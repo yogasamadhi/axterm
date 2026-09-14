@@ -635,11 +635,16 @@ Phase 14 implementation evidence (acceptance remains open):
 - [x] T14-04 adds a viewport-clamped keyboard-navigable xterm context menu for copy, paste,
       select-all, clear and search. Copy follows current xterm selection state; copy/paste use the
       Browser Clipboard API, report permission failures in the terminal surface and keep paste on
-      xterm's existing bounded Binary WebSocket input path.
+      xterm's existing bounded Binary WebSocket input path. Electron's shared Session now permits
+      clipboard read and sanitized write only for the current trusted top-level Axterm document;
+      every other permission, origin, child frame and native web view remains denied. This removes
+      the application-level denial that previously broke copy/paste on both macOS and Windows.
 - [x] Renderer model tests cover search validation/count bounds, option state, menu availability,
       positioning and clipboard failures. A real Electron/node-pty E2E covers every search mode,
       buttons and shortcuts, selection gating, copy/paste, clear, menu-opened search and denied
-      clipboard access.
+      clipboard access. A separate production Electron test performs a real Main-to-Renderer read
+      and Renderer-to-Main write without Playwright permission overrides. The `bun run.ts` Vite
+      launch journey also performs a real write/read round trip in its isolated desktop profile.
 - [x] T14-05 persists paste protection in Terminal Profiles and snapshots it into restored terminal
       tabs. Multiline or >500-character clipboard text opens an accessible, bounded review dialog;
       cancellation sends no terminal input, while confirmation stays on xterm `terminal.paste()` and
@@ -1573,6 +1578,9 @@ Phase 17 implementation evidence:
       policy. Electron Main reads the policy before acquiring the single-instance lock; changing it
       or title-bar mode reports restart-required, while opacity and zoom apply live. The native close
       guard serializes repeated requests, keeps canceled windows and allows one approved close.
+      Source launches now use the `Axterm Dev` name, user-data directory, single-instance domain and
+      Windows AppUserModelID, so `run.ts` can coexist with an installed Axterm without sharing state.
+      Explicit Electron user-data arguments are forwarded through electron-vite for isolated runs.
 - [x] Bounds persistence keeps the 1440×900 first-launch default, throttles and flushes normal
       move/resize state, ignores maximized/fullscreen geometry and corrects saved rectangles across
       primary, right, left and upper work areas or centers a disconnected display. Store/schema/guard/

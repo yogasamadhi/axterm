@@ -41,14 +41,19 @@ async function runDesktop(): Promise<number> {
     return 0;
   }
   const bunArguments = ['run', 'dev'];
-  if (forwardedArguments.length > 0) bunArguments.push('--', ...forwardedArguments);
+  const desktopEnvironment: NodeJS.ProcessEnv = {
+    ...process.env,
+    AXTERM_DESKTOP_ICON: desktopIcon,
+  };
+  if (forwardedArguments.length > 0)
+    desktopEnvironment.ELECTRON_CLI_ARGS = JSON.stringify(forwardedArguments);
 
   console.log('[Axterm] Starting the desktop development environment...');
 
   const desktop = spawn(process.execPath, bunArguments, {
     cwd: desktopDirectory,
     detached: process.platform !== 'win32',
-    env: { ...process.env, AXTERM_DESKTOP_ICON: desktopIcon },
+    env: desktopEnvironment,
     stdio: 'inherit',
   });
 

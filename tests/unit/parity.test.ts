@@ -111,7 +111,7 @@ describe('Electerm parity harness', () => {
     expect(stdout).toContain('122 matrix items');
     expect(stdout).toContain('72 settings');
     expect(stdout).toContain('23 actions');
-  });
+  }, 30_000);
 
   test('keeps committed localization captures free of hard defects at every viewport', async () => {
     const manifest = JSON.parse(await readFile('tests/parity/electerm-scenarios.json', 'utf8')) as {

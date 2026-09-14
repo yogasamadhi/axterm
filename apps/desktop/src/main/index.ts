@@ -15,7 +15,7 @@ import {
 import { APP_VERSION } from '@workspace/shared';
 import runtimePath from '../../../../packages/runtime/src/entry/desktop.ts?modulePath';
 import { RuntimeSupervisor } from './supervisor/runtime-supervisor';
-import { isTrustedDocument } from './windows/security';
+import { isTrustedClipboardPermission, isTrustedDocument } from './windows/security';
 import { HostCapabilityServer } from './host-capabilities/server';
 import {
   DEFAULT_DESKTOP_WINDOW_SIZE,
@@ -33,6 +33,15 @@ import {
 import { GlobalHotkeyController } from './host-capabilities/global-hotkey-controller';
 import { WindowCloseGuard } from './host-capabilities/window-close-guard';
 import { createDesktopUpdaterFromEnvironment } from './host-capabilities/signed-release-updater';
+
+const developmentInstance = !app.isPackaged;
+const desktopProductName = developmentInstance ? 'Axterm Dev' : 'Axterm';
+if (developmentInstance) {
+  app.setName(desktopProductName);
+  app.setAppUserModelId('dev.axterm.desktop.dev');
+  if (!app.commandLine.hasSwitch('user-data-dir'))
+    app.setPath('userData', resolve(app.getPath('appData'), desktopProductName));
+}
 
 let window: BrowserWindow | undefined;
 let developmentAppIcon: ReturnType<typeof nativeImage.createFromPath> | undefined;
@@ -227,7 +236,7 @@ function createWindow() {
     hostCapabilities?.preferencesForWindowCreation() ?? DEFAULT_DESKTOP_WINDOW_PREFERENCES;
   const customTitleBar = preferences.titleBarStyle === 'custom';
   const createdWindow = new BrowserWindow({
-    title: 'Axterm',
+    title: desktopProductName,
     ...(preferences.bounds ?? DEFAULT_DESKTOP_WINDOW_SIZE),
     minWidth: 800,
     minHeight: 580,
@@ -270,6 +279,10 @@ function createWindow() {
       ?.persistWindowBounds(createdWindow.getNormalBounds())
       .catch(() => console.error('Failed to save corrected desktop window bounds'));
   createdWindow.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  createdWindow.on('page-title-updated', (event) => {
+    event.preventDefault();
+    createdWindow.setTitle(desktopProductName);
+  });
   createdWindow.webContents.on('will-navigate', (event, url) => {
     if (!isTrustedDocument(url, allowedOrigin)) event.preventDefault();
   });
@@ -277,9 +290,26 @@ function createWindow() {
     if (!isTrustedDocument(url, allowedOrigin)) event.preventDefault();
   });
   createdWindow.webContents.session.setPermissionRequestHandler(
-    (_webContents, _permission, callback) => callback(false),
+    (requestingWebContents, permission, callback, details) =>
+      callback(
+        requestingWebContents === createdWindow.webContents &&
+          details.isMainFrame &&
+          isTrustedDocument(requestingWebContents.getURL(), allowedOrigin) &&
+          isTrustedClipboardPermission(permission, details.requestingUrl, allowedOrigin),
+      ),
   );
-  createdWindow.webContents.session.setPermissionCheckHandler(() => false);
+  createdWindow.webContents.session.setPermissionCheckHandler(
+    (requestingWebContents, permission, requestingOrigin, details) =>
+      requestingWebContents === createdWindow.webContents &&
+      details.isMainFrame &&
+      isTrustedDocument(requestingWebContents.getURL(), allowedOrigin) &&
+      isTrustedClipboardPermission(
+        permission,
+        details.requestingUrl ?? requestingWebContents.getURL(),
+        allowedOrigin,
+        requestingOrigin,
+      ),
+  );
   createdWindow.once('ready-to-show', () => createdWindow.show());
   createdWindow.on('close', (event) => {
     windowCloseGuard.handle(createdWindow, event, {

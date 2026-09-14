@@ -3,7 +3,10 @@ import { randomUUID } from 'node:crypto';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { ParentEnvelope } from '../../packages/contracts/src/host-capabilities/desktop';
 import { RuntimeSupervisor } from '../../apps/desktop/src/main/supervisor/runtime-supervisor';
-import { isTrustedDocument } from '../../apps/desktop/src/main/windows/security';
+import {
+  isTrustedClipboardPermission,
+  isTrustedDocument,
+} from '../../apps/desktop/src/main/windows/security';
 
 class FakeChild extends EventEmitter {
   messages: ParentEnvelope[] = [];
@@ -117,4 +120,22 @@ it('restricts bootstrap and navigation to the trusted top-level document origin'
     'not-a-url',
   ])
     expect(isTrustedDocument(url, origin)).toBe(false);
+});
+it('allows clipboard access only for the trusted top-level application document', () => {
+  const origin = 'http://127.0.0.1:1234';
+  for (const permission of ['clipboard-read', 'clipboard-sanitized-write'])
+    expect(isTrustedClipboardPermission(permission, `${origin}/`, origin, origin)).toBe(true);
+
+  for (const permission of ['notifications', 'media', 'deprecated-sync-clipboard-read'])
+    expect(isTrustedClipboardPermission(permission, `${origin}/`, origin, origin)).toBe(false);
+
+  expect(
+    isTrustedClipboardPermission('clipboard-read', `${origin}/assets/frame.html`, origin, origin),
+  ).toBe(false);
+  expect(
+    isTrustedClipboardPermission('clipboard-read', `${origin}/`, origin, 'https://example.com'),
+  ).toBe(false);
+  expect(isTrustedClipboardPermission('clipboard-read', `${origin}/`, origin, 'not-a-url')).toBe(
+    false,
+  );
 });

@@ -6931,6 +6931,31 @@ test('terminal session logs use grants, append safely and expose recording state
   }
 });
 
+test('trusted desktop renderer can read and write the system clipboard', async () => {
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-system-clipboard-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await page.bringToFront();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+
+    const pasteMarker = `AXTERM_NATIVE_PASTE_${Date.now()}`;
+    await app.evaluate(({ clipboard }, text) => clipboard.writeText(text), pasteMarker);
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(pasteMarker);
+
+    const copyMarker = `AXTERM_RENDERER_COPY_${Date.now()}`;
+    await page.evaluate((text) => navigator.clipboard.writeText(text), copyMarker);
+    await expect.poll(() => app.evaluate(({ clipboard }) => clipboard.readText())).toBe(copyMarker);
+  } finally {
+    await app.close();
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
 test('terminal search controls and context menu operate on a real Electron PTY', async () => {
   test.skip(process.platform === 'win32', 'This assertion uses a POSIX shell fixture.');
   const userData = await mkdtemp(resolve(tmpdir(), 'axterm-terminal-interaction-e2e-'));

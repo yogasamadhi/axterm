@@ -2643,6 +2643,9 @@ Desktop Host 可以保存并恢复经显示器工作区校正的 bounds；恢复
 - CSP；
 - 禁止任意 `window.open`；
 - Navigation allowlist；
+- Electron Session 权限默认拒绝；仅主窗口当前受信任的顶层 Axterm 文档可使用
+  `clipboard-read` 和 `clipboard-sanitized-write`，用于终端、编辑器和文件管理器的系统剪贴板；
+  子 frame、外部 origin、Native Web View 及其他权限保持拒绝；
 - 外链通过 Runtime → Host validated external URL；
 - 禁止 remote script；
 - 禁止 eval；
@@ -3451,8 +3454,10 @@ H-07 将 title bar、opacity、zoom、bounds、退出确认和 `allowMultiInstan
 修改该策略或标题栏时明确返回需要重启，opacity/zoom/bounds 可即时应用。普通窗口 move/resize
 使用首尾节流持久化，退出前 flush；最大化和全屏几何不得覆盖普通 bounds。恢复时保留当前左右/
 上方显示器的 DIP 坐标和负坐标，限制到目标 work area，已断开的显示器回到主显示器中央；首次启动
-仍为 1440×900。启用退出确认时，Desktop Host 串行显示一个原生确认框，取消无副作用，确认只
-放行一次关闭，应用 shutdown 不重复提示。
+仍为 1440×900。`run.ts` 启动的非 packaged Main 必须使用 `Axterm Dev` 产品名、独立 userData
+目录、单实例锁和 Windows AppUserModelID；显式 `--user-data-dir` 仍优先，用于隔离测试。开发版
+不得激活、读取或覆盖已安装 Axterm 的进程和数据。启用退出确认时，Desktop Host 串行显示一个
+原生确认框，取消无副作用，确认只放行一次关闭，应用 shutdown 不重复提示。
 
 H-08 复用 B-10 的有界产品数据通道并升级为 Axterm 便携格式 v2。导出文件可以包含
 Runtime 设置、应用本地 window preferences，以及 Host Vault 中的凭据类型、标签和创建/更新时间；

@@ -22,6 +22,11 @@ claimed. The desktop uses a single-instance lock and forwards initial, macOS
 ingress. Production Electron tests exercise those three handlers; installation-level
 registration and activation still require evidence from each target operating system.
 
+The source launcher uses a separate `Axterm Dev` application identity, user-data directory,
+single-instance domain and Windows AppUserModelID. Running `bun run.ts` therefore cannot focus or
+reuse an installed Axterm process, and development state never overwrites the packaged profile.
+An explicit Electron `--user-data-dir` remains authoritative for isolated automation.
+
 ## Native modules
 
 `node-pty` 1.1.0 carries the minimal macOS descriptor-close fix recorded in

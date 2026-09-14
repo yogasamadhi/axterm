@@ -104,6 +104,10 @@ bun run dev
 可丢弃的 OpenSSH/SFTP 集成测试对端，不参与应用启动、业务运行或发行。开发 Renderer 固定使用
 `127.0.0.1:5173`，Runtime 始终绑定 `127.0.0.1` 的系统分配端口。
 
+`run.ts` 启动的是独立的 **Axterm Dev** 实例。它使用操作系统应用数据目录下的
+`Axterm Dev` 子目录、独立单实例锁和 Windows AppUserModelID，因此可以与已经安装的
+Axterm 同时运行；开发配置、窗口状态、数据库和本地凭据不会读写安装版的数据目录。
+
 开发启动器会把 Electerm 兼容参数转发给 Desktop：
 
 ```sh
