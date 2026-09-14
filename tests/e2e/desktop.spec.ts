@@ -7202,6 +7202,23 @@ test('paste protection and policy-gated OSC 52 operate on a real Electron PTY', 
     await expect(layer.locator('.terminal-search-result')).toHaveText('无匹配');
     await search.press('Escape');
 
+    const continuedPipeline = "docker info | sed -n '/Registry Mirrors/,+5p'";
+    await page.evaluate(() => {
+      document.documentElement.dataset.clipboardRead =
+        "docker info |\n    sed -n '/Registry Mirrors/,+5p'";
+    });
+    await terminalHost.click({ button: 'right', position: { x: 110, y: 100 } });
+    await page
+      .getByRole('menu', { name: '终端菜单' })
+      .getByRole('menuitem', { name: '粘贴', exact: true })
+      .click();
+    await expect(page.getByRole('dialog', { name: '确认粘贴到终端' })).toHaveCount(0);
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText('剪贴板内容已发送到终端。');
+    await expect(
+      layer.locator('.xterm-rows > div').filter({ hasText: continuedPipeline }),
+    ).toHaveCount(1);
+    await input.press('Control+c');
+
     await page.evaluate(() => {
       document.documentElement.dataset.clipboardRead =
         "printf '\\nAXTERM_PASTE_CONFIRMED_ONE\\n'\nprintf '\\nAXTERM_PASTE_CONFIRMED_TWO\\n'";

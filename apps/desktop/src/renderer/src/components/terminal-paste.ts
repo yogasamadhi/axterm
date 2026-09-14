@@ -49,7 +49,94 @@ export function normalizeTerminalPaste(
   kind: 'local' | 'ssh' | 'telnet' | 'serial',
   platform: 'win32' | 'darwin' | 'linux' | 'other',
 ): string {
-  return platform === 'win32' && kind !== 'local' ? text.replace(/\r\n/g, '\n') : text;
+  const platformNormalized =
+    platform === 'win32' && kind !== 'local' ? text.replace(/\r\n/g, '\n') : text;
+  if (kind !== 'local' && kind !== 'ssh') return platformNormalized;
+  return foldShellContinuationLines(platformNormalized, {
+    allowBackslashContinuation: kind === 'ssh' || platform !== 'win32',
+  });
+}
+
+export function foldShellContinuationLines(
+  text: string,
+  options: { allowBackslashContinuation?: boolean } = {},
+): string {
+  // Here-document bodies are data rather than shell syntax. A small continuation
+  // recognizer cannot safely distinguish their delimiters, so leave the paste intact.
+  if (/(?:^|[;&|()\s])<<-?\s*['"]?[A-Za-z_][A-Za-z0-9_]*['"]?/mu.test(text)) return text;
+  const parts = text.split(/(\r\n|\r|\n)/u);
+  if (parts.length === 1) return text;
+  let folded = parts[0] ?? '';
+  for (let index = 1; index < parts.length; index += 2) {
+    const lineBreak = parts[index] ?? '';
+    const nextLine = parts[index + 1] ?? '';
+    const continuation = shellContinuationAtEnd(folded, options.allowBackslashContinuation ?? true);
+    const continuationTarget = nextLine.trimStart();
+    const safeTarget = continuationTarget.length > 0 && !continuationTarget.startsWith('#');
+    if (continuation === 'backslash' && safeTarget) {
+      folded = `${folded.trimEnd().slice(0, -1)}${nextLine.trimStart()}`;
+    } else if (continuation === 'operator' && safeTarget) {
+      folded = `${folded.trimEnd()} ${nextLine.trimStart()}`;
+    } else {
+      folded += `${lineBreak}${nextLine}`;
+    }
+  }
+  return folded;
+}
+
+function shellContinuationAtEnd(
+  text: string,
+  allowBackslashContinuation: boolean,
+): 'backslash' | 'operator' | undefined {
+  const lineStart = Math.max(text.lastIndexOf('\n'), text.lastIndexOf('\r')) + 1;
+  const line = text.slice(lineStart).trimEnd();
+  if (!line) return undefined;
+  let quote: "'" | '"' | undefined;
+  let escaped = false;
+  let comment = false;
+  const outsideQuotes = new Array<boolean>(line.length).fill(false);
+  for (let index = 0; index < line.length; index += 1) {
+    const character = line[index]!;
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+    if (character === '\\' && quote !== "'") {
+      outsideQuotes[index] = quote === undefined;
+      escaped = true;
+      continue;
+    }
+    if (character === "'" && quote !== '"') {
+      quote = quote === "'" ? undefined : "'";
+      continue;
+    }
+    if (character === '"' && quote !== "'") {
+      quote = quote === '"' ? undefined : '"';
+      continue;
+    }
+    if (
+      character === '#' &&
+      quote === undefined &&
+      (index === 0 || /[\s;&|()]/u.test(line[index - 1]!))
+    ) {
+      comment = true;
+      break;
+    }
+    outsideQuotes[index] = quote === undefined;
+  }
+  if (quote || comment) return undefined;
+  if (allowBackslashContinuation && line.endsWith('\\') && outsideQuotes[line.length - 1])
+    return 'backslash';
+  for (const operator of ['&&', '||', '|&', '|']) {
+    const start = line.length - operator.length;
+    if (
+      start >= 0 &&
+      line.endsWith(operator) &&
+      [...operator].every((_character, offset) => outsideQuotes[start + offset])
+    )
+      return 'operator';
+  }
+  return undefined;
 }
 
 export function terminalPlatformFromUserAgent(

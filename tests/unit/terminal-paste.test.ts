@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   assessTerminalPaste,
+  foldShellContinuationLines,
   normalizeTerminalPaste,
   terminalPlatformFromUserAgent,
   TERMINAL_PASTE_CONFIRM_THRESHOLD,
@@ -50,6 +51,39 @@ describe('terminal paste protection model', () => {
     expect(normalizeTerminalPaste(source, 'ssh', 'win32')).toBe('printf one\nprintf two\n');
     expect(normalizeTerminalPaste(source, 'local', 'win32')).toBe(source);
     expect(normalizeTerminalPaste(source, 'ssh', 'darwin')).toBe(source);
+    expect(normalizeTerminalPaste('first |\nsecond', 'telnet', 'darwin')).toBe('first |\nsecond');
+  });
+
+  it('folds only unambiguous shell continuation lines into one command', () => {
+    expect(foldShellContinuationLines("docker info |\n    sed -n '/Registry Mirrors/,+5p'")).toBe(
+      "docker info | sed -n '/Registry Mirrors/,+5p'",
+    );
+    expect(foldShellContinuationLines('first &&\r\n  second ||\n third')).toBe(
+      'first && second || third',
+    );
+    expect(foldShellContinuationLines('docker run \\\n  --name demo \\\r\n  alpine')).toBe(
+      'docker run --name demo alpine',
+    );
+  });
+
+  it('preserves scripts, quoted operators and escaped literal pipes', () => {
+    for (const text of [
+      'printf one\nprintf two',
+      "printf '|\ninside quote'",
+      'echo "|\ninside quote"',
+      'printf \\|\nprintf two',
+      'printf one # |\nprintf two',
+      'if ready; then\n  printf yes\nfi',
+      'cat <<EOF\nbody |\nstays literal\nEOF',
+      'printf one |\n',
+      'printf one |\n# comment\nprintf two',
+    ])
+      expect(foldShellContinuationLines(text)).toBe(text);
+    expect(
+      foldShellContinuationLines('Write-Output one \\\n  two', {
+        allowBackslashContinuation: false,
+      }),
+    ).toBe('Write-Output one \\\n  two');
   });
 
   it('detects the desktop platform without exposing a Node API to Renderer', () => {
