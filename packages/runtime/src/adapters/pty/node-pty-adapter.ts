@@ -2,11 +2,7 @@ import { homedir } from 'node:os';
 import process from 'node:process';
 import * as pty from 'node-pty';
 import type { PtyPort, ShellIntegrationKind, TerminalChannel } from '../../ports/terminal-channel';
-
-const defaultShell = () => {
-  if (process.platform === 'win32') return process.env.ComSpec ?? 'powershell.exe';
-  return process.env.SHELL ?? '/bin/sh';
-};
+import { defaultShellCandidates, openFirstAvailableShell } from './default-shell';
 
 export class NodePtyAdapter implements PtyPort {
   open(input: {
@@ -19,22 +15,25 @@ export class NodePtyAdapter implements PtyPort {
     cols: number;
     rows: number;
   }): TerminalChannel {
-    const shell = input.shell || defaultShell();
     const args = [
       ...(input.loginShell && process.platform !== 'win32' ? ['-l'] : []),
       ...input.args,
     ];
-    const child = pty.spawn(shell, args, {
-      name: input.term,
-      // node-pty 1.1.0 delivers Buffer instances on POSIX only when encoding is
-      // explicitly null. Leaving this unset decodes arbitrary PTY bytes as
-      // UTF-8 before the Runtime can put them on the binary terminal stream.
-      encoding: null,
-      cols: input.cols,
-      rows: input.rows,
-      cwd: input.cwd || homedir(),
-      env: sanitizeEnvironment({ ...process.env, ...input.env, TERM: input.term }),
-    });
+    const { shell, value: child } = openFirstAvailableShell(
+      input.shell ? [input.shell] : defaultShellCandidates(),
+      (candidate) =>
+        pty.spawn(candidate, args, {
+          name: input.term,
+          // node-pty 1.1.0 delivers Buffer instances on POSIX only when encoding is
+          // explicitly null. Leaving this unset decodes arbitrary PTY bytes as
+          // UTF-8 before the Runtime can put them on the binary terminal stream.
+          encoding: null,
+          cols: input.cols,
+          rows: input.rows,
+          cwd: input.cwd || homedir(),
+          env: sanitizeEnvironment({ ...process.env, ...input.env, TERM: input.term }),
+        }),
+    );
     let closed = false;
     let exited = false;
     let resolveExit!: () => void;

@@ -283,6 +283,45 @@ test('packaged app starts independently of checkout and system Node', async () =
   }
 });
 
+test('packaged Windows app starts its unconfigured local terminal with PowerShell 7', async () => {
+  test.skip(process.platform !== 'win32', 'PowerShell 7 is the Windows platform default.');
+  await access(source);
+  const directory = await realpath(await mkdtemp(join(tmpdir(), 'axterm-packaged-pwsh-')));
+  const artifact = join(directory, 'app');
+  await cp(source, artifact, { recursive: true, verbatimSymlinks: true });
+  const executablePath = join(artifact, 'Axterm.exe');
+  const app = await electron.launch({
+    executablePath,
+    args: [`--user-data-dir=${join(directory, 'user-data')}`],
+    cwd: directory,
+    env: {
+      ...process.env,
+      ELECTRON_RENDERER_URL: '',
+      PATH: process.env.SystemRoot ?? '',
+    },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const terminalLayer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(terminalLayer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    const terminalInput = terminalLayer.locator('.xterm-helper-textarea');
+    await terminalInput.pressSequentially(
+      "Write-Output ('AXTERM_PWSH_MAJOR=' + $PSVersionTable.PSVersion.Major)",
+    );
+    await terminalInput.press('Enter');
+    await expect
+      .poll(() => terminalLayer.locator('.xterm-rows').textContent())
+      .toContain('AXTERM_PWSH_MAJOR=7');
+  } finally {
+    await app.close().catch(() => {});
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test('packaged Phase 12 shell preserves tab, pane, workspace and window behavior', async () => {
   test.setTimeout(120_000);
   await access(source);

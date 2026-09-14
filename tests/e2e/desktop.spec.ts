@@ -6573,6 +6573,48 @@ test('connection Profile UI persists reference-only credentials and assigns them
   }
 });
 
+test('terminal settings prioritize the default profile and shell configuration', async () => {
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-terminal-settings-order-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await expect(
+      page.locator('.terminal-session-layer:not([hidden])').locator('.terminal-host'),
+    ).toHaveAttribute('data-connection-state', 'connected');
+    await page.locator('[data-activity-item="setting"]').click();
+    await expect(page.locator('.app-shell')).toHaveClass(/section-settings.*surface-section/u);
+    await expect(page.locator('.settings-workspace')).toBeVisible();
+    await page.locator('[data-settings-category="terminal"]').click();
+    await expect(
+      page.locator('.terminal-default-profile-settings, .terminal-profile-settings'),
+    ).toHaveCount(2);
+    expect(
+      await page
+        .locator('.terminal-default-profile-settings, .terminal-profile-settings')
+        .evaluateAll((elements) => elements.map((element) => element.className)),
+    ).toEqual([
+      'surface stack terminal-default-profile-settings',
+      'two-column terminal-profile-settings',
+    ]);
+    const profileForm = page
+      .locator('form')
+      .filter({ has: page.getByRole('heading', { name: '终端配置' }) });
+    const shellPosition = await profileForm.getByLabel('Shell', { exact: true }).boundingBox();
+    const appearancePosition = await profileForm.getByLabel('回滚行数').boundingBox();
+    expect(shellPosition).not.toBeNull();
+    expect(appearancePosition).not.toBeNull();
+    expect(shellPosition!.y).toBeLessThan(appearancePosition!.y);
+  } finally {
+    await app.close();
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
 test('terminal profile drives the real PTY and xterm appearance through the desktop flow', async () => {
   test.skip(process.platform === 'win32', 'This assertion uses a POSIX shell profile.');
   const userData = await mkdtemp(resolve(tmpdir(), 'axterm-terminal-profile-e2e-'));

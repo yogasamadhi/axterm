@@ -4049,6 +4049,10 @@ html[dir='rtl']
   font-size: 16px;
 }
 
+.settings-item-terminal .terminal-default-profile-settings {
+  margin-bottom: 24px;
+}
+
 .settings-item-terminal
   .terminal-profile-settings
   > form
@@ -4065,39 +4069,39 @@ html[dir='rtl']
 }
 
 .settings-item-terminal .terminal-setting-scrollback {
-  order: 1;
-}
-
-.settings-item-terminal .terminal-setting-renderer {
-  order: 2;
-}
-
-.settings-item-terminal .terminal-setting-font-size {
-  order: 3;
-}
-
-.settings-item-terminal .terminal-setting-font-family {
-  order: 4;
-}
-
-.settings-item-terminal .terminal-setting-term {
-  order: 5;
+  order: 10;
   margin-top: 32px;
 }
 
+.settings-item-terminal .terminal-setting-renderer {
+  order: 11;
+}
+
+.settings-item-terminal .terminal-setting-font-size {
+  order: 12;
+}
+
+.settings-item-terminal .terminal-setting-font-family {
+  order: 13;
+}
+
+.settings-item-terminal .terminal-setting-term {
+  order: 2;
+}
+
 .settings-item-terminal .terminal-setting-advanced {
-  order: 6;
+  order: 14;
 }
 
 .settings-item-terminal
   .terminal-profile-settings
   > form
   > .terminal-security-settings:last-of-type {
-  order: 8;
+  order: 18;
 }
 
 .settings-item-terminal .terminal-setting-profile {
-  order: 20;
+  order: 1;
 }
 
 .settings-item-terminal .terminal-profile-settings > form > .modal-actions {

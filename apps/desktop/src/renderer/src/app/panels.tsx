@@ -9833,6 +9833,17 @@ export function RuntimePanel({
       await settings.refetch();
     }
   }
+  async function setDefaultTerminalProfile(defaultProfileId: string | null) {
+    if (!settings.data) return;
+    setMessage('');
+    try {
+      await client.updateSettings(settings.data, { terminal: { defaultProfileId } });
+      await settings.refetch();
+    } catch (cause) {
+      setMessage(messageOf(cause));
+      await settings.refetch();
+    }
+  }
   async function saveProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
@@ -10149,6 +10160,39 @@ export function RuntimePanel({
                 <ShortcutSettingsPanel client={client} />
                 <CommandHistorySettingsPanel client={client} />
               </div>
+            )}
+            {settingsItem === 'terminal' && (
+              <section
+                className="surface stack terminal-default-profile-settings"
+                aria-labelledby="terminal-default-profile-title"
+              >
+                <h3 id="terminal-default-profile-title">{x('shell.terminalProfile')}</h3>
+                <label className="field compact-field">
+                  <span>{x('terminalRecovery.defaultProfile')}</span>
+                  <select
+                    aria-label={x('terminalRecovery.defaultProfile')}
+                    value={settings.data?.terminal.defaultProfileId ?? ''}
+                    disabled={!settings.data || settings.isFetching || profiles.isLoading}
+                    onChange={(event) => void setDefaultTerminalProfile(event.target.value || null)}
+                  >
+                    <option value="">{x('terminalRecovery.platformDefault')}</option>
+                    {settings.data?.terminal.defaultProfileId &&
+                      !profiles.data?.some(
+                        (profile) => profile.id === settings.data?.terminal.defaultProfileId,
+                      ) && (
+                        <option value={settings.data.terminal.defaultProfileId} disabled>
+                          {x('terminalRecovery.deletedProfile')}
+                        </option>
+                      )}
+                    {profiles.data?.map((profile) => (
+                      <option key={profile.id} value={profile.id}>
+                        {profile.name}
+                      </option>
+                    ))}
+                  </select>
+                  <small className="hint">{x('terminalRecovery.profileHint')}</small>
+                </label>
+              </section>
             )}
             {settingsItem === 'terminal' && (
               <div className="two-column terminal-profile-settings">

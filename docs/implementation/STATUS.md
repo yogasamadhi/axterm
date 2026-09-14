@@ -142,6 +142,10 @@ errors, backup/restore and Contract drift tests pass. Renderer has no DB access.
 - [x] `PtyPort`/node-pty adapter, terminal application service and bounded registry.
 - [x] Local PTYs default to the operating-system home directory (`/Users/<user>` on macOS)
       when no explicit Terminal Profile cwd or granted working directory overrides it.
+- [x] Unconfigured Windows PTYs try the standard PowerShell 7 install and per-user WindowsApps
+      alias before `pwsh.exe` on `PATH`, then safely fall back at spawn time to `ComSpec`;
+      Terminal Settings puts the global default Profile and primary Profile/Shell fields before
+      appearance, advanced and recovery controls.
 - [x] Binary WebSocket data channel; Zod-checked text controls for resize/exit/error.
 - [x] xterm with Fit, Search, Web Links and WebGL-to-canvas fallback.
 - [x] IME input, clipboard/browser behavior, terminal search, status feedback and

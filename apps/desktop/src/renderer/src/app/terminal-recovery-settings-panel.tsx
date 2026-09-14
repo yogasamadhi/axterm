@@ -43,7 +43,6 @@ export function TerminalRecoverySettingsPanel({ client }: { client: Client }) {
   const { x } = useI18n();
   const queryClient = useQueryClient();
   const settings = useQuery({ queryKey: ['settings'], queryFn: client.settings });
-  const profiles = useQuery({ queryKey: ['terminal-profiles'], queryFn: client.terminalProfiles });
   const [busy, setBusy] = useState<string>();
   const [error, setError] = useState('');
 
@@ -86,33 +85,6 @@ export function TerminalRecoverySettingsPanel({ client }: { client: Client }) {
     >
       <h3 id="terminal-recovery-settings-title">{x('terminalRecovery.title')}</h3>
       <p className="hint">{x('terminalRecovery.description')}</p>
-      <label className="field compact-field">
-        <span>{x('terminalRecovery.defaultProfile')}</span>
-        <select
-          aria-label={x('terminalRecovery.defaultProfile')}
-          value={settings.data?.terminal.defaultProfileId ?? ''}
-          disabled={!settings.data || profiles.isLoading || !!busy}
-          onChange={(event) =>
-            void update({ defaultProfileId: event.target.value ? event.target.value : null })
-          }
-        >
-          <option value="">{x('terminalRecovery.platformDefault')}</option>
-          {settings.data?.terminal.defaultProfileId &&
-            !profiles.data?.some(
-              (profile) => profile.id === settings.data?.terminal.defaultProfileId,
-            ) && (
-              <option value={settings.data.terminal.defaultProfileId} disabled>
-                {x('terminalRecovery.deletedProfile')}
-              </option>
-            )}
-          {profiles.data?.map((profile) => (
-            <option key={profile.id} value={profile.id}>
-              {profile.name}
-            </option>
-          ))}
-        </select>
-        <small className="hint">{x('terminalRecovery.profileHint')}</small>
-      </label>
       <label className="check">
         <input
           checked={settings.data?.terminal.autoReconnectTerminal ?? false}
