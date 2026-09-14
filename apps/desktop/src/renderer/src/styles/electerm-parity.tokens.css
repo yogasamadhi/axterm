@@ -1,0 +1,41 @@
+/*
+ * Phase 11 reference tokens. Values come from the pinned Electerm 5.5.0
+ * theme.styl, sidebar.styl, tabs.styl and constants.js. Components migrate to
+ * these semantic tokens during Phases 12-20; aliases keep source names out of
+ * component CSS and allow Axterm themes to override the same roles.
+ */
+:root {
+  --ax-color-canvas: #141314;
+  --ax-color-canvas-deep: #000000;
+  --ax-color-surface-raised: #2e3338;
+  --ax-color-surface-sunken: #0e0d0e;
+  --ax-color-surface-muted: #5b5a5b;
+  --ax-color-text: #dddddd;
+  --ax-color-text-strong: #ffffff;
+  --ax-color-text-muted: #888888;
+  --ax-color-text-disabled: #777777;
+  --ax-color-primary: #0088cc;
+  --ax-color-info: #ffd166;
+  --ax-color-success: #06d6a0;
+  --ax-color-danger: #ef476f;
+  --ax-color-warning: #e55934;
+  --ax-color-on-primary: #ffffff;
+
+  --ax-size-activity-rail: 43px;
+  --ax-size-tab-height: 36px;
+  --ax-size-footer-height: 36px;
+  --ax-size-tab-min: 100px;
+  --ax-size-tab-max: 200px;
+  --ax-size-tab-close: 16px;
+  --ax-size-status-dot: 5px;
+  --ax-size-shortcut-bar: 44px;
+
+  --ax-space-1: 4px;
+  --ax-space-2: 8px;
+  --ax-space-3: 12px;
+  --ax-space-4: 16px;
+  --ax-radius-control: 3px;
+  --ax-radius-panel: 4px;
+  --ax-motion-fast: 200ms;
+  --ax-shadow-menu: 0 2px 8px rgb(0 0 0 / 15%);
+}

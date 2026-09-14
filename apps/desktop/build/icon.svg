@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title description">
+  <title id="title">AxTerm</title>
+  <desc id="description">A mint-to-cyan AX monogram on a midnight green rounded square.</desc>
+  <defs>
+    <linearGradient id="background" x1="126" y1="92" x2="898" y2="932" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10231f"/>
+      <stop offset="0.52" stop-color="#091713"/>
+      <stop offset="1" stop-color="#050d0c"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="196" y1="680" x2="837" y2="366" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8cf59e"/>
+      <stop offset="0.48" stop-color="#71e7b7"/>
+      <stop offset="1" stop-color="#55cfe0"/>
+    </linearGradient>
+  </defs>
+  <rect x="48" y="48" width="928" height="928" rx="224" fill="url(#background)"/>
+  <rect x="52" y="52" width="920" height="920" rx="220" fill="none" stroke="#27433d" stroke-width="8"/>
+  <path
+    d="M221 744 421 329 803 744M803 329 421 744"
+    fill="none"
+    stroke="url(#mark)"
+    stroke-width="116"
+    stroke-linecap="square"
+    stroke-linejoin="round"
+  />
+</svg>

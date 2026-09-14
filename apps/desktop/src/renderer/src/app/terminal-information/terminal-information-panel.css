@@ -1,0 +1,262 @@
+.app-shell.with-terminal-information {
+  grid-template-columns:
+    var(--shell-rail-size) var(--shell-sidebar-size)
+    minmax(0, 1fr) var(--shell-inspector-size);
+}
+
+.app-shell.sidebar-collapsed.with-terminal-information {
+  grid-template-columns:
+    var(--shell-rail-size) minmax(0, 1fr)
+    var(--shell-inspector-size);
+}
+
+.terminal-information-panel {
+  grid-column: 4;
+  grid-row: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-left: 1px solid var(--shell-sunken);
+  background: var(--shell-canvas);
+  color: var(--shell-text);
+}
+
+.sidebar-collapsed .terminal-information-panel {
+  grid-column: 3;
+}
+.app-shell.section-settings.surface-section .terminal-information-panel {
+  display: none;
+}
+
+.terminal-information-panel > header {
+  height: var(--shell-tab-size);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 12px;
+  border-bottom: 1px solid var(--shell-sunken);
+  background: var(--shell-deep);
+}
+
+.terminal-information-panel > header > span,
+.terminal-information-panel > header > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.terminal-information-panel button {
+  min-height: 26px;
+}
+.terminal-information-panel > header button {
+  width: 26px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.terminal-information-body {
+  height: calc(100% - var(--shell-tab-size));
+  overflow: auto;
+  padding: 10px 12px 24px;
+}
+.terminal-information-base {
+  position: relative;
+  display: grid;
+  gap: 5px;
+  padding: 2px 0 12px;
+  border-bottom: 1px solid var(--shell-divider);
+}
+.terminal-information-base > span {
+  color: var(--shell-text-muted);
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.terminal-information-filter {
+  justify-self: end;
+  font-size: 11px;
+}
+.terminal-information-filter summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--shell-text-muted);
+  list-style: none;
+}
+.terminal-information-filter > div {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  width: 156px;
+  margin-top: 5px;
+  padding: 4px;
+  border: 1px solid var(--shell-raised);
+  background: var(--shell-canvas);
+  box-shadow: var(--shell-menu-shadow);
+}
+.terminal-information-filter button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+.terminal-information-filter button:hover {
+  background: var(--shell-hover);
+}
+.terminal-information-filter button > span {
+  width: 12px;
+  color: var(--shell-primary);
+}
+
+.terminal-information-section {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--shell-divider);
+}
+.terminal-information-section > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+.terminal-information-section > header > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.information-state {
+  color: var(--shell-success);
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.information-state.stale,
+.information-state.error {
+  color: var(--shell-warning);
+}
+.information-state.unsupported {
+  color: var(--shell-text-disabled);
+}
+.terminal-information-message,
+.terminal-information-empty {
+  padding: 14px 4px;
+  color: var(--shell-text-muted);
+  font-size: 11px;
+}
+
+.terminal-information-grid {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+.terminal-information-grid > div {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 8px;
+}
+.terminal-information-grid dt {
+  color: var(--shell-text-muted);
+}
+.terminal-information-grid dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.terminal-information-meter {
+  position: relative;
+  height: 20px;
+  overflow: hidden;
+  border: 1px solid var(--shell-divider);
+  background: var(--shell-sunken);
+}
+.terminal-information-meter i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: color-mix(in srgb, var(--shell-primary) 45%, transparent);
+}
+.terminal-information-meter.warning i {
+  background: color-mix(in srgb, var(--shell-warning) 55%, transparent);
+}
+.terminal-information-meter.critical i {
+  background: color-mix(in srgb, var(--shell-danger) 60%, transparent);
+}
+.terminal-information-meter span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 2px 6px;
+  font-size: 10px;
+}
+.terminal-information-sparkline {
+  width: 100%;
+  height: 34px;
+  margin-top: 6px;
+  background: var(--shell-sunken);
+}
+.terminal-information-sparkline polyline {
+  fill: none;
+  stroke: var(--shell-primary);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.terminal-information-list {
+  display: grid;
+  gap: 7px;
+}
+.terminal-information-list > span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+.terminal-information-list small {
+  color: var(--shell-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.terminal-information-activities {
+  display: grid;
+  gap: 1px;
+  font-size: 10px;
+}
+.terminal-information-activities > div {
+  display: grid;
+  grid-template-columns: 36px 54px 38px minmax(0, 1fr);
+  gap: 5px;
+  padding: 3px 2px;
+}
+.terminal-information-activities > div:nth-child(even) {
+  background: var(--shell-sunken);
+}
+.terminal-information-activities span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spinning {
+  animation: terminal-information-spin 0.8s linear infinite;
+}
+@keyframes terminal-information-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .terminal-information-panel {
+    position: fixed;
+    z-index: 350;
+    top: 0;
+    right: 0;
+    bottom: var(--shell-footer-size);
+    width: min(330px, calc(100vw - var(--shell-rail-size)));
+    box-shadow: var(--shell-menu-shadow);
+  }
+}

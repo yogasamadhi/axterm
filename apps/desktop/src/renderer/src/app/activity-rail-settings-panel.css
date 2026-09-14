@@ -1,0 +1,94 @@
+.activity-rail-settings {
+  display: grid;
+  gap: 11px;
+  padding: 16px;
+}
+
+.activity-rail-settings > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.activity-rail-settings > header small,
+.activity-rail-settings > header h3,
+.activity-rail-settings > p {
+  margin: 0;
+}
+
+.activity-rail-settings > header h3 {
+  margin-top: 3px;
+  font-size: 14px;
+}
+
+.activity-rail-settings > header > span {
+  min-width: 42px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--shell-text-muted);
+  background: var(--shell-raised);
+  font-size: 10px;
+  text-align: center;
+}
+
+.activity-rail-settings-list {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--shell-border);
+  border-radius: 4px;
+}
+
+.activity-rail-settings-list > div {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--shell-border);
+  color: var(--shell-text-muted);
+  background: var(--shell-canvas);
+}
+
+.activity-rail-settings-list > div:last-child {
+  border-bottom: 0;
+}
+
+.activity-rail-settings-list > div.enabled {
+  color: var(--shell-text);
+  background: color-mix(in srgb, var(--shell-accent) 6%, var(--shell-canvas));
+}
+
+.activity-rail-settings-list label {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  font-size: 12px;
+}
+
+.activity-rail-settings-list label input {
+  width: 14px;
+  min-height: 14px;
+  height: 14px;
+}
+
+.activity-rail-settings-list > div > div {
+  display: flex;
+  gap: 3px;
+}
+
+.activity-rail-settings-list button {
+  display: grid;
+  width: 27px;
+  min-height: 27px;
+  height: 27px;
+  padding: 0;
+  place-items: center;
+}
+
+.activity-rail-settings-message {
+  color: var(--shell-success);
+}

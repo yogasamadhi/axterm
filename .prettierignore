@@ -1,0 +1,14 @@
+node_modules
+out
+dist
+release
+bun.lock
+coverage
+playwright-report
+test-results
+packages/client/src/generated
+docs/api/openapi.json
+docs/architecture
+AGENTS.md
+vendor
+packages/runtime/src/adapters/terminal-transfer/electerm

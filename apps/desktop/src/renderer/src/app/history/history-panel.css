@@ -1,0 +1,295 @@
+.connection-history-panel {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  background: var(--shell-sunken, #0e0d0e);
+}
+
+.connection-history-toolbar {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 7px;
+  border-bottom: 1px solid var(--shell-divider, #252425);
+}
+
+.connection-history-body {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.connection-history-notice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 6px;
+  padding: 7px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--shell-danger, #e36d76) 42%, transparent);
+  background: color-mix(in srgb, var(--shell-danger, #e36d76) 10%, transparent);
+  color: var(--shell-danger, #e36d76);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.connection-history-notice button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.connection-history-toolbar-actions,
+.connection-history-recording {
+  display: flex;
+  align-items: center;
+}
+
+.connection-history-toolbar-actions {
+  gap: 4px;
+}
+
+.connection-history-recording {
+  gap: 4px;
+  color: var(--shell-text-muted, #888);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.connection-history-recording input {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  accent-color: var(--shell-accent, #76d68c);
+}
+
+.connection-history-sort {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--shell-text, #ddd);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.connection-history-clear,
+.connection-history-actions button,
+.connection-history-more,
+.connection-history-empty button {
+  border: 0;
+  border-radius: var(--ax-radius-control, 3px);
+  background: transparent;
+  color: var(--shell-text-muted, #888);
+  cursor: pointer;
+}
+
+.connection-history-sort input {
+  appearance: none;
+  width: 28px;
+  height: 16px;
+  margin: 0;
+  border: 0;
+  border-radius: 9px;
+  background: #555;
+  box-shadow: inset 0 0 0 1px #0003;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.connection-history-sort input::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin: 2px;
+  border-radius: 50%;
+  background: #eee;
+  transition: transform 120ms ease;
+}
+
+.connection-history-sort input:checked {
+  background: var(--shell-primary, #0088cc);
+}
+
+.connection-history-sort input:checked::before {
+  transform: translateX(12px);
+}
+
+.connection-history-clear,
+.connection-history-actions button {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.connection-history-clear:hover,
+.connection-history-actions button:hover,
+.connection-history-more:hover,
+.connection-history-empty button:hover {
+  color: var(--shell-accent, #76d68c);
+  background: var(--shell-hover, #262326);
+}
+
+.connection-history-list {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+}
+
+.connection-history-row {
+  position: relative;
+  height: 35px;
+  min-height: 35px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  border-bottom: 1px solid color-mix(in srgb, var(--shell-divider, #252425) 68%, transparent);
+}
+
+.connection-history-row:hover {
+  color: #fff;
+  background: var(--shell-primary, #0088cc);
+}
+
+.connection-history-main {
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.connection-history-name,
+.connection-history-separator,
+.connection-history-target,
+.connection-history-meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connection-history-name {
+  color: var(--shell-text, #ddd);
+  font-size: 12px;
+  flex: none;
+}
+
+.connection-history-separator,
+.connection-history-target {
+  color: var(--shell-text-soft, #aaa);
+  font-size: 12px;
+}
+
+.connection-history-meta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.connection-history-row:hover .connection-history-name,
+.connection-history-row:hover .connection-history-separator,
+.connection-history-row:hover .connection-history-target {
+  color: #fff;
+}
+
+.connection-history-actions {
+  display: flex;
+  gap: 1px;
+  padding-right: 5px;
+  opacity: 0;
+}
+
+.connection-history-row:hover .connection-history-actions,
+.connection-history-row:focus-within .connection-history-actions {
+  opacity: 1;
+}
+
+.connection-history-empty {
+  flex: 1;
+  min-height: 180px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 18px;
+  color: var(--shell-text-muted, #888);
+  font-size: 11px;
+  text-align: center;
+}
+
+.connection-history-empty button,
+.connection-history-more {
+  min-height: 27px;
+  padding: 0 9px;
+  font-size: 11px;
+}
+
+.connection-history-error {
+  color: var(--shell-danger, #e36d76);
+}
+
+.connection-source-tabs {
+  min-height: 34px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--shell-divider, #252425);
+  background: var(--shell-deep, #090909);
+}
+
+.connection-source-tabs button {
+  position: relative;
+  border: 0;
+  background: transparent;
+  color: var(--shell-text-muted, #888);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.connection-source-tabs button[aria-selected='true'] {
+  color: var(--shell-text, #ddd);
+}
+
+.connection-source-tabs button[aria-selected='true']::after {
+  content: '';
+  position: absolute;
+  right: 7px;
+  bottom: 0;
+  left: 7px;
+  height: 1px;
+  background: var(--shell-accent, #76d68c);
+}
+
+.explorer-content.connection-history-open {
+  padding: 0;
+  overflow: hidden;
+}
+
+.workspace-sidebar.section-hosts .explorer-content.connection-history-open {
+  padding: 28px 0 0;
+}
+
+.workspace-sidebar.section-hosts .connection-history-toolbar {
+  min-height: 50px;
+  padding: 7px 16px;
+}
+
+.connection-history-more {
+  display: block;
+  margin: 8px auto;
+}

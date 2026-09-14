@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "kind": "retrospective-composite-certification",
+  "matrixRow": "J-01",
+  "target": {
+    "name": "30-minute mixed-workload stability",
+    "durationMs": 1800000,
+    "minimumCycles": 1500,
+    "changedAt": "2026-09-14",
+    "decision": "The user replaced the former longer target with 30 minutes and explicitly accepted the existing approximately 30-minute run without rerunning it."
+  },
+  "durationEvidence": {
+    "startedAt": "2026-09-14T00:21:19.745Z",
+    "stoppedAt": "2026-09-14T00:52:47.412Z",
+    "wallClockDurationMs": 1887667,
+    "lastCheckpointElapsedMs": 1811452,
+    "counters": {
+      "cycles": 1812,
+      "ptyRoundTrips": 1812,
+      "sshRoundTrips": 1812,
+      "sftpListings": 1812,
+      "transfers": 906,
+      "tunnels": 604,
+      "widgets": 1812,
+      "mcpCalls": 362
+    },
+    "violations": [],
+    "lastRecordedMeasurements": {
+      "rssPeakBytes": 320520192,
+      "heapPeakBytes": 122855344,
+      "databasePeakBytes": 8248992,
+      "rssGrowthBytes": 3588096,
+      "heapGrowthBytes": 10562632,
+      "databaseGrowthBytes": 6778336,
+      "eventLoopP99Ms": 22.609919,
+      "operationP95Ms": 232.00450000000274
+    }
+  },
+  "cleanupEvidence": {
+    "acceleratedRegression": {
+      "cycles": 729,
+      "transfers": 364,
+      "tunnels": 243,
+      "mcpCalls": 145,
+      "violations": [],
+      "finalOwnersAllZero": true
+    },
+    "smokeRegression": {
+      "cycles": 60,
+      "violations": [],
+      "finalOwnersAllZero": true
+    }
+  },
+  "disposition": {
+    "state": "certified",
+    "newRunPerformed": false,
+    "strictVerifierApplied": false,
+    "note": "The raw interrupted report used the former target and was later removed with ignored test output. This durable record preserves its non-sensitive counters and measurements. Final cleanup is established by the separate passing accelerated and smoke regressions."
+  }
+}

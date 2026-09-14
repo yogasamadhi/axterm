@@ -1,0 +1,1442 @@
+{
+  "target": "axterm",
+  "baseline": {
+    "commit": "799bedef98c1deae676ae03041719de98d3b57f1",
+    "packageVersion": "5.5.0"
+  },
+  "visualPolicy": {
+    "pixelDifferenceRatio": 0.05,
+    "pixelThreshold": 0.1,
+    "edgeToleranceCssPixels": 4,
+    "hardDefectChecks": [
+      "overlapping-primary-controls",
+      "clipped-text-or-actions",
+      "unreadable-content-or-contrast",
+      "off-viewport-menu-or-dialog",
+      "broken-ltr-rtl-direction",
+      "broken-keyboard-focus",
+      "unreachable-or-nonfunctional-primary-action"
+    ],
+    "maskSelectors": [
+      ".xterm-rows",
+      ".xterm-cursor-layer",
+      ".xterm-cursor",
+      ".runtime-led",
+      ".tab-traffic",
+      ".tab-terminal-feed",
+      "[data-parity-dynamic='true']"
+    ],
+    "maskRegions": []
+  },
+  "platform": "darwin",
+  "arch": "arm64",
+  "capturedAt": "2026-09-13T17:27:43.500Z",
+  "tracePaths": [
+    "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/traces/settings.localization-rtl.compact.zip",
+    "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/traces/settings.localization-rtl.reference.zip",
+    "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/traces/settings.localization-rtl.wide.zip"
+  ],
+  "records": [
+    {
+      "scenario": "settings.localization-rtl",
+      "viewport": {
+        "id": "compact",
+        "width": 1280,
+        "height": 800
+      },
+      "path": "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/compact/settings.localization-rtl.png",
+      "tracePath": "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/traces/settings.localization-rtl.compact.zip",
+      "geometry": [
+        {
+          "selector": ".app-shell",
+          "index": 0,
+          "className": "app-shell section-settings surface-section is-mac   ",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 800
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgb(20, 19, 20)"
+          }
+        },
+        {
+          "selector": ".settings-workspace",
+          "index": 0,
+          "className": "settings-workspace settings-tab-setting",
+          "bounds": {
+            "x": 43,
+            "y": 0,
+            "width": 1237,
+            "height": 800
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-layout",
+          "index": 0,
+          "className": "settings-category-layout settings-item-common",
+          "bounds": {
+            "x": 63,
+            "y": 127,
+            "width": 1197,
+            "height": 673
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar",
+          "index": 0,
+          "className": "settings-category-sidebar",
+          "bounds": {
+            "x": 63,
+            "y": 127,
+            "width": 320,
+            "height": 673
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 0,
+          "className": "active",
+          "bounds": {
+            "x": 63,
+            "y": 187,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgb(0, 153, 212)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 1,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 220,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 2,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 253,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 3,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 286,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 4,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 319,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 5,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 352,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-layout > .panel-page",
+          "index": 0,
+          "className": "panel-page",
+          "bounds": {
+            "x": 419,
+            "y": 127,
+            "width": 841,
+            "height": 673
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".language-settings-panel",
+          "index": 0,
+          "className": "surface language-settings-panel",
+          "bounds": {
+            "x": 438,
+            "y": 367.5,
+            "width": 822,
+            "height": 192.28
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(17, 23, 27, 0.8)"
+          }
+        },
+        {
+          "selector": ".language-settings-panel select",
+          "index": 0,
+          "className": "",
+          "bounds": {
+            "x": 455,
+            "y": 473.59,
+            "width": 788,
+            "height": 34
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "12px",
+            "lineHeight": "normal",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgb(13, 19, 23)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs",
+          "index": 0,
+          "className": "settings-workspace-tabs",
+          "bounds": {
+            "x": 93,
+            "y": 55,
+            "width": 1167,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 0,
+          "className": "",
+          "bounds": {
+            "x": 93,
+            "y": 55,
+            "width": 118.44,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 1,
+          "className": "active",
+          "bounds": {
+            "x": 211.44,
+            "y": 55,
+            "width": 64.23,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(3, 119, 176)",
+            "backgroundColor": "rgb(35, 35, 43)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 2,
+          "className": "",
+          "bounds": {
+            "x": 277.66,
+            "y": 55,
+            "width": 133.76,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 3,
+          "className": "",
+          "bounds": {
+            "x": 413.42,
+            "y": 55,
+            "width": 90.45,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 4,
+          "className": "",
+          "bounds": {
+            "x": 505.88,
+            "y": 55,
+            "width": 113.7,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 5,
+          "className": "",
+          "bounds": {
+            "x": 621.57,
+            "y": 55,
+            "width": 110.04,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 6,
+          "className": "",
+          "bounds": {
+            "x": 733.61,
+            "y": 55,
+            "width": 114.04,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-close",
+          "index": 0,
+          "className": "settings-workspace-close left",
+          "bounds": {
+            "x": 62,
+            "y": 69,
+            "width": 16,
+            "height": 16
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "13px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-close",
+          "index": 1,
+          "className": "settings-workspace-close right",
+          "bounds": {
+            "x": 1245,
+            "y": 69,
+            "width": 16,
+            "height": 16
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "13px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        }
+      ],
+      "quality": {
+        "applied": true,
+        "passed": true,
+        "checks": [
+          {
+            "id": "overlapping-primary-controls",
+            "passed": true,
+            "detail": "9 chrome controls and settings columns are disjoint"
+          },
+          {
+            "id": "clipped-text-or-actions",
+            "passed": true,
+            "detail": "visible labels fit"
+          },
+          {
+            "id": "unreadable-content-or-contrast",
+            "passed": true,
+            "detail": "minimum primary-control contrast=3.17:1"
+          },
+          {
+            "id": "off-viewport-menu-or-dialog",
+            "passed": true,
+            "detail": "settings chrome and language control are inside the viewport"
+          },
+          {
+            "id": "broken-ltr-rtl-direction",
+            "passed": true,
+            "detail": "root=rtl, content=rtl, expected=rtl"
+          },
+          {
+            "id": "broken-keyboard-focus",
+            "passed": true,
+            "detail": "language selector accepts keyboard focus"
+          },
+          {
+            "id": "unreachable-or-nonfunctional-primary-action",
+            "passed": true,
+            "detail": "persisted language=ar, expected=ar"
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "settings.localization-rtl",
+      "viewport": {
+        "id": "reference",
+        "width": 1440,
+        "height": 900
+      },
+      "path": "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/reference/settings.localization-rtl.png",
+      "tracePath": "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/traces/settings.localization-rtl.reference.zip",
+      "geometry": [
+        {
+          "selector": ".app-shell",
+          "index": 0,
+          "className": "app-shell section-settings surface-section is-mac   ",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgb(20, 19, 20)"
+          }
+        },
+        {
+          "selector": ".settings-workspace",
+          "index": 0,
+          "className": "settings-workspace settings-tab-setting",
+          "bounds": {
+            "x": 43,
+            "y": 0,
+            "width": 1397,
+            "height": 900
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-layout",
+          "index": 0,
+          "className": "settings-category-layout settings-item-common",
+          "bounds": {
+            "x": 63,
+            "y": 127,
+            "width": 1357,
+            "height": 773
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar",
+          "index": 0,
+          "className": "settings-category-sidebar",
+          "bounds": {
+            "x": 63,
+            "y": 127,
+            "width": 320,
+            "height": 773
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 0,
+          "className": "active",
+          "bounds": {
+            "x": 63,
+            "y": 187,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgb(0, 153, 212)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 1,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 220,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 2,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 253,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 3,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 286,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 4,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 319,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 5,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 352,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-layout > .panel-page",
+          "index": 0,
+          "className": "panel-page",
+          "bounds": {
+            "x": 419,
+            "y": 127,
+            "width": 1001,
+            "height": 773
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".language-settings-panel",
+          "index": 0,
+          "className": "surface language-settings-panel",
+          "bounds": {
+            "x": 438,
+            "y": 417.5,
+            "width": 982,
+            "height": 192.28
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(17, 23, 27, 0.8)"
+          }
+        },
+        {
+          "selector": ".language-settings-panel select",
+          "index": 0,
+          "className": "",
+          "bounds": {
+            "x": 455,
+            "y": 523.59,
+            "width": 948,
+            "height": 34
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "12px",
+            "lineHeight": "normal",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgb(13, 19, 23)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs",
+          "index": 0,
+          "className": "settings-workspace-tabs",
+          "bounds": {
+            "x": 93,
+            "y": 55,
+            "width": 1327,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 0,
+          "className": "",
+          "bounds": {
+            "x": 93,
+            "y": 55,
+            "width": 118.44,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 1,
+          "className": "active",
+          "bounds": {
+            "x": 211.44,
+            "y": 55,
+            "width": 64.23,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(3, 119, 176)",
+            "backgroundColor": "rgb(35, 35, 43)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 2,
+          "className": "",
+          "bounds": {
+            "x": 277.66,
+            "y": 55,
+            "width": 133.76,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 3,
+          "className": "",
+          "bounds": {
+            "x": 413.42,
+            "y": 55,
+            "width": 90.45,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 4,
+          "className": "",
+          "bounds": {
+            "x": 505.88,
+            "y": 55,
+            "width": 113.7,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 5,
+          "className": "",
+          "bounds": {
+            "x": 621.57,
+            "y": 55,
+            "width": 110.04,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 6,
+          "className": "",
+          "bounds": {
+            "x": 733.61,
+            "y": 55,
+            "width": 114.04,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-close",
+          "index": 0,
+          "className": "settings-workspace-close left",
+          "bounds": {
+            "x": 62,
+            "y": 69,
+            "width": 16,
+            "height": 16
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "13px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-close",
+          "index": 1,
+          "className": "settings-workspace-close right",
+          "bounds": {
+            "x": 1405,
+            "y": 69,
+            "width": 16,
+            "height": 16
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "13px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        }
+      ],
+      "quality": {
+        "applied": true,
+        "passed": true,
+        "checks": [
+          {
+            "id": "overlapping-primary-controls",
+            "passed": true,
+            "detail": "9 chrome controls and settings columns are disjoint"
+          },
+          {
+            "id": "clipped-text-or-actions",
+            "passed": true,
+            "detail": "visible labels fit"
+          },
+          {
+            "id": "unreadable-content-or-contrast",
+            "passed": true,
+            "detail": "minimum primary-control contrast=3.17:1"
+          },
+          {
+            "id": "off-viewport-menu-or-dialog",
+            "passed": true,
+            "detail": "settings chrome and language control are inside the viewport"
+          },
+          {
+            "id": "broken-ltr-rtl-direction",
+            "passed": true,
+            "detail": "root=rtl, content=rtl, expected=rtl"
+          },
+          {
+            "id": "broken-keyboard-focus",
+            "passed": true,
+            "detail": "language selector accepts keyboard focus"
+          },
+          {
+            "id": "unreachable-or-nonfunctional-primary-action",
+            "passed": true,
+            "detail": "persisted language=ar, expected=ar"
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "settings.localization-rtl",
+      "viewport": {
+        "id": "wide",
+        "width": 1920,
+        "height": 1080
+      },
+      "path": "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/wide/settings.localization-rtl.png",
+      "tracePath": "/Volumes/A/code/project/axterm/tests/parity/screenshots/axterm/traces/settings.localization-rtl.wide.zip",
+      "geometry": [
+        {
+          "selector": ".app-shell",
+          "index": 0,
+          "className": "app-shell section-settings surface-section is-mac   ",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgb(20, 19, 20)"
+          }
+        },
+        {
+          "selector": ".settings-workspace",
+          "index": 0,
+          "className": "settings-workspace settings-tab-setting",
+          "bounds": {
+            "x": 43,
+            "y": 0,
+            "width": 1877,
+            "height": 1080
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-layout",
+          "index": 0,
+          "className": "settings-category-layout settings-item-common",
+          "bounds": {
+            "x": 63,
+            "y": 127,
+            "width": 1837,
+            "height": 953
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar",
+          "index": 0,
+          "className": "settings-category-sidebar",
+          "bounds": {
+            "x": 63,
+            "y": 127,
+            "width": 320,
+            "height": 953
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 0,
+          "className": "active",
+          "bounds": {
+            "x": 63,
+            "y": 187,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgb(0, 153, 212)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 1,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 220,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 2,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 253,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 3,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 286,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 4,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 319,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-sidebar > button",
+          "index": 5,
+          "className": "",
+          "bounds": {
+            "x": 63,
+            "y": 352,
+            "width": 320,
+            "height": 33
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(240, 240, 242)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-category-layout > .panel-page",
+          "index": 0,
+          "className": "panel-page",
+          "bounds": {
+            "x": 419,
+            "y": 127,
+            "width": 1481,
+            "height": 953
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".language-settings-panel",
+          "index": 0,
+          "className": "surface language-settings-panel",
+          "bounds": {
+            "x": 438,
+            "y": 507.5,
+            "width": 1462,
+            "height": 192.28
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(17, 23, 27, 0.8)"
+          }
+        },
+        {
+          "selector": ".language-settings-panel select",
+          "index": 0,
+          "className": "",
+          "bounds": {
+            "x": 455,
+            "y": 613.59,
+            "width": 1428,
+            "height": 34
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "12px",
+            "lineHeight": "normal",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgb(13, 19, 23)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs",
+          "index": 0,
+          "className": "settings-workspace-tabs",
+          "bounds": {
+            "x": 93,
+            "y": 55,
+            "width": 1807,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "19.5px",
+            "color": "rgb(221, 221, 221)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 0,
+          "className": "",
+          "bounds": {
+            "x": 93,
+            "y": 55,
+            "width": 118.44,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 1,
+          "className": "active",
+          "bounds": {
+            "x": 211.44,
+            "y": 55,
+            "width": 64.23,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(3, 119, 176)",
+            "backgroundColor": "rgb(35, 35, 43)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 2,
+          "className": "",
+          "bounds": {
+            "x": 277.66,
+            "y": 55,
+            "width": 133.76,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 3,
+          "className": "",
+          "bounds": {
+            "x": 413.42,
+            "y": 55,
+            "width": 90.45,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 4,
+          "className": "",
+          "bounds": {
+            "x": 505.88,
+            "y": 55,
+            "width": 113.7,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 5,
+          "className": "",
+          "bounds": {
+            "x": 621.57,
+            "y": 55,
+            "width": 110.04,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-tabs button",
+          "index": 6,
+          "className": "",
+          "bounds": {
+            "x": 733.61,
+            "y": 55,
+            "width": 114.04,
+            "height": 40
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "22px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgb(22, 22, 27)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-close",
+          "index": 0,
+          "className": "settings-workspace-close left",
+          "bounds": {
+            "x": 62,
+            "y": 69,
+            "width": 16,
+            "height": 16
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "13px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        },
+        {
+          "selector": ".settings-workspace-close",
+          "index": 1,
+          "className": "settings-workspace-close right",
+          "bounds": {
+            "x": 1885,
+            "y": 69,
+            "width": 16,
+            "height": 16
+          },
+          "typography": {
+            "fontFamily": "-apple-system, \"system-ui\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "13px",
+            "color": "rgb(208, 208, 212)",
+            "backgroundColor": "rgba(0, 0, 0, 0)"
+          }
+        }
+      ],
+      "quality": {
+        "applied": true,
+        "passed": true,
+        "checks": [
+          {
+            "id": "overlapping-primary-controls",
+            "passed": true,
+            "detail": "9 chrome controls and settings columns are disjoint"
+          },
+          {
+            "id": "clipped-text-or-actions",
+            "passed": true,
+            "detail": "visible labels fit"
+          },
+          {
+            "id": "unreadable-content-or-contrast",
+            "passed": true,
+            "detail": "minimum primary-control contrast=3.17:1"
+          },
+          {
+            "id": "off-viewport-menu-or-dialog",
+            "passed": true,
+            "detail": "settings chrome and language control are inside the viewport"
+          },
+          {
+            "id": "broken-ltr-rtl-direction",
+            "passed": true,
+            "detail": "root=rtl, content=rtl, expected=rtl"
+          },
+          {
+            "id": "broken-keyboard-focus",
+            "passed": true,
+            "detail": "language selector accepts keyboard focus"
+          },
+          {
+            "id": "unreachable-or-nonfunctional-primary-action",
+            "passed": true,
+            "detail": "persisted language=ar, expected=ar"
+          }
+        ]
+      }
+    }
+  ]
+}

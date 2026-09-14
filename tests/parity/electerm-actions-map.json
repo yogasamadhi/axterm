@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "source": "vendor/electerm/src/client/components/shortcuts/shortcuts-defaults.js",
+  "actions": {
+    "app_closeCurrentTab": {
+      "target": "workspace.tabs.close",
+      "matrix": "A-06",
+      "status": "implemented"
+    },
+    "app_mouseWheelDownCloseTab": {
+      "target": "workspace.tabs.closeByWheel",
+      "matrix": "A-05",
+      "status": "implemented"
+    },
+    "app_reloadCurrentTab": {
+      "target": "workspace.tabs.reload",
+      "matrix": "A-06",
+      "status": "implemented"
+    },
+    "app_reloadAll": {
+      "target": "workspace.tabs.reloadAll",
+      "matrix": "A-06",
+      "status": "implemented"
+    },
+    "app_cloneToNextLayout": {
+      "target": "workspace.layout.cloneToNext",
+      "matrix": "A-08",
+      "status": "implemented"
+    },
+    "app_duplicateTab": {
+      "target": "workspace.tabs.duplicate",
+      "matrix": "A-06",
+      "status": "implemented"
+    },
+    "app_newBookmark": {
+      "target": "bookmarks.create",
+      "matrix": "B-02",
+      "status": "implemented"
+    },
+    "app_newTab": {
+      "target": "workspace.tabs.new",
+      "matrix": "A-03",
+      "status": "implemented"
+    },
+    "app_toggleAddBtn": {
+      "target": "workspace.newSession.toggle",
+      "matrix": "A-03",
+      "status": "implemented"
+    },
+    "app_togglefullscreen": {
+      "target": "desktop.window.fullscreen",
+      "matrix": "A-12",
+      "status": "implemented"
+    },
+    "app_zoomin": {
+      "target": "desktop.window.zoomIn",
+      "matrix": "H-07",
+      "status": "implemented"
+    },
+    "app_zoomout": {
+      "target": "desktop.window.zoomOut",
+      "matrix": "H-07",
+      "status": "implemented"
+    },
+    "app_prevTab": {
+      "target": "workspace.tabs.previous",
+      "matrix": "A-05",
+      "status": "implemented"
+    },
+    "app_nextTab": {
+      "target": "workspace.tabs.next",
+      "matrix": "A-05",
+      "status": "implemented"
+    },
+    "terminal_clear": {
+      "target": "terminal.clear",
+      "matrix": "C-05",
+      "status": "implemented"
+    },
+    "terminal_copy": {
+      "target": "terminal.copy",
+      "matrix": "C-03",
+      "status": "implemented"
+    },
+    "terminal_paste": {
+      "target": "terminal.paste",
+      "matrix": "C-03",
+      "status": "implemented"
+    },
+    "terminal_search": {
+      "target": "terminal.search",
+      "matrix": "C-04",
+      "status": "implemented"
+    },
+    "terminal_pasteSelected": {
+      "target": "terminal.pasteSelection",
+      "matrix": "C-05",
+      "status": "implemented"
+    },
+    "terminal_showNormalBuffer": {
+      "target": "terminal.normalBuffer.show",
+      "matrix": "C-05",
+      "status": "implemented"
+    },
+    "terminal_zoominTerminal": {
+      "target": "terminal.font.zoomIn",
+      "matrix": "C-08",
+      "status": "implemented"
+    },
+    "terminal_zoomoutTerminal": {
+      "target": "terminal.font.zoomOut",
+      "matrix": "C-08",
+      "status": "implemented"
+    },
+    "terminal_syncSftpPath": {
+      "target": "files.syncTerminalCwd",
+      "matrix": "E-02",
+      "status": "implemented"
+    }
+  }
+}

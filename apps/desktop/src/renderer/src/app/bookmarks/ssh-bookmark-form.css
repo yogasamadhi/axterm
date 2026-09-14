@@ -1,0 +1,1254 @@
+.host-protocol-form {
+  align-items: start;
+}
+
+.host-form-tabs {
+  display: flex;
+  gap: 18px;
+  margin: -16px -16px 2px;
+  padding: 0 16px;
+  overflow-x: auto;
+  border-bottom: 1px solid #27302d;
+  scrollbar-width: thin;
+}
+
+.host-form-tabs button {
+  min-width: 0;
+  padding: 12px 2px 10px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: #77847e;
+  background: transparent;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.host-form-tabs button:hover,
+.host-form-tabs button:focus-visible {
+  color: #c8d2cd;
+  background: transparent;
+}
+
+.host-form-tabs button.active {
+  border-bottom-color: #56b894;
+  color: #d8e2dd;
+}
+
+.host-protocol-form .host-form-field {
+  display: none !important;
+}
+
+.host-protocol-form[data-active-tab='auth'] .host-form-field[data-tab='auth'],
+.host-protocol-form[data-active-tab='settings'] .host-form-field[data-tab='settings'],
+.host-protocol-form[data-active-tab='quickCommands'] .host-form-field[data-tab='quickCommands'],
+.host-protocol-form[data-active-tab='triggers'] .host-form-field[data-tab='triggers'],
+.host-protocol-form[data-active-tab='tunnels'] .host-form-field[data-tab='tunnels'],
+.host-protocol-form[data-active-tab='hops'] .host-form-field[data-tab='hops'] {
+  display: grid !important;
+}
+
+.bookmark-quick-command-field {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  grid-column: 1 / -1;
+  order: 2;
+}
+
+.bookmark-quick-command-field > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.bookmark-quick-command-field > header p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
+.bookmark-quick-command-list {
+  display: grid;
+  gap: 8px;
+}
+
+.bookmark-quick-command-row {
+  display: grid;
+  grid-template-columns: 24px minmax(130px, 0.4fr) minmax(240px, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--panel-raised);
+}
+
+.bookmark-quick-command-row > span {
+  padding-top: 23px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.bookmark-quick-command-row label {
+  display: grid;
+  gap: 4px;
+}
+
+.bookmark-quick-command-row textarea {
+  min-height: 56px;
+  resize: vertical;
+  font-family: var(--font-mono);
+}
+
+.bookmark-quick-command-actions {
+  display: flex;
+  gap: 4px;
+  padding-top: 20px;
+}
+
+.bookmark-quick-command-empty {
+  padding: 32px 16px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 5px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.bookmark-trigger-field {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 12px;
+  align-content: start;
+  order: 2;
+  text-align: left;
+}
+
+.bookmark-trigger-field > header,
+.bookmark-trigger-row > header,
+.bookmark-trigger-add,
+.bookmark-trigger-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bookmark-trigger-field > header {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.bookmark-trigger-field > header p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
+.bookmark-trigger-list {
+  display: grid;
+  gap: 9px;
+}
+
+.bookmark-trigger-row {
+  display: grid;
+  gap: 10px;
+  padding: 11px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--panel-raised);
+}
+
+.bookmark-trigger-row > header > span {
+  display: inline-grid;
+  place-items: center;
+  color: #56b894;
+}
+
+.bookmark-trigger-actions {
+  margin-left: auto;
+}
+
+.bookmark-trigger-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.bookmark-trigger-grid label {
+  display: grid;
+  gap: 4px;
+}
+
+.bookmark-trigger-grid label.wide {
+  grid-column: span 2;
+}
+
+.bookmark-trigger-grid label.check.compact {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  min-height: 32px;
+}
+
+.bookmark-trigger-grid textarea {
+  min-height: 56px;
+  resize: vertical;
+  font-family: var(--font-mono);
+}
+
+.bookmark-trigger-empty {
+  padding: 32px 16px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 5px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.host-protocol-form[data-active-tab] label.check.host-form-field {
+  display: none !important;
+}
+
+.host-protocol-form[data-active-tab='auth'] label.check.host-form-field[data-tab='auth'],
+.host-protocol-form[data-active-tab='settings'] label.check.host-form-field[data-tab='settings'] {
+  display: flex !important;
+}
+
+.host-form-tab-intro {
+  margin: 0;
+  padding: 1px 0 2px;
+  color: #74827b;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.host-auth-note {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #2c3732;
+  border-radius: 6px;
+  color: #84918b;
+  background: #101619;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.host-protocol-form > .modal-actions {
+  margin-top: 3px;
+  padding-top: 13px;
+  border-top: 1px solid #27302d;
+}
+
+@media (max-width: 720px) {
+  .host-protocol-form[data-active-tab] .host-form-field[data-tab] {
+    grid-column: 1 / -1;
+  }
+}
+
+.modal-backdrop:has(.host-bookmark-modal) {
+  inset: 0 0 0 43px;
+  display: block;
+  background: #121214;
+  backdrop-filter: none;
+}
+
+/* Keep Electerm's bookmark workspace visible while editing another protocol.
+ * This preserves the user's directory and protocol context instead of replacing
+ * it with a blurred hosts page. The focused form remains a real modal with the
+ * same keyboard trap and escape/backdrop behavior as the other editors. */
+.modal-backdrop:has(.protocol-bookmark-modal) {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.modal.host-bookmark-modal {
+  position: fixed;
+  inset: 0 0 0 43px;
+  width: auto;
+  max-height: none;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #121214;
+  box-shadow: none;
+}
+
+.host-bookmark-modal > header {
+  position: absolute;
+  z-index: 3;
+  top: 149px;
+  right: 25px;
+  left: 508px;
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  pointer-events: none;
+}
+
+.host-bookmark-modal > header h2 {
+  display: none;
+}
+
+.modal.host-bookmark-modal > header button {
+  position: fixed;
+  z-index: 5;
+  top: 69px;
+  right: 19px;
+  display: grid;
+  width: 16px;
+  height: 16px;
+  min-height: 0;
+  box-sizing: border-box;
+  place-items: center;
+  padding: 0 0 1px;
+  border: 1px solid #d0d0d4;
+  border-radius: 50%;
+  color: #d0d0d4;
+  font-size: 13px;
+  line-height: 1;
+  pointer-events: auto;
+}
+
+.host-bookmark-shell-tabs {
+  position: absolute;
+}
+
+.host-bookmark-shell-tabs button:nth-child(1) {
+  width: 105.89px;
+}
+
+.host-bookmark-shell-tabs button:nth-child(2) {
+  width: 80.2px;
+}
+
+.host-bookmark-shell-tabs button:nth-child(3) {
+  width: 103.27px;
+}
+
+.host-bookmark-shell-tabs button:nth-child(4) {
+  width: 145.99px;
+}
+
+.host-bookmark-shell-tabs button:nth-child(5) {
+  width: 113.7px;
+}
+
+.host-bookmark-shell-tabs button:nth-child(6) {
+  width: 82.48px;
+}
+
+.host-bookmark-shell-tabs button:nth-child(7) {
+  width: 114.04px;
+}
+
+.host-bookmark-shell-close-left {
+  position: absolute;
+}
+
+.host-bookmark-shell-sidebar {
+  position: absolute;
+  top: 127px;
+  bottom: 0;
+  left: 0;
+  width: 440px;
+  box-sizing: border-box;
+  padding: 20px 0 20px 20px;
+  overflow: hidden;
+}
+
+.host-bookmark-shell-toolbar {
+  display: flex;
+  height: 33px;
+  transform: translateY(1px);
+}
+
+.host-bookmark-shell-toolbar button {
+  display: grid;
+  width: 46px;
+  height: 33px;
+  min-height: 0;
+  place-items: center;
+  padding: 0;
+  border-radius: 0;
+  border-color: #44444f;
+  background: #1e1e25;
+  color: #d0d0d4;
+}
+
+.host-bookmark-shell-toolbar button + button {
+  border-left: 0;
+}
+
+.host-bookmark-shell-toolbar button:nth-child(n + 3) {
+  width: 31px;
+}
+
+.host-bookmark-shell-toolbar button:last-child {
+  width: 45px;
+}
+
+.host-bookmark-shell-toolbar button:disabled {
+  opacity: 1;
+}
+
+.host-bookmark-shell-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 39px;
+  width: 258px;
+  height: 33px;
+  margin-top: 9px;
+  border: 1px solid #44444f;
+  background: #1e1e25;
+}
+
+.host-bookmark-shell-search input {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  min-height: 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.host-bookmark-shell-search svg {
+  grid-column: 2;
+  grid-row: 1;
+  place-self: center;
+  color: #bfc0c6;
+}
+
+.host-bookmark-shell-tree {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 258px;
+  margin-top: 4px;
+}
+
+.host-bookmark-shell-tree button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 26px;
+  min-height: 26px;
+  padding: 0 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #dddddd;
+  font-size: 14px;
+  font-weight: 600;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.host-bookmark-shell-tree button.child {
+  padding-left: 20px;
+}
+
+.host-bookmark-shell-tree button::before {
+  width: 9px;
+  flex: 0 0 9px;
+  color: #d0d0d4;
+  content: '▾';
+  font-size: 10px;
+  text-align: center;
+}
+
+.host-bookmark-shell-tree button.child::before {
+  content: '▸';
+}
+
+.host-bookmark-shell-tree button:hover,
+.host-bookmark-shell-tree button[aria-selected='true'] {
+  background: #222229;
+}
+
+.host-bookmark-shell-tree button span {
+  width: 11px;
+  height: 11px;
+}
+
+.host-bookmark-protocol-heading {
+  position: absolute;
+  z-index: 2;
+  top: 154px;
+  right: 25px;
+  left: 518px;
+  height: 77px;
+}
+
+.host-bookmark-protocol-heading > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 28px;
+}
+
+.host-bookmark-protocol-heading strong {
+  color: #dddddd;
+  font-size: 13px;
+}
+
+.host-bookmark-protocol-heading > div:first-child button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  min-height: 0;
+  padding: 0 10px;
+  border-color: #44444f;
+  border-radius: 3px;
+  background: #1e1e25;
+  color: #d0d0d4;
+  font-size: 14px;
+}
+
+.host-bookmark-protocols {
+  display: flex;
+  height: 24px;
+  margin-top: 8px;
+}
+
+.host-bookmark-protocols button {
+  height: 24px;
+  min-height: 0;
+  padding: 0 7.85px;
+  border-radius: 0;
+  border-color: #44444f;
+  background: #1e1e25;
+  color: #d0d0d4;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.host-bookmark-protocols button + button {
+  border-left: 0;
+  margin-left: -1px;
+}
+
+.host-bookmark-protocols button.active {
+  border-color: #0088cc;
+  background: #0088cc;
+  color: white;
+}
+
+.host-bookmark-protocols button:disabled {
+  opacity: 1;
+}
+
+.host-bookmark-modal > .host-protocol-form {
+  position: absolute;
+  top: 230px;
+  right: 25px;
+  bottom: 0;
+  left: 508px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  min-height: 0;
+  padding: 0 5px 40px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.host-bookmark-modal > .host-protocol-form::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.host-bookmark-modal > .host-protocol-form > * {
+  order: 50;
+  flex: 0 0 auto;
+}
+
+.host-bookmark-modal .host-form-tabs {
+  order: 0;
+  grid-column: 1;
+  align-items: stretch;
+  height: 46px;
+  margin: 0 -5px 16px;
+  padding: 0;
+  gap: 32px;
+  overflow: visible;
+  border-bottom-color: #3f3f48;
+}
+
+.host-bookmark-modal .host-field-category {
+  order: 1;
+}
+
+.host-bookmark-modal .host-field-title {
+  order: 2;
+}
+
+.host-bookmark-modal .host-field-host {
+  order: 3;
+}
+
+.host-bookmark-modal .host-field-username {
+  order: 4;
+}
+
+.host-bookmark-modal .host-auth-selector {
+  order: 5;
+}
+
+.host-bookmark-modal .host-field-password,
+.host-bookmark-modal .host-auth-note {
+  order: 6;
+}
+
+.host-bookmark-modal .host-field-profile {
+  order: 6;
+}
+
+.host-bookmark-modal .host-field-port {
+  order: 7;
+}
+
+.host-bookmark-modal .host-field-port > input {
+  width: 91px;
+}
+
+.host-bookmark-modal .host-required-label i {
+  margin-right: 3px;
+  color: #ff4d74;
+  font-style: normal;
+}
+
+.host-bookmark-modal .host-field-passphrase {
+  order: 7;
+}
+
+.host-bookmark-modal .host-field-agent {
+  order: 8;
+}
+
+.host-bookmark-modal .host-field-mfa {
+  order: 9;
+}
+
+.host-bookmark-modal .host-field-run-script {
+  order: 10;
+}
+
+.host-bookmark-modal .host-field-save {
+  order: 11;
+}
+
+.host-bookmark-modal .host-form-tabs button {
+  height: 46px;
+  padding: 0;
+  color: #d0d0d4;
+  font-size: 14px;
+}
+
+.host-bookmark-modal .host-form-tabs button:disabled {
+  opacity: 1;
+}
+
+.host-bookmark-modal .host-form-tabs button.active {
+  border-bottom-color: #0088cc;
+  color: #0088cc;
+}
+
+.modal.host-bookmark-modal .host-protocol-form .host-form-tab-intro {
+  display: none !important;
+}
+
+.modal.host-bookmark-modal
+  .host-protocol-form[data-active-tab='auth']
+  .host-form-field[data-tab~='auth'],
+.modal.host-bookmark-modal
+  .host-protocol-form[data-active-tab='settings']
+  .host-form-field[data-tab~='settings'],
+.modal.host-bookmark-modal
+  .host-protocol-form[data-active-tab='triggers']
+  .host-form-field[data-tab~='triggers'],
+.modal.host-bookmark-modal
+  .host-protocol-form[data-active-tab='tunnels']
+  .host-form-field[data-tab~='tunnels'],
+.modal.host-bookmark-modal
+  .host-protocol-form[data-active-tab='hops']
+  .host-form-field[data-tab~='hops'] {
+  display: grid !important;
+}
+
+.host-bookmark-modal .host-form-field {
+  grid-column: 1;
+  grid-template-columns: calc(33.333% - 10px) minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  margin: 0 0 24px;
+  color: #d0d0d4;
+  font-size: 14px;
+  text-align: right;
+}
+
+.host-bookmark-modal .bookmark-trigger-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  text-align: left;
+}
+
+.host-bookmark-modal .bookmark-trigger-row > header {
+  min-height: 28px;
+}
+
+.host-bookmark-modal .host-field-with-help {
+  position: relative;
+  display: grid;
+  align-self: stretch;
+  align-items: end;
+}
+
+.host-bookmark-modal .host-field-with-help small {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  color: #d0d0d4;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.host-bookmark-modal .host-field-with-help input {
+  width: 100%;
+  height: 32px;
+  min-height: 32px;
+  box-sizing: border-box;
+  border-color: #44444f;
+  border-radius: 3px;
+  background: #1e1e25;
+  color: #dddddd;
+  font-size: 14px;
+}
+
+.host-bookmark-modal .host-field-host {
+  min-height: 54px;
+}
+
+.host-bookmark-modal .host-auth-selector {
+  position: relative;
+  min-height: 32px;
+  margin-bottom: 5px;
+}
+
+.host-bookmark-modal .host-auth-selector > div {
+  display: flex;
+  align-items: center;
+}
+
+.host-bookmark-modal .host-auth-selector button {
+  height: 24px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-color: #44444f;
+  border-radius: 0;
+  background: #1e1e25;
+  color: #d0d0d4;
+  font-size: 14px;
+}
+
+.host-bookmark-modal .host-auth-selector button + button {
+  border-left: 0;
+}
+
+.host-bookmark-modal .host-auth-selector button.active {
+  border-color: #0088cc;
+  background: #0088cc;
+  color: #fff;
+}
+
+.host-bookmark-modal .host-auth-native-select {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.host-bookmark-modal .host-field-agent > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.host-bookmark-modal .host-field-agent > div > input {
+  width: 180px;
+  height: 32px;
+  min-height: 32px;
+  box-sizing: border-box;
+}
+
+.host-bookmark-modal .host-field-agent > div > span {
+  display: grid;
+  width: 15px;
+  height: 15px;
+  place-items: center;
+  border: 1px solid #d0d0d4;
+  border-radius: 50%;
+  font-size: 10px;
+  margin-left: 7px;
+}
+
+.host-bookmark-modal .host-switch {
+  position: relative;
+  display: block;
+  width: 43px;
+  height: 22px;
+  min-height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: #4d4d53;
+}
+
+.host-bookmark-modal .host-switch i {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.host-bookmark-modal .host-switch[aria-checked='true'] {
+  background: #0088cc;
+}
+
+.host-bookmark-modal .host-switch[aria-checked='true'] i {
+  left: 23px;
+}
+
+.host-bookmark-modal .host-field-mfa > button {
+  justify-self: start;
+}
+
+.host-bookmark-modal .host-field-run-script {
+  align-items: start;
+  min-height: 112px;
+}
+
+.host-bookmark-modal .host-field-run-script > span {
+  padding-top: 7px;
+}
+
+.host-bookmark-modal .host-field-run-script > div {
+  display: grid;
+  grid-template-columns: 210px 189px 32px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.host-bookmark-modal .host-field-run-script input:disabled,
+.host-bookmark-modal .host-field-agent input:disabled {
+  background: #212129;
+  color: #73737d;
+  opacity: 1;
+}
+
+.host-bookmark-modal .host-field-run-script input,
+.host-bookmark-modal .host-field-run-script button {
+  height: 32px;
+  min-height: 32px;
+  box-sizing: border-box;
+}
+
+.host-bookmark-modal .host-field-run-script button:last-child {
+  grid-column: 1 / -1;
+  border-style: dashed;
+}
+
+.host-bookmark-modal .host-field-run-script button:not(:last-child) {
+  margin-left: -8px;
+}
+
+.host-bookmark-modal .host-form-field > input,
+.host-bookmark-modal .host-form-field > select,
+.host-bookmark-modal .host-form-field > textarea {
+  height: 32px;
+  min-height: 32px;
+  border-color: #44444f;
+  border-radius: 3px;
+  background: #1e1e25;
+  color: #dddddd;
+  font-size: 14px;
+}
+
+.host-bookmark-modal .host-form-field > input:focus,
+.host-bookmark-modal .host-form-field > select:focus,
+.host-bookmark-modal .host-field-with-help input:focus {
+  border-color: #0088cc;
+  outline: 1px solid #0088cc;
+}
+
+.host-bookmark-modal .host-form-field > textarea {
+  height: 64px;
+}
+
+.host-bookmark-modal .host-protocol-form[data-active-tab] label.check.host-form-field {
+  justify-self: stretch;
+  grid-template-columns: calc(33.333% - 10px) minmax(0, 1fr);
+  justify-content: normal;
+  text-align: left;
+}
+
+.host-bookmark-modal .host-protocol-form[data-active-tab] label.check.host-form-field input {
+  grid-column: 2;
+  justify-self: start;
+}
+
+.host-bookmark-modal .host-protocol-form > .modal-actions {
+  position: relative;
+  order: 100;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  margin: auto 0 0 289px;
+  padding: 16px 0 0;
+  border-top: 0;
+}
+
+.host-bookmark-modal .host-jump-chain {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+  background: #1a1a20;
+}
+
+.host-bookmark-modal .host-tunnel-editor {
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+  background: #1a1a20;
+}
+
+.host-bookmark-modal .host-tunnel-editor legend {
+  padding: 0 6px;
+  color: #dddddd;
+  font-size: 14px;
+}
+
+.host-tunnel-draft {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.host-tunnel-draft > label {
+  display: grid;
+  gap: 5px;
+}
+
+.host-tunnel-draft .host-tunnel-non-loopback {
+  align-self: end;
+}
+
+.host-tunnel-draft-actions {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.host-tunnel-list {
+  display: grid;
+  gap: 7px;
+}
+
+.host-tunnel-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px 32px 32px;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 6px 8px;
+  border: 1px solid #34343d;
+  border-radius: 3px;
+  background: #202027;
+}
+
+.host-tunnel-row.active {
+  border-color: #286b51;
+}
+
+.host-tunnel-row.failed {
+  border-color: #8a4545;
+}
+
+.host-tunnel-row > span {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.host-tunnel-row strong,
+.host-tunnel-row small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.host-tunnel-row small {
+  color: #85858f;
+  font-size: 11px;
+}
+
+.host-tunnel-row button {
+  min-height: 32px;
+}
+
+.host-bookmark-modal .host-jump-chain legend {
+  padding: 0 6px;
+  color: #dddddd;
+  font-size: 14px;
+}
+
+.host-jump-chain-add {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 8px;
+}
+
+.host-jump-chain-add label {
+  display: grid;
+  gap: 5px;
+}
+
+.host-jump-chain-add select,
+.host-jump-chain-add button,
+.host-jump-chain-list button {
+  min-height: 32px;
+}
+
+.host-jump-chain-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.host-jump-chain-list li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 32px 32px 32px;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 5px 6px;
+  border: 1px solid #34343d;
+  border-radius: 3px;
+  background: #202027;
+}
+
+.host-jump-chain-list li > span:nth-of-type(2) {
+  display: grid;
+  min-width: 0;
+}
+
+.host-jump-chain-list strong,
+.host-jump-chain-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.host-jump-chain-list small {
+  color: #81818b;
+}
+
+.host-jump-chain-index {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 50%;
+  background: #0088cc;
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.host-jump-chain-empty {
+  margin: 0;
+}
+
+.host-jump-chain-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  color: #a6a6af;
+  font-size: 12px;
+}
+
+.host-jump-chain-path span + span::before {
+  content: '→';
+  margin-right: 6px;
+  color: #5f5f69;
+}
+
+.ssh-algorithm-settings {
+  padding: 10px 12px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+}
+
+.ssh-algorithm-settings summary {
+  cursor: pointer;
+  color: #d7d7dd;
+}
+
+.ssh-algorithm-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ssh-algorithm-grid label {
+  display: grid;
+  gap: 5px;
+}
+
+.ssh-algorithm-grid select {
+  min-height: 92px;
+  border-color: #44444f;
+  background: #1e1e25;
+  color: #dddddd;
+  font-size: 12px;
+}
+
+.ssh-startup-settings {
+  padding: 10px 12px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+}
+
+.ssh-x11-settings {
+  display: grid;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+}
+
+.ssh-x11-settings:not([open]) > :not(summary) {
+  display: none;
+}
+
+.ssh-x11-settings summary {
+  cursor: pointer;
+  color: #d7d7dd;
+}
+
+.ssh-x11-settings > label:not(.check) {
+  display: grid;
+  gap: 5px;
+}
+
+.ssh-startup-settings summary {
+  cursor: pointer;
+  color: #d7d7dd;
+}
+
+.ssh-startup-settings[open] {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 12px;
+  background: #121214;
+  text-align: left;
+}
+
+.ssh-startup-settings[open] > * {
+  grid-column: 1;
+}
+
+.ssh-startup-settings > label,
+.ssh-startup-script-row label {
+  display: grid;
+  gap: 5px;
+}
+
+.ssh-startup-settings small {
+  color: #85858f;
+}
+
+.ssh-startup-script-group {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #303038;
+}
+
+.ssh-startup-script-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ssh-startup-script-heading button {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  gap: 5px;
+}
+
+.ssh-startup-script-row {
+  display: grid;
+  grid-template-columns: 112px minmax(210px, 1fr) minmax(260px, 0.8fr) 32px;
+  align-items: end;
+  gap: 8px;
+}
+
+.ssh-startup-script-row > button {
+  min-height: 32px;
+}
+
+.ssh-startup-script-row textarea {
+  min-height: 54px;
+  resize: vertical;
+}
+
+.ssh-startup-script-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.ssh-startup-script-options label {
+  min-width: 0;
+}
+
+.ssh-startup-script-options input,
+.ssh-startup-script-options select {
+  width: 100%;
+  min-height: 30px;
+}
+
+@media (max-width: 800px) {
+  .host-bookmark-shell-sidebar {
+    width: 340px;
+  }
+
+  .host-bookmark-modal > header,
+  .host-bookmark-protocol-heading,
+  .host-bookmark-modal > .host-protocol-form {
+    left: 380px;
+  }
+
+  .host-bookmark-modal .host-form-field {
+    grid-template-columns: 150px minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,3 @@
+[submodule "vendor/electerm"]
+	path = vendor/electerm
+	url = https://github.com/electerm/electerm.git

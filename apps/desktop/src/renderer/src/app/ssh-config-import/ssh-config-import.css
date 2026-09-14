@@ -1,0 +1,451 @@
+.modal.ssh-config-import-modal {
+  width: min(1080px, calc(100vw - 40px));
+  overflow: hidden;
+}
+
+.ssh-config-import-modal > header {
+  min-height: 48px;
+  height: auto;
+}
+
+.ssh-config-import-modal > header > div {
+  display: grid;
+  gap: 2px;
+}
+
+.ssh-config-import-modal > header small,
+.ssh-import-section-title span,
+.ssh-import-item small,
+.ssh-import-include small,
+.ssh-import-include span,
+.ssh-import-footer > span {
+  color: var(--text-faint, #718078);
+  font-size: 10px;
+}
+
+.ssh-import-body {
+  display: grid;
+  gap: 12px;
+  max-height: calc(100vh - 110px);
+  padding: 14px;
+  overflow: auto;
+}
+
+.ssh-import-loading,
+.ssh-import-error {
+  margin: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border, #2c3732);
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.ssh-import-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted, #929e98);
+}
+
+.ssh-import-error,
+.ssh-import-edit-error {
+  color: #f1aaa4;
+  border-color: #7b3d38;
+  background: #2b1918;
+}
+
+.ssh-import-toolbar,
+.ssh-import-footer,
+.ssh-import-section-title,
+.ssh-import-item-heading,
+.ssh-import-include {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ssh-import-metrics {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(68px, 1fr));
+  gap: 6px;
+  flex: 1;
+}
+
+.ssh-import-metric {
+  display: grid;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid var(--border, #28322f);
+  border-radius: 5px;
+  background: #0e1415;
+}
+
+.ssh-import-metric span {
+  color: var(--text-faint, #718078);
+  font-size: 8px;
+}
+
+.ssh-import-metric strong {
+  color: #bdd0c4;
+  font:
+    13px ui-monospace,
+    monospace;
+}
+
+.ssh-import-includes {
+  display: grid;
+  gap: 5px;
+  padding: 10px;
+  border: 1px solid #39483f;
+  border-radius: 6px;
+  background: #101716;
+}
+
+.ssh-import-section-title {
+  padding: 0 2px 5px;
+}
+
+.ssh-import-include {
+  min-height: 42px;
+  padding: 7px 8px;
+  border: 1px solid var(--border, #28322f);
+  border-radius: 5px;
+  background: #0c1213;
+}
+
+.ssh-import-include > div:first-child {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 2px;
+}
+
+.ssh-import-include p,
+.ssh-import-item > p,
+.ssh-import-global-notice,
+.ssh-import-edit-error {
+  margin: 3px 0 0;
+  color: var(--text-faint, #718078);
+  font-size: 10px;
+}
+
+.ssh-import-include-actions,
+.ssh-import-item-actions,
+.ssh-import-editor > div,
+.ssh-import-footer > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.include-status {
+  min-width: 58px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  text-align: center;
+  background: #252d2a;
+}
+
+.include-status.authorization-required {
+  color: #f0ce89;
+  background: #322b1b;
+}
+
+.include-status.authorized {
+  color: #bde7d1;
+  background: #163126;
+}
+
+.ssh-import-items {
+  display: grid;
+  gap: 4px;
+}
+
+.ssh-import-item {
+  display: grid;
+  gap: 5px;
+  padding: 8px 9px;
+  border: 1px solid var(--border, #28322f);
+  border-radius: 5px;
+  background: #0d1214;
+}
+
+.ssh-import-item-heading > div:nth-child(2) {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 3px;
+}
+
+.ssh-import-item-heading strong,
+.ssh-import-item-heading small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ssh-import-item-actions label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted, #929e98);
+  font-size: 10px;
+}
+
+.ssh-import-item-actions input {
+  width: auto;
+}
+
+.ssh-import-editor {
+  display: grid;
+  gap: 7px;
+  padding: 9px;
+  border-top: 1px solid var(--border, #28322f);
+}
+
+.ssh-import-editor label {
+  color: var(--text-muted, #929e98);
+  font-size: 10px;
+}
+
+.ssh-import-editor textarea {
+  min-height: 250px;
+  resize: vertical;
+  font:
+    11px/1.55 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+}
+
+.ssh-import-editor > div {
+  justify-content: flex-end;
+}
+
+.ssh-import-footer {
+  position: sticky;
+  bottom: -14px;
+  margin: 0 -14px -14px;
+  padding: 11px 14px;
+  border-top: 1px solid var(--border, #28322f);
+  background: #13191bf2;
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 760px) {
+  .ssh-import-toolbar,
+  .ssh-import-footer,
+  .ssh-import-include {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ssh-import-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ssh-import-include-actions,
+  .ssh-import-footer > div {
+    justify-content: flex-end;
+  }
+}
+
+/* Electerm 5.5.0 SSH Config dialog geometry, kept local to this workflow. */
+.modal-backdrop:has(.ssh-config-import-modal) {
+  place-items: unset;
+  align-items: flex-start;
+  justify-items: center;
+  box-sizing: border-box;
+  padding: 24px;
+  background: rgb(0 0 0 / 45%);
+  backdrop-filter: none;
+}
+
+.modal.ssh-config-import-modal {
+  width: 80%;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
+  margin-top: 50px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 8px;
+  background: #111113;
+  box-shadow:
+    0 6px 16px rgb(0 0 0 / 8%),
+    0 3px 6px -4px rgb(0 0 0 / 12%),
+    0 9px 28px 8px rgb(0 0 0 / 5%);
+}
+
+.ssh-config-import-modal > header {
+  height: 57px;
+  min-height: 57px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #0d0d0e;
+}
+
+.ssh-config-import-modal > header h2 {
+  color: #dddddd;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.ssh-config-import-modal > header small {
+  display: none;
+}
+
+.ssh-config-import-modal > header button {
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  color: #dddddd;
+  font-size: 19px;
+}
+
+.ssh-config-import-modal .ssh-import-body {
+  display: block;
+  max-height: calc(100vh - 129px);
+  padding: 0 24px 24px;
+  overflow: auto;
+}
+
+.ssh-config-import-modal .ssh-import-toolbar {
+  display: flex;
+  height: 54px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 12px 0 9px;
+}
+
+.ssh-config-import-modal .ssh-import-reload {
+  width: 112px;
+  min-width: 112px;
+  height: 33px;
+  min-height: 33px;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 15px;
+  border: 1px solid #454554;
+  border-radius: 3px;
+  background: #25252d;
+  color: #d0d0d4;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.ssh-config-import-modal .ssh-import-summary {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.ssh-config-import-modal .ssh-import-items.ssh-config-list {
+  display: block;
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.ssh-config-import-modal .ssh-import-item {
+  display: block;
+  height: 249px;
+  padding: 5px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.ssh-config-import-modal .ssh-import-item-heading {
+  display: flex;
+  height: 27px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 0 0 5px;
+  color: rgb(221 221 221 / 85%);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.ssh-config-import-modal .ssh-import-item-actions {
+  display: flex;
+  height: 22px;
+  align-items: center;
+  gap: 5px;
+}
+
+.ssh-config-import-modal .ssh-import-item-actions button {
+  display: grid;
+  width: 14px;
+  height: 22px;
+  min-height: 22px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgb(221 221 221 / 85%);
+}
+
+.ssh-config-import-modal .ssh-config-item-content {
+  width: 100%;
+  height: 198px;
+  margin: 0;
+  overflow: hidden;
+  color: rgb(221 221 221 / 85%);
+  background: transparent;
+  font:
+    14px/22px SFMono-Regular,
+    Consolas,
+    'Liberation Mono',
+    Menlo,
+    Courier,
+    monospace;
+  white-space: pre-wrap;
+}
+
+.ssh-config-import-modal .ssh-import-footer {
+  position: static;
+  display: flex;
+  height: 48px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 5px 0 10px;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.ssh-config-import-modal .ssh-import-footer > div {
+  display: flex;
+  gap: 5px;
+}
+
+.ssh-config-import-modal .ssh-import-footer button {
+  height: 33px;
+  min-height: 33px;
+  padding: 0 15px;
+  border: 1px solid #454554;
+  border-radius: 3px;
+  background: #25252d;
+  color: #d0d0d4;
+  font-size: 14px;
+}
+
+.ssh-config-import-modal .ssh-import-footer button.primary {
+  border-color: #0088cc;
+  background: #0088cc;
+  color: #ffffff;
+}
+
+.ssh-config-import-modal .ssh-import-footer > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}

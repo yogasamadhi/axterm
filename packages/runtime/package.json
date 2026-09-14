@@ -1,0 +1,32 @@
+{
+  "name": "@workspace/runtime",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ../../scripts/build-runtime.mjs",
+    "start": "node dist/headless.js"
+  },
+  "dependencies": {
+    "@electerm/ftp-srv": "1.0.5",
+    "@hono/node-server": "2.1.1",
+    "@hono/zod-openapi": "1.6.3",
+    "@workspace/contracts": "workspace:*",
+    "@workspace/db-schema": "workspace:*",
+    "@workspace/shared": "workspace:*",
+    "@xterm/headless": "6.0.0",
+    "basic-ftp": "6.2.1",
+    "drizzle-orm": "0.45.2",
+    "hono": "4.13.7",
+    "iconv-lite": "0.7.2",
+    "node-pty": "1.1.0",
+    "pino": "10.3.1",
+    "serialport": "13.0.0",
+    "ssh2": "1.17.0",
+    "tar": "7.5.22",
+    "trzsz2": "1.2.0",
+    "ws": "8.21.3",
+    "zmodem2": "1.4.0",
+    "zod": "4.6.1"
+  }
+}

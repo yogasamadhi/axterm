@@ -1,0 +1,185 @@
+.trigger-workspace {
+  display: grid;
+  grid-template-columns: minmax(390px, 0.85fr) minmax(520px, 1.25fr);
+  gap: 12px;
+  min-height: min(680px, calc(100vh - 198px));
+}
+
+.trigger-library,
+.trigger-editor {
+  min-width: 0;
+  overflow: auto;
+  padding: 14px;
+}
+
+.trigger-library > header,
+.trigger-form > header,
+.trigger-json-editor > header,
+.trigger-form > footer,
+.trigger-json-editor > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.trigger-library > header,
+.trigger-form > header,
+.trigger-json-editor > header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.trigger-library h3,
+.trigger-editor h3 {
+  margin: 2px 0 0;
+}
+
+.trigger-library small,
+.trigger-editor small {
+  color: var(--muted);
+}
+
+.trigger-toolbar {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.trigger-toolbar button,
+.trigger-form > footer button,
+.trigger-json-editor > footer button,
+.trigger-editor-empty button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.trigger-toolbar select {
+  min-width: 0;
+  flex: 1;
+}
+
+.trigger-list {
+  display: grid;
+  gap: 6px;
+}
+
+.trigger-list article {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto 28px 28px 28px;
+  align-items: center;
+  gap: 5px;
+  padding: 7px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel-raised);
+}
+
+.trigger-list article[aria-selected='true'] {
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+.trigger-list article > button:not(.trigger-main) {
+  min-height: 27px;
+  padding: 4px;
+}
+
+.trigger-main {
+  display: grid;
+  min-width: 0;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.trigger-main strong,
+.trigger-main small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trigger-mode {
+  padding: 2px 5px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.trigger-empty,
+.trigger-editor-empty {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  min-height: 320px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.trigger-form,
+.trigger-json-editor {
+  display: grid;
+  gap: 13px;
+}
+
+.trigger-form > label,
+.trigger-form fieldset,
+.trigger-form fieldset > label {
+  display: grid;
+  gap: 6px;
+}
+
+.trigger-form .check {
+  display: flex;
+  align-items: center;
+}
+
+.trigger-form fieldset {
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.trigger-inline {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.trigger-inline > label {
+  display: grid;
+  grid-template-columns: auto 110px;
+  align-items: center;
+  gap: 7px;
+}
+
+.trigger-form > footer,
+.trigger-json-editor > footer {
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.trigger-json-editor textarea {
+  width: 100%;
+  resize: vertical;
+  font-family: var(--mono);
+}
+
+.trigger-error {
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--danger) 55%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--danger) 9%, transparent);
+  color: var(--danger);
+}
+
+@media (max-width: 1000px) {
+  .trigger-workspace {
+    grid-template-columns: 1fr;
+  }
+}

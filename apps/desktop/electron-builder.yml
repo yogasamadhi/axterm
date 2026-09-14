@@ -1,0 +1,58 @@
+appId: dev.axterm.desktop
+productName: Axterm
+copyright: Copyright © 2026 Axterm contributors
+directories:
+  output: ../../release
+  buildResources: build
+files:
+  - out/**/*
+  - package.json
+  - node_modules/node-pty/package.json
+  - node_modules/node-pty/LICENSE
+  - node_modules/node-pty/lib/**/*.js
+  - node_modules/node-pty/build/Release/**/*
+  - node_modules/serialport/**/*
+  - node_modules/@serialport/**/*
+  - node_modules/ssh2/**/*
+  - node_modules/ws/**/*
+  - '!node_modules/cpu-features/**/*'
+asar: true
+asarUnpack:
+  - node_modules/node-pty/build/Release/**/*
+  - node_modules/@serialport/bindings-cpp/**/*.node
+protocols:
+  - name: Axterm session link
+    schemes:
+      - axterm
+      - electerm
+      - ssh
+      - telnet
+      - vnc
+      - rdp
+      - spice
+      - serial
+      - ftp
+# The package script rebuilds only node-pty and the SerialPort binding. A broad rebuild also attempts the
+# optional cpu-features accelerator, whose published source is incomplete.
+npmRebuild: false
+mac:
+  category: public.app-category.developer-tools
+  icon: build/icon.icns
+  hardenedRuntime: true
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  target: [dmg, zip]
+win:
+  icon: build/icon.ico
+  signAndEditExecutable: true
+  target: [nsis]
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+linux:
+  executableName: axterm
+  category: Development
+  icon: build/icon.png
+  synopsis: Secure SSH, SFTP and terminal workspace
+  target: [AppImage, deb]

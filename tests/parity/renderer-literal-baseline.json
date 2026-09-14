@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "rule": "CJK string/template/JSX literals outside renderer/src/i18n",
+  "total": 0,
+  "files": {}
+}

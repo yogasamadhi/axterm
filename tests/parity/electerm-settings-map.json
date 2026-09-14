@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "source": "vendor/electerm/src/client/common/default-setting.js",
+  "settings": {
+    "hotkey": {
+      "target": "desktop.globalHotkey",
+      "matrix": "H-06",
+      "status": "implemented"
+    },
+    "sshReadyTimeout": {
+      "target": "ssh.readyTimeoutMs",
+      "matrix": "D-04",
+      "status": "partial"
+    },
+    "scrollback": {
+      "target": "terminal.scrollback",
+      "matrix": "C-07",
+      "status": "implemented"
+    },
+    "onStartSessions": {
+      "target": "settings.workspace.startupSessions",
+      "matrix": "A-09",
+      "status": "implemented"
+    },
+    "fontSize": {
+      "target": "terminal.fontSize",
+      "matrix": "C-08",
+      "status": "partial"
+    },
+    "fontFamily": {
+      "target": "terminal.fontFamily",
+      "matrix": "C-08",
+      "status": "partial"
+    },
+    "execWindows": {
+      "target": "terminal.shell.windows.executable",
+      "matrix": "C-01",
+      "status": "partial"
+    },
+    "execMac": {
+      "target": "terminal.shell.mac.executable",
+      "matrix": "C-01",
+      "status": "partial"
+    },
+    "execLinux": {
+      "target": "terminal.shell.linux.executable",
+      "matrix": "C-01",
+      "status": "partial"
+    },
+    "execWindowsArgs": {
+      "target": "terminal.shell.windows.args",
+      "matrix": "C-01",
+      "status": "partial"
+    },
+    "execMacArgs": {
+      "target": "terminal.shell.mac.args",
+      "matrix": "C-01",
+      "status": "partial"
+    },
+    "execLinuxArgs": {
+      "target": "terminal.shell.linux.args",
+      "matrix": "C-01",
+      "status": "partial"
+    },
+    "enableGlobalProxy": {
+      "target": "settings.network.proxy.mode",
+      "matrix": "D-05",
+      "status": "implemented"
+    },
+    "disableConnectionHistory": {
+      "target": "history.connections.enabled",
+      "matrix": "B-06",
+      "status": "partial",
+      "invert": true
+    },
+    "disableTransferHistory": {
+      "target": "history.transfers.enabled",
+      "matrix": "E-12",
+      "status": "partial",
+      "invert": true
+    },
+    "terminalBackgroundImagePath": {
+      "target": "terminal.background.image",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundFilterOpacity": {
+      "target": "terminal.background.opacity",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundFilterBlur": {
+      "target": "terminal.background.blur",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundFilterBrightness": {
+      "target": "terminal.background.brightness",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundFilterGrayscale": {
+      "target": "terminal.background.grayscale",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundFilterContrast": {
+      "target": "terminal.background.contrast",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundText": {
+      "target": "terminal.background.text",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundTextSize": {
+      "target": "terminal.background.textSize",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundTextColor": {
+      "target": "terminal.background.textColor",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "terminalBackgroundTextFontFamily": {
+      "target": "terminal.background.textFontFamily",
+      "matrix": "C-10",
+      "status": "implemented"
+    },
+    "rendererType": {
+      "target": "terminal.renderer",
+      "matrix": "C-07",
+      "status": "implemented"
+    },
+    "terminalType": {
+      "target": "terminal.defaultProfileId / profile.term",
+      "matrix": "C-08",
+      "status": "implemented"
+    },
+    "keepaliveCountMax": {
+      "target": "ssh.keepalive.countMax",
+      "matrix": "D-04",
+      "status": "partial"
+    },
+    "keyword2FA": {
+      "target": "ssh.keyboardInteractive.otpKeywords",
+      "matrix": "D-01",
+      "status": "partial"
+    },
+    "saveTerminalLogToFile": {
+      "target": "terminal.logging.enabled",
+      "matrix": "C-11",
+      "status": "partial"
+    },
+    "checkUpdateOnStart": {
+      "target": "desktop.updater.checkOnStart",
+      "matrix": "H-12",
+      "status": "partial"
+    },
+    "cursorBlink": {
+      "target": "terminal.cursor.blink",
+      "matrix": "C-08",
+      "status": "partial"
+    },
+    "cursorStyle": {
+      "target": "terminal.cursor.style",
+      "matrix": "C-08",
+      "status": "partial"
+    },
+    "useSystemTitleBar": {
+      "target": "desktop.window.systemTitleBar",
+      "matrix": "A-12",
+      "status": "implemented"
+    },
+    "opacity": {
+      "target": "desktop.window.opacity",
+      "matrix": "H-07",
+      "status": "implemented"
+    },
+    "defaultEditor": {
+      "target": "settings.fileManager.externalEditor",
+      "matrix": "E-14",
+      "status": "implemented"
+    },
+    "terminalWordSeparator": {
+      "target": "terminal.wordSeparator",
+      "matrix": "C-08",
+      "status": "implemented"
+    },
+    "confirmBeforeExit": {
+      "target": "desktop.window.confirmBeforeExit",
+      "matrix": "H-07",
+      "status": "implemented"
+    },
+    "initDefaultTabOnStart": {
+      "target": "workspace.createDefaultTab",
+      "matrix": "A-10",
+      "status": "partial"
+    },
+    "screenReaderMode": {
+      "target": "settings.terminal.screenReaderMode",
+      "matrix": "J-08",
+      "status": "implemented"
+    },
+    "autoRefreshWhenSwitchToSftp": {
+      "target": "settings.fileManager.refreshOnFocus",
+      "matrix": "E-02",
+      "status": "implemented"
+    },
+    "addTimeStampToTermLog": {
+      "target": "terminal.logging.timestamps",
+      "matrix": "C-11",
+      "status": "implemented"
+    },
+    "sftpPathFollowSsh": {
+      "target": "settings.fileManager.followTerminalCwd",
+      "matrix": "E-02",
+      "status": "implemented"
+    },
+    "keepaliveInterval": {
+      "target": "ssh.keepalive.intervalMs",
+      "matrix": "D-04",
+      "status": "partial"
+    },
+    "backspaceMode": {
+      "target": "terminal.keys.backspace",
+      "matrix": "C-08",
+      "status": "implemented"
+    },
+    "shiftEnterMode": {
+      "target": "terminal.keys.shiftEnter",
+      "matrix": "C-08",
+      "status": "implemented"
+    },
+    "showHiddenFilesOnSftpStart": {
+      "target": "files.showHiddenOnStart",
+      "matrix": "E-04",
+      "status": "implemented"
+    },
+    "terminalInfos": {
+      "target": "monitor.terminalInfo.items",
+      "matrix": "G-07",
+      "status": "implemented"
+    },
+    "remoteMonitorBarEnabled": {
+      "target": "monitor.bar.enabled",
+      "matrix": "G-08",
+      "status": "implemented"
+    },
+    "remoteMonitorBarItems": {
+      "target": "monitor.bar.items",
+      "matrix": "G-08",
+      "status": "implemented"
+    },
+    "filePropsEnabled": {
+      "target": "files.columns",
+      "matrix": "E-03",
+      "status": "implemented"
+    },
+    "hideIP": {
+      "target": "privacy.hideAddresses",
+      "matrix": "H-01",
+      "status": "implemented"
+    },
+    "dataSyncSelected": {
+      "target": "sync.selectedCategories",
+      "matrix": "H-09",
+      "status": "implemented"
+    },
+    "nameAI": {
+      "target": "ai.provider.name",
+      "matrix": "I-01",
+      "status": "implemented"
+    },
+    "baseURLAI": {
+      "target": "ai.provider.baseUrl",
+      "matrix": "I-01",
+      "status": "implemented"
+    },
+    "modelAI": {
+      "target": "ai.model.model",
+      "matrix": "I-01",
+      "status": "implemented"
+    },
+    "roleAI": {
+      "target": "ai.provider.systemPrompt",
+      "matrix": "I-01",
+      "status": "implemented"
+    },
+    "apiPathAI": {
+      "target": "ai.provider.apiPath",
+      "matrix": "I-02",
+      "status": "implemented"
+    },
+    "proxyAI": {
+      "target": "ai.provider.proxy",
+      "matrix": "I-01",
+      "status": "implemented"
+    },
+    "sessionLogPath": {
+      "target": "terminal.logging.directoryGrant",
+      "matrix": "C-11",
+      "status": "partial"
+    },
+    "sshSftpSplitView": {
+      "target": "settings.fileManager.sshSplitView",
+      "matrix": "E-01",
+      "status": "implemented"
+    },
+    "showCmdSuggestions": {
+      "target": "settings.terminal.commandSuggestionsEnabled",
+      "matrix": "C-14",
+      "status": "implemented"
+    },
+    "autoReconnectTerminal": {
+      "target": "settings.terminal.autoReconnectTerminal",
+      "matrix": "C-12",
+      "status": "implemented"
+    },
+    "restoreTerminalSessionOnReload": {
+      "target": "settings.terminal.restoreTerminalSessionOnReload",
+      "matrix": "C-12",
+      "status": "implemented"
+    },
+    "startDirectoryLocal": {
+      "target": "terminal.shell.startDirectory",
+      "matrix": "C-01",
+      "status": "partial"
+    },
+    "allowMultiInstance": {
+      "target": "desktop.window.allowMultiInstance",
+      "matrix": "H-07",
+      "status": "implemented"
+    },
+    "disableDeveloperTool": {
+      "target": "desktop.security.developerTools",
+      "matrix": "H-01",
+      "status": "partial",
+      "invert": true
+    },
+    "dragDropBehavior": {
+      "target": "settings.terminal.dragDropBehavior",
+      "matrix": "C-15",
+      "status": "implemented"
+    },
+    "switchTabOnHover": {
+      "target": "workspace.tabs.switchOnHover",
+      "matrix": "A-07",
+      "status": "implemented"
+    },
+    "disableTabIndex": {
+      "target": "workspace.tabs.showIndex",
+      "matrix": "A-07",
+      "status": "implemented",
+      "invert": true
+    },
+    "disableShortcutBar": {
+      "target": "settings.terminal.shortcutBarEnabled",
+      "matrix": "C-13",
+      "status": "implemented",
+      "invert": true
+    },
+    "leftSideBarIcons": {
+      "target": "workspace.activityRail.items",
+      "matrix": "A-01",
+      "status": "implemented"
+    }
+  }
+}

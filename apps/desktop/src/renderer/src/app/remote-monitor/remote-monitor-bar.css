@@ -1,0 +1,276 @@
+.workspace-main.terminal-workspace.with-remote-monitor {
+  grid-template-rows: minmax(0, 1fr) 28px;
+}
+
+.workspace-main.terminal-workspace.with-remote-monitor > .workspace-content {
+  grid-row: 1;
+}
+
+.remote-monitor-bar {
+  position: relative;
+  z-index: 34;
+  grid-row: 2;
+  min-width: 0;
+  height: 28px;
+  display: flex;
+  background: var(--shell-canvas);
+  color: var(--shell-text);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.remote-monitor-scroll {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.remote-monitor-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.remote-monitor-item,
+.remote-monitor-controls button {
+  min-width: max-content;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.remote-monitor-item:hover,
+.remote-monitor-item:focus-visible,
+.remote-monitor-controls button:hover,
+.remote-monitor-controls button:focus-visible {
+  background: var(--shell-hover);
+}
+
+.remote-monitor-item:focus-visible,
+.remote-monitor-controls button:focus-visible {
+  outline: 1px solid var(--shell-primary);
+  outline-offset: -1px;
+}
+
+.remote-monitor-item-hostname {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remote-monitor-level-warning {
+  color: var(--shell-warning);
+}
+
+.remote-monitor-level-critical {
+  color: var(--shell-danger);
+}
+
+.remote-monitor-level-unknown,
+.remote-monitor-message,
+.remote-monitor-empty {
+  color: var(--shell-text-disabled);
+}
+
+.remote-monitor-message {
+  min-width: max-content;
+  padding: 7px 10px;
+}
+
+.remote-monitor-disk-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.remote-monitor-controls {
+  flex-shrink: 0;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.remote-monitor-bar:hover .remote-monitor-controls,
+.remote-monitor-bar:focus-within .remote-monitor-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.remote-monitor-controls button {
+  min-width: 28px;
+  width: 28px;
+  justify-content: center;
+  padding: 0;
+  color: var(--shell-text-muted);
+}
+
+.remote-monitor-popover {
+  position: absolute;
+  z-index: 380;
+  right: 6px;
+  bottom: 32px;
+  width: min(440px, calc(100vw - 32px));
+  max-height: min(520px, calc(100vh - 110px));
+  overflow: auto;
+  padding: 10px 12px;
+  border: 1px solid var(--shell-raised);
+  border-radius: 4px;
+  background: var(--shell-panel);
+  box-shadow: var(--shell-menu-shadow);
+}
+
+.remote-monitor-popover > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.remote-monitor-popover > header button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.remote-monitor-details-list {
+  display: grid;
+  gap: 5px;
+  margin: 0 0 8px;
+}
+
+.remote-monitor-details-list > div {
+  display: grid;
+  grid-template-columns: minmax(84px, 0.45fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.remote-monitor-details-list dt {
+  color: var(--shell-text-muted);
+}
+
+.remote-monitor-details-list dd {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remote-monitor-popover table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 9px;
+}
+
+.remote-monitor-popover th,
+.remote-monitor-popover td {
+  padding: 4px 5px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--shell-divider);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remote-monitor-popover th {
+  color: var(--shell-text-muted);
+  font-weight: 500;
+}
+
+.remote-monitor-sparkline {
+  width: 72px;
+  height: 20px;
+  overflow: visible;
+}
+
+.remote-monitor-sparkline.large {
+  width: 100%;
+  height: 88px;
+  margin: 5px 0 8px;
+}
+
+.remote-monitor-sparkline polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.remote-monitor-activity {
+  margin-top: 10px;
+}
+
+.remote-monitor-activity > strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+
+.remote-monitor-open-information {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 9px;
+  border: 0;
+  background: transparent;
+  color: var(--shell-primary);
+}
+
+.monitor-settings-group {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--shell-divider);
+}
+
+.monitor-settings-group legend {
+  padding: 0 5px;
+  color: var(--shell-text);
+  font-weight: 600;
+}
+
+.monitor-settings-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 6px 12px;
+}
+
+.monitor-settings-list {
+  display: grid;
+  gap: 3px;
+}
+
+.monitor-settings-list > div {
+  min-height: 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px 28px 46px;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  background: var(--shell-sunken);
+}
+
+.monitor-settings-list button {
+  min-height: 24px;
+  padding: 0 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .remote-monitor-item {
+    transition: none;
+  }
+}

@@ -1,0 +1,27 @@
+diff --git a/package.json b/package.json
+index e0bb82aa85f7b67d764a5925d3804c0814e9a6d7..ea11afa94ef48c0f902c413efdfd950cf1732a04 100644
+--- a/package.json
++++ b/package.json
+@@ -43,11 +43,11 @@
+   "exports": {
+     ".": {
+       "import": {
+-        "types": "./dist/esm/index.d.ts",
++        "types": "./dist/esm/lib/index.d.ts",
+         "default": "./dist/esm/index.js"
+       },
+       "require": {
+-        "types": "./dist/esm/index.d.ts",
++        "types": "./dist/esm/lib/index.d.ts",
+         "default": "./dist/cjs-full/index.cjs"
+       }
+     },
+@@ -57,7 +57,7 @@
+   },
+   "main": "./dist/cjs-full/index.cjs",
+   "module": "./dist/esm/index.js",
+-  "types": "./dist/esm/index.d.ts",
++  "types": "./dist/esm/lib/index.d.ts",
+   "browser": "./dist/browser/trzsz2.js",
+   "files": [
+     "dist",

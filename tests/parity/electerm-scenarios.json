@@ -1,0 +1,625 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "commit": "799bedef98c1deae676ae03041719de98d3b57f1",
+    "packageVersion": "5.5.0"
+  },
+  "viewports": [
+    { "id": "compact", "width": 1280, "height": 800 },
+    { "id": "reference", "width": 1440, "height": 900 },
+    { "id": "wide", "width": 1920, "height": 1080 }
+  ],
+  "visualPolicy": {
+    "pixelDifferenceRatio": 0.05,
+    "pixelThreshold": 0.1,
+    "edgeToleranceCssPixels": 4,
+    "hardDefectChecks": [
+      "overlapping-primary-controls",
+      "clipped-text-or-actions",
+      "unreadable-content-or-contrast",
+      "off-viewport-menu-or-dialog",
+      "broken-ltr-rtl-direction",
+      "broken-keyboard-focus",
+      "unreachable-or-nonfunctional-primary-action"
+    ],
+    "maskSelectors": [
+      ".xterm-rows",
+      ".xterm-cursor-layer",
+      ".xterm-cursor",
+      ".runtime-led",
+      ".tab-traffic",
+      ".tab-terminal-feed",
+      "[data-parity-dynamic='true']"
+    ],
+    "maskRegions": []
+  },
+  "scenarios": [
+    {
+      "id": "shell.chrome-empty",
+      "phase": 12,
+      "title": "Desktop chrome and the real no-session state after every tab is closed",
+      "matrix": ["A-01", "A-02", "A-10", "A-12"],
+      "upstream": [
+        "src/client/components/sidebar",
+        "src/client/components/tabs/no-session.jsx",
+        "src/client/components/tabs/window-control.jsx"
+      ],
+      "states": ["closed-all-tabs-empty", "sidebar-open", "sidebar-collapsed", "window-active"],
+      "capture": true
+    },
+    {
+      "id": "shell.new-session-tabs",
+      "phase": 12,
+      "title": "New-session menu, Quick Connect, tab overflow and tab actions",
+      "matrix": ["A-03", "A-04", "A-05", "A-06", "A-07"],
+      "upstream": ["src/client/components/tabs", "src/test/e2e/02.3.tabs.spec.js"],
+      "states": ["new-menu", "quick-connect", "overflow", "context-menu", "pinned"],
+      "capture": true
+    },
+    {
+      "id": "shell.layouts",
+      "phase": 12,
+      "title": "One-to-four-pane layouts and per-pane session controls",
+      "matrix": ["A-08", "A-11"],
+      "upstream": ["src/client/components/layout", "src/test/e2e/00181.layout.spec.js"],
+      "states": ["single", "two-columns", "two-rows", "three", "grid-2x2", "resizing"],
+      "capture": true
+    },
+    {
+      "id": "shell.workspaces",
+      "phase": 12,
+      "title": "Named workspace save, select, restore and stale sessions",
+      "matrix": ["A-09"],
+      "upstream": [
+        "src/client/components/tabs/workspace-select.jsx",
+        "src/test/e2e/00182.workspace.spec.js"
+      ],
+      "states": ["save-modal", "workspace-menu", "restored-disconnected"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.tree",
+      "phase": 13,
+      "title": "Nested bookmark tree, search, color and drag/drop",
+      "matrix": ["B-01", "B-02", "B-03", "B-04", "B-05"],
+      "upstream": [
+        "src/client/components/sidebar/bookmark.jsx",
+        "src/test/e2e/021.basic.bookmarks-groups.spec.js"
+      ],
+      "states": ["populated", "filtered", "context-menu", "drag-target"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.search",
+      "phase": 13,
+      "title": "Bookmark tree search reveals ancestors and highlights the active result",
+      "matrix": ["B-03"],
+      "upstream": [
+        "src/client/components/tree-list/tree-search.jsx",
+        "src/client/components/tree-list/tree-list.jsx"
+      ],
+      "states": ["filtered", "active-result"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.drag-target",
+      "phase": 13,
+      "title": "Bookmark drag target shows an exact before-position indicator",
+      "matrix": ["B-04"],
+      "upstream": [
+        "src/client/components/tree-list/tree-list.jsx",
+        "src/client/common/drop-position.js"
+      ],
+      "states": ["dragging", "before-target"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.connection-history",
+      "phase": 13,
+      "title": "Connection history list and frequency control",
+      "matrix": ["B-06"],
+      "upstream": [
+        "src/client/components/sidebar/history.jsx",
+        "src/client/components/sidebar/history-item.jsx"
+      ],
+      "states": ["history", "frequency-control"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.command-history",
+      "phase": 13,
+      "title": "Command history popover, frequency sorting and row actions",
+      "matrix": ["B-07"],
+      "upstream": [
+        "src/client/components/footer/cmd-history.jsx",
+        "src/client/components/footer/cmd-history.styl"
+      ],
+      "states": ["populated", "frequency-control", "row-actions"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.connection-profiles",
+      "phase": 13,
+      "title": "Connection Profile list, default state and protocol editor",
+      "matrix": ["B-08"],
+      "upstream": [
+        "src/client/components/profile/profile-list.jsx",
+        "src/client/components/profile/profile-form-elem.jsx",
+        "src/client/components/profile/profile-tabs.jsx"
+      ],
+      "states": ["saved-default", "ssh-tab", "protocol-tabs"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.ssh-config-import",
+      "phase": 13,
+      "title": "SSH Config import preview and item actions",
+      "matrix": ["B-09"],
+      "upstream": [
+        "src/client/components/ssh-config/load-ssh-configs.jsx",
+        "src/client/components/ssh-config/load-ssh-configs-item.jsx",
+        "src/client/components/ssh-config/ssh-config.styl"
+      ],
+      "states": ["preview", "item-actions", "atomic-submit"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.history-profiles",
+      "phase": 13,
+      "title": "Connection and command history, protocol profiles and migration",
+      "matrix": ["B-06", "B-07", "B-08", "B-09", "B-10"],
+      "upstream": [
+        "src/client/components/sidebar/history.jsx",
+        "src/client/components/profile",
+        "src/app/lib/ssh-config.js"
+      ],
+      "states": ["history", "history-menu", "profile-list", "import-preview", "import-report"],
+      "capture": true
+    },
+    {
+      "id": "bookmarks.forms",
+      "phase": 13,
+      "title": "Protocol-specific bookmark forms and submit paths",
+      "matrix": ["B-11", "B-12"],
+      "upstream": [
+        "src/client/components/bookmark-form/config",
+        "src/client/components/bookmark-form/common/submit-buttons.jsx"
+      ],
+      "states": ["auth", "settings", "commands", "triggers", "tunnels", "hops", "validation"],
+      "capture": true
+    },
+    {
+      "id": "terminal.basic",
+      "phase": 14,
+      "title": "Local terminal, input, search and context menu",
+      "matrix": ["C-01", "C-02", "C-03", "C-04", "C-05"],
+      "upstream": ["src/client/components/terminal", "src/test/e2e/008.basic-terminal.spec.js"],
+      "states": ["connected", "selection", "search-found", "search-missing", "context-menu"],
+      "capture": true
+    },
+    {
+      "id": "terminal.addons-settings",
+      "phase": 14,
+      "title": "OSC 52, timestamps, renderer/addons, encoding and background",
+      "matrix": ["C-06", "C-07", "C-08", "C-09", "C-10"],
+      "upstream": [
+        "src/client/components/terminal/osc52-addon.js",
+        "src/client/components/setting-panel/setting-terminal.jsx"
+      ],
+      "states": ["osc52-prompt", "timestamp", "renderer-fallback", "non-utf8", "background"],
+      "capture": true
+    },
+    {
+      "id": "terminal.productivity",
+      "phase": 14,
+      "title": "Logging, reconnect, shortcut bar, suggestions and file drop",
+      "matrix": ["C-11", "C-12", "C-13", "C-14", "C-15"],
+      "upstream": [
+        "src/client/components/terminal/shortcut-bar.jsx",
+        "src/client/components/terminal/reconnect-overlay.jsx"
+      ],
+      "states": ["logging", "disconnected", "shortcut-editor", "suggestions", "drop-dialog"],
+      "capture": true
+    },
+    {
+      "id": "terminal.transfer-protocols",
+      "phase": 17,
+      "title": "Zmodem, Xmodem and trzsz terminal transfer states",
+      "matrix": ["C-16"],
+      "upstream": [
+        "src/client/components/terminal/zmodem-client.js",
+        "src/test/e2e/020.trzsz-rzsz.spec.js"
+      ],
+      "states": ["detect", "progress", "cancelled", "complete", "failed"],
+      "capture": true
+    },
+    {
+      "id": "ssh.authentication",
+      "phase": 15,
+      "title": "SSH authentication, Host Key, timeout and keepalive",
+      "matrix": ["D-01", "D-02", "D-03", "D-04"],
+      "upstream": ["src/app/server/session-ssh.js", "src/app/server/ssh-known-hosts.js"],
+      "states": ["password", "key", "certificate", "otp", "unknown-key", "changed-key", "timeout"],
+      "capture": true
+    },
+    {
+      "id": "ssh.network",
+      "phase": 15,
+      "title": "Proxy, ProxyCommand, hop chain, algorithms, scripts and X11",
+      "matrix": ["D-05", "D-06", "D-07", "D-08", "D-09", "D-10"],
+      "upstream": [
+        "src/app/lib/build-proxy.js",
+        "src/app/server/session-hop.js",
+        "src/app/server/ssh-proxy-command.js"
+      ],
+      "states": ["proxy-form", "hop-editor", "algorithm-editor", "script-editor", "x11"],
+      "capture": true
+    },
+    {
+      "id": "ssh.tunnels-sftp",
+      "phase": 15,
+      "title": "Bookmark tunnels and concurrent terminal/SFTP channels",
+      "matrix": ["D-11", "D-12"],
+      "upstream": [
+        "src/app/server/ssh-tunnel.js",
+        "src/client/components/bookmark-form/common/ssh-tunnels.jsx"
+      ],
+      "states": ["configured", "starting", "running", "conflict", "stopped"],
+      "capture": true
+    },
+    {
+      "id": "files.browse-operate",
+      "phase": 16,
+      "title": "Dual-pane browsing, address bar, table, selection and context operations",
+      "matrix": ["E-01", "E-02", "E-03", "E-04", "E-05", "E-06", "E-07"],
+      "upstream": ["src/client/components/sftp", "src/test/e2e/008.basic.file-manager.spec.js"],
+      "states": [
+        "dual-pane",
+        "path-history",
+        "sorted",
+        "filtered",
+        "multi-select",
+        "context-menu",
+        "drag-folder"
+      ],
+      "capture": true
+    },
+    {
+      "id": "files.transfers",
+      "phase": 16,
+      "title": "Cross-pane and remote transfers, conflicts and queue lifecycle",
+      "matrix": ["E-08", "E-09", "E-10", "E-11", "E-12"],
+      "upstream": [
+        "src/client/components/file-transfer",
+        "src/test/e2e/018.file-transfer-conflict.spec.js"
+      ],
+      "states": [
+        "drop-target",
+        "queued",
+        "running",
+        "paused",
+        "conflict",
+        "failed",
+        "complete",
+        "history"
+      ],
+      "capture": true
+    },
+    {
+      "id": "files.edit-inspect",
+      "phase": 16,
+      "title": "Internal/external edit, compare, permissions, compression and native actions",
+      "matrix": ["E-13", "E-14", "E-15", "E-16", "E-17", "E-18"],
+      "upstream": [
+        "src/client/components/text-editor",
+        "src/client/components/sftp/file-compare-modal.jsx",
+        "src/app/lib/open-file-with-editor.js"
+      ],
+      "states": ["editor", "conflict", "compare", "file-info", "permission", "compress-progress"],
+      "capture": true
+    },
+    {
+      "id": "protocol.ftp",
+      "phase": 17,
+      "title": "FTP and FTPS session and file workflow",
+      "matrix": ["F-01"],
+      "upstream": [
+        "src/app/server/session-ftp.js",
+        "src/client/components/bookmark-form/config/ftp.js"
+      ],
+      "states": ["bookmark", "connected", "tls-error", "file-pane"],
+      "capture": true
+    },
+    {
+      "id": "protocol.telnet",
+      "phase": 17,
+      "title": "Telnet prompts, authentication and terminal",
+      "matrix": ["F-02"],
+      "upstream": [
+        "src/app/server/session-telnet.js",
+        "src/client/components/bookmark-form/config/telnet.js"
+      ],
+      "states": ["bookmark", "login-prompt", "password-prompt", "connected", "timeout"],
+      "capture": true
+    },
+    {
+      "id": "protocol.serial",
+      "phase": 17,
+      "title": "Serial configuration and terminal lifecycle",
+      "matrix": ["F-03"],
+      "upstream": [
+        "src/app/server/session-serial.js",
+        "src/client/components/bookmark-form/config/serial.js"
+      ],
+      "states": ["bookmark", "port-missing", "connected", "closing"],
+      "capture": true
+    },
+    {
+      "id": "protocol.rdp",
+      "phase": 17,
+      "title": "RDP bookmark, connection and resize",
+      "matrix": ["F-04"],
+      "upstream": [
+        "src/app/server/session-rdp.js",
+        "src/client/components/bookmark-form/config/rdp.js"
+      ],
+      "states": ["bookmark", "connecting", "connected", "fullscreen", "failed"],
+      "capture": true
+    },
+    {
+      "id": "protocol.vnc",
+      "phase": 17,
+      "title": "VNC quality, scaling, input and clipboard",
+      "matrix": ["F-05"],
+      "upstream": [
+        "src/app/server/session-vnc.js",
+        "src/client/components/bookmark-form/config/vnc.js"
+      ],
+      "states": ["bookmark", "connected", "view-only", "scaled", "failed"],
+      "capture": true
+    },
+    {
+      "id": "protocol.spice",
+      "phase": 17,
+      "title": "SPICE configuration and proxy lifecycle",
+      "matrix": ["F-06"],
+      "upstream": [
+        "src/app/server/session-spice.js",
+        "src/client/components/bookmark-form/config/spice.js"
+      ],
+      "states": ["bookmark", "connecting", "connected", "scaled", "failed"],
+      "capture": true
+    },
+    {
+      "id": "protocol.web-deeplink",
+      "phase": 17,
+      "title": "Web session navigation and validated deep links",
+      "matrix": ["F-07", "F-08"],
+      "upstream": ["src/client/components/bookmark-form/config/web.js", "src/app/lib/deep-link.js"],
+      "states": ["bookmark", "loaded", "blocked-navigation", "deep-link-preview"],
+      "capture": true
+    },
+    {
+      "id": "automation.commands-batch",
+      "phase": 18,
+      "title": "Quick Command tree, assignment, batch input and batch operation",
+      "matrix": ["G-01", "G-02", "G-03", "G-04"],
+      "upstream": ["src/client/components/quick-commands", "src/client/components/batch-op"],
+      "states": ["command-tree", "command-form", "batch-input", "batch-running", "batch-summary"],
+      "capture": true
+    },
+    {
+      "id": "automation.triggers-scripts",
+      "phase": 18,
+      "title": "Trigger and ordered script editors and runtime states",
+      "matrix": ["G-05", "G-06"],
+      "upstream": ["src/client/components/triggers", "src/client/components/terminal/automation"],
+      "states": ["trigger-list", "trigger-editor", "script-editor", "matched", "timeout"],
+      "capture": true
+    },
+    {
+      "id": "monitor.info-remote",
+      "phase": 18,
+      "title": "Terminal information and remote monitor bar/details",
+      "matrix": ["G-07", "G-08"],
+      "upstream": ["src/client/components/terminal-info", "src/client/components/remote-monitor"],
+      "states": ["info", "monitor-bar", "monitor-details", "unavailable"],
+      "capture": true
+    },
+    {
+      "id": "widgets.lifecycle",
+      "phase": 18,
+      "title": "Widget instances and local file/FTP/SSH servers",
+      "matrix": ["G-09", "G-10", "G-11"],
+      "upstream": ["src/client/components/widgets", "src/app/widgets"],
+      "states": ["catalog", "configuration", "running", "notification", "stopped"],
+      "capture": true
+    },
+    {
+      "id": "desktop.cli",
+      "phase": 18,
+      "title": "CLI session launch and multi-instance behavior",
+      "matrix": ["G-12"],
+      "upstream": ["README.md", "src/app/lib/deep-link.js"],
+      "states": ["valid", "invalid", "existing-window", "new-window"],
+      "capture": false
+    },
+    {
+      "id": "settings.navigation-map",
+      "phase": 19,
+      "title": "Settings navigation and complete default-setting mapping",
+      "matrix": ["H-01", "H-02"],
+      "upstream": ["src/client/components/setting-panel", "src/client/common/default-setting.js"],
+      "states": ["common", "terminal", "shortcuts", "sync", "ai", "passwords"],
+      "capture": true
+    },
+    {
+      "id": "settings.themes",
+      "phase": 19,
+      "title": "Theme CRUD, import/export, preview and backgrounds",
+      "matrix": ["H-03", "H-04"],
+      "upstream": ["src/client/components/theme", "src/test/e2e/009.basic.themes.spec.js"],
+      "states": ["list", "editor", "preview", "background", "delete-confirmation"],
+      "capture": true
+    },
+    {
+      "id": "settings.shortcuts-window",
+      "phase": 19,
+      "title": "Shortcut conflicts, global hotkey and desktop window behavior",
+      "matrix": ["H-05", "H-06", "H-07"],
+      "upstream": ["src/client/components/shortcuts", "src/app/lib/window-restore.js"],
+      "states": ["shortcut-list", "shortcut-conflict", "window-settings", "multi-display"],
+      "capture": true
+    },
+    {
+      "id": "settings.data-sync-i18n-update",
+      "phase": 19,
+      "title": "Data import/export, sync providers, localization and updater",
+      "matrix": ["H-08", "H-09", "H-10", "H-11", "H-12"],
+      "upstream": [
+        "src/client/components/setting-sync",
+        "src/app/server/webdav-sync.js",
+        "src/test/e2e/009.3.upgrade.check.spec.js"
+      ],
+      "states": [
+        "import",
+        "data-select",
+        "sync-compare",
+        "offline",
+        "language",
+        "update-available"
+      ],
+      "capture": true
+    },
+    {
+      "id": "settings.localization-ltr",
+      "phase": 19,
+      "title": "English localization, fallback copy and left-to-right settings layout",
+      "matrix": ["H-11"],
+      "upstream": [
+        "src/client/components/setting-panel/setting-common.jsx",
+        "node_modules/@electerm/electerm-locales/dist/cjs/list.json"
+      ],
+      "states": ["english", "fallback", "ltr"],
+      "capture": true
+    },
+    {
+      "id": "settings.localization-rtl",
+      "phase": 19,
+      "title": "Arabic localization, fallback copy and right-to-left settings layout",
+      "matrix": ["H-11"],
+      "upstream": [
+        "src/client/components/setting-panel/setting-common.jsx",
+        "node_modules/@electerm/electerm-locales/dist/cjs/list.json"
+      ],
+      "states": ["arabic", "fallback", "rtl"],
+      "capture": true
+    },
+    {
+      "id": "ai.configuration-adapters",
+      "phase": 20,
+      "title": "AI configuration and provider protocol formats",
+      "matrix": ["I-01", "I-02"],
+      "upstream": ["src/client/components/ai/ai-config.jsx", "src/app/lib/ai-format.js"],
+      "states": ["configuration", "test-success", "test-error", "streaming"],
+      "capture": true
+    },
+    {
+      "id": "ai.chat-context",
+      "phase": 20,
+      "title": "Chat sessions/history, terminal context, generation and attachments",
+      "matrix": ["I-03", "I-04", "I-05", "I-09"],
+      "upstream": [
+        "src/client/components/ai/ai-chat.jsx",
+        "src/client/components/ai/ai-attachments.js"
+      ],
+      "states": [
+        "history",
+        "empty-chat",
+        "streaming",
+        "selection-context",
+        "attachment-preview",
+        "cancelled"
+      ],
+      "capture": true
+    },
+    {
+      "id": "ai.chat-cancelled",
+      "phase": 20,
+      "title": "Canceled AI stream remains visible without executing a command",
+      "matrix": ["I-03", "J-07"],
+      "upstream": [
+        "src/client/components/ai/ai-chat-history-item.jsx",
+        "src/client/components/ai/ai-stop-icon.jsx"
+      ],
+      "states": ["streaming", "cancel-requested", "cancelled", "partial-output-retained"],
+      "capture": true
+    },
+    {
+      "id": "ai.generated-assets-agent",
+      "phase": 20,
+      "title": "AI bookmark/theme creation and agent tool cards",
+      "matrix": ["I-06", "I-07", "I-08"],
+      "upstream": [
+        "src/client/components/bookmark-form/ai-bookmark-form.jsx",
+        "src/client/components/ai/agent-tool-call-card.jsx"
+      ],
+      "states": [
+        "bookmark-review",
+        "theme-preview",
+        "tool-pending",
+        "tool-approved",
+        "tool-failed"
+      ],
+      "capture": true
+    },
+    {
+      "id": "mcp.widget",
+      "phase": 20,
+      "title": "MCP widget/server configuration and running instance",
+      "matrix": ["I-10"],
+      "upstream": ["src/app/widgets/widget-mcp-server.js", "src/client/components/widgets"],
+      "states": ["configuration", "running", "approval", "stopped"],
+      "capture": true
+    },
+    {
+      "id": "certification.resilience",
+      "phase": 21,
+      "title": "Bounded long run and fault recovery",
+      "matrix": ["J-01", "J-02"],
+      "upstream": [
+        "src/test/unit-ci/remote-monitor-session.spec.js",
+        "src/client/components/terminal/reconnect-overlay.jsx"
+      ],
+      "states": ["long-run", "network-loss", "sleep-wake", "runtime-crash", "recovered"],
+      "capture": true
+    },
+    {
+      "id": "certification.platform-upgrade",
+      "phase": 21,
+      "title": "Packaged macOS, Windows, Linux and upgrade journeys",
+      "matrix": ["J-03", "J-04", "J-05", "J-06"],
+      "upstream": ["README.md", "src/test/unit-ci/window-restore.spec.js"],
+      "states": ["fresh-install", "first-launch", "upgrade", "data-retained"],
+      "capture": true
+    },
+    {
+      "id": "certification.visual-accessibility",
+      "phase": 21,
+      "title": "Golden visual corpus, keyboard, screen reader and reduced motion",
+      "matrix": ["J-07", "J-08"],
+      "upstream": ["src/client", "src/client/common/default-setting.js"],
+      "states": ["light", "dark", "keyboard-focus", "screen-reader", "reduced-motion"],
+      "capture": true
+    },
+    {
+      "id": "certification.performance-security",
+      "phase": 21,
+      "title": "Large-data performance and architecture/security gates",
+      "matrix": ["J-09", "J-10"],
+      "upstream": ["src/test/e2e", "src/test/unit-ci"],
+      "states": ["large-tree", "large-directory", "large-output", "large-queue", "gate-report"],
+      "capture": false
+    }
+  ]
+}
