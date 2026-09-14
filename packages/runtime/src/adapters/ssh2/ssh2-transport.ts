@@ -556,6 +556,10 @@ function sftpHandle(sftp: SFTPWrapper): SftpHandle {
       sftp[method](path, (error, value) => (error ? reject(error) : resolve(attributes(value))));
     });
   return {
+    realpath: (path) =>
+      new Promise((resolve, reject) =>
+        sftp.realpath(path, (error, resolved) => (error ? reject(error) : resolve(resolved))),
+      ),
     list: (path) =>
       new Promise((resolve, reject) =>
         sftp.readdir(path, (error, entries) =>

@@ -12,6 +12,7 @@ function handleFixture(): FtpFileHandle {
   return {
     pwd: vi.fn(async () => '/'),
     cd: vi.fn(async () => {}),
+    realpath: vi.fn(async (path) => path),
     list: vi.fn(async () => []),
     stat: vi.fn(async () => ({
       size: 0,

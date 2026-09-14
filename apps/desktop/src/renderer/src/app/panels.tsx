@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type DragEvent as ReactDragEvent,
+  type FormEvent,
+  type ReactNode,
+} from 'react';
 import { useQuery, type QueryClient } from '@tanstack/react-query';
 import type { createRuntimeClient } from '@workspace/client';
 import type {
@@ -86,6 +93,11 @@ import { RemoteEditor } from '../components/remote-editor';
 import { ExternalEditorDialog } from '../components/external-editor-dialog';
 import { FileComparisonDialog } from '../components/file-comparison-dialog';
 import { TextInputDialog } from '../components/text-input-dialog';
+import {
+  TERMINAL_DROP_MAX_FILES,
+  terminalDroppedFilesError,
+  type TerminalDroppedFilesErrorCode,
+} from '../components/terminal-file-drop-model';
 import { useWorkspace } from '../stores/workspace';
 import type { FileGrant, UpdaterStatus } from '@workspace/contracts/desktop';
 import type { QuickConnectTarget } from '@workspace/shared';
@@ -5246,6 +5258,7 @@ export function FilesPanel({
   const localFilePanelMountedRef = useRef(true);
   const defaultLocalGrantRequestedRef = useRef(false);
   const followedTerminalDirectoryRef = useRef('');
+  const externalDropControllerRef = useRef<AbortController | undefined>(undefined);
   const splitDefaultAppliedRef = useRef(false);
   const [localPath, setLocalPath] = useState('');
   const [localPathInput, setLocalPathInput] = useState('/');
@@ -5298,6 +5311,9 @@ export function FilesPanel({
   const [remoteCopyTargetConnectionId, setRemoteCopyTargetConnectionId] = useState('');
   const [remoteCopyTargetPath, setRemoteCopyTargetPath] = useState('/');
   const [remoteCopyBusy, setRemoteCopyBusy] = useState(false);
+  const [remotePathConnectionId, setRemotePathConnectionId] = useState('');
+  const [remotePaths, setRemotePaths] = useState<Record<string, string>>({});
+  const [externalDropBusy, setExternalDropBusy] = useState(false);
   const [conflictApplyToAll, setConflictApplyToAll] = useState(false);
   const [conflictDecisionBusy, setConflictDecisionBusy] = useState(false);
   const completedTransferRevisionRef = useRef('');
@@ -5308,6 +5324,7 @@ export function FilesPanel({
       ? session.connectionId
       : connectionId || activeFtpConnectionId || ready[0]?.id || ftpReady[0]?.id || '';
   const ftpMode = ftpReady.some(({ id }) => id === effectiveConnectionId);
+  const sshConnectionReady = ready.some(({ id }) => id === effectiveConnectionId);
   const effectiveHostId = connections.find(({ id }) => id === effectiveConnectionId)?.hostId;
   const pendingConflict = transfers.find(
     (transfer) => transfer.state === 'awaiting-decision' && transfer.conflict,
@@ -5323,6 +5340,23 @@ export function FilesPanel({
   const remoteShowHidden =
     remoteShowHiddenOverride ?? settings?.fileManager.showHiddenFiles ?? true;
   const remotePathBookmarked = remoteBookmarks.some((item) => item.path === path);
+  const requestedRemotePath =
+    requestedSshDirectory?.connectionId === effectiveConnectionId
+      ? requestedSshDirectory.path
+      : undefined;
+  const remoteHome = useQuery({
+    queryKey: ['sftp-home', effectiveConnectionId],
+    queryFn: () => client.remoteHome(effectiveConnectionId),
+    enabled:
+      active &&
+      effectiveFileManagerView !== 'local' &&
+      !!effectiveConnectionId &&
+      sshConnectionReady &&
+      !ftpMode &&
+      !requestedRemotePath,
+    retry: false,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
   const selected = singleSelectedFilePath(remoteSelection);
   const files = useQuery({
     queryKey: ['files', effectiveConnectionId, path],
@@ -5330,7 +5364,12 @@ export function FilesPanel({
       ftpMode
         ? client.ftpFiles(effectiveConnectionId, path)
         : client.remoteFiles(effectiveConnectionId, path),
-    enabled: active && !!effectiveConnectionId,
+    enabled:
+      active &&
+      effectiveFileManagerView !== 'local' &&
+      !!effectiveConnectionId &&
+      (ftpMode || sshConnectionReady) &&
+      remotePathConnectionId === effectiveConnectionId,
     retry: false,
     refetchOnMount: settings?.fileManager.refreshOnFocus ? 'always' : false,
   });
@@ -5356,6 +5395,64 @@ export function FilesPanel({
   useEffect(() => {
     localGrantRef.current = localGrant;
   }, [localGrant]);
+  useEffect(() => {
+    if (
+      !active ||
+      effectiveFileManagerView === 'local' ||
+      !effectiveConnectionId ||
+      (!ftpMode && !sshConnectionReady)
+    )
+      return;
+    const remembered = remotePaths[effectiveConnectionId];
+    const ftpInitial = ftpReady.find(({ id }) => id === effectiveConnectionId)?.initialDirectory;
+    const followed = settings?.fileManager.followTerminalCwd
+      ? getActiveSshDirectory?.()
+      : undefined;
+    const target =
+      requestedRemotePath ??
+      remembered ??
+      ftpInitial ??
+      (followed?.connectionId === effectiveConnectionId ? followed.path : undefined) ??
+      remoteHome.data?.path ??
+      (remoteHome.isError ? '/' : undefined);
+    if (!target || remotePathConnectionId === effectiveConnectionId) return;
+    let canceled = false;
+    queueMicrotask(() => {
+      if (canceled) return;
+      setRemotePaths((current) =>
+        current[effectiveConnectionId] === target
+          ? current
+          : { ...current, [effectiveConnectionId]: target },
+      );
+      setPath(target);
+      setPathInput(target);
+      setRemotePathConnectionId(effectiveConnectionId);
+      setRemoteSelection(createFileSelection());
+      setRemoteHistory((current) => boundedPathHistory(target, current));
+      setRemoteKeyword('');
+      setRemoteKeywordDraft('');
+      if (remoteHome.isError && !remembered && !requestedRemotePath && !ftpInitial)
+        setError(x('fileManager.remoteHomeFallback'));
+    });
+    return () => {
+      canceled = true;
+    };
+  }, [
+    active,
+    effectiveConnectionId,
+    effectiveFileManagerView,
+    ftpReady,
+    ftpMode,
+    getActiveSshDirectory,
+    remoteHome.data?.path,
+    remoteHome.isError,
+    remotePathConnectionId,
+    remotePaths,
+    requestedRemotePath,
+    settings?.fileManager.followTerminalCwd,
+    sshConnectionReady,
+    x,
+  ]);
   useEffect(() => {
     if (!active || localGrant || defaultLocalGrantRequestedRef.current) return;
     defaultLocalGrantRequestedRef.current = true;
@@ -5423,6 +5520,7 @@ export function FilesPanel({
   useEffect(
     () => () => {
       localFilePanelMountedRef.current = false;
+      externalDropControllerRef.current?.abort();
       const grant = localGrantRef.current;
       if (grant) void client.revokeFileGrant(grant.grantId).catch(() => {});
     },
@@ -5505,11 +5603,14 @@ export function FilesPanel({
     }
   }
 
-  function navigateRemote(nextPath: string) {
+  function navigateRemote(nextPath: string, targetConnectionId = effectiveConnectionId) {
     try {
       const normalized = normalizeRemoteAddress(nextPath, x);
+      if (targetConnectionId)
+        setRemotePaths((current) => ({ ...current, [targetConnectionId]: normalized }));
       setPath(normalized);
       setPathInput(normalized);
+      setRemotePathConnectionId(targetConnectionId);
       setRemoteSelection(createFileSelection());
       setRemoteHistory((current) => boundedPathHistory(normalized, current));
       setRemoteKeyword('');
@@ -5633,6 +5734,64 @@ export function FilesPanel({
       await queryClient.invalidateQueries({ queryKey: ['transfers'] });
     } catch (cause) {
       setError(messageOf(cause, x));
+    }
+  }
+
+  async function uploadDroppedFiles(
+    droppedFiles: readonly File[],
+    destination: string,
+    includesDirectory: boolean,
+  ) {
+    if (externalDropBusy || !effectiveConnectionId) return;
+    const validationError = terminalDroppedFilesError(droppedFiles, includesDirectory);
+    if (validationError) {
+      setError(fileManagerDropError(validationError, x));
+      return;
+    }
+    externalDropControllerRef.current?.abort();
+    const controller = new AbortController();
+    externalDropControllerRef.current = controller;
+    setExternalDropBusy(true);
+    setError('');
+    setFileNotice(x('fileManager.dropPreparing', { count: droppedFiles.length }));
+    let queued = 0;
+    let pendingGrant: FileGrant | undefined;
+    try {
+      for (const file of droppedFiles) {
+        pendingGrant = await client.importDroppedFile(file, controller.signal);
+        controller.signal.throwIfAborted();
+        await (ftpMode ? client.createFtpTransfer : client.createTransfer)(
+          effectiveConnectionId,
+          'upload',
+          {
+            grantId: pendingGrant.grantId,
+            remotePath: appendRemotePath(destination, pendingGrant.name),
+            recursive: false,
+            conflict: 'ask',
+          },
+        );
+        pendingGrant = undefined;
+        queued += 1;
+      }
+      await queryClient.invalidateQueries({ queryKey: ['transfers'] });
+      setFileNotice(
+        x('fileManager.transferQueued', {
+          count: queued,
+          direction: x('fileManager.uploadDirection'),
+        }),
+      );
+    } catch (cause) {
+      if (pendingGrant) await client.revokeFileGrant(pendingGrant.grantId).catch(() => undefined);
+      if (queued && localFilePanelMountedRef.current) {
+        await queryClient.invalidateQueries({ queryKey: ['transfers'] });
+        setFileNotice(x('fileManager.transferPartiallyQueued', { count: queued }));
+      }
+      if (!controller.signal.aborted && localFilePanelMountedRef.current)
+        setError(messageOf(cause, x));
+    } finally {
+      if (externalDropControllerRef.current === controller)
+        externalDropControllerRef.current = undefined;
+      if (localFilePanelMountedRef.current) setExternalDropBusy(false);
     }
   }
   async function download() {
@@ -6777,7 +6936,9 @@ export function FilesPanel({
                         : undefined,
                     );
                     const ftpConnection = ftpReady.find(({ id }) => id === nextConnectionId);
-                    if (ftpConnection) navigateRemote(ftpConnection.initialDirectory);
+                    if (ftpConnection)
+                      navigateRemote(ftpConnection.initialDirectory, nextConnectionId);
+                    else setRemotePathConnectionId('');
                     setRemoteSelection(createFileSelection());
                   }}
                 >
@@ -7021,6 +7182,10 @@ export function FilesPanel({
                 onDropFiles={(payload, destination) =>
                   handleFileDrop('remote', payload, destination)
                 }
+                onDropExternalFiles={(droppedFiles, destination, includesDirectory) =>
+                  void uploadDroppedFiles(droppedFiles, destination, includesDirectory)
+                }
+                externalDropBusy={externalDropBusy}
                 onSort={(column) => void changeFileSort('remote', column)}
                 onToggleColumn={(column) => void toggleFileColumn(column)}
               />
@@ -7585,6 +7750,8 @@ function FileTable({
   onStartDrag,
   onEndDrag,
   onDropFiles,
+  onDropExternalFiles,
+  externalDropBusy = false,
   onSort,
   onToggleColumn,
 }: {
@@ -7608,6 +7775,12 @@ function FileTable({
   onStartDrag(paths: readonly string[]): FileDragPayload | undefined;
   onEndDrag(): void;
   onDropFiles(payload: FileDragPayload, destination: string): void;
+  onDropExternalFiles?(
+    files: readonly File[],
+    destination: string,
+    includesDirectory: boolean,
+  ): void;
+  externalDropBusy?: boolean;
   onSort(column: FileManagerColumn): void;
   onToggleColumn(column: FileManagerColumn): void;
 }) {
@@ -7644,9 +7817,29 @@ function FileTable({
       ? [selection.focusedPath]
       : [];
   const activeDrag = () => activeDragRef.current ?? fileDrag;
+  const isExternalFileTransfer = (transfer: DataTransfer) =>
+    Array.from(transfer.types).includes('Files');
   const acceptsTransfer = (transfer: DataTransfer) =>
-    Array.from(transfer.types).includes(FILE_DRAG_MIME) || activeDrag()?.scope === scope;
+    Array.from(transfer.types).includes(FILE_DRAG_MIME) ||
+    activeDrag()?.scope === scope ||
+    (!!onDropExternalFiles && !externalDropBusy && isExternalFileTransfer(transfer));
   const dropPayload = (transfer: DataTransfer) => parseFileDragPayload(transfer) ?? activeDrag();
+  const dropEffect = (transfer: DataTransfer) =>
+    isExternalFileTransfer(transfer) && !dropPayload(transfer) ? 'copy' : 'move';
+  const commitDrop = (event: ReactDragEvent<HTMLElement>, destination: string) => {
+    const payload = dropPayload(event.dataTransfer);
+    if (payload) {
+      onDropFiles(payload, destination);
+      return true;
+    }
+    if (!onDropExternalFiles || externalDropBusy || !isExternalFileTransfer(event.dataTransfer))
+      return false;
+    const includesDirectory = [...event.dataTransfer.items].some(
+      (item) => item.kind === 'file' && item.webkitGetAsEntry?.()?.isDirectory,
+    );
+    onDropExternalFiles([...event.dataTransfer.files], destination, includesDirectory);
+    return true;
+  };
   const gridTemplateColumns = widths.map((width) => `minmax(0, ${width}fr)`).join(' ');
 
   function focusFile(path: string | null) {
@@ -7802,6 +7995,7 @@ function FileTable({
         ref={scrollRef}
         className={`file-table-scroll ${dropTarget === 'current' ? 'drop-target' : ''}`}
         role="rowgroup"
+        aria-busy={externalDropBusy}
         tabIndex={entries.length ? -1 : 0}
         onPointerDown={(event) => {
           if (!(event.target as Element).closest('.file-row'))
@@ -7843,7 +8037,7 @@ function FileTable({
           )
             return;
           event.preventDefault();
-          event.dataTransfer.dropEffect = 'move';
+          event.dataTransfer.dropEffect = dropEffect(event.dataTransfer);
           setDropTarget('current');
         }}
         onDragLeave={(event) => {
@@ -7851,11 +8045,10 @@ function FileTable({
             setDropTarget(undefined);
         }}
         onDrop={(event) => {
-          const payload = dropPayload(event.dataTransfer);
-          if (!payload || (event.target as Element).closest('.file-data-row')) return;
+          if ((event.target as Element).closest('.file-data-row')) return;
           event.preventDefault();
           setDropTarget(undefined);
-          onDropFiles(payload, currentPath);
+          commitDrop(event, currentPath);
         }}
         onScroll={(event) => {
           setScrollTop(event.currentTarget.scrollTop);
@@ -7878,17 +8071,16 @@ function FileTable({
               if (!acceptsTransfer(event.dataTransfer) || parentPath === undefined) return;
               event.preventDefault();
               event.stopPropagation();
-              event.dataTransfer.dropEffect = 'move';
+              event.dataTransfer.dropEffect = dropEffect(event.dataTransfer);
               setDropTarget('parent');
             }}
             onDragLeave={() => setDropTarget(undefined)}
             onDrop={(event) => {
-              const payload = dropPayload(event.dataTransfer);
-              if (!payload || parentPath === undefined) return;
+              if (parentPath === undefined) return;
               event.preventDefault();
               event.stopPropagation();
               setDropTarget(undefined);
-              onDropFiles(payload, parentPath);
+              commitDrop(event, parentPath);
             }}
           >
             {columns.map((column) => (
@@ -7964,20 +8156,27 @@ function FileTable({
                 onEndDrag();
               }}
               onDragOver={(event) => {
-                if (!acceptsTransfer(event.dataTransfer) || entry.type !== 'directory') return;
+                const external =
+                  isExternalFileTransfer(event.dataTransfer) && !dropPayload(event.dataTransfer);
+                if (
+                  !acceptsTransfer(event.dataTransfer) ||
+                  (entry.type !== 'directory' && !external)
+                )
+                  return;
                 event.preventDefault();
                 event.stopPropagation();
-                event.dataTransfer.dropEffect = 'move';
-                setDropTarget(entry.path);
+                event.dataTransfer.dropEffect = dropEffect(event.dataTransfer);
+                setDropTarget(entry.type === 'directory' ? entry.path : 'current');
               }}
               onDragLeave={() => setDropTarget(undefined)}
               onDrop={(event) => {
-                const payload = dropPayload(event.dataTransfer);
-                if (!payload || entry.type !== 'directory') return;
+                const external =
+                  isExternalFileTransfer(event.dataTransfer) && !dropPayload(event.dataTransfer);
+                if (entry.type !== 'directory' && !external) return;
                 event.preventDefault();
                 event.stopPropagation();
                 setDropTarget(undefined);
-                onDropFiles(payload, entry.path);
+                commitDrop(event, entry.type === 'directory' ? entry.path : currentPath);
               }}
               onKeyDown={(event) => {
                 if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
@@ -11259,6 +11458,24 @@ function formatBytes(value: number) {
 }
 function boundedPathHistory(path: string, current: string[]): string[] {
   return [path, ...current.filter((item) => item !== path)].slice(0, 32);
+}
+function fileManagerDropError(code: TerminalDroppedFilesErrorCode, x: Translator): string {
+  switch (code) {
+    case 'DIRECTORY_UNSUPPORTED':
+      return x('fileManager.dropDirectoryUnsupported');
+    case 'NO_FILES':
+      return x('terminal.dropNoFiles');
+    case 'TOO_MANY_FILES':
+      return x('terminal.dropTooManyFiles', { limit: TERMINAL_DROP_MAX_FILES });
+    case 'UNSAFE_FILE_NAME':
+      return x('terminal.dropUnsafeFileName');
+    case 'INVALID_FILE_SIZE':
+      return x('terminal.dropInvalidFileSize');
+    case 'FILE_TOO_LARGE':
+      return x('terminal.dropFileTooLarge');
+    case 'TOTAL_TOO_LARGE':
+      return x('terminal.dropTotalTooLarge');
+  }
 }
 function normalizeLocalAddress(value: string, x: Translator): string {
   const segments = value.trim().replaceAll('\\', '/').split('/').filter(Boolean);

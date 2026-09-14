@@ -984,6 +984,11 @@ Phase 16 implementation evidence (acceptance remains open):
       absolute directory, replacing and revoking the prior grant. File operations still submit only
       the grant ID plus normalized relative paths; Host containment rejects escapes. Listings remain
       capped at 10,000 entries with metadata reads in batches of 32.
+- [x] An SSH session now resolves its initial SFTP address with the authenticated channel's
+      `realpath('.')`, so the remote pane opens the account home instead of `/`. Explicit file intents,
+      remembered per-connection navigation, FTP initial directories and terminal-cwd following take
+      precedence. A failed home lookup falls back to `/` with visible feedback, and each lookup owns
+      and closes its SFTP channel.
 - [x] The Docker OpenSSH desktop journey shows a real authorized local directory and a real remote
       SFTP directory in the same split workspace. Fixed viewport visuals and packaged Windows/Linux
       directory-grant/resize evidence remain certification work.
@@ -1059,6 +1064,11 @@ Phase 16 implementation evidence (acceptance remains open):
       opens an explicit upload/download decision before creating work. The dialog states direction,
       item count, destination and rename-on-conflict behavior; Escape/cancel creates no transfer and a
       batch is limited to 32 independently cancelable queue entries.
+- [x] The remote table also accepts ordinary operating-system `Files` drops on its background, a file
+      row, `..` or a directory row. Each file streams into a temporary generation-bound grant and is
+      queued immediately to the selected destination with existing progress, cancellation and conflict
+      handling. Unsafe names, empty drops, more than 32 files, files over 4 GiB, batches over 8 GiB and
+      direct folder drops return explicit feedback; folders remain available through Upload directory.
 - [x] Cross-pane requests contain only an opaque local directory-grant ID plus a normalized relative
       path. Runtime asks Desktop Host to resolve each source or write target immediately before streaming;
       Host rejects stale generations, insufficient permission, traversal and symlinks, and the absolute

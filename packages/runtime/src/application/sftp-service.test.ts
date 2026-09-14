@@ -35,8 +35,15 @@ describe('SftpService', () => {
       return attributes(file.content, file.mode, file.mtime);
     });
     const handle: SftpHandle = {
+      realpath: async (path) => (path === '.' ? '/home/fixture' : path),
       list: async () => [],
       stat: async (path) => {
+        if (path === '/home/fixture')
+          return {
+            ...attributes(Buffer.alloc(0), 0o40700),
+            isFile: false,
+            isDirectory: true,
+          };
         const file = files.get(path)!;
         return attributes(file.content, file.mode, file.mtime);
       },
@@ -84,6 +91,7 @@ describe('SftpService', () => {
     };
     const connections = { handle: () => ({ openSftp: async () => handle }) };
     const service = new SftpService(connections as never);
+    await expect(service.home('connection')).resolves.toEqual({ path: '/home/fixture' });
     await service.touch('connection', '/created.txt');
     expect(files.get('/created.txt')?.content.toString()).toBe('');
     const created = await service.readText('connection', '/created.txt');
@@ -144,7 +152,7 @@ describe('SftpService', () => {
       code: 'CAPABILITY_UNAVAILABLE',
       message: 'Remote server does not support safe atomic text replacement',
     });
-    expect(closes).toBe(12);
+    expect(closes).toBe(13);
   });
 
   it('copies and moves files and recursive directories within one SFTP connection', async () => {
@@ -170,6 +178,7 @@ describe('SftpService', () => {
     };
     let closes = 0;
     const handle: SftpHandle = {
+      realpath: async (path) => path,
       list: async (path) =>
         [...entries.entries()]
           .filter(

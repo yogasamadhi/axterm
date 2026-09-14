@@ -2637,6 +2637,23 @@ function registerSftpRoutes(
   app.openapi(
     createRoute({
       method: 'get',
+      path: '/api/v1/sftp/{connectionId}/home',
+      operationId: 'getRemoteHomeDirectory',
+      security,
+      request: { params: connectionParamsSchema },
+      responses: {
+        200: {
+          description: 'Canonical home directory for the authenticated SSH account',
+          content: { 'application/json': { schema: pathInputSchema } },
+        },
+        ...errors,
+      },
+    }),
+    async (c) => c.json(await sftp.home(c.req.valid('param').connectionId), 200),
+  );
+  app.openapi(
+    createRoute({
+      method: 'get',
       path: '/api/v1/sftp/{connectionId}/list',
       operationId: 'listRemoteFiles',
       security,

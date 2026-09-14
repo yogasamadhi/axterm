@@ -174,6 +174,7 @@ function trackedHandle(handle: FtpFileHandle, onClose: () => void): FtpFileHandl
   return {
     pwd: () => handle.pwd(),
     cd: (path) => handle.cd(path),
+    realpath: (path) => handle.realpath(path),
     list: (path) => handle.list(path),
     stat: (path) => handle.stat(path),
     lstat: (path) => handle.lstat(path),

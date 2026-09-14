@@ -46,6 +46,7 @@ import {
   idSchema,
   interactionSchema,
   insertGrantedPathsResultSchema,
+  pathInputSchema,
   problemSchema,
   promoteConnectionHistoryResultSchema,
   proxyTestResultSchema,
@@ -1000,6 +1001,8 @@ export function createRuntimeClient(discovery: DesktopBootstrapApi, transport = 
       request(`/api/v1/sftp/${connectionId}/list?path=${encodeURIComponent(path)}`).then((value) =>
         remoteFileEntrySchema.array().parse(value),
       ),
+    remoteHome: (connectionId: string) =>
+      request(`/api/v1/sftp/${connectionId}/home`).then((value) => pathInputSchema.parse(value)),
     ftpFiles: (connectionId: string, path: string) =>
       request(`/api/v1/ftp/${connectionId}/list?path=${encodeURIComponent(path)}`).then((value) =>
         remoteFileEntrySchema.array().parse(value),

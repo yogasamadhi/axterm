@@ -957,6 +957,11 @@ const axtermMessages = {
     'fileManager.dropLimit': 'Drag at most 32 items at a time. Reduce the selection.',
     'fileManager.dropSourceExpired': 'The drag source has expired. Select the files again.',
     'fileManager.dropItemsChanged': 'Some dragged items changed. Refresh and try again.',
+    'fileManager.dropPreparing': 'Preparing {count} dropped files for upload…',
+    'fileManager.dropDirectoryUnsupported':
+      'Direct folder drop is unavailable. Use Upload directory for folders.',
+    'fileManager.remoteHomeFallback':
+      'The remote home directory could not be resolved. Axterm opened the filesystem root.',
     'fileManager.transferQueued': 'Added {count} items to the {direction} queue.',
     'fileManager.transferPartiallyQueued':
       'Added {count} items to the queue. The remaining items could not be added; select them again and retry.',
@@ -3565,6 +3570,9 @@ const axtermMessages = {
     'fileManager.dropLimit': '一次最多拖放 32 项，请缩小选择范围。',
     'fileManager.dropSourceExpired': '拖放来源已经失效，请重新选择文件。',
     'fileManager.dropItemsChanged': '部分拖放项目已经变化，请刷新后重试。',
+    'fileManager.dropPreparing': '正在准备上传拖入的 {count} 个文件…',
+    'fileManager.dropDirectoryUnsupported': '暂不支持直接拖入文件夹，请使用“上传目录”。',
+    'fileManager.remoteHomeFallback': '无法解析远端用户目录，已回退到文件系统根目录。',
     'fileManager.transferQueued': '已将 {count} 项加入{direction}队列。',
     'fileManager.transferPartiallyQueued':
       '已将 {count} 项加入队列；其余项目未能加入，请重新选择后重试。',

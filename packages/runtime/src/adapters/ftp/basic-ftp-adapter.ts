@@ -78,6 +78,10 @@ class BasicFtpHandle implements FtpFileHandle {
     return this.enqueue(async () => this.decode(await this.client.pwd()));
   }
 
+  realpath(path: string): Promise<string> {
+    return this.enqueue(async () => posix.resolve(this.decode(await this.client.pwd()), path));
+  }
+
   async cd(path: string): Promise<void> {
     await this.enqueue(() => this.client.cd(this.encode(path)).then(() => undefined));
   }

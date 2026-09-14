@@ -1831,6 +1831,10 @@ PtyAdapter
 
 Renderer 永远拿不到 `ssh2` SFTP object。
 
+SSH 会话首次打开 SFTP 文件面时，Runtime 必须通过 SFTP `realpath('.')` 解析已认证账号的
+规范化用户目录，并把它作为默认远端地址；只有服务器无法解析时才回退到 `/`，同时向用户
+显示明确提示。手动地址、远端书签、终端 cwd 跟随和显式启动目录可以覆盖该默认值。
+
 统一 DTO：
 
 ```ts
@@ -1857,6 +1861,11 @@ delete
 upload
 download
 ```
+
+远端文件面接受来自 Finder、Explorer 和桌面文件管理器的 `Files` 拖放。普通文件拖入当前
+列表、`..` 或具体远端目录后，Renderer 立即用有界 HTTP stream 导入临时 File Grant，并为
+每个文件创建可取消、可观察进度的上传任务；批次、单文件和总字节数沿用终端拖放上限，重名
+进入现有冲突决策。目录拖放未实现递归浏览器入口时必须明确引导到“上传目录”。
 
 后续再增加：
 
@@ -3389,6 +3398,9 @@ Acceptance：Parity Matrix D 组全部 Certified；真实 fixture 覆盖所有�
 ## Phase 16 — File Manager / Editor / Transfer Center
 
 复刻 local/remote dual pane、地址历史/书签、filter/sort/columns/pagination、多选和键盘操作、context menu、cut/copy/paste、双向拖放、remote-to-remote、冲突对话框、pause/resume/history、internal/system editor、compare、permission/info、compress-and-transfer 和 native reveal/open-terminal。本地文件面嵌入本地会话，SFTP 文件面绑定对应 SSH connection；从侧栏、传输中心、命令面板或终端 cwd 打开文件时，统一激活所属会话的二级文件视图。
+
+本地文件面默认打开系统用户目录；SSH 的 SFTP 文件面默认使用 `realpath('.')` 得到远端账号
+目录。远端列表必须支持从操作系统文件管理器直接拖入普通文件并立即开始队列上传。
 
 Acceptance：Parity Matrix E 组全部 Certified；所有大文件仍走 stream，watcher/channel/temp file 有确定性 cleanup。
 

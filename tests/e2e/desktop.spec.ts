@@ -2025,8 +2025,26 @@ test.describe('B-12 authenticated save-and-connect', () => {
       await expect(localPane.getByText('local-side.txt', { exact: true })).toBeVisible();
       await localPane.getByRole('button', { name: 'local-side.txt', exact: true }).click();
       await expect(localPane.locator('.file-data-row.selected')).toHaveCount(1);
-      await remotePane.getByRole('button', { name: '当前终端目录' }).click();
       const remoteAddress = remotePane.getByRole('textbox', { name: '远端路径', exact: true });
+      await expect(remoteAddress).toHaveValue(/^\/(?!$)/u);
+      await remotePane.locator('.file-table-scroll').evaluate((element) => {
+        const transfer = new DataTransfer();
+        transfer.items.add(
+          new File(['E01_EXTERNAL_DROP_OK'], 'e01-external-drop.txt', { type: 'text/plain' }),
+        );
+        element.dispatchEvent(
+          new DragEvent('dragenter', { bubbles: true, cancelable: true, dataTransfer: transfer }),
+        );
+        element.dispatchEvent(
+          new DragEvent('dragover', { bubbles: true, cancelable: true, dataTransfer: transfer }),
+        );
+        element.dispatchEvent(
+          new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: transfer }),
+        );
+      });
+      await expect(page.getByText('已将 1 项加入上传队列。')).toBeVisible();
+      await expect(remotePane.getByText('e01-external-drop.txt', { exact: true })).toBeVisible();
+      await remotePane.getByRole('button', { name: '当前终端目录' }).click();
       await expect(remoteAddress).toHaveValue('/tmp');
       await expect(remotePane.getByText('e01-remote-side.txt', { exact: true })).toBeVisible();
       await remotePane.getByRole('button', { name: 'e01-remote-side.txt', exact: true }).click();

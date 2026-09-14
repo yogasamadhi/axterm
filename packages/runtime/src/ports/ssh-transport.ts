@@ -30,6 +30,7 @@ export class SftpCapabilityUnavailableError extends Error {
   }
 }
 export interface SftpHandle {
+  realpath(path: string): Promise<string>;
   list(path: string): Promise<SftpEntry[]>;
   stat(path: string): Promise<SftpAttributes>;
   lstat(path: string): Promise<SftpAttributes>;

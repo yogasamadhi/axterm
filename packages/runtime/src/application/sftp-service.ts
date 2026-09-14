@@ -19,6 +19,26 @@ export class SftpService {
     },
   ) {}
 
+  async home(connectionId: string): Promise<{ path: string }> {
+    return this.withSftp(connectionId, async (sftp) => {
+      const path = posix.normalize(await sftp.realpath('.'));
+      if (!path.startsWith('/'))
+        throw new ApplicationError(
+          'CAPABILITY_UNAVAILABLE',
+          'Remote home directory could not be resolved',
+          503,
+        );
+      const metadata = await sftp.stat(path);
+      if (!metadata.isDirectory)
+        throw new ApplicationError(
+          'CAPABILITY_UNAVAILABLE',
+          'Remote home path is not a directory',
+          503,
+        );
+      return { path };
+    });
+  }
+
   async list(connectionId: string, path: string): Promise<RemoteFileEntry[]> {
     return this.withSftp(connectionId, async (sftp) => {
       const entries = await sftp.list(path);

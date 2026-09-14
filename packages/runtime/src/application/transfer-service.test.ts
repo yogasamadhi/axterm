@@ -25,6 +25,7 @@ describe('TransferService', () => {
     await writeFile(source, 'ftp payload');
     const remote = new Map<string, Buffer>();
     const handle: SftpHandle = {
+      realpath: async (path) => path,
       list: async () => [],
       stat: async () => {
         throw new Error('missing');
@@ -120,6 +121,7 @@ describe('TransferService', () => {
     let closed = 0;
     const removed: string[] = [];
     const sftp: SftpHandle = {
+      realpath: async (path) => path,
       list: async () => [],
       stat: async () => {
         throw new Error('missing');
@@ -265,6 +267,7 @@ describe('TransferService', () => {
     const filesRemoved: string[] = [];
     let closed = 0;
     const sftp: SftpHandle = {
+      realpath: async (path) => path,
       list: async () => [],
       stat: async () => {
         throw new Error('missing');
@@ -501,6 +504,7 @@ function createRemoteStore(initialFiles: Record<string, string>, initialDirector
     throw new Error(`missing ${path}`);
   };
   const createHandle = (): SftpHandle => ({
+    realpath: async (path) => path,
     list: async (directory) => {
       const prefix = directory === '/' ? '/' : `${directory}/`;
       const names = new Set<string>();

@@ -2044,6 +2044,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/sftp/{connectionId}/home": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getRemoteHomeDirectory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/sftp/{connectionId}/list": {
         parameters: {
             query?: never;
@@ -62428,6 +62444,261 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Problem Details */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+            /** @description Problem Details */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code: string;
+                        /** Format: uuid */
+                        traceId: string;
+                        fieldErrors?: {
+                            [key: string]: string[];
+                        };
+                    };
+                };
+            };
+        };
+    };
+    getRemoteHomeDirectory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                connectionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Canonical home directory for the authenticated SSH account */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        path: string;
+                    };
+                };
             };
             /** @description Problem Details */
             400: {
