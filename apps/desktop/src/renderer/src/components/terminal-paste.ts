@@ -52,15 +52,12 @@ export function normalizeTerminalPaste(
   const platformNormalized =
     platform === 'win32' && kind !== 'local' ? text.replace(/\r\n/g, '\n') : text;
   if (kind !== 'local' && kind !== 'ssh') return platformNormalized;
-  return foldShellContinuationLines(platformNormalized, {
-    allowBackslashContinuation: kind === 'ssh' || platform !== 'win32',
-  });
+  if (SQL_STATEMENT_START.test(platformNormalized))
+    return foldSqlStatementLines(platformNormalized);
+  return foldShellContinuationLines(platformNormalized);
 }
 
-export function foldShellContinuationLines(
-  text: string,
-  options: { allowBackslashContinuation?: boolean } = {},
-): string {
+export function foldShellContinuationLines(text: string): string {
   // Here-document bodies are data rather than shell syntax. A small continuation
   // recognizer cannot safely distinguish their delimiters, so leave the paste intact.
   if (/(?:^|[;&|()\s])<<-?\s*['"]?[A-Za-z_][A-Za-z0-9_]*['"]?/mu.test(text)) return text;
@@ -70,12 +67,10 @@ export function foldShellContinuationLines(
   for (let index = 1; index < parts.length; index += 2) {
     const lineBreak = parts[index] ?? '';
     const nextLine = parts[index + 1] ?? '';
-    const continuation = shellContinuationAtEnd(folded, options.allowBackslashContinuation ?? true);
+    const continuation = shellContinuationAtEnd(folded);
     const continuationTarget = nextLine.trimStart();
     const safeTarget = continuationTarget.length > 0 && !continuationTarget.startsWith('#');
-    if (continuation === 'backslash' && safeTarget) {
-      folded = `${folded.trimEnd().slice(0, -1)}${nextLine.trimStart()}`;
-    } else if (continuation === 'operator' && safeTarget) {
+    if (continuation && safeTarget) {
       folded = `${folded.trimEnd()} ${nextLine.trimStart()}`;
     } else {
       folded += `${lineBreak}${nextLine}`;
@@ -84,13 +79,10 @@ export function foldShellContinuationLines(
   return folded;
 }
 
-function shellContinuationAtEnd(
-  text: string,
-  allowBackslashContinuation: boolean,
-): 'backslash' | 'operator' | undefined {
+function shellContinuationAtEnd(text: string): boolean {
   const lineStart = Math.max(text.lastIndexOf('\n'), text.lastIndexOf('\r')) + 1;
   const line = text.slice(lineStart).trimEnd();
-  if (!line) return undefined;
+  if (!line) return false;
   let quote: "'" | '"' | undefined;
   let escaped = false;
   let comment = false;
@@ -124,9 +116,7 @@ function shellContinuationAtEnd(
     }
     outsideQuotes[index] = quote === undefined;
   }
-  if (quote || comment) return undefined;
-  if (allowBackslashContinuation && line.endsWith('\\') && outsideQuotes[line.length - 1])
-    return 'backslash';
+  if (quote || comment) return false;
   for (const operator of ['&&', '||', '|&', '|']) {
     const start = line.length - operator.length;
     if (
@@ -134,9 +124,89 @@ function shellContinuationAtEnd(
       line.endsWith(operator) &&
       [...operator].every((_character, offset) => outsideQuotes[start + offset])
     )
-      return 'operator';
+      return true;
   }
-  return undefined;
+  return false;
+}
+
+const SQL_STATEMENT_START =
+  /^\s*(?:WITH(?:\s+RECURSIVE)?\b|SELECT\b|INSERT\s+INTO\b|UPDATE\b|DELETE\s+FROM\b|MERGE\s+INTO\b|CREATE\s+(?:OR\s+REPLACE\s+)?(?:TABLE|VIEW|INDEX|SCHEMA|DATABASE|TYPE|FUNCTION|PROCEDURE|TRIGGER|SEQUENCE)\b|ALTER\s+(?:TABLE|VIEW|INDEX|SCHEMA|DATABASE|TYPE|FUNCTION|PROCEDURE|TRIGGER|SEQUENCE)\b|DROP\s+(?:TABLE|VIEW|INDEX|SCHEMA|DATABASE|TYPE|FUNCTION|PROCEDURE|TRIGGER|SEQUENCE)\b|TRUNCATE(?:\s+TABLE)?\b|GRANT\b|REVOKE\b|COMMENT\s+ON\b|EXPLAIN\b|VACUUM\b)/iu;
+
+export function foldSqlStatementLines(text: string): string {
+  if (!/[\r\n]/u.test(text) || !SQL_STATEMENT_START.test(text) || !isFoldableSqlStatement(text))
+    return text;
+  return text
+    .split(/\r\n|\r|\n/u)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join(' ');
+}
+
+function isFoldableSqlStatement(text: string): boolean {
+  let quote: "'" | '"' | '`' | ']' | undefined;
+  let parentheses = 0;
+  let terminators = 0;
+  let lastTerminator = -1;
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index]!;
+    if (character === '\r' || character === '\n') {
+      if (quote) return false;
+      continue;
+    }
+    if (quote) {
+      const closing = quote;
+      if (character === '\\') {
+        if (text[index + 1] === '\r' || text[index + 1] === '\n') return false;
+        index += 1;
+        continue;
+      }
+      if (character !== closing) continue;
+      if (text[index + 1] === closing) {
+        index += 1;
+        continue;
+      }
+      quote = undefined;
+      continue;
+    }
+    if (
+      (character === '-' && text[index + 1] === '-') ||
+      (character === '/' && text[index + 1] === '*') ||
+      (character === '#' && (index === 0 || /\s/u.test(text[index - 1]!)))
+    )
+      return false;
+    if (character === "'" || character === '"' || character === '`') {
+      quote = character;
+      continue;
+    }
+    if (character === '[') {
+      quote = ']';
+      continue;
+    }
+    if (character === '$') {
+      const delimiter = /^\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$/u.exec(text.slice(index))?.[0];
+      if (delimiter) {
+        const end = text.indexOf(delimiter, index + delimiter.length);
+        if (end < 0 || /[\r\n]/u.test(text.slice(index + delimiter.length, end))) return false;
+        index = end + delimiter.length - 1;
+        continue;
+      }
+    }
+    if (character === '(') parentheses += 1;
+    else if (character === ')') {
+      parentheses -= 1;
+      if (parentheses < 0) return false;
+    } else if (character === ';') {
+      terminators += 1;
+      lastTerminator = index;
+    }
+  }
+  return (
+    !quote &&
+    parentheses === 0 &&
+    terminators === 1 &&
+    lastTerminator >= 0 &&
+    text.slice(lastTerminator + 1).trim().length === 0
+  );
 }
 
 export function terminalPlatformFromUserAgent(

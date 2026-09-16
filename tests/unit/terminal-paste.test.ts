@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   assessTerminalPaste,
   foldShellContinuationLines,
+  foldSqlStatementLines,
   normalizeTerminalPaste,
   terminalPlatformFromUserAgent,
   TERMINAL_PASTE_CONFIRM_THRESHOLD,
@@ -61,12 +62,10 @@ describe('terminal paste protection model', () => {
     expect(foldShellContinuationLines('first &&\r\n  second ||\n third')).toBe(
       'first && second || third',
     );
-    expect(foldShellContinuationLines('docker run \\\n  --name demo \\\r\n  alpine')).toBe(
-      'docker run --name demo alpine',
-    );
   });
 
-  it('preserves scripts, quoted operators and escaped literal pipes', () => {
+  it('preserves scripts, backslash commands, quoted operators and escaped literal pipes', () => {
+    const backslashCommand = 'docker exec \\\n  -it \\\n  opengauss \\\n  bash';
     for (const text of [
       'printf one\nprintf two',
       "printf '|\ninside quote'",
@@ -77,13 +76,32 @@ describe('terminal paste protection model', () => {
       'cat <<EOF\nbody |\nstays literal\nEOF',
       'printf one |\n',
       'printf one |\n# comment\nprintf two',
+      backslashCommand,
     ])
       expect(foldShellContinuationLines(text)).toBe(text);
+    expect(normalizeTerminalPaste(backslashCommand, 'ssh', 'darwin')).toBe(backslashCommand);
     expect(
-      foldShellContinuationLines('Write-Output one \\\n  two', {
-        allowBackslashContinuation: false,
-      }),
-    ).toBe('Write-Output one \\\n  two');
+      assessTerminalPaste(normalizeTerminalPaste(backslashCommand, 'ssh', 'darwin')),
+    ).toMatchObject({ action: 'confirm', review: { lines: 4, reason: 'multiline' } });
+  });
+
+  it('folds one complete SQL statement without changing ambiguous SQL', () => {
+    const createTable = 'CREATE TABLE users (\n  id INTEGER,\n  username VARCHAR(50)\n);';
+    expect(foldSqlStatementLines(createTable)).toBe(
+      'CREATE TABLE users ( id INTEGER, username VARCHAR(50) );',
+    );
+    expect(normalizeTerminalPaste(createTable, 'ssh', 'darwin')).toBe(
+      'CREATE TABLE users ( id INTEGER, username VARCHAR(50) );',
+    );
+    for (const text of [
+      "SELECT 'first\nsecond';",
+      'SELECT 1 -- keep this comment\n, 2;',
+      'SELECT 1;\nSELECT 2;',
+      'SELECT flags |\n  other_flags;\nSELECT 2;',
+      'CREATE TABLE users (\n  id INTEGER\n)',
+      "DO $$\nBEGIN\n  RAISE NOTICE 'hello';\nEND\n$$;",
+    ])
+      expect(foldSqlStatementLines(text)).toBe(text);
   });
 
   it('detects the desktop platform without exposing a Node API to Renderer', () => {

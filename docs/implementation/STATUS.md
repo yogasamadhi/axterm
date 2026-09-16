@@ -651,9 +651,12 @@ Phase 14 implementation evidence (acceptance remains open):
       the unified Binary WebSocket sender. Clipboard input above 1 MiB is rejected, and Windows SSH
       CRLF normalization is covered explicitly without exposing Node/Electron to Renderer. Before
       review, local/SSH paste now conservatively folds only explicit unquoted shell continuations
-      (`|`, `||`, `|&`, `&&` and dialect-safe trailing backslash) so a formatted pipeline is inserted
-      as one command. Separate commands, quoted or escaped operators, comments, here-documents and
-      Telnet/Serial input remain byte-for-byte multiline and retain the review path.
+      (`|`, `||`, `|&` and `&&`) so a formatted pipeline is inserted as one command. A complete,
+      single-terminator SQL statement is folded only when delimiters are balanced and it contains no
+      comments, cross-line strings or dollar-quoted body, preventing interactive database clients
+      from stacking continuation prompts. Trailing-backslash commands, separate commands,
+      ambiguous/multiple SQL, quoted or escaped operators, comments, here-documents and Telnet/Serial
+      input remain byte-for-byte multiline and retain the review path.
 - [x] T14-06 loads a disposable xterm OSC 52 parser with an explicit profile switch and independent
       deny-by-default read/write policy. Only target `c` is accepted; Base64, decoded UTF-8 and
       response bytes are bounded, invalid targets/encoding, limits, permission errors and timeouts
@@ -663,9 +666,10 @@ Phase 14 implementation evidence (acceptance remains open):
       newlines, conservative continuation recognition and false-positive boundaries, strict OSC 52
       parsing, independent policy, size limits, timeout and disposal. The
       Runtime persistence integration test retains all policy fields across a sparse update. A real
-      macOS arm64 Electron/node-pty E2E proves a formatted pipeline stays on one input row without a
-      review dialog, independent commands retain review/cancel/confirm, OSC 52 write,
-      malformed-payload feedback and the exact OSC 52 read-response escape sequence.
+      macOS arm64 Electron/node-pty E2E proves a formatted pipeline and one complete SQL statement
+      stay on one input row, a four-line trailing-backslash command remains in the review dialog,
+      independent commands retain review/cancel/confirm, and OSC 52 write, malformed-payload feedback
+      and the exact OSC 52 read-response escape sequence remain correct.
 - [x] T14-07 persists a bounded scrollback size, DOM/WebGL preference, Unicode 6/11 choice,
       ligature switch and image-sequence switch in Terminal Profiles and immutable workspace tab
       snapshots. Defaults match the pinned Electerm outcome: 3,000 lines, DOM, Unicode 11,

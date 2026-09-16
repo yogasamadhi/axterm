@@ -7219,6 +7219,36 @@ test('paste protection and policy-gated OSC 52 operate on a real Electron PTY', 
     ).toHaveCount(1);
     await input.press('Control+c');
 
+    const singleSqlStatement = 'CREATE TABLE users ( id INTEGER, username VARCHAR(50) );';
+    await page.evaluate(() => {
+      document.documentElement.dataset.clipboardRead =
+        'CREATE TABLE users (\n  id INTEGER,\n  username VARCHAR(50)\n);';
+    });
+    await terminalHost.click({ button: 'right', position: { x: 110, y: 100 } });
+    await page
+      .getByRole('menu', { name: '终端菜单' })
+      .getByRole('menuitem', { name: '粘贴', exact: true })
+      .click();
+    await expect(page.getByRole('dialog', { name: '确认粘贴到终端' })).toHaveCount(0);
+    await expect(
+      layer.locator('.xterm-rows > div').filter({ hasText: singleSqlStatement }),
+    ).toHaveCount(1);
+    await input.press('Control+c');
+
+    await page.evaluate(() => {
+      document.documentElement.dataset.clipboardRead =
+        'docker exec \\\n  -it \\\n  opengauss \\\n  bash';
+    });
+    await terminalHost.click({ button: 'right', position: { x: 110, y: 100 } });
+    await page
+      .getByRole('menu', { name: '终端菜单' })
+      .getByRole('menuitem', { name: '粘贴', exact: true })
+      .click();
+    pasteDialog = page.getByRole('dialog', { name: '确认粘贴到终端' });
+    await expect(pasteDialog).toContainText('4 行');
+    await expect(pasteDialog.getByLabel('待粘贴内容预览')).toContainText('docker exec \\');
+    await pasteDialog.getByRole('button', { name: '取消' }).click();
+
     await page.evaluate(() => {
       document.documentElement.dataset.clipboardRead =
         "printf '\\nAXTERM_PASTE_CONFIRMED_ONE\\n'\nprintf '\\nAXTERM_PASTE_CONFIRMED_TWO\\n'";

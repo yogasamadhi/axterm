@@ -3391,10 +3391,12 @@ Acceptance：Parity Matrix B 组全部 Certified；迁移可预览、可取消�
 复刻终端 context menu、search、OSC 52、timestamp、Unicode/ligature/image addon、renderer、font/cursor/key behavior、encoding/raw/env、background、session log、reconnect、shortcut bar、command suggestion 和 file drop。
 
 终端粘贴先保留 Electerm 将内容交给 xterm 的输入路径，再对本地终端和 SSH 中明确的 Shell
-语法续行做保守归一化：换行前为未引用且未转义的 `|`、`||`、`|&`、`&&`，或适用
-Shell 方言的行尾反斜杠时，将缩进续行合并为同一输入行。普通多命令、引号内换行、注释、
-here-document、空续行目标及 Telnet/Serial 原始输入不得改写；归一化后仍为多行或超过
-500 字符时继续执行可预览、可取消的粘贴保护。
+语法续行做保守归一化：换行前为未引用且未转义的 `|`、`||`、`|&` 或 `&&` 时，将缩进
+续行合并为同一输入行。完整且只有一个终止符的 SQL 语句可以在括号/引号平衡、没有注释、
+跨行字符串或 dollar-quoted body 时将格式换行折叠为空格，避免交互式数据库客户端堆叠续行
+提示符。行尾反斜杠、普通多命令、多条或不完整 SQL、引号内换行、注释、here-document、
+空续行目标及 Telnet/Serial 原始输入不得改写；归一化后仍为多行或超过 500 字符时继续执行
+可预览、可取消的粘贴保护。
 
 Acceptance：Parity Matrix C 组除 C-16 的终端传输协议外全部 Certified。
 
