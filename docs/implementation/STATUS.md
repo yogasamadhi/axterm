@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-09-14  
+Updated: 2026-09-17
 Product version: `0.10.0`  
 Normative sources: [MASTER_SPEC](../architecture/MASTER_SPEC.md),
 [ELECTERM_PARITY_SPEC](../product/ELECTERM_PARITY_SPEC.md)  
@@ -94,6 +94,12 @@ defect groups: AI Inspector now opens the visible AI workspace from full-window 
 Bookmark edit mode assigns distinct React keys to the jump-chain and tunnel editors so fields and DOM
 ids cannot be duplicated after switching from create to edit; and the AI Provider setup closes after a
 successful save and no longer covers a pending Agent approval when no Provider exists.
+The macOS window lifecycle regression is fixed: closing the last window no longer lets a later Runtime
+restart create a window without a new user request. Initial launch, Dock activation and explicit
+second-instance/deep-link requests can still create a window. A Runtime restart while a window remains
+open restores its saved tabs as disconnected, even when ordinary cold-start layout restoration is off.
+The production Electron regression first reproduced the unwanted reopen, then passed close/restart/no-
+reopen, explicit activation and existing open-window crash recovery after the fix.
 Phase 10 may wait for external Windows/Linux/upgrade evidence, but Phase 21 cannot
 complete until Phase 10 also closes.
 
@@ -639,6 +645,10 @@ Phase 14 implementation evidence (acceptance remains open):
       clipboard read and sanitized write only for the current trusted top-level Axterm document;
       every other permission, origin, child frame and native web view remains denied. This removes
       the application-level denial that previously broke copy/paste on both macOS and Windows.
+- [x] Terminal action feedback, including clipboard paste confirmations, now disappears after
+      10 seconds. A new message restarts the countdown, and the timer is cleared when the message
+      changes or its terminal view unmounts. A production Electron PTY test covers visibility,
+      repeat-trigger timing and automatic dismissal.
 - [x] Renderer model tests cover search validation/count bounds, option state, menu availability,
       positioning and clipboard failures. A real Electron/node-pty E2E covers every search mode,
       buttons and shortcuts, selection gating, copy/paste, clear, menu-opened search and denied
@@ -1132,6 +1142,14 @@ Phase 16 implementation evidence (acceptance remains open):
       source/destination descriptors, while local absolute paths remain absent. The transfer center shows
       active count, aggregate progress, per-task progress/speed/paths and state, plus pause, resume,
       cancel, retry and transactional clearing of completed persistent history.
+- [x] At the user's request, the file workspace no longer renders a second, persistent transfer
+      queue below the local/remote panes. The status-bar transfer entry still opens the right-side
+      transfer center with the existing queue actions and history. The real SSH/SFTP desktop
+      journey now checks both the queue's absence and the center's availability with retained
+      tasks. Moving the file-comparison dialog to a document-level portal also keeps it clickable
+      above the context sidebar after the file panes expand. The pinned Electerm Phase 16
+      transfer screenshot predates this deliberate layout change, so E-12 remains Implemented
+      pending updated visual review and the existing platform/fault evidence.
 - [x] Unit coverage proves pause/resume/cancel cleanup, final speed persistence and history clearing.
       The real 128 MiB Docker OpenSSH desktop upload pauses, visibly reaches `已暂停`, resumes and then
       cancels with target/temporary-file cleanup. Long-duration speed accuracy, restart/fault screenshots
@@ -1924,7 +1942,7 @@ formal release remains open until Phase 10 and the non-waivable gates pass.
 
 ## Verification snapshot
 
-- `bun run test`: 721 passed across 164 files; one Docker-gated test/file is skipped in the default run. H-04 adds
+- `bun run test`: 742 passed across 165 files; one Docker-gated test/file is skipped in the default run. H-04 adds
   terminal visual Contract defaults/cross-field validation, SQLite restart persistence and bounded
   application-local background asset import/delete coverage. C-16 adds
   a real paired XMODEM binary fixture plus ZMODEM/trzsz split-header, path-redaction, cancel,
@@ -2000,9 +2018,9 @@ formal release remains open until Phase 10 and the non-waivable gates pass.
   separated and retains its earlier dedicated passing evidence. The same five journeys pass through the committed DMG gate: it verifies and mounts the image, copies the app into an independent temporary installation directory, detaches the image before launch, and cleans both temporary directories. The macOS CI job now runs this exact command.
 - `bun run test:ssh:packaged`: copied macOS `.app` connected to Docker OpenSSH, ran an SSH PTY and browsed
   the live `/tmp` directory over SFTP; the complete source B-12 SSH/SFTP/transfer/editor journey passed first.
-- `bun run architecture:check`: 340 modules and 1215 dependencies passed the Level 1 / Zero
+- `bun run architecture:check`: 341 modules and 1222 dependencies passed the Level 1 / Zero
   Business IPC gate.
-- `bun run contracts:check`: 255 operations match OpenAPI and generated client.
+- `bun run contracts:check`: 256 operations match OpenAPI and generated client.
 - `bun run parity:audit`: 122 matrix items across 50 scenarios passed with zero unmapped
   upstream settings, actions or design tokens; 0 settings and 0 actions remain unimplemented. The
   settings map contains 50 Implemented and 22 Partial entries. The

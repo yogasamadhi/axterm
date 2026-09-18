@@ -69,7 +69,6 @@ import {
   LoaderCircle,
   Monitor,
   Network,
-  Pause,
   Paperclip,
   Pencil,
   Play,
@@ -7202,67 +7201,6 @@ export function FilesPanel({
           </section>
         )}
       </div>
-      {!!transfers.length && (
-        <section className="transfer-list">
-          <h3>{x('fileManager.transferQueue')}</h3>
-          {transfers.slice(0, 8).map((transfer) => (
-            <div key={transfer.id}>
-              <span>
-                {transfer.direction === 'upload' ? (
-                  <Upload size={12} />
-                ) : transfer.direction === 'download' ? (
-                  <Download size={12} />
-                ) : (
-                  <Server size={12} />
-                )}{' '}
-                {transfer.id.slice(0, 8)}
-              </span>
-              <progress value={transfer.bytesTransferred} max={transfer.totalBytes || 1} />
-              <small>{transfer.state}</small>
-              {transfer.state === 'running' ? (
-                <>
-                  <button
-                    onClick={() => void client.pauseTransfer(transfer.id)}
-                    title={x('fileManager.pause')}
-                  >
-                    <Pause size={11} />
-                  </button>
-                  <button
-                    onClick={() => void client.cancelTransfer(transfer.id)}
-                    title={x('fileManager.cancel')}
-                  >
-                    <Square size={11} />
-                  </button>
-                </>
-              ) : transfer.state === 'paused' ? (
-                <>
-                  <button
-                    onClick={() => void client.resumeTransfer(transfer.id)}
-                    title={x('fileManager.resume')}
-                  >
-                    <Play size={11} />
-                  </button>
-                  <button
-                    onClick={() => void client.cancelTransfer(transfer.id)}
-                    title={x('fileManager.cancel')}
-                  >
-                    <Square size={11} />
-                  </button>
-                </>
-              ) : ['queued', 'preparing', 'awaiting-decision'].includes(transfer.state) ? (
-                <button onClick={() => void client.cancelTransfer(transfer.id)}>
-                  <Square size={11} />
-                </button>
-              ) : null}
-              {['failed', 'canceled'].includes(transfer.state) && (
-                <button onClick={() => void client.retryTransfer(transfer.id)}>
-                  {x('fileManager.retry')}
-                </button>
-              )}
-            </div>
-          ))}
-        </section>
-      )}
       {editing && (
         <RemoteEditor
           client={client}

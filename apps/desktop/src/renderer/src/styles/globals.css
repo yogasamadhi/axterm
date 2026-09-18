@@ -722,14 +722,6 @@ button.danger {
     8px ui-monospace,
     monospace;
 }
-.transfer-list {
-  margin-top: 14px;
-  padding: 12px;
-  border: 1px solid #26302d;
-  border-radius: 7px;
-  background: #111719;
-}
-.transfer-list h3,
 .surface h3,
 .approval-list h3,
 .inspector-body h3 {
@@ -737,22 +729,6 @@ button.danger {
   font-size: 10px;
   font-weight: 550;
   color: #89958f;
-}
-.transfer-list > div {
-  display: grid;
-  grid-template-columns: 130px minmax(100px, 1fr) 65px 25px;
-  gap: 8px;
-  align-items: center;
-  min-height: 27px;
-  font-size: 9px;
-}
-.transfer-list span {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-.transfer-list small {
-  color: #6f7d76;
 }
 progress {
   width: 100%;
@@ -3668,7 +3644,6 @@ kbd {
 }
 
 .surface,
-.transfer-list,
 .metric {
   border-color: var(--border);
   border-radius: 9px;
@@ -3681,7 +3656,6 @@ kbd {
 }
 
 .surface h3,
-.transfer-list h3,
 .approval-list h3,
 .inspector-body h3 {
   color: #a7b2b6;
@@ -4307,15 +4281,6 @@ kbd {
 .file-permission-editor .hint,
 .file-permission-editor .danger-text {
   margin: 9px 0 0;
-}
-
-.transfer-list {
-  padding: 14px;
-}
-
-.transfer-list > div {
-  min-height: 32px;
-  font-size: 10px;
 }
 
 .modal {

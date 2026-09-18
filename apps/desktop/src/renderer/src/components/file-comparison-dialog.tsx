@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { FileComparison } from '@workspace/contracts';
 import { Check, Copy, FileDiff, TriangleAlert, X } from 'lucide-react';
 import { useI18n } from '../i18n/context';
@@ -20,7 +21,7 @@ export function FileComparisonDialog({
     [comparison],
   );
 
-  return (
+  return createPortal(
     <div className="modal-backdrop">
       <section
         className="modal file-comparison-dialog"
@@ -76,7 +77,8 @@ export function FileComparisonDialog({
           </button>
         </footer>
       </section>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

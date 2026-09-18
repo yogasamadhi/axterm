@@ -1629,6 +1629,54 @@ test.describe('H-06 global visibility hotkey', () => {
   });
 });
 
+test('closing the last macOS window does not reopen it after a Runtime restart', async () => {
+  test.skip(process.platform !== 'darwin', 'Other platforms quit when the last window closes.');
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-closed-window-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  let mainPid: number | undefined;
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    mainPid = await app.evaluate(() => process.pid);
+    const runtimePid = await app.evaluate(
+      ({ app }) => app.getAppMetrics().find((metric) => metric.name === 'Axterm Core Runtime')?.pid,
+    );
+    expect(runtimePid).toBeGreaterThan(0);
+
+    const pageClosed = page.waitForEvent('close');
+    await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.close());
+    await pageClosed;
+
+    const reopenedPromise = app.waitForEvent('window');
+    await app.evaluate(({ app }) => app.emit('activate'));
+    const reopened = await reopenedPromise;
+    await expect(reopened.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await expect(reopened.locator('.terminal-tab')).toHaveCount(1);
+    const reopenedClosed = reopened.waitForEvent('close');
+    await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.close());
+    await reopenedClosed;
+
+    process.kill(runtimePid!, 'SIGKILL');
+    await new Promise((resolveDelay) => setTimeout(resolveDelay, 3_000));
+    expect(() => process.kill(mainPid!, 0)).not.toThrow();
+    expect(app.windows()).toHaveLength(0);
+  } finally {
+    if (mainPid) {
+      try {
+        process.kill(mainPid, 'SIGKILL');
+      } catch {
+        // The test-owned Electron process already exited.
+      }
+    }
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
 test.describe('H-07 desktop window behavior', () => {
   test('exposes the empty pane tab strip as a native window drag region', async () => {
     test.skip(process.platform !== 'darwin', 'This verifies the macOS hidden title bar.');
@@ -2020,6 +2068,10 @@ test.describe('B-12 authenticated save-and-connect', () => {
         .click();
       const localPane = page.getByRole('region', { name: '本地文件' });
       const remotePane = page.getByRole('region', { name: '远端文件' });
+      await expect(page.locator('.transfer-list')).toHaveCount(0);
+      await page.locator('.status-transfer').click();
+      await expect(transferCenter.locator('article')).not.toHaveCount(0);
+      await transferCenter.getByLabel('关闭传输中心').click();
       await expect(localPane.getByLabel('本地绝对路径')).toHaveValue(await realpath(homedir()));
       await localPane.getByRole('button', { name: '更换目录' }).click();
       await expect(localPane.getByText('local-side.txt', { exact: true })).toBeVisible();
@@ -6950,6 +7002,48 @@ test('trusted desktop renderer can read and write the system clipboard', async (
     const copyMarker = `AXTERM_RENDERER_COPY_${Date.now()}`;
     await page.evaluate((text) => navigator.clipboard.writeText(text), copyMarker);
     await expect.poll(() => app.evaluate(({ clipboard }) => clipboard.readText())).toBe(copyMarker);
+  } finally {
+    await app.close();
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('terminal action feedback expires after ten seconds and restarts for a new action', async () => {
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-terminal-feedback-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    const terminalHost = layer.locator('.terminal-host');
+    const notice = layer.locator('.terminal-action-feedback');
+    await expect(terminalHost).toHaveAttribute('data-connection-state', 'connected');
+    await page.evaluate(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: { readText: async () => 'x' },
+      });
+    });
+    const paste = async () => {
+      await terminalHost.click({ button: 'right', position: { x: 100, y: 90 } });
+      await page
+        .getByRole('menu', { name: '终端菜单' })
+        .getByRole('menuitem', { name: '粘贴', exact: true })
+        .click();
+      await expect(notice).toHaveText('剪贴板内容已发送到终端。');
+    };
+
+    await paste();
+    await page.waitForTimeout(6_000);
+    await expect(notice).toBeVisible();
+    await paste();
+    await page.waitForTimeout(5_000);
+    await expect(notice).toBeVisible();
+    await expect(notice).toHaveCount(0, { timeout: 6_000 });
   } finally {
     await app.close();
     await rm(userData, { recursive: true, force: true });

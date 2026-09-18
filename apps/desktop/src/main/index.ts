@@ -44,6 +44,7 @@ if (developmentInstance) {
 }
 
 let window: BrowserWindow | undefined;
+let windowRequested = true;
 let developmentAppIcon: ReturnType<typeof nativeImage.createFromPath> | undefined;
 const desktopWindows = new Set<BrowserWindow>();
 const windowBoundsPersistences = new Map<BrowserWindow, WindowBoundsPersistence>();
@@ -86,7 +87,11 @@ const windowCloseGuard = new WindowCloseGuard(async (target) => {
 });
 
 function focusWindow() {
-  if (!window || window.isDestroyed()) return;
+  if (!window || window.isDestroyed()) {
+    windowRequested = true;
+    if (supervisor?.state === 'ready') createWindow();
+    return;
+  }
   if (window.isMinimized()) window.restore();
   window.show();
   window.focus();
@@ -195,8 +200,8 @@ function createSupervisor(host: HostCapabilityServer) {
       const targetOrigin = devUrl ? new URL(devUrl).origin : bootstrap.baseUrl;
       const originChanged = allowedOrigin !== targetOrigin;
       allowedOrigin = targetOrigin;
-      if (!window) createWindow();
-      else if (originChanged) {
+      if (!window && windowRequested) createWindow();
+      else if (window && originChanged) {
         const recovery = supervisor?.restartCount ? '?recovery=runtime-restarted' : '';
         void window.loadURL(`${allowedOrigin}/${recovery}`).catch(showStartupError);
       }
@@ -258,6 +263,7 @@ function createWindow() {
       webviewTag: false,
     },
   });
+  windowRequested = false;
   window = createdWindow;
   desktopWindows.add(createdWindow);
   createdWindow.on('focus', () => {
@@ -374,7 +380,7 @@ if (primaryInstance)
       supervisor.start();
       void drainCommandLines();
       app.on('activate', () => {
-        if (!desktopWindows.size && supervisor?.state === 'ready') createWindow();
+        if (!desktopWindows.size) focusWindow();
       });
     })
     .catch(showStartupError);

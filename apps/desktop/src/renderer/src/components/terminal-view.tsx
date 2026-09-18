@@ -149,6 +149,8 @@ interface TerminalActionFeedback {
   tone: 'success' | 'error';
 }
 
+const ACTION_FEEDBACK_DURATION_MS = 10_000;
+
 interface TerminalTimestampTooltipState {
   pointer: TerminalPointerPosition;
   text: string;
@@ -314,6 +316,15 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
   commandSuggestionsEnabledRef.current = commandSuggestionsEnabled;
   themeRef.current = theme;
   backgroundRef.current = background;
+
+  useEffect(() => {
+    if (!actionFeedback) return;
+    const timer = window.setTimeout(
+      () => setActionFeedback(undefined),
+      ACTION_FEEDBACK_DURATION_MS,
+    );
+    return () => window.clearTimeout(timer);
+  }, [actionFeedback]);
 
   useEffect(() => {
     if (terminalRef.current) terminalRef.current.options.screenReaderMode = screenReaderMode;

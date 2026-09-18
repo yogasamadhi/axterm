@@ -270,6 +270,9 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
   const terminalViews = useRef(new Map<string, TerminalViewHandle>());
   const terminalReloadStates = useRef(new TerminalReloadStateRegistry());
   const appDisposed = useRef(false);
+  const restoringAfterRuntimeRestart = useRef(
+    new URLSearchParams(window.location.search).get('recovery') === 'runtime-restarted',
+  );
   const startupTerminalRequested = useRef(false);
   const startupBookmarkConnector = useRef<(bookmark: Bookmark) => void>(() => {});
   const startupWorkspaceLoader = useRef<(workspace: NamedWorkspace) => Promise<void>>(
@@ -691,10 +694,14 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
     let canceled = false;
     const hydrate = async () => {
       let liveTerminalIds = new Set<string>();
-      if (settings.data.workspace.restoreLayout && settings.data.workspace.layout) {
+      if (
+        (settings.data.workspace.restoreLayout || restoringAfterRuntimeRestart.current) &&
+        settings.data.workspace.layout
+      ) {
         const configured = settings.data.workspace.startupSessions;
         const hasExplicitStartup =
-          typeof configured === 'string' ? !!configured : configured.length > 0;
+          !restoringAfterRuntimeRestart.current &&
+          (typeof configured === 'string' ? !!configured : configured.length > 0);
         if (hasExplicitStartup) {
           setAiInspector(settings.data.workspace.aiInspectorOpen);
           setLayoutHydrated(true);
@@ -721,7 +728,10 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
       }
       if (canceled) return;
       setAiInspector(settings.data.workspace.aiInspectorOpen);
-      if (settings.data.workspace.restoreLayout && settings.data.workspace.layout)
+      if (
+        (settings.data.workspace.restoreLayout || restoringAfterRuntimeRestart.current) &&
+        settings.data.workspace.layout
+      )
         restoreLayout(settings.data.workspace.layout, liveTerminalIds);
       setLayoutHydrated(true);
     };
@@ -744,12 +754,14 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
     )
       return;
     startupTerminalRequested.current = true;
-    const startupSessions = settings.data.workspace.startupSessions;
+    const startupSessions = restoringAfterRuntimeRestart.current
+      ? []
+      : settings.data.workspace.startupSessions;
     const hasExplicitStartup =
       typeof startupSessions === 'string' ? !!startupSessions : startupSessions.length > 0;
     const restoredTabs =
       !hasExplicitStartup &&
-      settings.data.workspace.restoreLayout &&
+      (settings.data.workspace.restoreLayout || restoringAfterRuntimeRestart.current) &&
       !!settings.data.workspace.layout?.tabs.length;
     if (restoredTabs || useWorkspace.getState().tabs.length) return;
     window.queueMicrotask(() => {
