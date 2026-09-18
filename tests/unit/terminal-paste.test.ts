@@ -1,15 +1,21 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   assessTerminalPaste,
   foldShellContinuationLines,
   foldSqlStatementLines,
   normalizeTerminalPaste,
+  supportsWindowsBracketedPaste,
   terminalPlatformFromUserAgent,
+  waitForSshPasteMode,
+  waitForTerminalPrompt,
+  wrapWindowsBracketedPaste,
   TERMINAL_PASTE_CONFIRM_THRESHOLD,
   TERMINAL_PASTE_MAX_BYTES,
   TERMINAL_PASTE_MAX_CHARACTERS,
   TERMINAL_PASTE_PREVIEW_CHARACTERS,
 } from '../../apps/desktop/src/renderer/src/components/terminal-paste';
+
+afterEach(() => vi.useRealTimers());
 
 describe('terminal paste protection model', () => {
   it('reviews multiline or long content while allowing short single-line text', () => {
@@ -112,5 +118,142 @@ describe('terminal paste protection model', () => {
       'darwin',
     );
     expect(terminalPlatformFromUserAgent('Mozilla/5.0 (X11; Linux x86_64)')).toBe('linux');
+  });
+
+  it('preserves LF inside Windows PowerShell paste brackets and does not force CMD', () => {
+    expect(supportsWindowsBracketedPaste(undefined)).toBe(true);
+    expect(supportsWindowsBracketedPaste('C:\\Program Files\\PowerShell\\7\\pwsh.exe')).toBe(true);
+    expect(supportsWindowsBracketedPaste('C:\\Windows\\System32\\cmd.exe')).toBe(false);
+    expect(wrapWindowsBracketedPaste('first\r\nsecond\rthird\n\u001b[201~')).toBe(
+      '\u001b[200~first\nsecond\nthird\n[201~\u001b[201~',
+    );
+  });
+
+  it('waits for the first settled prompt before a Windows multiline paste', async () => {
+    vi.useFakeTimers();
+    const listeners = new Set<() => void>();
+    let line = 'PowerShell 7';
+    const terminal = {
+      buffer: {
+        active: {
+          type: 'normal',
+          cursorY: 0,
+          getLine: () => ({ translateToString: () => line }),
+        },
+      },
+      onWriteParsed: (listener: () => void) => {
+        listeners.add(listener);
+        return { dispose: () => listeners.delete(listener) };
+      },
+    };
+    const controller = new AbortController();
+    let resolved = false;
+    const ready = waitForTerminalPrompt(terminal, controller.signal, 1_000, 300).then((value) => {
+      resolved = true;
+      return value;
+    });
+    await vi.advanceTimersByTimeAsync(400);
+    expect(resolved).toBe(false);
+    line = 'PS C:\\Users\\test> ';
+    for (const listener of listeners) listener();
+    await vi.advanceTimersByTimeAsync(299);
+    expect(resolved).toBe(false);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(await ready).toBe(true);
+    expect(listeners.size).toBe(0);
+  });
+
+  it('ends the initial wait when a custom prompt cannot be recognized', async () => {
+    vi.useFakeTimers();
+    const listeners = new Set<() => void>();
+    const terminal = {
+      buffer: {
+        active: {
+          type: 'normal',
+          cursorY: 0,
+          getLine: () => ({ translateToString: () => 'λ ' }),
+        },
+      },
+      onWriteParsed: (listener: () => void) => {
+        listeners.add(listener);
+        return { dispose: () => listeners.delete(listener) };
+      },
+    };
+    const ready = waitForTerminalPrompt(terminal, new AbortController().signal, 50, 10);
+    await vi.advanceTimersByTimeAsync(50);
+    expect(await ready).toBe(false);
+    expect(listeners.size).toBe(0);
+  });
+
+  it('waits through SSH integration recovery, then falls back for an unsupported shell', async () => {
+    vi.useFakeTimers();
+    const listeners = new Set<() => void>();
+    const stateListeners = new Set<() => void>();
+    let state: 'pending' | 'active' | 'unavailable' = 'pending';
+    const terminal = {
+      modes: { bracketedPasteMode: false },
+      onWriteParsed: (listener: () => void) => {
+        listeners.add(listener);
+        return { dispose: () => listeners.delete(listener) };
+      },
+    };
+    const subscribe = (listener: () => void) => {
+      stateListeners.add(listener);
+      return { dispose: () => stateListeners.delete(listener) };
+    };
+    let resolved = false;
+    const ready = waitForSshPasteMode(
+      terminal,
+      new AbortController().signal,
+      () => state,
+      subscribe,
+      12_000,
+      30,
+    ).then((value) => {
+      resolved = true;
+      return value;
+    });
+    await vi.advanceTimersByTimeAsync(8_000);
+    expect(resolved).toBe(false);
+    state = 'active';
+    for (const listener of stateListeners) listener();
+    await vi.advanceTimersByTimeAsync(20);
+    terminal.modes.bracketedPasteMode = true;
+    for (const listener of listeners) listener();
+    expect(await ready).toBe(true);
+    expect(listeners.size).toBe(0);
+    expect(stateListeners.size).toBe(0);
+
+    terminal.modes.bracketedPasteMode = false;
+    state = 'pending';
+    const unsupported = waitForSshPasteMode(
+      terminal,
+      new AbortController().signal,
+      () => state,
+      subscribe,
+      1_000,
+      30,
+    );
+    await vi.advanceTimersByTimeAsync(50);
+    state = 'unavailable';
+    for (const listener of stateListeners) listener();
+    await vi.advanceTimersByTimeAsync(30);
+    expect(await unsupported).toBe(false);
+    expect(listeners.size).toBe(0);
+    expect(stateListeners.size).toBe(0);
+
+    state = 'pending';
+    const timedOut = waitForSshPasteMode(
+      terminal,
+      new AbortController().signal,
+      () => state,
+      subscribe,
+      100,
+      30,
+    );
+    await vi.advanceTimersByTimeAsync(100);
+    expect(await timedOut).toBe(false);
+    expect(listeners.size).toBe(0);
+    expect(stateListeners.size).toBe(0);
   });
 });

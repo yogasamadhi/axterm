@@ -47,6 +47,7 @@ interface DesktopWindowControllerOptions {
   getAppliedTitleBarStyle?: () => DesktopWindowPreferences['titleBarStyle'] | undefined;
   getAppliedAllowMultiInstance?: () => boolean | undefined;
   globalHotkey?: GlobalHotkeyRegistrationPort;
+  approveClose?: (target: Pick<BrowserWindow, 'close' | 'isDestroyed'>) => void;
 }
 
 export class DesktopWindowUnavailableError extends Error {
@@ -97,7 +98,10 @@ export class DesktopWindowController {
       if (!target.isClosable()) throw new DesktopWindowUnavailableError();
       // Let the HTTP handler flush its accepted response before closing Renderer.
       setImmediate(() => {
-        if (!target.isDestroyed()) target.close();
+        if (!target.isDestroyed()) {
+          this.options.approveClose?.(target);
+          target.close();
+        }
       });
     }
     return desktopWindowActionResultSchema.parse({ accepted: true, state: readState(target) });

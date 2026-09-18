@@ -27,6 +27,22 @@ describe('WindowCloseGuard', () => {
     expect(confirm).not.toHaveBeenCalled();
   });
 
+  it('lets a custom close pass without a second native prompt', () => {
+    const confirm = vi.fn(async () => true);
+    const guard = new WindowCloseGuard(confirm);
+    const { target } = createTarget();
+    const event = { preventDefault: vi.fn() };
+
+    guard.approveNextClose(target);
+    guard.handle(target, event, { confirmBeforeExit: true, bypass: false });
+    expect(event.preventDefault).not.toHaveBeenCalled();
+    expect(confirm).not.toHaveBeenCalled();
+
+    guard.handle(target, event, { confirmBeforeExit: true, bypass: false });
+    expect(event.preventDefault).toHaveBeenCalledOnce();
+    expect(confirm).toHaveBeenCalledOnce();
+  });
+
   it('serializes pending prompts, keeps a canceled window and passes one approved close', async () => {
     let resolveConfirmation: ((accepted: boolean) => void) | undefined;
     const confirm = vi.fn(() => new Promise<boolean>((resolve) => (resolveConfirmation = resolve)));

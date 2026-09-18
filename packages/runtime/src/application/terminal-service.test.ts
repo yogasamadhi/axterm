@@ -571,6 +571,90 @@ describe('TerminalService', () => {
     }
   });
 
+  it('keeps the hidden SSH startup bracketed-paste mode when replacing its prompt', async () => {
+    vi.useFakeTimers();
+    const channel = new FakeChannel('bash');
+    const service = new TerminalService({ open: () => channel });
+    const terminalId = randomUUID();
+    try {
+      service.registerExternal(
+        {
+          id: terminalId,
+          kind: 'ssh',
+          title: 'fixture',
+          state: 'ready',
+          connectionId: randomUUID(),
+          appearance: { ...DEFAULT_TERMINAL_APPEARANCE },
+          behavior: { ...DEFAULT_TERMINAL_BEHAVIOR },
+          createdAt: new Date().toISOString(),
+        },
+        channel,
+        'bash',
+      );
+      const socket = new FakeSocket();
+      service.attach(terminalId, socket as unknown as TerminalSocket);
+
+      channel.emitData(Buffer.from('Last login\r\n\u001b[?25l\u001b[?2004h\r\nold-title\r\nold$ '));
+      await vi.advanceTimersByTimeAsync(1_000);
+      channel.emitData(Buffer.from('echoed bootstrap\r\n\u001b]633;A\u0007new-title\r\nnew$ '));
+      await vi.advanceTimersByTimeAsync(250);
+
+      const rendered = Buffer.concat(binary(socket).map((item) => Buffer.from(item)));
+      expect(rendered.toString('utf8')).not.toContain('old-title');
+      vi.useRealTimers();
+      const screen = new HeadlessTerminal({ allowProposedApi: true, cols: 80, rows: 24 });
+      await new Promise<void>((resolve) => screen.write(rendered, resolve));
+      expect(screen.modes.bracketedPasteMode).toBe(true);
+      screen.dispose();
+    } finally {
+      await service.closeAll();
+      vi.useRealTimers();
+    }
+  });
+
+  it('restores the hidden SSH bracketed-paste mode after shell integration times out', async () => {
+    vi.useFakeTimers();
+    const channel = new FakeChannel('bash');
+    const service = new TerminalService({ open: () => channel });
+    const terminalId = randomUUID();
+    try {
+      service.registerExternal(
+        {
+          id: terminalId,
+          kind: 'ssh',
+          title: 'fixture',
+          state: 'ready',
+          connectionId: randomUUID(),
+          appearance: { ...DEFAULT_TERMINAL_APPEARANCE },
+          behavior: { ...DEFAULT_TERMINAL_BEHAVIOR },
+          createdAt: new Date().toISOString(),
+        },
+        channel,
+        'bash',
+      );
+      const socket = new FakeSocket();
+      service.attach(terminalId, socket as unknown as TerminalSocket);
+      channel.emitData(Buffer.from('Last login\r\n\u001b[?25l\u001b[?2004h\r\nold-title\r\nold$ '));
+      await vi.advanceTimersByTimeAsync(1_000);
+      channel.emitData(Buffer.from('echoed bootstrap\r\n'));
+      await vi.advanceTimersByTimeAsync(3_000);
+      channel.emitData(Buffer.from('^C\r\nnew$ '));
+      await vi.advanceTimersByTimeAsync(5_000);
+
+      expect(controls(socket)).toContainEqual({ type: 'shellIntegration', state: 'unavailable' });
+      const rendered = Buffer.concat(binary(socket).map((item) => Buffer.from(item)));
+      expect(rendered.toString('utf8')).not.toContain('old-title');
+      vi.useRealTimers();
+      const screen = new HeadlessTerminal({ allowProposedApi: true, cols: 80, rows: 24 });
+      await new Promise<void>((resolve) => screen.write(rendered, resolve));
+      expect(screen.modes.bracketedPasteMode).toBe(true);
+      screen.dispose();
+    } finally {
+      await service.closeAll();
+      vi.useRealTimers();
+    }
+  });
+
   it('waits for a split SSH prompt before replacing its native prompt', async () => {
     vi.useFakeTimers();
     const channel = new FakeChannel('zsh');

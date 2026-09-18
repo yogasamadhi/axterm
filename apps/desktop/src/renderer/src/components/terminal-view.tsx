@@ -51,7 +51,11 @@ import {
   type TerminalInputIssue,
 } from './terminal-protocol';
 import { resolveTerminalAppearance } from './terminal-appearance';
-import { terminalBackspaceSequence, terminalShiftEnterSequence } from './terminal-key-input';
+import {
+  terminalBackspaceSequence,
+  terminalCtrlCPress,
+  terminalShiftEnterSequence,
+} from './terminal-key-input';
 import {
   createTerminalOutputDecoder,
   decodeTerminalOutput,
@@ -61,8 +65,12 @@ import { Osc52Addon, type Osc52FeedbackCode } from './terminal-osc52';
 import {
   assessTerminalPaste,
   normalizeTerminalPaste,
+  supportsWindowsBracketedPaste,
   terminalPlatformFromUserAgent,
   type TerminalPasteReview,
+  waitForSshPasteMode,
+  waitForTerminalPrompt,
+  wrapWindowsBracketedPaste,
 } from './terminal-paste';
 import { TerminalPasteDialog } from './terminal-paste-dialog';
 import { TerminalSearchBar } from './terminal-search-bar';
@@ -122,6 +130,7 @@ interface TerminalViewProps {
   client: ReturnType<typeof createRuntimeClient>;
   active: boolean;
   kind: 'local' | 'ssh' | 'telnet' | 'serial';
+  shell?: string | null | undefined;
   connectionId?: string | undefined;
   appearance?: TerminalAppearance | undefined;
   behavior?: TerminalBehavior | undefined;
@@ -206,6 +215,7 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
     client,
     active,
     kind,
+    shell,
     connectionId,
     appearance,
     behavior,
@@ -233,6 +243,7 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
   const inputSenderRef = useRef<TerminalInputSender | undefined>(undefined);
   const terminalClientId = useRef(crypto.randomUUID());
   const terminalRef = useRef<Terminal | undefined>(undefined);
+  const shellRef = useRef(shell);
   const themeRef = useRef(theme);
   const backgroundRef = useRef(background);
   const serializeRef = useRef<SerializeAddon | undefined>(undefined);
@@ -258,6 +269,10 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
   const surfaceRef = useRef<HTMLDivElement>(null);
   const pointerPositionRef = useRef<TerminalPointerPosition>({ x: 0, y: 0 });
   const pendingPasteTextRef = useRef<string | undefined>(undefined);
+  const terminalLifecycleAbortRef = useRef<AbortController | undefined>(undefined);
+  const windowsPromptReadyRef = useRef<Promise<boolean> | undefined>(undefined);
+  const sshShellIntegrationStateRef = useRef<'pending' | 'active' | 'unavailable'>('pending');
+  const sshShellIntegrationListenersRef = useRef(new Set<() => void>());
   const fitRef = useRef<FitAddon | undefined>(undefined);
   const lastSentSizeRef = useRef<{ cols: number; rows: number } | undefined>(undefined);
   const activeRef = useRef(active);
@@ -316,6 +331,7 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
   commandSuggestionsEnabledRef.current = commandSuggestionsEnabled;
   themeRef.current = theme;
   backgroundRef.current = background;
+  shellRef.current = shell;
 
   useEffect(() => {
     if (!actionFeedback) return;
@@ -1046,19 +1062,63 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
   }, []);
 
   const commitTerminalPaste = useCallback(
-    (text: string) => {
-      const terminal = terminalRef.current;
-      if (!terminal || !inputSenderRef.current) {
-        reportInputIssue('TERMINAL_INPUT_UNAVAILABLE');
-        reportAction(xRef.current('terminal.pasteDisconnected'), 'error');
-        terminal?.focus();
+    async (text: string) => {
+      for (let attempt = 0; attempt < 40; attempt += 1) {
+        const terminal = terminalRef.current;
+        const sender = inputSenderRef.current;
+        if (!terminal || !sender) {
+          await new Promise((resolve) => window.setTimeout(resolve, 50));
+          continue;
+        }
+        if (
+          /[\r\n]/u.test(text) &&
+          kind === 'local' &&
+          terminalPlatformFromUserAgent(navigator.userAgent) === 'win32' &&
+          supportsWindowsBracketedPaste(shellRef.current)
+        ) {
+          if (!terminal.modes.bracketedPasteMode) {
+            reportAction(xRef.current('terminal.pasteWaitingForMode'), 'success');
+            // A custom prompt may not match the heuristic, so keep this wait bounded.
+            await windowsPromptReadyRef.current;
+          }
+          if (terminalRef.current !== terminal || inputSenderRef.current !== sender) {
+            await new Promise((resolve) => window.setTimeout(resolve, 50));
+            continue;
+          }
+          if (!sendTerminalInput(wrapWindowsBracketedPaste(text))) return;
+          reportAction(xRef.current('terminal.clipboardSent'), 'success');
+          terminal.focus();
+          return;
+        }
+        if (/[\r\n]/u.test(text) && kind === 'ssh' && !terminal.modes.bracketedPasteMode) {
+          reportAction(xRef.current('terminal.pasteWaitingForMode'), 'success');
+          const signal = terminalLifecycleAbortRef.current?.signal;
+          if (signal)
+            await waitForSshPasteMode(
+              terminal,
+              signal,
+              () => sshShellIntegrationStateRef.current,
+              (listener) => {
+                sshShellIntegrationListenersRef.current.add(listener);
+                return { dispose: () => sshShellIntegrationListenersRef.current.delete(listener) };
+              },
+            );
+        }
+        // Settings can resolve while the first paste is waiting and recreate
+        // xterm for this tab. Retry on that replacement instead of losing text.
+        if (terminalRef.current !== terminal || inputSenderRef.current !== sender) {
+          await new Promise((resolve) => window.setTimeout(resolve, 50));
+          continue;
+        }
+        terminal.paste(text);
+        reportAction(xRef.current('terminal.clipboardSent'), 'success');
+        terminal.focus();
         return;
       }
-      terminal.paste(text);
-      reportAction(xRef.current('terminal.clipboardSent'), 'success');
-      terminal.focus();
+      reportInputIssue('TERMINAL_INPUT_UNAVAILABLE');
+      reportAction(xRef.current('terminal.pasteDisconnected'), 'error');
     },
-    [reportAction, reportInputIssue],
+    [kind, reportAction, reportInputIssue, sendTerminalInput],
   );
 
   const pasteIntoTerminal = useCallback(async () => {
@@ -1335,6 +1395,10 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
       wordSeparator: effectiveBehavior.wordSeparator,
       theme: xtermTheme(themeRef.current, backgroundRef.current),
     });
+    const lifecycleAbort = new AbortController();
+    terminalLifecycleAbortRef.current = lifecycleAbort;
+    sshShellIntegrationStateRef.current = 'pending';
+    const sshShellIntegrationListeners = sshShellIntegrationListenersRef.current;
     const fitAddon = new FitAddon();
     installSearchAddon(terminal);
     const commandTracker = new TerminalCommandTrackerAddon(
@@ -1355,6 +1419,8 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
           });
       },
       (state) => {
+        sshShellIntegrationStateRef.current = state;
+        for (const listener of sshShellIntegrationListeners) listener();
         setCommandTrackingState(state);
         if (state !== 'active') {
           commandInputRef.current.closePrompt();
@@ -1403,6 +1469,10 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
       terminal.write(reloadState.screen, () => commandTracker.endReplay());
     }
     terminal.open(element);
+    windowsPromptReadyRef.current =
+      kind === 'local' && terminalPlatformFromUserAgent(navigator.userAgent) === 'win32'
+        ? waitForTerminalPrompt(terminal, lifecycleAbort.signal)
+        : undefined;
     setCapabilityState(undefined);
     const capabilities = installTerminalCapabilities(terminal, effectiveBehavior, {
       feedback: (code) => reportAction(terminalCapabilityFeedback(code), 'error'),
@@ -1565,7 +1635,53 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
       fitAndResize();
     });
     resize.observe(element);
+    let previousCtrlCAt: number | undefined;
     terminal.attachCustomKeyEventHandler((event) => {
+      if (
+        terminalPlatformFromUserAgent(navigator.userAgent) === 'win32' &&
+        event.ctrlKey &&
+        !event.altKey &&
+        !event.metaKey &&
+        (event.code === 'KeyC' || event.key.toLowerCase() === 'c')
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.type === 'keydown' && !event.repeat) {
+          if (event.shiftKey) {
+            previousCtrlCAt = undefined;
+            void copyTerminalSelection();
+          } else {
+            const press = terminalCtrlCPress(
+              previousCtrlCAt,
+              performance.now(),
+              terminal.hasSelection(),
+            );
+            previousCtrlCAt = press.nextPressAt;
+            if (press.action === 'interrupt') {
+              sendTerminalInput('\x03');
+              commandInputRef.current.handleInput('\x03');
+              closeCommandSuggestions();
+              terminal.scrollToBottom();
+            } else void copyTerminalSelection();
+          }
+        }
+        return false;
+      }
+      if (
+        terminalPlatformFromUserAgent(navigator.userAgent) === 'win32' &&
+        event.ctrlKey &&
+        !event.altKey &&
+        !event.metaKey &&
+        (event.code === 'KeyV' || event.key.toLowerCase() === 'v')
+      ) {
+        previousCtrlCAt = undefined;
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.type === 'keydown' && !event.repeat) void pasteIntoTerminal();
+        return false;
+      }
+      if (event.type === 'keydown' && !['Control', 'Shift', 'Alt', 'Meta'].includes(event.key))
+        previousCtrlCAt = undefined;
       const suggestions = commandSuggestionsRef.current;
       if (suggestions) {
         if (event.key === 'Escape') {
@@ -1626,6 +1742,11 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
     });
     return () => {
       disposed = true;
+      lifecycleAbort.abort();
+      if (terminalLifecycleAbortRef.current === lifecycleAbort)
+        terminalLifecycleAbortRef.current = undefined;
+      windowsPromptReadyRef.current = undefined;
+      sshShellIntegrationListeners.clear();
       dismissTimestampTooltip();
       resize.disconnect();
       input.dispose();
@@ -1643,7 +1764,6 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
       socket?.close();
       socketRef.current = undefined;
       lastSentSizeRef.current = undefined;
-      pendingPasteTextRef.current = undefined;
       capabilities.dispose();
       osc52.dispose();
       commandTracker.dispose();
@@ -1659,6 +1779,7 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
   }, [
     client,
     consumeReloadState,
+    copyTerminalSelection,
     effectiveAppearance,
     effectiveBehavior,
     cancelCommandSuggestionWork,
@@ -1669,6 +1790,7 @@ export const TerminalView = forwardRef<TerminalViewHandle, TerminalViewProps>(fu
     kind,
     openSearch,
     osc52Feedback,
+    pasteIntoTerminal,
     performSearch,
     reportInputIssue,
     reportAction,

@@ -157,6 +157,7 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
   const xRef = useRef(x);
   xRef.current = x;
   const isMac = /Macintosh|Mac OS X/.test(navigator.userAgent);
+  const isWindows = /Windows/.test(navigator.userAgent);
   const platform = shortcutPlatform(navigator.userAgent);
   const queryClient = useQueryClient();
   const status = useQuery({
@@ -279,6 +280,8 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
     async () => {},
   );
   const tabbar = useRef<HTMLDivElement>(null);
+  const windowControlBar = useRef<HTMLDivElement>(null);
+  const workspaceMain = useRef<HTMLElement>(null);
   const [terminalError, setTerminalError] = useState('');
   const [recoveryNotice, setRecoveryNotice] = useState<RecoveryNotice | undefined>(() =>
     new URLSearchParams(window.location.search).get('recovery') === 'runtime-restarted'
@@ -2558,6 +2561,25 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
 
   const currentTab = tabs.find((tab) => tab.id === activeTerminalId);
   const terminalSurfaceActive = contentSurface === 'terminal' && !!currentTab;
+  useEffect(() => {
+    if (!isWindows || !terminalSurfaceActive) return;
+    const workspace = workspaceMain.current;
+    const controls = windowControlBar.current;
+    if (!workspace || !controls) return;
+    const update = () => {
+      workspace.style.setProperty(
+        '--terminal-window-controls-width',
+        `${Math.ceil(controls.getBoundingClientRect().width)}px`,
+      );
+    };
+    const observer = new ResizeObserver(update);
+    observer.observe(controls);
+    update();
+    return () => {
+      observer.disconnect();
+      workspace.style.removeProperty('--terminal-window-controls-width');
+    };
+  }, [isWindows, terminalSurfaceActive]);
   const currentSessionMode =
     currentTab && terminalSessionModes[currentTab.id] === 'files' ? 'files' : 'terminal';
   const terminalContentActive = terminalSurfaceActive && currentSessionMode === 'terminal';
@@ -2577,7 +2599,7 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
 
   return (
     <div
-      className={`app-shell section-${section} surface-${contentSurface} ${isMac ? 'is-mac' : ''} ${sidebarOpen ? '' : 'sidebar-collapsed'} ${aiInspectorOpen ? 'with-ai' : ''} ${terminalInformationOpen && !aiInspectorOpen ? 'with-terminal-information' : ''}`}
+      className={`app-shell section-${section} surface-${contentSurface} ${isMac ? 'is-mac' : ''} ${isWindows ? 'is-windows' : ''} ${sidebarOpen ? '' : 'sidebar-collapsed'} ${aiInspectorOpen ? 'with-ai' : ''} ${terminalInformationOpen && !aiInspectorOpen ? 'with-terminal-information' : ''}`}
     >
       <aside className="app-sidebar activity-bar" aria-label={x('app.primaryFeatures')}>
         <div className="activity-brand" aria-label={x('app.dragWindow')} />
@@ -2732,9 +2754,10 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
       />
 
       <main
+        ref={workspaceMain}
         className={`${terminalSurfaceActive ? 'workspace-main terminal-workspace' : 'workspace-main'} ${remoteMonitorVisible ? 'with-remote-monitor' : ''}`}
       >
-        <div className="tabbar">
+        <div className="tabbar" ref={windowControlBar}>
           <div className="tabbar-scroll" ref={tabbar} onWheel={handleTabWheel}>
             {!terminalSurfaceActive && (
               <button className="workspace-tab active section-tab">
@@ -2949,7 +2972,7 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
               onDismiss={() => setTabOverflowMenuOpen(false)}
             />
           )}
-          <WindowControls client={client} />
+          <WindowControls client={client} openTabCount={tabs.length} />
         </div>
 
         {recoveryNotice && (
@@ -3012,6 +3035,7 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
               {!!tabs.length && (
                 <div className="terminal-workspace-layer" hidden={!terminalSurfaceActive}>
                   <TerminalPaneGrid
+                    profiles={terminalProfiles.data ?? []}
                     client={client}
                     layout={layoutMode}
                     paneTerminalIds={paneTerminalIds}

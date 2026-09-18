@@ -10,12 +10,17 @@ export class WindowCloseGuard {
 
   constructor(private readonly confirm: (target: CloseGuardWindow) => Promise<boolean>) {}
 
+  /** The custom title-bar button already handled its own tab confirmation. */
+  approveNextClose(target: CloseGuardWindow): void {
+    this.approved.add(target);
+  }
+
   handle(
     target: CloseGuardWindow,
     event: CloseEvent,
     options: { confirmBeforeExit: boolean; bypass: boolean },
   ): void {
-    if (options.bypass || !options.confirmBeforeExit || this.approved.delete(target)) return;
+    if (options.bypass || this.approved.delete(target) || !options.confirmBeforeExit) return;
     event.preventDefault();
     if (this.pending.has(target)) return;
     this.pending.add(target);

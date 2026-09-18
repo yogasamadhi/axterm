@@ -352,6 +352,7 @@ if (primaryInstance)
             primary: { workArea: { ...screen.getPrimaryDisplay().workArea } },
           }),
           globalHotkey: globalHotkeyController,
+          approveWindowClose: (target) => windowCloseGuard.approveNextClose(target),
           updater: createDesktopUpdaterFromEnvironment({
             currentVersion: APP_VERSION,
             downloadDirectory: resolve(app.getPath('userData'), 'updates'),

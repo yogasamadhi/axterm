@@ -101,11 +101,14 @@ describe('Desktop window controller', () => {
 
   it('accepts close before scheduling it and refuses absent or destroyed windows', async () => {
     const { state, target } = createWindow();
-    const controller = new DesktopWindowController(() => target);
+    const approveClose = vi.fn();
+    const controller = new DesktopWindowController(() => target, { approveClose });
 
     expect(controller.perform('close')).toMatchObject({ accepted: true });
     expect(target.close).not.toHaveBeenCalled();
     await new Promise<void>((resolve) => setImmediate(resolve));
+    expect(approveClose).toHaveBeenCalledOnce();
+    expect(approveClose).toHaveBeenCalledWith(target);
     expect(target.close).toHaveBeenCalledOnce();
     expect(state.destroyed).toBe(true);
     expect(() => controller.status()).toThrow(DesktopWindowUnavailableError);

@@ -1,6 +1,6 @@
 import { createHash, generateKeyPairSync, randomUUID, sign } from 'node:crypto';
 import { once } from 'node:events';
-import { cp, mkdtemp, rm, access, realpath, mkdir, readFile } from 'node:fs/promises';
+import { cp, mkdtemp, rm, access, realpath, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -316,6 +316,312 @@ test('packaged Windows app starts its unconfigured local terminal with PowerShel
     await expect
       .poll(() => terminalLayer.locator('.xterm-rows').textContent())
       .toContain('AXTERM_PWSH_MAJOR=7');
+  } finally {
+    await app.close().catch(() => {});
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('packaged Windows Ctrl+C copies selection and interrupts without one or on double press', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows terminal keyboard behavior is under test.');
+  await access(source);
+  const directory = await realpath(await mkdtemp(join(tmpdir(), 'axterm-packaged-ctrl-c-')));
+  const artifact = join(directory, 'app');
+  await cp(source, artifact, { recursive: true, verbatimSymlinks: true });
+  const app = await electron.launch({
+    executablePath: join(artifact, 'Axterm.exe'),
+    args: [`--user-data-dir=${join(directory, 'user-data')}`],
+    cwd: directory,
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    const input = layer.locator('.xterm-helper-textarea');
+    await input.pressSequentially("Write-Output 'AXTERM_PACKAGED_CTRL_C_COPY'");
+    await input.press('Enter');
+    await expect
+      .poll(() => layer.locator('.xterm-rows').textContent())
+      .toContain('AXTERM_PACKAGED_CTRL_C_COPY');
+    await layer.locator('.terminal-host').click({ button: 'right', position: { x: 100, y: 100 } });
+    await page
+      .getByRole('menu', { name: '终端菜单' })
+      .getByRole('menuitem', { name: '全选' })
+      .click();
+    await page.keyboard.press('Control+c');
+    await expect
+      .poll(() => app.evaluate(({ clipboard }) => clipboard.readText()))
+      .toContain('AXTERM_PACKAGED_CTRL_C_COPY');
+
+    const started = join(directory, 'sleep-started.txt');
+    const afterInterrupt = join(directory, 'after-interrupt.txt');
+    await input.pressSequentially(
+      `Set-Content -LiteralPath '${started}' -Value 'started'; Start-Sleep -Seconds 20`,
+    );
+    await input.press('Enter');
+    await expect.poll(() => readFile(started, 'utf8').catch(() => '')).toContain('started');
+    await app.evaluate(({ clipboard }) => clipboard.writeText('NO_SELECTION_SENTINEL'));
+    await input.press('Control+c');
+    expect(await app.evaluate(({ clipboard }) => clipboard.readText())).toBe(
+      'NO_SELECTION_SENTINEL',
+    );
+    // PowerShell/PSReadLine can discard the first keystroke while redrawing after ^C.
+    await page.waitForTimeout(300);
+    await input.pressSequentially(`Set-Content -LiteralPath '${afterInterrupt}' -Value 'resumed'`);
+    await input.press('Enter');
+    await expect.poll(() => readFile(afterInterrupt, 'utf8').catch(() => '')).toContain('resumed');
+
+    const doubleStarted = join(directory, 'double-started.txt');
+    const afterDouble = join(directory, 'after-double.txt');
+    await input.pressSequentially(
+      `Set-Content -LiteralPath '${doubleStarted}' -Value 'started'; Start-Sleep -Seconds 20`,
+    );
+    await input.press('Enter');
+    await expect.poll(() => readFile(doubleStarted, 'utf8').catch(() => '')).toContain('started');
+    await layer.locator('.terminal-host').click({ button: 'right', position: { x: 100, y: 100 } });
+    await page
+      .getByRole('menu', { name: '终端菜单' })
+      .getByRole('menuitem', { name: '全选' })
+      .click();
+    await app.evaluate(({ clipboard }) => clipboard.writeText('DOUBLE_PRESS_SENTINEL'));
+    await page.keyboard.down('Control');
+    await page.keyboard.press('c');
+    await page.keyboard.press('c');
+    await page.keyboard.up('Control');
+    await expect
+      .poll(() => app.evaluate(({ clipboard }) => clipboard.readText()))
+      .toContain('Start-Sleep -Seconds 20');
+    await page.waitForTimeout(300);
+    await input.pressSequentially(`Set-Content -LiteralPath '${afterDouble}' -Value 'resumed'`);
+    await input.press('Enter');
+    await expect.poll(() => readFile(afterDouble, 'utf8').catch(() => '')).toContain('resumed');
+  } finally {
+    await app.close().catch(() => {});
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('packaged Windows terminal pastes with Ctrl+V and Ctrl+Shift+V', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows terminal keyboard behavior is under test.');
+  await access(source);
+  const directory = await realpath(await mkdtemp(join(tmpdir(), 'axterm-packaged-ctrl-v-')));
+  const artifact = join(directory, 'app');
+  await cp(source, artifact, { recursive: true, verbatimSymlinks: true });
+  const app = await electron.launch({
+    executablePath: join(artifact, 'Axterm.exe'),
+    args: [`--user-data-dir=${join(directory, 'user-data')}`],
+    cwd: directory,
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    const input = layer.locator('.xterm-helper-textarea');
+    for (const [chord, filename] of [
+      ['Control+v', 'ctrl-v.txt'],
+      ['Control+Shift+v', 'ctrl-shift-v.txt'],
+    ] as const) {
+      const output = join(directory, filename);
+      await app.evaluate(
+        ({ clipboard }, command) => clipboard.writeText(command),
+        `Set-Content -LiteralPath '${output}' -Value '${filename}'`,
+      );
+      await input.press(chord);
+      await expect.poll(() => layer.locator('.xterm-rows').textContent()).toContain(filename);
+      await input.press('Enter');
+      await expect.poll(() => readFile(output, 'utf8').catch(() => '')).toContain(filename);
+    }
+  } finally {
+    await app.close().catch(() => {});
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('packaged Windows new tab keeps the first multiline paste buffered until Enter', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows PowerShell startup behavior is under test.');
+  await access(source);
+  const directory = await realpath(await mkdtemp(join(tmpdir(), 'axterm-packaged-first-paste-')));
+  const artifact = join(directory, 'app');
+  await cp(source, artifact, { recursive: true, verbatimSymlinks: true });
+  const app = await electron.launch({
+    executablePath: join(artifact, 'Axterm.exe'),
+    args: [`--user-data-dir=${join(directory, 'user-data')}`],
+    cwd: directory,
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const first = join(directory, 'first.txt');
+    const second = join(directory, 'second.txt');
+    await app.evaluate(
+      ({ clipboard }, value) => clipboard.writeText(value),
+      `Set-Content -LiteralPath '${first}' -Value 'first'\r\nSet-Content -LiteralPath '${second}' -Value 'second'`,
+    );
+    const previousId = await page
+      .locator('.terminal-session-layer:not([hidden])')
+      .getAttribute('data-terminal-session');
+    await page.locator('.terminal-pane.active .tab-add').click();
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(2);
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer).not.toHaveAttribute('data-terminal-session', previousId!);
+    const input = layer.locator('.xterm-helper-textarea');
+    await input.press('Control+v');
+    const dialog = page.getByRole('dialog', { name: '确认粘贴到终端' });
+    await dialog.getByRole('button', { name: '确认粘贴' }).click();
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText('剪贴板内容已发送到终端。');
+    await page.waitForTimeout(3_000);
+    expect(await readFile(first, 'utf8').catch(() => undefined)).toBeUndefined();
+    expect(await readFile(second, 'utf8').catch(() => undefined)).toBeUndefined();
+    await input.press('Enter');
+    await expect.poll(() => readFile(first, 'utf8').catch(() => '')).toContain('first');
+    await expect.poll(() => readFile(second, 'utf8').catch(() => '')).toContain('second');
+  } finally {
+    await app.close().catch(() => {});
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('packaged Windows paste confirmation and file browser layout use available space', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows packaged interface is under test.');
+  await access(source);
+  const directory = await realpath(await mkdtemp(join(tmpdir(), 'axterm-packaged-file-layout-')));
+  const browseDirectory = join(directory, 'browse');
+  await mkdir(browseDirectory);
+  await Promise.all(
+    Array.from({ length: 80 }, (_, index) =>
+      writeFile(join(browseDirectory, `file-${String(index).padStart(3, '0')}.txt`), ''),
+    ),
+  );
+  const artifact = join(directory, 'app');
+  await cp(source, artifact, { recursive: true, verbatimSymlinks: true });
+  const app = await electron.launch({
+    executablePath: join(artifact, 'Axterm.exe'),
+    args: [`--user-data-dir=${join(directory, 'user-data')}`],
+    cwd: directory,
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    await app.evaluate(({ dialog }, path) => {
+      Object.defineProperty(dialog, 'showOpenDialog', {
+        configurable: true,
+        value: async () => ({ canceled: false, filePaths: [path] }),
+      });
+    }, browseDirectory);
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    await app.evaluate(({ clipboard }) =>
+      clipboard.writeText("Write-Output 'PACKAGED_PASTE_ONE'\nWrite-Output 'PACKAGED_PASTE_TWO'"),
+    );
+    await layer.locator('.xterm-helper-textarea').press('Control+v');
+    const pasteDialog = page.getByRole('dialog', { name: '确认粘贴到终端' });
+    await expect(pasteDialog.getByRole('button', { name: '确认粘贴' })).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(pasteDialog).toHaveCount(0);
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText('剪贴板内容已发送到终端。');
+
+    await page
+      .getByRole('tablist', { name: '会话工具' })
+      .getByRole('tab', { name: '文件管理' })
+      .click();
+    const pane = page.locator('.terminal-file-session-layer:not([hidden]) .file-pane-local');
+    await pane.getByRole('button', { name: '更换目录' }).click();
+    await expect(pane.getByLabel('本地绝对路径')).toHaveValue(browseDirectory);
+    await expect.poll(() => pane.locator('.file-data-row').count()).toBeGreaterThan(20);
+    const bottomGap = await pane.evaluate((element) => {
+      const scroll = element.querySelector('.file-table-scroll')!.getBoundingClientRect();
+      return element.getBoundingClientRect().bottom - scroll.bottom;
+    });
+    expect(bottomGap).toBeLessThan(50);
+  } finally {
+    await app.close().catch(() => {});
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('packaged Windows close button confirms multiple tabs and allows cancellation', async () => {
+  test.skip(process.platform !== 'win32', 'The custom Windows close button is under test.');
+  await access(source);
+  const directory = await realpath(await mkdtemp(join(tmpdir(), 'axterm-packaged-close-')));
+  const artifact = join(directory, 'app');
+  await cp(source, artifact, { recursive: true, verbatimSymlinks: true });
+  const app = await electron.launch({
+    executablePath: join(artifact, 'Axterm.exe'),
+    args: [`--user-data-dir=${join(directory, 'user-data')}`],
+    cwd: directory,
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(1);
+    await page.locator('.terminal-pane.active .tab-add').click();
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(2);
+    await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.maximize());
+    await expect
+      .poll(() =>
+        app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.isMaximized()),
+      )
+      .toBe(true);
+
+    const closeButton = page.locator('[data-window-action="close"]');
+    await expect(page.locator('.activity-brand')).toHaveCSS('-webkit-app-region', 'drag');
+    await expect(page.locator('.terminal-workspace > .tabbar')).toHaveCSS(
+      '-webkit-app-region',
+      'no-drag',
+    );
+    const dragStrip = page.locator('.terminal-pane.active > .pane-tabbar .pane-tabbar-scroll');
+    await expect(dragStrip).toHaveCSS('-webkit-app-region', 'drag');
+    const dragSpace = dragStrip.locator('.pane-tabbar-drag-space');
+    await expect(dragSpace).toHaveCSS('-webkit-app-region', 'drag');
+    expect(
+      await dragSpace.evaluate((element) => element.getBoundingClientRect().width),
+    ).toBeGreaterThan(100);
+    const stripRight = await dragStrip.evaluate((element) => element.getBoundingClientRect().right);
+    const controlsLeft = await page
+      .locator('.terminal-workspace > .tabbar')
+      .evaluate((element) => element.getBoundingClientRect().left);
+    expect(stripRight).toBeLessThanOrEqual(controlsLeft + 1);
+    await expect(closeButton).toHaveCSS('-webkit-app-region', 'no-drag');
+    const closeTarget = await closeButton.evaluate((button) => {
+      const bounds = button.getBoundingClientRect();
+      const x = bounds.left + bounds.width / 2;
+      const y = bounds.top + bounds.height / 2;
+      return {
+        x,
+        y,
+        hitsCloseButton: button.contains(document.elementFromPoint(x, y)),
+        regionsAtPoint: document
+          .elementsFromPoint(x, y)
+          .map((element) => getComputedStyle(element).getPropertyValue('-webkit-app-region')),
+      };
+    });
+    expect(closeTarget.hitsCloseButton).toBe(true);
+    expect(closeTarget.regionsAtPoint).not.toContain('drag');
+    await page.mouse.click(closeTarget.x, closeTarget.y);
+    const confirmation = page.getByRole('alertdialog', { name: '关闭 2 个标签？' });
+    await expect(confirmation).toBeVisible();
+    await confirmation.getByRole('button', { name: '取消' }).click();
+    expect(page.isClosed()).toBe(false);
+
+    await page.mouse.click(closeTarget.x, closeTarget.y);
+    await confirmation.getByRole('button', { name: '关闭窗口' }).click();
+    await expect.poll(() => page.isClosed()).toBe(true);
   } finally {
     await app.close().catch(() => {});
     await rm(directory, { recursive: true, force: true });

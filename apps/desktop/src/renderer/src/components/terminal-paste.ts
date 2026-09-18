@@ -2,6 +2,124 @@ export const TERMINAL_PASTE_CONFIRM_THRESHOLD = 500;
 export const TERMINAL_PASTE_MAX_CHARACTERS = 1024 * 1024;
 export const TERMINAL_PASTE_MAX_BYTES = 1024 * 1024;
 export const TERMINAL_PASTE_PREVIEW_CHARACTERS = 8 * 1024;
+export const TERMINAL_PROMPT_WAIT_MS = 3_000;
+export const SSH_PASTE_STARTUP_WAIT_MS = 12_000;
+export const SSH_PASTE_PARSE_SETTLE_MS = 750;
+
+interface PromptPasteTerminal {
+  buffer: {
+    readonly active: {
+      readonly cursorY: number;
+      readonly type: string;
+      getLine(index: number): { translateToString(trimRight?: boolean): string } | undefined;
+    };
+  };
+  onWriteParsed(listener: () => void): { dispose(): void };
+}
+
+interface BracketedPasteTerminal {
+  readonly modes: { readonly bracketedPasteMode: boolean };
+  onWriteParsed(listener: () => void): { dispose(): void };
+}
+
+export function waitForSshPasteMode(
+  terminal: BracketedPasteTerminal,
+  signal: AbortSignal,
+  shellIntegrationState: () => 'pending' | 'active' | 'unavailable',
+  onShellIntegrationState: (listener: () => void) => { dispose(): void },
+  timeoutMs = SSH_PASTE_STARTUP_WAIT_MS,
+  settleMs = SSH_PASTE_PARSE_SETTLE_MS,
+): Promise<boolean> {
+  if (signal.aborted) return Promise.resolve(false);
+  if (terminal.modes.bracketedPasteMode) return Promise.resolve(true);
+  return new Promise((resolve) => {
+    let finished = false;
+    let settleTimer: ReturnType<typeof setTimeout> | undefined;
+    const finish = (ready: boolean) => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timeoutTimer);
+      if (settleTimer) clearTimeout(settleTimer);
+      parsedSubscription.dispose();
+      stateSubscription.dispose();
+      signal.removeEventListener('abort', onAbort);
+      resolve(ready);
+    };
+    const onAbort = () => finish(false);
+    const check = () => {
+      if (terminal.modes.bracketedPasteMode) finish(true);
+      else if (shellIntegrationState() !== 'pending' && !settleTimer)
+        settleTimer = setTimeout(() => finish(terminal.modes.bracketedPasteMode), settleMs);
+    };
+    const timeoutTimer = setTimeout(() => finish(terminal.modes.bracketedPasteMode), timeoutMs);
+    signal.addEventListener('abort', onAbort, { once: true });
+    const parsedSubscription = terminal.onWriteParsed(check);
+    const stateSubscription = onShellIntegrationState(check);
+    check();
+  });
+}
+
+export function supportsWindowsBracketedPaste(shell: string | null | undefined): boolean {
+  if (!shell) return true; // The Windows default shell prefers PowerShell.
+  const executable = shell.trim().split(/[\\/]/u).at(-1)?.toLowerCase();
+  return [
+    'pwsh',
+    'pwsh.exe',
+    'powershell',
+    'powershell.exe',
+    'bash',
+    'bash.exe',
+    'zsh',
+    'fish',
+  ].includes(executable ?? '');
+}
+
+export function wrapWindowsBracketedPaste(text: string): string {
+  // PSReadLine treats CR as Enter even inside the bracket, while LF stays in
+  // the paste buffer. ESC in pasted data could forge the closing marker.
+  return `\u001b[200~${text.replaceAll('\u001b', '').replace(/\r\n?|\n/gu, '\n')}\u001b[201~`;
+}
+
+export function waitForTerminalPrompt(
+  terminal: PromptPasteTerminal,
+  signal: AbortSignal,
+  timeoutMs = TERMINAL_PROMPT_WAIT_MS,
+  settleMs = 300,
+): Promise<boolean> {
+  if (signal.aborted) return Promise.resolve(false);
+  return new Promise((resolve) => {
+    let finished = false;
+    let settleTimer: ReturnType<typeof setTimeout> | undefined;
+    const finish = (ready: boolean) => {
+      if (finished) return;
+      finished = true;
+      if (settleTimer) clearTimeout(settleTimer);
+      clearTimeout(timeoutTimer);
+      subscription.dispose();
+      signal.removeEventListener('abort', onAbort);
+      resolve(ready);
+    };
+    const onAbort = () => finish(false);
+    const check = () => {
+      if (settleTimer) clearTimeout(settleTimer);
+      if (!hasTerminalPrompt(terminal)) return;
+      settleTimer = setTimeout(() => {
+        if (hasTerminalPrompt(terminal)) finish(true);
+      }, settleMs);
+    };
+    const timeoutTimer = setTimeout(() => finish(false), timeoutMs);
+    signal.addEventListener('abort', onAbort, { once: true });
+    const subscription = terminal.onWriteParsed(check);
+    check();
+  });
+}
+
+function hasTerminalPrompt(terminal: PromptPasteTerminal): boolean {
+  const buffer = terminal.buffer.active;
+  if (buffer.type !== 'normal') return false;
+  const line = buffer.getLine(buffer.cursorY)?.translateToString(true) ?? '';
+  return line.length <= 512 && /[>$#]\s*$/u.test(line);
+}
 
 export interface TerminalPasteReview {
   characters: number;

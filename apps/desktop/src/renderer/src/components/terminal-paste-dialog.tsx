@@ -13,11 +13,11 @@ export function TerminalPasteDialog({
   onCancel(): void;
 }) {
   const { language, t, x } = useI18n();
-  const cancelRef = useRef<HTMLButtonElement>(null);
+  const confirmRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    cancelRef.current?.focus();
+    confirmRef.current?.focus();
   }, []);
 
   const reason =
@@ -79,10 +79,10 @@ export function TerminalPasteDialog({
         </pre>
         {review.truncated && <small>{x('terminal.pasteTruncated')}</small>}
         <footer>
-          <button ref={cancelRef} type="button" onClick={onCancel}>
+          <button type="button" onClick={onCancel}>
             {t('cancel', 'Cancel')}
           </button>
-          <button className="primary" type="button" onClick={onConfirm}>
+          <button ref={confirmRef} className="primary" type="button" onClick={onConfirm}>
             {x('terminal.confirmPaste')}
           </button>
         </footer>

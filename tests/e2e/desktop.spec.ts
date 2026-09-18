@@ -20,6 +20,7 @@ import { BookmarkRepository } from '../../packages/runtime/src/adapters/sqlite/b
 import { QuickCommandRepository } from '../../packages/runtime/src/adapters/sqlite/quick-command-repository';
 import { BatchOperationRepository } from '../../packages/runtime/src/adapters/sqlite/batch-operation-repository';
 import { TriggerRepository } from '../../packages/runtime/src/adapters/sqlite/trigger-repository';
+import { DEFAULT_DESKTOP_WINDOW_PREFERENCES } from '../../apps/desktop/src/main/host-capabilities/window-preferences';
 
 async function readDirectoryFiles(directory: string): Promise<Buffer[]> {
   const contents: Buffer[] = [];
@@ -44,6 +45,690 @@ const { Client: FtpClient } = runtimeRequire('basic-ftp') as {
 };
 const executablePath = require('electron') as string;
 const sshFixturePort = Number(process.env.AXTERM_SSH_FIXTURE_PORT ?? 0);
+
+test('Windows Ctrl+C copies a selection, interrupts without one, and double press interrupts', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows terminal keyboard behavior is under test.');
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-ctrl-c-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    const input = layer.locator('.xterm-helper-textarea');
+    const rows = layer.locator('.xterm-rows');
+    await input.pressSequentially("Write-Output 'AXTERM_CTRL_C_COPY_MARKER'");
+    await input.press('Enter');
+    await expect.poll(() => rows.textContent()).toContain('AXTERM_CTRL_C_COPY_MARKER');
+    await layer.locator('.terminal-host').click({ button: 'right', position: { x: 100, y: 100 } });
+    await page
+      .getByRole('menu', { name: '终端菜单' })
+      .getByRole('menuitem', { name: '全选' })
+      .click();
+    await page.keyboard.press('Control+c');
+    await expect
+      .poll(() => app.evaluate(({ clipboard }) => clipboard.readText()))
+      .toContain('AXTERM_CTRL_C_COPY_MARKER');
+    await app.evaluate(({ clipboard }) => clipboard.writeText('COPY_ALIAS_SENTINEL'));
+    await page.keyboard.press('Control+Shift+c');
+    await expect
+      .poll(() => app.evaluate(({ clipboard }) => clipboard.readText()))
+      .toContain('AXTERM_CTRL_C_COPY_MARKER');
+
+    const started = resolve(userData, 'sleep-started.txt');
+    const afterInterrupt = resolve(userData, 'after-interrupt.txt');
+    await input.pressSequentially(
+      `Set-Content -LiteralPath '${started}' -Value 'started'; Start-Sleep -Seconds 20`,
+    );
+    await input.press('Enter');
+    await expect.poll(() => readFile(started, 'utf8').catch(() => '')).toContain('started');
+    await app.evaluate(({ clipboard }) => clipboard.writeText('NO_SELECTION_SENTINEL'));
+    await input.press('Control+c');
+    expect(await app.evaluate(({ clipboard }) => clipboard.readText())).toBe(
+      'NO_SELECTION_SENTINEL',
+    );
+    // PowerShell/PSReadLine can discard the first keystroke while redrawing after ^C.
+    await page.waitForTimeout(300);
+    await input.pressSequentially(`Set-Content -LiteralPath '${afterInterrupt}' -Value 'resumed'`);
+    await input.press('Enter');
+    await expect.poll(() => readFile(afterInterrupt, 'utf8').catch(() => '')).toContain('resumed');
+
+    const doubleStarted = resolve(userData, 'double-started.txt');
+    const afterDouble = resolve(userData, 'after-double.txt');
+    await input.pressSequentially(
+      `Set-Content -LiteralPath '${doubleStarted}' -Value 'started'; Start-Sleep -Seconds 20`,
+    );
+    await input.press('Enter');
+    await expect.poll(() => readFile(doubleStarted, 'utf8').catch(() => '')).toContain('started');
+    await layer.locator('.terminal-host').click({ button: 'right', position: { x: 100, y: 100 } });
+    await page
+      .getByRole('menu', { name: '终端菜单' })
+      .getByRole('menuitem', { name: '全选' })
+      .click();
+    await app.evaluate(({ clipboard }) => clipboard.writeText('DOUBLE_PRESS_SENTINEL'));
+    await page.keyboard.down('Control');
+    await page.keyboard.press('c');
+    await page.keyboard.press('c');
+    await page.keyboard.up('Control');
+    await expect
+      .poll(() => app.evaluate(({ clipboard }) => clipboard.readText()))
+      .toContain('Start-Sleep -Seconds 20');
+    await page.waitForTimeout(300);
+    await input.pressSequentially(`Set-Content -LiteralPath '${afterDouble}' -Value 'resumed'`);
+    await input.press('Enter');
+    await expect.poll(() => readFile(afterDouble, 'utf8').catch(() => '')).toContain('resumed');
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('Windows terminal pastes with Ctrl+V and keeps Ctrl+Shift+V working', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows terminal keyboard behavior is under test.');
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-ctrl-v-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    const input = layer.locator('.xterm-helper-textarea');
+    for (const [chord, filename] of [
+      ['Control+v', 'ctrl-v.txt'],
+      ['Control+Shift+v', 'ctrl-shift-v.txt'],
+    ] as const) {
+      const output = resolve(userData, filename);
+      await app.evaluate(
+        ({ clipboard }, command) => clipboard.writeText(command),
+        `Set-Content -LiteralPath '${output}' -Value '${filename}'`,
+      );
+      await input.press(chord);
+      await expect.poll(() => layer.locator('.xterm-rows').textContent()).toContain(filename);
+      await input.press('Enter');
+      await expect.poll(() => readFile(output, 'utf8').catch(() => '')).toContain(filename);
+    }
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('Windows paste confirmation focuses Confirm so Enter pastes and Escape still cancels', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows paste dialog behavior is under test.');
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-paste-confirm-focus-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    await app.evaluate(({ clipboard }) =>
+      clipboard.writeText("Write-Output 'AXTERM_PASTE_ONE'\nWrite-Output 'AXTERM_PASTE_TWO'"),
+    );
+    const input = layer.locator('.xterm-helper-textarea');
+    const dialog = page.getByRole('dialog', { name: '确认粘贴到终端' });
+    const confirm = dialog.getByRole('button', { name: '确认粘贴' });
+
+    await input.press('Control+v');
+    await expect(confirm).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(dialog).toHaveCount(0);
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText('已取消粘贴。');
+
+    await input.press('Control+v');
+    await expect(confirm).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(dialog).toHaveCount(0);
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText('剪贴板内容已发送到终端。');
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('first and later multiline pastes in a new PowerShell tab wait for Enter', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows PowerShell startup behavior is under test.');
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-first-multiline-paste-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    const first = resolve(userData, 'first-paste-line.txt');
+    const second = resolve(userData, 'second-paste-line.txt');
+    await app.evaluate(
+      ({ clipboard }, value) => clipboard.writeText(value),
+      `Set-Content -LiteralPath '${first}' -Value 'first'\r\nSet-Content -LiteralPath '${second}' -Value 'second'`,
+    );
+    const previousTerminalId = await page
+      .locator('.terminal-session-layer:not([hidden])')
+      .getAttribute('data-terminal-session');
+    await page.locator('.terminal-pane.active .tab-add').click();
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(2);
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer).not.toHaveAttribute('data-terminal-session', previousTerminalId!);
+    const input = layer.locator('.xterm-helper-textarea');
+    await input.press('Control+v');
+    const dialog = page.getByRole('dialog', { name: '确认粘贴到终端' });
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole('button', { name: '确认粘贴' }).click();
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText('剪贴板内容已发送到终端。');
+    await page.waitForTimeout(5_000);
+    expect(await readFile(first, 'utf8').catch(() => undefined)).toBeUndefined();
+    expect(await readFile(second, 'utf8').catch(() => undefined)).toBeUndefined();
+    await input.press('Enter');
+    await expect.poll(() => readFile(first, 'utf8').catch(() => '')).toContain('first');
+    await expect.poll(() => readFile(second, 'utf8').catch(() => '')).toContain('second');
+
+    const later = resolve(userData, 'later-paste-line.txt');
+    await app.evaluate(
+      ({ clipboard }, value) => clipboard.writeText(value),
+      `Set-Content -LiteralPath '${later}' -Value 'later'\r\nWrite-Output 'SECOND_PASTE_READY'`,
+    );
+    await input.press('Control+v');
+    await dialog.getByRole('button', { name: '确认粘贴' }).click();
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText('剪贴板内容已发送到终端。');
+    expect(await readFile(later, 'utf8').catch(() => undefined)).toBeUndefined();
+    await input.press('Enter');
+    await expect.poll(() => readFile(later, 'utf8').catch(() => '')).toContain('later');
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('Windows CMD profile still accepts multiline paste without bracketed-paste support', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows CMD fallback is under test.');
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-cmd-multiline-paste-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await expect(
+      page.locator('.terminal-session-layer:not([hidden]) .terminal-host'),
+    ).toHaveAttribute('data-connection-state', 'connected');
+    await page.locator('[data-activity-item="setting"]').click();
+    await page.locator('[data-settings-category="terminal"]').click();
+    const profileForm = page
+      .locator('form')
+      .filter({ has: page.getByRole('heading', { name: '终端配置' }) });
+    await profileForm.getByLabel('名称').fill('CMD paste test');
+    await profileForm.getByLabel('Shell', { exact: true }).fill('cmd.exe');
+    await profileForm.getByRole('button', { name: '保存终端配置' }).click();
+    await page.getByLabel('全局默认终端配置').selectOption({ label: 'CMD paste test' });
+    await page.getByRole('button', { name: '关闭设置并返回工作区' }).click();
+
+    const previousId = await page
+      .locator('.terminal-session-layer:not([hidden])')
+      .getAttribute('data-terminal-session');
+    await page.getByTitle('新建会话菜单', { exact: true }).click();
+    await page
+      .locator('.session-menu')
+      .getByRole('button', { name: /本地终端/ })
+      .click();
+    await expect(page.locator('.workspace-tab.terminal-tab')).toHaveCount(2);
+    const layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer).not.toHaveAttribute('data-terminal-session', previousId!);
+    const first = resolve(userData, 'cmd-first.txt');
+    const second = resolve(userData, 'cmd-second.txt');
+    await app.evaluate(
+      ({ clipboard }, value) => clipboard.writeText(value),
+      `echo first > "${first}"\r\necho second > "${second}"`,
+    );
+    const input = layer.locator('.xterm-helper-textarea');
+    await input.press('Control+v');
+    await page
+      .getByRole('dialog', { name: '确认粘贴到终端' })
+      .getByRole('button', { name: '确认粘贴' })
+      .click();
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText(
+      '剪贴板内容已发送到终端。',
+      { timeout: 5_000 },
+    );
+    await expect.poll(() => readFile(first, 'utf8').catch(() => '')).toContain('first');
+    await input.press('Enter');
+    await expect.poll(() => readFile(second, 'utf8').catch(() => '')).toContain('second');
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('SSH first multiline paste uses a hidden startup bracket mode and older shells still receive paste', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows SSH paste regression is under test.');
+  test.setTimeout(60_000);
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-ssh-paste-fallback-e2e-'));
+  const hostKey = utils.generateKeyPairSync('ed25519').private;
+  const parsedHostKey = utils.parseKey(hostKey);
+  if (parsedHostKey instanceof Error || Array.isArray(parsedHostKey))
+    throw new Error('SSH paste fixture generated an invalid host key');
+  const publicKey = parsedHostKey.getPublicSSH();
+  const fingerprint = `SHA256:${createHash('sha256')
+    .update(publicKey)
+    .digest('base64')
+    .replace(/=+$/u, '')}`;
+  const fixture = await startReconnectSshFixture(hostKey);
+  const bracketedFixture = await startReconnectSshFixture(hostKey, 0, true);
+  await mkdir(resolve(userData, 'data'), { recursive: true });
+  const database = await ProductDatabase.open(resolve(userData, 'data', 'axterm.sqlite'));
+  try {
+    const products = new ProductRepository(database);
+    const bookmarks = new BookmarkRepository(database);
+    for (const [name, server] of [
+      ['SSH paste startup', bracketedFixture],
+      ['SSH paste fallback', fixture],
+    ] as const) {
+      const host = products.createHost({
+        name,
+        hostname: '127.0.0.1',
+        port: server.port,
+        username: 'operator',
+        authType: 'agent',
+        sshAgent: { enabled: false, path: null },
+      });
+      products.saveKnownHostKey({
+        host: host.hostname,
+        port: host.port,
+        algorithm: parsedHostKey.type,
+        fingerprint,
+        publicKey: publicKey.toString('base64'),
+      });
+      bookmarks.createBookmark(
+        {
+          groupId: null,
+          protocol: 'ssh',
+          hostId: host.id,
+          title: host.name,
+          color: null,
+          description: 'SSH paste startup fixture',
+          profileId: null,
+          connectionProfileId: null,
+          quickCommands: [],
+          triggers: [],
+          ftp: null,
+          telnet: null,
+          serial: null,
+          rdp: null,
+          vnc: null,
+          spice: null,
+          web: null,
+        },
+        bookmarks.snapshot().etag,
+      );
+    }
+  } finally {
+    database.close();
+  }
+
+  const packaged = process.env.AXTERM_SSH_PASTE_PACKAGED === '1';
+  const app = await electron.launch({
+    executablePath: packaged ? resolve('release/win-unpacked/Axterm.exe') : executablePath,
+    args: packaged
+      ? [`--user-data-dir=${userData}`]
+      : [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await page.locator('[data-activity-item="bookmarks"]').click();
+    await page.locator('[data-bookmark-title="SSH paste startup"] .bookmark-row-main').click();
+    await expect(page.locator('.terminal-pane.active .terminal-tab.active .tab-title')).toHaveText(
+      'SSH paste startup',
+    );
+    let layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    await app.evaluate(({ clipboard }) =>
+      clipboard.writeText('echo SSH_FIRST_BLOCK\necho SSH_SECOND_BLOCK'),
+    );
+    await layer.locator('.xterm-helper-textarea').press('Control+v');
+    await page
+      .getByRole('dialog', { name: '确认粘贴到终端' })
+      .getByRole('button', { name: '确认粘贴' })
+      .click();
+    await expect.poll(() => bracketedFixture.receivedText()).toContain('AXTERM_SHELL_INTEGRATION');
+    bracketedFixture.releaseIntegration();
+    await expect
+      .poll(() => bracketedFixture.receivedText(), { timeout: 15_000 })
+      .toContain('SSH_SECOND_BLOCK');
+    await expect(layer.locator('.terminal-surface')).toHaveAttribute(
+      'data-command-tracking',
+      'active',
+    );
+    expect(bracketedFixture.receivedText()).toContain('\u001b[200~echo SSH_FIRST_BLOCK');
+    expect(bracketedFixture.receivedText()).toContain('SSH_SECOND_BLOCK\u001b[201~');
+
+    await page.locator('[data-bookmark-title="SSH paste fallback"] .bookmark-row-main').click();
+    await expect(page.locator('.terminal-pane.active .terminal-tab.active .tab-title')).toHaveText(
+      'SSH paste fallback',
+    );
+    layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    await expect(layer.locator('.xterm-rows')).toContainText('D04_NETWORK_FIXTURE_READY');
+    await app.evaluate(({ clipboard }) =>
+      clipboard.writeText('echo SSH_PASTE_FIRST\necho SSH_PASTE_SECOND'),
+    );
+    await layer.locator('.xterm-helper-textarea').press('Control+v');
+    await page
+      .getByRole('dialog', { name: '确认粘贴到终端' })
+      .getByRole('button', { name: '确认粘贴' })
+      .click();
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText(
+      '剪贴板内容已发送到终端。',
+      { timeout: 8_000 },
+    );
+    await expect.poll(() => fixture.receivedText()).toContain('SSH_PASTE_FIRST');
+    await expect.poll(() => fixture.receivedText()).toContain('SSH_PASTE_SECOND');
+  } finally {
+    await app.close().catch(() => {});
+    await fixture.stop().catch(() => {});
+    await bracketedFixture.stop().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('active terminal tab has a clearer highlight that follows the selection', async () => {
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-active-tab-color-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await page.locator('.terminal-pane.active .tab-add').click();
+    const tabs = page.locator('.terminal-pane.active .terminal-tab');
+    await expect(tabs).toHaveCount(2);
+
+    const tabBrightness = () =>
+      tabs.evaluateAll((elements) =>
+        elements.map((element) => {
+          const canvas = document.createElement('canvas');
+          canvas.width = canvas.height = 1;
+          const context = canvas.getContext('2d')!;
+          context.fillStyle = getComputedStyle(element).backgroundColor;
+          context.fillRect(0, 0, 1, 1);
+          const [red, green, blue] = context.getImageData(0, 0, 1, 1).data;
+          return red! * 0.2126 + green! * 0.7152 + blue! * 0.0722;
+        }),
+      );
+
+    await expect(tabs.nth(1)).toHaveClass(/active/);
+    let brightness = await tabBrightness();
+    expect(brightness[1]! - brightness[0]!).toBeGreaterThan(25);
+
+    await tabs.first().click();
+    await expect(tabs.first()).toHaveClass(/active/);
+    brightness = await tabBrightness();
+    expect(brightness[0]! - brightness[1]!).toBeGreaterThan(25);
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('embedded file browser fills the pane and renders more rows when the window grows', async () => {
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-file-pane-height-e2e-'));
+  const browseDirectory = resolve(userData, 'many-files');
+  await mkdir(browseDirectory);
+  await Promise.all(
+    Array.from({ length: 80 }, (_, index) =>
+      writeFile(resolve(browseDirectory, `file-${String(index).padStart(3, '0')}.txt`), ''),
+    ),
+  );
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    await app.evaluate(({ dialog }, directory) => {
+      Object.defineProperty(dialog, 'showOpenDialog', {
+        configurable: true,
+        value: async () => ({ canceled: false, filePaths: [directory] }),
+      });
+    }, browseDirectory);
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await page
+      .getByRole('tablist', { name: '会话工具' })
+      .getByRole('tab', { name: '文件管理' })
+      .click();
+    const pane = page.locator('.terminal-file-session-layer:not([hidden]) .file-pane-local');
+    await expect(pane).toBeVisible();
+    await pane.getByRole('button', { name: '更换目录' }).click();
+    await expect(pane.getByLabel('本地绝对路径')).toHaveValue(browseDirectory);
+    const scroll = pane.locator('.file-table-scroll');
+    const visibleRows = () => pane.locator('.file-data-row').count();
+
+    await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.setSize(1200, 700));
+    const compactHeight = await scroll.evaluate((element) => element.clientHeight);
+    await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.setSize(1200, 900));
+    await expect
+      .poll(() => scroll.evaluate((element) => element.clientHeight))
+      .toBeGreaterThan(compactHeight + 150);
+    const expandedHeight = await scroll.evaluate((element) => element.clientHeight);
+    expect(expandedHeight).toBeGreaterThan(400);
+    await expect.poll(visibleRows).toBeGreaterThan(20);
+    const bottomGap = await pane.evaluate((element) => {
+      const scrollRect = element.querySelector('.file-table-scroll')!.getBoundingClientRect();
+      return element.getBoundingClientRect().bottom - scrollRect.bottom;
+    });
+    expect(bottomGap).toBeLessThan(50);
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('empty space after terminal tabs is a safe window drag region', async () => {
+  test.skip(process.platform !== 'win32', 'The Windows custom title bar is under test.');
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-window-drag-space-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await app.evaluate(({ BrowserWindow, screen }) => {
+      const workArea = screen.getPrimaryDisplay().workArea;
+      BrowserWindow.getAllWindows()[0]!.setBounds({
+        x: workArea.x + 100,
+        y: workArea.y + 100,
+        width: Math.min(1_300, workArea.width - 200),
+        height: Math.min(800, workArea.height - 200),
+      });
+    });
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(1);
+    const dragSpace = page.locator('.terminal-pane.active .pane-tabbar-drag-space');
+    await expect(dragSpace).toBeVisible({ timeout: 2_000 });
+    await expect(dragSpace).toHaveCSS('-webkit-app-region', 'drag');
+    const regions = await page.evaluate(() => {
+      const space = document.querySelector('.terminal-pane.active .pane-tabbar-drag-space');
+      const controls = document.querySelector('.terminal-workspace > .tabbar');
+      const close = document.querySelector('[data-window-action="close"]');
+      if (!space || !controls || !close) throw new Error('Missing title-bar region');
+      const blank = space.getBoundingClientRect();
+      const actions = controls.getBoundingClientRect();
+      const closeButton = close.getBoundingClientRect();
+      const x = blank.left + blank.width / 2;
+      const y = blank.top + blank.height / 2;
+      return {
+        blankWidth: blank.width,
+        blankRight: blank.right,
+        controlsLeft: actions.left,
+        hitIsBlank: document.elementFromPoint(x, y) === space,
+        closeRegion: getComputedStyle(close).getPropertyValue('-webkit-app-region'),
+        closeHitsButton: close.contains(
+          document.elementFromPoint(
+            closeButton.left + closeButton.width / 2,
+            closeButton.top + closeButton.height / 2,
+          ),
+        ),
+      };
+    });
+    expect(regions.blankWidth).toBeGreaterThan(100);
+    expect(regions.blankRight).toBeLessThanOrEqual(regions.controlsLeft + 1);
+    expect(regions.hitIsBlank).toBe(true);
+    expect(regions.closeRegion).toBe('no-drag');
+    expect(regions.closeHitsButton).toBe(true);
+
+    await app.evaluate(({ BrowserWindow }) => {
+      const window = BrowserWindow.getAllWindows()[0]!;
+      window.setBounds({ ...window.getBounds(), width: 800 });
+    });
+    for (let index = 0; index < 4; index++)
+      await page.locator('.terminal-pane.active .tab-add').click();
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(5);
+    const overflow = page.getByTestId('pane-1-tab-overflow');
+    await expect(overflow).toBeVisible();
+    const scroll = page.locator('.terminal-pane.active .pane-tabbar-scroll');
+    const stripRight = await scroll.evaluate((element) => element.getBoundingClientRect().right);
+    const controlsLeft = await page
+      .locator('.terminal-workspace > .tabbar')
+      .evaluate((element) => element.getBoundingClientRect().left);
+    expect(stripRight).toBeLessThanOrEqual(controlsLeft + 1);
+    const beforeScroll = await scroll.evaluate((element) => element.scrollLeft);
+    await overflow.getByTitle('窗格 1 向右滚动标签').click();
+    await expect
+      .poll(() => scroll.evaluate((element) => element.scrollLeft))
+      .toBeGreaterThan(beforeScroll);
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('window close button closes one terminal without a prompt', async () => {
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-window-close-one-e2e-'));
+  await mkdir(resolve(userData, 'desktop'));
+  await writeFile(
+    resolve(userData, 'desktop', 'window-preferences.json'),
+    JSON.stringify({
+      version: 1,
+      preferences: { ...DEFAULT_DESKTOP_WINDOW_PREFERENCES, confirmBeforeExit: true },
+    }),
+  );
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(1);
+    const closeButton = page.locator('[data-window-action="close"]');
+    await expect(closeButton).toBeVisible();
+    await closeButton.click();
+    await expect.poll(() => page.isClosed()).toBe(true);
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+test('window close button confirms before closing multiple terminals', async () => {
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-window-close-many-e2e-'));
+  const app = await electron.launch({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(1);
+    await page.locator('.terminal-pane.active .tab-add').click();
+    await expect(page.locator('.terminal-pane.active .terminal-tab')).toHaveCount(2);
+    await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.maximize());
+    await expect
+      .poll(() =>
+        app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.isMaximized()),
+      )
+      .toBe(true);
+
+    const closeButton = page.locator('[data-window-action="close"]');
+    await expect(page.locator('.activity-brand')).toHaveCSS('-webkit-app-region', 'drag');
+    await expect(page.locator('.terminal-workspace > .tabbar')).toHaveCSS(
+      '-webkit-app-region',
+      'no-drag',
+    );
+    const dragStrip = page.locator('.terminal-pane.active > .pane-tabbar .pane-tabbar-scroll');
+    await expect(dragStrip).toHaveCSS('-webkit-app-region', 'drag');
+    const stripRight = await dragStrip.evaluate((element) => element.getBoundingClientRect().right);
+    const controlsLeft = await page
+      .locator('.terminal-workspace > .tabbar')
+      .evaluate((element) => element.getBoundingClientRect().left);
+    expect(stripRight).toBeLessThanOrEqual(controlsLeft + 1);
+    await expect(closeButton).toHaveCSS('-webkit-app-region', 'no-drag');
+    const closeTarget = await closeButton.evaluate((button) => {
+      const bounds = button.getBoundingClientRect();
+      const x = bounds.left + bounds.width / 2;
+      const y = bounds.top + bounds.height / 2;
+      return {
+        x,
+        y,
+        hitsCloseButton: button.contains(document.elementFromPoint(x, y)),
+        regionsAtPoint: document
+          .elementsFromPoint(x, y)
+          .map((element) => getComputedStyle(element).getPropertyValue('-webkit-app-region')),
+      };
+    });
+    expect(closeTarget.hitsCloseButton).toBe(true);
+    expect(closeTarget.regionsAtPoint).not.toContain('drag');
+    await page.mouse.click(closeTarget.x, closeTarget.y);
+    const confirmation = page.getByRole('alertdialog', { name: '关闭 2 个标签？' });
+    await expect(confirmation).toBeVisible();
+    await confirmation.getByRole('button', { name: '取消' }).click();
+    await expect(confirmation).toHaveCount(0);
+    expect(page.isClosed()).toBe(false);
+
+    await page.mouse.click(closeTarget.x, closeTarget.y);
+    await confirmation.getByRole('button', { name: '关闭窗口' }).click();
+    await expect.poll(() => page.isClosed()).toBe(true);
+  } finally {
+    await app.close().catch(() => {});
+    await rm(userData, { recursive: true, force: true });
+  }
+});
 
 test('H12 signed updater exposes check, progress, cancellation and installer handoff', async () => {
   const userData = await mkdtemp(resolve(tmpdir(), 'axterm-updater-e2e-'));
@@ -568,8 +1253,15 @@ async function dragFileTo(source: Locator, target: Locator, page: Page) {
   }
 }
 
-async function startReconnectSshFixture(hostKey: string | Buffer, requestedPort = 0) {
+async function startReconnectSshFixture(
+  hostKey: string | Buffer,
+  requestedPort = 0,
+  hiddenBracketedPaste = false,
+) {
   const connections = new Set<SshServerConnection>();
+  let receivedText = '';
+  let integrationReleaseRequested = false;
+  let pendingIntegrationReply: (() => void) | undefined;
   const server = new SshServer({ hostKeys: [hostKey] }, (connection) => {
     connections.add(connection);
     connection.once('close', () => connections.delete(connection));
@@ -582,15 +1274,34 @@ async function startReconnectSshFixture(hostKey: string | Buffer, requestedPort 
         const session = accept();
         session.on('exec', (acceptCommand) => {
           const stream = acceptCommand();
-          stream.write('/bin/sh\n');
+          stream.write(hiddenBracketedPaste ? '/bin/bash\n' : '/bin/sh\n');
           stream.exit(0);
           stream.end();
         });
         session.on('pty', (acceptPty) => acceptPty?.());
         session.on('shell', (acceptShell) => {
           const stream = acceptShell();
-          stream.write('\r\nD04_NETWORK_FIXTURE_READY\r\n$ ');
-          stream.on('data', (chunk: Buffer) => stream.write(chunk));
+          stream.write(
+            hiddenBracketedPaste
+              ? '\r\nD04_NETWORK_FIXTURE_READY\r\n\u001b[?25l\u001b[?2004h\r\nold$ '
+              : '\r\nD04_NETWORK_FIXTURE_READY\r\n$ ',
+          );
+          let integrationReplied = false;
+          stream.on('data', (chunk: Buffer) => {
+            receivedText = `${receivedText}${chunk.toString('utf8')}`.slice(-64 * 1024);
+            if (
+              hiddenBracketedPaste &&
+              !integrationReplied &&
+              receivedText.includes('AXTERM_SHELL_INTEGRATION')
+            ) {
+              integrationReplied = true;
+              const reply = () => stream.write('echoed bootstrap\r\n\u001b]633;A\u0007new$ ');
+              if (integrationReleaseRequested) reply();
+              else pendingIntegrationReply = reply;
+              return;
+            }
+            stream.write(chunk);
+          });
         });
       });
     });
@@ -602,6 +1313,12 @@ async function startReconnectSshFixture(hostKey: string | Buffer, requestedPort 
   return {
     port: address.port,
     connectionCount: () => connections.size,
+    receivedText: () => receivedText,
+    releaseIntegration() {
+      integrationReleaseRequested = true;
+      pendingIntegrationReply?.();
+      pendingIntegrationReply = undefined;
+    },
     async stop() {
       const closed = new Promise<void>((resolveClose) => server.close(() => resolveClose()));
       for (const connection of connections) connection.end();
@@ -7285,7 +8002,7 @@ test('paste protection and policy-gated OSC 52 operate on a real Electron PTY', 
       'AXTERM_PASTE_CANCELLED_SHOULD_NOT_EXIST',
     );
     await expect(pasteDialog).toContainText('2 行');
-    await expect(pasteDialog.getByRole('button', { name: '取消' })).toBeFocused();
+    await expect(pasteDialog.getByRole('button', { name: '确认粘贴' })).toBeFocused();
     await page.keyboard.press('Escape');
     await expect(pasteDialog).toHaveCount(0);
     await expect(layer.locator('.terminal-action-feedback')).toHaveText('已取消粘贴。');

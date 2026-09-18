@@ -1,5 +1,21 @@
 import type { TerminalBehavior } from '@workspace/contracts';
 
+export const TERMINAL_CTRL_C_DOUBLE_PRESS_MS = 500;
+
+export function terminalCtrlCPress(
+  previousPressAt: number | undefined,
+  pressedAt: number,
+  hasSelection: boolean,
+): { action: 'copy' | 'interrupt'; nextPressAt: number | undefined } {
+  if (
+    previousPressAt !== undefined &&
+    pressedAt >= previousPressAt &&
+    pressedAt - previousPressAt <= TERMINAL_CTRL_C_DOUBLE_PRESS_MS
+  )
+    return { action: 'interrupt', nextPressAt: undefined };
+  return { action: hasSelection ? 'copy' : 'interrupt', nextPressAt: pressedAt };
+}
+
 /** Match Electerm's configured Backspace/Shift+Backspace pair exactly. */
 export function terminalBackspaceSequence(
   mode: TerminalBehavior['backspaceMode'],

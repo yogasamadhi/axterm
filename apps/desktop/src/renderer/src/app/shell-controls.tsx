@@ -427,6 +427,7 @@ export function TerminalPaneGrid({
   paneTerminalIds,
   focusedPane,
   tabs,
+  profiles,
   connections,
   retryingConnectionIds,
   cancelingConnectionIds,
@@ -479,6 +480,7 @@ export function TerminalPaneGrid({
   paneTerminalIds: Array<string | null>;
   focusedPane: number;
   tabs: TerminalTab[];
+  profiles: TerminalProfile[];
   connections: Connection[];
   retryingConnectionIds: ReadonlySet<string>;
   cancelingConnectionIds: ReadonlySet<string>;
@@ -852,6 +854,7 @@ export function TerminalPaneGrid({
                     client={client}
                     active={visible && focusedPane === paneIndex && activeTerminalId === tab.id}
                     kind={tab.kind}
+                    shell={profiles.find((profile) => profile.id === tab.profileId)?.shell}
                     connectionId={connection?.state === 'ready' ? connection.id : undefined}
                     appearance={tab.appearance}
                     behavior={tab.behavior}
@@ -1035,8 +1038,7 @@ function PaneTabBar({
     const element = scroll.current;
     if (!element) return;
     const update = () => {
-      const availableWidth = element.parentElement?.clientWidth ?? element.clientWidth;
-      const next = element.scrollWidth > availableWidth + 1;
+      const next = element.scrollWidth > element.clientWidth + 1;
       setOverflow(next);
       if (!next) setOverflowMenuOpen(false);
     };
@@ -1206,6 +1208,7 @@ function PaneTabBar({
         >
           <ChevronDown size={11} />
         </button>
+        <div className="pane-tabbar-drag-space" aria-hidden="true" />
       </div>
       {overflow && (
         <div className="pane-tabbar-overflow" data-testid={`pane-${index + 1}-tab-overflow`}>
@@ -1467,10 +1470,20 @@ export function TabOverflowMenu({
   );
 }
 
-export function WindowControls({ client }: { client: ReturnType<typeof createRuntimeClient> }) {
+export function WindowControls({
+  client,
+  openTabCount,
+}: {
+  client: ReturnType<typeof createRuntimeClient>;
+  openTabCount: number;
+}) {
   const { x } = useI18n();
   const [maximized, setMaximized] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
+  const [confirmCloseOpen, setConfirmCloseOpen] = useState(false);
+  const [closeError, setCloseError] = useState('');
+  const [closing, setClosing] = useState(false);
+  const closeButton = useRef<HTMLButtonElement>(null);
   const isMac = /Macintosh|Mac OS X/.test(navigator.userAgent);
 
   useEffect(() => {
@@ -1508,6 +1521,33 @@ export function WindowControls({ client }: { client: ReturnType<typeof createRun
     }
   };
 
+  const dismissCloseConfirmation = () => {
+    setConfirmCloseOpen(false);
+    setCloseError('');
+    closeButton.current?.focus();
+  };
+
+  const closeWindow = async () => {
+    if (closing) return;
+    setClosing(true);
+    setCloseError('');
+    try {
+      await client.performWindowAction('close');
+    } catch {
+      // A successful close can destroy the document before the response arrives.
+      if (document.visibilityState === 'visible') setCloseError(x('shell.closeWindowFailed'));
+    } finally {
+      setClosing(false);
+    }
+  };
+
+  const requestClose = () => {
+    if (closing || confirmCloseOpen) return;
+    setCloseError('');
+    if (openTabCount > 1) setConfirmCloseOpen(true);
+    else void closeWindow();
+  };
+
   return (
     <div className="window-controls" aria-label={x('shell.windowControls')}>
       <button
@@ -1537,16 +1577,58 @@ export function WindowControls({ client }: { client: ReturnType<typeof createRun
             {maximized ? <Minimize2 size={12} /> : <Maximize2 size={12} />}
           </button>
           <button
+            ref={closeButton}
             className="window-control-close"
             data-window-action="close"
             title={x('shell.closeWindow')}
             aria-label={x('shell.closeWindow')}
-            onClick={() => void perform('close')}
+            onClick={requestClose}
           >
             <X size={14} />
           </button>
         </>
       )}
+      {closeError && !confirmCloseOpen && (
+        <span className="window-close-error" role="alert">
+          {closeError}
+        </span>
+      )}
+      {confirmCloseOpen &&
+        createPortal(
+          <div className="modal-backdrop">
+            <section
+              className="modal window-close-confirmation"
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="window-close-confirmation-title"
+              aria-describedby="window-close-confirmation-description"
+              onKeyDown={(event) => {
+                if (event.key === 'Escape' && !closing) dismissCloseConfirmation();
+              }}
+            >
+              <header>
+                <h2 id="window-close-confirmation-title">
+                  {x('shell.confirmCloseTabsTitle', { count: openTabCount })}
+                </h2>
+              </header>
+              <div className="window-close-confirmation-body">
+                <p id="window-close-confirmation-description">
+                  {x('shell.confirmCloseTabsDescription')}
+                </p>
+                {closeError && <p role="alert">{closeError}</p>}
+                <div className="modal-actions">
+                  <button autoFocus disabled={closing} onClick={dismissCloseConfirmation}>
+                    {x('common.cancel')}
+                  </button>
+                  <button className="danger" disabled={closing} onClick={() => void closeWindow()}>
+                    {x('shell.closeWindow')}
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

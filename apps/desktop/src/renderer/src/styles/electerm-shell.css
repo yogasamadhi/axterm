@@ -716,7 +716,8 @@ body.shortcut-bar-on .app-shell {
   width: auto;
   min-width: 0;
   background: transparent;
-  pointer-events: none;
+  app-region: no-drag;
+  -webkit-app-region: no-drag;
 }
 
 .terminal-workspace > .tabbar .tabbar-scroll {
@@ -809,9 +810,9 @@ body.shortcut-bar-on .app-shell {
 }
 
 .workspace-tab.active {
-  background: var(--shell-canvas);
+  background: color-mix(in srgb, var(--shell-canvas) 45%, var(--shell-raised));
   box-shadow: none;
-  color: var(--shell-text);
+  color: var(--shell-text-strong);
 }
 
 .workspace-tab.disconnected {
@@ -1023,10 +1024,42 @@ body.shortcut-bar-on .app-shell {
   -webkit-app-region: no-drag;
 }
 
+.window-controls button {
+  app-region: no-drag;
+  -webkit-app-region: no-drag;
+}
+
 .window-controls .window-control-close:hover,
 .window-controls [data-window-action='close']:hover {
   background: var(--shell-danger);
   color: #ffffff;
+}
+
+.window-close-confirmation {
+  width: min(420px, calc(100vw - 40px));
+}
+
+.window-close-confirmation-body {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  font-size: 12px;
+}
+
+.window-close-confirmation-body p {
+  margin: 0;
+}
+
+.window-close-error {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: max-content;
+  max-width: 300px;
+  padding: 8px 12px;
+  background: var(--shell-danger);
+  color: #ffffff;
+  font-size: 11px;
 }
 
 .tab-rename {
@@ -1295,8 +1328,6 @@ body.shortcut-bar-on .app-shell {
   align-items: stretch;
   overflow: hidden;
   background: var(--shell-deep);
-  app-region: drag;
-  -webkit-app-region: drag;
 }
 
 .pane-tabbar-scroll {
@@ -1308,6 +1339,23 @@ body.shortcut-bar-on .app-shell {
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
+  app-region: drag;
+  -webkit-app-region: drag;
+}
+
+/* The scroll strip is the drag surface. Reserve the measured controls width
+ * on Windows so it never runs underneath the close button. */
+.app-shell.is-windows .terminal-workspace .pane-tabbar {
+  padding-right: var(--terminal-window-controls-width, 320px);
+}
+
+.pane-tabbar-drag-space {
+  height: var(--shell-tab-size);
+  min-width: 0;
+  flex: 1 0 0;
+}
+
+.app-shell.is-windows .terminal-workspace .pane-tabbar-drag-space {
   app-region: drag;
   -webkit-app-region: drag;
 }
@@ -1638,6 +1686,14 @@ body.shortcut-bar-on .app-shell {
 .terminal-file-session-layer .embedded-file-panel .file-pane .file-list {
   min-height: 0;
   max-height: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-file-session-layer .embedded-file-panel .file-table-scroll {
+  min-height: 0;
+  height: auto;
   flex: 1;
 }
 
@@ -3838,6 +3894,14 @@ body.resizing-panes webview {
 .app-shell.section-files.surface-section .file-pane .file-list {
   min-height: 0;
   max-height: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell.section-files.surface-section .file-table-scroll {
+  min-height: 0;
+  height: auto;
   flex: 1;
 }
 

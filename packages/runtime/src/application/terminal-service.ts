@@ -127,6 +127,7 @@ const SHELL_INTEGRATION_OUTPUT_MAX_BYTES = 64 * 1024;
 const SHELL_INTEGRATION_INPUT_MAX_BYTES = 256 * 1024;
 const SHELL_INTEGRATION_MARKER_BYTES = Buffer.from(SHELL_INTEGRATION_MARKER, 'utf8');
 const TERMINAL_CURSOR_HIDE_BYTES = Buffer.from('\u001b[?25l', 'latin1');
+const BRACKETED_PASTE_ON_BYTES = Buffer.from('\u001b[?2004h', 'latin1');
 
 export class TerminalService {
   private readonly sessions = new Map<string, ManagedTerminal>();
@@ -649,6 +650,7 @@ export class TerminalService {
       countLineFeeds(replacementPrompt),
     );
     if (initialOutput.length) this.broadcast(managed, initialOutput);
+    this.restoreHiddenBracketedPasteMode(managed);
     // Retain the marker and following prompt bytes so the Renderer tracker
     // observes activation, while the echoed bootstrap command stays hidden.
     this.broadcast(managed, replacementPrompt);
@@ -735,6 +737,7 @@ export class TerminalService {
       recoveryOutput.length > 0 ? 0 : undefined,
     );
     if (initialOutput.length) this.broadcast(managed, initialOutput);
+    this.restoreHiddenBracketedPasteMode(managed);
     if (recoveryOutput.length) this.broadcast(managed, recoveryOutput);
     this.flushPendingInput(managed);
   }
@@ -746,6 +749,13 @@ export class TerminalService {
     });
     for (const socket of managed.sockets.keys())
       if (socket.readyState === 1) socket.send(message, { binary: false });
+  }
+
+  private restoreHiddenBracketedPasteMode(managed: ManagedTerminal): void {
+    // Startup prompt replacement can discard the shell's DECSET 2004. The
+    // shell still has bracketed paste enabled, so mirror that mode to xterm
+    // before flushing the user's first queued paste.
+    if (managed.bracketedPasteEnabled) this.broadcast(managed, BRACKETED_PASTE_ON_BYTES);
   }
 
   private disposeShellIntegration(managed: ManagedTerminal): void {

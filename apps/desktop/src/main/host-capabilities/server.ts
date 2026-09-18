@@ -107,6 +107,7 @@ interface HostCapabilityServerOptions {
   revealGrantedPath?: (path: string) => Promise<void>;
   copyGrantedPaths?: (paths: string[]) => Promise<void>;
   globalHotkey?: GlobalHotkeyRegistrationPort;
+  approveWindowClose?: (target: Pick<BrowserWindow, 'close' | 'isDestroyed'>) => void;
   updater?: DesktopUpdaterPort;
 }
 
@@ -152,6 +153,7 @@ export class HostCapabilityServer {
       getAppliedTitleBarStyle: () => this.appliedTitleBarStyle,
       getAppliedAllowMultiInstance: () => this.appliedAllowMultiInstance,
       ...(options.globalHotkey ? { globalHotkey: options.globalHotkey } : {}),
+      ...(options.approveWindowClose ? { approveClose: options.approveWindowClose } : {}),
     });
     this.webViews = new NativeWebViewController(getWindow);
     this.updater = options.updater ?? new DisabledDesktopUpdater();

@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 2026-09-17
+Updated: 2026-09-18
 Product version: `0.10.0`  
 Normative sources: [MASTER_SPEC](../architecture/MASTER_SPEC.md),
 [ELECTERM_PARITY_SPEC](../product/ELECTERM_PARITY_SPEC.md)  
@@ -15,6 +15,20 @@ technology stack. Phase 0–10 is the reusable foundation; Phase 11–21 and all
 matrix rows define the remaining product delivery. Saved credentials use only
 the application-local Host Credential Vault, and a fresh desktop profile opens
 at 1440×900.
+
+The Windows paste regression reported on 2026-09-18 is fixed: a fresh local
+PowerShell tab buffers the first and later multiline pastes until Enter. SSH
+shell-integration prompt replacement now restores a bracketed-paste mode that
+was enabled in the discarded startup output, so the first SSH multiline paste
+is framed instead of executing lines separately. The renderer waits through
+bounded SSH startup/recovery for the mode; shells without support still receive
+the paste. Runtime unit tests cover hidden mode on activation and recovery;
+source Electron SSH first-paste tests passed five consecutive runs, and the
+packaged Windows app passed the same SSH test three consecutive runs. Source
+PowerShell/CMD and packaged PowerShell/confirmation journeys also pass. The
+Windows installer remains unsigned. The repository-wide `bun run check` remains
+blocked by pre-existing Prettier differences in 606 files; relevant modified
+source files pass targeted format, lint, typecheck and unit checks.
 
 ## Current result
 

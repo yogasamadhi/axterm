@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type DragEvent as ReactDragEvent,
@@ -7729,6 +7730,15 @@ function FileTable({
   const [dropTarget, setDropTarget] = useState<string>();
   const activeDragRef = useRef<FileDragPayload | undefined>(undefined);
   const scrollRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const scroll = scrollRef.current;
+    if (!scroll) return;
+    const measure = () => setViewportHeight(scroll.clientHeight);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(scroll);
+    return () => observer.disconnect();
+  }, []);
   const drag = useRef<
     | {
         index: number;
@@ -7990,7 +8000,6 @@ function FileTable({
         }}
         onScroll={(event) => {
           setScrollTop(event.currentTarget.scrollTop);
-          setViewportHeight(event.currentTarget.clientHeight);
         }}
       >
         {parentVisible && (
