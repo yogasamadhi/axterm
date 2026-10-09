@@ -1,0 +1,44 @@
+/*
+ * Axterm's product-shell tokens. These semantic roles deliberately own the
+ * application chrome rather than mirroring a historical reference surface.
+ * Feature and terminal themes may override the same roles without changing
+ * interaction geometry or accessibility affordances.
+ */
+:root {
+  --ax-color-canvas: #252525;
+  --ax-color-canvas-deep: #191919;
+  --ax-color-terminal-canvas: #1e1e1e;
+  --ax-color-surface-raised: #343434;
+  --ax-color-surface-sunken: #1e1e1e;
+  --ax-color-surface-muted: #606060;
+  --ax-color-text: #dedede;
+  --ax-color-text-strong: #f5f5f5;
+  --ax-color-text-muted: #b0b0b0;
+  --ax-color-text-disabled: #8a8a8a;
+  --ax-color-primary: #2fc7a1;
+  --ax-color-info: #ffc857;
+  --ax-color-success: #4bd17d;
+  --ax-color-danger: #f06473;
+  --ax-color-warning: #ff9f43;
+  --ax-color-on-primary: #06201b;
+  --ax-color-on-danger: #101617;
+
+  --ax-size-activity-rail: 40px;
+  --ax-size-terminal-left-rail: 24px;
+  --ax-size-tab-height: 38px;
+  --ax-size-footer-height: 32px;
+  --ax-size-tab-min: 112px;
+  --ax-size-tab-max: 240px;
+  --ax-size-tab-close: 18px;
+  --ax-size-status-dot: 6px;
+  --ax-size-shortcut-bar: 44px;
+
+  --ax-space-1: 4px;
+  --ax-space-2: 8px;
+  --ax-space-3: 12px;
+  --ax-space-4: 16px;
+  --ax-radius-control: 6px;
+  --ax-radius-panel: 10px;
+  --ax-motion-fast: 160ms;
+  --ax-shadow-menu: 0 18px 42px rgb(0 0 0 / 28%), 0 0 0 1px rgb(255 255 255 / 5%);
+}

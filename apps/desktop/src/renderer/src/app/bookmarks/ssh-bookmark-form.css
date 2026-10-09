@@ -1,0 +1,1284 @@
+.host-protocol-form {
+  align-items: start;
+}
+
+.host-form-tabs {
+  display: flex;
+  gap: 18px;
+  margin: -16px -16px 2px;
+  padding: 0 16px;
+  overflow-x: auto;
+  border-bottom: 1px solid #27302d;
+  scrollbar-width: thin;
+}
+
+.host-form-tabs button {
+  min-width: 0;
+  padding: 12px 2px 10px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: #77847e;
+  background: transparent;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.host-form-tabs button:hover,
+.host-form-tabs button:focus-visible {
+  color: #c8d2cd;
+  background: transparent;
+}
+
+.host-form-tabs button.active {
+  border-bottom-color: #56b894;
+  color: #d8e2dd;
+}
+
+.host-protocol-form .host-form-field {
+  display: none !important;
+}
+
+.host-protocol-form[data-active-tab='auth'] .host-form-field[data-tab~='auth'],
+.host-protocol-form[data-active-tab='settings'] .host-form-field[data-tab~='settings'],
+.host-protocol-form[data-active-tab='quickCommands'] .host-form-field[data-tab~='quickCommands'],
+.host-protocol-form[data-active-tab='triggers'] .host-form-field[data-tab~='triggers'],
+.host-protocol-form[data-active-tab='tunnels'] .host-form-field[data-tab~='tunnels'],
+.host-protocol-form[data-active-tab='hops'] .host-form-field[data-tab~='hops'] {
+  display: grid !important;
+}
+
+.bookmark-quick-command-field {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  grid-column: 1 / -1;
+  order: 2;
+}
+
+.bookmark-quick-command-field > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.bookmark-quick-command-field > header p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
+.bookmark-quick-command-list {
+  display: grid;
+  gap: 8px;
+}
+
+.bookmark-quick-command-row {
+  display: grid;
+  grid-template-columns: 24px minmax(130px, 0.4fr) minmax(240px, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--panel-raised);
+}
+
+.bookmark-quick-command-row > span {
+  padding-top: 23px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.bookmark-quick-command-row label {
+  display: grid;
+  gap: 4px;
+}
+
+.bookmark-quick-command-row textarea {
+  min-height: 56px;
+  resize: vertical;
+  font-family: var(--font-mono);
+}
+
+.bookmark-quick-command-actions {
+  display: flex;
+  gap: 4px;
+  padding-top: 20px;
+}
+
+.bookmark-quick-command-empty {
+  padding: 32px 16px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 5px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.bookmark-trigger-field {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 12px;
+  align-content: start;
+  order: 2;
+  text-align: left;
+}
+
+.bookmark-trigger-field > header,
+.bookmark-trigger-row > header,
+.bookmark-trigger-add,
+.bookmark-trigger-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bookmark-trigger-field > header {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.bookmark-trigger-field > header p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
+.bookmark-trigger-list {
+  display: grid;
+  gap: 9px;
+}
+
+.bookmark-trigger-row {
+  display: grid;
+  gap: 10px;
+  padding: 11px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px;
+  background: var(--panel-raised);
+}
+
+.bookmark-trigger-row > header > span {
+  display: inline-grid;
+  place-items: center;
+  color: #56b894;
+}
+
+.bookmark-trigger-actions {
+  margin-left: auto;
+}
+
+.bookmark-trigger-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.bookmark-trigger-grid label {
+  display: grid;
+  gap: 4px;
+}
+
+.bookmark-trigger-grid label.wide {
+  grid-column: span 2;
+}
+
+.bookmark-trigger-grid label.check.compact {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  min-height: 32px;
+}
+
+.bookmark-trigger-grid textarea {
+  min-height: 56px;
+  resize: vertical;
+  font-family: var(--font-mono);
+}
+
+.bookmark-trigger-empty {
+  padding: 32px 16px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 5px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.host-protocol-form[data-active-tab] label.check.host-form-field {
+  display: none !important;
+}
+
+.host-protocol-form[data-active-tab='auth'] label.check.host-form-field[data-tab~='auth'],
+.host-protocol-form[data-active-tab='settings'] label.check.host-form-field[data-tab~='settings'] {
+  display: flex !important;
+}
+
+.host-form-tab-intro {
+  margin: 0;
+  padding: 1px 0 2px;
+  color: #74827b;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.host-auth-note {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #2c3732;
+  border-radius: 6px;
+  color: #84918b;
+  background: #101619;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.host-protocol-form > .modal-actions {
+  margin-top: 3px;
+  padding-top: 13px;
+  border-top: 1px solid #27302d;
+}
+
+@media (max-width: 720px) {
+  .host-protocol-form[data-active-tab] .host-form-field[data-tab] {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Protocol editors keep the bookmark workspace recognizable without letting
+ * its controls compete with a dense connection form. The restrained mint
+ * edge, fixed header and sticky action bar are shared by every non-SSH
+ * protocol so they read as one Axterm-owned editor family. */
+.modal-backdrop:has(.protocol-bookmark-modal) {
+  padding: 16px;
+  background: color-mix(in srgb, var(--shell-canvas) 76%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.modal.protocol-bookmark-modal {
+  display: grid;
+  width: min(820px, calc(100vw - 40px));
+  max-height: calc(100vh - 32px);
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--shell-primary) 34%, var(--border-strong));
+  background: color-mix(in srgb, var(--shell-canvas) 90%, #111a16);
+  box-shadow:
+    0 30px 100px #000d,
+    0 0 0 1px color-mix(in srgb, var(--shell-primary) 9%, transparent);
+}
+
+.modal.protocol-bookmark-modal > header {
+  position: relative;
+  height: 54px;
+  padding: 0 18px 0 22px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--shell-primary) 8%, var(--shell-canvas)),
+    color-mix(in srgb, var(--shell-canvas) 96%, transparent) 48%
+  );
+}
+
+.modal.protocol-bookmark-modal > header::before {
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  left: 12px;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--shell-primary);
+  content: '';
+}
+
+.modal.protocol-bookmark-modal > header h2 {
+  color: var(--text-strong);
+  letter-spacing: 0.01em;
+}
+
+.modal.protocol-bookmark-modal > header button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.modal.protocol-bookmark-modal > .protocol-bookmark-form {
+  min-height: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.protocol-bookmark-form > label {
+  min-width: 0;
+}
+
+.protocol-bookmark-form > .error-banner {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.protocol-bookmark-form .checkbox-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  padding: 12px 14px;
+  border-color: var(--border);
+  background: color-mix(in srgb, var(--shell-primary) 4%, var(--shell-canvas));
+}
+
+.protocol-bookmark-form .checkbox-grid legend {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.protocol-bookmark-form .hint.full-field {
+  padding: 10px 12px;
+  border-left: 2px solid color-mix(in srgb, var(--shell-primary) 68%, transparent);
+  border-radius: 0 7px 7px 0;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--shell-primary) 5%, var(--shell-canvas));
+  font-size: 10px;
+}
+
+.protocol-bookmark-form > .modal-actions {
+  position: sticky;
+  z-index: 2;
+  bottom: -20px;
+  margin: 2px -20px -20px;
+  padding: 14px 20px 16px;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--shell-canvas) 96%, transparent);
+  box-shadow: 0 -12px 28px color-mix(in srgb, var(--shell-canvas) 70%, transparent);
+}
+
+.protocol-bookmark-form > .modal-actions button {
+  min-width: 92px;
+}
+
+@media (max-width: 720px) {
+  .modal-backdrop:has(.protocol-bookmark-modal) {
+    padding: 12px;
+  }
+
+  .modal.protocol-bookmark-modal {
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 24px);
+  }
+
+  .modal.protocol-bookmark-modal > .protocol-bookmark-form {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+  }
+
+  .protocol-bookmark-form > label,
+  .protocol-bookmark-form > .full-field,
+  .protocol-bookmark-form > .modal-actions,
+  .protocol-bookmark-form > .error-banner {
+    grid-column: 1;
+  }
+
+  .protocol-bookmark-form > .modal-actions {
+    bottom: -16px;
+    margin: 2px -16px -16px;
+    padding: 12px 16px 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .protocol-bookmark-form .checkbox-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .protocol-bookmark-form > .modal-actions {
+    flex-wrap: wrap;
+  }
+
+  .protocol-bookmark-form > .modal-actions button {
+    flex: 1 1 130px;
+  }
+}
+
+.modal.interaction-modal {
+  width: min(660px, calc(100vw - 32px));
+  overflow: auto;
+}
+
+.modal.interaction-modal > header {
+  min-height: 52px;
+  height: auto;
+  background: color-mix(in srgb, var(--shell-primary) 5%, var(--shell-canvas));
+}
+
+.modal.host-key-interaction-modal.unknown {
+  border-color: color-mix(in srgb, var(--shell-warning) 52%, var(--border-strong));
+}
+
+.modal.host-key-interaction-modal.changed {
+  border-color: color-mix(in srgb, var(--shell-danger) 68%, var(--border-strong));
+  box-shadow:
+    0 28px 100px #000d,
+    0 0 0 1px color-mix(in srgb, var(--shell-danger) 16%, transparent);
+}
+
+.modal.host-key-interaction-modal.unknown > header {
+  border-color: color-mix(in srgb, var(--shell-warning) 26%, var(--border));
+  background: color-mix(in srgb, var(--shell-warning) 7%, var(--shell-canvas));
+}
+
+.modal.host-key-interaction-modal.changed > header {
+  border-color: color-mix(in srgb, var(--shell-danger) 34%, var(--border));
+  background: color-mix(in srgb, var(--shell-danger) 9%, var(--shell-canvas));
+}
+
+.modal.interaction-modal > form {
+  gap: 16px;
+  padding: 20px;
+}
+
+.host-key-interaction-detail,
+.keyboard-interaction-detail {
+  display: grid;
+  gap: 14px;
+}
+
+.host-key-interaction-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--shell-warning) 34%, var(--border));
+  border-radius: 9px;
+  color: var(--shell-warning);
+  background: color-mix(in srgb, var(--shell-warning) 8%, var(--shell-canvas));
+}
+
+.host-key-interaction-modal.changed .host-key-interaction-summary {
+  border-color: color-mix(in srgb, var(--shell-danger) 46%, var(--border));
+  color: var(--shell-danger);
+  background: color-mix(in srgb, var(--shell-danger) 10%, var(--shell-canvas));
+}
+
+.host-key-interaction-summary strong {
+  color: var(--shell-text-strong);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.host-key-interaction-summary span {
+  padding: 3px 7px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.host-key-interaction-detail dl {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--border);
+}
+
+.host-key-interaction-detail dl > div {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.34fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--shell-canvas) 94%, var(--shell-primary));
+}
+
+.host-key-interaction-detail dt {
+  color: var(--shell-text-muted);
+  font-size: 10px;
+}
+
+.host-key-interaction-detail dd {
+  min-width: 0;
+  margin: 0;
+}
+
+.host-key-interaction-detail code,
+.keyboard-interaction-detail > code {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--shell-text-strong);
+  font-size: 11px;
+  user-select: text;
+}
+
+.host-key-interaction-detail > p,
+.keyboard-interaction-detail > p {
+  margin: 0;
+  color: var(--shell-text-muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.host-key-interaction-modal.changed .host-key-interaction-detail > p {
+  color: color-mix(in srgb, var(--shell-danger) 76%, var(--shell-text));
+}
+
+.host-key-interaction-modal .check {
+  align-items: flex-start;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--shell-primary) 4%, var(--shell-canvas));
+  line-height: 1.5;
+}
+
+.host-key-interaction-modal.changed .check {
+  border-color: color-mix(in srgb, var(--shell-danger) 30%, var(--border));
+  background: color-mix(in srgb, var(--shell-danger) 5%, var(--shell-canvas));
+}
+
+.host-key-confirmation-error {
+  margin: -8px 0 0;
+  color: var(--shell-danger);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.keyboard-interaction-detail {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--shell-primary) 4%, var(--shell-canvas));
+}
+
+@media (max-width: 520px) {
+  .host-key-interaction-summary {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .host-key-interaction-summary span {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .host-key-interaction-detail dl > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+  }
+}
+
+.host-bookmark-modal .host-jump-chain {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+  background: #1a1a20;
+}
+
+.host-bookmark-modal .host-tunnel-editor {
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+  background: #1a1a20;
+}
+
+.host-bookmark-modal .host-tunnel-editor legend {
+  padding: 0 6px;
+  color: #dddddd;
+  font-size: 14px;
+}
+
+.host-tunnel-draft {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.host-tunnel-draft > label {
+  display: grid;
+  gap: 5px;
+}
+
+.host-tunnel-draft .host-tunnel-non-loopback {
+  align-self: end;
+}
+
+.host-tunnel-draft-actions {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.host-tunnel-list {
+  display: grid;
+  gap: 7px;
+}
+
+.host-tunnel-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px 32px 32px;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 6px 8px;
+  border: 1px solid #34343d;
+  border-radius: 3px;
+  background: #202027;
+}
+
+.host-tunnel-row.active {
+  border-color: #286b51;
+}
+
+.host-tunnel-row.failed {
+  border-color: #8a4545;
+}
+
+.host-tunnel-row > span {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.host-tunnel-row strong,
+.host-tunnel-row small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.host-tunnel-row small {
+  color: #85858f;
+  font-size: 11px;
+}
+
+.host-tunnel-row button {
+  min-height: 32px;
+}
+
+.host-bookmark-modal .host-jump-chain legend {
+  padding: 0 6px;
+  color: #dddddd;
+  font-size: 14px;
+}
+
+.host-jump-chain-add {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 8px;
+}
+
+.host-jump-chain-add label {
+  display: grid;
+  gap: 5px;
+}
+
+.host-jump-chain-add select,
+.host-jump-chain-add button,
+.host-jump-chain-list button {
+  min-height: 32px;
+}
+
+.host-jump-chain-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.host-jump-chain-list li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 32px 32px 32px;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 5px 6px;
+  border: 1px solid #34343d;
+  border-radius: 3px;
+  background: #202027;
+}
+
+.host-jump-chain-list li > span:nth-of-type(2) {
+  display: grid;
+  min-width: 0;
+}
+
+.host-jump-chain-list strong,
+.host-jump-chain-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.host-jump-chain-list small {
+  color: #81818b;
+}
+
+.host-jump-chain-index {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--shell-primary);
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.host-jump-chain-empty {
+  margin: 0;
+}
+
+.host-jump-chain-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  color: #a6a6af;
+  font-size: 12px;
+}
+
+.host-jump-chain-path span + span::before {
+  content: '→';
+  margin-right: 6px;
+  color: #5f5f69;
+}
+
+.ssh-algorithm-settings {
+  padding: 10px 12px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+}
+
+.ssh-algorithm-settings summary {
+  cursor: pointer;
+  color: #d7d7dd;
+}
+
+.ssh-algorithm-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ssh-algorithm-grid label {
+  display: grid;
+  gap: 5px;
+}
+
+.ssh-algorithm-grid select {
+  min-height: 92px;
+  border-color: #44444f;
+  background: #1e1e25;
+  color: #dddddd;
+  font-size: 12px;
+}
+
+.ssh-startup-settings {
+  padding: 10px 12px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+}
+
+.ssh-x11-settings {
+  display: grid;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #35353e;
+  border-radius: 4px;
+}
+
+.ssh-x11-settings:not([open]) > :not(summary) {
+  display: none;
+}
+
+.ssh-x11-settings summary {
+  cursor: pointer;
+  color: #d7d7dd;
+}
+
+.ssh-x11-settings > label:not(.check) {
+  display: grid;
+  gap: 5px;
+}
+
+.ssh-startup-settings summary {
+  cursor: pointer;
+  color: #d7d7dd;
+}
+
+.ssh-startup-settings[open] {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 12px;
+  background: #121214;
+  text-align: left;
+}
+
+.ssh-startup-settings[open] > * {
+  grid-column: 1;
+}
+
+.ssh-startup-settings > label,
+.ssh-startup-script-row label {
+  display: grid;
+  gap: 5px;
+}
+
+.ssh-startup-settings small {
+  color: #85858f;
+}
+
+.ssh-startup-script-group {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #303038;
+}
+
+.ssh-startup-script-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ssh-startup-script-heading button {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  gap: 5px;
+}
+
+.ssh-startup-script-row {
+  display: grid;
+  grid-template-columns: 112px minmax(210px, 1fr) minmax(260px, 0.8fr) 32px;
+  align-items: end;
+  gap: 8px;
+}
+
+.ssh-startup-script-row > button {
+  min-height: 32px;
+}
+
+.ssh-startup-script-row textarea {
+  min-height: 54px;
+  resize: vertical;
+}
+
+.ssh-startup-script-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.ssh-startup-script-options label {
+  min-width: 0;
+}
+
+.ssh-startup-script-options input,
+.ssh-startup-script-options select {
+  width: 100%;
+  min-height: 30px;
+}
+
+/* ADR-016/P-07: the SSH editor is an Axterm task dialog, not a reproduction of
+ * another product's full-window settings workspace. Keep protocol switching
+ * and the complete advanced form, but present them in the shared modal shell. */
+.modal-backdrop:has(.host-bookmark-modal) {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #050809aa;
+  backdrop-filter: blur(4px);
+}
+
+.modal.host-bookmark-modal {
+  position: static;
+  inset: auto;
+  width: min(920px, calc(100vw - 40px));
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 28px 90px #000c;
+}
+
+.host-bookmark-modal > header {
+  position: sticky;
+  z-index: 4;
+  inset: 0 0 auto;
+  height: 52px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--panel) 96%, transparent);
+  backdrop-filter: blur(12px);
+  pointer-events: auto;
+}
+
+.host-bookmark-modal > header h2 {
+  display: block;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.modal.host-bookmark-modal > header button {
+  position: static;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  min-height: 30px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  color: var(--text-muted);
+  background: transparent;
+  font-size: 19px;
+}
+
+.host-bookmark-modal > .host-protocol-form {
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 14px;
+  min-height: 0;
+  padding: 18px;
+  overflow: visible;
+}
+
+.host-bookmark-modal > .host-protocol-form > * {
+  order: initial !important;
+  flex: initial;
+}
+
+.host-bookmark-dialog-intro {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--panel-raised) 82%, var(--panel));
+}
+
+.host-bookmark-dialog-summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.host-bookmark-dialog-summary > div {
+  display: grid;
+  gap: 4px;
+}
+
+.host-bookmark-dialog-summary strong {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.host-bookmark-dialog-summary p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.host-bookmark-dialog-summary > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.host-bookmark-modal .host-bookmark-protocols {
+  position: static;
+  display: flex;
+  height: auto;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+}
+
+.host-bookmark-modal .host-bookmark-protocols button {
+  height: 30px;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-muted);
+  background: var(--panel-raised);
+  font-size: 11px;
+  font-weight: 550;
+}
+
+.host-bookmark-modal .host-bookmark-protocols button + button {
+  margin-left: 0;
+  border-left: 1px solid var(--border);
+}
+
+.host-bookmark-modal .host-bookmark-protocols button.active {
+  border-color: var(--shell-primary);
+  color: var(--shell-primary-contrast);
+  background: var(--shell-primary);
+}
+
+.host-bookmark-modal .host-form-tabs {
+  display: flex;
+  align-items: stretch;
+  height: auto;
+  margin: 0;
+  padding: 0 2px;
+  gap: 18px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border-subtle);
+  scrollbar-width: thin;
+}
+
+.host-bookmark-modal .host-form-tabs button {
+  height: 38px;
+  min-height: 38px;
+  padding: 0 2px;
+  color: var(--text-muted);
+  background: transparent;
+  font-size: 11px;
+}
+
+.host-bookmark-modal .host-form-tabs button.active {
+  border-bottom-color: var(--shell-primary);
+  color: var(--shell-primary);
+}
+
+.host-bookmark-modal .host-form-field,
+.host-bookmark-modal .host-protocol-form[data-active-tab] label.check.host-form-field {
+  grid-column: auto;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 6px;
+  min-height: 0;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-align: left;
+}
+
+.host-bookmark-modal .host-form-field.full-field,
+.host-bookmark-modal .host-form-tabs,
+.host-bookmark-modal .modal-actions {
+  grid-column: 1 / -1;
+}
+
+.host-bookmark-modal .host-field-category {
+  grid-template-columns: minmax(0, 1fr) 34px;
+  align-items: end;
+}
+
+.host-bookmark-modal .host-field-category > label {
+  min-width: 0;
+}
+
+.host-bookmark-modal .host-field-category > button {
+  display: grid;
+  width: 34px;
+  min-height: 34px;
+  place-items: center;
+  padding: 0;
+}
+
+.host-bookmark-modal .host-field-port > input,
+.host-bookmark-modal .host-form-field > input,
+.host-bookmark-modal .host-form-field > select,
+.host-bookmark-modal .host-form-field > textarea {
+  width: 100%;
+  min-height: 34px;
+  border-color: var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  background: #0d1317;
+  font-size: 12px;
+}
+
+.host-bookmark-modal .host-form-field > textarea {
+  height: auto;
+  min-height: 76px;
+}
+
+.host-bookmark-modal .host-form-field > input:focus,
+.host-bookmark-modal .host-form-field > select:focus,
+.host-bookmark-modal .host-form-field > textarea:focus {
+  border-color: var(--shell-primary);
+  outline: 1px solid var(--shell-primary);
+}
+
+.host-bookmark-modal .host-required-label i {
+  margin-right: 3px;
+  color: var(--danger);
+  font-style: normal;
+}
+
+.host-bookmark-modal .host-auth-selector {
+  position: static;
+  min-height: 0;
+  margin: 0;
+}
+
+.host-bookmark-modal .host-auth-selector > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.host-bookmark-modal .host-auth-selector button {
+  height: 30px;
+  min-height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-muted);
+  background: var(--panel-raised);
+  font-size: 11px;
+}
+
+.host-bookmark-modal .host-auth-selector button + button {
+  border-left: 1px solid var(--border);
+}
+
+.host-bookmark-modal .host-auth-selector button.active {
+  border-color: var(--shell-primary);
+  color: var(--shell-primary-contrast);
+  background: var(--shell-primary);
+}
+
+.host-bookmark-modal .host-auth-native-select {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.host-bookmark-modal .host-field-agent > div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.host-bookmark-modal .host-field-agent > div > input {
+  width: 100%;
+}
+
+.host-bookmark-modal .host-field-mfa {
+  align-content: start;
+}
+
+.host-bookmark-modal .host-field-mfa > button {
+  justify-self: start;
+}
+
+.host-bookmark-modal .host-switch {
+  position: relative;
+  display: block;
+  width: 43px;
+  height: 22px;
+  min-height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: var(--border-strong);
+}
+
+.host-bookmark-modal .host-switch i {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text);
+  transition: left 120ms ease;
+}
+
+.host-bookmark-modal .host-switch[aria-checked='true'] {
+  background: var(--shell-primary);
+}
+
+.host-bookmark-modal .host-switch[aria-checked='true'] i {
+  left: 23px;
+}
+
+.modal.host-bookmark-modal .host-protocol-form[data-active-tab] label.check.host-form-field {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.modal.host-bookmark-modal
+  .host-protocol-form[data-active-tab]
+  label.check.host-form-field
+  input[type='checkbox'] {
+  grid-column: auto;
+  justify-self: auto;
+  width: 16px;
+  height: 16px;
+  min-height: 0;
+  flex: 0 0 16px;
+}
+
+.host-bookmark-modal .host-protocol-form > .modal-actions {
+  position: sticky;
+  bottom: -18px;
+  z-index: 3;
+  justify-content: flex-end;
+  margin: 4px -18px -18px;
+  padding: 14px 18px 18px;
+  border-top: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--panel) 96%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+@media (max-width: 760px) {
+  .modal.host-bookmark-modal {
+    width: min(680px, calc(100vw - 20px));
+    max-height: calc(100vh - 20px);
+  }
+
+  .host-bookmark-modal > .host-protocol-form {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 14px;
+  }
+
+  .host-bookmark-dialog-summary {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .host-bookmark-dialog-summary > button {
+    align-self: start;
+  }
+
+  .host-bookmark-modal .host-form-field,
+  .host-bookmark-modal .host-protocol-form[data-active-tab] label.check.host-form-field {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .host-bookmark-modal .host-protocol-form > .modal-actions {
+    margin: 4px -14px -14px;
+    padding: 12px 14px 14px;
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Legacy migration workflow",
+    "action": "connect",
+    "params": {
+      "host": "legacy-workflow.example.test",
+      "port": 2222,
+      "username": "operator",
+      "password": "SYNTHETIC_LEGACY_WORKFLOW_SECRET"
+    },
+    "retry": 3
+  },
+  {
+    "name": "Prepare",
+    "action": "command",
+    "command": "printf LEGACY_PREPARE",
+    "afterDelay": 20,
+    "expect": "$"
+  },
+  {
+    "name": "Verify",
+    "action": "command",
+    "command": "printf LEGACY_VERIFY",
+    "prevDelay": 30
+  }
+]

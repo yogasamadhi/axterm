@@ -1,0 +1,461 @@
+Axterm third-party notices — transition build
+
+This file identifies known upstream-derived and separately licensed material
+currently present in Axterm. It is not yet a complete inventory of all direct
+and transitive dependencies. The independent commercial release remains gated
+on a full dependency, asset, source, and packaged-artifact license audit.
+The separate THIRD_PARTY_COMPONENTS.json lists the installed production
+dependency graph and is available in the app's About and licenses view. It is
+a metadata index, not a substitute for the applicable notices below.
+THIRD_PARTY_LICENSE_TEXTS.json separately preserves the exact root
+LICENSE/COPYING/NOTICE file text and hashes found in the installed production
+dependency graph. It lists packages lacking such a root file and does not
+replace file-level notices, source-availability duties or legal review.
+
+Axterm's own code is licensed under Apache-2.0 (see LICENSE). That license does
+not replace the licenses or copyright notices below.
+
+Preserved historical copyright notices pending source review
+------------------------------------------------------------
+Two historical source and locale archives carried the following copyright
+notices, respectively. The original archives remain in the controlled prior
+repository; this notice does not claim that the archives are shipped here:
+
+Copyright (c) since 2017~ ZHAO Xudong <zxdong@gmail.com>
+Copyright (c) 2017~tomorrow ZHAO Xudong <zxdong@gmail.com>
+
+The active Renderer locale catalog is an Axterm navigation draft, not the
+historical 410-message snapshot. Product-specific compatibility entry points
+and old-data migration identifiers are absent from this candidate. These
+copyright lines are retained conservatively until a qualified source and
+packaged-artifact review determines the applicable attribution. Textual
+cleanup does not establish independent authorship or clear distribution rights.
+
+zmodem2 1.4.0
+--------------
+The installed package's LICENSE file states:
+
+Copyright (c) 2026 ZHAO Xudong <zxdong@gmail.com>
+
+The publisher describes zmodem2 as a port of the zmodem2 Rust crate. The
+upstream Rust crate's MIT license also states:
+
+Copyright (c) 2017-2020 Alexey Arbuzov
+Copyright (c) 2023-2025 Jarkko Sakkinen
+
+The MIT permission and disclaimer below are retained for this source chain.
+The precise translated-code lineage and completeness of attribution remain
+part of the final source-rights review.
+
+trzsz2 1.2.0
+-------------
+The installed package's LICENSE file states:
+
+Copyright (c) 2024 trzsz2 contributors
+
+The publisher identifies this library as a derivative of trzsz.js by Lonny
+Wong. The original project's MIT LICENSE at the source revision predating
+trzsz2 preserves:
+
+Copyright (c) 2023 Lonny Wong
+
+The original license text is preserved verbatim in
+licenses/trzsz-js-LICENSE.txt. The publisher's derived source files also carry
+"Copyright(c) 2024 Lonny Wong" headers. Both upstream and publisher notices
+apply; the MIT permission and disclaimer below are retained for this chain.
+
+Axterm applies a local patch to the separately published MIT package's
+receiver: a successful or failed data receive clears its pending timeout,
+binary chunk headers are limited to 16 MiB, and protocol lines are limited
+to 32 MiB in both POSIX and Windows terminal readers. Pending peer input is
+limited to 64 MiB and 4,096 chunks, and consumed receive-queue slots are reclaimed.
+The patch is in patches/trzsz2@1.2.0.patch in the Axterm source tree. The
+original copyright and MIT permission terms continue to apply to this
+modified third-party component.
+
+isarray 1.0.0
+-------------
+The published package declares MIT but contains no separate root LICENSE
+file. Its README includes the complete MIT permission and disclaimer with:
+
+Copyright (c) 2013 Julian Gruber <julian@juliangruber.com>
+
+The exact installed README is preserved in licenses/isarray-README.txt and
+is readable in the application About/Legal view. The official v1.0.0 source
+tag has the same README, executable index.js and package.json bytes as the
+installed package. This source-text mapping does not replace the pending
+qualified source-rights and distribution review.
+
+@openclaw/fs-safe 0.13.1 and its platform-native binding
+----------------------------------------------------------
+The Runtime uses this separately published MIT package only for atomic
+no-replace publication when a destination filesystem rejects hard links.
+The publisher's root LICENSE states:
+
+Copyright (c) 2026 openclaw
+Copyright (c) 2026 OpenClaw Foundation (guest filesystem Python source)
+
+The applicable MIT permission and disclaimer appear below and the exact
+parent-package LICENSE is preserved in THIRD_PARTY_LICENSE_TEXTS.json. The
+macOS arm64 native package declares MIT but does not contain its own root
+LICENSE file; the parent project license is supplied for that binding as a
+conservative notice, pending final qualified source-rights review. Other
+platform-native packages remain subject to their installed-artifact review.
+The exact macOS arm64 Cargo source graph has 61 package identities. The
+publisher's root license and all 110 available dependency root legal files
+are preserved verbatim in licenses/fs-safe-rust-ROOT-LICENSES.txt, accessible
+both in the installed legal directory and the app's About/Legal view. That
+collection includes alternative license choices and is not a conclusion on
+which option applies to the published binary. The locked zstd-sys crate also
+contains a nested Zstandard source tree with its own BSD-style LICENSE and
+GPLv2 COPYING. Both original texts are preserved in
+licenses/zstd-sys-Zstandard-LICENSE.txt and
+licenses/zstd-sys-Zstandard-COPYING.txt. The Zstandard source headers describe
+these as alternatives; including both texts does not select GPLv2 or determine
+the published binary's applicable obligations. Four napi-family crates have no
+own root legal file. A separate source-header candidate sweep found 156 explicit
+copyright/SPDX lines in 156 code files across nine packages; those exact lines,
+source-file hashes and positions are preserved in
+licenses/fs-safe-SOURCE-HEADER-ATTRIBUTIONS.txt and in About. This candidate
+index is not a complete file-level attribution decision and does not prove
+which files enter the published native binding. Other nested/source notices and
+other platforms still require qualified review. The pinned source hashes and limitations are recorded in
+docs/implementation/evidence/IR11-FS-SAFE-RUST-DEPENDENCIES-2026-09-24.json.
+
+napi-rs Rust crates in fs-safe's macOS native source graph
+-----------------------------------------------------------
+The locked graph contains napi 3.12.2, napi-derive 3.6.3,
+napi-derive-backend 6.1.2 and napi-sys 3.3.0. Their published Cargo
+manifests declare MIT but the .crate archives omit a root license file.
+The published packages' Cargo VCS metadata points to four package paths
+at three commits of https://github.com/napi-rs/napi-rs. Each of those
+commits has the same repository-root LICENSE. The exact two-block MIT text,
+including the LongYinan and GitHub copyright lines, is preserved in
+licenses/napi-rs-LICENSE.txt and made available in the installed legal
+directory and About/Legal. This source-root supplement does not establish
+which code was linked into the published fs-safe binary, resolve nested
+attribution, or replace qualified distribution review.
+
+node-pty 1.1.0
+--------------
+The installed package's LICENSE file includes the following copyright notices:
+
+Copyright (c) 2012-2015, Christopher Jeffrey
+Copyright (c) 2016, Daniel Imms
+Copyright (c) 2018 - present Microsoft Corporation
+
+Axterm applies a narrowly scoped local patch to the package's Unix
+`src/unix/pty.cc` source: it corrects file-descriptor accounting around the
+`posix_spawn` setup and cleanup loops. The patch is in
+`patches/node-pty@1.1.0.patch` in the Axterm source tree. The original
+copyright notices and MIT permission terms continue to apply to this modified
+third-party component; the exact installed LICENSE file is also preserved in
+`THIRD_PARTY_LICENSE_TEXTS.json` and exposed in the application Legal view.
+
+@xterm/addon-serialize 0.14.0
+-----------------------------
+The published package identifies the xterm.js authors and declares MIT, but
+omits a root license file. Its bundled SerializeAddon.ts matches the official
+xterm.js f447274f430fd22513f6adbf9862d19524471c04 source file. The root
+MIT copyright and permission text at that commit is preserved in
+licenses/xterm-addon-serialize-LICENSE.txt.
+
+@xterm/headless 6.0.0
+----------------------
+The published headless package declares MIT but omits a root license file.
+The official xterm.js 6.0.0 tag resolves to the same
+f447274f430fd22513f6adbf9862d19524471c04 commit as the serialize
+package's recorded source. The exact root MIT text at that tag is preserved
+in licenses/xterm-addon-serialize-LICENSE.txt for both packages. This source
+license mapping does not by itself prove every published bundle byte matches
+the tagged source; the checked-in headless/package.json at that tag still
+shows 5.5.0, so the 6.0.0 publication step needs separate verification.
+
+The installed 6.0.0 CommonJS source map also embeds 11
+`out/vs/base/common/*.js` modules whose source headers state:
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the MIT License. See License.txt in the project root for license information.
+
+The official microsoft/vscode MIT permission text and copyright line are
+preserved in licenses/xterm-headless-vscode-LICENSE.txt. This separately
+credits the published headless bundle's VS Code source chain; the exact VS
+Code source revision and complete bundle provenance still require review.
+
+drizzle-orm 0.45.2
+------------------
+The installed package declares Apache-2.0 and names Drizzle Team as author,
+but omits a root license file. The official 0.45.2 source tag contains an
+Apache-2.0 LICENSE; its exact text is preserved in
+licenses/drizzle-orm-LICENSE.txt. Published-bundle provenance and any
+file-level notices remain part of the final source-to-binary review.
+
+@hono/zod-openapi 1.6.3 and @hono/zod-validator 0.9.1
+------------------------------------------------------
+Both published packages declare MIT and include a README naming Yusuke Wada
+as author and MIT as the license. Each installed README is byte-identical to
+the corresponding official honojs/middleware release tag: zod-openapi
+bc7d9e67119f870b5275569b371676663c74c976 and zod-validator
+8de0f1ea32b76d40df0ec4a06ed5af2e100ccbfd. The common MIT permission
+and disclaimer below are provided for these components. The installed package
+roots and matching tagged package directories lack a LICENSE file, and these
+READMEs state no package-specific copyright holder or year. A qualified
+reviewer must resolve any further attribution duty.
+
+ssh2 1.17.0 and buildcheck 0.0.7
+---------------------------------
+Both installed packages identify Brian White as author and declare MIT using
+the legacy package.json `licenses` field. Their bundled root LICENSE files
+contain the same copyright and permission text:
+
+Copyright Brian White. All rights reserved.
+
+The common MIT permission and disclaimer below are retained for these
+components as well. Their package-level LICENSE files remain in the app.
+
+tweetnacl 0.14.5
+-----------------
+The installed package declares Unlicense and retains its exact public-domain
+dedication in the production root-license archive. Its README points to
+AUTHORS.md, which lists the TweetNaCl.js authors and the credited TweetNaCl
+and Poly1305-donna public-domain source authors. The exact published file,
+matching the official v0.14.5 source tag, is preserved as
+licenses/tweetnacl-AUTHORS.txt and readable in About. This records the
+publisher's source chain; it does not infer copyright ownership or replace
+the final file-level rights review.
+
+@devolutions/iron-remote-desktop-rdp 0.7.0
+------------------------------------------
+The installed package identifies Alexandr Yusuk as author, Benoit Cortier as
+a contributor, and Devolutions/IronRDP as its source repository. Its package
+manifest declares MIT OR Apache-2.0. Axterm distributes this RDP web backend
+under the Apache-2.0 option. The upstream release-tagged Apache text is
+preserved separately as licenses/IronRDP-LICENSE-APACHE.txt and available in
+About; Axterm's own customized root LICENSE is not used as the third-party
+attribution record. The official npm-iron-remote-desktop-rdp-v0.7.0 source
+tag resolves to e45f68c7e52297ca50d33b44c0ace36c9940fbe6, and its
+public/package.json matches the published package byte-for-byte. The
+published npm tarball contains bundled JavaScript with embedded IronRDP
+WebAssembly but no separate license file. A byte-identical package manifest
+does not establish a source-to-WASM build match or settle any additional
+file-level attribution duties; both remain part of the final review.
+The tagged source's ironrdp-web wasm32 normal/build Cargo tree contains 259
+distinct source packages. Their 468 available package-root legal files plus
+the upstream Apache and MIT root texts are preserved byte-for-byte in
+licenses/IronRDP-RUST-ROOT-LICENSES.txt and readable in About. Six registry
+crates and five upstream workspace crates have no legal file in their own
+package root; the upstream root texts cover the workspace declaration but
+do not replace qualified file-level review. The target-tree inventory and
+source caveats are recorded in the IR-11 IronRDP WASM source evidence.
+For the six registry crates, their published archives' VCS metadata and a
+matching source file identify exact publisher commits. Both original
+repository-root license texts from each commit are additionally preserved
+in licenses/IronRDP-MISSING-CRATE-ROOT-LICENSES.txt and readable in About.
+Those texts are supplements; the published crate archives themselves still
+have no root legal file and no license alternative is selected here.
+The locked tracing-core 0.1.36 archive also contains a nested
+src/spin/LICENSE with a distinct MIT attribution to Mathijs van de Nes.
+Its exact original text is preserved separately as
+licenses/tracing-core-spin-LICENSE.txt and readable in About. This source
+candidate may be build-time-only; preserving its notice does not prove its
+code is linked into the published WASM.
+The target source graph also contains explicit file-level copyright and
+SPDX header lines. An archive/tag-checked candidate inventory preserves
+798 matching lines from 719 source files in 51 packages, separately as
+licenses/IronRDP-SOURCE-HEADER-ATTRIBUTIONS.txt and in About. The lines
+identify review candidates rather than replacing full source licenses;
+the graph includes build-time code and is not a map of linked WASM files.
+This preservation does not prove that every source package is linked into
+the published WASM or select a license alternative for its dependencies.
+
+Chromium DOM code to Windows scan-code data
+--------------------------------------------
+The RDP keyboard mapping in apps/desktop/src/renderer/src/components/
+rdp-scancodes.ts was generated from the Windows scan-code column of Chromium's
+ui/events/keycodes/dom/dom_code_data.inc at commit
+6f88d301153935f5ea3ad43fbbb4096ddfe25685. That source file states:
+
+Copyright 2013 The Chromium Authors
+
+The Chromium repository root BSD-style permission, conditions and disclaimer
+are preserved byte-for-byte in licenses/chromium-dom-code-data-LICENSE.txt,
+readable in the installed legal directory and application About/Legal view.
+This separately identifies the RDP mapping data; Electron's own bundled
+Chromium notices are not used as a substitute. The generated map preserves
+the 84 browser-code inputs already supported by Axterm, with values selected
+from USB keyboard usage-page rows with nonzero Windows scan codes. The
+source SHA-256 and exact selection rule are in the generated file. This
+provenance record is subject to qualified final source-rights review.
+
+spice-client 1.2.0
+------------------
+The installed package identifies ZHAO Xudong as its author and says it is a
+TypeScript port of spice-html5 (SPICE Project). Its package metadata states
+LGPL-3.0-or-later. The package's exact LICENSE notice is in
+licenses/spice-client-LICENSE.txt; the complete LGPL-3.0 and GPL-3.0 texts
+are in licenses/LGPL-3.0.txt and licenses/GPL-3.0.txt.
+The published ESM source map contains 30 source texts, including embedded
+jsbn, SHA-1 and keyboard-name code with additional Tom Wu, Paul Johnston,
+Thomas Roell and XFree86 notices. Their exact leading comments and source
+hashes are preserved in licenses/spice-client-SOURCE-NOTICES.txt. This is an
+attribution aid, not a complete corresponding-source or LGPL-compliance claim.
+The fixed publisher source copy is supplied in
+licenses/spice-client-1.2.0-source.tar; extraction and provenance information
+are in licenses/spice-client-SOURCE-README.txt. The archive includes the
+library source and build inputs but does not by itself establish every LGPL
+distribution or relinking obligation.
+
+@novnc/novnc 1.7.0
+------------------
+The installed package's LICENSE.txt names the noVNC authors and states that
+the core library is under MPL-2.0. Its exact distribution notice is in
+licenses/noVNC-LICENSE.txt; the referenced authors file is preserved at
+licenses/noVNC-AUTHORS.txt. The complete MPL-2.0 text is in
+licenses/MPL-2.0.txt. The included core DES implementation carries separate
+AT&T Laboratories Cambridge, Widget Workshop and Jef Poskanzer notices,
+preserved verbatim in licenses/noVNC-DES-NOTICE.txt. The package also carries
+BSD-2-Clause and BSD-3-Clause texts, included in licenses/. Which additional
+assets and embedded components enter each platform bundle still needs a
+binary-level review.
+Its imported core inflator/deflator uses the bundled vendor/pako implementation.
+The exact MIT notice for that embedded copy is preserved in
+licenses/noVNC-pako-LICENSE.txt; this is separate from the production graph's
+standalone pako package notice. The embedded copy says:
+Copyright (C) 2014-2016 by Vitaly Puzrin
+The generated licenses/noVNC-SOURCE-NOTICES.txt lists the 52 source inputs
+reachable from the RFB entry, their exact installed hashes, and the leading
+file-level legal/source-origin comments found there. This includes the
+Mozilla-origin core/base64.js header and identifies files with no such header;
+the actual Vite build also emits axterm-novnc-bundle-provenance.json inside
+app.asar, mapping those installed inputs to the RFB chunk and its hash. These
+are module-level provenance aids, not complete source-to-binary or MPL
+source-availability compliance evidence.
+The exact published @novnc/novnc 1.7.0 source tarball is also supplied as
+licenses/noVNC-1.7.0-source.tgz, with extraction and scope information in
+licenses/noVNC-SOURCE-README.txt. It contains the RFB input files and the
+embedded Pako source; final MPL source-availability and attribution review
+remains open.
+
+MIT license text for the components identified above
+---------------------------------------------------------------------
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Maple Mono via @fontsource/maple-mono
+-------------------------------------
+Copyright (c) 2022, subframe7536 (https://github.com/subframe7536),
+with Reserved Font Name Maple Mono.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+
+Pi AI / Agent / telemetry source engine
+Source: https://github.com/earendil-works/pi
+Revision: 5b6c792b424e73edefbfa558b901bcd64788dad2 (Pi 1.0.3)
+Copyright (c) 2025 Mario Zechner
+License: MIT; full text: licenses/pi-LICENSE.txt
+The pinned model catalog is included under packages/pi-engine/catalog; its immutable source and SHA-256 revision are recorded in provenance.json.

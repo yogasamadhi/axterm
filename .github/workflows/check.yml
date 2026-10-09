@@ -1,0 +1,174 @@
+name: Axterm independent release checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-22.04, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      # Immutable release commits prevent a later mutable action tag from
+      # changing the source or artifact-producing release workflow.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          # Dependency installation and packaging do not need a checkout token.
+          persist-credentials: false
+          submodules: recursive
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24.18.0'
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: '1.4.0'
+      - run: bun run snapshot:check
+      - run: bun install --frozen-lockfile
+      - run: bun run audit:dependencies
+      - if: runner.os == 'Linux'
+        run: bun run licenses:ironrdp:provenance-check
+      - if: runner.os == 'Linux'
+        run: bunx playwright install-deps chromium
+      - if: runner.os == 'Linux'
+        run: sudo apt-get install -y curl xvfb x11-utils python3-gi gir1.2-gtk-3.0 squashfs-tools
+      - if: runner.os == 'Linux'
+        run: xvfb-run -a -s '-screen 0 1920x1080x24' bun run check
+      - if: runner.os != 'Linux'
+        run: bun run check
+      - if: runner.os == 'Linux'
+        run: bun run test:ssh
+      - name: Prepare pinned independent transfer peers
+        if: runner.os == 'Linux'
+        run: |
+          docker pull debian@sha256:3783cc01769c7b2b1b83a5c5ad96c815348e28ed7da68e2e3687004faa906251
+          curl --fail --location --silent --show-error --max-time 30 --output "$RUNNER_TEMP/lrzsz_0.12.21-10+b1_amd64.deb" https://deb.debian.org/debian/pool/main/l/lrzsz/lrzsz_0.12.21-10+b1_amd64.deb
+      - name: Test independent lrzsz over SSH PTY
+        if: runner.os == 'Linux'
+        env:
+          AXTERM_EXTERNAL_LRZSZ_SSH: '1'
+          AXTERM_EXTERNAL_PEER_PLATFORM: linux/amd64
+          AXTERM_EXTERNAL_LRZSZ_DEB: ${{ runner.temp }}/lrzsz_0.12.21-10+b1_amd64.deb
+        run: bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-ssh-pty.test.ts
+      - name: Test independent trzsz-go over SSH PTY
+        if: runner.os == 'Linux'
+        env:
+          AXTERM_EXTERNAL_TRZSZ_SSH: '1'
+          AXTERM_EXTERNAL_PEER_PLATFORM: linux/amd64
+        run: bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-ssh-pty.test.ts
+      - if: runner.os == 'Linux'
+        run: xvfb-run -a -s '-screen 0 1920x1080x24' bunx playwright test --project=desktop --project=accessibility --project=performance
+      - if: runner.os != 'Linux'
+        run: bunx playwright test --project=desktop --project=accessibility --project=performance
+      - run: bun run package
+      - if: runner.os == 'macOS'
+        run: bun run sbom:packaged -- release/mac-arm64/Axterm.app/Contents/Resources --platform macos-arm64 --output release/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
+      - if: runner.os == 'Windows'
+        run: bun run sbom:packaged -- release/win-unpacked/resources --platform windows-x64 --output release/AXTERM_PACKAGED_ARTIFACTS.windows-x64.spdx.json
+      - if: runner.os == 'Linux'
+        run: bun run sbom:packaged -- release/linux-unpacked/resources --platform linux-x64 --output release/AXTERM_PACKAGED_ARTIFACTS.linux-x64.spdx.json
+      - if: runner.os == 'macOS'
+        run: bun run release:hashes -- release --platform macos-arm64 --output release/AXTERM_RELEASE_ARTIFACTS.macos-arm64.json
+      - if: runner.os == 'Windows'
+        run: bun run release:hashes -- release --platform windows-x64 --output release/AXTERM_RELEASE_ARTIFACTS.windows-x64.json
+      - if: runner.os == 'Linux'
+        run: bun run release:hashes -- release --platform linux-x64 --output release/AXTERM_RELEASE_ARTIFACTS.linux-x64.json
+      - if: runner.os == 'Linux'
+        run: bun run test:deb:linux
+      - if: runner.os == 'Linux'
+        run: bun run test:appimage:linux
+      - if: runner.os == 'Linux'
+        run: bun run test:appimage:linux:runtime
+      - if: runner.os == 'Windows'
+        run: bun run test:nsis:windows
+      - if: runner.os == 'macOS'
+        run: bun run test:dmg:macos
+      - if: runner.os == 'Linux'
+        run: xvfb-run -a -s '-screen 0 1920x1080x24' bun run test:ssh:packaged
+      - if: runner.os == 'macOS'
+        run: bun run sbom:packaged:check -- release/mac-arm64/Axterm.app/Contents/Resources --platform macos-arm64 --sidecar release/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
+      - if: runner.os == 'Windows'
+        run: bun run sbom:packaged:check -- release/win-unpacked/resources --platform windows-x64 --sidecar release/AXTERM_PACKAGED_ARTIFACTS.windows-x64.spdx.json
+      - if: runner.os == 'Linux'
+        run: bun run sbom:packaged:check -- release/linux-unpacked/resources --platform linux-x64 --sidecar release/AXTERM_PACKAGED_ARTIFACTS.linux-x64.spdx.json
+      - if: runner.os == 'macOS'
+        run: bun run release:updater-feed:package-check -- release/mac-arm64/Axterm.app/Contents/Resources
+      - if: runner.os == 'Windows'
+        run: bun run release:updater-feed:package-check -- release/win-unpacked/resources
+      - if: runner.os == 'Linux'
+        run: bun run release:updater-feed:package-check -- release/linux-unpacked/resources
+      - if: runner.os == 'macOS'
+        run: bun run release:hashes:check -- release --platform macos-arm64 --manifest release/AXTERM_RELEASE_ARTIFACTS.macos-arm64.json
+      - if: runner.os == 'Windows'
+        run: bun run release:hashes:check -- release --platform windows-x64 --manifest release/AXTERM_RELEASE_ARTIFACTS.windows-x64.json
+      - if: runner.os == 'Linux'
+        run: bun run release:hashes:check -- release --platform linux-x64 --manifest release/AXTERM_RELEASE_ARTIFACTS.linux-x64.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: packaged-installers-${{ matrix.os }}
+          path: |
+            release/*.dmg
+            release/*.zip
+            release/*.exe
+            release/*.AppImage
+            release/*.deb
+            release/*.blockmap
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: packaged-sbom-${{ matrix.os }}
+          path: release/AXTERM_PACKAGED_ARTIFACTS.*.spdx.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: packaged-artifact-hashes-${{ matrix.os }}
+          path: release/AXTERM_RELEASE_ARTIFACTS.*.json
+          if-no-files-found: error
+      - name: Download uploaded installers for byte verification
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: packaged-installers-${{ matrix.os }}
+          path: downloaded-release
+      - name: Download uploaded hash manifest for byte verification
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: packaged-artifact-hashes-${{ matrix.os }}
+          path: downloaded-release
+      - name: Download uploaded SPDX sidecar for byte verification
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: packaged-sbom-${{ matrix.os }}
+          path: downloaded-release
+      - if: runner.os == 'macOS'
+        run: bun run release:hashes:check -- downloaded-release --platform macos-arm64 --manifest downloaded-release/AXTERM_RELEASE_ARTIFACTS.macos-arm64.json --receipt downloaded-release/AXTERM_UPLOAD_ROUNDTRIP.macos-arm64.json
+      - if: runner.os == 'Windows'
+        run: bun run release:hashes:check -- downloaded-release --platform windows-x64 --manifest downloaded-release/AXTERM_RELEASE_ARTIFACTS.windows-x64.json --receipt downloaded-release/AXTERM_UPLOAD_ROUNDTRIP.windows-x64.json
+      - if: runner.os == 'Linux'
+        run: bun run release:hashes:check -- downloaded-release --platform linux-x64 --manifest downloaded-release/AXTERM_RELEASE_ARTIFACTS.linux-x64.json --receipt downloaded-release/AXTERM_UPLOAD_ROUNDTRIP.linux-x64.json
+      - if: runner.os == 'macOS'
+        run: bun run sbom:packaged:check -- release/mac-arm64/Axterm.app/Contents/Resources --platform macos-arm64 --sidecar downloaded-release/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json --receipt downloaded-release/AXTERM_SPDX_UPLOAD_ROUNDTRIP.macos-arm64.json
+      - if: runner.os == 'Windows'
+        run: bun run sbom:packaged:check -- release/win-unpacked/resources --platform windows-x64 --sidecar downloaded-release/AXTERM_PACKAGED_ARTIFACTS.windows-x64.spdx.json --receipt downloaded-release/AXTERM_SPDX_UPLOAD_ROUNDTRIP.windows-x64.json
+      - if: runner.os == 'Linux'
+        run: bun run sbom:packaged:check -- release/linux-unpacked/resources --platform linux-x64 --sidecar downloaded-release/AXTERM_PACKAGED_ARTIFACTS.linux-x64.spdx.json --receipt downloaded-release/AXTERM_SPDX_UPLOAD_ROUNDTRIP.linux-x64.json
+      - if: runner.os == 'Linux'
+        run: bun run test:appimage:linux -- --artifact-dir downloaded-release
+      - if: runner.os == 'Linux'
+        run: bun run test:appimage:linux:runtime -- --artifact-dir downloaded-release
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: packaged-upload-roundtrip-${{ matrix.os }}
+          path: |
+            downloaded-release/AXTERM_UPLOAD_ROUNDTRIP.*.json
+            downloaded-release/AXTERM_SPDX_UPLOAD_ROUNDTRIP.*.json
+            downloaded-release/AXTERM_APPIMAGE_RUNTIME.*.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: failure()
+        with:
+          name: diagnostics-${{ matrix.os }}
+          path: test-results

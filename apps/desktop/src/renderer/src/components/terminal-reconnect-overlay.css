@@ -1,0 +1,62 @@
+.terminal-reconnect-overlay {
+  position: absolute;
+  right: 12px;
+  bottom: 6px;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  color: rgb(255 255 255 / 55%);
+  font-size: 11px;
+}
+
+.terminal-reconnect-message {
+  pointer-events: none;
+}
+
+.terminal-reconnect-actions {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 4px;
+  background: rgb(20 20 21 / 94%);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 28%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.terminal-reconnect-overlay:hover .terminal-reconnect-actions,
+.terminal-reconnect-overlay:focus-within .terminal-reconnect-actions,
+.terminal-reconnect-overlay.error .terminal-reconnect-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.terminal-reconnect-overlay.error {
+  color: #e8aaa1;
+}
+
+.terminal-reconnect-overlay button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 22px;
+  padding: 2px 7px;
+  color: #b9c4be;
+  font: inherit;
+  border: 1px solid #3b4741;
+  border-radius: 3px;
+  background: #202725;
+}
+
+.terminal-reconnect-overlay button:hover:not(:disabled) {
+  color: #ffffff;
+  border-color: #66736d;
+}
+
+.terminal-reconnect-overlay button:disabled {
+  opacity: 0.55;
+}

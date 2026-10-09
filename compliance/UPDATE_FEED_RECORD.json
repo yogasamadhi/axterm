@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "manifestUrl": null,
+  "publicKeyBase64": null,
+  "approval": null,
+  "limitations": [
+    "A pending record disables the packaged public updater unless an explicit local test environment supplies a feed.",
+    "An active record pins a public HTTPS manifest URL and Ed25519 public key inside each release package; runtime environment variables cannot override it.",
+    "Active configuration alone does not prove that the HTTPS feed, signing service, installer signing, public download or installed upgrade works."
+  ]
+}

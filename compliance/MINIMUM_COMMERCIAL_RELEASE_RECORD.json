@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "contentRights": null,
+  "macDelivery": null,
+  "publicAccess": null,
+  "ownerAcceptance": null,
+  "limitations": [
+    "Null means pending, not rejected or approved. Never populate a field merely to make the gate pass.",
+    "Content-rights and owner decisions require named human authority and review of the cited exact material; this record cannot decide copyright, trademark or legal sufficiency.",
+    "Mac evidence must come from a Developer ID signed and notarized package downloaded from the stated public HTTPS address. The current unsigned local package is not eligible.",
+    "Windows and Linux native tests remain the owner's later self-test and must not be represented as passed by this Mac gate."
+  ]
+}

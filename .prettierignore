@@ -1,0 +1,20 @@
+node_modules
+out
+dist
+release
+bun.lock
+coverage
+playwright-report
+test-results
+packages/client/src/generated
+docs/api/openapi.json
+docs/architecture
+AGENTS.md
+vendor
+# Exact old-package export bytes are guarded by SHA-256 in migration tests.
+tests/fixtures/migration/historical-axterm-portable-v2-657b3cc.json
+# Sanitized old-package sync envelopes keep their recorded fixture bytes.
+tests/fixtures/migration/historical-axterm-sync-plaintext-v1-657b3cc.sanitized.json
+tests/fixtures/migration/historical-axterm-sync-encrypted-v1-657b3cc.sanitized.json
+
+packages/pi-engine/catalog/models.all.json

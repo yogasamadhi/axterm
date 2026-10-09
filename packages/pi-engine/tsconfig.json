@@ -1,0 +1,35 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "types": ["node"],
+    "lib": ["ES2024"],
+    "target": "ES2024",
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false,
+    "paths": {
+      "@earendil-works/pi-ai": ["../../vendor/pi/packages/ai/src/index.ts"],
+      "@earendil-works/pi-telemetry": ["../../vendor/pi/packages/telemetry/src/index.ts"],
+      "@anthropic-ai/sdk": ["./node_modules/@anthropic-ai/sdk"],
+      "@anthropic-ai/sdk/*": ["./node_modules/@anthropic-ai/sdk/*"],
+      "@aws-sdk/client-bedrock-runtime": ["./node_modules/@aws-sdk/client-bedrock-runtime"],
+      "@aws-sdk/client-bedrock-runtime/*": ["./node_modules/@aws-sdk/client-bedrock-runtime/*"],
+      "@google/genai": ["./node_modules/@google/genai"],
+      "@google/genai/*": ["./node_modules/@google/genai/*"],
+      "@smithy/node-http-handler": ["./node_modules/@smithy/node-http-handler"],
+      "@smithy/node-http-handler/*": ["./node_modules/@smithy/node-http-handler/*"],
+      "http-proxy-agent": ["./node_modules/http-proxy-agent/dist/index.d.ts"],
+      "http-proxy-agent/*": ["./node_modules/http-proxy-agent/*"],
+      "https-proxy-agent": ["./node_modules/https-proxy-agent/dist/index.d.ts"],
+      "https-proxy-agent/*": ["./node_modules/https-proxy-agent/*"],
+      "openai": ["./node_modules/openai"],
+      "openai/*": ["./node_modules/openai/*"],
+      "partial-json": ["./node_modules/partial-json"],
+      "partial-json/*": ["./node_modules/partial-json/*"],
+      "typebox": ["./node_modules/typebox"],
+      "typebox/*": ["./node_modules/typebox/build/*/index.d.mts"],
+      "@smithy/types": ["./node_modules/@smithy/types/dist-types/index.d.ts"]
+    }
+  },
+  "include": ["src/**/*.ts"]
+}

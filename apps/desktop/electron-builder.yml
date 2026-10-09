@@ -1,0 +1,118 @@
+appId: dev.axterm.desktop
+productName: Axterm
+copyright: Copyright © 2026 Axterm contributors
+directories:
+  output: ../../release
+  buildResources: build
+files:
+  - out/**/*
+  - package.json
+  - node_modules/node-pty/package.json
+  - node_modules/node-pty/LICENSE
+  - node_modules/node-pty/lib/**/*.js
+  - node_modules/node-pty/build/Release/**/*
+  - node_modules/@openclaw/fs-safe/**/*
+  - node_modules/@openclaw/fs-safe-*/**/*
+  - node_modules/serialport/**/*
+  - node_modules/@serialport/**/*
+  - node_modules/ssh2/**/*
+  - node_modules/ws/**/*
+  - '!node_modules/cpu-features/**/*'
+  # The optional translated README is not runtime or legal material; the
+  # package license and source notices are included separately below.
+  - '!node_modules/spice-client/README.cn.md'
+  # The packaging script rebuilds both native modules for this Electron ABI.
+  # Published prebuilds for other operating systems are not part of this app.
+  - '!node_modules/node-pty/prebuilds/**/*'
+  - '!node_modules/@serialport/bindings-cpp/prebuilds/**/*'
+asar: true
+# Keep Electron/Chromium runtime dialogs aligned with Axterm's four selectable
+# product locales. electron-builder preserves compatible region variants, such
+# as `en-US` for `en`, while removing unrelated runtime locale resources.
+electronLanguages:
+  - en
+  - ja
+  - zh-CN
+  - zh-TW
+extraFiles:
+  - from: ../../LICENSE
+    to: LICENSE.axterm
+  - from: ../../THIRD_PARTY_NOTICES.txt
+    to: THIRD_PARTY_NOTICES.txt
+  - from: ../../compliance/THIRD_PARTY_COMPONENTS.json
+    to: THIRD_PARTY_COMPONENTS.json
+  - from: ../../compliance/AXTERM_PRODUCTION_DEPENDENCIES.spdx.json
+    to: AXTERM_PRODUCTION_DEPENDENCIES.spdx.json
+  - from: ../../compliance/THIRD_PARTY_LICENSE_TEXTS.json
+    to: THIRD_PARTY_LICENSE_TEXTS.json
+  - from: ../../licenses
+    to: licenses
+asarUnpack:
+  - node_modules/node-pty/build/Release/**/*
+  - node_modules/@serialport/bindings-cpp/**/*.node
+  - node_modules/@openclaw/fs-safe-*/*.node
+protocols:
+  - name: Axterm session link
+    schemes:
+      - axterm
+      - ssh
+      - telnet
+      - vnc
+      - rdp
+      - spice
+      - serial
+      - ftp
+# The package script rebuilds only node-pty and the SerialPort binding. A broad rebuild also attempts the
+# optional cpu-features accelerator, whose published source is incomplete.
+npmRebuild: false
+mac:
+  category: public.app-category.developer-tools
+  icon: build/icon.icns
+  extraResources:
+    - from: ../../compliance/UPDATE_FEED_RECORD.json
+      to: AXTERM_UPDATE_FEED.json
+  hardenedRuntime: true
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  target: [dmg, zip]
+win:
+  icon: build/icon.ico
+  extraResources:
+    - from: ../../compliance/UPDATE_FEED_RECORD.json
+      to: AXTERM_UPDATE_FEED.json
+  signAndEditExecutable: true
+  target: [nsis]
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+linux:
+  executableName: axterm
+  syncDesktopName: true
+  category: Development
+  icon: build/icon-512.png
+  extraResources:
+    - from: ../../compliance/UPDATE_FEED_RECORD.json
+      to: AXTERM_UPDATE_FEED.json
+    - from: build/icon.png
+      to: axterm-icon.png
+  synopsis: Secure SSH, SFTP and terminal workspace
+  target: [AppImage, deb]
+deb:
+  packageName: axterm
+  artifactName: axterm_${version}_${arch}.${ext}
+  maintainer: yogasamadhi <yogasamadhi@163.com>
+  depends:
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+    - libuuid1
+    - libsecret-1-0
+    - libgbm1
+    - libasound2t64 | libasound2
+    # serialport enumerates Linux devices through the udevadm executable.
+    - udev

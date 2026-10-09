@@ -1,0 +1,14 @@
+GNU LESSER GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+
+This project is licensed under the GNU Lesser General Public License v3.0 or later.
+
+See COPYING for the full text of the GNU General Public License v3.0.
+See COPYING.LESSER for the full text of the GNU Lesser General Public License v3.0.
+
+This project is a TypeScript port of spice-html5:
+https://gitlab.freedesktop.org/spice/spice-html5.git
+
+Original authors: SPICE Project <spice-devel@lists.freedesktop.org>

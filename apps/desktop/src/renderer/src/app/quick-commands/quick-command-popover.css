@@ -1,0 +1,125 @@
+.quick-command-popover-root {
+  position: relative;
+  height: 100%;
+}
+
+.status-quick-command {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 100%;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.status-quick-command:hover,
+.status-quick-command.active {
+  background: var(--panel-hover);
+  color: var(--text-primary);
+}
+
+.status-quick-command small {
+  min-width: 15px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  text-align: center;
+}
+
+.quick-command-popover {
+  position: absolute;
+  z-index: 140;
+  bottom: calc(100% + 7px);
+  left: 0;
+  width: min(620px, calc(100vw - 32px));
+  max-height: min(520px, calc(100vh - 110px));
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--panel-bg);
+  box-shadow: 0 16px 42px rgb(0 0 0 / 36%);
+}
+
+.quick-command-popover > header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.quick-command-popover > header label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  background: var(--panel-raised);
+}
+
+.quick-command-popover > header input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.quick-command-popover-list {
+  display: grid;
+  gap: 1px;
+  max-height: 390px;
+  overflow: auto;
+  background: var(--border-subtle);
+}
+
+.quick-command-popover-list article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 9px;
+  background: var(--panel-bg);
+}
+
+.quick-command-popover-list article > div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 8px;
+  min-width: 0;
+}
+
+.quick-command-popover-list article span {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.quick-command-popover-list article code {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quick-command-popover-empty {
+  margin: 0;
+  padding: 34px 16px;
+  background: var(--panel-bg);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.quick-command-popover > footer {
+  padding: 7px 10px;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 11px;
+}

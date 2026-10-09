@@ -1,0 +1,2 @@
+"legacy-workflow.example.test","2222","operator","SYNTHETIC_LEGACY_CSV_SECRET","printf LEGACY_CSV_PREPARE","","","","printf LEGACY_CSV_AFTER"
+"legacy-workflow.example.test","2222","operator","SYNTHETIC_LEGACY_CSV_SECRET","printf LEGACY_CSV_VERIFY","","","",""

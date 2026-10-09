@@ -1,0 +1,13 @@
+{
+  "name": "@workspace/contracts",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./desktop": "./src/host-capabilities/desktop.ts"
+  },
+  "dependencies": {
+    "zod": "4.6.1"
+  }
+}

@@ -1,0 +1,389 @@
+diff --git a/dist/cjs-full/index.cjs b/dist/cjs-full/index.cjs
+index 27b302170d9896c14b5f3280d8cf1948fc5203a8..323666c762dc3de0125a1d14191b2d69cb9e29d6 100644
+--- a/dist/cjs-full/index.cjs
++++ b/dist/cjs-full/index.cjs
+@@ -294,6 +294,9 @@ function isTrzszLetter(c) {
+   }
+   return false;
+ }
++const MAX_PROTOCOL_LINE_BYTES = 32 * 1024 * 1024;
++const MAX_BUFFERED_BYTES = 64 * 1024 * 1024;
++const MAX_BUFFERED_CHUNKS = 4096;
+ class TrzszBuffer {
+   constructor() {
+     this.bufArray = [];
+@@ -301,6 +304,8 @@ class TrzszBuffer {
+     this.reject = null;
+     this.bufHead = 0;
+     this.bufTail = 0;
++    this.queuedBytes = 0;
++    this.queueEpoch = 0;
+     this.nextIdx = 0;
+     this.nextBuf = null;
+     this.arrBuf = new ArrayBuffer(128);
+@@ -310,7 +315,14 @@ class TrzszBuffer {
+    * @param buf - The buffer to add.
+    */
+   addBuffer(buf) {
++    const size = this.bufferSize(buf);
++    const unread = this.nextBuf == null ? 0 : this.nextBuf.length - this.nextIdx;
++    if (this.bufTail - this.bufHead >= MAX_BUFFERED_CHUNKS ||
++        size > MAX_BUFFERED_BYTES - this.queuedBytes - unread) {
++      throw new TrzszError("TRZSZ receive buffer exceeds limit");
++    }
+     this.bufArray[this.bufTail++] = buf;
++    this.queuedBytes += size;
+     if (this.resolve != null) {
+       this.resolve();
+       this.resolve = null;
+@@ -331,9 +343,19 @@ class TrzszBuffer {
+    * Drain all buffers.
+    */
+   drainBuffer() {
++    this.queueEpoch++;
+     this.bufArray = [];
+     this.bufHead = 0;
+     this.bufTail = 0;
++    this.queuedBytes = 0;
++    this.nextBuf = null;
++    this.nextIdx = 0;
++  }
++  bufferSize(buf) {
++    if (typeof buf === "string") return buf.length;
++    if (buf instanceof ArrayBuffer || buf instanceof Uint8Array) return buf.byteLength;
++    if (buf instanceof Blob) return buf.size;
++    throw new TrzszError("The buffer type is not supported", null, true);
+   }
+   /**
+    * Convert a buffer to Uint8Array.
+@@ -362,8 +384,10 @@ class TrzszBuffer {
+     if (this.nextBuf != null && this.nextIdx < this.nextBuf.length) {
+       return this.nextBuf.subarray(this.nextIdx);
+     }
++    this.nextBuf = null;
+     if (this.bufHead === this.bufTail) {
+       if (this.bufHead !== 0) {
++        this.bufArray = [];
+         this.bufHead = 0;
+         this.bufTail = 0;
+       }
+@@ -375,10 +399,23 @@ class TrzszBuffer {
+     const buf = this.bufArray[this.bufHead];
+     this.bufArray[this.bufHead] = null;
+     this.bufHead++;
++    if (this.bufHead === this.bufTail) {
++      this.bufArray = [];
++      this.bufHead = 0;
++      this.bufTail = 0;
++    } else if (this.bufHead >= 1024 && this.bufHead * 2 >= this.bufTail) {
++      this.bufArray = this.bufArray.slice(this.bufHead);
++      this.bufTail -= this.bufHead;
++      this.bufHead = 0;
++    }
+     if (buf == null) {
+       throw new TrzszError("Unexpected null buffer");
+     }
+-    this.nextBuf = await this.toUint8Array(buf);
++    const epoch = this.queueEpoch;
++    const converted = await this.toUint8Array(buf);
++    if (epoch !== this.queueEpoch) throw new TrzszError("Stopped");
++    this.nextBuf = converted;
++    this.queuedBytes -= this.bufferSize(buf);
+     this.nextIdx = 0;
+     return this.nextBuf;
+   }
+@@ -427,6 +464,9 @@ class TrzszBuffer {
+       if (next.includes(3)) {
+         throw new TrzszError("Interrupted");
+       }
++      if (len + next.length > MAX_PROTOCOL_LINE_BYTES) {
++        throw new TrzszError("TRZSZ protocol line exceeds limit");
++      }
+       buf = this.appendBuffer(buf, len, next);
+       len += next.length;
+       if (newLineIdx >= 0) {
+@@ -472,6 +512,7 @@ class TrzszBuffer {
+     let hasCursorHome = false;
+     let preHasCursorHome = false;
+     let idx = 0;
++    let rawLength = 0;
+     while (true) {
+       let next = await this.nextBuffer();
+       const newLineIdx = next.indexOf(33);
+@@ -481,6 +522,10 @@ class TrzszBuffer {
+       } else {
+         this.nextIdx += next.length;
+       }
++      if (rawLength + next.length > MAX_PROTOCOL_LINE_BYTES) {
++        throw new TrzszError("TRZSZ protocol line exceeds limit");
++      }
++      rawLength += next.length;
+       for (let i = 0; i < next.length; i++) {
+         const c = next[i];
+         if (c === 3) {
+@@ -512,7 +557,7 @@ class TrzszBuffer {
+             }
+           }
+           if (idx >= buf.length) {
+-            buf = this.growBuffer(buf, idx, next.length);
++            buf = this.growBuffer(buf, idx, 1);
+           }
+           buf[idx++] = c;
+           preHasCursorHome = hasCursorHome;
+@@ -842,22 +887,30 @@ class TrzszTransfer {
+    * @param timeoutInMilliseconds - The timeout in milliseconds.
+    */
+   async recvData(binary, escapeCodes, timeoutInMilliseconds) {
+-    return await Promise.race([
+-      new Promise(
+-        (_resolve, reject) => setTimeout(() => {
+-          this.cleanTimeoutInMilliseconds = 3e3;
+-          reject(new TrzszError("Receive data timeout"));
+-        }, timeoutInMilliseconds)
+-      ),
+-      (async () => {
+-        if (!binary) {
+-          return await this.recvBinary("DATA");
+-        }
+-        const size = await this.recvInteger("DATA");
+-        const data = await this.buffer.readBinary(size);
+-        return unescapeData(data, escapeCodes);
+-      })()
+-    ]);
++    let receiveTimer;
++    try {
++      return await Promise.race([
++        new Promise(
++          (_resolve, reject) => receiveTimer = setTimeout(() => {
++            this.cleanTimeoutInMilliseconds = 3e3;
++            reject(new TrzszError("Receive data timeout"));
++          }, timeoutInMilliseconds)
++        ),
++        (async () => {
++          if (!binary) {
++            return await this.recvBinary("DATA");
++          }
++          const size = await this.recvInteger("DATA");
++          if (!Number.isSafeInteger(size) || size <= 0 || size > 16 * 1024 * 1024) {
++            throw new TrzszError("TRZSZ binary chunk exceeds limit");
++          }
++          const data = await this.buffer.readBinary(size);
++          return unescapeData(data, escapeCodes);
++        })()
++      ]);
++    } finally {
++      clearTimeout(receiveTimer);
++    }
+   }
+   /**
+    * Send action.
+diff --git a/dist/esm/buffer.js b/dist/esm/buffer.js
+index 184fcbd85fe61029a508d312aaf83bc981379143..1f23df9750330b75cada95fa35bd9eb301434136 100644
+--- a/dist/esm/buffer.js
++++ b/dist/esm/buffer.js
+@@ -14,6 +14,9 @@ function isTrzszLetter(c) {
+   }
+   return false;
+ }
++const MAX_PROTOCOL_LINE_BYTES = 32 * 1024 * 1024;
++const MAX_BUFFERED_BYTES = 64 * 1024 * 1024;
++const MAX_BUFFERED_CHUNKS = 4096;
+ class TrzszBuffer {
+   constructor() {
+     this.bufArray = [];
+@@ -21,6 +24,8 @@ class TrzszBuffer {
+     this.reject = null;
+     this.bufHead = 0;
+     this.bufTail = 0;
++    this.queuedBytes = 0;
++    this.queueEpoch = 0;
+     this.nextIdx = 0;
+     this.nextBuf = null;
+     this.arrBuf = new ArrayBuffer(128);
+@@ -30,7 +35,14 @@ class TrzszBuffer {
+    * @param buf - The buffer to add.
+    */
+   addBuffer(buf) {
++    const size = this.bufferSize(buf);
++    const unread = this.nextBuf == null ? 0 : this.nextBuf.length - this.nextIdx;
++    if (this.bufTail - this.bufHead >= MAX_BUFFERED_CHUNKS ||
++        size > MAX_BUFFERED_BYTES - this.queuedBytes - unread) {
++      throw new TrzszError("TRZSZ receive buffer exceeds limit");
++    }
+     this.bufArray[this.bufTail++] = buf;
++    this.queuedBytes += size;
+     if (this.resolve != null) {
+       this.resolve();
+       this.resolve = null;
+@@ -51,9 +63,19 @@ class TrzszBuffer {
+    * Drain all buffers.
+    */
+   drainBuffer() {
++    this.queueEpoch++;
+     this.bufArray = [];
+     this.bufHead = 0;
+     this.bufTail = 0;
++    this.queuedBytes = 0;
++    this.nextBuf = null;
++    this.nextIdx = 0;
++  }
++  bufferSize(buf) {
++    if (typeof buf === "string") return buf.length;
++    if (buf instanceof ArrayBuffer || buf instanceof Uint8Array) return buf.byteLength;
++    if (buf instanceof Blob) return buf.size;
++    throw new TrzszError("The buffer type is not supported", null, true);
+   }
+   /**
+    * Convert a buffer to Uint8Array.
+@@ -82,8 +104,10 @@ class TrzszBuffer {
+     if (this.nextBuf != null && this.nextIdx < this.nextBuf.length) {
+       return this.nextBuf.subarray(this.nextIdx);
+     }
++    this.nextBuf = null;
+     if (this.bufHead === this.bufTail) {
+       if (this.bufHead !== 0) {
++        this.bufArray = [];
+         this.bufHead = 0;
+         this.bufTail = 0;
+       }
+@@ -95,10 +119,23 @@ class TrzszBuffer {
+     const buf = this.bufArray[this.bufHead];
+     this.bufArray[this.bufHead] = null;
+     this.bufHead++;
++    if (this.bufHead === this.bufTail) {
++      this.bufArray = [];
++      this.bufHead = 0;
++      this.bufTail = 0;
++    } else if (this.bufHead >= 1024 && this.bufHead * 2 >= this.bufTail) {
++      this.bufArray = this.bufArray.slice(this.bufHead);
++      this.bufTail -= this.bufHead;
++      this.bufHead = 0;
++    }
+     if (buf == null) {
+       throw new TrzszError("Unexpected null buffer");
+     }
+-    this.nextBuf = await this.toUint8Array(buf);
++    const epoch = this.queueEpoch;
++    const converted = await this.toUint8Array(buf);
++    if (epoch !== this.queueEpoch) throw new TrzszError("Stopped");
++    this.nextBuf = converted;
++    this.queuedBytes -= this.bufferSize(buf);
+     this.nextIdx = 0;
+     return this.nextBuf;
+   }
+@@ -147,6 +184,9 @@ class TrzszBuffer {
+       if (next.includes(3)) {
+         throw new TrzszError("Interrupted");
+       }
++      if (len + next.length > MAX_PROTOCOL_LINE_BYTES) {
++        throw new TrzszError("TRZSZ protocol line exceeds limit");
++      }
+       buf = this.appendBuffer(buf, len, next);
+       len += next.length;
+       if (newLineIdx >= 0) {
+@@ -192,6 +232,7 @@ class TrzszBuffer {
+     let hasCursorHome = false;
+     let preHasCursorHome = false;
+     let idx = 0;
++    let rawLength = 0;
+     while (true) {
+       let next = await this.nextBuffer();
+       const newLineIdx = next.indexOf(33);
+@@ -201,6 +242,10 @@ class TrzszBuffer {
+       } else {
+         this.nextIdx += next.length;
+       }
++      if (rawLength + next.length > MAX_PROTOCOL_LINE_BYTES) {
++        throw new TrzszError("TRZSZ protocol line exceeds limit");
++      }
++      rawLength += next.length;
+       for (let i = 0; i < next.length; i++) {
+         const c = next[i];
+         if (c === 3) {
+@@ -232,7 +277,7 @@ class TrzszBuffer {
+             }
+           }
+           if (idx >= buf.length) {
+-            buf = this.growBuffer(buf, idx, next.length);
++            buf = this.growBuffer(buf, idx, 1);
+           }
+           buf[idx++] = c;
+           preHasCursorHome = hasCursorHome;
+diff --git a/dist/esm/transfer.js b/dist/esm/transfer.js
+index 61d59326da17ecda6b44f3349c3d206ff461d6c1..ceb115fa30271a931e8a8123982f05d32d823a52 100644
+--- a/dist/esm/transfer.js
++++ b/dist/esm/transfer.js
+@@ -246,22 +246,30 @@ class TrzszTransfer {
+    * @param timeoutInMilliseconds - The timeout in milliseconds.
+    */
+   async recvData(binary, escapeCodes, timeoutInMilliseconds) {
+-    return await Promise.race([
+-      new Promise(
+-        (_resolve, reject) => setTimeout(() => {
+-          this.cleanTimeoutInMilliseconds = 3e3;
+-          reject(new TrzszError("Receive data timeout"));
+-        }, timeoutInMilliseconds)
+-      ),
+-      (async () => {
+-        if (!binary) {
+-          return await this.recvBinary("DATA");
+-        }
+-        const size = await this.recvInteger("DATA");
+-        const data = await this.buffer.readBinary(size);
+-        return unescapeData(data, escapeCodes);
+-      })()
+-    ]);
++    let receiveTimer;
++    try {
++      return await Promise.race([
++        new Promise(
++          (_resolve, reject) => receiveTimer = setTimeout(() => {
++            this.cleanTimeoutInMilliseconds = 3e3;
++            reject(new TrzszError("Receive data timeout"));
++          }, timeoutInMilliseconds)
++        ),
++        (async () => {
++          if (!binary) {
++            return await this.recvBinary("DATA");
++          }
++          const size = await this.recvInteger("DATA");
++          if (!Number.isSafeInteger(size) || size <= 0 || size > 16 * 1024 * 1024) {
++            throw new TrzszError("TRZSZ binary chunk exceeds limit");
++          }
++          const data = await this.buffer.readBinary(size);
++          return unescapeData(data, escapeCodes);
++        })()
++      ]);
++    } finally {
++      clearTimeout(receiveTimer);
++    }
+   }
+   /**
+    * Send action.
+diff --git a/package.json b/package.json
+index e0bb82aa85f7b67d764a5925d3804c0814e9a6d7..ea11afa94ef48c0f902c413efdfd950cf1732a04 100644
+--- a/package.json
++++ b/package.json
+@@ -43,11 +43,11 @@
+   "exports": {
+     ".": {
+       "import": {
+-        "types": "./dist/esm/index.d.ts",
++        "types": "./dist/esm/lib/index.d.ts",
+         "default": "./dist/esm/index.js"
+       },
+       "require": {
+-        "types": "./dist/esm/index.d.ts",
++        "types": "./dist/esm/lib/index.d.ts",
+         "default": "./dist/cjs-full/index.cjs"
+       }
+     },
+@@ -57,7 +57,7 @@
+   },
+   "main": "./dist/cjs-full/index.cjs",
+   "module": "./dist/esm/index.js",
+-  "types": "./dist/esm/index.d.ts",
++  "types": "./dist/esm/lib/index.d.ts",
+   "browser": "./dist/browser/trzsz2.js",
+   "files": [
+     "dist",

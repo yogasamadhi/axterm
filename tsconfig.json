@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": { "types": ["node"], "lib": ["ES2023", "DOM"], "allowJs": true },
+  "include": [
+    "run.ts",
+    "scripts/**/*.ts",
+    "tests/**/*.ts",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "apps/desktop/src/renderer/src/env.d.ts"
+  ]
+}

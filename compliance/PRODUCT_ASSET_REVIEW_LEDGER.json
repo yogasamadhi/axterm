@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "source": "AXTERM_PRODUCT_ASSETS.json declared first-party product-mark assets",
+  "sourceScopeSha256": "1dd135c1a3854b0386299eb1e253f9eb997b905de75b6b7cd9e12f12a5f43747",
+  "scope": "Declared first-party application marks only; excludes third-party, generated-runtime and package-managed assets.",
+  "limitations": [
+    "This is a human-review handoff, not a copyright, trademark, license, authorship or freedom-to-operate conclusion.",
+    "A retained entry does not clear platform package inspection, third-party font/bundle review, source-rights review or IR-07.",
+    "Every retained application-mark asset needs an explicit retain or exclude decision before a final public source snapshot."
+  ],
+  "entries": [
+    {
+      "asset": {
+        "path": "apps/desktop/build/icon-512.png",
+        "sha256": "3061ebc124f5e9b044fe63648ff8094abab70f67534ffa89917f8c880bf0740a"
+      },
+      "publicDisposition": "pending",
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      },
+      "brandReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "asset": {
+        "path": "apps/desktop/build/icon.icns",
+        "sha256": "cdeedd28c8e4171e9111d44eef618c2aa7879568cae8e987514321005759d205"
+      },
+      "publicDisposition": "pending",
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      },
+      "brandReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "asset": {
+        "path": "apps/desktop/build/icon.ico",
+        "sha256": "a5a5cac7b2c93e8bc57d186a0fcd7332f9c5bc9642041bc77f3ddfb9267c41b0"
+      },
+      "publicDisposition": "pending",
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      },
+      "brandReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "asset": {
+        "path": "apps/desktop/build/icon.png",
+        "sha256": "68c7b6b3fefb195280be18b8956484f551a57024d4fb3be7eff87ab76ad9a200"
+      },
+      "publicDisposition": "pending",
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      },
+      "brandReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "asset": {
+        "path": "apps/desktop/build/icon.svg",
+        "sha256": "589197174bdda9a35a4786b9aca0505a03ae96d5bb817d2ecaebdb3995beb8e1"
+      },
+      "publicDisposition": "pending",
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      },
+      "brandReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    }
+  ]
+}

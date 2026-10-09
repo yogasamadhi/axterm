@@ -1,0 +1,231 @@
+.command-history-root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.status-command-history {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--shell-text-muted);
+  font-size: 10px;
+}
+
+.status-command-history:hover,
+.status-command-history.active {
+  background: var(--shell-raised);
+  color: var(--shell-text);
+}
+
+.command-history-popover {
+  position: fixed;
+  z-index: 1800;
+  left: 75px;
+  bottom: 39px;
+  width: 324px;
+  max-height: 324px;
+  overflow: hidden;
+  padding: 12px;
+  border: 0;
+  border-radius: 5px;
+  background: #30303b;
+  color: var(--shell-text);
+  box-shadow: var(--shell-menu-shadow);
+  line-height: 22px;
+}
+
+.command-history-popover-content {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  max-height: 300px;
+  overflow: hidden;
+  padding: 16px;
+}
+
+.command-history-search {
+  flex: none;
+  height: 48px;
+  padding-bottom: 16px;
+}
+
+.command-history-search-field {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 11px;
+  border: 1px solid var(--shell-muted);
+  border-radius: 2px;
+  background: #292a34;
+}
+
+.command-history-search input {
+  min-width: 0;
+  flex: 1;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+}
+
+.command-history-search button,
+.command-history-header button,
+.command-history-actions button {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--shell-text-muted);
+}
+
+.command-history-header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  padding-bottom: 8px;
+}
+
+.command-history-header label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--shell-text-muted);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.command-history-header input {
+  position: absolute;
+  opacity: 0;
+}
+
+.history-check {
+  display: inline-grid;
+  place-items: center;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--shell-muted);
+  border-radius: 2px;
+  background: var(--shell-deep);
+  color: var(--shell-accent);
+}
+
+.command-history-clear:hover,
+.command-history-actions button:last-child:hover {
+  color: var(--shell-danger);
+}
+
+.command-history-list {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  border-top: 1px solid var(--shell-sunken);
+}
+
+.command-history-item {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  min-height: 30px;
+  padding: 4px 8px;
+}
+
+.command-history-item:hover {
+  background: var(--shell-raised);
+}
+
+.command-history-item-text {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--shell-text);
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-history-item-text:disabled {
+  color: var(--shell-text-disabled);
+}
+
+.command-history-count {
+  flex: none;
+  padding: 0 5px;
+  color: var(--shell-text-muted);
+  font-size: 12px;
+}
+
+.command-history-actions {
+  display: none;
+  flex: none;
+  align-items: center;
+}
+
+.command-history-item:hover .command-history-actions,
+.command-history-item:focus-within .command-history-actions {
+  display: flex;
+}
+
+.command-history-item:hover .command-history-count,
+.command-history-item:focus-within .command-history-count {
+  display: none;
+}
+
+.command-history-empty,
+.command-history-disabled {
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  min-height: 128px;
+  margin: 0;
+  padding: 14px;
+  color: var(--shell-text-muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+.command-history-disabled strong {
+  color: var(--shell-text);
+  font-size: 11px;
+}
+
+.command-history-disabled p {
+  margin: 0;
+}
+
+.command-history-disabled button {
+  height: 26px;
+  border: 1px solid var(--shell-accent);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--shell-accent) 14%, transparent);
+  color: var(--shell-accent);
+  font-size: 10px;
+}
+
+.command-history-feedback {
+  flex: none;
+  margin: 4px 0 0;
+  color: var(--shell-warning);
+  font-size: 9px;
+}

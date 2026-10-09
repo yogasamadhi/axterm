@@ -1,0 +1,326 @@
+.commands-workspace-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel-raised);
+}
+
+.commands-workspace-tabs button {
+  min-width: 108px;
+  border-color: transparent;
+  background: transparent;
+}
+
+.commands-workspace-tabs button[aria-selected='true'] {
+  border-color: var(--line);
+  background: var(--panel);
+  color: var(--accent);
+}
+
+.batch-operation-workspace {
+  display: grid;
+  grid-template-columns: minmax(560px, 1.35fr) minmax(380px, 0.9fr);
+  gap: 12px;
+  min-height: min(680px, calc(100vh - 198px));
+}
+
+.batch-operation-composer,
+.batch-operation-results {
+  min-width: 0;
+  overflow: auto;
+  padding: 14px;
+}
+
+.batch-operation-composer > header,
+.batch-operation-results > header,
+.batch-operation-step-heading,
+.batch-operation-target-heading,
+.batch-operation-composer > footer,
+.batch-operation-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.batch-operation-composer > header,
+.batch-operation-results > header {
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.batch-operation-composer h3,
+.batch-operation-results h3 {
+  margin: 2px 0 0;
+}
+
+.batch-operation-composer small,
+.batch-operation-results small {
+  color: var(--muted);
+}
+
+.batch-operation-composer > header label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.batch-operation-composer select {
+  min-width: 64px;
+}
+
+.batch-operation-name {
+  display: grid;
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.batch-operation-error {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--danger) 55%, transparent);
+  border-radius: 5px;
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 9%, transparent);
+}
+
+.batch-operation-target-heading,
+.batch-operation-step-heading {
+  margin-top: 14px;
+}
+
+.batch-operation-target-heading strong,
+.batch-operation-step-heading strong {
+  margin-right: auto;
+}
+
+.batch-operation-target-heading span {
+  color: var(--muted);
+}
+
+.batch-operation-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel-raised);
+}
+
+.batch-operation-search input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.batch-operation-targets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  max-height: 154px;
+  margin-top: 7px;
+  overflow: auto;
+}
+
+.batch-operation-targets > label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel-raised);
+}
+
+.batch-operation-targets label span,
+.batch-operation-history button span {
+  display: grid;
+  min-width: 0;
+  text-align: left;
+}
+
+.batch-operation-targets strong,
+.batch-operation-targets small,
+.batch-operation-history strong,
+.batch-operation-history small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.batch-operation-steps {
+  display: grid;
+  gap: 8px;
+  margin-top: 7px;
+}
+
+.batch-operation-step {
+  display: grid;
+  grid-template-columns: 28px 1fr 30px;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel-raised);
+}
+
+.batch-operation-step-index {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-content: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent);
+}
+
+.batch-operation-step-fields {
+  display: grid;
+  gap: 7px;
+}
+
+.batch-operation-step-fields textarea {
+  resize: vertical;
+  font-family: var(--mono);
+}
+
+.batch-operation-step-fields > div,
+.batch-operation-step-fields label,
+.batch-operation-step-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.batch-operation-step-fields > div {
+  justify-content: space-between;
+}
+
+.batch-operation-step-fields input[type='number'] {
+  width: 86px;
+}
+
+.batch-operation-step-actions {
+  flex-direction: column;
+}
+
+.batch-operation-step-actions button {
+  width: 28px;
+  min-height: 27px;
+  padding: 4px;
+}
+
+.batch-operation-composer > footer {
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.batch-operation-composer > footer button,
+.batch-operation-summary button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.batch-operation-history {
+  display: grid;
+  gap: 5px;
+  max-height: 210px;
+  margin: 10px 0;
+  overflow: auto;
+}
+
+.batch-operation-history > button {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 6px;
+  border-color: transparent;
+  background: transparent;
+}
+
+.batch-operation-history > button[aria-selected='true'] {
+  border-color: color-mix(in srgb, var(--accent) 46%, transparent);
+  background: var(--panel-hover);
+}
+
+.batch-operation-summary {
+  flex-wrap: wrap;
+  padding: 8px;
+  background: var(--panel-raised);
+}
+
+.batch-operation-summary button {
+  margin-left: auto;
+}
+
+.batch-operation-detail details {
+  border-bottom: 1px solid var(--line);
+}
+
+.batch-operation-detail summary,
+.batch-operation-detail li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.batch-operation-detail summary {
+  padding: 9px 4px;
+  cursor: pointer;
+}
+
+.batch-operation-detail summary strong {
+  flex: 1;
+}
+
+.batch-operation-detail ol {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 9px 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.batch-operation-detail li {
+  min-height: 28px;
+  padding: 4px 7px;
+  background: var(--panel-raised);
+}
+
+.batch-operation-detail li span {
+  flex: 1;
+}
+
+.batch-operation-detail code {
+  color: var(--muted);
+}
+
+.batch-operation-workspace .success {
+  color: var(--success);
+}
+
+.batch-operation-workspace .danger {
+  color: var(--danger);
+}
+
+.batch-operation-workspace .running {
+  color: var(--accent);
+  animation: spin 1.2s linear infinite;
+}
+
+@media (max-width: 1050px) {
+  .batch-operation-workspace {
+    grid-template-columns: 1fr;
+  }
+}

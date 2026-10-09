@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "scope": "Installed zmodem2/trzsz2 CommonJS source-map contents and local runtime bundle hashes",
+  "limitations": [
+    "The publisher's source maps are not proof of a reproducible build or complete code lineage.",
+    "The trzsz2 runtime files include Axterm's declared local timeout, binary chunk-size and protocol-line bounds patch; their source maps still carry the publisher's unpatched source text.",
+    "A qualified source-rights review remains required before IR-02 or IR-03 acceptance."
+  ],
+  "packages": [
+    {
+      "name": "zmodem2",
+      "version": "1.4.0",
+      "publisherCommit": "b9f03ed3cdc362610dc76ce9401c7e02397ee0c8",
+      "cjsBundleSha256": "1ec99688fee89163cd1f1e7668ea15b65125e088c92d6a2f8edf5aad460e89de",
+      "cjsSourceMapSha256": "0f3c020695c49d8b2fe62b624af34a1e141e9611cfc1347b0fd6d700d36558cc",
+      "sources": [
+        {
+          "path": "src/lib/constants.ts",
+          "sha256": "af1dcbd35608ba62004cb98f52989534b94a818afef2fda0c723ad40f25abb1e"
+        },
+        {
+          "path": "src/lib/error.ts",
+          "sha256": "76949d5563502c4fd6f0390a4336878c12ee74810e4367240431612c3101f148"
+        },
+        {
+          "path": "src/lib/crc.ts",
+          "sha256": "925a4e5fbe3ebcc5397feadcde2dff484292a6d00baa0348931d642a8ea943b3"
+        },
+        {
+          "path": "src/lib/zdle.ts",
+          "sha256": "726126713837b05fc5d8e873714d5209fcc9d4587e8ce16e09bb2c3b0b5c8207"
+        },
+        {
+          "path": "src/lib/header.ts",
+          "sha256": "c86f5d725f261698f5269a9e4324ee368fb674b4203ba7c312e867ce0980c19b"
+        },
+        {
+          "path": "src/lib/transmission.ts",
+          "sha256": "c7761a0fe3ad35bbc1356329d9f2745457a3039ee5097e887c98610fb4eff5b8"
+        }
+      ]
+    },
+    {
+      "name": "trzsz2",
+      "version": "1.2.0",
+      "publisherCommit": "d8ec536dab4fe86ee41acb6db8ae89d55e29153a",
+      "cjsBundleSha256": "333600a28cfd794c0e9eca0c2d8b1b6e32830ab964775332a96382c2359e63a3",
+      "cjsSourceMapSha256": "a83ed552b498cf81d4c01862fe4d4e37d5bee60c48ccffe96aa3bd31676d7c31",
+      "patchedEsmTransferSha256": "bff938669ebf2bc42c5046025f8a3d2a26d61e9766d73036d784997fe8f68ca2",
+      "patchedEsmBufferSha256": "4055e6436d76d0fdde4f388fc3d0bc65de5632a2d48a126e399499182388b065",
+      "sources": [
+        {
+          "path": "src/lib/comm.ts",
+          "sha256": "384b72d4b88beb27b8f591de838cd84243337babc1c2e6aa58b5236dbb64f6c3"
+        },
+        {
+          "path": "src/lib/buffer.ts",
+          "sha256": "42d4fb9f41bdbe2c33a7c7bdae73a511e5689b72a37b537a7e77b502b181b315"
+        },
+        {
+          "path": "src/lib/escape.ts",
+          "sha256": "13feb2327137b7f500e9c243d03e57599b6528b66f8e61e32640c3497ec2e7d0"
+        },
+        {
+          "path": "src/lib/transfer.ts",
+          "sha256": "a60c5af1742a37560460c5c4f9e7a5d6602a1b7516cebb87274d5745e19889cf"
+        },
+        {
+          "path": "src/lib/progress.ts",
+          "sha256": "665a033710a9280fcd413186a24de8796681a11be223160baf1ee08cb48b2deb"
+        }
+      ]
+    }
+  ]
+}

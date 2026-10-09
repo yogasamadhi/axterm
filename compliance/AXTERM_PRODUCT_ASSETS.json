@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "source": "First-party product-mark paths enumerated by Axterm",
+  "scope": "Content inventory for current first-party application-mark files.",
+  "limitations": [
+    "Matching bytes do not prove authorship, copyright ownership, trademark availability or freedom from third-party claims.",
+    "This does not inventory third-party fonts, renderer bundles, Electron/Chromium, native binaries or package-managed assets.",
+    "This inventory does not replace a human review of each retained product-mark asset."
+  ],
+  "assets": [
+    {
+      "path": "apps/desktop/build/icon.svg",
+      "role": "Editable Axterm application-mark source",
+      "distribution": "Source tree",
+      "bytes": 1138,
+      "sha256": "589197174bdda9a35a4786b9aca0505a03ae96d5bb817d2ecaebdb3995beb8e1"
+    },
+    {
+      "path": "apps/desktop/build/icon.png",
+      "role": "1024px application-mark raster and Linux extra resource",
+      "distribution": "Linux package resource and source tree",
+      "bytes": 744305,
+      "sha256": "68c7b6b3fefb195280be18b8956484f551a57024d4fb3be7eff87ab76ad9a200"
+    },
+    {
+      "path": "apps/desktop/build/icon-512.png",
+      "role": "Linux package application icon",
+      "distribution": "Linux package metadata and source tree",
+      "bytes": 160415,
+      "sha256": "3061ebc124f5e9b044fe63648ff8094abab70f67534ffa89917f8c880bf0740a"
+    },
+    {
+      "path": "apps/desktop/build/icon.ico",
+      "role": "Windows application icon set",
+      "distribution": "Windows executable metadata and source tree",
+      "bytes": 73005,
+      "sha256": "a5a5cac7b2c93e8bc57d186a0fcd7332f9c5bc9642041bc77f3ddfb9267c41b0"
+    },
+    {
+      "path": "apps/desktop/build/icon.icns",
+      "role": "macOS application icon set",
+      "distribution": "macOS application resource and source tree",
+      "bytes": 1173403,
+      "sha256": "cdeedd28c8e4171e9111d44eef618c2aa7879568cae8e987514321005759d205"
+    }
+  ]
+}
