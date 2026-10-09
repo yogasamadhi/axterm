@@ -10,6 +10,7 @@ import {
   symlinkSync,
   unlinkSync,
   existsSync,
+  chmodSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -44,6 +45,25 @@ function stage(journal: OwnedStageJournal, directory: string, name = '.axterm-te
 }
 
 describe('OwnedStageJournal', () => {
+  it('opens a newly created store and rejects a second hard link to that store', () => {
+    const { root, journal } = fixture();
+    journal.close();
+    const path = join(root, 'private', 'terminal-stage-ownership.sqlite');
+    linkSync(path, join(root, 'store-link.sqlite'));
+    expect(() => new OwnedStageJournal(join(root, 'private'))).toThrow(
+      'not a private regular file',
+    );
+  });
+
+  it.skipIf(process.platform === 'win32')('rejects POSIX group-readable stores', () => {
+    const { root, journal } = fixture();
+    journal.close();
+    chmodSync(join(root, 'private', 'terminal-stage-ownership.sqlite'), 0o640);
+    expect(() => new OwnedStageJournal(join(root, 'private'))).toThrow(
+      'not a private regular file',
+    );
+  });
+
   it('commits ownership before stage creation and keeps a prepared-only record unverified', () => {
     const { directory, journal } = fixture();
     const id = journal.prepare(directory, '.axterm-a.part', 'payload.bin', 'zmodem');

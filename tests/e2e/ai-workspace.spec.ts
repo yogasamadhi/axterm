@@ -457,7 +457,8 @@ test('AI opens in chat, follows selected local tabs and executes only an approve
       requests.push(body);
       res.writeHead(200, { 'content-type': 'text/event-stream' });
       res.end(
-        propose
+        propose &&
+          !JSON.parse(body).messages.some((message: { role: string }) => message.role === 'tool')
           ? piSseCommand('pwd; printf approved > approval-marker')
           : piSseText('openai-chat', '可以直接聊天') + piSseEnd('openai-chat'),
       );
@@ -555,7 +556,7 @@ test('AI opens in chat, follows selected local tabs and executes only an approve
     });
     await changeDirectory(second);
     await expect(assistant.locator('.ai-workspace-context code')).toHaveText(second);
-    await approval.getByRole('button', { name: '仅运行一次' }).click();
+    await page.locator('.ai-command-approval').getByRole('button', { name: '仅运行一次' }).click();
     await expect
       .poll(() => readFile(join(first, 'approval-marker'), 'utf8').catch(() => ''))
       .toBe('approved');

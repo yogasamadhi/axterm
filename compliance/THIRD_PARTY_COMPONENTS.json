@@ -239,7 +239,7 @@
       "license": "MIT"
     },
     {
-      "name": "@openclaw/fs-safe-darwin-arm64",
+      "name": "@openclaw/fs-safe-win32-x64-msvc",
       "version": "0.13.1",
       "license": "MIT"
     },

@@ -36,6 +36,15 @@ export interface PiCatalogProvider {
 }
 
 export interface PiEngineRequest {
+  executeCommand?:
+    | ((
+        command: string,
+        toolCallId: string,
+        signal: AbortSignal,
+      ) => Promise<{ text: string; isError: boolean }>)
+    | undefined;
+  maxOutputTokens?: number | undefined;
+  requireComplete?: boolean | undefined;
   allowCommandProposal?: boolean;
   provider: PiProviderConfig;
   baseUrl: string;
@@ -64,3 +73,27 @@ export declare function piSkills(): Array<{
   body: string;
 }>;
 export declare function streamPiAgent(request: PiEngineRequest): AsyncIterable<PiEngineEvent>;
+export declare function estimateReviewTextTokens(text: string): number;
+export declare function parseDecision(text: string): {
+  outcome: 'allow' | 'deny' | 'defer';
+  risk_level: 'low' | 'medium' | 'high' | 'critical';
+  user_authorization: 'unknown' | 'low' | 'medium' | 'high';
+  rationale: string;
+};
+export declare function deterministicHardDeny(details: {
+  command: string;
+  fullCommand?: string;
+}): { rule: string; reason: string } | undefined;
+export declare function commandExpansionLimitExceeded(details: {
+  command: string;
+  fullCommand?: string;
+}): boolean;
+export declare function buildClassifierTranscript(
+  entries: readonly unknown[],
+  config: {
+    maxUserTranscriptTokens: number;
+    maxToolTranscriptTokens: number;
+    maxRelevantResultTokens?: number;
+  },
+  request?: { command: string; surface: string },
+): { truncated: boolean; userAuthorizationCeiling: string; reviewerEvidence: unknown };

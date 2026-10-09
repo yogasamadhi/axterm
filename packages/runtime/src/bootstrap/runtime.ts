@@ -310,7 +310,14 @@ export async function startRuntime(options: RuntimeOptions) {
   const tunnels = new TunnelService(connections, repository, realtime);
   const aiWorkspaces = new AiWorkspaceService(terminals, connections);
   const aiTools = new AiToolService(repository, terminals, connections, sftp, aiWorkspaces);
-  const ai = new AiService(repository, hostCapabilities, realtime, aiTools, aiWorkspaces);
+  const ai = new AiService(
+    repository,
+    hostCapabilities,
+    realtime,
+    aiTools,
+    aiWorkspaces,
+    options.generation,
+  );
   widgets.setMcpToolGateway({
     listTools: () => aiTools.mcpTools(),
     callTool: (name, args, idempotencyKey) =>

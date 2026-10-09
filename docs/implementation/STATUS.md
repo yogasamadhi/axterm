@@ -3,6 +3,225 @@
 Updated: 2026-10-09
 Product version: `0.10.0`
 
+2026-10-09 按所有者要求将当前本地源码与远端 `main` 同步。拉取后，
+本地 HEAD 与 `origin/main` 均为 `06b2605`，`git merge --ff-only origin/main`
+返回 Already up to date，无远端新增提交或合并冲突；保留现有 AI 自动审核、
+连续执行、审批 UI、全宽顶部导航及 Windows ownership-store 修正等本地改动。
+本轮未修改产品代码、依赖或测试断言，按普通提交和推送保留已有主线历史。
+`bun run check` 返回 1：lint/typecheck 通过，279 文件中 253 通过、13 失败、
+13 条件跳过；1,403 tests 通过、30 失败、72 跳过。30 条失败记录与此前
+`out/repack-mv0x01l5/check.log` 完全一致，仍为已有 Windows 权限、POSIX
+路径/命令/Unix socket 及 ownership 容量超时等问题，不标记全量门禁通过。
+独立 Level 1 架构（425 modules / 1,506 dependencies）、264 operation Contract、
+组件/许可/归属/SPDX、四语言、源码清单/快照及 `bun run build` 检查通过；
+本轮日志为 `out/git-sync-20261009/`。本次仅同步源码，不新增安装包、
+Mac/Linux 原生验收、签名、公证或正式发行声明。
+
+2026-10-09 按所有者再次“重新打包”要求，用当前源码生成未签名 Windows x64
+0.10.0 NSIS 安装程序，包含最新全宽顶部导航、待审批交互与命令审核策略 v2。
+本轮未修改产品代码或依赖。`bun run build`、打包 wrapper、包级 SPDX、安装包
+SHA-256 清单及包内 pending 更新源记录校验均返回 0；独立 Level 1 架构检查
+通过（425 modules / 1,506 dependencies），264 operation Contract 检查通过。
+新安装程序、目录包、SPDX 和 hash manifest 位于
+`release/repack-20261009-windows-x64-mv0x01l5/`。
+`Axterm Setup 0.10.0.exe` 为 134,173,943 bytes，SHA-256 为
+`2933d18b4090f119e5cb773bb0af64b86fd759a803ffa970114d3a1e3cbb7ed3`；
+`app.asar` SHA-256 为
+`2dd4e3c21d7a97e6a1243a58d17a7ff581cd20e4e0ab865c51e9b394b82a544f`。
+新包及产物校验成功后，旧 `auto-review-v2-20261009/`、
+`full-width-navigation-20261009/` 与 `repack-20261009-windows-x64-mv0rf8bl/`
+整套产物移入 Windows 回收站，原目录已确认不存在；其下文记录保留为历史证据。
+日志保存在 `out/repack-mv0x01l5/`。按仓库要求执行的 `bun run check` 返回 1：
+lint/typecheck 通过；279 文件中 253 通过、13 失败、13 条件跳过；1,403 tests
+通过、30 失败、72 跳过。失败仍涉及 Windows symlink 权限、POSIX 命令/路径/
+Unix socket/权限断言及 ownership 容量超时，完整日志为该目录的 `check.log`。
+本次未运行新包桌面流程或 NSIS 安装/升级，不将此前导航与自动审核目录包的
+验收记为新安装包的新验证；未进行签名、公开发布或 Mac/Linux 原生测试，
+不关闭完整门禁或正式发行验收。真实用户数据、受控备份、日志与既有验收证据保留。
+
+2026-10-09 按所有者顶部导航应左右撑满、侧边栏不得顶到窗口上方的反馈，
+将导航/窗口按钮提升为 shell 第一行，主工作区、左轨、功能轨与上下文侧栏从
+第二行开始。主窗格标签通过 Renderer Portal 移入全宽导航，保留分屏标签和
+最大化/还原行为；终端与文件 session 的顶边偏移同步修正，避免多留一行空白。
+移除旧窗口按钮覆盖宽度的 ResizeObserver，设置页保留其原有独立窗口 chrome。
+构建与 Level 1 架构通过；桌面几何验收核对窗口左右边界、AI/书签展开、分屏、
+第二窗格最大化/还原、session 与工具栏对齐，新增流程通过（2.9s）。启动/冷重启
+旧标签恢复流程亦通过；截图为 `out/full-width-navigation-ai.png` 与
+`out/full-width-navigation-bookmarks.png`，测试为 `tests/e2e/top-navigation.spec.ts`。
+当前已有未提交修改全部保留；本轮不把未运行的 Mac/Linux 原生验收记为通过。
+新未签名 Windows 包/安装程序位于 `release/full-width-navigation-20261009/`；
+桌面与新目录包的几何/分屏验收及自动审核批准/拒绝回归共 6/6 通过（55.4s）。
+包级 SPDX 与安装包 hash manifest 已生成并校验；`app.asar` SHA-256 为
+`d989e33684d46945a09b25c4e3739ce38b569a6e535843f21ff8648b2c63643d`，
+安装程序 SHA-256 为
+`68021126671252f74605f36019f722844483cf423fb5b9c4b2f99e2097a4f231`。
+最终 `bun run check` 返回 1：lint/typecheck 通过；279 文件中 252 通过、14 失败、
+13 跳过；1,402 tests 通过、31 失败、72 跳过。保留已有 30 项 Windows 权限/POSIX
+等失败；另一次 AI context Runtime HTTP 请求不可用，独立复跑该三项集成测试通过。
+中间全量运行的 model HTTP/MCP 临时 bad-port 失败也单独复跑七项通过，原日志保留。
+最终 typecheck、425 modules / 1,506 dependencies 架构、264 operation Contract 通过。
+源码清单更新至 1,350 文件；日志为 `out/full-width-navigation-packaged-check.log`、
+`out/full-width-navigation-package.log`。不标记全量门禁/正式发行完成，未测试 NSIS
+安装升级，不替换用户当前安装，不删除旧包。
+
+2026-10-09 按所有者“为什么每个命令都还要我审核”反馈，修正策略 v2 的过度拦截。
+此前所有 PowerShell 包装在模型审核前被视为不透明操作，输入 token 预算又按字节
+检查；现对实际 Windows CMD 下的可验证简单查询和单个普通相对文件的字面
+Set-Content 建立有限语法，查询可直接通过，写入需独立模型审核与真实用户授权，
+并保证最低 medium 风险。编码、动态表达式、复合脚本、设备名、敏感目标、越界
+路径等仍人工或拒绝；不能借模型判断降低本地风险底线。助手优先使用简单 CMD
+命令，固定 Pi 文本估算配合保守 UTF-8 上界核对完整的 8,192-token 审核输入。
+真实测试同时发现并修正 CMD argv 的反斜杠引号转义问题，执行使用明确外层引号
+与 Windows verbatim argv，审核事实一致。策略版本变化使旧绑定不能用于新执行。
+新增 12 项回归；集中审核/上下文/Pi 连续执行 58 项通过，真实 Windows 进程验证
+PowerShell 查询、文件写入、后续查询三步无需审批且文件确实存在。
+Electron source 批准/拒绝两项流程 2/2 通过（38.9s），现在自动步骤包含 PowerShell
+查询和字面文件写入；最后删除才提示。构建、Level 1 架构（425 modules / 1,506
+dependencies）、264 operation Contract 通过，保留已有用户修改和旧发行产物。
+最终 `bun run check` 返回 1：lint/typecheck 通过；253 文件、1,403 tests 通过，
+13 文件、30 tests 失败，13 文件、72 tests 跳过（279 文件、1,505 tests）。
+新增回归无失败；现有 Windows 权限、POSIX 路径/命令/Unix socket 与 ownership
+容量问题保留，未删测试或放松门禁。日志为 `out/auto-review-v2-check.log`。
+新未签名安装程序与目录包位于 `release/auto-review-v2-20261009/`。包内两项审批
+流程 2/2 通过（7.8s）：四个自动步骤包含真实 PowerShell 查询与单文件写入，
+危险删除才需用户决定，批准后完成、拒绝后停止。独立 user-data/cwd，PATH 仅含
+Windows System32 与其内置 WindowsPowerShell，未依赖系统 Pi CLI。
+`app.asar` SHA-256 为
+`ab825a40240e9ff4a1109767e58ea6e18ac725cbc81b7025149cba0ae94552b6`；
+安装程序 SHA-256 为
+`72f7f7388c71e9ee893ff9eb801a8b4361de26474e541898a6c606641ca137f2`。
+包级 SPDX 和安装包 hash manifest 已校验。未运行 NSIS 安装/升级或 Mac/Linux 原生
+验收，不替换用户运行中的旧安装，不标记全量门禁或正式发行完成。
+
+2026-10-09 按所有者再次“重新打包”要求，用当前源码生成未签名 Windows x64
+0.10.0 NSIS 安装程序，包含最新待审批弹窗、确认/拒绝交互及 ADR-030 工作模式。
+本轮未修改产品代码或依赖。`bun run build`、打包 wrapper、包级 SPDX、安装包
+SHA-256 清单及包内 pending 更新源记录校验均返回 0；独立 Level 1 架构检查
+通过（424 modules / 1,505 dependencies），264 operation Contract 检查通过。
+新安装程序、目录包、SPDX 和 hash manifest 位于
+`release/repack-20261009-windows-x64-mv0rf8bl/`。
+`Axterm Setup 0.10.0.exe` 为 134,174,631 bytes，SHA-256 为
+`e5da3cabdcc26af1458da14c690424455fe3c4a9f3a8f5efc54b65dcc3a4fae7`；
+`app.asar` SHA-256 为
+`1cee8d7fe88e88663fea7498527e7704afc85c8a7a61e2666031e2ea90aa6756`。
+新包及产物校验成功后，旧 `approval-ui-20261009/` 与
+`repack-20261009-windows-x64-mv0kl5z4/` 整套产物移入 Windows 回收站，原目录
+已确认不存在；其下文记录保留为历史证据。日志保存在 `out/repack-mv0rf8bl/`。
+按仓库要求执行的 `bun run check` 返回 1：lint/typecheck 通过；279 文件中
+253 通过、13 失败、13 条件跳过；1,391 tests 通过、30 失败、72 跳过。
+失败仍涉及 Windows symlink 权限、POSIX 命令/路径/Unix socket/权限断言及
+ownership 容量超时，完整日志为该目录的 `check.log`。本次未运行新包桌面流程
+或 NSIS 安装/升级，不将此前审批 UI 目录包的验收记为新安装包的新验证；未进行
+签名、公开发布或 Mac/Linux 原生测试，不关闭完整门禁或正式发行验收。
+真实用户数据、受控备份、日志与既有验收证据保留。
+
+2026-10-09 按所有者“确认还是拒绝也没提示框”“像 Codex 那样交互好一点”的反馈，
+补修待审批 UI：Portal 弹窗直接展示完整命令、目标、目录快照、风险和到期时间，
+固定底部的拒绝/单次运行按钮；关闭弹窗保留醒目提醒，待审批卡片始终展开。
+复用 Modal 焦点管理，默认聚焦拒绝，提供同步提交锁、忙碌状态与弹窗内失败反馈。
+状态 SSE 即时刷新审批与调用；安全命令不弹窗。Runtime 审批与目标绑定未改变。
+新增批准/拒绝两项 Electron source 流程 2/2 通过（42.5s），含四步自动执行无提示、
+完整命令/目录、关闭再打开、卡片展开和 Tab 操作；批准继续到最终回复，拒绝停止。
+实际界面截图为 `out/ai-approval-desktop-*.png`。构建、typecheck、Renderer 本地化
+检查、Level 1 架构（424 modules / 1,505 dependencies）及 264 operation Contract 通过。
+按要求执行 `bun run check` 返回 1：lint/typecheck 通过；279 文件中 253 通过、13 失败、
+13 跳过；1,391 tests 通过、30 失败、72 跳过。失败仍为现有 Windows 权限、POSIX
+命令/路径/Unix socket 和 ownership 容量等；日志为 `out/ai-approval-ui-check.log`。
+另复跑旧工作区桌面测试，在进入审批之前的标签单行布局断言失败，未删除断言。
+本轮不把全量门禁、Mac/Linux 原生或正式发行验收记为通过，已有未提交修改保留。
+新未签名 Windows x64 NSIS 与目录包位于 `release/approval-ui-20261009/`，
+新目录包的批准/拒绝两项流程 2/2 通过（8.1s），仅 System32 PATH、隔离 cwd/user-data，
+`app.isPackaged`、安全步骤无弹窗、审批按钮、执行/停止结果及落库批准来源均核对。
+安装程序为 134,174,666 bytes，SHA-256 为
+`b573130fa56e3bde74bf367d2a0fa40cc2e2dc7a9d2dbbac0c487c5568ab2546`；
+`app.asar` SHA-256 为
+`2ca30bdb55ea43dcf4d27f06f10f90c4b4d17816cd65887334bda45f914c1971`。
+包级 SPDX 与安装程序 hash manifest 已生成并校验。打包日志为
+`out/ai-approval-ui-package.log`，未测试 NSIS 安装/升级，不替换用户安装或删除旧包。
+
+2026-10-09 按所有者“重新打包”要求，用当前源码重新生成未签名 Windows x64
+0.10.0 NSIS 安装程序，包含 ADR-030 的 AI 自动审核与连续执行改动；本轮未修改
+产品代码或依赖。`bun run build`、打包 wrapper、包级 SPDX、安装包 SHA-256
+清单及包内 pending 更新源记录校验均返回 0。独立 Level 1 架构检查通过
+（424 modules / 1,504 dependencies），264 operation Contract 检查通过。
+新安装程序、目录包、SPDX 和 hash manifest 位于
+`release/repack-20261009-windows-x64-mv0kl5z4/`。
+`Axterm Setup 0.10.0.exe` 为 134,169,374 bytes，SHA-256 为
+`ede50520030919f264e91b236924f88d7d5e97223a6e9a9976bbe8fbd87baba4`；
+`app.asar` SHA-256 为
+`a3c68a2000cd7ba672605da52aafe2f7651611de3f9a9f0e3ac1a071b7a53b7b`。
+新包及产物校验成功后，旧 `repack-20261009-windows-x64-mv0ejud9/` 整套产物
+移入 Windows 回收站，原目录已确认不存在；其下文记录保留为历史证据。
+日志保存在 `out/repack-mv0kl5z4/`。按仓库要求执行的 `bun run check` 返回 1：
+lint/typecheck 通过；279 文件中 253 通过、13 失败、13 条件跳过；1,391 tests
+通过、30 失败、72 跳过。失败仍涉及 Windows symlink 权限、POSIX 命令/路径/
+Unix socket/权限断言及 ownership 容量超时，完整日志为该目录的 `check.log`。
+本次未运行新包桌面流程或 NSIS 安装/升级，不将此前隔离目录包的验收记为新
+安装包的新验证；未进行签名、公开发布或 Mac/Linux 原生测试，不关闭完整门禁
+或正式发行验收。真实用户数据、受控备份、日志与既有验收证据保留。
+
+2026-10-09 按所有者批准的 ADR-030 计划实现工作模式安全命令自动审核与 Pi 连续执行。
+严格白名单直接通过；其他命令用当前模型独立、无工具审核，有限且明确授权的可逆修改
+可自动执行，危险操作仍需原单次人工审批，批准后继续任务。安全拒绝、取消、过期、
+目标关闭或预算耗尽终止整个循环。聊天、解释/生成技能和 MCP 保持原权限范围。
+任务上限为 50 条尝试、30 分钟实际运行（人工等待暂停），最多 4 个并行任务、
+每终端一个；单条仍为 30 秒/128 KiB。SQLite migration 42、审核/步骤/批准来源、
+经过 Contract 校验的 ToolCall SSE、execution/review 用量与工具卡片已接入。
+SSH 决定额外绑定实际主机、用户名及连接执行代次，同 ID 重连也不能使用旧决定。
+固定纳入 pi-auto-review 三个纯模块与 MIT 许可，仅经私有 Pi 引擎编译；
+不升级固定 Pi，不加载扩展或完整权限系统。来源、许可、客户端与文档已同步。
+实现及实际验收边界见[本轮证据](evidence/pi-engine/2026-10-09-auto-review.md)。
+新增 45 项回归通过，集中 AI/Pi/审核/预算/迁移/真实 SSH 回归共 81 项通过；
+另核对 SSH 同 ID 执行代次变化、旧审批兼容、文案与源码快照。真实本地进程、
+真实 SSH 协议/进程夹具、Electron source 与最终隔离 Windows 目录包流程通过。
+桌面/包两项流程 2/2 通过（17.1s），包以独立 user-data/cwd 与仅 System32 的 PATH
+运行，安全步骤没有确认按钮，删除步骤单次批准后产生最终回复，未依赖系统 Pi CLI。
+最终未签名验证包为仓库外临时目录
+`C:\Users\ys\AppData\Local\Temp\axterm-auto-review-completed-4654b34a3fc04fc28d1eeffacd440f12\win-unpacked`，
+`app.asar` SHA-256 为 `1c4e384db0eb4bca6777848365524149c8282a138d37a2230ef1a31b65868841`。
+包内 reviewer MIT 许可、第三方通知、组件/许可清单及 SPDX 与当前源码逐字节一致。
+Level 1 架构（424 modules / 1,504 dependencies）、264 operation Contract、
+来源哈希、许可/SPDX、本地化、源码卫生与构建检查通过。
+最终 `bun run check` 返回 1：lint/typecheck 通过；279 文件中 254 通过、13 失败、
+12 条件跳过；1,392 tests 通过、30 失败、71 跳过。残留为原有 Windows 权限、
+POSIX 命令/Unix socket/路径断言及 ownership 容量超时等，未删除测试或放松门禁；
+完整日志为 `out/auto-review-check-completed.log`。此前 Windows 基线为 31 项失败，
+本轮旧 workspace 审批测试改为真实解释器可运行的命令并等待异步审核后通过。
+本轮不标记 Feature/Phase、全量门禁或正式发行验收完成；Mac/Linux 未运行，
+未进行 NSIS 安装/升级、签名、公证或公开发布。原用户数据、旧受控备份和已有发行产物保留。
+
+2026-10-09 按所有者要求在当前 Windows x64 检出打包 0.10.0。初始化固定 Pi
+子模块并完成冻结依赖安装；Windows Git 的自动 CRLF 转换使模型目录哈希不符，
+已将检出文本恢复为索引中的 LF 字节，本地 `core.autocrlf=false`。首次检查发现
+传输 ownership store 的 POSIX mode 校验阻止 Windows Runtime 启动；现仅在
+POSIX 校验 group/other 权限位，Windows 沿用应用数据目录的 ACL，保留普通文件、
+symlink、单硬链接及适用的 owner 校验。新增 store 硬链接拒绝和 POSIX 私有权限
+回归；Windows 定向启动/重开/硬链接拒绝 3/3 通过，Runtime 历史与协议所有权
+流程通过。POSIX 权限新增用例在 Windows 按平台条件跳过，不宣称已在 Mac/Linux
+复验。`bun run build` 和打包 wrapper 返回 0，Level 1 架构（421 模块 / 1,493
+依赖）及 264 operation Contract 检查通过，无依赖版本或架构边界变化。
+
+未签名 NSIS 安装程序、目录包、包级 SPDX 与 SHA-256 清单位于
+`release/repack-20261009-windows-x64-mv0ejud9/`。`Axterm Setup 0.10.0.exe`
+为 134,152,223 bytes，SHA-256
+`2fe287fce52eac7e36aa23631c04282c97340036743293fd4c36de99d808d18c`；
+`app.asar` SHA-256
+`9c0a4cd653d3f4405fc80b851ba03984a52e1f6e149f028b88ea3176a6617892`。
+包级 SPDX、安装包 hash manifest 与 pending 更新源记录均核验通过。隔离副本、
+临时 user-data、受限 PATH 下的 Runtime、真实 PowerShell PTY 输出、SQLite
+integrity 和冷启动通过；包内原生模块/无 foreign prebuild、四语言 runtime locale、
+About 法律文本和默认 PowerShell 7 四项 packaged 检查通过。
+
+最终 `bun run check` 返回 1：lint/typecheck 通过，274 文件中 249 通过、13 失败、
+12 条件跳过；测试 1,346 通过、31 失败、71 跳过。剩余失败涉及 Windows symlink
+权限、POSIX chmod/Unix socket 或路径断言、跨平台命令和 ownership 容量测试
+10 秒超时，详细证据保留在 `out/packaging-20261009/`。独立的 Windows close-button
+packaged 流程也因缺少 `.pane-tabbar-drag-space` 失败，未改弱断言。普通账户的
+symlink `EPERM` 需在允许创建链接的 Windows 测试账户复验；其余平台适配/性能
+问题仍待修复。此包已有上述有限 Windows smoke 证据，但未执行 NSIS 安装/升级、
+完整 Windows 验收、签名或发布，不将历史 Mac/Linux 结果记为本轮新验证，也不
+关闭正式发行或三平台验收。真实用户数据和受控备份未修改。
+
 2026-10-09 所有者明确要求 GitHub `yogasamadhi/axterm` 仅以当前本地记录为准，
 不保留远端旧提交。本轮以本地完整工作树（含未提交修改）生成无父提交的新
 初始提交，替换远端 `main`；旧远端历史不合并进新主线。当前 Pi 子模块 URL

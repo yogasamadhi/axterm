@@ -7,7 +7,7 @@ Axterm 的模型请求由 Runtime Adapter 调用固定的 Pi AI 与 Agent 源码
 ## 模式与技能
 
 AI 助手只提供“聊天模式”和“工作模式”，默认聊天模式。聊天只回复内容；工作模式
-可以提出当前标签工作区的命令，仍需用户确认后执行。输入 `@` 或点击“技能”即可
+可以连续执行当前标签工作区的命令：安全命令自动审核，危险命令等待单次确认。输入 `@` 或点击“技能”即可
 选择解释命令、解释输出、生成命令/脚本、诊断。支持按中文名称或英文 ID 过滤，
 上下键选择、Enter/Tab 采用、Escape 收起；中文输入法确认不会误发送消息。
 已选技能显示在输入框上方，可移除。直接输入 `@explain-command ls -la` 也可调用。
@@ -112,20 +112,32 @@ compat 和额外采样设置尚未接入；需要这些方式的厂商不作为�
 
 请求保留应用的上下文审阅、脱敏、代理、超时、取消、响应与输出上限。
 模型私有推理不展示或持久化。按 [ADR-028](../adr/ADR-028-ai-terminal-workspace.md)，
-Pi 每轮工作模式可提出一个命令，自己的执行器始终阻止执行；Runtime 将命令、标签、
-连接及目录快照记录为待确认操作。点击“仅运行一次”后通过 Application Service
-执行，最多 30 秒、合计 128 KiB 输出；确认前切换标签或 `cd` 不会改变已记录的
-执行目标。关闭目标会失败。结果回到聊天，可继续提问；没有自主执行循环。
+由 [ADR-030](../adr/ADR-030-ai-auto-review-and-agent-loop.md) 扩展工作执行范围：
+Pi 每轮最多调用一个命令，执行回调只调用 Runtime Application Service。
+Runtime 用严格白名单或独立、无工具的当前模型请求审核；有限且明确授权的可逆修改可自动通过。
+策略 v2 不再把所有 PowerShell 调用一律转人工：实际 CMD 下可解析的简单查询、
+单个普通文件的字面 Set-Content 可自动审核；写入必须至少按 medium 风险和真实用户授权
+判断。编码、动态表达式、设备名、越界路径、复合脚本等仍人工确认。助手优先使用
+实际 CMD 的简单命令，避免无必要的 PowerShell 包装。Windows 执行固定外层引号并使用
+verbatim argv，审核事实与真实解释器参数一致；预算使用固定 Pi 文本估算与保守 UTF-8
+上界，而不是把 8,192 tokens 错按成 8,192 字节。
+危险操作保留“仅运行一次”人工确认，批准后回到 Pi 原生循环；拒绝、过期、取消或目标关闭终止任务。
+命令、目标、目录快照、generation、策略和有效期均持久化绑定；自动批准不伪装成人工点击。
+每任务最多 50 条尝试、30 分钟实际运行（等待人工确认暂停），最多 4 个工作任务、每终端一个。
+单条仍为 30 秒、128 KiB，交回模型最多 16 KiB 并标明截断。审核最多估算 8,192 输入 tokens、
+1,024 输出 tokens，超时最多 30 秒且不重试。切换标签、模型或 `cd` 不改变原任务目标和目录。
+审核只保存结构化决定与简短理由，不进入聊天正文；重启后不恢复执行或重放批准。
 专用“生成命令”任务保持草稿，不自动执行，已有终端插入及 MCP 工具语义保留。
 
 ## 源码与构建
 
 Git 检出后先运行 `git submodule update --init --recursive vendor/pi`，再安装依赖。
 `bun run pi:build` 校验 `packages/pi-engine/source-manifest.json` 的源码哈希与固定
-catalog 哈希，使用 Pi 的离线 hydration helper，并把 SDK 和源码编入私有引擎包。
+catalog 哈希及 `vendor/pi-auto-review/PROVENANCE.json` 的三份纯源码与 MIT 许可哈希，
+使用 Pi 的离线 hydration helper，并把 SDK 和源码编入私有引擎包。
 上游目录数据是忽略的生成输入，子模块的已跟踪文件保持不变。
 
 独立源码快照带上三个必要的 Pi 引擎源码树、技能加载器及其必要依赖源码、
 hydration helper、目录 pin 和 MIT 许可证，
 排除子模块 Git 元数据、CLI、示例和上游测试。安装包包含引擎代码、SDK 许可清单和
-`licenses/pi-LICENSE.txt`，运行时无需源码工作区或系统 Node。
+`licenses/pi-LICENSE.txt` 和 `licenses/pi-auto-review-LICENSE.txt`，运行时无需源码工作区、系统 Node 或 Pi CLI。

@@ -1,5 +1,31 @@
 import { execFile, spawn } from 'node:child_process';
 import { StringDecoder } from 'node:string_decoder';
+import type { AiWorkspace } from '@workspace/contracts';
+
+export function workspaceExecutionFacts(command: string, workspace: AiWorkspace) {
+  if (workspace.execution === 'ssh') {
+    const quote = (value: string) => `'${value.replaceAll("'", "'\\''")}'`;
+    return {
+      shell: 'SSH login shell (server-selected)',
+      command: workspace.commandDirectory
+        ? `cd -- ${quote(workspace.commandDirectory)} && (\n${command}\n)`
+        : command,
+      connectionId: workspace.connectionId,
+      cwd: workspace.commandDirectory,
+    };
+  }
+  const executable = process.platform === 'win32' ? process.env.ComSpec || 'cmd.exe' : '/bin/sh';
+  return {
+    shell:
+      process.platform === 'win32' && /(?:^|[\\/])cmd\.exe$/iu.test(executable)
+        ? 'cmd.exe'
+        : executable,
+    executable: process.platform === 'win32' ? process.env.ComSpec || 'cmd.exe' : '/bin/sh',
+    arguments: process.platform === 'win32' ? ['/d', '/s', '/c', `"${command}"`] : ['-c', command],
+    command,
+    cwd: workspace.commandDirectory,
+  };
+}
 
 /** One owned process group, bounded output and deterministic cancellation. */
 export async function executeWorkspaceCommand(command: string, cwd: string, signal: AbortSignal) {
@@ -7,7 +33,7 @@ export async function executeWorkspaceCommand(command: string, cwd: string, sign
   const windows = process.platform === 'win32';
   const child = spawn(
     windows ? process.env.ComSpec || 'cmd.exe' : '/bin/sh',
-    windows ? ['/d', '/s', '/c', command] : ['-c', command],
+    windows ? ['/d', '/s', '/c', `"${command}"`] : ['-c', command],
     {
       cwd,
       env: Object.fromEntries(
@@ -18,6 +44,9 @@ export async function executeWorkspaceCommand(command: string, cwd: string, sign
       ),
       detached: !windows,
       windowsHide: true,
+      // CMD /s removes this one outer quote pair. Node's normal argv escaping
+      // uses backslashes, which are not CMD quote escapes and alter PS payloads.
+      windowsVerbatimArguments: windows,
       stdio: ['ignore', 'pipe', 'pipe'],
     },
   );

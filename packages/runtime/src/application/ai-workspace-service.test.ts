@@ -43,8 +43,10 @@ async function fixture() {
   const local = terminals.createLocal({ cols: 80, rows: 24 });
   const exec = vi.fn(async (_input: unknown) => ({ stdout: 'REMOTE', stderr: '', exitCode: 0 }));
   const handle = vi.fn((_id: string) => ({ exec }));
+  let generation = 1;
   const connections = {
     get: (id: string) => ({ id, state: 'ready' }),
+    executionTarget: () => ({ hostname: 'fixture', port: 22, username: 'fixture', generation }),
     exec: (id: string, input: unknown) => handle(id).exec(input),
   } as unknown as ConnectionService;
   const workspaces = new AiWorkspaceService(terminals, connections, home);
@@ -58,10 +60,34 @@ async function fixture() {
     connectionId: randomUUID(),
   };
   terminals.registerExternal(remote, { ...channel, cwd: "/remote/space's dir" });
-  return { home, terminals, local, remote, exec, handle, workspaces, emit, writes, connections };
+  return {
+    home,
+    terminals,
+    local,
+    remote,
+    exec,
+    handle,
+    workspaces,
+    emit,
+    writes,
+    connections,
+    changeTarget: () => {
+      generation++;
+    },
+  };
 }
 
 describe('selected-terminal assistant workspace and execution', () => {
+  it('invalidates the same SSH connection after its execution generation changes', async () => {
+    const f = await fixture();
+    const bound = await f.workspaces.bind(f.remote.id, { command: 'hostname' });
+    f.changeTarget();
+    expect(f.workspaces.targetReady(bound.workspace)).toBe(false);
+    await expect(f.workspaces.execute(f.remote.id, bound)).rejects.toMatchObject({
+      code: 'PRECONDITION_FAILED',
+    });
+    expect(f.exec).not.toHaveBeenCalled();
+  });
   it('does not pass Desktop Host and Runtime credentials into an approved shell', async () => {
     const f = await fixture();
     vi.stubEnv('AXTERM_RUNTIME_TOKEN', 'internal-auth-canary');
@@ -191,12 +217,13 @@ describe('selected-terminal assistant workspace and execution', () => {
       tool: {
         name: 'workspace.exec',
         target: f.local.id,
-        args: { command: 'printf approved > marker' },
+        args: { command: 'echo approved>marker' },
       },
     };
     const key = randomUUID();
     const run = await ai.start(input, key);
     expect(await ai.start(input, key)).toMatchObject({ id: run.id });
+    await vi.waitFor(() => expect(ai.get(run.id).state).toBe('waiting_approval'));
     const approval = ai.approvals()[0]!;
     expect(ai.toolCalls(run.id)[0]?.args).toMatchObject({
       workspace: { commandDirectory: f.home },
@@ -206,7 +233,9 @@ describe('selected-terminal assistant workspace and execution', () => {
     await mkdir(next);
     f.emit(next);
     await ai.decideApproval(approval.id, { decision: 'approve_once', argsHash: approval.argsHash });
-    expect(await readFile(join(f.home, 'marker'), 'utf8')).toBe('approved');
+    expect(await readFile(join(f.home, 'marker'), 'utf8')).toBe(
+      process.platform === 'win32' ? 'approved\r\n' : 'approved\n',
+    );
     await expect(
       ai.decideApproval(approval.id, { decision: 'approve_once', argsHash: approval.argsHash }),
     ).rejects.toMatchObject({ code: 'PRECONDITION_FAILED' });

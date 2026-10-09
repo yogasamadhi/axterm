@@ -37,6 +37,11 @@ commands execute on the selected remote connection.
 
 ## Validation
 
+2026-10-09 execution amendment: [ADR-030](ADR-030-ai-auto-review-and-agent-loop.md)
+supersedes the every-command approval and single-proposal completion constraints for
+work-mode `workspace.exec`. Safe decisions may be automatic; dangerous commands wait
+for existing human approvals. Exact terminal/connection/directory binding remains required.
+
 Cover selected local directories, split directory markers and bounds, SSH/local separation,
 connection closure, cancellation/output limits, exact-target approval and model proposal
 validation. Exercise direct conversation and API-key configuration in real Electron and

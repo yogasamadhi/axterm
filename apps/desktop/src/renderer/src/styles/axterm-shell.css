@@ -62,14 +62,17 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) var(--shell-footer-size);
+  grid-template-rows: var(--shell-tab-size) minmax(0, 1fr) var(--shell-footer-size);
   background: var(--shell-canvas);
   color: var(--shell-text);
 }
 
 body.shortcut-bar-on .app-shell {
   height: calc(100% - var(--shortcut-bar-kb-offset, 0px));
-  grid-template-rows: minmax(0, 1fr) var(--shell-footer-size) var(--ax-size-shortcut-bar, 44px);
+  grid-template-rows: var(--shell-tab-size) minmax(0, 1fr) var(--shell-footer-size) var(
+      --ax-size-shortcut-bar,
+      44px
+    );
 }
 
 .terminal-shortcut-bar {
@@ -359,7 +362,7 @@ body.shortcut-bar-on .app-shell {
 
 .workspace-left-rail {
   grid-column: 1;
-  grid-row: 1 / -1;
+  grid-row: 2 / -1;
   min-width: 0;
   border-right: 1px solid var(--shell-sunken);
   background: var(--shell-deep);
@@ -395,7 +398,7 @@ body.shortcut-bar-on .app-shell {
 /* Activity rail */
 .app-sidebar.activity-bar {
   grid-column: -2 / -1;
-  grid-row: 1 / -1;
+  grid-row: 2 / -1;
   width: var(--shell-rail-size);
   min-width: var(--shell-rail-size);
   min-height: 0;
@@ -545,7 +548,7 @@ body.shortcut-bar-on .app-shell {
 /* Context sidebar */
 .workspace-sidebar {
   grid-column: -3 / -2;
-  grid-row: 1 / -1;
+  grid-row: 2 / -1;
   min-width: 0;
   min-height: 0;
   display: flex;
@@ -769,11 +772,11 @@ body.shortcut-bar-on .app-shell {
 .sidebar-collapsed .workspace-main {
   position: relative;
   grid-column: 2;
-  grid-row: 1;
+  grid-row: 2;
   min-width: 0;
   min-height: 0;
   display: grid;
-  grid-template-rows: var(--shell-tab-size) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   background: var(--shell-canvas);
 }
 
@@ -1482,10 +1485,9 @@ body.shortcut-bar-on .app-shell {
   anchor-name: --pane-active-tab;
 }
 
-/* The application toolbar is overlaid on the first pane's tab strip. Reserve
- * its measured width on every platform so its icons cannot intercept tab clicks. */
+/* Window controls occupy the global strip, leaving pane strips their full width. */
 .terminal-workspace .pane-tabbar {
-  padding-right: var(--terminal-window-controls-width, 320px);
+  padding-right: 0;
 }
 
 .pane-tabbar-drag-space {
@@ -3894,7 +3896,7 @@ body.resizing-panes webview {
 /* AI shares the contextual sidebar and its full height. */
 .workspace-sidebar.ai-inspector {
   grid-column: -3 / -2;
-  grid-row: 1 / -1;
+  grid-row: 2 / -1;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
@@ -4062,7 +4064,7 @@ body.resizing-panes webview {
 .app-statusbar {
   position: relative;
   grid-column: 2 / -2;
-  grid-row: 2;
+  grid-row: 3;
   height: var(--shell-footer-size);
   min-height: var(--shell-footer-size);
   display: flex;
@@ -5117,4 +5119,40 @@ html[dir='rtl']
   padding: 8px 12px;
   color: var(--shell-text-muted);
   font-size: 11px;
+}
+
+/* Window navigation spans the full shell; sidebars begin below it. */
+.app-shell > .tabbar {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  z-index: 100;
+}
+.workspace-primary-tabs {
+  flex: 1;
+  min-width: 0;
+}
+.workspace-primary-tabs[hidden],
+.app-shell.surface-terminal > .tabbar > .tabbar-scroll,
+.app-shell > .activity-bar > .activity-brand {
+  display: none;
+}
+.terminal-pane[data-global-tabs] {
+  grid-template-rows: 32px minmax(0, 1fr);
+}
+.terminal-pane.empty[data-global-tabs] {
+  grid-template-rows: minmax(0, 1fr);
+}
+.terminal-session-layer[data-global-tabs] {
+  margin-top: 32px;
+}
+.app-shell.is-mac > .tabbar .pane-tabbar-scroll,
+.app-shell.is-mac > .tabbar > .tabbar-scroll {
+  margin-left: var(--shell-native-controls-width);
+}
+.app-shell.section-settings.surface-section > .tabbar {
+  display: none;
+}
+.app-shell.section-settings.surface-section > .activity-bar,
+.app-shell.section-settings.surface-section > .workspace-sidebar {
+  grid-row: 1 / -1;
 }

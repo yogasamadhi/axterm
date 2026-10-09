@@ -5141,6 +5141,70 @@ kbd {
 .modal-backdrop:has(.ai-context-review) {
   z-index: 2000;
 }
+.modal-backdrop:has(.ai-command-approval) {
+  z-index: 2000;
+}
+.ai-command-approval {
+  width: min(760px, calc(100vw - 32px));
+}
+.ai-command-approval > header,
+.ai-command-approval > footer {
+  position: sticky;
+  background: #13191b;
+  z-index: 1;
+}
+.ai-command-approval > header {
+  top: 0;
+  height: auto;
+  min-height: 48px;
+}
+.ai-command-approval-body {
+  padding: 0 18px 12px;
+  overflow-wrap: anywhere;
+}
+.ai-command-approval-risk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e5b76c;
+}
+.ai-command-approval pre {
+  max-height: 38vh;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 12px;
+  border: 1px solid var(--border, #35423c);
+  border-radius: 6px;
+  background: #0c1112;
+}
+.ai-command-approval > footer {
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--border, #35423c);
+}
+.ai-command-approval > footer small {
+  margin-right: auto;
+  color: var(--text-muted);
+}
+.ai-approval-reminder {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: 1px solid #b98b48;
+  border-radius: 8px;
+  background: #202721;
+  box-shadow: 0 8px 32px #0008;
+}
 .ai-context-review > :not(header) {
   margin-inline: 16px;
 }

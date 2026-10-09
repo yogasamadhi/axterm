@@ -45,6 +45,11 @@ provider streaming protocols itself. Pi is pinned by the `vendor/pi` gitlink and
 
 ## Validation
 
+2026-10-09 execution amendment: [ADR-030](ADR-030-ai-auto-review-and-agent-loop.md)
+supersedes the blocked executor/no autonomous tools constraint only for work-mode
+`workspace.exec`. The native loop delegates to Runtime review and bounded execution;
+chat/generation, Vault, source pinning and other tool permissions retain their boundaries.
+
 Verify catalog fidelity, built-in and custom model resolution, old provider compatibility,
 Pi-generated protocol requests, visible streaming/usage, failure/cancellation/timeout/limits,
 Vault-only imports and header credentials, unchanged approval policy, and independent source

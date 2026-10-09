@@ -104,7 +104,9 @@ export class OwnedStageJournal implements StageOwnershipWriter {
       !store.isFile() ||
       store.isSymbolicLink() ||
       store.nlink !== 1 ||
-      (store.mode & 0o077) !== 0 ||
+      // Windows inherits the application data directory's ACL. Its stat mode
+      // reports DOS read-only attributes, not POSIX group/other permissions.
+      (process.platform !== 'win32' && (store.mode & 0o077) !== 0) ||
       (typeof process.getuid === 'function' && store.uid !== process.getuid())
     )
       throw new Error('Transfer ownership store is not a private regular file');

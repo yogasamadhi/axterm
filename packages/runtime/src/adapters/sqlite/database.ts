@@ -908,6 +908,11 @@ const migrations: readonly Migration[] = [
     risky: false,
     sql: `INSERT INTO app_meta(key, value) VALUES ('axterm:schema-generation', '2');`,
   },
+  {
+    id: 42,
+    risky: false,
+    sql: 'ALTER TABLE ai_tool_calls ADD COLUMN review_json TEXT; ALTER TABLE ai_tool_calls ADD COLUMN step INTEGER; ALTER TABLE ai_tool_calls ADD COLUMN approval_source TEXT;',
+  },
 ];
 
 const LEGACY_THEME_ID_PREFIX = '00000000-0000-4000-8000-';

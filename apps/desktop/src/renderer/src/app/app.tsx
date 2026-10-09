@@ -294,8 +294,7 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
     async () => {},
   );
   const tabbar = useRef<HTMLDivElement>(null);
-  const windowControlBar = useRef<HTMLDivElement>(null);
-  const workspaceMain = useRef<HTMLElement>(null);
+  const [primaryTabContainer, setPrimaryTabContainer] = useState<HTMLDivElement | null>(null);
   const shellRoot = useRef<HTMLDivElement>(null);
   const activityRail = useRef<HTMLElement>(null);
 
@@ -2658,25 +2657,6 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
   const workspaceCloseTab =
     hoveredWorkspaceTabId && hoveredWorkspaceTab ? hoveredWorkspaceTab : currentTab;
   const terminalSurfaceActive = contentSurface === 'terminal' && !!currentTab;
-  useEffect(() => {
-    if (!terminalSurfaceActive) return;
-    const workspace = workspaceMain.current;
-    const controls = windowControlBar.current;
-    if (!workspace || !controls) return;
-    const update = () => {
-      workspace.style.setProperty(
-        '--terminal-window-controls-width',
-        `${Math.ceil(controls.getBoundingClientRect().width)}px`,
-      );
-    };
-    const observer = new ResizeObserver(update);
-    observer.observe(controls);
-    update();
-    return () => {
-      observer.disconnect();
-      workspace.style.removeProperty('--terminal-window-controls-width');
-    };
-  }, [terminalSurfaceActive]);
   const currentSessionMode =
     currentTab && terminalSessionModes[currentTab.id] === 'files' ? 'files' : 'terminal';
   const terminalContentActive = terminalSurfaceActive && currentSessionMode === 'terminal';
@@ -2914,8 +2894,268 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
         }}
       />
 
+      <div className="tabbar">
+        <div
+          className="workspace-primary-tabs"
+          ref={setPrimaryTabContainer}
+          hidden={!terminalSurfaceActive}
+        />
+        <div
+          className="tabbar-scroll"
+          ref={tabbar}
+          onMouseMove={(event) => {
+            const target = event.target as HTMLElement;
+            if (target.closest('.tab-close-active')) return;
+            setHoveredWorkspaceTabId(
+              target.closest<HTMLElement>('.terminal-tab')?.dataset.terminalId,
+            );
+          }}
+          onMouseLeave={() => setHoveredWorkspaceTabId(undefined)}
+          onWheel={handleTabWheel}
+        >
+          {!terminalSurfaceActive && section === 'settings' && (
+            <h1 id="workspace-main-heading" className="workspace-tab active section-tab">
+              <SectionIcon size={14} aria-hidden="true" />
+              <span>{activeSectionLabel}</span>
+            </h1>
+          )}
+          {!terminalSurfaceActive && (
+            <div className="workspace-session-tabs" role="tablist" aria-label={x('shell.allTabs')}>
+              {tabs.map((tab) => (
+                <div className="workspace-tab-entry" key={tab.id} role="presentation">
+                  <div
+                    className={`workspace-tab terminal-tab ${activeTerminalId === tab.id ? 'active' : ''} ${workspaceCloseTab?.id === tab.id ? 'close-target' : ''} ${tab.disconnected ? 'disconnected' : ''} ${tab.pinned ? 'pinned' : ''}`}
+                    data-terminal-id={tab.id}
+                    role="tab"
+                    tabIndex={activeTerminalId === tab.id ? 0 : -1}
+                    draggable
+                    aria-selected={activeTerminalId === tab.id}
+                    onClick={() => setActiveTerminal(tab.id)}
+                    onMouseEnter={() => {
+                      if (
+                        (settings.data?.workspace.switchTabOnHover ?? false) &&
+                        activeTerminalId !== tab.id &&
+                        !document.querySelector('.terminal-tab.dragging')
+                      )
+                        setActiveTerminal(tab.id);
+                    }}
+                    onDoubleClick={() => void duplicateTab(tab.id)}
+                    onAuxClick={(event) => {
+                      if (event.button !== 1) return;
+                      event.preventDefault();
+                      void closeTab(tab.id);
+                    }}
+                    onContextMenu={(event) => {
+                      event.preventDefault();
+                      setActiveTerminal(tab.id);
+                      setTabMenu({ id: tab.id, x: event.clientX, y: event.clientY });
+                    }}
+                    onDragStart={(event) => {
+                      event.currentTarget.classList.add('dragging');
+                      event.dataTransfer.effectAllowed = 'move';
+                      event.dataTransfer.setData('application/x-axterm-tab', tab.id);
+                    }}
+                    onDragOver={(event) => {
+                      if (!event.dataTransfer.types.includes('application/x-axterm-tab')) return;
+                      event.preventDefault();
+                      const bounds = event.currentTarget.getBoundingClientRect();
+                      const after = event.clientX > bounds.left + bounds.width / 2;
+                      event.currentTarget.classList.toggle('drop-after', after);
+                      event.currentTarget.classList.toggle('drop-before', !after);
+                    }}
+                    onDragLeave={(event) => {
+                      event.currentTarget.classList.remove('drop-before', 'drop-after');
+                    }}
+                    onDrop={(event) => {
+                      event.preventDefault();
+                      const bounds = event.currentTarget.getBoundingClientRect();
+                      moveTerminal(
+                        event.dataTransfer.getData('application/x-axterm-tab'),
+                        tab.id,
+                        event.clientX > bounds.left + bounds.width / 2,
+                      );
+                      event.currentTarget.classList.remove('drop-before', 'drop-after');
+                    }}
+                    onDragEnd={() => {
+                      document
+                        .querySelectorAll('.terminal-tab.dragging')
+                        .forEach((element) => element.classList.remove('dragging'));
+                      tabbar.current
+                        ?.querySelectorAll('.drop-before, .drop-after')
+                        .forEach((element) =>
+                          element.classList.remove('drop-before', 'drop-after'),
+                        );
+                    }}
+                    onKeyDown={(event) => {
+                      const direction =
+                        event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0;
+                      const index = tabs.findIndex((candidate) => candidate.id === tab.id);
+                      const targetIndex = direction
+                        ? (index + direction + tabs.length) % tabs.length
+                        : event.key === 'Home'
+                          ? 0
+                          : event.key === 'End'
+                            ? tabs.length - 1
+                            : -1;
+                      const target = tabs[targetIndex];
+                      if (target) {
+                        event.preventDefault();
+                        setActiveTerminal(target.id);
+                        tabbar.current
+                          ?.querySelectorAll<HTMLElement>('[role="tab"]')
+                          .forEach((element) => {
+                            if (element.dataset.terminalId === target.id) element.focus();
+                          });
+                      } else if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        setActiveTerminal(tab.id);
+                      }
+                    }}
+                  >
+                    <GripVertical className="tab-grip" size={12} />
+                    <span className="tab-state" />
+                    {(settings.data?.workspace.showTabNumber ?? true) && (
+                      <span className="tab-number">{tab.tabNumber}</span>
+                    )}
+                    <Terminal size={14} />
+                    {tab.pinned && <Pin className="tab-pin" size={10} fill="currentColor" />}
+                    {renamingTabId === tab.id ? (
+                      <input
+                        className="tab-rename"
+                        autoFocus
+                        defaultValue={tab.title}
+                        onClick={(event) => event.stopPropagation()}
+                        onBlur={(event) => finishRename(tab.id, event.target.value)}
+                        onKeyDown={(event) => {
+                          event.stopPropagation();
+                          if (event.key === 'Enter') event.currentTarget.blur();
+                          if (event.key === 'Escape') setRenamingTabId(undefined);
+                        }}
+                      />
+                    ) : (
+                      <span className="tab-title">{tab.title}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {!terminalSurfaceActive && workspaceCloseTab && !workspaceCloseTab.pinned && (
+            <button
+              className="tab-close-active"
+              aria-label={x('shell.closeTab', { title: workspaceCloseTab.title })}
+              title={x('shell.closeTab', { title: workspaceCloseTab.title })}
+              onClick={() => {
+                setHoveredWorkspaceTabId(undefined);
+                void closeTab(workspaceCloseTab.id);
+              }}
+            >
+              <X size={14} />
+            </button>
+          )}
+          {!terminalSurfaceActive && (
+            <button
+              className="tab-add"
+              onClick={() => void createLocalTerminal()}
+              title={x('app.newLocalTerminal')}
+            >
+              <Plus size={15} />
+            </button>
+          )}
+          {!terminalSurfaceActive && (
+            <button
+              className={newSessionMenuOpen ? 'tab-add-menu active' : 'tab-add-menu'}
+              onClick={() => {
+                setNewSessionMenuOpen((open) => !open);
+                setLayoutMenuOpen(false);
+                setTabOverflowMenuOpen(false);
+              }}
+              title={x('app.newSessionMenu')}
+            >
+              <ChevronDown size={11} />
+            </button>
+          )}
+        </div>
+        <div className="tabbar-actions">
+          {tabOverflow && (
+            <>
+              <button onClick={() => scrollTabs(-1)} title={x('app.scrollTabsLeft')}>
+                <ChevronLeft size={13} />
+              </button>
+              <button onClick={() => scrollTabs(1)} title={x('app.scrollTabsRight')}>
+                <ChevronRight size={13} />
+              </button>
+              <button
+                className={tabOverflowMenuOpen ? 'active' : ''}
+                onClick={() => {
+                  setTabOverflowMenuOpen((open) => !open);
+                  setLayoutMenuOpen(false);
+                  setNewSessionMenuOpen(false);
+                }}
+                title={x('shell.allTabs')}
+              >
+                <ChevronDown size={13} />
+              </button>
+            </>
+          )}
+          <button
+            onClick={() => {
+              setLayoutMenuOpen((open) => !open);
+              setNewSessionMenuOpen(false);
+              setTabOverflowMenuOpen(false);
+            }}
+            className={split ? 'active' : ''}
+            disabled={!tabs.length}
+            title={x('app.layoutWorkspace')}
+          >
+            <LayoutGrid size={14} />
+          </button>
+          <button onClick={reconnect} aria-label={x('app.reconnect')} title={x('app.reconnect')}>
+            <RefreshCw size={14} />
+          </button>
+          <button
+            onClick={toggleDetails}
+            aria-label={x('app.connectionDetails')}
+            title={x('app.connectionDetails')}
+          >
+            <Activity size={14} />
+          </button>
+          <button
+            onClick={(event) => {
+              if (!activeTerminalId) return;
+              const box = event.currentTarget.getBoundingClientRect();
+              setTabMenu({ id: activeTerminalId, x: box.right - 190, y: box.bottom + 4 });
+            }}
+            disabled={!activeTerminalId}
+            title={x('app.tabActions')}
+          >
+            <Ellipsis size={15} />
+          </button>
+        </div>
+        {layoutMenuOpen && (
+          <LayoutWorkspaceMenu
+            layout={layoutMode}
+            workspaces={settings.data?.workspace.namedWorkspaces ?? []}
+            activeWorkspaceId={settings.data?.workspace.activeWorkspaceId ?? null}
+            onLayout={setLayoutMode}
+            onSave={saveWorkspace}
+            onLoad={(workspace) => void loadWorkspace(workspace)}
+            onDelete={(workspace) => void deleteWorkspace(workspace)}
+            onDismiss={() => setLayoutMenuOpen(false)}
+          />
+        )}
+        {tabOverflowMenuOpen && (
+          <TabOverflowMenu
+            tabs={tabs}
+            activeTerminalId={activeTerminalId}
+            onSelect={setActiveTerminal}
+            onDismiss={() => setTabOverflowMenuOpen(false)}
+          />
+        )}
+        <WindowControls client={client} openTabCount={tabs.length} />
+      </div>
+
       <main
-        ref={workspaceMain}
         aria-labelledby="workspace-main-heading"
         className={`${terminalSurfaceActive ? 'workspace-main terminal-workspace' : 'workspace-main'} ${remoteMonitorVisible ? 'with-remote-monitor' : ''}`}
       >
@@ -2924,266 +3164,6 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
             {workspaceHeading}
           </h1>
         ) : null}
-        <div className="tabbar" ref={windowControlBar}>
-          <div
-            className="tabbar-scroll"
-            ref={tabbar}
-            onMouseMove={(event) => {
-              const target = event.target as HTMLElement;
-              if (target.closest('.tab-close-active')) return;
-              setHoveredWorkspaceTabId(
-                target.closest<HTMLElement>('.terminal-tab')?.dataset.terminalId,
-              );
-            }}
-            onMouseLeave={() => setHoveredWorkspaceTabId(undefined)}
-            onWheel={handleTabWheel}
-          >
-            {!terminalSurfaceActive && section === 'settings' && (
-              <h1 id="workspace-main-heading" className="workspace-tab active section-tab">
-                <SectionIcon size={14} aria-hidden="true" />
-                <span>{activeSectionLabel}</span>
-              </h1>
-            )}
-            {!terminalSurfaceActive && (
-              <div
-                className="workspace-session-tabs"
-                role="tablist"
-                aria-label={x('shell.allTabs')}
-              >
-                {tabs.map((tab) => (
-                  <div className="workspace-tab-entry" key={tab.id} role="presentation">
-                    <div
-                      className={`workspace-tab terminal-tab ${activeTerminalId === tab.id ? 'active' : ''} ${workspaceCloseTab?.id === tab.id ? 'close-target' : ''} ${tab.disconnected ? 'disconnected' : ''} ${tab.pinned ? 'pinned' : ''}`}
-                      data-terminal-id={tab.id}
-                      role="tab"
-                      tabIndex={activeTerminalId === tab.id ? 0 : -1}
-                      draggable
-                      aria-selected={activeTerminalId === tab.id}
-                      onClick={() => setActiveTerminal(tab.id)}
-                      onMouseEnter={() => {
-                        if (
-                          (settings.data?.workspace.switchTabOnHover ?? false) &&
-                          activeTerminalId !== tab.id &&
-                          !document.querySelector('.terminal-tab.dragging')
-                        )
-                          setActiveTerminal(tab.id);
-                      }}
-                      onDoubleClick={() => void duplicateTab(tab.id)}
-                      onAuxClick={(event) => {
-                        if (event.button !== 1) return;
-                        event.preventDefault();
-                        void closeTab(tab.id);
-                      }}
-                      onContextMenu={(event) => {
-                        event.preventDefault();
-                        setActiveTerminal(tab.id);
-                        setTabMenu({ id: tab.id, x: event.clientX, y: event.clientY });
-                      }}
-                      onDragStart={(event) => {
-                        event.currentTarget.classList.add('dragging');
-                        event.dataTransfer.effectAllowed = 'move';
-                        event.dataTransfer.setData('application/x-axterm-tab', tab.id);
-                      }}
-                      onDragOver={(event) => {
-                        if (!event.dataTransfer.types.includes('application/x-axterm-tab')) return;
-                        event.preventDefault();
-                        const bounds = event.currentTarget.getBoundingClientRect();
-                        const after = event.clientX > bounds.left + bounds.width / 2;
-                        event.currentTarget.classList.toggle('drop-after', after);
-                        event.currentTarget.classList.toggle('drop-before', !after);
-                      }}
-                      onDragLeave={(event) => {
-                        event.currentTarget.classList.remove('drop-before', 'drop-after');
-                      }}
-                      onDrop={(event) => {
-                        event.preventDefault();
-                        const bounds = event.currentTarget.getBoundingClientRect();
-                        moveTerminal(
-                          event.dataTransfer.getData('application/x-axterm-tab'),
-                          tab.id,
-                          event.clientX > bounds.left + bounds.width / 2,
-                        );
-                        event.currentTarget.classList.remove('drop-before', 'drop-after');
-                      }}
-                      onDragEnd={() => {
-                        document
-                          .querySelectorAll('.terminal-tab.dragging')
-                          .forEach((element) => element.classList.remove('dragging'));
-                        tabbar.current
-                          ?.querySelectorAll('.drop-before, .drop-after')
-                          .forEach((element) =>
-                            element.classList.remove('drop-before', 'drop-after'),
-                          );
-                      }}
-                      onKeyDown={(event) => {
-                        const direction =
-                          event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0;
-                        const index = tabs.findIndex((candidate) => candidate.id === tab.id);
-                        const targetIndex = direction
-                          ? (index + direction + tabs.length) % tabs.length
-                          : event.key === 'Home'
-                            ? 0
-                            : event.key === 'End'
-                              ? tabs.length - 1
-                              : -1;
-                        const target = tabs[targetIndex];
-                        if (target) {
-                          event.preventDefault();
-                          setActiveTerminal(target.id);
-                          tabbar.current
-                            ?.querySelectorAll<HTMLElement>('[role="tab"]')
-                            .forEach((element) => {
-                              if (element.dataset.terminalId === target.id) element.focus();
-                            });
-                        } else if (event.key === 'Enter' || event.key === ' ') {
-                          event.preventDefault();
-                          setActiveTerminal(tab.id);
-                        }
-                      }}
-                    >
-                      <GripVertical className="tab-grip" size={12} />
-                      <span className="tab-state" />
-                      {(settings.data?.workspace.showTabNumber ?? true) && (
-                        <span className="tab-number">{tab.tabNumber}</span>
-                      )}
-                      <Terminal size={14} />
-                      {tab.pinned && <Pin className="tab-pin" size={10} fill="currentColor" />}
-                      {renamingTabId === tab.id ? (
-                        <input
-                          className="tab-rename"
-                          autoFocus
-                          defaultValue={tab.title}
-                          onClick={(event) => event.stopPropagation()}
-                          onBlur={(event) => finishRename(tab.id, event.target.value)}
-                          onKeyDown={(event) => {
-                            event.stopPropagation();
-                            if (event.key === 'Enter') event.currentTarget.blur();
-                            if (event.key === 'Escape') setRenamingTabId(undefined);
-                          }}
-                        />
-                      ) : (
-                        <span className="tab-title">{tab.title}</span>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            {!terminalSurfaceActive && workspaceCloseTab && !workspaceCloseTab.pinned && (
-              <button
-                className="tab-close-active"
-                aria-label={x('shell.closeTab', { title: workspaceCloseTab.title })}
-                title={x('shell.closeTab', { title: workspaceCloseTab.title })}
-                onClick={() => {
-                  setHoveredWorkspaceTabId(undefined);
-                  void closeTab(workspaceCloseTab.id);
-                }}
-              >
-                <X size={14} />
-              </button>
-            )}
-            {!terminalSurfaceActive && (
-              <button
-                className="tab-add"
-                onClick={() => void createLocalTerminal()}
-                title={x('app.newLocalTerminal')}
-              >
-                <Plus size={15} />
-              </button>
-            )}
-            {!terminalSurfaceActive && (
-              <button
-                className={newSessionMenuOpen ? 'tab-add-menu active' : 'tab-add-menu'}
-                onClick={() => {
-                  setNewSessionMenuOpen((open) => !open);
-                  setLayoutMenuOpen(false);
-                  setTabOverflowMenuOpen(false);
-                }}
-                title={x('app.newSessionMenu')}
-              >
-                <ChevronDown size={11} />
-              </button>
-            )}
-          </div>
-          <div className="tabbar-actions">
-            {tabOverflow && (
-              <>
-                <button onClick={() => scrollTabs(-1)} title={x('app.scrollTabsLeft')}>
-                  <ChevronLeft size={13} />
-                </button>
-                <button onClick={() => scrollTabs(1)} title={x('app.scrollTabsRight')}>
-                  <ChevronRight size={13} />
-                </button>
-                <button
-                  className={tabOverflowMenuOpen ? 'active' : ''}
-                  onClick={() => {
-                    setTabOverflowMenuOpen((open) => !open);
-                    setLayoutMenuOpen(false);
-                    setNewSessionMenuOpen(false);
-                  }}
-                  title={x('shell.allTabs')}
-                >
-                  <ChevronDown size={13} />
-                </button>
-              </>
-            )}
-            <button
-              onClick={() => {
-                setLayoutMenuOpen((open) => !open);
-                setNewSessionMenuOpen(false);
-                setTabOverflowMenuOpen(false);
-              }}
-              className={split ? 'active' : ''}
-              disabled={!tabs.length}
-              title={x('app.layoutWorkspace')}
-            >
-              <LayoutGrid size={14} />
-            </button>
-            <button onClick={reconnect} aria-label={x('app.reconnect')} title={x('app.reconnect')}>
-              <RefreshCw size={14} />
-            </button>
-            <button
-              onClick={toggleDetails}
-              aria-label={x('app.connectionDetails')}
-              title={x('app.connectionDetails')}
-            >
-              <Activity size={14} />
-            </button>
-            <button
-              onClick={(event) => {
-                if (!activeTerminalId) return;
-                const box = event.currentTarget.getBoundingClientRect();
-                setTabMenu({ id: activeTerminalId, x: box.right - 190, y: box.bottom + 4 });
-              }}
-              disabled={!activeTerminalId}
-              title={x('app.tabActions')}
-            >
-              <Ellipsis size={15} />
-            </button>
-          </div>
-          {layoutMenuOpen && (
-            <LayoutWorkspaceMenu
-              layout={layoutMode}
-              workspaces={settings.data?.workspace.namedWorkspaces ?? []}
-              activeWorkspaceId={settings.data?.workspace.activeWorkspaceId ?? null}
-              onLayout={setLayoutMode}
-              onSave={saveWorkspace}
-              onLoad={(workspace) => void loadWorkspace(workspace)}
-              onDelete={(workspace) => void deleteWorkspace(workspace)}
-              onDismiss={() => setLayoutMenuOpen(false)}
-            />
-          )}
-          {tabOverflowMenuOpen && (
-            <TabOverflowMenu
-              tabs={tabs}
-              activeTerminalId={activeTerminalId}
-              onSelect={setActiveTerminal}
-              onDismiss={() => setTabOverflowMenuOpen(false)}
-            />
-          )}
-          <WindowControls client={client} openTabCount={tabs.length} />
-        </div>
-
         {recoveryNotice && (
           <div
             className={`session-recovery-banner ${recoveryNotice.kind}`}
@@ -3244,6 +3224,9 @@ export function App({ client }: { client: ReturnType<typeof createRuntimeClient>
               {!!tabs.length && (
                 <div className="terminal-workspace-layer" hidden={!terminalSurfaceActive}>
                   <TerminalPaneGrid
+                    primaryTabContainer={
+                      terminalSurfaceActive ? (primaryTabContainer ?? undefined) : undefined
+                    }
                     profiles={terminalProfiles.data ?? []}
                     client={client}
                     layout={layoutMode}

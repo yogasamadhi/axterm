@@ -1328,9 +1328,9 @@ describe('independent-release documentation boundaries', () => {
     expect(localizationFallbackPolicy).toContain('four selectable application languages');
     expect(localizationFallbackPolicy).toContain('locales:core:reviewed-check');
     expect(coreReviewLedger).toContain('"catalog": "core"');
-    expect(coreReviewLedger).toContain('"keyCount": 2612');
+    expect(coreReviewLedger).toContain('"keyCount": 2615');
     expect(coreReviewLedger).toContain('"status": "complete"');
-    expect(coreReviewLedger).toContain('"translatedKeyCount": 2612');
+    expect(coreReviewLedger).toContain('"translatedKeyCount": 2615');
     expect(releaseOwnerHandoff).toContain('MIGRATION_RELEASE_RECORD.json');
     expect(releaseOwnerHandoff).toContain('migration:record:active-check');
     expect(releaseOwnerHandoff).toContain('migration:record:removal-check');

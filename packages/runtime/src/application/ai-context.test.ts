@@ -21,12 +21,10 @@ describe('bounded model context sources', () => {
     const generated = buildAiModelContext({ ...input, mode: 'work', useCase: 'generateCommand' });
     expect(generated.system).toContain('<skill name="generate-command">');
     expect(generated.system).toContain('Do not execute');
-    expect(generated.system).not.toContain('using workspace_exec');
-    expect(buildAiModelContext({ ...input, mode: 'work' }).system).toContain(
-      'using workspace_exec',
-    );
+    expect(generated.system).not.toContain('use workspace_exec');
+    expect(buildAiModelContext({ ...input, mode: 'work' }).system).toContain('use workspace_exec');
     expect(buildAiModelContext({ ...input, useCase: 'chat' }).system).not.toContain(
-      'using workspace_exec',
+      'use workspace_exec',
     );
   });
   it('redacts an incomplete private key, JSON values, short authorization and cloud key patterns idempotently', () => {

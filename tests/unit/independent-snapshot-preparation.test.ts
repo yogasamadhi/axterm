@@ -58,6 +58,10 @@ describe('independent source snapshot preparation', () => {
       'export const engine = true;\n',
     );
     await writeFile(join(source, 'vendor/pi/LICENSE'), 'MIT license\n');
+    await mkdir(join(source, 'vendor/pi-auto-review/src/review'), { recursive: true });
+    await writeFile(join(source, 'vendor/pi-auto-review/src/policy.ts'), 'pure policy\n');
+    await writeFile(join(source, 'vendor/pi-auto-review/LICENSE'), 'MIT license\n');
+    await writeFile(join(source, 'vendor/pi-auto-review/src/index.ts'), 'unrelated extension\n');
     await writeFile(join(source, 'vendor/pi/.git'), 'gitdir: private-checkout\n');
     await writeFile(join(source, 'vendor/pi/packages/coding-agent/src/cli.ts'), 'unrelated CLI\n');
     await mkdir(join(source, 'vendor/pi/packages/coding-agent/src/core'));
@@ -72,6 +76,15 @@ describe('independent source snapshot preparation', () => {
       true,
     );
     expect(existsSync(join(prepared.snapshotDirectory, 'vendor/pi/LICENSE'))).toBe(true);
+    expect(
+      existsSync(join(prepared.snapshotDirectory, 'vendor/pi-auto-review/src/policy.ts')),
+    ).toBe(true);
+    expect(existsSync(join(prepared.snapshotDirectory, 'vendor/pi-auto-review/LICENSE'))).toBe(
+      true,
+    );
+    expect(existsSync(join(prepared.snapshotDirectory, 'vendor/pi-auto-review/src/index.ts'))).toBe(
+      false,
+    );
     expect(existsSync(join(prepared.snapshotDirectory, 'vendor/pi/.git'))).toBe(false);
     expect(
       existsSync(

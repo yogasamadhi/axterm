@@ -7,7 +7,8 @@ import type {
   AiProviderProtocol,
   AiToolCall,
 } from '@workspace/contracts';
-import { DEFAULT_AI_ROLE } from '@workspace/contracts';
+import { aiWorkspaceSchema, DEFAULT_AI_ROLE } from '@workspace/contracts';
+import { createPortal } from 'react-dom';
 import {
   Bot,
   Check,
@@ -41,7 +42,7 @@ import type { AxtermMessageKey } from '../../i18n/core';
 import { useWorkspace } from '../../stores/workspace';
 import { aiGeneratedCode, aiTerminalInsertion } from '../ai-generated-command';
 import { formatBytes } from '../ui/format';
-import { ErrorBanner, PanelFrame } from '../ui/panel-scaffold';
+import { ErrorBanner, Modal, PanelFrame } from '../ui/panel-scaffold';
 import { useAiAttachments } from './use-ai-attachments';
 import { useAiContextReview } from './use-ai-context-review';
 import { AiContextReview } from './ai-context-review';
@@ -1137,6 +1138,7 @@ export function AiPanel({
           } catch (cause) {
             setError(safeAiMessage(cause, x));
             await Promise.all([approvals.refetch(), runs.refetch(), toolCalls.refetch()]);
+            throw cause;
           }
         }}
         cancel={async (runId) => {
@@ -1188,13 +1190,29 @@ function AgentToolCards({
   const { x } = useI18n();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [busy, setBusy] = useState<Record<string, boolean>>({});
+  const actionLocks = useRef(new Set<string>());
+  const [dismissedApproval, setDismissedApproval] = useState<string>();
+  const [actionError, setActionError] = useState('');
+  const pendingCall = toolCalls.find(
+    (call) =>
+      call.state === 'waiting_approval' &&
+      approvals.some((item) => item.toolCallId === call.id && item.state === 'pending'),
+  );
+  const pendingApproval = approvals.find(
+    (item) => item.toolCallId === pendingCall?.id && item.state === 'pending',
+  );
   async function runAction(callId: string, action: () => Promise<unknown>) {
-    if (busy[callId]) return;
+    if (actionLocks.current.has(callId)) return;
+    actionLocks.current.add(callId);
+    setActionError('');
     setExpanded((current) => ({ ...current, [callId]: true }));
     setBusy((current) => ({ ...current, [callId]: true }));
     try {
       await action();
+    } catch {
+      setActionError(x('common.operationFailed'));
     } finally {
+      actionLocks.current.delete(callId);
       setBusy((current) => {
         const next = { ...current };
         delete next[callId];
@@ -1205,6 +1223,35 @@ function AgentToolCards({
   if (!toolCalls.length) return null;
   return (
     <section className="agent-tool-list" aria-label={x('ai.agentActivity')}>
+      {pendingCall &&
+        pendingApproval &&
+        createPortal(
+          dismissedApproval === pendingApproval.id ? (
+            <button
+              className="ai-approval-reminder"
+              type="button"
+              onClick={() => setDismissedApproval(undefined)}
+            >
+              <ShieldAlert size={18} /> {x('ai.waitingApproval')} <ChevronRight size={16} />
+            </button>
+          ) : (
+            <AiCommandApproval
+              key={pendingApproval.id}
+              call={pendingCall}
+              approval={pendingApproval}
+              busy={!!busy[pendingCall.id]}
+              error={actionError}
+              onClose={() => {
+                if (!actionLocks.current.has(pendingCall.id))
+                  setDismissedApproval(pendingApproval.id);
+              }}
+              onDecide={(decision) =>
+                void runAction(pendingCall.id, () => decide(pendingApproval, decision))
+              }
+            />
+          ),
+          document.body,
+        )}
       <header>
         <div>
           <Bot size={16} />
@@ -1218,7 +1265,8 @@ function AgentToolCards({
       {[...toolCalls].reverse().map((call) => {
         const approval = approvals.find((item) => item.toolCallId === call.id);
         const isExpanded =
-          expanded[call.id] ?? ['running', 'waiting_approval'].includes(call.state);
+          call.state === 'waiting_approval' ||
+          (expanded[call.id] ?? ['proposed', 'running'].includes(call.state));
         const active = ['proposed', 'running'].includes(call.state);
         return (
           <article
@@ -1245,11 +1293,25 @@ function AgentToolCards({
                 )}
                 {call.state === 'succeeded' && <Check size={11} />}
                 {['failed', 'canceled'].includes(call.state) && <X size={11} />}
-                {toolStateLabel(call.state, x)}
+                {call.state === 'proposed' && call.review
+                  ? x('ai.reviewingCommand')
+                  : toolStateLabel(call.state, x)}
               </i>
             </button>
             {isExpanded && (
               <div className="agent-tool-card-detail">
+                {call.review && (
+                  <section className="agent-tool-review">
+                    <strong>
+                      {x(
+                        call.approvalSource === 'automatic'
+                          ? 'ai.automaticallyApproved'
+                          : 'ai.commandReview',
+                      )}
+                    </strong>
+                    <p>{call.review.reason}</p>
+                  </section>
+                )}
                 <section>
                   <strong>{x('ai.arguments')}</strong>
                   <pre tabIndex={0}>{JSON.stringify(call.args, null, 2)}</pre>
@@ -1324,6 +1386,86 @@ function AgentToolCards({
         );
       })}
     </section>
+  );
+}
+
+function AiCommandApproval({
+  call,
+  approval,
+  busy,
+  error,
+  onClose,
+  onDecide,
+}: {
+  call: AiToolCall;
+  approval: AiApproval;
+  busy: boolean;
+  error: string;
+  onClose(): void;
+  onDecide(decision: 'approve_once' | 'reject'): void;
+}) {
+  const { x, language } = useI18n();
+  const parsed = aiWorkspaceSchema.safeParse(call.args.workspace);
+  const workspace = parsed.success ? parsed.data : undefined;
+  const target = workspace?.sshTarget
+    ? `${workspace.sshTarget.username}@${workspace.sshTarget.hostname}:${workspace.sshTarget.port}`
+    : workspace?.execution === 'local'
+      ? x('ai.executionLocal')
+      : call.target;
+  return (
+    <Modal
+      title={x('panels.terminalOperationApproval')}
+      className="ai-command-approval"
+      onClose={onClose}
+    >
+      <div className="ai-command-approval-body">
+        <p className="ai-command-approval-risk">
+          <ShieldAlert size={18} /> {toolRiskLabel(call.risk, x)}
+        </p>
+        {call.review && <p>{call.review.reason}</p>}
+        <dl className="ai-review-target">
+          <div>
+            <dt>{x('ai.target')}</dt>
+            <dd>{target}</dd>
+          </div>
+          {workspace && (
+            <div>
+              <dt>{x('ai.workspace')}</dt>
+              <dd>{workspace.commandDirectory ?? workspace.workspaceDirectory}</dd>
+            </div>
+          )}
+        </dl>
+        <pre tabIndex={0} aria-label={x('panels.commandForReview')}>
+          {typeof call.args.command === 'string'
+            ? call.args.command
+            : JSON.stringify(call.args, null, 2)}
+        </pre>
+        <details>
+          <summary>{x('ai.arguments')}</summary>
+          <pre tabIndex={0}>{JSON.stringify(call.args, null, 2)}</pre>
+        </details>
+        {error && <ErrorBanner text={error} />}
+      </div>
+      <footer>
+        <small>
+          {x('panels.expiresAt', {
+            time: new Date(approval.expiresAt).toLocaleTimeString(language),
+          })}
+        </small>
+        <button type="button" data-autofocus disabled={busy} onClick={() => onDecide('reject')}>
+          {x('panels.reject')}
+        </button>
+        <button
+          type="button"
+          className="primary"
+          disabled={busy}
+          onClick={() => onDecide('approve_once')}
+        >
+          {busy ? <LoaderCircle className="spin" size={14} /> : <Check size={14} />}{' '}
+          {x('panels.runOnce')}
+        </button>
+      </footer>
+    </Modal>
   );
 }
 

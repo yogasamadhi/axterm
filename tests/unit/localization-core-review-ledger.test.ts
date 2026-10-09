@@ -24,7 +24,7 @@ describe('Axterm core-copy review ledger', () => {
     const catalog = currentCatalog();
     const review = validateCoreReviewLedger(currentLedger(), catalog);
 
-    expect(catalog.keyCount).toBe(2_612);
+    expect(catalog.keyCount).toBe(2_615);
     const messages = catalog.messagesByLocale as Record<string, Record<string, string>>;
     for (const locale of ['en', 'ja', 'zh-CN', 'zh-TW']) {
       for (const key of [
@@ -38,6 +38,9 @@ describe('Axterm core-copy review ledger', () => {
         'ai.executionLocal',
         'ai.executionSsh',
         'ai.workspaceUnavailable',
+        'ai.reviewingCommand',
+        'ai.automaticallyApproved',
+        'ai.commandReview',
       ]) {
         expect(messages[locale]?.[key]).toBeTruthy();
       }

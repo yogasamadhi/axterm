@@ -17,12 +17,17 @@ export default defineConfig({
         'pi-engine.spec.ts',
         'terminal-selection.spec.ts',
         'ai-workspace.spec.ts',
+        'ai-auto-review.spec.ts',
+        'top-navigation.spec.ts',
       ],
     },
     { name: 'visual', testMatch: 'visual.spec.ts' },
     { name: 'accessibility', testMatch: 'accessibility.spec.ts' },
     { name: 'performance', testMatch: 'performance.spec.ts' },
-    { name: 'packaged', testMatch: 'packaged.spec.ts' },
+    {
+      name: 'packaged',
+      testMatch: ['packaged.spec.ts', 'ai-auto-review.spec.ts', 'top-navigation.spec.ts'],
+    },
     { name: 'dev', testMatch: 'dev.spec.ts' },
   ],
 });

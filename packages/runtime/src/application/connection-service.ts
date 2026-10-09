@@ -31,6 +31,7 @@ import { detectShellIntegrationKind } from './shell-integration';
 import type { ConnectionProfileService } from './connection-profile-service';
 
 interface ManagedConnection {
+  executionGeneration: number;
   metadata: Connection;
   host: Host;
   source:
@@ -136,6 +137,7 @@ export class ConnectionService {
       reconnectTimer: undefined,
       pendingProxySocket: undefined,
       interactionAttempt: 0,
+      executionGeneration: 0,
     };
     this.connections.set(metadata.id, managed);
     this.transition(managed, 'resolving');
@@ -144,6 +146,7 @@ export class ConnectionService {
   }
 
   private startConnect(managed: ManagedConnection): void {
+    managed.executionGeneration++;
     void this.connect(managed).catch((error) => this.recover(managed, error));
   }
 
@@ -459,6 +462,16 @@ export class ConnectionService {
   get(id: string): Connection {
     const managed = this.require(id);
     return { ...managed.metadata };
+  }
+  executionTarget(id: string) {
+    const managed = this.connections.get(id);
+    if (!managed) throw new ApplicationError('NOT_FOUND', 'Connection not found', 404);
+    return {
+      hostname: managed.host.hostname,
+      port: managed.host.port,
+      username: managed.host.username,
+      generation: managed.executionGeneration,
+    };
   }
   handle(id: string): SshConnectionHandle {
     const managed = this.require(id);

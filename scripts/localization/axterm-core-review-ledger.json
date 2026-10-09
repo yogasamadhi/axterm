@@ -3,15 +3,15 @@
   "catalog": "core",
   "scope": {
     "sourceFile": "apps/desktop/src/renderer/src/i18n/core.ts",
-    "keyCount": 2612,
-    "keySha256": "d1b40ead9cde82f68bc397cd7be4c3a3c33d49f589a08a029046048c77e93ff1",
-    "englishMessageSha256": "7059008f2f20c4d99811165e67743b48775cee0f76999f07d5a4a98e2c59796c",
-    "simplifiedChineseMessageSha256": "a09aa0fd6197de69e461cb617f433d54de068eef6e0ac3a1c9aeab77915b2ea4",
+    "keyCount": 2615,
+    "keySha256": "9578ac3de91e1b3f3d867e4e765b27eea8a7dccec366b05486dca79e234af61e",
+    "englishMessageSha256": "f7aa72d38d2fcd71221bbf6867e2892a23fbe814463929957f94dccd0d94b23e",
+    "simplifiedChineseMessageSha256": "ef8bacea59cb8509b6aad8f0309d12a7e04fc5b55efc6e5eb89898f7705c60e6",
     "messageSha256ByLocale": {
-      "en": "7059008f2f20c4d99811165e67743b48775cee0f76999f07d5a4a98e2c59796c",
-      "ja": "42b52a76e11f30091cfa533d45570c8b2823d2c231a1f055fc6535469d07af70",
-      "zh-CN": "a09aa0fd6197de69e461cb617f433d54de068eef6e0ac3a1c9aeab77915b2ea4",
-      "zh-TW": "8001f26198e46c3a06fbbed9ba644b07d25cb7885845a07b1ecba4e2f5446142"
+      "en": "f7aa72d38d2fcd71221bbf6867e2892a23fbe814463929957f94dccd0d94b23e",
+      "ja": "031dacb96c6c6da5386fd4696d42d4e80fa931522c029d64cb29814dcf0a1927",
+      "zh-CN": "ef8bacea59cb8509b6aad8f0309d12a7e04fc5b55efc6e5eb89898f7705c60e6",
+      "zh-TW": "6b9b7c6289f4cada8c6edaa4e44fd067997347c518c9013de9bd01ee587f47e5"
     }
   },
   "locales": {
@@ -25,7 +25,7 @@
       },
       "coverage": {
         "status": "complete",
-        "translatedKeyCount": 2612
+        "translatedKeyCount": 2615
       },
       "languageReview": {
         "status": "pending",
@@ -41,14 +41,14 @@
     "ja": {
       "source": {
         "sourceLanguage": "en",
-        "method": "AI-assisted complete Axterm core draft (2612/2612 keys); provenance review pending",
+        "method": "AI-assisted complete Axterm core draft (2615/2615 keys); provenance review pending",
         "preparedAt": "2026-09-21",
         "attributionStatus": "unrecorded",
         "author": null
       },
       "coverage": {
         "status": "complete",
-        "translatedKeyCount": 2612
+        "translatedKeyCount": 2615
       },
       "languageReview": {
         "status": "pending",
@@ -71,7 +71,7 @@
       },
       "coverage": {
         "status": "complete",
-        "translatedKeyCount": 2612
+        "translatedKeyCount": 2615
       },
       "languageReview": {
         "status": "pending",
@@ -87,14 +87,14 @@
     "zh-TW": {
       "source": {
         "sourceLanguage": "en",
-        "method": "AI-assisted complete Axterm core draft (2612/2612 keys); provenance review pending",
+        "method": "AI-assisted complete Axterm core draft (2615/2615 keys); provenance review pending",
         "preparedAt": "2026-09-21",
         "attributionStatus": "unrecorded",
         "author": null
       },
       "coverage": {
         "status": "complete",
-        "translatedKeyCount": 2612
+        "translatedKeyCount": 2615
       },
       "languageReview": {
         "status": "pending",

@@ -3,7 +3,7 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "axterm production dependency inventory",
-  "documentNamespace": "https://axterm.dev/sbom/0.10.0/e775487d38905520321ae2edfc7632210741952df7fde1929c1e563530279d10",
+  "documentNamespace": "https://axterm.dev/sbom/0.10.0/4ff96dd055261c7b9859a2a73dad0100cf27ac4a48ba0850d0395c883fc6113a",
   "creationInfo": {
     "created": "2026-09-21T00:00:00Z",
     "creators": ["Tool: Axterm production SBOM generator"],
@@ -57,7 +57,7 @@
     "SPDXRef-Package-d40314c9d010e2d6f7b7811a8396abfef23f0e84b2732847c64a5cc16cfbbff3",
     "SPDXRef-Package-18ba4845a88cf85c14aa131e98efa65c6bb8ac00ebfc0bb6289e7f66078a062d",
     "SPDXRef-Package-881da183659518b2eaba07db3c0b0042ffadd6b433b3293edd52eb7c8d78091e",
-    "SPDXRef-Package-f4407d673c410b36351629b6483698bf64761e20b61e67d8ea72b0517ad4cc9b",
+    "SPDXRef-Package-c68e13436efbcf966736d92c1f9156e914c13ef5d56797bfe21ff0fe523823c8",
     "SPDXRef-Package-84c80662c94e69151230980bbcf9daa5e298abcbcdc5cee1c743a815cbeee3b6",
     "SPDXRef-Package-cd59072f1bbaf91226623f417f26d05e38df55873c68a5e03078707ba3e0cf0c",
     "SPDXRef-Package-5fc89f8afcf82ba2267346f00c1c29b555c28e5e26466c12b260c8a846148811",
@@ -1062,8 +1062,8 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-f4407d673c410b36351629b6483698bf64761e20b61e67d8ea72b0517ad4cc9b",
-      "name": "@openclaw/fs-safe-darwin-arm64",
+      "SPDXID": "SPDXRef-Package-c68e13436efbcf966736d92c1f9156e914c13ef5d56797bfe21ff0fe523823c8",
+      "name": "@openclaw/fs-safe-win32-x64-msvc",
       "versionInfo": "0.13.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
@@ -1075,7 +1075,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/%40openclaw/fs-safe-darwin-arm64@0.13.1"
+          "referenceLocator": "pkg:npm/%40openclaw/fs-safe-win32-x64-msvc@0.13.1"
         }
       ]
     },

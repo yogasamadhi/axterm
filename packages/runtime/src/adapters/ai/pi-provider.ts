@@ -52,11 +52,7 @@ export class PiModelProvider implements ModelProvider {
   async *stream(input: ModelRequest): AsyncIterable<ModelEvent> {
     const provider = this.provider;
     const controller = new AbortController();
-    const signal = AbortSignal.any([
-      input.signal,
-      controller.signal,
-      AbortSignal.timeout(provider.timeoutMs),
-    ]);
+    const signal = AbortSignal.any([input.signal, controller.signal]);
     const legacyApi =
       provider.protocol === 'anthropic'
         ? 'anthropic-messages'
@@ -70,6 +66,7 @@ export class PiModelProvider implements ModelProvider {
       modelOverrides: {},
     };
     const activeBody: { value: ReadableStream<Uint8Array> | null } = { value: null };
+    let deadline: AbortSignal | undefined;
     const fetchModel: typeof globalThis.fetch = async (resource, init) => {
       signal.throwIfAborted();
       const request = new Request(resource, init);
@@ -80,6 +77,8 @@ export class PiModelProvider implements ModelProvider {
           provider.baseUrl.replace(/\/?$/, '/'),
         );
       const body = request.method === 'GET' ? undefined : await request.text();
+      deadline = AbortSignal.timeout(provider.timeoutMs);
+      const activeSignal = AbortSignal.any([signal, request.signal, deadline]);
       if (body && Buffer.byteLength(body) > 1024 * 1024)
         throw new Error('Model request exceeded limit');
       const response = await requestModel(
@@ -88,7 +87,7 @@ export class PiModelProvider implements ModelProvider {
           method: request.method === 'GET' ? 'GET' : 'POST',
           headers: requestHeaders(request.headers),
           ...(body === undefined ? {} : { body }),
-          signal: AbortSignal.any([signal, request.signal]),
+          signal: activeSignal,
         },
         this.proxy,
         provider.timeoutMs,
@@ -151,7 +150,7 @@ export class PiModelProvider implements ModelProvider {
     } catch {
       // Pi/SDK errors can contain request headers and provider bodies; expose a stable failure.
       throw new Error(
-        signal.aborted
+        input.signal.aborted || deadline?.aborted
           ? 'Model provider request was canceled or timed out'
           : 'Pi model provider request failed',
       );

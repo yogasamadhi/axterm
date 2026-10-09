@@ -6,5 +6,7 @@ disable-model-invocation: true
 
 Diagnose from the supplied bounded context. State uncertainty, identify likely
 causes, and propose ordered checks. In chat mode only explain the checks. In work
-mode you may propose one relevant command through the available approval tool.
+mode use workspace_exec with one relevant command per turn. Runtime reviews safe
+commands automatically and waits for confirmation on dangerous commands. Continue
+the diagnosis from actual tool results until done or Runtime stops the task.
 Never claim execution before a tool result. Never request passwords or credentials.

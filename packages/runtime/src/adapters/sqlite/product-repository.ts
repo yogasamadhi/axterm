@@ -1312,6 +1312,23 @@ export class ProductRepository {
     );
     return next;
   }
+  updateCommandCall(
+    id: string,
+    patch: Partial<Pick<AiToolCall, 'risk' | 'argsHash' | 'review' | 'step' | 'approvalSource'>>,
+  ) {
+    const call = { ...this.getToolCall(id), ...patch };
+    this.database.run(
+      'UPDATE ai_tool_calls SET risk=?, args_hash=?, review_json=?, step=?, approval_source=?, updated_at=?, version=version+1 WHERE id=?',
+      call.risk,
+      call.argsHash,
+      call.review ? JSON.stringify(call.review) : null,
+      call.step ?? null,
+      call.approvalSource ?? null,
+      new Date().toISOString(),
+      id,
+    );
+    return this.getToolCall(id);
+  }
   listToolCalls(runId?: string): AiToolCall[] {
     const rows = this.database.all<{
       id: string;
@@ -1323,6 +1340,9 @@ export class ProductRepository {
       target: string;
       state: AiToolCall['state'];
       result_metadata: string | null;
+      review_json: string | null;
+      step: number | null;
+      approval_source: AiToolCall['approvalSource'] | null;
       created_at: string;
       updated_at: string;
       version: number;
@@ -1340,6 +1360,9 @@ export class ProductRepository {
       target: row.target,
       state: row.state,
       ...(row.result_metadata ? { resultMetadata: JSON.parse(row.result_metadata) } : {}),
+      ...(row.review_json ? { review: JSON.parse(row.review_json) } : {}),
+      ...(row.step ? { step: row.step } : {}),
+      ...(row.approval_source ? { approvalSource: row.approval_source } : {}),
       createdAt: row.created_at,
       updatedAt: row.updated_at,
       version: row.version,

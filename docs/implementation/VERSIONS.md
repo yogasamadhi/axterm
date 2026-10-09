@@ -1,5 +1,12 @@
 # Resolved dependency versions
 
+2026-10-09: ADR-030 adds the MIT pure policy/scanner/evidence source subset of
+`@erichll/pi-auto-review` 0.26.0 from `erichll/pi-packages` commit
+`6eb4d9668f6d23fb6793029d5d145b8ae0fcd0ad`. The three source modules and license
+are hash-bound in `vendor/pi-auto-review/PROVENANCE.json`, compiled only by the
+private Pi engine. No npm dependency, extension loader or permission-system is
+installed; the existing Pi 1.0.3 and Bun lock pins remain unchanged.
+
 Verified: 2026-09-25. Direct versions are exact; all transitive resolutions are
 recorded in `bun.lock`.
 

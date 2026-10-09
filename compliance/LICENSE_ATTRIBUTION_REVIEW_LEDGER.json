@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "THIRD_PARTY_LICENSE_TEXTS.json missingCopyrightDeclarations",
-  "sourceScopeSha256": "cc4d4d61edd65e9a1c2da02c860475805c72ce837cda47deb522fee5dc9dfd70",
+  "sourceScopeSha256": "b41147190155661e40f79ec13b0e799b14906c2f170ee9817a85017a769cae1b",
   "scope": "Production packages with neither a manifest copyright field nor a copyright line in a root LICENSE/COPYING/NOTICE file.",
   "limitations": [
     "This ledger is a human-review handoff, not a copyright, license, source-rights or distribution conclusion.",
@@ -73,7 +73,7 @@
       "requiredReview": "Record qualified reviewer, date, primary source/notice references and an explicit conclusion before changing this status."
     },
     {
-      "component": { "name": "@openclaw/fs-safe-darwin-arm64", "version": "0.13.1" },
+      "component": { "name": "@openclaw/fs-safe-win32-x64-msvc", "version": "0.13.1" },
       "status": "pending",
       "reviewer": null,
       "reviewedAt": null,

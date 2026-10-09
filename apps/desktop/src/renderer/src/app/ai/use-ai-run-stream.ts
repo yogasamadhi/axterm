@@ -15,9 +15,14 @@ export function useAiRunStream(client: ReturnType<typeof createRuntimeClient>, r
         runId,
         (event) => {
           if (controller.signal.aborted) return;
-          if (event.type === 'snapshot' || event.type === 'state')
+          if (event.type === 'snapshot' || event.type === 'state') {
             setRun('run' in event.data ? event.data.run : event.data);
-          else if (event.type === 'delta')
+            void queryClient.invalidateQueries({ queryKey: ['ai-tool-calls'] });
+            void queryClient.invalidateQueries({ queryKey: ['ai-approvals'] });
+          } else if (event.type === 'tool') {
+            void queryClient.invalidateQueries({ queryKey: ['ai-tool-calls'] });
+            void queryClient.invalidateQueries({ queryKey: ['ai-approvals'] });
+          } else if (event.type === 'delta')
             setRun((current) => {
               if (current?.id !== runId) return current;
               const result = ((current.result ?? '') + event.data.text).slice(0, 2 * 1024 * 1024);

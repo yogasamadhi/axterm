@@ -459,3 +459,10 @@ Revision: 5b6c792b424e73edefbfa558b901bcd64788dad2 (Pi 1.0.3)
 Copyright (c) 2025 Mario Zechner
 License: MIT; full text: licenses/pi-LICENSE.txt
 The pinned model catalog is included under packages/pi-engine/catalog; its immutable source and SHA-256 revision are recorded in provenance.json.
+
+Pi Auto Review pure policy / shell scanning / evidence source
+Source: https://github.com/erichll/pi-packages/tree/6eb4d9668f6d23fb6793029d5d145b8ae0fcd0ad/packages/pi-auto-review
+Revision: 6eb4d9668f6d23fb6793029d5d145b8ae0fcd0ad (0.26.0)
+Copyright (c) 2026
+License: MIT; full text: licenses/pi-auto-review-LICENSE.txt
+Only the three pure source modules listed in vendor/pi-auto-review/PROVENANCE.json are compiled into the private Pi engine. No extension loader or upstream permission runtime is installed.

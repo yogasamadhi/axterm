@@ -101,11 +101,21 @@ describe('assistant selected workspace REST and real SSH boundary', () => {
         requests.push(body);
         res.writeHead(200, { 'content-type': 'text/event-stream' });
         res.end(
-          propose
+          propose &&
+            !JSON.parse(body).messages.some((message: { role: string }) => message.role === 'tool')
             ? piSseCommand(
                 'pwd; printf approved > approval-marker; cat approval-marker; printf "$AI_KEY_FIXTURE"',
               )
-            : piSseText('openai-chat', 'direct chat ready') + piSseEnd('openai-chat'),
+            : piSseText(
+                'openai-chat',
+                propose
+                  ? String(
+                      JSON.parse(body).messages.find(
+                        (message: { role: string }) => message.role === 'tool',
+                      )?.content ?? 'direct chat ready',
+                    )
+                  : 'direct chat ready',
+              ) + piSseEnd('openai-chat'),
         );
       });
     });

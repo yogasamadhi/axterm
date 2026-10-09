@@ -41,6 +41,10 @@ The former task selector mixes reply instructions with permission to propose com
 
 ## Validation
 
+2026-10-09 execution amendment: [ADR-030](ADR-030-ai-auto-review-and-agent-loop.md)
+supersedes the no autonomous execution loop constraint for work-mode chat/diagnosis.
+Explanation/generation skills and chat remain reply-only, with the original MCP policy.
+
 Cover omitted/invalid modes, mode-bound receipts, disabled command proposals in chat
 and explanation/generation skills, real SSH approval in work mode, mention boundaries
 and keyboard/IME interaction. Exercise real Electron and an isolated Mac directory

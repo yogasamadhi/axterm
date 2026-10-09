@@ -1,4 +1,11 @@
 import { runAgentLoop } from '../../../vendor/pi/packages/agent/src/agent-loop.ts';
+export { estimateTextTokens as estimateReviewTextTokens } from '../../../vendor/pi/packages/ai/src/utils/estimate.ts';
+export {
+  parseDecision,
+  deterministicHardDeny,
+  commandExpansionLimitExceeded,
+  buildClassifierTranscript,
+} from '../../../vendor/pi-auto-review/src/policy.ts';
 import { Type } from 'typebox';
 import type { AgentMessage } from '../../../vendor/pi/packages/agent/src/types.ts';
 import type { Model, Message, ProviderStreams } from '../../../vendor/pi/packages/ai/src/types.ts';
@@ -93,6 +100,8 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
   let failure: unknown;
   let outputBytes = 0;
   let providerEvents = 0;
+  const executedIds = new Set<string>();
+  let turns = 0;
   const emit = async (event: PiEngineEvent) => {
     signal.throwIfAborted();
     if (event.type === 'delta') {
@@ -131,13 +140,34 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
               name: 'workspace_exec',
               label: 'Propose workspace command',
               description:
-                'Propose one shell command on the selected terminal target. Execution always requires separate user approval. Never choose a different host or directory.',
+                'Request one command on the original workspace. Runtime reviews safe commands and pauses dangerous commands for confirmation. Continue only from actual results; never choose another host or directory.',
               parameters: Type.Object(
                 { command: Type.String({ minLength: 1, maxLength: 8192 }) },
                 { additionalProperties: false },
               ),
-              execute: async () => {
-                throw new Error('Only Runtime Application Service may execute commands');
+              execute: async (toolCallId, args, toolSignal) => {
+                if (!request.executeCommand)
+                  throw new Error('Only Runtime Application Service may execute commands');
+                if (executedIds.has(toolCallId) || executedIds.size > 50) {
+                  controller.abort();
+                  throw new Error('Command execution limit exceeded');
+                }
+                executedIds.add(toolCallId);
+                try {
+                  const result = await request.executeCommand(
+                    (args as { command: string }).command,
+                    toolCallId,
+                    toolSignal ?? signal,
+                  );
+                  return {
+                    content: [{ type: 'text', text: result.text }],
+                    details: {},
+                    isError: result.isError,
+                  };
+                } catch (error) {
+                  controller.abort();
+                  throw error;
+                }
               },
             },
           ]
@@ -152,7 +182,26 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
       timeoutMs: request.timeoutMs,
       maxRetries: 0,
       transport: 'sse',
-      maxTokens: model.maxTokens,
+      maxTokens: Math.min(model.maxTokens, request.maxOutputTokens ?? model.maxTokens),
+      toolExecution: 'sequential',
+      prepareRequest: ({ context }) => {
+        providerEvents = 0;
+        if (++turns > 51) throw new Error('Agent turn limit exceeded');
+        if (!request.executeCommand) return;
+        const userIndex = context.messages.findIndex((message) => message.role === 'user');
+        const fixed = context.messages.filter(
+          (message, index) => message.role === 'system' || index === userIndex,
+        );
+        const rest = context.messages.filter(
+          (message, index) => message.role !== 'system' && index !== userIndex,
+        );
+        while (rest.length && JSON.stringify([...fixed, ...rest]).length > 131_072) {
+          rest.shift();
+          while (rest[0]?.role === 'toolResult') rest.shift();
+        }
+        if (JSON.stringify(fixed).length > 131_072) throw new Error('Agent context exceeded limit');
+        return { context: { ...context, messages: [...fixed, ...rest] } };
+      },
       onProviderStreamEvent: () => {
         if (++providerEvents > 16_384) {
           controller.abort();
@@ -163,19 +212,25 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
         messages.filter((message): message is Message =>
           ['system', 'user', 'assistant', 'toolResult'].includes(message.role),
         ),
-      finishTurn: () => ({ action: 'end' }),
-      beforeToolCall: async () => ({
-        block: true,
-        terminate: true,
-        reason: 'Explicit application approval required',
-      }),
+      finishTurn: request.executeCommand ? undefined : () => ({ action: 'end' }),
+      beforeToolCall: request.executeCommand
+        ? undefined
+        : async () => ({
+            block: true,
+            terminate: true,
+            reason: 'Explicit application approval required',
+          }),
     },
     async (event) => {
       if (event.type === 'message_update' && event.assistantMessageEvent.type === 'text_delta')
         await emit({ type: 'delta', text: event.assistantMessageEvent.delta });
       if (event.type === 'message_end' && event.message.role === 'assistant') {
         const message = event.message;
-        if (message.stopReason === 'error' || message.stopReason === 'aborted')
+        if (
+          message.stopReason === 'error' ||
+          message.stopReason === 'aborted' ||
+          (request.requireComplete && message.stopReason !== 'stop')
+        )
           throw new Error('Model provider request failed');
         const calls = message.content.filter((block) => block.type === 'toolCall');
         if (calls.length) {
@@ -199,10 +254,10 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
           inputTokens: message.usage.input + message.usage.cacheRead + message.usage.cacheWrite,
           outputTokens: message.usage.output,
         });
-        if (calls.length)
+        if (calls.length && !request.executeCommand)
           await emit({ type: 'commandProposal', command: calls[0]!.arguments.command as string });
-        await emit({ type: 'completed' });
       }
+      if (event.type === 'agent_end') await emit({ type: 'completed' });
     },
     signal,
     (m, context, options) => {

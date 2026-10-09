@@ -15,7 +15,7 @@
     { "name": "@devolutions/iron-remote-desktop-rdp", "version": "0.7.0" },
     { "name": "@hono/zod-openapi", "version": "1.6.3" },
     { "name": "@hono/zod-validator", "version": "0.9.1" },
-    { "name": "@openclaw/fs-safe-darwin-arm64", "version": "0.13.1" },
+    { "name": "@openclaw/fs-safe-win32-x64-msvc", "version": "0.13.1" },
     { "name": "@xterm/addon-serialize", "version": "0.14.0" },
     { "name": "@xterm/headless", "version": "6.0.0" },
     { "name": "data-uri-to-buffer", "version": "4.0.1" },
@@ -32,7 +32,7 @@
     { "name": "@hono/zod-openapi", "version": "1.6.3" },
     { "name": "@hono/zod-validator", "version": "0.9.1" },
     { "name": "@novnc/novnc", "version": "1.7.0" },
-    { "name": "@openclaw/fs-safe-darwin-arm64", "version": "0.13.1" },
+    { "name": "@openclaw/fs-safe-win32-x64-msvc", "version": "0.13.1" },
     { "name": "@xterm/addon-serialize", "version": "0.14.0" },
     { "name": "@xterm/headless", "version": "6.0.0" },
     { "name": "data-uri-to-buffer", "version": "4.0.1" },
@@ -1360,7 +1360,7 @@
       }
     },
     {
-      "name": "@openclaw/fs-safe-darwin-arm64",
+      "name": "@openclaw/fs-safe-win32-x64-msvc",
       "version": "0.13.1",
       "license": "MIT",
       "files": [],

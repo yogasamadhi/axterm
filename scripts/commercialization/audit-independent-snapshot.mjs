@@ -118,6 +118,12 @@ export function isExcludedFromIndependentSnapshot(snapshotPath) {
     )
       return true;
     if (['vendor', 'vendor/pi', 'vendor/pi/packages'].includes(path)) return false;
+    if (
+      /^vendor\/pi-auto-review(?:\/(?:src(?:\/review)?|LICENSE|PROVENANCE\.json|src\/(?:policy\.ts|path-surfaces\.ts|review\/shell-text\.ts)))?$/u.test(
+        path,
+      )
+    )
+      return false;
     if (['vendor/pi/LICENSE', 'vendor/pi/nix', 'vendor/pi/nix/model-catalog.json'].includes(path))
       return false;
     if (/^vendor\/pi\/packages\/(ai|agent|telemetry)$/u.test(path)) return false;

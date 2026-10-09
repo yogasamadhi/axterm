@@ -3,6 +3,7 @@ import { buildAiModelContext, redact } from './ai-context';
 export { redact } from './ai-context';
 import {
   aiContextPreviewRequestSchema,
+  aiRunEventSchema,
   type AiContextPreview,
   type AiContextPreviewInput,
   aiBookmarkDraftSchema,
@@ -27,6 +28,9 @@ import type { RealtimeHub } from './realtime-hub';
 import type { AiToolService } from './ai-tool-service';
 import type { AiWorkspaceService } from './ai-workspace-service';
 import { ApplicationError } from './errors';
+import { reviewCommand, COMMAND_POLICY_VERSION } from '../adapters/ai/command-review';
+import { AiWorkBudget } from './ai-work-budget';
+import type { ModelProvider } from '../ports/model-provider';
 import type { McpToolInvocation } from '../ports/widget-server';
 
 export type { AiRunEvent } from '@workspace/contracts';
@@ -73,12 +77,16 @@ export class AiService {
   private readonly partialResults = new Map<string, string>();
   private readonly tasks = new Set<Promise<void>>();
   private readonly preparedAttachments = new Map<string, PreparedAiAttachment>();
+  private readonly workTargets = new Map<string, string>();
+  private readonly approvalWaiters = new Map<string, { approve(): void }>();
+  private readonly commandCompletions = new Map<string, Promise<void>>();
   constructor(
     private readonly repository: ProductRepository,
     private readonly host: HostCapabilityClient | undefined,
     private readonly realtime: RealtimeHub,
     private readonly tools: AiToolService,
     private readonly workspaces?: AiWorkspaceService,
+    private readonly commandGeneration = randomBytes(16).toString('hex'),
   ) {}
 
   workspace(terminalId: string) {
@@ -105,8 +113,16 @@ export class AiService {
     if (previous) return previous;
     const idempotencyInput = input;
     const attachments = this.resolveAttachments(input.attachmentIds ?? []);
-    const workspace = await this.selectedWorkspace(input);
+    const workspace =
+      (await this.selectedWorkspace(input)) ??
+      (input.tool?.name === 'workspace.exec' ? await this.workspace(input.tool.target) : undefined);
     if (input.tool?.name === 'workspace.exec') {
+      if (workspace?.terminalId !== input.tool.target)
+        throw new ApplicationError(
+          'PRECONDITION_FAILED',
+          'Command target differs from the selected terminal',
+          412,
+        );
       if (input.mode !== 'work' || !['chat', 'diagnose'].includes(input.useCase))
         throw new ApplicationError(
           'PRECONDITION_FAILED',
@@ -172,6 +188,25 @@ export class AiService {
       ...(workspace ? { workspace } : {}),
     };
     const attachmentMetadata = attachments.map(({ preview }) => attachmentMetadataOf(preview));
+    const committed = this.repository.resolveIdempotency<AiRun>(
+      idempotencyKey,
+      'ai-run',
+      idempotencyInput,
+    );
+    if (committed) return committed;
+    const isWork =
+      (!safe.tool || safe.tool.name === 'workspace.exec') &&
+      safe.mode === 'work' &&
+      ['chat', 'diagnose'].includes(safe.useCase) &&
+      ((safe.workspace?.execution !== 'unavailable' && !!safe.workspace) ||
+        safe.tool?.name === 'workspace.exec');
+    const workTarget = safe.workspace?.terminalId ?? safe.tool?.target;
+    if (isWork && (this.workTargets.size >= 4 || this.workTargets.has(workTarget!)))
+      throw new ApplicationError(
+        'CAPACITY_EXCEEDED',
+        'Work target is busy or work capacity is full',
+        409,
+      );
     const run = this.repository.createAiRun({
       useCase: input.useCase,
       request: { ...safe, context: baseContext, attachments: attachmentMetadata },
@@ -187,8 +222,11 @@ export class AiService {
     });
     for (const id of input.attachmentIds ?? []) this.preparedAttachments.delete(id);
     this.repository.recordIdempotency(idempotencyKey, 'ai-run', idempotencyInput, run);
+    if (isWork) this.workTargets.set(workTarget!, run.id);
     this.track(
-      safe.tool ? this.runTool(run.id, safe.tool) : this.runModel(run.id, safe, built.system),
+      safe.tool && safe.tool.name !== 'workspace.exec'
+        ? this.runTool(run.id, safe.tool)
+        : this.runModel(run.id, safe, built.system),
     );
     return run;
   }
@@ -452,6 +490,10 @@ export class AiService {
       if (approval.state !== 'pending' || Date.parse(approval.expiresAt) > Date.now()) continue;
       const call = this.repository.getToolCall(approval.toolCallId);
       this.repository.decideApproval(approval.id, 'expired');
+      if (call.review)
+        this.controllers
+          .get(call.runId)
+          ?.abort(new ApplicationError('APPROVAL_EXPIRED', 'Approval expired', 409));
       if (!['succeeded', 'failed', 'canceled'].includes(call.state))
         this.repository.updateToolCall(call.id, 'canceled', { code: 'APPROVAL_EXPIRED' });
       const run = this.get(call.runId);
@@ -590,9 +632,37 @@ export class AiService {
       );
     if (Date.parse(approval.expiresAt) <= Date.now()) {
       this.repository.decideApproval(id, 'expired');
+      if (call.review)
+        this.controllers
+          .get(call.runId)
+          ?.abort(new ApplicationError('APPROVAL_EXPIRED', 'Approval expired', 409));
       this.repository.updateToolCall(call.id, 'canceled', { code: 'APPROVAL_EXPIRED' });
       this.update(call.runId, 'canceled', undefined, 'APPROVAL_EXPIRED');
       throw new ApplicationError('APPROVAL_EXPIRED', 'Approval expired', 409);
+    }
+    if (
+      this.commandHash(call, approval.expiresAt) !== approval.argsHash ||
+      (call.review
+        ? call.review.generation !== this.commandGeneration ||
+          call.review.policyVersion !== COMMAND_POLICY_VERSION ||
+          !this.approvalWaiters.has(call.id)
+        : this.tools.risk(call.toolName) !== call.risk)
+    )
+      throw new ApplicationError(
+        'PRECONDITION_FAILED',
+        'Tool identity, arguments, risk, policy or expiry changed',
+        412,
+      );
+    if (call.review) {
+      if (input.decision === 'reject') {
+        this.cancel(call.runId);
+        return this.get(call.runId);
+      }
+      this.repository.decideApproval(id, 'approved');
+      const completing = this.commandCompletions.get(call.id);
+      this.approvalWaiters.get(call.id)!.approve();
+      await completing;
+      return this.get(call.runId);
     }
     if (
       stableHash({
@@ -734,24 +804,82 @@ export class AiService {
     this.controllers.set(runId, controller);
     this.update(runId, 'running');
     let result = '';
+    const working =
+      this.workTargets.get(input.workspace?.terminalId ?? input.tool?.target ?? '') === runId;
+    const budget = working ? new AiWorkBudget(controller) : undefined;
+    let targetTimer: ReturnType<typeof setInterval> | undefined;
     try {
-      const model = this.repository.getJson<AiModel>('ai_models', input.modelId);
-      const provider = this.repository.getJson<AiProvider>('ai_providers', model.providerId);
-      if (!provider.enabled)
+      let model: AiModel | undefined;
+      let provider: AiProvider | undefined;
+      try {
+        model = this.repository.getJson<AiModel>('ai_models', input.modelId);
+        provider = this.repository.getJson<AiProvider>('ai_providers', model.providerId);
+      } catch (error) {
+        if (!input.tool) throw error;
+      }
+      if (provider && !provider.enabled && !input.tool)
         throw new ApplicationError('CAPABILITY_UNAVAILABLE', 'AI provider is disabled', 503);
-      if (!this.host)
+      if (!this.host && !input.tool)
         throw new ApplicationError(
           'CAPABILITY_UNAVAILABLE',
           'Credential vault is unavailable',
           503,
         );
-      const adapter = await this.adapter(provider);
+      const adapter: ModelProvider =
+        provider && this.host && provider.enabled
+          ? await this.adapter(provider, controller.signal)
+          : {
+              stream() {
+                throw new Error('Reviewer unavailable');
+              },
+            };
+      const workspace = input.workspace ?? (input.tool?.args.workspace as AiWorkspace | undefined);
+      if (working && workspace) {
+        targetTimer = setInterval(() => {
+          if (!this.workspaces?.targetReady(workspace))
+            controller.abort(
+              new ApplicationError(
+                'PRECONDITION_FAILED',
+                'Work execution target closed or changed',
+                412,
+              ),
+            );
+        }, 250);
+        targetTimer.unref();
+      }
+      const executeCommand =
+        working && workspace && budget
+          ? (command: string, _toolCallId: string, _signal: AbortSignal) =>
+              this.executeReviewedCommand(
+                runId,
+                input,
+                workspace,
+                command,
+                adapter,
+                model?.model ?? 'unavailable',
+                provider?.timeoutMs ?? 30_000,
+                controller,
+                budget,
+              )
+          : undefined;
+      if (input.tool?.name === 'workspace.exec') {
+        if (!executeCommand || typeof input.tool.args.command !== 'string')
+          throw new ApplicationError('PRECONDITION_FAILED', 'No work execution target', 412);
+        const toolResult = await executeCommand(
+          input.tool.args.command,
+          'direct',
+          controller.signal,
+        );
+        this.update(runId, 'succeeded', toolResult.text);
+        return;
+      }
       for await (const event of adapter.stream({
-        model: model.model,
+        model: model!.model,
         system,
         prompt: input.prompt,
         context: input.context,
         signal: controller.signal,
+        executeCommand,
         allowCommandProposal:
           input.mode === 'work' &&
           ['chat', 'diagnose'].includes(input.useCase) &&
@@ -764,25 +892,14 @@ export class AiService {
           if (!['createBookmark', 'createTheme'].includes(input.useCase))
             this.partialResults.set(runId, result);
           this.emit({ runId, type: 'delta', data: { text: event.text } });
-        } else if (event.type === 'usage') this.emit({ runId, type: 'usage', data: event });
+        } else if (event.type === 'usage')
+          this.emit({ runId, type: 'usage', data: { ...event, purpose: 'execution' } });
         else if (event.type === 'commandProposal') {
-          if (
-            input.mode !== 'work' ||
-            !['chat', 'diagnose'].includes(input.useCase) ||
-            !input.workspace ||
-            !this.workspaces
-          )
-            throw new ApplicationError(
-              'PRECONDITION_FAILED',
-              'AI command has no selected workspace',
-              412,
-            );
-          await this.runTool(runId, {
-            name: 'workspace.exec',
-            target: input.workspace.terminalId,
-            args: { command: event.command, workspace: input.workspace },
-          });
-          return;
+          throw new ApplicationError(
+            'AI_POLICY_REJECTED',
+            'Model command bypassed the Runtime execution callback',
+            409,
+          );
         }
       }
       this.update(
@@ -795,11 +912,21 @@ export class AiService {
             : result,
       );
     } catch (error) {
+      if (['succeeded', 'failed', 'canceled'].includes(this.get(runId).state)) return;
       const partialResult = ['createBookmark', 'createTheme'].includes(input.useCase)
         ? undefined
         : result || undefined;
-      if (controller.signal.aborted) this.update(runId, 'canceled', partialResult);
-      else
+      if (controller.signal.aborted) {
+        const reason = controller.signal.reason;
+        this.update(
+          runId,
+          reason instanceof ApplicationError && reason.code === 'AI_RUNTIME_LIMIT'
+            ? 'failed'
+            : 'canceled',
+          partialResult,
+          reason instanceof ApplicationError ? reason.code : undefined,
+        );
+      } else
         this.update(
           runId,
           'failed',
@@ -807,8 +934,232 @@ export class AiService {
           error instanceof ApplicationError ? error.code : 'AI_PROVIDER_FAILED',
         );
     } finally {
+      clearInterval(targetTimer);
+      budget?.close();
+      for (const [target, id] of this.workTargets)
+        if (id === runId) this.workTargets.delete(target);
       this.controllers.delete(runId);
       this.partialResults.delete(runId);
+    }
+  }
+
+  private commandHash(
+    call: Pick<AiToolCall, 'toolName' | 'args' | 'target' | 'risk' | 'review' | 'step'>,
+    expiresAt: string | null,
+  ) {
+    return stableHash({
+      toolName: call.toolName,
+      args: call.args,
+      target: call.target,
+      risk: call.risk,
+      expiresAt,
+      ...(call.review ? { review: call.review, step: call.step } : {}),
+    });
+  }
+
+  private waitForCommandApproval(
+    call: AiToolCall,
+    controller: AbortController,
+    budget: AiWorkBudget,
+  ) {
+    const approval = this.repository.createApproval({
+      runId: call.runId,
+      toolCallId: call.id,
+      argsHash: call.argsHash,
+      target: call.target,
+      expiresAt: call.review!.expiresAt,
+    });
+    this.repository.updateToolCall(call.id, 'waiting_approval');
+    this.update(call.runId, 'waiting_approval');
+    this.emit({
+      runId: call.runId,
+      type: 'state',
+      data: { run: this.get(call.runId), approval, toolCall: this.repository.getToolCall(call.id) },
+    });
+    budget.pause();
+    return new Promise<void>((resolve, reject) => {
+      let settled = false;
+      const done = (error?: unknown) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        controller.signal.removeEventListener('abort', abort);
+        this.approvalWaiters.delete(call.id);
+        budget.resume();
+        if (error) reject(error);
+        else resolve();
+      };
+      const abort = () => done(controller.signal.reason ?? new Error('Work canceled'));
+      const timer = setTimeout(
+        () => {
+          this.repository.decideApproval(approval.id, 'expired');
+          controller.abort(
+            new ApplicationError('APPROVAL_EXPIRED', 'Command approval expired', 409),
+          );
+        },
+        Math.max(0, Date.parse(approval.expiresAt) - Date.now()),
+      );
+      timer.unref();
+      this.approvalWaiters.set(call.id, { approve: () => done() });
+      controller.signal.addEventListener('abort', abort, { once: true });
+      if (controller.signal.aborted) abort();
+    });
+  }
+
+  private async executeReviewedCommand(
+    runId: string,
+    input: AiInput,
+    workspace: AiWorkspace,
+    command: string,
+    adapter: ModelProvider,
+    model: string,
+    timeoutMs: number,
+    controller: AbortController,
+    budget: AiWorkBudget,
+  ) {
+    let call: AiToolCall | undefined;
+    let complete: (() => void) | undefined;
+    try {
+      const step = budget.next();
+      const secrets = await this.knownAiSecrets(controller.signal);
+      if (redact(command, secrets) !== command)
+        throw new ApplicationError('AI_SECRET_BOUNDARY', 'Command contains a credential', 409);
+      // Validate that the original target is still live before reviewing or waiting.
+      const current = await this.workspace(workspace.terminalId);
+      if (
+        current.connectionId !== workspace.connectionId ||
+        current.terminalKind !== workspace.terminalKind
+      )
+        throw new ApplicationError('PRECONDITION_FAILED', 'Work target changed', 412);
+      call = this.repository.createToolCall({
+        runId,
+        toolName: 'workspace.exec',
+        args: { command, workspace },
+        target: workspace.terminalId,
+        risk: 'mutating',
+        argsHash: '',
+        state: 'proposed',
+      });
+      this.commandCompletions.set(
+        call.id,
+        new Promise<void>((resolve) => {
+          complete = resolve;
+        }),
+      );
+      call = this.repository.updateCommandCall(call.id, {
+        step,
+        review: {
+          status: 'pending',
+          decision: 'ask_user',
+          riskLevel: 'high',
+          userAuthorization: 'unknown',
+          reason: 'Reviewing this command.',
+          source: 'rules',
+          generation: this.commandGeneration,
+          policyVersion: COMMAND_POLICY_VERSION,
+          expiresAt: new Date(Date.now() + 60_000).toISOString(),
+        },
+      });
+      this.emit({ runId, type: 'tool', data: call });
+      const review = await reviewCommand({
+        command,
+        workspace,
+        modelId: input.modelId,
+        model,
+        generation: this.commandGeneration,
+        messages: [
+          ...(input.conversationId && input.includeConversationHistory !== false
+            ? this.repository.listAiContextMessages(input.conversationId).messages
+            : []),
+          { role: 'user', content: input.prompt },
+        ],
+        adapter,
+        signal: controller.signal,
+        timeoutMs,
+        secrets,
+        usage: (event) =>
+          this.emit({ runId, type: 'usage', data: { type: 'usage', purpose: 'review', ...event } }),
+      });
+      controller.signal.throwIfAborted();
+      review.expiresAt = new Date(
+        Date.now() + (review.decision === 'ask_user' ? 10 * 60_000 : 60_000),
+      ).toISOString();
+      const risk: AiToolCall['risk'] =
+        review.riskLevel === 'low'
+          ? 'read_only'
+          : review.riskLevel === 'medium'
+            ? 'mutating'
+            : /\b(?:sudo|su|doas|Set-Acl)\b/iu.test(command)
+              ? 'privileged'
+              : 'destructive';
+      call = this.repository.updateCommandCall(call.id, { step, risk, review });
+      call = this.repository.updateCommandCall(call.id, {
+        argsHash: this.commandHash(call, review.expiresAt),
+      });
+      this.emit({ runId, type: 'tool', data: call });
+      if (review.decision === 'reject')
+        throw new ApplicationError('AI_POLICY_REJECTED', review.reason, 409);
+      if (review.decision === 'ask_user')
+        await this.waitForCommandApproval(call, controller, budget);
+      controller.signal.throwIfAborted();
+      const bound = this.repository.getToolCall(call.id);
+      if (
+        bound.argsHash !== this.commandHash(bound, review.expiresAt) ||
+        bound.approvalSource ||
+        bound.state !== (review.decision === 'auto_approve' ? 'proposed' : 'waiting_approval') ||
+        bound.review?.generation !== this.commandGeneration ||
+        Date.parse(review.expiresAt) <= Date.now()
+      )
+        throw new ApplicationError(
+          'PRECONDITION_FAILED',
+          'Command decision changed or expired',
+          412,
+        );
+      call = this.repository.updateCommandCall(call.id, {
+        approvalSource: review.decision === 'auto_approve' ? 'automatic' : 'user',
+      });
+      this.repository.updateToolCall(call.id, 'running');
+      this.update(runId, 'running');
+      this.emit({ runId, type: 'tool', data: this.repository.getToolCall(call.id) });
+      const execution = await this.tools.execute(
+        call.toolName,
+        call.args,
+        call.target,
+        controller.signal,
+      );
+      controller.signal.throwIfAborted();
+      const safe = JSON.parse(JSON.stringify(execution), (_key, value: unknown) =>
+        typeof value === 'string' ? redact(value, secrets) : value,
+      ) as Record<string, unknown>;
+      const isError = typeof safe.exitCode === 'number' && safe.exitCode !== 0;
+      this.repository.updateToolCall(call.id, isError ? 'failed' : 'succeeded', safe);
+      this.emit({ runId, type: 'tool', data: this.repository.getToolCall(call.id) });
+      const text = JSON.stringify(safe);
+      const buffer = Buffer.from(text);
+      return {
+        text:
+          buffer.length > 16 * 1024
+            ? buffer.subarray(0, 16 * 1024 - 40).toString('utf8') + '\n[tool output truncated]'
+            : text,
+        isError,
+      };
+    } catch (error) {
+      const failure =
+        controller.signal.reason instanceof ApplicationError ? controller.signal.reason : error;
+      const code = failure instanceof ApplicationError ? failure.code : 'AI_TOOL_FAILED';
+      const state =
+        controller.signal.aborted && code !== 'AI_RUNTIME_LIMIT' ? 'canceled' : 'failed';
+      if (
+        call &&
+        !['succeeded', 'failed', 'canceled'].includes(this.repository.getToolCall(call.id).state)
+      )
+        this.repository.updateToolCall(call.id, state, { code });
+      if (!['failed', 'canceled'].includes(this.get(runId).state))
+        this.update(runId, state, undefined, code);
+      throw error;
+    } finally {
+      complete?.();
+      if (call) this.commandCompletions.delete(call.id);
     }
   }
 
@@ -823,6 +1174,7 @@ export class AiService {
     return run;
   }
   private emit(event: AiRunEvent) {
+    event = aiRunEventSchema.parse(event);
     this.realtime.publish(`ai.run.${event.type}`, event);
     for (const listener of this.listeners.get(event.runId) ?? []) listener(event);
   }
@@ -873,22 +1225,22 @@ export class AiService {
     void task.finally(() => this.tasks.delete(task));
   }
 
-  private async adapter(provider: AiProvider): Promise<PiModelProvider> {
+  private async adapter(provider: AiProvider, signal?: AbortSignal): Promise<PiModelProvider> {
     if (!this.host)
       throw new ApplicationError('CAPABILITY_UNAVAILABLE', 'Credential vault is unavailable', 503);
-    const apiKey = await this.host.resolveCredential(provider.credentialRef);
+    const apiKey = await this.host.resolveCredential(provider.credentialRef, signal);
     const proxy = provider.proxy
       ? {
           url: provider.proxy.url,
           username: provider.proxy.username,
           ...(provider.proxy.credentialRef
-            ? { password: await this.host.resolveCredential(provider.proxy.credentialRef) }
+            ? { password: await this.host.resolveCredential(provider.proxy.credentialRef, signal) }
             : {}),
         }
       : null;
     const headers: Record<string, string> = {};
     for (const [name, ref] of Object.entries(provider.pi?.headerCredentialRefs ?? {}))
-      headers[name] = await this.host.resolveCredential(ref);
+      headers[name] = await this.host.resolveCredential(ref, signal);
     const testModel = this.repository
       .listJson<AiModel>('ai_models')
       .find(({ providerId }) => providerId === provider.id)?.model;

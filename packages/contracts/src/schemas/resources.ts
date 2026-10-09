@@ -2855,6 +2855,15 @@ export const aiWorkspaceSchema = z
     commandDirectory: z.string().min(1).max(4096).nullable(),
     execution: z.enum(['local', 'ssh', 'unavailable']),
     connectionId: idSchema.optional(),
+    sshTarget: z
+      .object({
+        hostname: z.string().min(1).max(255),
+        port: z.number().int().min(1).max(65535),
+        username: z.string().max(255),
+        generation: z.number().int().min(1),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 export type AiWorkspace = z.infer<typeof aiWorkspaceSchema>;
@@ -3011,6 +3020,21 @@ export const aiRunSchema = z
   })
   .strict();
 export const aiToolRiskSchema = z.enum(['read_only', 'mutating', 'destructive', 'privileged']);
+export const aiCommandReviewSchema = z
+  .object({
+    status: z.enum(['pending', 'completed', 'unavailable']),
+    decision: z.enum(['auto_approve', 'ask_user', 'reject']),
+    riskLevel: z.enum(['low', 'medium', 'high', 'critical']),
+    userAuthorization: z.enum(['unknown', 'low', 'medium', 'high']),
+    reason: z.string().max(600),
+    source: z.enum(['rules', 'model', 'fallback']),
+    policyVersion: z.string().max(80),
+    modelId: idSchema.optional(),
+    generation: z.string().max(80),
+    expiresAt: timestampSchema,
+  })
+  .strict();
+export type AiCommandReview = z.infer<typeof aiCommandReviewSchema>;
 export const aiToolCallSchema = z
   .object({
     ...entityFields,
@@ -3022,6 +3046,9 @@ export const aiToolCallSchema = z
     target: z.string(),
     state: z.enum(['proposed', 'waiting_approval', 'running', 'succeeded', 'failed', 'canceled']),
     resultMetadata: z.record(z.string(), z.unknown()).optional(),
+    review: aiCommandReviewSchema.optional(),
+    step: z.number().int().min(1).max(50).optional(),
+    approvalSource: z.enum(['automatic', 'user']).optional(),
   })
   .strict();
 export const aiApprovalSchema = z
@@ -3041,6 +3068,7 @@ export const aiApprovalDecisionSchema = z
   .strict();
 
 export const aiRunEventSchema = z.discriminatedUnion('type', [
+  z.object({ runId: idSchema, type: z.literal('tool'), data: aiToolCallSchema }).strict(),
   z.object({ runId: idSchema, type: z.literal('snapshot'), data: aiRunSchema }).strict(),
   z
     .object({
@@ -3070,6 +3098,7 @@ export const aiRunEventSchema = z.discriminatedUnion('type', [
           type: z.literal('usage'),
           inputTokens: z.number().nonnegative().optional(),
           outputTokens: z.number().nonnegative().optional(),
+          purpose: z.enum(['execution', 'review']).optional(),
         })
         .strict(),
     })

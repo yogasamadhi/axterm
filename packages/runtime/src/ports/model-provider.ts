@@ -1,4 +1,13 @@
 export interface ModelRequest {
+  executeCommand?:
+    | ((
+        command: string,
+        toolCallId: string,
+        signal: AbortSignal,
+      ) => Promise<{ text: string; isError: boolean }>)
+    | undefined;
+  maxOutputTokens?: number | undefined;
+  requireComplete?: boolean | undefined;
   allowCommandProposal?: boolean;
   model: string;
   system: string;

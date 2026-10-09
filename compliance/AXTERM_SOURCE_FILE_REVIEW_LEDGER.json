@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Prepared independent source snapshot, excluding this review ledger",
-  "sourceScopeSha256": "fbd984b5877bf14126df1da5caf338fef518fb70986a1c4d4b362b8b37db7ca4",
+  "sourceScopeSha256": "11a7ea666d3a2f3625d39455aaaa9fbf3e51bef95fce1ffe4510967908cb3e46",
   "limitations": [
     "A path and byte hash identify review scope; they do not establish authorship, license, rights or package inclusion.",
     "Git author metadata and prospective contribution rules do not grant retrospective permission for these bytes.",
@@ -12,8 +12,8 @@
     {
       "file": {
         "path": ".dependency-cruiser.cjs",
-        "bytes": 3399,
-        "sha256": "3518b66b56bc65d2883832e01b47b0291318a1ccfeaa51158c1cdc175a180510"
+        "bytes": 3510,
+        "sha256": "7a0a3e4cbd8fc004999d389ddcd3eb79ca67ccfb66525f20bbf04ed01fb646a6"
       },
       "review": {
         "status": "pending",
@@ -292,8 +292,8 @@
     {
       "file": {
         "path": "THIRD_PARTY_NOTICES.txt",
-        "bytes": 24914,
-        "sha256": "21d4006c6c92e6f5d980cf980a1ff07a81f9a2db03fdbe87bf0f46a3f4884708"
+        "bytes": 25423,
+        "sha256": "1dc34ab08d88e57a3c69cffe0fbfb0381a966d240363287d45dc613d0e770e17"
       },
       "review": {
         "status": "pending",
@@ -1072,8 +1072,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/app/ai/ai-panel.tsx",
-        "bytes": 52282,
-        "sha256": "5f822b74448db2016849d6ec8b8be830073e14934f35ea08e682280846010612"
+        "bytes": 57151,
+        "sha256": "1f4dc3589bad639643ca27de30371924bbf12aea0192e329c30e921553e66904"
       },
       "review": {
         "status": "pending",
@@ -1212,8 +1212,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/app/ai/use-ai-run-stream.ts",
-        "bytes": 1634,
-        "sha256": "32db363f95e93d3dcc6fc5a85a9967f6486ac8c781477450cb4fee6597f4a102"
+        "bytes": 2006,
+        "sha256": "10de40bf3815a651dcdefc8ffcfd15db8da540d300e613c5d8a55d6202dff62f"
       },
       "review": {
         "status": "pending",
@@ -1272,8 +1272,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/app/app.tsx",
-        "bytes": 158695,
-        "sha256": "573a65411ae6637935855d6f0ea9c15cd534c5bf77cf1665344d12c12a894ae9"
+        "bytes": 157729,
+        "sha256": "cff3e889b4f925b8b45bec7fef938101b9a1e6d4ce155968c8deeae1bab8a013"
       },
       "review": {
         "status": "pending",
@@ -2472,8 +2472,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/app/shell-controls.tsx",
-        "bytes": 59108,
-        "sha256": "e714af759c604e2b0274a9bdabd9dac280f1dc0e67ba4764741d95b016130363"
+        "bytes": 59950,
+        "sha256": "cbd6a2158bd89a71e1bc2801f259e6c1c52dc2b854565942d9a4abf21980701f"
       },
       "review": {
         "status": "pending",
@@ -4192,8 +4192,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/i18n/core.ts",
-        "bytes": 678857,
-        "sha256": "997ca03dff60aa70aa04e77f0c43e81ddd66d868af22cbcbda751e75f07321a7"
+        "bytes": 679440,
+        "sha256": "41b18a440816864a2e5cf38985eee1443a62eaf9d0050e84d9ebc8afe7e2f34d"
       },
       "review": {
         "status": "pending",
@@ -4312,8 +4312,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/styles/axterm-shell.css",
-        "bytes": 104745,
-        "sha256": "5c01d9cf30802a3a95224023d996a92f915c60cea58635ab36f39ad7c535326a"
+        "bytes": 105626,
+        "sha256": "8adb271250dfd9c6d07abf1ab7b35541cbc025cc355dd9a08da41536a4dd667e"
       },
       "review": {
         "status": "pending",
@@ -4352,8 +4352,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/styles/globals.css",
-        "bytes": 93853,
-        "sha256": "f0027f7e95e8b83e6aafc475496de4de06fffff602dc60313c36ccd484546e12"
+        "bytes": 95141,
+        "sha256": "27c13ec98f3573e0febe2b6fe45fe56b92a0768bdecfc59a37a968f159a01503"
       },
       "review": {
         "status": "pending",
@@ -4492,8 +4492,8 @@
     {
       "file": {
         "path": "compliance/AXTERM_PRODUCTION_DEPENDENCIES.spdx.json",
-        "bytes": 156994,
-        "sha256": "51097f9346f76035482e282eb898e584b2d614703f86981696cab33c63b87e1f"
+        "bytes": 156998,
+        "sha256": "58e09cdf4e79143fcdbee03f630263e6a1cfd210a3ddaa683f09a91cbe247d30"
       },
       "review": {
         "status": "pending",
@@ -4552,8 +4552,8 @@
     {
       "file": {
         "path": "compliance/LICENSE_ATTRIBUTION_REVIEW_LEDGER.json",
-        "bytes": 6916,
-        "sha256": "645341cac30b6b8ba528be8e3a2c6bffb1ccd5eae00f9d03feb35ff04a77dbb7"
+        "bytes": 6918,
+        "sha256": "dc091da32f301efa9ecf6cef3882d07e4165cfaad7ad40fc0a1178ed53860a83"
       },
       "review": {
         "status": "pending",
@@ -4672,8 +4672,8 @@
     {
       "file": {
         "path": "compliance/THIRD_PARTY_COMPONENTS.json",
-        "bytes": 22075,
-        "sha256": "345c7dbd107aed5d160b972b75817450a4cba53b1509636090d6ad83eba62230"
+        "bytes": 22077,
+        "sha256": "7055a3fbf92d2c4d2835ab35dd586b2219ab9cc13ddc47306c16d245077f4f7b"
       },
       "review": {
         "status": "pending",
@@ -4692,8 +4692,8 @@
     {
       "file": {
         "path": "compliance/THIRD_PARTY_LICENSE_TEXTS.json",
-        "bytes": 822696,
-        "sha256": "cee538380546c7ed47ea1d182d1f5f934430eeefb465da4ef03b44729f307740"
+        "bytes": 822702,
+        "sha256": "af444c7aa50e9c42aba91153574b68932ec45e12a631d92488ac2a5ce406472d"
       },
       "review": {
         "status": "pending",
@@ -5292,8 +5292,8 @@
     {
       "file": {
         "path": "docs/adr/ADR-027-pi-ai-source-engine.md",
-        "bytes": 3969,
-        "sha256": "51bc55756fde628ca077955ae1b0bc4df57c487a0df68de1275216b6e35390ea"
+        "bytes": 4312,
+        "sha256": "3b12eaac93d4e6b97f662f99109bfa7d86d50fb7eb8c86847e34533606f8d490"
       },
       "review": {
         "status": "pending",
@@ -5312,8 +5312,8 @@
     {
       "file": {
         "path": "docs/adr/ADR-028-ai-terminal-workspace.md",
-        "bytes": 3525,
-        "sha256": "086d305f936a84a5816d4c0180da3cb9cc225bd9773efd0a53e33b19975e74e6"
+        "bytes": 3872,
+        "sha256": "43fba58165320276da7a724fc753d4343c20ac17c932a159e59258c7db093e79"
       },
       "review": {
         "status": "pending",
@@ -5332,8 +5332,28 @@
     {
       "file": {
         "path": "docs/adr/ADR-029-ai-modes-and-mentioned-skills.md",
-        "bytes": 3534,
-        "sha256": "bee43745344d242fa87a9622c533932c0d81347840fa6032c29ff80f64dda7cc"
+        "bytes": 3792,
+        "sha256": "96eb8b60a326a26e4c71963f33b018fa278c187f0055d56524859a99d1671cf5"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "docs/adr/ADR-030-ai-auto-review-and-agent-loop.md",
+        "bytes": 3501,
+        "sha256": "3c7ba8be1c414d8c347bb6628087945095b10a37de84b133bb8a7ff611d5fbd0"
       },
       "review": {
         "status": "pending",
@@ -5432,8 +5452,8 @@
     {
       "file": {
         "path": "docs/architecture/MASTER_SPEC.md",
-        "bytes": 127279,
-        "sha256": "c142c521740c83302b94b53c5c06a7e5e0af47a1aaac25da3f5da96b35d950fa"
+        "bytes": 128869,
+        "sha256": "7234f6eee3f1b57df47f5f97bc3e0edc9e359dd53c169d6444c3334858258eb6"
       },
       "review": {
         "status": "pending",
@@ -5812,8 +5832,8 @@
     {
       "file": {
         "path": "docs/implementation/PI_AI_ENGINE.md",
-        "bytes": 9249,
-        "sha256": "16d0f82fe216619b79f2ea0bb84eac32cd7ad5298abeba0ff9bc69ea0f722cc8"
+        "bytes": 10674,
+        "sha256": "5fc243f11e9dbdf350bc5e883de0ba7611db43291f293611e12a8d768cd9a7c5"
       },
       "review": {
         "status": "pending",
@@ -5892,8 +5912,8 @@
     {
       "file": {
         "path": "docs/implementation/RELEASE_OWNER_HANDOFF.md",
-        "bytes": 39223,
-        "sha256": "0dd3ce625abd7e252aa894b5cd6630e6717e9901a6c6dc8d419782b6773e867c"
+        "bytes": 39351,
+        "sha256": "aae08da3bf1af180d1a20c6fdc14355c9efc9dcc028f926c545a092aab857fd9"
       },
       "review": {
         "status": "pending",
@@ -5952,8 +5972,8 @@
     {
       "file": {
         "path": "docs/implementation/STATUS.md",
-        "bytes": 768298,
-        "sha256": "2298cb1bda5499a2425ec4862e87868858030fd2a5cbd1fdfd7aa1b57c9d6415"
+        "bytes": 787094,
+        "sha256": "e0c3236dfe1585eb804f7b25d6789d75982de54b83a1d8fa391b4698d16e38ad"
       },
       "review": {
         "status": "pending",
@@ -6052,8 +6072,8 @@
     {
       "file": {
         "path": "docs/implementation/VERSIONS.md",
-        "bytes": 20502,
-        "sha256": "46557884ac58f7fa16efd101029f640fb423e0ac922d6c1da2e31257ad4b1be0"
+        "bytes": 20958,
+        "sha256": "368d8608f0a5acc217342b8e26a6a594e932411acf33972ff689869449391358"
       },
       "review": {
         "status": "pending",
@@ -8691,6 +8711,26 @@
     },
     {
       "file": {
+        "path": "docs/implementation/evidence/pi-engine/2026-10-09-auto-review.md",
+        "bytes": 7918,
+        "sha256": "dd1058d1fe24f85ee7218d6413169f79ae49df84c7c10db6bda95398603198b5"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "docs/product/AXTERM_BRAND.md",
         "bytes": 1587,
         "sha256": "cedfb6a6e70a963c19bbc3efd1432bbfb6c43c8d1e643885762edef9897443d9"
@@ -9211,6 +9251,26 @@
     },
     {
       "file": {
+        "path": "licenses/pi-auto-review-LICENSE.txt",
+        "bytes": 1057,
+        "sha256": "75054b6a08e1008c86b6045ab99add2c8fa571987880951a9929f11ee56a7d64"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "licenses/spice-client-1.2.0-source.tar",
         "bytes": 716800,
         "sha256": "a30adf3706f5a03ede1fdcd0785cea4330f86af2c9bbbc75165384ccfcfd9a26"
@@ -9512,8 +9572,8 @@
     {
       "file": {
         "path": "packages/client/src/generated/api.ts",
-        "bytes": 3413691,
-        "sha256": "5861316416b0f38fb7349da71ee2b5b27282b2c17c41600a26cff6fcb99c822b"
+        "bytes": 3415123,
+        "sha256": "2cda2ef516e981bc477786e8e50d6248e36b394a73fc147f36a2d9902f750dd5"
       },
       "review": {
         "status": "pending",
@@ -9832,8 +9892,8 @@
     {
       "file": {
         "path": "packages/contracts/src/schemas/resources.ts",
-        "bytes": 115390,
-        "sha256": "dc29365b42819da5d31ac6bdf3a494c650bec0fd4c5dc3f7857b2feae1091d76"
+        "bytes": 116581,
+        "sha256": "13137e4289ded6cf01e9cd52b9d56c779d07be69b7c005a935994e629c7f6cc9"
       },
       "review": {
         "status": "pending",
@@ -10132,8 +10192,8 @@
     {
       "file": {
         "path": "packages/pi-engine/catalog/skills.generated.json",
-        "bytes": 1795,
-        "sha256": "7e15a9c4a9572d6ed74c61b1c7e4aeb18b6218db25f1878689e284ff1800a21c"
+        "bytes": 1958,
+        "sha256": "1b57944c6a92fa789e852ecf65525397521aa240eec7bba74317bcfe98be9d64"
       },
       "review": {
         "status": "pending",
@@ -10172,8 +10232,8 @@
     {
       "file": {
         "path": "packages/pi-engine/skills/diagnose/SKILL.md",
-        "bytes": 476,
-        "sha256": "2d89bd07093490c24bb8f366171bd6c76d6c960858f535a10a9c0587a5f9cb11"
+        "bytes": 637,
+        "sha256": "0f84adfa33c39cda89ea333d957b4daa2fdf5ae908c637e255d4c4e4a0b9067d"
       },
       "review": {
         "status": "pending",
@@ -10272,8 +10332,8 @@
     {
       "file": {
         "path": "packages/pi-engine/src/index.ts",
-        "bytes": 9897,
-        "sha256": "9be461ef48abcbf5c1c0e5300dde314eb5879caf535edead2a1248c8b68b4b64"
+        "bytes": 12441,
+        "sha256": "38dfccc105039ea1644ff247c96b669c6c5de44a138625346a74212a86f3b515"
       },
       "review": {
         "status": "pending",
@@ -10292,8 +10352,8 @@
     {
       "file": {
         "path": "packages/pi-engine/src/public.ts",
-        "bytes": 1769,
-        "sha256": "232308a06fc5a35e89526db3808eb11cf9bc24533609c8ba566a3ad44b9083f8"
+        "bytes": 2958,
+        "sha256": "c61f86d189b9ab11e9226f68a0caf018216d84b8fbe467f90d2737916c9b0ab5"
       },
       "review": {
         "status": "pending",
@@ -10391,6 +10451,46 @@
     },
     {
       "file": {
+        "path": "packages/runtime/src/adapters/ai/command-review.test.ts",
+        "bytes": 7459,
+        "sha256": "d293219021b21d011c320991d3a3ce8af5c578100a1a52bde1f16dc2307e4fb8"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/runtime/src/adapters/ai/command-review.ts",
+        "bytes": 9917,
+        "sha256": "401f19f00732fabb51178e1838fbb1a5df35403e205b5fa84bec91810fafb21a"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "packages/runtime/src/adapters/ai/model-http.test.ts",
         "bytes": 7505,
         "sha256": "9fb26cb6ff20d08273c91646a6f818206fb7ae1df6305f20c854cf123ff4cf38"
@@ -10452,8 +10552,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/ai/pi-provider.ts",
-        "bytes": 6126,
-        "sha256": "6007d8a3305beabbbc0d4adf310cd1f1d784ef2fa99efadfc434b83e57118a40"
+        "bytes": 6239,
+        "sha256": "b1118a66ebd5bb8013f93239eb6c9f3f7babd5756a41b6b08a6047c78af9514f"
       },
       "review": {
         "status": "pending",
@@ -10492,8 +10592,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/ai/workspace-command.ts",
-        "bytes": 3418,
-        "sha256": "f2e7bc3700c8e2bdbc405e22b63aa2abcea5aa172635190b51c8da6d6800546a"
+        "bytes": 4668,
+        "sha256": "712e4afcce2d6ebfa0d9b2868f51b639aa1a2d131524301705aae6d89956a754"
       },
       "review": {
         "status": "pending",
@@ -11071,6 +11171,26 @@
     },
     {
       "file": {
+        "path": "packages/runtime/src/adapters/sqlite/ai-command-review-migration.test.ts",
+        "bytes": 2072,
+        "sha256": "f8ec58eecebc1e51fe95e0238f0f73611acbaf9649c022ccc424379546faca1c"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "packages/runtime/src/adapters/sqlite/batch-operation-repository.ts",
         "bytes": 5321,
         "sha256": "accb7eda941ab823ce17f9e1324e8c2fc5a89ac47064610ed90b45ec7a801157"
@@ -11332,8 +11452,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/sqlite/database.ts",
-        "bytes": 46946,
-        "sha256": "05ef018cf05267ee455ad1275b98c5915d5f7a48704502a80f269c0d34e41a6a"
+        "bytes": 47162,
+        "sha256": "eea7b5d2fe79ed35a0eb6dde16532075dffd6425eba7fbf0b4780abf812bdf21"
       },
       "review": {
         "status": "pending",
@@ -11432,8 +11552,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/sqlite/product-repository.ts",
-        "bytes": 64169,
-        "sha256": "006405adf77c9e6590a053f0de8a99975e65daeddbadad6418e8557ce26793aa"
+        "bytes": 65091,
+        "sha256": "d08e187a21a2974599ef278308c9be6d385dc201b970473cb031974a12302cd2"
       },
       "review": {
         "status": "pending",
@@ -12132,8 +12252,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/terminal-transfer/owned-stage-journal.test.ts",
-        "bytes": 7684,
-        "sha256": "89e2a8cff54f4c8bfa675e9d7e9e969ae7051a3aeb6566ec3f5a00884f64b028"
+        "bytes": 8451,
+        "sha256": "8c6c5e3537f311181978e3769441fb3a25457af52293710c26752cd1fdb9b6bd"
       },
       "review": {
         "status": "pending",
@@ -12152,8 +12272,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/terminal-transfer/owned-stage-journal.ts",
-        "bytes": 10637,
-        "sha256": "e1282abe1eef46f6dec29e838ddaf4fe0a8342a1236c65c7a21d3c6d3e267d2c"
+        "bytes": 10827,
+        "sha256": "0703120a354ef741fd85acef7a351efc6d0eb3cb98589a365872fda148e2d5e0"
       },
       "review": {
         "status": "pending",
@@ -12892,8 +13012,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/ai-context.test.ts",
-        "bytes": 4845,
-        "sha256": "0b46f3287a43a1ed57bc8d67fe483e7ac49b6f0311c980e45ff7c13cf9014ddd"
+        "bytes": 4826,
+        "sha256": "b28ca47ea6f331065a5139389ed2eee86b8984aa5a946e58b56a5300da05b127"
       },
       "review": {
         "status": "pending",
@@ -12912,8 +13032,28 @@
     {
       "file": {
         "path": "packages/runtime/src/application/ai-context.ts",
-        "bytes": 9019,
-        "sha256": "761b48e1060d752d90a5c50714a4725921f9f82ee90e98a838856bc75e4a6c6a"
+        "bytes": 9897,
+        "sha256": "281133f75c1869be55b698b35ad8b36e756455ccfa37ac62e034e84d5869dbd2"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/runtime/src/application/ai-continuous-work.test.ts",
+        "bytes": 16644,
+        "sha256": "522033beacb96105cd7a706e90dba8fee17bdad154ea857ef55f306013c95717"
       },
       "review": {
         "status": "pending",
@@ -12952,8 +13092,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/ai-service.ts",
-        "bytes": 34379,
-        "sha256": "7fb984ae878f4f4a77c9702f0316b17f4e69945ed806ac856a23257fb823a323"
+        "bytes": 47857,
+        "sha256": "842396728f9b821bb556d65463c47da2255113056a1b35d3d9f82ff2339e7235"
       },
       "review": {
         "status": "pending",
@@ -12991,9 +13131,49 @@
     },
     {
       "file": {
+        "path": "packages/runtime/src/application/ai-work-budget.test.ts",
+        "bytes": 1164,
+        "sha256": "dfda01808dea0ce899de7ebe81b466668ec25f73e996fc25a01784e968293630"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/runtime/src/application/ai-work-budget.ts",
+        "bytes": 1181,
+        "sha256": "ba895cd06107df61e05342e561d772f2497dcec579a61c2ff10077876eb15f6f"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "packages/runtime/src/application/ai-workspace-service.test.ts",
-        "bytes": 9127,
-        "sha256": "e17d3bbc3a8caf75aad50153035bcb684fcfb7d5e68874b8518534bbb57a5fb9"
+        "bytes": 9957,
+        "sha256": "207cf57444d7fa840a35e572c2fb989d526079234bac9e799348148b12feea36"
       },
       "review": {
         "status": "pending",
@@ -13012,8 +13192,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/ai-workspace-service.ts",
-        "bytes": 4320,
-        "sha256": "6742412110600891dbccfe4231943ff2dbeab71612708fa75d6418dad108bc41"
+        "bytes": 4986,
+        "sha256": "23ac6818767ec88c96d68001fee55728d4b3e06051cac5017fce8969969bba56"
       },
       "review": {
         "status": "pending",
@@ -13292,8 +13472,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/connection-service.ts",
-        "bytes": 27154,
-        "sha256": "c97e05188e3006ea83d82b8a6f0064a0bb8ee970d272c42ceefee050ed6480de"
+        "bytes": 27596,
+        "sha256": "1f49df54f550676bb860df3304f97fc2230ac6eea9d953c78b2ae2b97836c0a5"
       },
       "review": {
         "status": "pending",
@@ -13472,8 +13652,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/errors.ts",
-        "bytes": 3605,
-        "sha256": "cd47d2dc3a5d7b77307447e6d8c659c0464e723186b3608a35163cbdb312ec34"
+        "bytes": 3787,
+        "sha256": "58ac7bcb11fd8bf10d81ae750dfbcad83bb20bb3c1b458f6c50bdcf35d949a74"
       },
       "review": {
         "status": "pending",
@@ -14732,8 +14912,8 @@
     {
       "file": {
         "path": "packages/runtime/src/bootstrap/runtime.ts",
-        "bytes": 24009,
-        "sha256": "b87ece4d312554e3ffa513fc92cebeb11d94aa8f17399d7c013d0c942d72e0b4"
+        "bytes": 24058,
+        "sha256": "0fdd7cf0033fa851dae136f0181e3ddb8bd1b84ead5582af9e60cfd09e7900b7"
       },
       "review": {
         "status": "pending",
@@ -15192,8 +15372,8 @@
     {
       "file": {
         "path": "packages/runtime/src/ports/model-provider.ts",
-        "bytes": 484,
-        "sha256": "6301abea80f892de9adfc955c26250d477598a3287c2bd33fb9b9bf6365bdc61"
+        "bytes": 748,
+        "sha256": "9412ffca3de7ded4863301f8fb6873d63ef2f1c86cfd56f9d747e83c78361586"
       },
       "review": {
         "status": "pending",
@@ -15712,8 +15892,8 @@
     {
       "file": {
         "path": "playwright.config.ts",
-        "bytes": 767,
-        "sha256": "c7509265b126d0bbe59dba2c8c8e825099efffea0b46701eb1637eddc2f69975"
+        "bytes": 906,
+        "sha256": "d07a5a165c7e23aaf2fc4c8539e9d0e5c53e908e63d1cb2fdbc16bddefbfce61"
       },
       "review": {
         "status": "pending",
@@ -15852,8 +16032,8 @@
     {
       "file": {
         "path": "scripts/commercialization/audit-independent-snapshot.mjs",
-        "bytes": 16722,
-        "sha256": "9c004fd18ea77f17803f611f5579cfacb918de2295b3e7e66744e5913b5b2335"
+        "bytes": 16932,
+        "sha256": "aa6441a9c305e7e77a323213ebb3fe2d5c8901fe5dbfe1f446c5f6ff1380e18e"
       },
       "review": {
         "status": "pending",
@@ -16773,7 +16953,7 @@
       "file": {
         "path": "scripts/localization/axterm-core-review-ledger.json",
         "bytes": 3206,
-        "sha256": "27fe99982532b334a4becf65a1094fd74c5c32e791bd330f46205d8bd5cb1f65"
+        "sha256": "0d030ff8257584af159809fea8545a118c4be08a8f2c3ff058845f9bbe50c106"
       },
       "review": {
         "status": "pending",
@@ -16952,8 +17132,8 @@
     {
       "file": {
         "path": "scripts/pi-source-provenance.mjs",
-        "bytes": 2567,
-        "sha256": "9e9cf800eaf1f65a9a05d24c6550ac7c67a026019e4c6c382ccdeee2655a4cf1"
+        "bytes": 3939,
+        "sha256": "fd7a08b11332297e9681b0c2119545d0f846a394a43abb204d6e73ecf1bf3d23"
       },
       "review": {
         "status": "pending",
@@ -17231,6 +17411,26 @@
     },
     {
       "file": {
+        "path": "tests/e2e/ai-auto-review.spec.ts",
+        "bytes": 10328,
+        "sha256": "d7f6b95bc7e0b43fb05a92cc5c19e5067a6b079ac44854ab3b0be4fbb64fcd8d"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "tests/e2e/ai-skill-picker.ts",
         "bytes": 452,
         "sha256": "28772cd87af7c38d87d1505d6310e8af037d626ac862838115e032657bfd219d"
@@ -17252,8 +17452,8 @@
     {
       "file": {
         "path": "tests/e2e/ai-workspace.spec.ts",
-        "bytes": 31214,
-        "sha256": "6951efa15298d2727b2b0df421acdb6eafa57d39fe495837d006c563da0847d9"
+        "bytes": 31343,
+        "sha256": "67beb7aa7433e4dc1d4ea322a972d4b1761d9442be2030eb172f742a19bfbada"
       },
       "review": {
         "status": "pending",
@@ -17474,6 +17674,26 @@
         "path": "tests/e2e/terminal-selection.spec.ts",
         "bytes": 8189,
         "sha256": "c5c5139f39874ef793c4695ae484722c40683da5a94112d6fcf74dc6c24a6ea9"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "tests/e2e/top-navigation.spec.ts",
+        "bytes": 4189,
+        "sha256": "c809b903abac7a5e6e95cd23c9233f710d3a3bd410def6c79055b9c3a03e457b"
       },
       "review": {
         "status": "pending",
@@ -18191,6 +18411,26 @@
     },
     {
       "file": {
+        "path": "tests/integration/ai-auto-review-ssh.test.ts",
+        "bytes": 9049,
+        "sha256": "353e6670f7e8576fc2dcd037c14c2a69ca7974149446eb3307cbd506b481a3b8"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "tests/integration/ai-bookmark-runtime.test.ts",
         "bytes": 5638,
         "sha256": "1e55d77244922d08e732b73f627bb8683c29d90601fe054912f69c4faa1c6944"
@@ -18312,8 +18552,8 @@
     {
       "file": {
         "path": "tests/integration/ai-workspace-runtime.test.ts",
-        "bytes": 12174,
-        "sha256": "913f52d6f123ba55eacf43bd7bace86fe5ae924e853d2fd33ea8c8de95a435b9"
+        "bytes": 12595,
+        "sha256": "b3811be0341322b86b45a5b8ba8c9a69f356a63e2009f7e06011190bf9a12975"
       },
       "review": {
         "status": "pending",
@@ -19553,7 +19793,7 @@
       "file": {
         "path": "tests/unit/independent-release-documents.test.ts",
         "bytes": 87825,
-        "sha256": "aa3beba3c1a14ed51d9aba92ff22e21357a140f2a8eb69998c9c2e766c2fdc92"
+        "sha256": "5e5cd5b1a599d9016f93ef08f1524ffb475dd4376f41c75471db76fdc9f06997"
       },
       "review": {
         "status": "pending",
@@ -19592,8 +19832,8 @@
     {
       "file": {
         "path": "tests/unit/independent-snapshot-preparation.test.ts",
-        "bytes": 9779,
-        "sha256": "9f6ff6f41bf3bc746dac360997c63348dafa1a4c2df6a8932f01172dcb4b2468"
+        "bytes": 10498,
+        "sha256": "307db5da445128f28e1dfbca9c27b063ff24dd4710dcca2c8e7abda301bed0cb"
       },
       "review": {
         "status": "pending",
@@ -19872,8 +20112,8 @@
     {
       "file": {
         "path": "tests/unit/localization-core-review-ledger.test.ts",
-        "bytes": 2549,
-        "sha256": "60f0d1ebd1f932a0f0d87e1102a6bb361299c8fcb8eac67cb8acd329b0a0dda0"
+        "bytes": 2644,
+        "sha256": "95aa6bcbb83431023e6b243d16a7dfd7f28c6f40c5933dea36122bcbd930d319"
       },
       "review": {
         "status": "pending",
@@ -21414,6 +21654,106 @@
         "path": "tsconfig.json",
         "bytes": 302,
         "sha256": "aafaf8d9017a1d0e4f15074d2241842c41af8727da29b5a64d8fa6e5df3ea571"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi-auto-review/LICENSE",
+        "bytes": 1057,
+        "sha256": "75054b6a08e1008c86b6045ab99add2c8fa571987880951a9929f11ee56a7d64"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi-auto-review/PROVENANCE.json",
+        "bytes": 852,
+        "sha256": "61fef24a3f7639000de2a44ecf9b3a84dd9dcbe3534f902f6119ebbd83ce2e2e"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi-auto-review/src/path-surfaces.ts",
+        "bytes": 1097,
+        "sha256": "e80c43c5a0d0ae6bcf1a3d358f7c388e6e7b6f18fbed81d408c2cf58a54225fb"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi-auto-review/src/policy.ts",
+        "bytes": 63913,
+        "sha256": "6ed03ed1cdad5073f92b45efabfa9a1520af552ae479b2708dbbcc18cddfd180"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi-auto-review/src/review/shell-text.ts",
+        "bytes": 15879,
+        "sha256": "b4145845c1f9f389132692ba18f6a57bda1669e465536851a7ae7dbd1ccb2cc3"
       },
       "review": {
         "status": "pending",

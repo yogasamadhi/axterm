@@ -85571,6 +85571,28 @@ export interface operations {
                         resultMetadata?: {
                             [key: string]: unknown;
                         };
+                        review?: {
+                            /** @enum {string} */
+                            status: "pending" | "completed" | "unavailable";
+                            /** @enum {string} */
+                            decision: "auto_approve" | "ask_user" | "reject";
+                            /** @enum {string} */
+                            riskLevel: "low" | "medium" | "high" | "critical";
+                            /** @enum {string} */
+                            userAuthorization: "unknown" | "low" | "medium" | "high";
+                            reason: string;
+                            /** @enum {string} */
+                            source: "rules" | "model" | "fallback";
+                            policyVersion: string;
+                            /** Format: uuid */
+                            modelId?: string;
+                            generation: string;
+                            /** Format: date-time */
+                            expiresAt: string;
+                        };
+                        step?: number;
+                        /** @enum {string} */
+                        approvalSource?: "automatic" | "user";
                     }[];
                 };
             };
@@ -86887,6 +86909,12 @@ export interface operations {
                         execution: "local" | "ssh" | "unavailable";
                         /** Format: uuid */
                         connectionId?: string;
+                        sshTarget?: {
+                            hostname: string;
+                            port: number;
+                            username: string;
+                            generation: number;
+                        };
                     };
                 };
             };

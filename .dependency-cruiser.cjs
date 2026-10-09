@@ -71,7 +71,11 @@ module.exports = {
       name: 'pi-engine-source-scope',
       severity: 'error',
       from: { path: '^packages/pi-engine/src/' },
-      to: { path: '(^|/)vendor/', pathNot: '^vendor/pi/packages/(ai|agent|telemetry)/src/' },
+      to: {
+        path: '(^|/)vendor/',
+        pathNot:
+          '^vendor/(pi/packages/(ai|agent|telemetry)/src/|pi-auto-review/src/(policy\\.ts|path-surfaces\\.ts|review/shell-text\\.ts)$)',
+      },
     },
     {
       name: 'pi-engine-only-runtime-adapter',

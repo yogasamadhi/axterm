@@ -17,6 +17,27 @@ function sourceFiles(directory) {
   });
 }
 export function checkPiSource() {
+  const review = JSON.parse(
+    readFileSync(path.join(root, 'vendor/pi-auto-review/PROVENANCE.json'), 'utf8'),
+  );
+  const reviewFiles = [
+    'LICENSE',
+    'src/path-surfaces.ts',
+    'src/policy.ts',
+    'src/review/shell-text.ts',
+  ];
+  if (
+    review.repository !== 'https://github.com/erichll/pi-packages' ||
+    review.revision !== '6eb4d9668f6d23fb6793029d5d145b8ae0fcd0ad' ||
+    review.license !== 'MIT' ||
+    JSON.stringify(review.files?.map((file) => file.path)) !== JSON.stringify(reviewFiles)
+  )
+    throw new Error('Auto-review source pin or scope differs');
+  for (const file of review.files)
+    if (digest(`vendor/pi-auto-review/${file.path}`) !== file.sha256)
+      throw new Error(`Pinned auto-review source differs: ${file.path}`);
+  if (digest('licenses/pi-auto-review-LICENSE.txt') !== digest('vendor/pi-auto-review/LICENSE'))
+    throw new Error('Packaged auto-review license differs');
   const manifest = JSON.parse(readFileSync(output, 'utf8'));
   for (const file of manifest.files)
     if (digest(file.path) !== file.sha256)
@@ -33,6 +54,17 @@ export function checkPiSource() {
     `sha256-${digest('packages/pi-engine/catalog/models.all.json')}` !== catalog.catalogRevision
   )
     throw new Error('Pi catalog/source provenance differs from its pinned inputs');
+}
+if (process.argv[2] === '--generate-auto-review') {
+  const file = path.join(root, 'vendor/pi-auto-review/PROVENANCE.json');
+  const manifest = JSON.parse(readFileSync(file, 'utf8'));
+  manifest.files = [
+    'LICENSE',
+    'src/path-surfaces.ts',
+    'src/policy.ts',
+    'src/review/shell-text.ts',
+  ].map((file) => ({ path: file, sha256: digest(`vendor/pi-auto-review/${file}`) }));
+  writeFileSync(file, JSON.stringify(manifest, null, 2) + '\n');
 }
 if (process.argv[2] === '--generate') {
   const files = [

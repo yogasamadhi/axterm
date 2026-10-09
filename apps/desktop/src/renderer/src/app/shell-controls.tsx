@@ -441,6 +441,7 @@ export function LayoutWorkspaceMenu({
 }
 
 export function TerminalPaneGrid({
+  primaryTabContainer,
   client,
   layout,
   paneTerminalIds,
@@ -494,6 +495,7 @@ export function TerminalPaneGrid({
   switchTabOnHover,
   encodingOverrides,
 }: {
+  primaryTabContainer?: HTMLDivElement | undefined;
   client: ReturnType<typeof createRuntimeClient>;
   layout: WorkspaceLayoutMode;
   paneTerminalIds: Array<string | null>;
@@ -556,6 +558,7 @@ export function TerminalPaneGrid({
     pane: number;
   }>();
   const maximizedPane = maximized?.layout === layout ? maximized.pane : undefined;
+  const primaryTabPane = maximizedPane ?? 0;
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setRatios(defaultPaneRatios(layout)));
@@ -636,6 +639,7 @@ export function TerminalPaneGrid({
           return (
             <section
               key={index}
+              data-global-tabs={(index === primaryTabPane && !!primaryTabContainer) || undefined}
               className={
                 focusedPane === index ? 'terminal-pane empty active' : 'terminal-pane empty'
               }
@@ -643,7 +647,9 @@ export function TerminalPaneGrid({
               style={maximizedPane === index ? { gridArea: '1 / 1 / -1 / -1' } : undefined}
               onMouseDown={() => onFocus(index)}
             >
-              {tabbar}
+              {index === primaryTabPane && primaryTabContainer
+                ? createPortal(tabbar, primaryTabContainer)
+                : tabbar}
               <div className="terminal-pane-body empty-pane-body">
                 <EmptyPaneLanding
                   index={index}
@@ -661,12 +667,15 @@ export function TerminalPaneGrid({
         return (
           <section
             key={index}
+            data-global-tabs={(index === primaryTabPane && !!primaryTabContainer) || undefined}
             className={focusedPane === index ? 'terminal-pane active' : 'terminal-pane'}
             hidden={maximizedPane !== undefined && maximizedPane !== index}
             style={maximizedPane === index ? { gridArea: '1 / 1 / -1 / -1' } : undefined}
             onMouseDown={() => onFocus(index)}
           >
-            {tabbar}
+            {index === primaryTabPane && primaryTabContainer
+              ? createPortal(tabbar, primaryTabContainer)
+              : tabbar}
             <header>
               <nav
                 className="session-mode-tabs"
@@ -823,6 +832,9 @@ export function TerminalPaneGrid({
                 className="terminal-session-layer"
                 data-terminal-session={tab.id}
                 data-pane-index={paneIndex}
+                data-global-tabs={
+                  (paneIndex === primaryTabPane && !!primaryTabContainer) || undefined
+                }
                 role="tabpanel"
                 aria-labelledby={`session-mode-terminal-${tab.id}`}
                 hidden={!visible}
@@ -922,6 +934,9 @@ export function TerminalPaneGrid({
                 className="terminal-session-layer terminal-file-session-layer"
                 data-file-session={tab.id}
                 data-pane-index={paneIndex}
+                data-global-tabs={
+                  (paneIndex === primaryTabPane && !!primaryTabContainer) || undefined
+                }
                 role="tabpanel"
                 aria-labelledby={`session-mode-files-${tab.id}`}
                 hidden={!visible}

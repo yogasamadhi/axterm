@@ -7,10 +7,9 @@ import type { TerminalService } from './terminal-service';
 import type { ConnectionService } from './connection-service';
 import { ApplicationError } from './errors';
 
-import { executeWorkspaceCommand } from '../adapters/ai/workspace-command';
+import { executeWorkspaceCommand, workspaceExecutionFacts } from '../adapters/ai/workspace-command';
 const commandSchema = z.object({ command: z.string().min(1).max(8192) }).strict();
 const boundSchema = commandSchema.extend({ workspace: aiWorkspaceSchema }).strict();
-const quote = (value: string) => `'${value.replaceAll("'", "'\\''")}'`;
 
 export class AiWorkspaceService {
   constructor(
@@ -38,13 +37,35 @@ export class AiWorkspaceService {
       workspaceDirectory,
       commandDirectory: local ? workspaceDirectory : directory,
       execution: local ? 'local' : remote ? 'ssh' : 'unavailable',
-      ...(remote ? { connectionId: terminal.connectionId! } : {}),
+      ...(remote
+        ? {
+            connectionId: terminal.connectionId!,
+            sshTarget: this.connections.executionTarget?.(terminal.connectionId!),
+          }
+        : {}),
     };
   }
 
   async bind(target: string, args: Record<string, unknown>) {
     const command = commandSchema.parse(args);
     return { ...command, workspace: await this.resolve(target) };
+  }
+  targetReady(workspace: AiWorkspace) {
+    try {
+      const terminal = this.terminals.get(workspace.terminalId);
+      return (
+        terminal.state === 'ready' &&
+        terminal.kind === workspace.terminalKind &&
+        terminal.connectionId === workspace.connectionId &&
+        (!workspace.connectionId ||
+          (this.connections.get(workspace.connectionId).state === 'ready' &&
+            (!workspace.sshTarget ||
+              JSON.stringify(this.connections.executionTarget(workspace.connectionId)) ===
+                JSON.stringify(workspace.sshTarget))))
+      );
+    } catch {
+      return false;
+    }
   }
 
   async execute(target: string, args: Record<string, unknown>, signal?: AbortSignal) {
@@ -61,7 +82,8 @@ export class AiWorkspaceService {
       workspace.terminalId !== target ||
       terminal.kind !== workspace.terminalKind ||
       terminal.state !== 'ready' ||
-      terminal.connectionId !== workspace.connectionId
+      terminal.connectionId !== workspace.connectionId ||
+      !this.targetReady(workspace)
     )
       throw new ApplicationError('PRECONDITION_FAILED', 'AI execution target changed', 412);
     const deadline = new AbortController();
@@ -72,9 +94,7 @@ export class AiWorkspaceService {
       boundedSignal.throwIfAborted();
       if (workspace.execution === 'ssh' && workspace.connectionId) {
         const result = await this.connections.exec(workspace.connectionId, {
-          command: workspace.commandDirectory
-            ? `cd -- ${quote(workspace.commandDirectory)} && (\n${command}\n)`
-            : command,
+          command: workspaceExecutionFacts(command, workspace).command,
           maxBytes: 128 * 1024,
           signal: boundedSignal,
         });

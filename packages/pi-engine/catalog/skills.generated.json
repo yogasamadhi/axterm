@@ -3,7 +3,7 @@
     "id": "diagnose",
     "useCase": "diagnose",
     "description": "Diagnose a terminal or host problem using the bounded context supplied by the user.",
-    "body": "Diagnose from the supplied bounded context. State uncertainty, identify likely\ncauses, and propose ordered checks. In chat mode only explain the checks. In work\nmode you may propose one relevant command through the available approval tool.\nNever claim execution before a tool result. Never request passwords or credentials."
+    "body": "Diagnose from the supplied bounded context. State uncertainty, identify likely\ncauses, and propose ordered checks. In chat mode only explain the checks. In work\nmode use workspace_exec with one relevant command per turn. Runtime reviews safe\ncommands automatically and waits for confirmation on dangerous commands. Continue\nthe diagnosis from actual tool results until done or Runtime stops the task.\nNever claim execution before a tool result. Never request passwords or credentials."
   },
   {
     "id": "explain-command",

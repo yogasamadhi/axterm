@@ -2312,13 +2312,15 @@ and specialized requests retain context review. ADR-029 presents only `chat` (de
 `work` modes; explanation, output explanation, command generation and diagnosis are `@`
 skills loaded/validated by the pinned Pi skill loader from bundled `SKILL.md` files.
 Runtime binds mode into preview receipts and run metadata. Chat advertises no command tool
-and rejects direct workspace commands. Work may propose one `workspace_exec` command for
+and rejects direct workspace commands. Work may propose one `workspace_exec` command per model turn for
 ordinary requests or diagnosis; explanation/generation skills remain reply-only in both
-modes. Pi's executor is blocked; the distinct Application tool `workspace.exec`
-uses the existing persisted approval/audit flow. Approval binds terminal, connection, exact
+modes. ADR-030 allows Pi's tool callback to invoke only the Runtime Application Service;
+the distinct Application tool `workspace.exec` uses automatic review for safe commands
+and the existing human approval/audit flow for dangerous commands. Approval binds terminal, connection, exact
 command and directory snapshot. Local subprocess groups and SSH exec streams are bounded,
 cancellable and never write into a foreground CLI. Closed targets fail without fallback.
-Results are redacted and become conversation history; there is no autonomous tool loop.
+Results are redacted and returned to the native Pi loop until its final reply or a Runtime stop.
+No other execution entry gains automatic approval.
 
 按顺序：
 
@@ -2517,10 +2519,10 @@ interface AiToolDefinition<I, O> {
 
 ```text
 read_only
-→ 只有显式 allowlist 才允许自动执行
+→ 显式 allowlist 可自动执行；ADR-030 的助手 workspace.exec 也可通过独立模型审核低风险观察操作
 
 mutating
-→ 默认需要 Approval
+→ 默认需要 Approval；ADR-030 的助手 workspace.exec 可对授权明确、范围有限的可逆修改自动审核批准
 
 destructive
 → 永远 Approval
@@ -2571,6 +2573,17 @@ expiresAt
 ```
 
 参数一旦变化，旧 Approval 无效。
+
+ADR-030 的工作模式命令先由 Runtime 安全底线及独立、无工具的当前模型请求审核。
+严格白名单观察命令直接通过；自动审核不能降低破坏性、提权和高影响操作的人工确认底线。
+真实用户消息是唯一授权来源；助手、工具、文件和摘要不是授权。异常、证据不足、不可可靠解释的
+CMD/SSH 载荷或非法审核输出转人工；产品凭据和目标边界违规直接拒绝。
+审核输入上限估算 8,192 tokens、输出 1,024 tokens，超时为 Provider 超时与 30 秒的较小值，零重试。
+决定还绑定目录快照、Runtime generation、策略版本；自动批准 60 秒且只消费一次，人工批准 10 分钟。
+每任务最多 50 次命令尝试及 30 分钟实际运行时间，等待人工确认时暂停预算；每命令 30 秒、128 KiB，
+返回模型最多 16 KiB（标明截断），可见回复累计 2 MiB，上下文保留完整调用/结果对。
+最多 4 个并行工作任务、每终端一个。拒绝、过期、关闭目标、取消、启动/超时/资源错误终止整个任务；
+普通非零退出码可交回 Pi 诊断。重启后中断任务与批准失效，不自动恢复或重放。
 
 ## 35.2 AiRun State
 
