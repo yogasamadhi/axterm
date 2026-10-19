@@ -22,6 +22,59 @@ const englishMessages = localeById.get('en')!.messages;
 
 const axtermMessages = {
   en: {
+    'hosts.errorNameConflict':
+      'A host with this display name already exists. Use a different name or edit the existing host.',
+    'hosts.errorKey':
+      'The private key, passphrase or certificate is invalid or mismatched. Check them and try again.',
+    'hosts.errorStageCredential': 'Unable to save credentials: {reason}',
+    'hosts.errorStageSave': 'Unable to save the SSH host: {reason}',
+    'hosts.errorStageConnect': 'SSH host saved, but connection failed: {reason}',
+    'hosts.errorStageTerminal': 'SSH is connected, but the terminal could not open: {reason}',
+    'hosts.errorValidation': 'Some settings are invalid. Check the indicated fields and try again.',
+    'hosts.errorFields': 'Check: {fields}.',
+    'hosts.errorConflict':
+      'The configuration changed or conflicts with another item. Review the latest bookmark list and try again.',
+    'hosts.errorNotFound':
+      'A referenced group, profile or credential no longer exists. Select it again and retry.',
+    'hosts.errorRuntime':
+      'The local connection service is unavailable. Wait for it to recover or restart the app.',
+    'hosts.errorRuntimeChanged':
+      'The local service restarted or the session expired. Retry after it reconnects.',
+    'hosts.errorForbidden':
+      'The local service refused this request. Restart the app and try again.',
+    'hosts.errorVault':
+      'The Axterm local Vault is unavailable. Check the app data directory permissions and free disk space, then retry.',
+    'hosts.errorCapability':
+      'A required desktop capability is unavailable. Check Settings → Diagnostics and retry.',
+    'hosts.errorInternal':
+      'The local service encountered an internal error. Use the error code and request ID to locate it in Diagnostics.',
+    'hosts.errorAuthentication':
+      'The server rejected authentication. Check the username, password, private key or SSH Agent identity.',
+    'hosts.errorRefused':
+      'The server refused the connection. Check the port, SSH service and firewall or cloud security group.',
+    'hosts.errorTimeout':
+      'The SSH connection timed out. Check the address, port, network, firewall or cloud security group.',
+    'hosts.errorDns':
+      'The hostname could not be resolved. Check the address and DNS configuration.',
+    'hosts.errorUnreachable':
+      'The target network is unreachable. Check the network, VPN and routing.',
+    'hosts.errorLost':
+      'The SSH connection was interrupted. Check the server and network, then reconnect.',
+    'hosts.errorNegotiation':
+      'The SSH handshake failed. Check the configured key exchange, cipher and host key algorithms.',
+    'hosts.errorSshUnknown':
+      'SSH did not establish a connection; the specific cause is unavailable. Check Diagnostics before retrying.',
+    'hosts.errorHostKey':
+      'The server host key was rejected or changed. Verify the server identity before connecting.',
+    'hosts.errorClosed': 'The connection has closed. Connect again to open a terminal.',
+    'hosts.errorProxyAuth':
+      'The proxy requires valid authentication. Check the proxy username and password.',
+    'hosts.errorProxyTimeout':
+      'The proxy connection timed out. Check the proxy address and network.',
+    'hosts.errorProxyConnect':
+      'The proxy could not connect to the SSH server. Check its address, port and forwarding rules.',
+    'hosts.errorUnknown':
+      'No specific cause was returned. Check Diagnostics and include the error code and request ID when reporting the issue.',
     'ai.reviewTitle': 'Review AI request',
     'ai.reviewHint':
       'Check the actual content before sending. You can go back to edit the prompt, remove attachments or omit conversation history.',
@@ -672,7 +725,7 @@ const axtermMessages = {
     'terminalProfile.deny': 'Deny',
     'terminalProfile.allow': 'Allow',
     'terminalProfile.osc52Hint':
-      'OSC 52 is off and read/write access is denied by default. Enable it only for trusted sessions; payloads and responses have size limits.',
+      'OSC 52 is on with clipboard writes allowed and reads denied by default. Disable writes for untrusted sessions; payloads and responses have size limits.',
     'terminalProfile.cancelEdit': 'Cancel editing',
     'terminalProfile.update': 'Update profile',
     'terminalProfile.save': 'Save terminal profile',
@@ -859,6 +912,12 @@ const axtermMessages = {
     'hosts.proxyCredentialLabel': '{name} SSH proxy',
     'hosts.proxyPasswordRequired':
       'Enter the proxy password. Saved passwords remain only in the Axterm application-local Vault.',
+    'hosts.overwriteTitle': 'Overwrite SSH host?',
+    'hosts.overwriteMessage':
+      'An SSH host named “{name}” already exists. Overwrite it with all settings and credentials from this form?',
+    'hosts.overwriteReferences':
+      'Other bookmarks, jump hosts and tunnels referencing this host will use the new connection settings. Historical snapshots are preserved.',
+    'hosts.overwriteConfirm': 'Overwrite',
     'hosts.sshBookmarkMissing':
       'The corresponding SSH bookmark no longer exists. Refresh and try again.',
     'hosts.treeUnavailable': 'The bookmark tree is not ready yet. Try again shortly.',
@@ -2849,6 +2908,39 @@ const axtermMessages = {
     'terminal.osc52WriteSucceeded': 'Allowed the terminal to write the clipboard through OSC 52.',
   },
   'zh-CN': {
+    'hosts.errorNameConflict': '已存在同名 SSH 主机，请修改显示名称，或编辑已有主机。',
+    'hosts.errorKey': '私钥、私钥口令或证书无效或不匹配，请检查后重试。',
+    'hosts.errorStageCredential': '保存凭据失败：{reason}',
+    'hosts.errorStageSave': '保存 SSH 主机失败：{reason}',
+    'hosts.errorStageConnect': 'SSH 主机已保存，但连接失败：{reason}',
+    'hosts.errorStageTerminal': 'SSH 已连接，但无法打开终端：{reason}',
+    'hosts.errorValidation': '部分配置不符合要求，请检查提示的字段后重试。',
+    'hosts.errorFields': '请检查：{fields}。',
+    'hosts.errorConflict': '配置已发生变化或存在冲突，请核对最新书签列表后重试。',
+    'hosts.errorNotFound': '引用的分组、连接配置或凭据已不存在，请重新选择后重试。',
+    'hosts.errorRuntime': '应用本地连接服务不可用，请等待恢复或重启应用。',
+    'hosts.errorRuntimeChanged': '应用本地服务已重启或会话已过期，请等待重新连接后重试。',
+    'hosts.errorForbidden': '应用本地服务拒绝了请求，请重启应用后重试。',
+    'hosts.errorVault':
+      'Axterm 本地 Vault 不可用，请检查应用数据目录的写入权限和磁盘剩余空间后重试。',
+    'hosts.errorCapability': '所需桌面能力不可用，请在“设置 → 诊断”查看状态后重试。',
+    'hosts.errorInternal': '应用本地服务发生内部错误，请使用错误码和请求编号在诊断中定位问题。',
+    'hosts.errorAuthentication':
+      '服务器拒绝了身份认证，请检查用户名、密码、私钥或 SSH Agent 中的身份。',
+    'hosts.errorRefused':
+      '服务器拒绝连接，请检查端口、SSH 服务是否启动，以及防火墙或云安全组规则。',
+    'hosts.errorTimeout': 'SSH 连接超时，请检查主机地址、端口、网络、防火墙或云安全组规则。',
+    'hosts.errorDns': '无法解析主机名，请检查主机地址和 DNS 配置。',
+    'hosts.errorUnreachable': '无法到达目标网络，请检查网络连接、VPN 和路由。',
+    'hosts.errorLost': 'SSH 连接被中断，请检查服务器和网络后重新连接。',
+    'hosts.errorNegotiation': 'SSH 握手失败，请检查配置的密钥交换、加密和主机密钥算法。',
+    'hosts.errorSshUnknown': 'SSH 未能建立连接，尚未取得具体原因，请查看诊断后重试。',
+    'hosts.errorHostKey': '服务器主机密钥被拒绝或发生变化，请先核实服务器身份再连接。',
+    'hosts.errorClosed': '连接已关闭，请重新连接后打开终端。',
+    'hosts.errorProxyAuth': '代理需要有效的身份认证，请检查代理用户名和密码。',
+    'hosts.errorProxyTimeout': '代理连接超时，请检查代理地址和网络。',
+    'hosts.errorProxyConnect': '代理无法连接 SSH 服务器，请检查代理地址、端口和转发规则。',
+    'hosts.errorUnknown': '未取得具体错误原因，请查看诊断；反馈问题时附上错误码和请求编号。',
     'ai.reviewTitle': '检查 AI 请求',
     'ai.reviewHint': '发送前检查实际内容。可以返回修改问题、移除附件或不包含对话历史。',
     'ai.reviewSources': '上下文来源',
@@ -3461,7 +3553,7 @@ const axtermMessages = {
     'terminalProfile.deny': '拒绝',
     'terminalProfile.allow': '允许',
     'terminalProfile.osc52Hint':
-      'OSC 52 默认关闭且读写均拒绝。只为可信会话按需开启；载荷与响应都受大小限制。',
+      'OSC 52 默认开启，允许写入剪贴板，拒绝读取。不可信会话可关闭写入；载荷与响应都受大小限制。',
     'terminalProfile.cancelEdit': '取消编辑',
     'terminalProfile.update': '更新配置',
     'terminalProfile.save': '保存终端配置',
@@ -3638,6 +3730,11 @@ const axtermMessages = {
     'hosts.proxyUsernameRequired': '填写代理密码时也必须填写代理用户名。',
     'hosts.proxyCredentialLabel': '{name} SSH 代理',
     'hosts.proxyPasswordRequired': '请输入代理密码；保存后密码只存放在 Axterm 应用本地 Vault。',
+    'hosts.overwriteTitle': '是否覆盖同名 SSH 主机？',
+    'hosts.overwriteMessage': '已存在名为“{name}”的 SSH 主机。是否用当前表单的全部配置和凭据覆盖？',
+    'hosts.overwriteReferences':
+      '引用该主机的其他书签、跳板和隧道将使用新的连接配置，历史记录快照会保留。',
+    'hosts.overwriteConfirm': '覆盖',
     'hosts.sshBookmarkMissing': '对应的 SSH 书签不存在，请刷新后重试。',
     'hosts.treeUnavailable': '书签树尚未就绪，请稍后重试。',
     'hosts.operationFailed': '无法完成 SSH 主机操作，请检查连接后重试。',
@@ -5536,6 +5633,59 @@ const axtermMessages = {
     'terminal.osc52WriteSucceeded': '已允许终端通过 OSC 52 写入剪贴板。',
   },
   ja: {
+    'hosts.errorNameConflict':
+      '同じ表示名のホストがすでに存在します。別の名前にするか、既存のホストを編集してください。',
+    'hosts.errorKey':
+      '秘密鍵、パスフレーズ、証明書が無効か一致しません。確認して再試行してください。',
+    'hosts.errorStageCredential': '認証情報を保存できませんでした：{reason}',
+    'hosts.errorStageSave': 'SSH ホストを保存できませんでした：{reason}',
+    'hosts.errorStageConnect': 'SSH ホストは保存されましたが、接続に失敗しました：{reason}',
+    'hosts.errorStageTerminal': 'SSH は接続済みですが、ターミナルを開けませんでした：{reason}',
+    'hosts.errorValidation':
+      '設定に無効な値があります。表示された項目を確認して再試行してください。',
+    'hosts.errorFields': '確認する項目：{fields}。',
+    'hosts.errorConflict':
+      '設定が変更されたか競合しています。最新のブックマーク一覧を確認して再試行してください。',
+    'hosts.errorNotFound':
+      '参照先のグループ、プロファイル、認証情報が見つかりません。選択し直して再試行してください。',
+    'hosts.errorRuntime':
+      'アプリの接続サービスを利用できません。復旧を待つかアプリを再起動してください。',
+    'hosts.errorRuntimeChanged':
+      '接続サービスが再起動したか、セッションの期限が切れました。再接続後に再試行してください。',
+    'hosts.errorForbidden':
+      '接続サービスがリクエストを拒否しました。アプリを再起動して再試行してください。',
+    'hosts.errorVault':
+      'Axterm のローカル Vault を利用できません。アプリのデータフォルダーの書き込み権限と空き容量を確認してください。',
+    'hosts.errorCapability':
+      '必要なデスクトップ機能を利用できません。設定 → 診断で状態を確認してください。',
+    'hosts.errorInternal':
+      '接続サービスで内部エラーが発生しました。エラーコードとリクエスト ID を診断で確認してください。',
+    'hosts.errorAuthentication':
+      'サーバーが認証を拒否しました。ユーザー名、パスワード、秘密鍵、SSH Agent の鍵を確認してください。',
+    'hosts.errorRefused':
+      'サーバーが接続を拒否しました。ポート、SSH サービス、ファイアウォールやクラウドのセキュリティグループを確認してください。',
+    'hosts.errorTimeout':
+      'SSH 接続がタイムアウトしました。アドレス、ポート、ネットワーク、ファイアウォールを確認してください。',
+    'hosts.errorDns': 'ホスト名を解決できません。アドレスと DNS 設定を確認してください。',
+    'hosts.errorUnreachable':
+      '対象のネットワークに到達できません。ネットワーク、VPN、ルーティングを確認してください。',
+    'hosts.errorLost':
+      'SSH 接続が切断されました。サーバーとネットワークを確認して再接続してください。',
+    'hosts.errorNegotiation':
+      'SSH ハンドシェイクに失敗しました。鍵交換、暗号、ホスト鍵のアルゴリズム設定を確認してください。',
+    'hosts.errorSshUnknown':
+      'SSH 接続を確立できませんでした。原因の詳細は取得できません。診断を確認して再試行してください。',
+    'hosts.errorHostKey':
+      'サーバーのホスト鍵が拒否されたか変更されました。接続前にサーバーの身元を確認してください。',
+    'hosts.errorClosed': '接続は終了しています。再接続してターミナルを開いてください。',
+    'hosts.errorProxyAuth':
+      'プロキシの認証が必要です。プロキシのユーザー名とパスワードを確認してください。',
+    'hosts.errorProxyTimeout':
+      'プロキシ接続がタイムアウトしました。アドレスとネットワークを確認してください。',
+    'hosts.errorProxyConnect':
+      'プロキシから SSH サーバーに接続できません。アドレス、ポート、転送ルールを確認してください。',
+    'hosts.errorUnknown':
+      '原因の詳細が返されませんでした。診断を確認し、問題を報告する際はエラーコードとリクエスト ID を添えてください。',
     'ai.reviewTitle': 'AI リクエストを確認',
     'ai.reviewHint':
       '送信する内容を確認してください。戻って質問の編集、添付ファイルの削除、会話履歴の除外ができます。',
@@ -8086,7 +8236,7 @@ const axtermMessages = {
     'terminalProfile.deny': '拒否',
     'terminalProfile.allow': '許可',
     'terminalProfile.osc52Hint':
-      'OSC 52 は既定でオフであり、読み取り/書き込みアクセスは拒否されます。信頼できるセッションでのみ有効にしてください。ペイロードと応答にはサイズ制限があります。',
+      'OSC 52 は既定で有効で、クリップボードへの書き込みを許可し、読み取りを拒否します。信頼できないセッションでは書き込みを無効にしてください。ペイロードと応答にはサイズ制限があります。',
     'terminalProfile.cancelEdit': '編集をキャンセル',
     'terminalProfile.update': 'プロファイルを更新',
     'terminalProfile.save': 'ターミナルプロファイルを保存',
@@ -8239,6 +8389,12 @@ const axtermMessages = {
     'hosts.proxyCredentialLabel': '{name} の SSH プロキシ',
     'hosts.proxyPasswordRequired':
       'プロキシパスワードを入力してください。保存したパスワードは Axterm のアプリケーションローカル Vault にのみ保存されます。',
+    'hosts.overwriteTitle': '同名の SSH ホストを上書きしますか？',
+    'hosts.overwriteMessage':
+      '「{name}」という SSH ホストが既に存在します。このフォームの設定と認証情報ですべて上書きしますか？',
+    'hosts.overwriteReferences':
+      'このホストを参照する他のブックマーク、踏み台、トンネルも新しい接続設定を使用します。接続履歴のスナップショットは保持されます。',
+    'hosts.overwriteConfirm': '上書き',
     'hosts.sshBookmarkMissing':
       '対応する SSH ブックマークはもう存在しません。更新して再試行してください。',
     'hosts.treeUnavailable':
@@ -8419,6 +8575,40 @@ const axtermMessages = {
     'shell.closeWindowFailed': 'ウィンドウを閉じられません。もう一度お試しください。',
   },
   'zh-TW': {
+    'hosts.errorNameConflict': '已存在同名 SSH 主機，請修改顯示名稱，或編輯已有主機。',
+    'hosts.errorKey': '私鑰、私鑰密碼或憑證無效或不相符，請檢查後重試。',
+    'hosts.errorStageCredential': '儲存憑證失敗：{reason}',
+    'hosts.errorStageSave': '儲存 SSH 主機失敗：{reason}',
+    'hosts.errorStageConnect': 'SSH 主機已儲存，但連線失敗：{reason}',
+    'hosts.errorStageTerminal': 'SSH 已連線，但無法開啟終端機：{reason}',
+    'hosts.errorValidation': '部分設定不符合要求，請檢查提示的欄位後重試。',
+    'hosts.errorFields': '請檢查：{fields}。',
+    'hosts.errorConflict': '設定已發生變更或存在衝突，請核對最新書籤清單後重試。',
+    'hosts.errorNotFound': '引用的群組、連線設定檔或憑證已不存在，請重新選擇後重試。',
+    'hosts.errorRuntime': '應用程式本機連線服務無法使用，請等待恢復或重新啟動應用程式。',
+    'hosts.errorRuntimeChanged':
+      '應用程式本機服務已重新啟動或工作階段已過期，請等待重新連線後重試。',
+    'hosts.errorForbidden': '應用程式本機服務拒絕了請求，請重新啟動應用程式後重試。',
+    'hosts.errorVault':
+      'Axterm 本機 Vault 無法使用，請檢查應用程式資料目錄的寫入權限和磁碟剩餘空間後重試。',
+    'hosts.errorCapability': '所需桌面功能無法使用，請在「設定 → 診斷」查看狀態後重試。',
+    'hosts.errorInternal': '應用程式本機服務發生內部錯誤，請使用錯誤碼和請求編號在診斷中定位問題。',
+    'hosts.errorAuthentication':
+      '伺服器拒絕了身分驗證，請檢查使用者名稱、密碼、私鑰或 SSH Agent 中的身分。',
+    'hosts.errorRefused':
+      '伺服器拒絕連線，請檢查連接埠、SSH 服務是否啟動，以及防火牆或雲端安全群組規則。',
+    'hosts.errorTimeout': 'SSH 連線逾時，請檢查主機位址、連接埠、網路、防火牆或雲端安全群組規則。',
+    'hosts.errorDns': '無法解析主機名稱，請檢查主機位址和 DNS 設定。',
+    'hosts.errorUnreachable': '無法到達目標網路，請檢查網路連線、VPN 和路由。',
+    'hosts.errorLost': 'SSH 連線已中斷，請檢查伺服器和網路後重新連線。',
+    'hosts.errorNegotiation': 'SSH 交握失敗，請檢查設定的金鑰交換、加密和主機金鑰演算法。',
+    'hosts.errorSshUnknown': 'SSH 未能建立連線，尚未取得具體原因，請查看診斷後重試。',
+    'hosts.errorHostKey': '伺服器主機金鑰已被拒絕或發生變更，請先核實伺服器身分再連線。',
+    'hosts.errorClosed': '連線已關閉，請重新連線後開啟終端機。',
+    'hosts.errorProxyAuth': 'Proxy 需要有效的身分驗證，請檢查 Proxy 使用者名稱和密碼。',
+    'hosts.errorProxyTimeout': 'Proxy 連線逾時，請檢查 Proxy 位址和網路。',
+    'hosts.errorProxyConnect': 'Proxy 無法連線到 SSH 伺服器，請檢查 Proxy 位址、連接埠和轉送規則。',
+    'hosts.errorUnknown': '未取得具體錯誤原因，請查看診斷；回報問題時附上錯誤碼和請求編號。',
     'ai.reviewTitle': '檢查 AI 請求',
     'ai.reviewHint': '傳送前檢查實際內容。可以返回修改問題、移除附件或不包含對話歷史。',
     'ai.reviewSources': '上下文來源',
@@ -10807,7 +10997,7 @@ const axtermMessages = {
     'terminalProfile.deny': '拒絕',
     'terminalProfile.allow': '允許',
     'terminalProfile.osc52Hint':
-      'OSC 52 預設為關閉，且讀取/寫入存取會被拒絕。僅在信任的工作階段啟用；承載資料和回應均有大小限制。',
+      'OSC 52 預設開啟，允許寫入剪貼簿，拒絕讀取。不信任的工作階段可關閉寫入；承載資料和回應均有大小限制。',
     'terminalProfile.cancelEdit': '取消編輯',
     'terminalProfile.update': '更新設定檔',
     'terminalProfile.save': '儲存終端機設定檔',
@@ -10953,6 +11143,12 @@ const axtermMessages = {
     'hosts.proxyCredentialLabel': '{name} SSH Proxy',
     'hosts.proxyPasswordRequired':
       '請輸入 Proxy 密碼。已儲存的密碼只會保留在 Axterm 的應用程式本機 Vault。',
+    'hosts.overwriteTitle': '是否覆蓋同名 SSH 主機？',
+    'hosts.overwriteMessage':
+      '已存在名為「{name}」的 SSH 主機。是否以目前表單的全部設定和憑證覆蓋？',
+    'hosts.overwriteReferences':
+      '參照此主機的其他書籤、跳板和通道將使用新的連線設定，歷史記錄快照會保留。',
+    'hosts.overwriteConfirm': '覆蓋',
     'hosts.sshBookmarkMissing': '對應的 SSH 書籤已不存在。請重新整理後再試一次。',
     'hosts.treeUnavailable': '書籤樹尚未準備好。請稍後再試。',
     'hosts.operationFailed': '無法完成 SSH 主機操作。請檢查連線後重試。',

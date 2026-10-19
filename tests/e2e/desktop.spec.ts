@@ -10,6 +10,7 @@ import {
 import { createHash, generateKeyPairSync, randomUUID, sign } from 'node:crypto';
 import { once } from 'node:events';
 import { createServer } from 'node:http';
+import { createServer as createTcpServer } from 'node:net';
 import { createRequire } from 'node:module';
 import { mkdir, mkdtemp, readFile, readdir, realpath, rm, writeFile } from 'node:fs/promises';
 import { homedir, tmpdir } from 'node:os';
@@ -17,6 +18,7 @@ import { resolve } from 'node:path';
 import { _electron as electron, expect, test, type Locator, type Page } from '@playwright/test';
 import {
   DEFAULT_TERMINAL_BACKGROUND,
+  createBookmarkSchema,
   connectionProfileInputSchema,
   terminalProfileInputSchema,
   triggerRuleInputSchema,
@@ -66,6 +68,409 @@ const { Client: FtpClient } = runtimeRequire('basic-ftp') as {
 };
 const executablePath = require('electron') as string;
 const sshFixturePort = Number(process.env.AXTERM_SSH_FIXTURE_PORT ?? 0);
+
+for (const deletion of ['manager', 'bookmark'] as const) {
+  test(`deleted SSH hosts can be recreated with the same name after ${deletion} deletion and retain history`, async () => {
+    const userData = await mkdtemp(resolve(tmpdir(), 'axterm-ssh-deletion-'));
+    const path = resolve(userData, 'data-v2/axterm.sqlite');
+    const seed = await ProductDatabase.open(path);
+    let oldHostId: string;
+    let historyId: string;
+    try {
+      const products = new ProductRepository(seed);
+      const host = products.createHost({
+        name: '删除后重建目标',
+        hostname: 'old.example.test',
+        username: 'operator',
+        authType: 'agent',
+      });
+      oldHostId = host.id;
+      const bookmarks = new BookmarkRepository(seed);
+      bookmarks.createBookmark(
+        createBookmarkSchema.parse({ protocol: 'ssh', hostId: host.id, title: host.name }),
+        bookmarks.snapshot().etag,
+      );
+      const history = new ConnectionHistoryRepository(seed);
+      history.record({ host, persistedHostId: host.id });
+      historyId = history.record({ host, persistedHostId: host.id }).id;
+    } finally {
+      seed.close();
+    }
+    const app = await launchLocalOptimizationApp({
+      executablePath,
+      args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+      env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+    });
+    try {
+      const page = await app.firstWindow();
+      await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+      await page.locator('[data-activity-item="bookmarks"]').click();
+      const deleted = page.waitForResponse(
+        (response) =>
+          response.request().method() === 'DELETE' &&
+          new URL(response.url()).pathname.startsWith(
+            deletion === 'manager' ? '/api/v1/ssh-bookmark-hosts/' : '/api/v1/ssh-bookmarks/',
+          ),
+      );
+      if (deletion === 'manager') {
+        await page.locator('.bookmark-explorer-title button').click();
+        const card = page.locator('.host-card').filter({ hasText: '删除后重建目标' });
+        await expect(card).toBeVisible();
+        page.once('dialog', (dialog) => dialog.accept());
+        await card.getByRole('button', { name: '删除', exact: true }).click();
+        expect((await deleted).status()).toBe(200);
+        await expect(card).toHaveCount(0);
+      } else {
+        const row = page.locator('[data-bookmark-title="删除后重建目标"]');
+        await row.click({ button: 'right' });
+        page.once('dialog', (dialog) => dialog.accept());
+        await page
+          .getByRole('menu', { name: '书签操作' })
+          .getByRole('menuitem', { name: '删除', exact: true })
+          .click();
+        expect((await deleted).status()).toBe(200);
+        await expect(row).toHaveCount(0);
+      }
+      await openNewBookmark(page);
+      const form = page.locator('.host-bookmark-modal form');
+      await form.locator('[name="name"]').fill('删除后重建目标');
+      await form.locator('[name="hostname"]').fill('new.example.test');
+      await form.locator('[name="username"]').fill('operator');
+      await form.locator('button[value="save"]').click();
+      await expect(page.locator('.host-bookmark-modal')).toBeHidden();
+      const database = await ProductDatabase.open(path);
+      try {
+        const hosts = new ProductRepository(database).listHosts();
+        expect(hosts).toHaveLength(1);
+        expect(hosts[0]).toMatchObject({ name: '删除后重建目标', hostname: 'new.example.test' });
+        expect(hosts[0]!.id).not.toBe(oldHostId);
+        expect(new BookmarkRepository(database).snapshot().bookmarks).toHaveLength(1);
+        expect(new ConnectionHistoryRepository(database).get(historyId)).toMatchObject({
+          hostId: null,
+          hostname: 'old.example.test',
+          count: 2,
+          version: 3,
+        });
+      } finally {
+        database.close();
+      }
+    } finally {
+      await app.close();
+      await rm(userData, { recursive: true, force: true });
+    }
+  });
+}
+
+for (const action of ['save', 'save-and-new'] as const) {
+  test(`SSH confirmed overwrite replaces ${action === 'save' ? 'a retained Host without a Bookmark' : 'an existing Bookmark'} and continues ${action}`, async () => {
+    const userData = await mkdtemp(resolve(tmpdir(), 'axterm-ssh-overwrite-'));
+    const databasePath = resolve(userData, 'data-v2/axterm.sqlite');
+    const seed = await ProductDatabase.open(databasePath);
+    const repository = new ProductRepository(seed);
+    const old = repository.createHost({
+      name: 'Overwrite cloud',
+      hostname: 'old.example.test',
+      port: 2222,
+      username: 'old-user',
+      favorite: true,
+      credentialRef: 'cred_shared_overwrite_fixture',
+      startup: { directory: '/old-directory', environment: { OLD: 'value' } },
+    });
+    const shared = repository.createHost({
+      name: 'Shared credential host',
+      hostname: 'shared.example.test',
+      username: 'shared',
+      credentialRef: old.credentialRef,
+    });
+    let bookmarkId: string | undefined;
+    if (action === 'save-and-new') {
+      const tree = new BookmarkRepository(seed).createBookmark(
+        createBookmarkSchema.parse({
+          protocol: 'ssh',
+          hostId: old.id,
+          title: old.name,
+          description: 'Old description',
+        }),
+        '"bookmark-tree-v1"',
+      );
+      bookmarkId = tree.bookmarks[0]!.id;
+    }
+    seed.close();
+    const app = await launchLocalOptimizationApp({
+      executablePath,
+      args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+      env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+    });
+    try {
+      const page = await app.firstWindow();
+      await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+      const deletedRefs: string[] = [];
+      let connectionRequests = 0;
+      page.on('request', (request) => {
+        const path = new URL(request.url()).pathname;
+        if (path.startsWith('/api/v1/credentials/') && request.method() === 'DELETE')
+          deletedRefs.push(path);
+        if (path === '/api/v1/connections' && request.method() === 'POST') connectionRequests++;
+      });
+      await openNewBookmark(page);
+      const form = page.locator('.host-bookmark-modal form');
+      await form.locator('input[name="name"]').fill(` ${old.name} `);
+      await form.locator('input[name="hostname"]').fill('new.example.test');
+      await form.locator('input[name="username"]').fill('new-user');
+      await form.locator('input[name="port"]').fill('2200');
+      await form.locator(`button[value="${action}"]`).click();
+      const confirmation = page.getByRole('dialog', { name: '是否覆盖同名 SSH 主机？' });
+      await expect(confirmation).toContainText('引用该主机的其他书签');
+      await expect(confirmation.getByRole('button', { name: '取消', exact: true })).toBeFocused();
+      if (action === 'save')
+        await page.screenshot({ path: test.info().outputPath('ssh-overwrite-confirmation.png') });
+      await confirmation.getByRole('button', { name: '覆盖', exact: true }).click();
+      await expect(confirmation).toBeHidden();
+      if (action === 'save') await expect(page.locator('.host-bookmark-modal')).toBeHidden();
+      else {
+        await expect(form).toBeVisible();
+        await expect(form.locator('input[name="name"]')).toHaveValue('');
+        await expect(form.locator('input[name="hostname"]')).toHaveValue('');
+      }
+      const database = await ProductDatabase.open(databasePath);
+      try {
+        const saved = new ProductRepository(database);
+        expect(saved.getHost(old.id)).toMatchObject({
+          name: old.name,
+          hostname: 'new.example.test',
+          port: 2200,
+          username: 'new-user',
+          version: old.version + 1,
+          favorite: false,
+          credentialRef: null,
+          startup: { directory: null, environment: {}, loginScripts: [], runScripts: [] },
+        });
+        expect(saved.getHost(shared.id).credentialRef).toBe(old.credentialRef);
+        expect(saved.listHosts()).toHaveLength(2);
+        const entries = new BookmarkRepository(database).snapshot().bookmarks;
+        expect(entries).toHaveLength(1);
+        expect(entries[0]).toMatchObject({ hostId: old.id, title: old.name, description: '' });
+        if (bookmarkId) expect(entries[0]!.id).toBe(bookmarkId);
+      } finally {
+        database.close();
+      }
+      expect(connectionRequests).toBe(0);
+      expect(deletedRefs).toEqual([]);
+    } finally {
+      await app.close();
+      await rm(userData, { recursive: true, force: true });
+    }
+  });
+}
+
+test('SSH same-name confirmation cancels cleanly and overwrite continues save-and-connect', async () => {
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-ssh-errors-'));
+  const portProbe = createTcpServer();
+  portProbe.listen(0, '127.0.0.1');
+  await once(portProbe, 'listening');
+  const address = portProbe.address();
+  if (!address || typeof address === 'string') throw new Error('Port fixture unavailable');
+  await new Promise<void>((resolve, reject) =>
+    portProbe.close((error) => (error ? reject(error) : resolve())),
+  );
+  const app = await launchLocalOptimizationApp({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    let connectionRequests = 0;
+    let credentialsCreated = 0;
+    let credentialsDeleted = 0;
+    page.on('request', (request) => {
+      const path = new URL(request.url()).pathname;
+      if (path === '/api/v1/connections' && request.method() === 'POST') connectionRequests++;
+      if (path === '/api/v1/credentials' && request.method() === 'POST') credentialsCreated++;
+      if (path.startsWith('/api/v1/credentials/') && request.method() === 'DELETE')
+        credentialsDeleted++;
+    });
+    const fillHost = async () => {
+      await openNewBookmark(page);
+      const form = page.locator('.host-bookmark-modal form');
+      await form.locator('input[name="name"]').fill('Cloud error fixture');
+      await form.locator('input[name="hostname"]').fill('127.0.0.1');
+      await form.locator('input[name="username"]').fill('operator');
+      await form.locator('input[name="port"]').fill(String(address.port));
+      await form
+        .locator('textarea[name="password"], input[name="password"]')
+        .fill('ssh-error-fixture-secret');
+      await form.locator('input[name="save"]').check();
+      return form;
+    };
+    const first = await fillHost();
+    await first.locator('button[value="save"]').click();
+    await expect(page.locator('.host-bookmark-modal')).toBeHidden();
+    const duplicate = await fillHost();
+    await duplicate.locator('button[value="save-and-connect"]').click();
+    const confirmation = page.getByRole('dialog', { name: '是否覆盖同名 SSH 主机？' });
+    await expect(confirmation).toContainText('Cloud error fixture');
+    await expect(confirmation).toContainText('全部配置和凭据覆盖');
+    await expect(confirmation).not.toContainText('ssh-error-fixture-secret');
+    expect(connectionRequests).toBe(0);
+    expect(credentialsCreated).toBe(1);
+    expect(credentialsDeleted).toBe(0);
+    await confirmation.getByRole('button', { name: '取消', exact: true }).click();
+    await expect(duplicate.locator('input[name="name"]')).toHaveValue('Cloud error fixture');
+    await expect(
+      duplicate.locator('textarea[name="password"], input[name="password"]'),
+    ).toHaveValue('ssh-error-fixture-secret');
+    await duplicate.locator('button[value="save-and-connect"]').click();
+    await expect(confirmation).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(confirmation).toBeHidden();
+    await expect(duplicate).toBeVisible();
+    expect(credentialsCreated).toBe(1);
+    await duplicate.locator('button[value="save-and-connect"]').click();
+    await expect(confirmation).toBeVisible();
+    await confirmation.getByRole('button', { name: '覆盖', exact: true }).click();
+    await expect(page.locator('.host-bookmark-modal')).toBeHidden();
+    const failure = page.getByRole('alert');
+    await expect(failure).toContainText('SSH 主机已保存，但连接失败');
+    await expect(failure).toContainText('服务器拒绝连接');
+    await expect(failure).toContainText('SSH_CONNECTION_REFUSED');
+    await expect(failure).not.toContainText('ssh-error-fixture-secret');
+    expect(connectionRequests).toBe(1);
+    expect(credentialsCreated).toBe(2);
+    expect(credentialsDeleted).toBe(1);
+    const database = await ProductDatabase.open(resolve(userData, 'data-v2/axterm.sqlite'));
+    try {
+      expect(database.get<{ count: number }>('SELECT count(*) AS count FROM hosts')?.count).toBe(1);
+      expect(
+        database.get<{ count: number }>('SELECT count(*) AS count FROM bookmarks')?.count,
+      ).toBe(1);
+    } finally {
+      database.close();
+    }
+  } finally {
+    await app.close();
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
+for (const race of ['duplicate-after-preflight', 'modified-after-confirmation'] as const) {
+  test(`SSH overwrite handles ${race} without an unconfirmed replacement`, async () => {
+    const userData = await mkdtemp(resolve(tmpdir(), 'axterm-ssh-overwrite-race-'));
+    const databasePath = resolve(userData, 'data-v2/axterm.sqlite');
+    const seed = await ProductDatabase.open(databasePath);
+    const name = 'Concurrent cloud';
+    const old =
+      race === 'modified-after-confirmation'
+        ? new ProductRepository(seed).createHost({ name, hostname: 'old.test', username: 'old' })
+        : undefined;
+    seed.close();
+    const app = await launchLocalOptimizationApp({
+      executablePath,
+      args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+      env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+    });
+    try {
+      const page = await app.firstWindow();
+      await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+      let credentialCreates = 0;
+      let credentialDeletes = 0;
+      let overwriteRequests = 0;
+      page.on('request', (request) => {
+        const path = new URL(request.url()).pathname;
+        if (path === '/api/v1/credentials' && request.method() === 'POST') credentialCreates++;
+        if (path.startsWith('/api/v1/credentials/') && request.method() === 'DELETE')
+          credentialDeletes++;
+        if (
+          path === '/api/v1/ssh-bookmarks' &&
+          request.method() === 'POST' &&
+          request.postDataJSON().overwrite
+        )
+          overwriteRequests++;
+      });
+      let injected = false;
+      if (race === 'duplicate-after-preflight') {
+        await page.route('**/api/v1/ssh-bookmarks', async (route) => {
+          if (route.request().method() === 'POST' && !injected) {
+            injected = true;
+            const database = await ProductDatabase.open(databasePath);
+            try {
+              new ProductRepository(database).createHost({
+                name,
+                hostname: 'concurrent.test',
+                username: 'concurrent',
+              });
+            } finally {
+              database.close();
+            }
+          }
+          await route.continue();
+        });
+      }
+      await openNewBookmark(page);
+      const form = page.locator('.host-bookmark-modal form');
+      await form.locator('input[name="name"]').fill(name);
+      await form.locator('input[name="hostname"]').fill('new.test');
+      await form.locator('input[name="username"]').fill('new');
+      await form
+        .locator('textarea[name="password"], input[name="password"]')
+        .fill('race-fixture-secret');
+      await form.locator('input[name="save"]').check();
+      await form.locator('button[value="save"]').click();
+      const confirmation = page.getByRole('dialog', { name: '是否覆盖同名 SSH 主机？' });
+      await expect(confirmation).toBeVisible();
+      expect(overwriteRequests).toBe(0);
+      if (old) {
+        const database = await ProductDatabase.open(databasePath);
+        try {
+          new ProductRepository(database).updateHost(
+            old.id,
+            { hostname: 'concurrent.test' },
+            `"v${old.version}"`,
+          );
+        } finally {
+          database.close();
+        }
+        await confirmation.getByRole('button', { name: '覆盖', exact: true }).click();
+        await expect(form.getByRole('alert')).toContainText('PRECONDITION_FAILED');
+        await expect(form.locator('input[name="hostname"]')).toHaveValue('new.test');
+        expect(overwriteRequests).toBe(1);
+        const verify = await ProductDatabase.open(databasePath);
+        try {
+          expect(new ProductRepository(verify).getHost(old.id).hostname).toBe('concurrent.test');
+          expect(new BookmarkRepository(verify).snapshot().bookmarks).toEqual([]);
+        } finally {
+          verify.close();
+        }
+        await form.locator('button[value="save"]').click();
+        await expect(confirmation).toBeVisible();
+        expect(overwriteRequests).toBe(1);
+      }
+      await confirmation.getByRole('button', { name: '覆盖', exact: true }).click();
+      await expect(page.locator('.host-bookmark-modal')).toBeHidden();
+      const database = await ProductDatabase.open(databasePath);
+      try {
+        const hosts = new ProductRepository(database).listHosts();
+        expect(hosts).toHaveLength(1);
+        expect(hosts[0]).toMatchObject({
+          name,
+          hostname: 'new.test',
+          username: 'new',
+          version: old ? 3 : 2,
+        });
+        expect(new BookmarkRepository(database).snapshot().bookmarks).toHaveLength(1);
+      } finally {
+        database.close();
+      }
+      expect(credentialCreates).toBe(2);
+      expect(credentialDeletes).toBe(1);
+      expect(overwriteRequests).toBe(old ? 2 : 1);
+    } finally {
+      await app.close();
+      await rm(userData, { recursive: true, force: true });
+    }
+  });
+}
 
 test('refreshing an opening workspace cancels navigation without a startup error', async () => {
   const userData = await mkdtemp(resolve(tmpdir(), 'axterm-workspace-refresh-'));
@@ -11171,10 +11576,110 @@ test('terminal search controls and context menu operate on a real Electron PTY',
   }
 });
 
+test('OSC 52 defaults copy terminal text, deny reads and retain profile write restrictions', async () => {
+  test.skip(process.platform === 'win32', 'This assertion uses a POSIX shell fixture.');
+  const userData = await mkdtemp(resolve(tmpdir(), 'axterm-osc52-defaults-'));
+  const app = await launchLocalOptimizationApp({
+    executablePath,
+    args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
+    env: { ...process.env, ELECTRON_RENDERER_URL: '' },
+  });
+  try {
+    const page = await app.firstWindow();
+    const pageErrors: string[] = [];
+    page.on('pageerror', (error) => pageErrors.push(error.message));
+    await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
+    await page.locator('.tab-add-menu:visible').first().click();
+    await page
+      .locator('.session-menu')
+      .getByRole('button', { name: /本地终端/ })
+      .click();
+    let layer = page.locator('.terminal-session-layer:not([hidden])');
+    const terminalHost = layer.locator('.terminal-host');
+    await expect(terminalHost).toHaveAttribute('data-connection-state', 'connected');
+    await expect(terminalHost).toHaveAttribute('data-osc52-enabled', 'true');
+    await expect(terminalHost).toHaveAttribute('data-osc52-write-policy', 'allow');
+    await expect(terminalHost).toHaveAttribute('data-osc52-read-policy', 'deny');
+    await page.evaluate(() => {
+      document.documentElement.dataset.osc52Reads = '0';
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: {
+          writeText: async (text: string) => {
+            document.documentElement.dataset.osc52Write = text;
+          },
+          readText: async () => {
+            document.documentElement.dataset.osc52Reads = String(
+              Number(document.documentElement.dataset.osc52Reads) + 1,
+            );
+            return 'private clipboard';
+          },
+        },
+      });
+    });
+    const copiedText = 'Pi 复制 OSC 52 ✓';
+    const copyCommand = `printf '\\033]52;c;${Buffer.from(copiedText).toString('base64')}\\007'`;
+    let input = layer.locator('.xterm-helper-textarea');
+    await input.pressSequentially(copyCommand);
+    await input.press('Enter');
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.dataset.osc52Write))
+      .toBe(copiedText);
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText(
+      '已允许终端通过 OSC 52 写入剪贴板。',
+    );
+    await input.pressSequentially("printf '\\033]52;c;?\\007'");
+    await input.press('Enter');
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText(
+      '当前终端配置禁止 OSC 52 读取剪贴板。',
+    );
+    expect(await page.evaluate(() => document.documentElement.dataset.osc52Reads)).toBe('0');
+
+    await page.locator('[data-activity-item="setting"]').click();
+    await page.locator('[data-settings-category="terminal"]').click();
+    const profileForm = page
+      .locator('form')
+      .filter({ has: page.getByRole('heading', { name: '终端配置' }) });
+    await expect(profileForm.getByLabel('启用 OSC 52 剪贴板协议')).toBeChecked();
+    await expect(profileForm.getByLabel('OSC 52 写入本地剪贴板')).toHaveValue('allow');
+    await expect(profileForm.getByLabel('OSC 52 读取本地剪贴板')).toHaveValue('deny');
+    await profileForm.getByLabel('名称').fill('Restricted OSC 52');
+    await profileForm.getByLabel('OSC 52 写入本地剪贴板').selectOption('deny');
+    await profileForm.getByRole('button', { name: '保存终端配置' }).click();
+    await expect(
+      page.locator('.list-row strong').getByText('Restricted OSC 52', { exact: true }),
+    ).toBeVisible();
+    await page.getByRole('button', { name: '关闭设置并返回工作区' }).click();
+    await page.locator('.tab-add-menu:visible').first().click();
+    const sessionMenu = page.locator('.session-menu');
+    await sessionMenu.getByLabel('终端配置').selectOption({ label: 'Restricted OSC 52' });
+    await sessionMenu.getByRole('button', { name: /本地终端/ }).click();
+    layer = page.locator('.terminal-session-layer:not([hidden])');
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-connection-state',
+      'connected',
+    );
+    await expect(layer.locator('.terminal-host')).toHaveAttribute(
+      'data-osc52-write-policy',
+      'deny',
+    );
+    input = layer.locator('.xterm-helper-textarea');
+    await input.pressSequentially(copyCommand);
+    await input.press('Enter');
+    await expect(layer.locator('.terminal-action-feedback')).toHaveText(
+      '当前终端配置禁止 OSC 52 写入剪贴板。',
+    );
+    expect(pageErrors).toEqual([]);
+  } finally {
+    await app.close();
+    await rm(userData, { recursive: true, force: true });
+  }
+});
+
 test('paste protection and policy-gated OSC 52 operate on a real Electron PTY', async () => {
   test.skip(process.platform === 'win32', 'This assertion uses a POSIX shell fixture.');
   const userData = await mkdtemp(resolve(tmpdir(), 'axterm-terminal-clipboard-e2e-'));
-  const app = await electron.launch({
+  const app = await launchLocalOptimizationApp({
     executablePath,
     args: [resolve('apps/desktop'), `--user-data-dir=${userData}`],
     env: { ...process.env, ELECTRON_RENDERER_URL: '' },
@@ -11201,7 +11706,7 @@ test('paste protection and policy-gated OSC 52 operate on a real Electron PTY', 
     ).toBeVisible();
 
     await page.getByRole('button', { name: '关闭设置并返回工作区' }).click();
-    await page.getByTitle('新建会话菜单', { exact: true }).click();
+    await page.locator('.tab-add-menu:visible').first().click();
     const sessionMenu = page.locator('.session-menu');
     await sessionMenu.getByLabel('终端配置').selectOption({ label: 'Clipboard policy' });
     await sessionMenu.getByRole('button', { name: /本地终端/ }).click();

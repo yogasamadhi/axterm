@@ -369,16 +369,52 @@ function problem(
   status: 400 | 401 | 403 | 404 | 409 | 412 | 413 | 428 | 429 | 500 | 503,
   code: string,
   title: string,
+  fieldErrors?: Record<string, string[]>,
 ) {
-  return c.json({ type: 'about:blank', title, status, code, traceId: c.get('traceId') }, status, {
-    'Content-Type': 'application/problem+json',
-  });
+  return c.json(
+    {
+      type: 'about:blank',
+      title,
+      status,
+      code,
+      traceId: c.get('traceId'),
+      ...(fieldErrors ? { fieldErrors } : {}),
+    },
+    status,
+    {
+      'Content-Type': 'application/problem+json',
+    },
+  );
 }
 
 export function createRuntimeApp(options: AppOptions) {
   const app = new OpenAPIHono<Env>({
     defaultHook: (result, c) => {
-      if (!result.success) return problem(c, 400, 'VALIDATION_ERROR', 'Invalid request');
+      if (!result.success) {
+        const fieldErrors: Record<string, string[]> = {};
+        if (/^\/api\/v1\/ssh-bookmarks(?:\/[^/]+)?$/u.test(c.req.path)) {
+          for (const issue of result.error.issues.slice(0, 32)) {
+            const [section, field] = issue.path;
+            // Static schema keys only: exclude unknown keys, dynamic environment
+            // names, validation input and vendor exception messages.
+            const shape =
+              section === 'host'
+                ? createSshBookmarkSchema.shape.host.shape
+                : section === 'bookmark'
+                  ? createSshBookmarkSchema.shape.bookmark.shape
+                  : undefined;
+            if (shape && typeof field === 'string' && Object.hasOwn(shape, field))
+              fieldErrors[`${String(section)}.${field}`] = ['Invalid value'];
+          }
+        }
+        return problem(
+          c,
+          400,
+          'VALIDATION_ERROR',
+          'Invalid request',
+          Object.keys(fieldErrors).length ? fieldErrors : undefined,
+        );
+      }
     },
   });
   app.openAPIRegistry.registerComponent('securitySchemes', 'bearerAuth', {
@@ -5905,7 +5941,7 @@ function registerBookmarkRoutes(
       responses: {
         201: {
           description:
-            'Atomically created SSH Host and Bookmark; ETag identifies the returned tree',
+            'Atomically created SSH Host and Bookmark, or replaced an explicitly confirmed same-name Host after checking its version and the tree ETag; ETag identifies the returned tree',
           content: { 'application/json': { schema: sshBookmarkMutationResultSchema } },
         },
         ...errors,
@@ -5963,7 +5999,7 @@ function registerBookmarkRoutes(
       responses: {
         200: {
           description:
-            'Deleted one SSH Bookmark and deleted its Host only when no Bookmark, jump chain, history or tunnel still references it',
+            'Deleted one SSH Bookmark; deleted an otherwise unreferenced Host and detached primary history links while preserving historical snapshots',
           content: { 'application/json': { schema: deleteSshBookmarkEntryResultSchema } },
         },
         ...errors,

@@ -5361,6 +5361,11 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
+                    overwrite?: {
+                        /** Format: uuid */
+                        hostId: string;
+                        hostVersion: number;
+                    };
                     host: {
                         name: string;
                         hostname: string;
@@ -5610,7 +5615,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Atomically created SSH Host and Bookmark; ETag identifies the returned tree */
+            /** @description Atomically created SSH Host and Bookmark, or replaced an explicitly confirmed same-name Host after checking its version and the tree ETag; ETag identifies the returned tree */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -6703,7 +6708,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Deleted one SSH Bookmark and deleted its Host only when no Bookmark, jump chain, history or tunnel still references it */
+            /** @description Deleted one SSH Bookmark; deleted an otherwise unreferenced Host and detached primary history links while preserving historical snapshots */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -38521,9 +38526,9 @@ export interface operations {
                          *       "displayRaw": false,
                          *       "logTimestamps": false,
                          *       "pasteProtection": true,
-                         *       "osc52Enabled": false,
+                         *       "osc52Enabled": true,
                          *       "osc52ReadPolicy": "deny",
-                         *       "osc52WritePolicy": "deny"
+                         *       "osc52WritePolicy": "allow"
                          *     }
                          */
                         behavior: {
@@ -38911,9 +38916,9 @@ export interface operations {
                          *       "displayRaw": false,
                          *       "logTimestamps": false,
                          *       "pasteProtection": true,
-                         *       "osc52Enabled": false,
+                         *       "osc52Enabled": true,
                          *       "osc52ReadPolicy": "deny",
-                         *       "osc52WritePolicy": "deny"
+                         *       "osc52WritePolicy": "allow"
                          *     }
                          */
                         behavior: {
@@ -39273,9 +39278,9 @@ export interface operations {
                          *       "displayRaw": false,
                          *       "logTimestamps": false,
                          *       "pasteProtection": true,
-                         *       "osc52Enabled": false,
+                         *       "osc52Enabled": true,
                          *       "osc52ReadPolicy": "deny",
-                         *       "osc52WritePolicy": "deny"
+                         *       "osc52WritePolicy": "allow"
                          *     }
                          */
                         behavior: {
@@ -75601,7 +75606,7 @@ export interface operations {
                         logTimestamps: boolean;
                         /** @default true */
                         pasteProtection: boolean;
-                        /** @default false */
+                        /** @default true */
                         osc52Enabled: boolean;
                         /**
                          * @default deny
@@ -75609,7 +75614,7 @@ export interface operations {
                          */
                         osc52ReadPolicy: "deny" | "allow";
                         /**
-                         * @default deny
+                         * @default allow
                          * @enum {string}
                          */
                         osc52WritePolicy: "deny" | "allow";
@@ -75925,7 +75930,7 @@ export interface operations {
                     logTimestamps?: boolean;
                     /** @default true */
                     pasteProtection?: boolean;
-                    /** @default false */
+                    /** @default true */
                     osc52Enabled?: boolean;
                     /**
                      * @default deny
@@ -75933,7 +75938,7 @@ export interface operations {
                      */
                     osc52ReadPolicy?: "deny" | "allow";
                     /**
-                     * @default deny
+                     * @default allow
                      * @enum {string}
                      */
                     osc52WritePolicy?: "deny" | "allow";
@@ -76019,7 +76024,7 @@ export interface operations {
                         logTimestamps: boolean;
                         /** @default true */
                         pasteProtection: boolean;
-                        /** @default false */
+                        /** @default true */
                         osc52Enabled: boolean;
                         /**
                          * @default deny
@@ -76027,7 +76032,7 @@ export interface operations {
                          */
                         osc52ReadPolicy: "deny" | "allow";
                         /**
-                         * @default deny
+                         * @default allow
                          * @enum {string}
                          */
                         osc52WritePolicy: "deny" | "allow";
@@ -76649,7 +76654,7 @@ export interface operations {
                         logTimestamps: boolean;
                         /** @default true */
                         pasteProtection: boolean;
-                        /** @default false */
+                        /** @default true */
                         osc52Enabled: boolean;
                         /**
                          * @default deny
@@ -76657,7 +76662,7 @@ export interface operations {
                          */
                         osc52ReadPolicy: "deny" | "allow";
                         /**
-                         * @default deny
+                         * @default allow
                          * @enum {string}
                          */
                         osc52WritePolicy: "deny" | "allow";

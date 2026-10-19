@@ -485,6 +485,10 @@ export const updateBookmarkSchema = z
 // Host input so the legacy host_groups table cannot become a second tree writer.
 export const createSshBookmarkSchema = z
   .object({
+    overwrite: z
+      .object({ hostId: idSchema, hostVersion: z.number().int().min(1) })
+      .strict()
+      .optional(),
     host: createHostSchema.omit({ groupId: true }).strict(),
     bookmark: z
       .object({

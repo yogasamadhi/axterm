@@ -279,7 +279,12 @@ test('adding SSH opens only its dialog, keeps the current sidebar, and supports 
     await expect(page.locator('.settings-workspace')).toBeVisible();
     await expect(sidebar).toHaveClass(/section-settings/);
     await page.keyboard.press('Escape');
-    await page.getByRole('button', { name: '关闭设置并返回工作区' }).click();
+    // Return focus explicitly from the dialog trigger's tooltip to the close control.
+    const closeSettings = page.getByRole('button', { name: '关闭设置并返回工作区' });
+    await page.mouse.move(100, 100);
+    await closeSettings.focus();
+    await expect(page.getByRole('tooltip')).toHaveCount(0);
+    await closeSettings.press('Enter');
     if (await sidebar.isVisible()) await sidebar.locator('.explorer-header button').click();
 
     await page.route('**/api/v1/ssh-bookmarks', async (route) => {
@@ -290,6 +295,8 @@ test('adding SSH opens only its dialog, keeps the current sidebar, and supports 
           body: JSON.stringify({
             type: 'about:blank',
             title: 'Fixture failure',
+            code: 'RUNTIME_UNAVAILABLE',
+            traceId: '6d50c8f1-78c3-4f38-8b5e-f0ca291f488c',
             status: 503,
             detail: 'DIALOG_SAVE_FAILURE_CANARY',
           }),
@@ -301,7 +308,9 @@ test('adding SSH opens only its dialog, keeps the current sidebar, and supports 
     await editor.locator('[name="hostname"]').fill('dialog.example.test');
     await editor.locator('[name="username"]').fill('operator');
     await editor.getByRole('button', { name: '保存', exact: true }).click();
-    await expect(editor.getByRole('alert')).toHaveText('无法完成 SSH 主机操作，请检查连接后重试。');
+    await expect(editor.getByRole('alert')).toHaveText(
+      '保存 SSH 主机失败：应用本地连接服务不可用，请等待恢复或重启应用。 (RUNTIME_UNAVAILABLE / 6d50c8f1-78c3-4f38-8b5e-f0ca291f488c)',
+    );
     await expect(editor.locator('[name="name"]')).toHaveValue('失败草稿');
     await expect(sidebar).toBeHidden();
     await expect(page.getByText('DIALOG_SAVE_FAILURE_CANARY')).toHaveCount(0);
@@ -317,6 +326,8 @@ test('adding SSH opens only its dialog, keeps the current sidebar, and supports 
           body: JSON.stringify({
             type: 'about:blank',
             title: 'Fixture failure',
+            code: 'RUNTIME_UNAVAILABLE',
+            traceId: '6d50c8f1-78c3-4f38-8b5e-f0ca291f488c',
             status: 503,
             detail: 'DIALOG_FAILURE_CANARY',
           }),
@@ -330,7 +341,7 @@ test('adding SSH opens only its dialog, keeps the current sidebar, and supports 
     await editor.getByRole('button', { name: '保存并连接', exact: true }).click();
     const failure = page.getByRole('dialog', { name: '主机与连接' });
     await expect(failure.getByRole('alert')).toHaveText(
-      '无法完成 SSH 主机操作，请检查连接后重试。',
+      'SSH 主机已保存，但连接失败：应用本地连接服务不可用，请等待恢复或重启应用。 (RUNTIME_UNAVAILABLE / 6d50c8f1-78c3-4f38-8b5e-f0ca291f488c)',
     );
     await expect(sidebar).toBeHidden();
     await expect(page.getByText('DIALOG_FAILURE_CANARY')).toHaveCount(0);

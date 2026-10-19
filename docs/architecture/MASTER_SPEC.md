@@ -2765,6 +2765,11 @@ Desktop Host 可以保存并恢复经显示器工作区校正的 bounds；恢复
 - Renderer 无 Electron import；
 - Renderer 不保存 Secret。
 
+依据 [ADR-033](../adr/ADR-033-default-osc52-clipboard-writes.md)，默认终端启用 OSC 52，
+允许远端程序写入本机剪贴板，默认拒绝读取。终端配置仍可分别关闭协议、拒绝写入或显式
+允许读取；已保存的明确权限和既有会话快照不被覆盖。只接受目标 `c`、严格 Base64/UTF-8、
+有界载荷/响应和限时操作，继续使用受信任顶层文档的 Browser Clipboard API。
+
 ---
 
 # 39. Local Runtime Security

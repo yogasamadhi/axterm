@@ -95,7 +95,7 @@ describe('desktop localization', () => {
       '/bin/zsh · xterm-256color · 14px / 1.2 · utf-8 · 生の出力 オン · 貼り付け保護 オン · OSC 52 オフ',
     );
     expect(translateAxterm('zh-TW', 'terminalProfile.osc52Hint')).toContain(
-      '僅在信任的工作階段啟用',
+      '預設開啟，允許寫入剪貼簿，拒絕讀取',
     );
     expect(translateAxterm('ja', 'hosts.vncSummary', { quality: 'high', compression: 'low' })).toBe(
       'VNC · 品質 high · 圧縮 low',

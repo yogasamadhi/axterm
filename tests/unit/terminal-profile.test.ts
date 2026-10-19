@@ -10,6 +10,26 @@ import {
 } from '../../packages/contracts/src';
 
 describe('terminal profile contract', () => {
+  it('defaults to OSC 52 writes while preserving explicit clipboard restrictions', () => {
+    expect(terminalProfileInputSchema.parse({ name: 'Default clipboard' })).toMatchObject({
+      osc52Enabled: true,
+      osc52ReadPolicy: 'deny',
+      osc52WritePolicy: 'allow',
+    });
+    expect(
+      terminalProfileInputSchema.parse({
+        name: 'Restricted clipboard',
+        osc52Enabled: false,
+        osc52ReadPolicy: 'deny',
+        osc52WritePolicy: 'deny',
+      }),
+    ).toMatchObject({
+      osc52Enabled: false,
+      osc52ReadPolicy: 'deny',
+      osc52WritePolicy: 'deny',
+    });
+  });
+
   it('normalizes legacy create input to explicit process and appearance defaults', () => {
     expect(terminalProfileInputSchema.parse({ name: 'Default' })).toEqual({
       name: 'Default',
@@ -66,6 +86,7 @@ describe('terminal profile contract', () => {
       pasteProtection: false,
       osc52Enabled: true,
       osc52ReadPolicy: 'allow',
+      osc52WritePolicy: 'deny',
     });
 
     expect(() => terminalProfileInputSchema.parse({ name: 'negative', scrollback: -1 })).toThrow();

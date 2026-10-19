@@ -438,9 +438,9 @@ export const DEFAULT_TERMINAL_BEHAVIOR = {
   displayRaw: false,
   logTimestamps: false,
   pasteProtection: true,
-  osc52Enabled: false,
+  osc52Enabled: true,
   osc52ReadPolicy: 'deny',
-  osc52WritePolicy: 'deny',
+  osc52WritePolicy: 'allow',
 } as const;
 export const DEFAULT_TERMINAL_TYPE = 'xterm-256color';
 export const terminalAppearanceSchema = z

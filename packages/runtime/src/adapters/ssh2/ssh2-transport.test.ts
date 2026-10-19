@@ -89,6 +89,56 @@ function input(overrides: Partial<Parameters<Ssh2Transport['connect']>[0]> = {})
 }
 
 describe('Ssh2Transport connection options', () => {
+  it('cleans up synchronous private-key parse failures without exposing parser text', async () => {
+    const client = new FakeClient();
+    const controller = new AbortController();
+    client.connect = () => {
+      throw new Error('Cannot parse privateKey: secret-value');
+    };
+    const error = await new Ssh2Transport(() => client as unknown as Client)
+      .connect(input({ signal: controller.signal }))
+      .catch((error: unknown) => error);
+    expect(error).toMatchObject({ code: 'SSH_KEY_INVALID' });
+    expect((error as Error).message).not.toContain('secret-value');
+    expect(client.destroyed).toBe(true);
+    expect(client.listenerCount('ready')).toBe(0);
+    expect(client.listenerCount('error')).toBe(0);
+    expect(client.listenerCount('keyboard-interactive')).toBe(0);
+  });
+
+  it.each([
+    [{ code: 'ECONNREFUSED' }, 'SSH_CONNECTION_REFUSED'],
+    [{ code: 'ETIMEDOUT' }, 'SSH_CONNECTION_TIMEOUT'],
+    [{ level: 'client-timeout' }, 'SSH_CONNECTION_TIMEOUT'],
+    [{ code: 'ENOTFOUND' }, 'SSH_DNS_FAILED'],
+    [{ code: 'EAI_AGAIN' }, 'SSH_DNS_FAILED'],
+    [{ code: 'EHOSTUNREACH' }, 'SSH_NETWORK_UNREACHABLE'],
+    [{ code: 'ECONNRESET' }, 'SSH_CONNECTION_LOST'],
+    [{ level: 'client-authentication' }, 'AUTHENTICATION_FAILED'],
+    [{ level: 'handshake' }, 'SSH_NEGOTIATION_FAILED'],
+    [{}, 'SSH_CONNECTION_FAILED'],
+  ])(
+    'classifies connection failures without returning vendor messages: %j',
+    async (details, code) => {
+      const client = new FakeClient();
+      client.connect = () => {
+        queueMicrotask(() =>
+          client.emit('error', Object.assign(new Error('password=secret-value'), details)),
+        );
+        return client;
+      };
+      const error = await new Ssh2Transport(() => client as unknown as Client)
+        .connect(input())
+        .catch((error: unknown) => error);
+      expect(error).toMatchObject({ code });
+      expect((error as Error).message).not.toContain('secret-value');
+      expect(client.destroyed).toBe(true);
+      expect(client.listenerCount('ready')).toBe(0);
+      expect(client.listenerCount('error')).toBe(0);
+      expect(client.listenerCount('keyboard-interactive')).toBe(0);
+    },
+  );
+
   it.each(['end', 'close'])('closes an SFTP channel after a prior %s event once', async (event) => {
     const client = new FakeClient();
     const handle = await new Ssh2Transport(() => client as unknown as Client).connect(input());

@@ -6,7 +6,8 @@ const locales = [
     id: 'en',
     hostDialog: 'Add SSH host',
     hostName: 'Display name',
-    hostError: 'Unable to complete the SSH host action. Check the connection and retry.',
+    hostError:
+      'Unable to save the SSH host: The local service encountered an internal error. Use the error code and request ID to locate it in Diagnostics. (INTERNAL_ERROR / 6d50c8f1-78c3-4f38-8b5e-f0ca291f488c)',
     ftpDialog: 'Add FTP/FTPS bookmark',
     ftpName: 'Name',
     ftpError: 'Unable to save the FTP/FTPS bookmark. Try again.',
@@ -20,7 +21,8 @@ const locales = [
     id: 'ja',
     hostDialog: 'SSH ホストを追加',
     hostName: '表示名',
-    hostError: 'SSH ホストの操作を完了できませんでした。接続を確認して再試行してください。',
+    hostError:
+      'SSH ホストを保存できませんでした：接続サービスで内部エラーが発生しました。エラーコードとリクエスト ID を診断で確認してください。 (INTERNAL_ERROR / 6d50c8f1-78c3-4f38-8b5e-f0ca291f488c)',
     ftpDialog: 'FTP/FTPS ブックマークを追加',
     ftpName: '名前',
     ftpError: 'FTP/FTPS ブックマークを保存できませんでした。再試行してください。',
@@ -34,7 +36,8 @@ const locales = [
     id: 'zh-CN',
     hostDialog: '添加 SSH 主机',
     hostName: '显示名称',
-    hostError: '无法完成 SSH 主机操作，请检查连接后重试。',
+    hostError:
+      '保存 SSH 主机失败：应用本地服务发生内部错误，请使用错误码和请求编号在诊断中定位问题。 (INTERNAL_ERROR / 6d50c8f1-78c3-4f38-8b5e-f0ca291f488c)',
     ftpDialog: '添加 FTP/FTPS 书签',
     ftpName: '名称',
     ftpError: '无法保存 FTP/FTPS 书签，请重试。',
@@ -48,7 +51,8 @@ const locales = [
     id: 'zh-TW',
     hostDialog: '新增 SSH 主機',
     hostName: '顯示名稱',
-    hostError: '無法完成 SSH 主機操作。請檢查連線後重試。',
+    hostError:
+      '儲存 SSH 主機失敗：應用程式本機服務發生內部錯誤，請使用錯誤碼和請求編號在診斷中定位問題。 (INTERNAL_ERROR / 6d50c8f1-78c3-4f38-8b5e-f0ca291f488c)',
     ftpDialog: '新增 FTP/FTPS 書籤',
     ftpName: '名稱',
     ftpError: '無法儲存 FTP/FTPS 書籤，請重試。',
@@ -65,6 +69,8 @@ const canary = 's2-editor-secret-canary-do-not-display';
 const failureBody = JSON.stringify({
   type: 'about:blank',
   title: 'Synthetic editor failure',
+  code: 'INTERNAL_ERROR',
+  traceId: '6d50c8f1-78c3-4f38-8b5e-f0ca291f488c',
   status: 500,
   detail: canary,
 });

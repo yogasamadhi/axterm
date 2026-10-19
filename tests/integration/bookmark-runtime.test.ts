@@ -10,7 +10,7 @@ import {
   hostSchema,
   sshBookmarkMutationResultSchema,
 } from '../../packages/contracts/src/index';
-import { createRuntimeClient } from '../../packages/client/src/api-client';
+import { createRuntimeClient, RuntimeClientError } from '../../packages/client/src/api-client';
 import { startRuntime } from '../../packages/runtime/src/bootstrap/runtime';
 
 const runtimes: Awaited<ReturnType<typeof startRuntime>>[] = [];
@@ -35,6 +35,118 @@ async function launch(dataDirectory: string) {
 }
 
 describe('Bookmark Runtime API', () => {
+  it('replaces an explicitly confirmed same-name Host through the client and rejects stale confirmation', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'axterm-ssh-overwrite-'));
+    directories.push(directory);
+    const runtime = await launch(directory);
+    const client = createRuntimeClient({ resolve: async () => runtime.bootstrap() });
+    try {
+      const initial = await client.createSshBookmark(await client.bookmarkTree(), {
+        host: { name: 'Confirmed cloud', hostname: 'old.test', username: 'old' },
+        bookmark: { title: 'Old bookmark', description: 'Clear me' },
+      });
+      const input = {
+        overwrite: { hostId: initial.host.id, hostVersion: initial.host.version },
+        host: { name: initial.host.name, hostname: 'new.test', port: 2200, username: 'new' },
+        bookmark: { title: 'New bookmark' },
+      };
+      const result = await client.createSshBookmark(initial.tree, input);
+      expect(result.host).toMatchObject({
+        id: initial.host.id,
+        hostname: 'new.test',
+        port: 2200,
+        version: 2,
+      });
+      expect(result.bookmark).toMatchObject({
+        id: initial.bookmark.id,
+        title: 'New bookmark',
+        description: '',
+      });
+      await expect(client.createSshBookmark(result.tree, input)).rejects.toMatchObject({
+        code: 'PRECONDITION_FAILED',
+        status: 412,
+      });
+      expect(await client.hosts()).toEqual([result.host]);
+      expect(await client.bookmarkTree()).toEqual(result.tree);
+    } finally {
+      client.dispose();
+    }
+  });
+
+  it('identifies duplicate SSH display names on create and edit without changing either aggregate', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'axterm-ssh-name-conflict-'));
+    directories.push(directory);
+    const runtime = await launch(directory);
+    const client = createRuntimeClient({ resolve: async () => runtime.bootstrap() });
+    try {
+      const input = {
+        host: {
+          name: 'Cloud host',
+          hostname: 'localhost',
+          port: 22,
+          username: 'operator',
+          authType: 'agent' as const,
+        },
+        bookmark: { title: 'Cloud host' },
+      };
+      const first = await client.createSshBookmark(await client.bookmarkTree(), input);
+      await expect(client.createSshBookmark(first.tree, input)).rejects.toMatchObject({
+        code: 'HOST_NAME_CONFLICT',
+        status: 409,
+      });
+      expect(await client.bookmarkTree()).toEqual(first.tree);
+      expect(await client.hosts()).toEqual([first.host]);
+      const second = await client.createSshBookmark(first.tree, {
+        ...input,
+        host: { ...input.host, name: 'Second host' },
+      });
+      await expect(
+        client.updateSshBookmark(second.tree, second.host, second.bookmark.id, {
+          host: { name: first.host.name },
+          bookmark: { title: 'Must not change' },
+        }),
+      ).rejects.toMatchObject({ code: 'HOST_NAME_CONFLICT', status: 409 });
+      expect(await client.bookmarkTree()).toEqual(second.tree);
+      expect((await client.hosts()).find(({ id }) => id === second.host.id)).toEqual(second.host);
+    } finally {
+      client.dispose();
+    }
+  });
+
+  it('returns safe invalid SSH field names through the HTTP client without writing a host', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'axterm-ssh-validation-'));
+    directories.push(directory);
+    const runtime = await launch(directory);
+    const client = createRuntimeClient({ resolve: async () => runtime.bootstrap() });
+    try {
+      const tree = await client.bookmarkTree();
+      const error = await client
+        .createSshBookmark(tree, {
+          host: {
+            name: 'Validation fixture',
+            hostname: 'localhost',
+            username: 'operator',
+            port: 70_000,
+            authType: 'password',
+            startup: { environment: { 'invalid secret-value': 'secret-value' } },
+          },
+          bookmark: { title: 'Validation fixture' },
+        })
+        .catch((error: unknown) => error);
+      expect(error).toBeInstanceOf(RuntimeClientError);
+      expect(error).toMatchObject({
+        code: 'VALIDATION_ERROR',
+        status: 400,
+        fieldErrors: { 'host.port': ['Invalid value'], 'host.startup': ['Invalid value'] },
+      });
+      expect(JSON.stringify(error)).not.toContain('secret-value');
+      expect((error as RuntimeClientError).traceId).toMatch(/^[0-9a-f-]{36}$/u);
+      expect(await client.hosts()).toEqual([]);
+    } finally {
+      client.dispose();
+    }
+  });
+
   it('enforces both aggregate preconditions for atomic SSH Bookmark create and delete', async () => {
     const directory = await mkdtemp(join(tmpdir(), 'axterm-ssh-bookmark-runtime-'));
     directories.push(directory);

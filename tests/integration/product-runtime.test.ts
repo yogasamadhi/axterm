@@ -110,6 +110,25 @@ describe('Phase 1-9 Runtime integration', () => {
       displayRaw: true,
       logTimestamps: true,
     });
+    expect(terminalProfile).toMatchObject({
+      osc52Enabled: true,
+      osc52ReadPolicy: 'deny',
+      osc52WritePolicy: 'allow',
+    });
+    const restrictedProfile = await client.createTerminalProfile({
+      name: 'Restricted clipboard',
+      osc52Enabled: false,
+      osc52ReadPolicy: 'deny',
+      osc52WritePolicy: 'deny',
+    });
+    const updatedRestrictedProfile = await client.updateTerminalProfile(restrictedProfile, {
+      fontSize: 19,
+    });
+    expect(updatedRestrictedProfile).toMatchObject({
+      osc52Enabled: false,
+      osc52ReadPolicy: 'deny',
+      osc52WritePolicy: 'deny',
+    });
     client.dispose();
     await runtime.close();
 
@@ -117,7 +136,7 @@ describe('Phase 1-9 Runtime integration', () => {
     client = createRuntimeClient({ resolve: async () => runtime.bootstrap() });
     expect(await client.hostGroups()).toEqual([group]);
     expect(await client.hosts()).toEqual([updated]);
-    expect(await client.terminalProfiles()).toEqual([terminalProfile]);
+    expect(await client.terminalProfiles()).toEqual([terminalProfile, updatedRestrictedProfile]);
     client.dispose();
   });
 
@@ -136,6 +155,11 @@ describe('Phase 1-9 Runtime integration', () => {
     });
     expect(response.status).toBe(201);
     const terminal = terminalSessionSchema.parse(await response.json());
+    expect(terminal.behavior).toMatchObject({
+      osc52Enabled: true,
+      osc52ReadPolicy: 'deny',
+      osc52WritePolicy: 'allow',
+    });
     const url = new URL(`/api/v1/terminals/${terminal.id}/stream`, runtime.baseUrl);
     url.protocol = 'ws:';
     const socket = new WebSocket(

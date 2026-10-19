@@ -208,6 +208,7 @@ export class RuntimeClientError extends Error {
     message: string,
     public readonly status?: number,
     public readonly traceId?: string,
+    public readonly fieldErrors?: Record<string, string[]>,
   ) {
     super(message);
   }
@@ -1689,6 +1690,7 @@ async function responseError(response: Response) {
     parsed.success ? parsed.data.title : 'Runtime request failed',
     response.status,
     parsed.success ? parsed.data.traceId : undefined,
+    parsed.success ? parsed.data.fieldErrors : undefined,
   );
 }
 

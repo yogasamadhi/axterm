@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Terminal } from '@xterm/xterm';
 import { DEFAULT_TERMINAL_BEHAVIOR } from '../../packages/contracts/src';
+import { resolveTerminalBehavior } from '../../apps/desktop/src/renderer/src/components/terminal-behavior';
 import {
   buildOsc52ClipboardResponse,
   decodeOsc52Payload,
@@ -101,15 +102,21 @@ describe('OSC 52 clipboard model', () => {
     expect(handlerDisposed).toBe(true);
   });
 
-  it('consumes denied requests with visible feedback and no clipboard access', async () => {
+  it('copies remote text by default without reading or returning local clipboard contents', async () => {
     let handler: ((data: string) => boolean | Promise<boolean>) | undefined;
+    const writes: string[] = [];
     const feedback: string[] = [];
     const addon = new Osc52Addon({
-      policy: { ...DEFAULT_TERMINAL_BEHAVIOR, osc52Enabled: true },
-      getClipboard: () => {
-        throw new Error('must not read clipboard');
+      policy: resolveTerminalBehavior(),
+      getClipboard: () => ({
+        writeText: async (text) => void writes.push(text),
+        readText: async () => {
+          throw new Error('must not read clipboard');
+        },
+      }),
+      sendData: () => {
+        throw new Error('must not return local clipboard contents');
       },
-      sendData: () => true,
       feedback: (message) => void feedback.push(message),
     });
     addon.activate({
@@ -120,10 +127,52 @@ describe('OSC 52 clipboard model', () => {
         },
       },
     } as unknown as Terminal);
-    expect(await handler?.('c;?')).toBe(true);
-    expect(await handler?.(`c;${base64('blocked')}`)).toBe(true);
-    expect(feedback).toEqual(['READ_DENIED', 'WRITE_DENIED']);
+    try {
+      expect(await handler?.(`c;${base64('Pi 复制 ✓')}`)).toBe(true);
+      expect(await handler?.('c;?')).toBe(true);
+      expect(writes).toEqual(['Pi 复制 ✓']);
+      expect(feedback).toEqual(['WRITE_SUCCEEDED', 'READ_DENIED']);
+    } finally {
+      addon.dispose();
+    }
   });
+
+  it.each([true, false])(
+    'consumes denied requests without clipboard access when enabled is %s',
+    async (enabled) => {
+      let handler: ((data: string) => boolean | Promise<boolean>) | undefined;
+      const feedback: string[] = [];
+      const addon = new Osc52Addon({
+        policy: {
+          ...DEFAULT_TERMINAL_BEHAVIOR,
+          osc52Enabled: enabled,
+          osc52WritePolicy: 'deny',
+        },
+        getClipboard: () => {
+          throw new Error('must not read clipboard');
+        },
+        sendData: () => true,
+        feedback: (message) => void feedback.push(message),
+      });
+      addon.activate({
+        parser: {
+          registerOscHandler: (_identifier: number, callback: typeof handler) => {
+            handler = callback;
+            return { dispose() {} };
+          },
+        },
+      } as unknown as Terminal);
+      try {
+        expect(await handler?.('c;?')).toBe(true);
+        expect(await handler?.(`c;${base64('blocked')}`)).toBe(true);
+        expect(feedback).toEqual(
+          enabled ? ['READ_DENIED', 'WRITE_DENIED'] : ['DISABLED', 'DISABLED'],
+        );
+      } finally {
+        addon.dispose();
+      }
+    },
+  );
 
   it('does not send or report an async read after disposal', async () => {
     let handler: ((data: string) => boolean | Promise<boolean>) | undefined;

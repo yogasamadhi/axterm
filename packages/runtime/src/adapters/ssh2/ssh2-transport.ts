@@ -22,6 +22,7 @@ import type { TerminalChannel } from '../../ports/terminal-channel';
 import { connectLocalX11, resolveLocalX11, type ResolvedX11Forwarding } from './x11-forwarding';
 import { createCertificateIdentity } from './certificate-identity';
 import { probeSshAgent } from './ssh-agent';
+import { ApplicationError, isApplicationError } from '../../application/errors';
 
 export const SSH_COMPRESSION_ALGORITHMS = ['zlib@openssh.com', 'zlib', 'none'] as const;
 
@@ -46,12 +47,22 @@ export class Ssh2Transport implements SshTransport {
 
   async connect(input: Parameters<SshTransport['connect']>[0]): Promise<SshConnectionHandle> {
     const client = this.createClient();
-    const certificateIdentity =
-      input.certificate && input.privateKey
-        ? createCertificateIdentity(input.privateKey, input.certificate, input.passphrase)
-        : undefined;
-    if (input.certificate && !certificateIdentity)
-      throw new Error('SSH certificate requires a private key');
+    let certificateIdentity: ParsedKey | undefined;
+    try {
+      certificateIdentity =
+        input.certificate && input.privateKey
+          ? createCertificateIdentity(input.privateKey, input.certificate, input.passphrase)
+          : undefined;
+      if (input.certificate && !certificateIdentity) throw new Error('Missing private key');
+    } catch {
+      client.destroy();
+      throw new ApplicationError(
+        'SSH_KEY_INVALID',
+        'SSH private key or certificate is invalid',
+        400,
+      );
+    }
+    let hostKeyRejected = false;
     const config: ConnectConfig = {
       host: input.host,
       port: input.port,
@@ -78,7 +89,16 @@ export class Ssh2Transport implements SshTransport {
             fingerprint,
             publicKey: key.toString('base64'),
           })
-          .then(verify, () => verify(false));
+          .then(
+            (accepted) => {
+              hostKeyRejected = !accepted;
+              verify(accepted);
+            },
+            () => {
+              hostKeyRejected = true;
+              verify(false);
+            },
+          );
       },
       ...(input.password ? { password: input.password } : {}),
       ...(!certificateIdentity && input.privateKey ? { privateKey: input.privateKey } : {}),
@@ -133,16 +153,51 @@ export class Ssh2Transport implements SshTransport {
         input.signal?.addEventListener('abort', onAbort, { once: true });
         client.once('ready', onReady);
         client.once('error', onError);
-        client.connect(config);
+        try {
+          client.connect(config);
+        } catch (error) {
+          onError(error instanceof Error ? error : new Error('SSH connection failed'));
+        }
       });
     } catch (error) {
       client.destroy();
-      throw error;
+      if (input.signal?.aborted) throw error;
+      if (hostKeyRejected)
+        throw new ApplicationError('HOST_KEY_REJECTED', 'SSH host key was not accepted');
+      throw connectionError(error);
     } finally {
       client.off('keyboard-interactive', onKeyboardInteractive);
     }
     return new Ssh2ConnectionHandle(client);
   }
+}
+
+function connectionError(error: unknown): ApplicationError {
+  if (isApplicationError(error)) return error;
+  const value = error instanceof Error ? error : undefined;
+  const code = value && 'code' in value ? value.code : undefined;
+  const level = value && 'level' in value ? value.level : undefined;
+  if (level === 'client-authentication')
+    return new ApplicationError('AUTHENTICATION_FAILED', 'SSH authentication failed');
+  if (code === 'ECONNREFUSED')
+    return new ApplicationError('SSH_CONNECTION_REFUSED', 'SSH connection was refused', 503);
+  if (code === 'ETIMEDOUT' || level === 'client-timeout')
+    return new ApplicationError('SSH_CONNECTION_TIMEOUT', 'SSH connection timed out', 503);
+  if (code === 'ENOTFOUND' || code === 'EAI_AGAIN' || level === 'client-dns')
+    return new ApplicationError('SSH_DNS_FAILED', 'SSH hostname could not be resolved', 503);
+  if (code === 'ENETUNREACH' || code === 'EHOSTUNREACH')
+    return new ApplicationError('SSH_NETWORK_UNREACHABLE', 'SSH network is unreachable', 503);
+  if (code === 'ECONNRESET' || code === 'EPIPE')
+    return new ApplicationError('SSH_CONNECTION_LOST', 'SSH connection was interrupted', 503);
+  if (level === 'handshake')
+    return new ApplicationError('SSH_NEGOTIATION_FAILED', 'SSH handshake failed', 503);
+  if (value?.message.startsWith('Cannot parse privateKey:'))
+    return new ApplicationError('SSH_KEY_INVALID', 'SSH private key is invalid', 400);
+  return new ApplicationError(
+    'SSH_CONNECTION_FAILED',
+    'SSH connection could not be established',
+    503,
+  );
 }
 
 function hostKeyAlgorithm(key: Buffer): string {

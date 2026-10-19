@@ -1282,3 +1282,12 @@
     padding: 12px 14px 14px;
   }
 }
+.ssh-overwrite-confirmation {
+  padding: 20px;
+}
+
+.ssh-overwrite-confirmation p {
+  margin: 0 0 16px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}

@@ -69,6 +69,12 @@ advances the tree revision and appends both aggregate events inside one SQLite
 Unit of Work. Nested repository transactions use SQLite savepoints, so a stale
 tree ETag, invalid group or later constraint rolls the Host and all events back.
 
+[ADR-032](ADR-032-confirmed-ssh-name-overwrite.md) adds explicitly confirmed
+same-name replacement to this create command. A reviewed Host ID/version plus the
+tree ETag protects an atomic full replacement; creation without that explicit
+target continues to reject duplicate names. Existing Host and Bookmark identities
+are preserved, or a Bookmark is created for a retained Host without one.
+
 Deleting a saved SSH destination is also explicit. The caller supplies the
 Host ETag through `If-Match` and the independent tree ETag through
 `X-Bookmark-Tree-If-Match`. The workflow removes every Bookmark which references
@@ -80,7 +86,7 @@ the Host, so a foreign-key failure cannot surface as an untyped server error.
 Deleting a group promotes its direct child groups and bookmarks into its parent
 at the deleted group's position, preserving their relative order. Deleting a
 Bookmark does not implicitly delete its referenced Host because another
-Bookmark, history item or jump chain may still reference it. Orphan Host cleanup
+Bookmark, historical jump dependency or saved jump chain may still reference it. Orphan Host cleanup
 is an explicit aggregate operation.
 
 Editing one saved SSH row is a Host-and-Bookmark command. The caller supplies
@@ -93,7 +99,10 @@ the projected snapshot.
 
 The SSH row delete command removes only the selected Bookmark. It then deletes
 the Host in that same Unit of Work only when no other Bookmark, jump-host chain,
-recent-connection record or tunnel profile retains it. Otherwise it returns the
+historical jump dependency or tunnel profile retains it. Under
+[ADR-031](ADR-031-saved-host-deletion-and-history.md), a recent connection's primary
+Host link alone does not retain the Host: deletion detaches that link, preserves the
+secret-free historical snapshot and releases the saved display name. Otherwise it returns the
 remaining Bookmark IDs and explicit retention reasons. A failure during final
 Host cleanup rolls back the Bookmark deletion, sibling compaction, tree revision
 and events.

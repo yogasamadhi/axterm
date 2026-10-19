@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { BookmarkRepository } from '../adapters/sqlite/bookmark-repository';
+import { ConnectionHistoryRepository } from '../adapters/sqlite/connection-history-repository';
 import { ProductDatabase } from '../adapters/sqlite/database';
 import { etagFor, ProductRepository } from '../adapters/sqlite/product-repository';
 import { BookmarkTreeService } from './bookmark-tree-service';
@@ -38,6 +39,270 @@ function input(name: string, groupId: string | null = null) {
 }
 
 describe('SshBookmarkService', () => {
+  it('replaces a confirmed same-name destination with complete new values and keeps shared references', async () => {
+    const { database, hosts, bookmarks, service } = await fixture();
+    const history = new ConnectionHistoryRepository(database);
+    try {
+      const first = service.create(input('overwrite-cloud'), bookmarks.snapshot().etag);
+      const old = hosts.updateHost(
+        first.host.id,
+        {
+          favorite: true,
+          certificateCredentialRef: `cred_${randomUUID()}`,
+          startup: { directory: '/old', environment: { OLD: 'value' } },
+          x11: { enabled: true, display: ':99' },
+          sshAgent: { enabled: true, path: '/old-agent' },
+          proxy: { mode: 'command', command: { executable: 'old-proxy', arguments: ['%h', '%p'] } },
+        },
+        etagFor(first.host.version),
+      );
+      const snapshot = history.record({ host: old, persistedHostId: old.id });
+      const sharedTree = bookmarks.createBookmark(
+        { protocol: 'ssh', hostId: old.id, title: 'Independent shared bookmark' },
+        first.tree.etag,
+      );
+      const shared = sharedTree.bookmarks.find(
+        ({ title }) => title === 'Independent shared bookmark',
+      )!;
+      const jump = hosts.createHost({
+        name: 'Uses overwritten jump',
+        hostname: 'jump-user.test',
+        username: 'user',
+        jumpHostIds: [old.id],
+      });
+      const result = service.create(
+        {
+          overwrite: { hostId: old.id, hostVersion: old.version },
+          host: { name: old.name, hostname: 'new.example.test', port: 2022, username: 'new-user' },
+          bookmark: { title: 'New bookmark' },
+        },
+        sharedTree.etag,
+      );
+      expect(result.host).toMatchObject({
+        id: old.id,
+        createdAt: old.createdAt,
+        version: old.version + 1,
+        hostname: 'new.example.test',
+        port: 2022,
+        username: 'new-user',
+        authType: 'password',
+        credentialRef: null,
+        passphraseCredentialRef: null,
+        certificateCredentialRef: null,
+        favorite: false,
+        jumpHostId: null,
+        jumpHostIds: [],
+        proxy: { mode: 'inherit' },
+        startup: { directory: null, environment: {}, loginScripts: [], runScripts: [] },
+        x11: { enabled: false, display: null },
+        sshAgent: { enabled: true, path: null },
+      });
+      expect(result.bookmark).toMatchObject({
+        id: first.bookmark.id,
+        title: 'New bookmark',
+        color: null,
+        description: '',
+        profileId: null,
+        connectionProfileId: null,
+        quickCommands: [],
+        triggers: [],
+      });
+      expect(result.tree.bookmarks.find(({ id }) => id === shared.id)).toEqual({
+        ...shared,
+        connectionDisplay: 'new-user@new.example.test:2022',
+      });
+      expect(hosts.getHost(jump.id).jumpHostIds).toEqual([old.id]);
+      expect(history.get(snapshot.id)).toEqual(snapshot);
+      expect(hosts.listHosts()).toHaveLength(2);
+      expect(result.tree.bookmarks).toHaveLength(2);
+    } finally {
+      database.close();
+    }
+  });
+
+  it('overwrites a retained Host without a Bookmark and creates its new tree entry', async () => {
+    const { database, hosts, bookmarks, service } = await fixture();
+    try {
+      const old = hosts.createHost({ name: 'Orphan cloud', hostname: 'old.test', username: 'old' });
+      const result = service.create(
+        {
+          overwrite: { hostId: old.id, hostVersion: old.version },
+          host: { name: old.name, hostname: 'new.test', username: 'new' },
+          bookmark: { title: old.name },
+        },
+        bookmarks.snapshot().etag,
+      );
+      expect(result.host).toMatchObject({ id: old.id, version: 2, hostname: 'new.test' });
+      expect(result.bookmark.hostId).toBe(old.id);
+      expect(hosts.listHosts()).toHaveLength(1);
+      expect(result.tree.bookmarks).toHaveLength(1);
+    } finally {
+      database.close();
+    }
+  });
+
+  it.each(['host', 'tree', 'name'] as const)(
+    'rejects a stale %s overwrite without durable writes',
+    async (stale) => {
+      const { database, hosts, bookmarks, service } = await fixture();
+      try {
+        const old = service.create(input('Stale overwrite'), bookmarks.snapshot().etag);
+        if (stale === 'host')
+          hosts.updateHost(old.host.id, { hostname: 'concurrent.test' }, etagFor(old.host.version));
+        if (stale === 'tree') bookmarks.createGroup({ name: 'Concurrent group' }, old.tree.etag);
+        const before = hosts.getHost(old.host.id);
+        const tree = bookmarks.snapshot();
+        const events = hosts.listEvents();
+        expect(() =>
+          service.create(
+            {
+              ...input(stale === 'name' ? 'Wrong name' : old.host.name),
+              overwrite: { hostId: old.host.id, hostVersion: old.host.version },
+            },
+            old.tree.etag,
+          ),
+        ).toThrowError(expect.objectContaining({ code: 'PRECONDITION_FAILED' }));
+        expect(hosts.getHost(old.host.id)).toEqual(before);
+        expect(bookmarks.snapshot()).toEqual(tree);
+        expect(hosts.listEvents()).toEqual(events);
+      } finally {
+        database.close();
+      }
+    },
+  );
+
+  it.each(['update', 'insert'] as const)(
+    'rolls confirmed overwrite back on a late Bookmark %s failure',
+    async (write) => {
+      const { database, hosts, bookmarks, service } = await fixture();
+      try {
+        const old =
+          write === 'update'
+            ? service.create(input('Rollback overwrite'), bookmarks.snapshot().etag).host
+            : hosts.createHost(input('Rollback overwrite').host);
+        const before = bookmarks.snapshot();
+        const events = hosts.listEvents();
+        database.run(`CREATE TRIGGER fail_overwrite BEFORE ${write.toUpperCase()} ON bookmarks
+        BEGIN SELECT RAISE(ABORT, 'forced bookmark failure'); END`);
+        expect(() =>
+          service.create(
+            {
+              ...input(old.name),
+              overwrite: { hostId: old.id, hostVersion: old.version },
+            },
+            before.etag,
+          ),
+        ).toThrow();
+        expect(hosts.getHost(old.id)).toEqual(old);
+        expect(bookmarks.snapshot()).toEqual(before);
+        expect(hosts.listEvents()).toEqual(events);
+      } finally {
+        database.close();
+      }
+    },
+  );
+
+  it.each(['bookmark', 'host'] as const)(
+    'releases a deleted %s name while preserving independently versioned history',
+    async (mode) => {
+      const { database, hosts, bookmarks, service } = await fixture();
+      const history = new ConnectionHistoryRepository(database);
+      try {
+        const saved = service.create(input('deleted-cloud'), bookmarks.snapshot().etag);
+        history.record({ host: saved.host, persistedHostId: saved.host.id });
+        const item = history.record({ host: saved.host, persistedHostId: saved.host.id });
+        const before = history.state();
+        const tree =
+          mode === 'bookmark'
+            ? service.deleteBookmark(
+                saved.bookmark.id,
+                etagFor(saved.host.version),
+                saved.tree.etag,
+              ).tree
+            : service.delete(saved.host.id, etagFor(saved.host.version), saved.tree.etag).tree;
+        expect(hosts.listHosts()).toEqual([]);
+        expect(tree.bookmarks).toEqual([]);
+        expect(history.get(item.id)).toMatchObject({
+          ...item,
+          hostId: null,
+          updatedAt: expect.any(String),
+          version: item.version + 1,
+          count: 2,
+        });
+        expect(history.state().revision).toBe(before.revision + 1);
+        expect(() => history.assertVersion(item.id, etagFor(item.version))).toThrowError(
+          expect.objectContaining({ code: 'PRECONDITION_FAILED' }),
+        );
+        expect(
+          hosts.listEvents().filter(({ type }) => type === 'connection-history.unlinked'),
+        ).toHaveLength(1);
+        const replacement = input('deleted-cloud');
+        const recreated = service.create(
+          { ...replacement, host: { ...replacement.host, hostname: 'new.example.test' } },
+          tree.etag,
+        );
+        expect(recreated.host.id).not.toBe(saved.host.id);
+        expect(recreated.host.name).toBe(saved.host.name);
+        expect(history.get(item.id).hostname).toBe(saved.host.hostname);
+        expect(history.get(item.id).hostId).toBeNull();
+      } finally {
+        database.close();
+      }
+    },
+  );
+
+  it('rolls detached history, its revision and events back if Host deletion fails', async () => {
+    const { database, hosts, bookmarks, service } = await fixture();
+    const history = new ConnectionHistoryRepository(database);
+    try {
+      const saved = service.create(input('retained-on-failure'), bookmarks.snapshot().etag);
+      const item = history.record({ host: saved.host, persistedHostId: saved.host.id });
+      const state = history.state();
+      const events = hosts.listEvents();
+      database.run(`CREATE TRIGGER fail_history_host_delete BEFORE DELETE ON hosts
+        BEGIN SELECT RAISE(ABORT, 'forced deletion failure'); END`);
+      expect(() =>
+        service.deleteBookmark(saved.bookmark.id, etagFor(saved.host.version), saved.tree.etag),
+      ).toThrow();
+      expect(history.get(item.id)).toEqual(item);
+      expect(history.state()).toEqual(state);
+      expect(bookmarks.snapshot()).toEqual(saved.tree);
+      expect(hosts.getHost(saved.host.id)).toEqual(saved.host);
+      expect(hosts.listEvents()).toEqual(events);
+    } finally {
+      database.close();
+    }
+  });
+
+  it('retains a real historical jump dependency during single-row deletion', async () => {
+    const { database, hosts, bookmarks, service } = await fixture();
+    const history = new ConnectionHistoryRepository(database);
+    try {
+      const saved = service.create(input('historical-jump'), bookmarks.snapshot().etag);
+      const item = history.record({
+        host: { ...saved.host, hostname: 'behind-jump.example.test', jumpHostId: saved.host.id },
+        persistedHostId: null,
+      });
+      const deleted = service.deleteBookmark(
+        saved.bookmark.id,
+        etagFor(saved.host.version),
+        saved.tree.etag,
+      );
+      expect(deleted).toMatchObject({ hostDeleted: false, retainedBy: ['history'] });
+      expect(hosts.getHost(saved.host.id)).toEqual(saved.host);
+      expect(history.get(item.id).jumpHostId).toBe(saved.host.id);
+      service.delete(saved.host.id, etagFor(saved.host.version), deleted.tree.etag);
+      expect(hosts.listHosts()).toEqual([]);
+      expect(history.get(item.id)).toMatchObject({
+        hostId: null,
+        jumpHostId: null,
+        version: item.version + 1,
+      });
+    } finally {
+      database.close();
+    }
+  });
+
   it('atomically creates a Host fact and its Bookmark without writing legacy placement', async () => {
     const { database, hosts, bookmarks, service } = await fixture();
     try {

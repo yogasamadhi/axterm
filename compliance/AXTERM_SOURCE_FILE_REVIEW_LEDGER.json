@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Prepared independent source snapshot, excluding this review ledger",
-  "sourceScopeSha256": "11a7ea666d3a2f3625d39455aaaa9fbf3e51bef95fce1ffe4510967908cb3e46",
+  "sourceScopeSha256": "4fe3e1a33d497930832455ae8fd7b668d7c829b37311a0a2d652c86c6fe21c23",
   "limitations": [
     "A path and byte hash identify review scope; they do not establish authorship, license, rights or package inclusion.",
     "Git author metadata and prospective contribution rules do not grant retrospective permission for these bytes.",
@@ -1532,8 +1532,28 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/app/bookmarks/ssh-bookmark-form.css",
-        "bytes": 27160,
-        "sha256": "90e80e0e1907c926398a480717089d25851dc69014d1a36979ce1c1cc17f3f31"
+        "bytes": 27311,
+        "sha256": "bcdbb0155c0b055dcbffac8d92a8c5e8d34cd5fe606b868479dfdff82c8b6ebd"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "apps/desktop/src/renderer/src/app/bookmarks/ssh-host-error.ts",
+        "bytes": 4206,
+        "sha256": "e9dd3ed5150593ea715936c7e565e41d9cfab43b9a5c0746d2f0997346071d3d"
       },
       "review": {
         "status": "pending",
@@ -2152,8 +2172,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/app/panels.tsx",
-        "bytes": 272476,
-        "sha256": "f9292df4aa5e85aec1aa60773b7d224b7740dc50b71683b8e67aa6897a06e395"
+        "bytes": 276759,
+        "sha256": "a822b1c8df774df4423e113dbadd36a4011d60b0d4cfec19a1f5cd2213a521a1"
       },
       "review": {
         "status": "pending",
@@ -4192,8 +4212,8 @@
     {
       "file": {
         "path": "apps/desktop/src/renderer/src/i18n/core.ts",
-        "bytes": 679440,
-        "sha256": "41b18a440816864a2e5cf38985eee1443a62eaf9d0050e84d9ebc8afe7e2f34d"
+        "bytes": 695810,
+        "sha256": "0bfa0d2ffbd74f93933a041508b772301b31cb786bf4300306d4548d33f8c8d6"
       },
       "review": {
         "status": "pending",
@@ -4492,8 +4512,8 @@
     {
       "file": {
         "path": "compliance/AXTERM_PRODUCTION_DEPENDENCIES.spdx.json",
-        "bytes": 156998,
-        "sha256": "58e09cdf4e79143fcdbee03f630263e6a1cfd210a3ddaa683f09a91cbe247d30"
+        "bytes": 156994,
+        "sha256": "51097f9346f76035482e282eb898e584b2d614703f86981696cab33c63b87e1f"
       },
       "review": {
         "status": "pending",
@@ -4552,8 +4572,8 @@
     {
       "file": {
         "path": "compliance/LICENSE_ATTRIBUTION_REVIEW_LEDGER.json",
-        "bytes": 6918,
-        "sha256": "dc091da32f301efa9ecf6cef3882d07e4165cfaad7ad40fc0a1178ed53860a83"
+        "bytes": 6916,
+        "sha256": "645341cac30b6b8ba528be8e3a2c6bffb1ccd5eae00f9d03feb35ff04a77dbb7"
       },
       "review": {
         "status": "pending",
@@ -4672,8 +4692,8 @@
     {
       "file": {
         "path": "compliance/THIRD_PARTY_COMPONENTS.json",
-        "bytes": 22077,
-        "sha256": "7055a3fbf92d2c4d2835ab35dd586b2219ab9cc13ddc47306c16d245077f4f7b"
+        "bytes": 22075,
+        "sha256": "345c7dbd107aed5d160b972b75817450a4cba53b1509636090d6ad83eba62230"
       },
       "review": {
         "status": "pending",
@@ -4692,8 +4712,8 @@
     {
       "file": {
         "path": "compliance/THIRD_PARTY_LICENSE_TEXTS.json",
-        "bytes": 822702,
-        "sha256": "af444c7aa50e9c42aba91153574b68932ec45e12a631d92488ac2a5ce406472d"
+        "bytes": 822696,
+        "sha256": "cee538380546c7ed47ea1d182d1f5f934430eeefb465da4ef03b44729f307740"
       },
       "review": {
         "status": "pending",
@@ -4852,8 +4872,8 @@
     {
       "file": {
         "path": "docs/adr/ADR-005-bookmark-aggregate-and-tree.md",
-        "bytes": 9498,
-        "sha256": "39bacd01fb058c20b87c5b82c7283765639b9e48a3834ff7dfad3b3c02af4af4"
+        "bytes": 10158,
+        "sha256": "b033aa9ebe4539b9241a253e7b1842aae4c9cf2dbeeff2d9cc9c8b853206eec2"
       },
       "review": {
         "status": "pending",
@@ -5371,6 +5391,66 @@
     },
     {
       "file": {
+        "path": "docs/adr/ADR-031-saved-host-deletion-and-history.md",
+        "bytes": 2384,
+        "sha256": "279123b17b15ec7011a5fb092f2a213ff8a36b8341fb28942d4a0843237d3338"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "docs/adr/ADR-032-confirmed-ssh-name-overwrite.md",
+        "bytes": 2723,
+        "sha256": "3592d4072f24aedbe63e6780269aa9792ff9da4bbc92a09a084dd8966d3748aa"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "docs/adr/ADR-033-default-osc52-clipboard-writes.md",
+        "bytes": 1603,
+        "sha256": "ceeabdee9f3fe5ef1abf93c262a5f7111a2ccc98acb615262b574544fbbfde37"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "docs/architecture/DESKTOP_ARCHITECTURE_BASELINE.md",
         "bytes": 10942,
         "sha256": "1b92cc2837a0910fa81a02055056ebf196374d1b8b47fcead3fded2aa3382349"
@@ -5452,8 +5532,8 @@
     {
       "file": {
         "path": "docs/architecture/MASTER_SPEC.md",
-        "bytes": 128869,
-        "sha256": "7234f6eee3f1b57df47f5f97bc3e0edc9e359dd53c169d6444c3334858258eb6"
+        "bytes": 129311,
+        "sha256": "c68640ceb79af971c3de3438ce55f1885e046312262456a65b8a0435a518b09d"
       },
       "review": {
         "status": "pending",
@@ -5912,8 +5992,8 @@
     {
       "file": {
         "path": "docs/implementation/RELEASE_OWNER_HANDOFF.md",
-        "bytes": 39351,
-        "sha256": "aae08da3bf1af180d1a20c6fdc14355c9efc9dcc028f926c545a092aab857fd9"
+        "bytes": 39537,
+        "sha256": "3a967f6b847c480b9930ded0ff3fd8d9135730563602e30d05500ad06895f5c0"
       },
       "review": {
         "status": "pending",
@@ -5933,7 +6013,7 @@
       "file": {
         "path": "docs/implementation/REMAINING_RELEASE_WORK.md",
         "bytes": 38876,
-        "sha256": "55d8fb400738c5dc3a2545a0b40729472d0d1345f07ec9acd06991176a5fb7cd"
+        "sha256": "176ffb8baa7e7d6f428b5713cf82c1dcef6cc6b882b9bca6b74bb4818e778a5e"
       },
       "review": {
         "status": "pending",
@@ -5972,8 +6052,8 @@
     {
       "file": {
         "path": "docs/implementation/STATUS.md",
-        "bytes": 787094,
-        "sha256": "e0c3236dfe1585eb804f7b25d6789d75982de54b83a1d8fa391b4698d16e38ad"
+        "bytes": 800883,
+        "sha256": "74782d6afe6c6c76d0b0c52af6dc16d05e08598e8f86e82d71fd271f230eb57b"
       },
       "review": {
         "status": "pending",
@@ -9552,8 +9632,8 @@
     {
       "file": {
         "path": "packages/client/src/api-client.ts",
-        "bytes": 73637,
-        "sha256": "57786b5035cab4cd7604f85fb35b159862076c8b75019790ed67aefe154710c6"
+        "bytes": 73755,
+        "sha256": "57febe250cd681976fce1d05ee4940d98633d98f99403a44b1161fb827df7286"
       },
       "review": {
         "status": "pending",
@@ -9572,8 +9652,8 @@
     {
       "file": {
         "path": "packages/client/src/generated/api.ts",
-        "bytes": 3415123,
-        "sha256": "2cda2ef516e981bc477786e8e50d6248e36b394a73fc147f36a2d9902f750dd5"
+        "bytes": 3415425,
+        "sha256": "de33c68dd96a205b8eb1aa641f875b77faf5603152c15390200f50780189f226"
       },
       "review": {
         "status": "pending",
@@ -9792,8 +9872,8 @@
     {
       "file": {
         "path": "packages/contracts/src/schemas/bookmarks.ts",
-        "bytes": 28063,
-        "sha256": "ee13de958659bb27eddc269390931b232d9289a79c1795661a9677aa1612b02e"
+        "bytes": 28189,
+        "sha256": "72b1811e2cd582a0f59fcdbd232acd6de17162f2624b0252f349da131d91956a"
       },
       "review": {
         "status": "pending",
@@ -9893,7 +9973,7 @@
       "file": {
         "path": "packages/contracts/src/schemas/resources.ts",
         "bytes": 116581,
-        "sha256": "13137e4289ded6cf01e9cd52b9d56c779d07be69b7c005a935994e629c7f6cc9"
+        "sha256": "0ee8baf68ef0c5a60b75779dd89a9a1f9655f830b0352fd14a501ade6ecb5641"
       },
       "review": {
         "status": "pending",
@@ -11372,8 +11452,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/sqlite/connection-history-repository.ts",
-        "bytes": 14233,
-        "sha256": "10e076c8c48d06adab275fc2809beabe80b6261e57011272741fca985eac67c9"
+        "bytes": 15217,
+        "sha256": "69ff76503d1bbbbd7e8d4cb4ee7c999a4a399d3fdc3d73facc35ab8c4f33c82b"
       },
       "review": {
         "status": "pending",
@@ -11552,8 +11632,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/sqlite/product-repository.ts",
-        "bytes": 65091,
-        "sha256": "d08e187a21a2974599ef278308c9be6d385dc201b970473cb031974a12302cd2"
+        "bytes": 65663,
+        "sha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677"
       },
       "review": {
         "status": "pending",
@@ -11952,8 +12032,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/ssh2/ssh2-transport.test.ts",
-        "bytes": 11940,
-        "sha256": "0b593c853dc7b217d8ca0e665b6fc0823ad5f0974f993751603c52a9265673d7"
+        "bytes": 14130,
+        "sha256": "659c737173af735c8e20c26c02c7da7897792e03dd09969ab25c4882eefde0ca"
       },
       "review": {
         "status": "pending",
@@ -11972,8 +12052,8 @@
     {
       "file": {
         "path": "packages/runtime/src/adapters/ssh2/ssh2-transport.ts",
-        "bytes": 21479,
-        "sha256": "841ee149f2792e1d8ba6bf532145b933c76deac5394597e0571175aa555cead5"
+        "bytes": 23901,
+        "sha256": "743d332d8a33852e3bd38182d1b657e62114977c4fd938390cb81865fa17a055"
       },
       "review": {
         "status": "pending",
@@ -13652,8 +13732,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/errors.ts",
-        "bytes": 3787,
-        "sha256": "58ac7bcb11fd8bf10d81ae750dfbcad83bb20bb3c1b458f6c50bdcf35d949a74"
+        "bytes": 4256,
+        "sha256": "d4d1fcf0f58ed6e0513ceeec0f2daca2b0e1596aced6000e332b46e4a99e7218"
       },
       "review": {
         "status": "pending",
@@ -14152,8 +14232,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/ssh-bookmark-service.test.ts",
-        "bytes": 17624,
-        "sha256": "b60faabaa60ab2c977f682510f798b9c40aa3a4b341bfdb49be56d67afb03289"
+        "bytes": 28452,
+        "sha256": "2bedc73ef3af3dcc8a4b0c5948ec322146b3cb10bc6ea36683b92d28c989af12"
       },
       "review": {
         "status": "pending",
@@ -14172,8 +14252,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/ssh-bookmark-service.ts",
-        "bytes": 5955,
-        "sha256": "9059925524561b80684e988c1524499d86321633d06ceb0ffed58a70c384d04c"
+        "bytes": 7374,
+        "sha256": "01d980bd33ff366f3263f33b4165db6487844e6bf5b69ea09cfe45b9f4ceddc8"
       },
       "review": {
         "status": "pending",
@@ -15232,8 +15312,8 @@
     {
       "file": {
         "path": "packages/runtime/src/http/app.ts",
-        "bytes": 192007,
-        "sha256": "b773dbf9d2e7bd300158131556dd3430dc0da1ced67b17b030feabf8f8906507"
+        "bytes": 193243,
+        "sha256": "ad79bd3a9d5013933935acf41584c50263242f299d762d6c2b887040a7addd40"
       },
       "review": {
         "status": "pending",
@@ -16953,7 +17033,7 @@
       "file": {
         "path": "scripts/localization/axterm-core-review-ledger.json",
         "bytes": 3206,
-        "sha256": "0d030ff8257584af159809fea8545a118c4be08a8f2c3ff058845f9bbe50c106"
+        "sha256": "967198fa19d30387de7f032832ab2d3f08978b4e799a021d03e49821148444ad"
       },
       "review": {
         "status": "pending",
@@ -17452,8 +17532,8 @@
     {
       "file": {
         "path": "tests/e2e/ai-workspace.spec.ts",
-        "bytes": 31343,
-        "sha256": "67beb7aa7433e4dc1d4ea322a972d4b1761d9442be2030eb172f742a19bfbada"
+        "bytes": 32033,
+        "sha256": "cbb2f21e47df5ea68c42104c80bb503996ce1b0e58382ad0cc5bba3a67c2afec"
       },
       "review": {
         "status": "pending",
@@ -17472,8 +17552,8 @@
     {
       "file": {
         "path": "tests/e2e/desktop.spec.ts",
-        "bytes": 566136,
-        "sha256": "ff72d29507b2e026b416e48100c22aec8ad52463bd68c546423d3b83b1219611"
+        "bytes": 589210,
+        "sha256": "a4c136cb243e9f7524cf0b9d98683fe1b9cd9007c5c3ef035fd3b468a3895821"
       },
       "review": {
         "status": "pending",
@@ -17512,8 +17592,8 @@
     {
       "file": {
         "path": "tests/e2e/editor-conditional-journey.ts",
-        "bytes": 10387,
-        "sha256": "73e12c10fe72535a12202d5316fbab80c712b8e21a4d8170a98579e2e699af16"
+        "bytes": 10998,
+        "sha256": "f73912f18581a408c45eeef127ee567d2d554d58fb4c87468e0709150f050133"
       },
       "review": {
         "status": "pending",
@@ -18592,8 +18672,8 @@
     {
       "file": {
         "path": "tests/integration/bookmark-runtime.test.ts",
-        "bytes": 13253,
-        "sha256": "03165a361cdb557996d90730cddc4215cb8a933aba7e13024b6797c4c004979f"
+        "bytes": 17843,
+        "sha256": "373046fa37ca9277566a92391b792da26bbc34b57252d09e60765413fd67cb42"
       },
       "review": {
         "status": "pending",
@@ -18752,8 +18832,8 @@
     {
       "file": {
         "path": "tests/integration/product-runtime.test.ts",
-        "bytes": 15328,
-        "sha256": "1cba68d539528ba02ad7bcc012cbc70fdab9dae55638c1ff4460b353620e6c5b"
+        "bytes": 16113,
+        "sha256": "3953ed50cf7b80d66867e117a0d7606eb0bc5d6e6f46611e570fef59dd5e1c1a"
       },
       "review": {
         "status": "pending",
@@ -19793,7 +19873,7 @@
       "file": {
         "path": "tests/unit/independent-release-documents.test.ts",
         "bytes": 87825,
-        "sha256": "5e5cd5b1a599d9016f93ef08f1524ffb475dd4376f41c75471db76fdc9f06997"
+        "sha256": "5aae0a7b58833ac63bd02422578369917197f335201f0f591883fbcd8e7dedcf"
       },
       "review": {
         "status": "pending",
@@ -20112,8 +20192,8 @@
     {
       "file": {
         "path": "tests/unit/localization-core-review-ledger.test.ts",
-        "bytes": 2644,
-        "sha256": "95aa6bcbb83431023e6b243d16a7dfd7f28c6f40c5933dea36122bcbd930d319"
+        "bytes": 2917,
+        "sha256": "e8468c569b14340cba9a98557f90b9a992a6bbd829e94f3c09e9db5da0e0f229"
       },
       "review": {
         "status": "pending",
@@ -20152,8 +20232,8 @@
     {
       "file": {
         "path": "tests/unit/localization.test.ts",
-        "bytes": 25336,
-        "sha256": "1dbf6340549e82f50f5ae8fc397e0b6f4397d09cc0d8d5b8b5d6500af4b71762"
+        "bytes": 25354,
+        "sha256": "9a1160f523c2edad2b23e3e7fd984c37362310f413c1ce5ff7dfebf573e306bc"
       },
       "review": {
         "status": "pending",
@@ -20931,6 +21011,26 @@
     },
     {
       "file": {
+        "path": "tests/unit/ssh-host-error.test.ts",
+        "bytes": 3170,
+        "sha256": "29b021256ee32adbb645887149104d9cd666e34a28467f14311daed370b62cf5"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "tests/unit/ssh-proxy-config.test.ts",
         "bytes": 4121,
         "sha256": "f681ab66f067e7f333ed12badad9ab9ae1609dd5e9a8e86bd9324ed1b79212b7"
@@ -21152,8 +21252,8 @@
     {
       "file": {
         "path": "tests/unit/terminal-osc52.test.ts",
-        "bytes": 8043,
-        "sha256": "af8a337a8d16c9059816ff67bd7ce6db9fe7f93f7f8ca4fc8fa67496d05107ec"
+        "bytes": 9654,
+        "sha256": "c51de433523d643aa86e033e312f22078830d7ac8e6b0511cf3279ed574e9084"
       },
       "review": {
         "status": "pending",
@@ -21252,8 +21352,8 @@
     {
       "file": {
         "path": "tests/unit/terminal-profile.test.ts",
-        "bytes": 4255,
-        "sha256": "0dff2ee5195010aa9dd3ac062ef333939cbd58476eb0438492b693d93dc10dba"
+        "bytes": 4892,
+        "sha256": "a03f5ffdac6638310493b61b3a12b52bb1dfccb1d4f352b97d4f20e7f8d46581"
       },
       "review": {
         "status": "pending",

@@ -229,6 +229,36 @@ export class ConnectionHistoryRepository {
     return current;
   }
 
+  detachHost(hostId: string): void {
+    this.database.transaction(() => {
+      const items = this.database.all<Pick<ConnectionHistoryRow, 'id'>>(
+        'SELECT id FROM recent_connections WHERE host_id=? OR jump_host_id=? ORDER BY id',
+        hostId,
+        hostId,
+      );
+      if (!items.length) return;
+      const now = new Date().toISOString();
+      this.database.run(
+        `UPDATE recent_connections
+         SET host_id=CASE WHEN host_id=? THEN NULL ELSE host_id END,
+             jump_host_id=CASE WHEN jump_host_id=? THEN NULL ELSE jump_host_id END,
+             updated_at=?, version=version+1
+         WHERE host_id=? OR jump_host_id=?`,
+        hostId,
+        hostId,
+        now,
+        hostId,
+        hostId,
+      );
+      const revision = this.advanceRevision();
+      this.database.appendEvent('connection-history.unlinked', hostId, {
+        hostId,
+        itemIds: items.map(({ id }) => id),
+        historyRevision: revision,
+      });
+    });
+  }
+
   linkHost(id: string, hostId: string, ifMatch: string | undefined): ConnectionHistoryItem {
     let result: ConnectionHistoryItem | undefined;
     this.database.transaction(() => {

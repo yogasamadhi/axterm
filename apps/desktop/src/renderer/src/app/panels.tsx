@@ -1,5 +1,5 @@
 import { useQuery, type QueryClient } from '@tanstack/react-query';
-import type { createRuntimeClient } from '@workspace/client';
+import { RuntimeClientError, type createRuntimeClient } from '@workspace/client';
 import type {
   AiBookmarkDraft,
   Bookmark,
@@ -65,6 +65,7 @@ import { BatchOperationWorkspace } from './batch-operations/batch-operation-work
 import { BehaviorSettingsPanel } from './behavior-settings-panel';
 import { BookmarkQuickCommandsEditor } from './bookmarks/bookmark-quick-commands-editor';
 import { BookmarkTriggersEditor } from './bookmarks/bookmark-triggers-editor';
+import { sshHostErrorMessage, type SshHostOperationStage } from './bookmarks/ssh-host-error';
 import './bookmarks/ssh-bookmark-form.css';
 import { CommandHistorySettingsPanel } from './command-history/command-history-settings-panel';
 import { ConnectionProfilesPanel } from './connection-profiles/connection-profiles-panel';
@@ -169,6 +170,31 @@ export function HostsPanel({
   const [webEditing, setWebEditing] = useState<Bookmark | null>();
   const [aiBookmarkOpen, setAiBookmarkOpen] = useState(false);
   const [savingBookmark, setSavingBookmark] = useState(false);
+  const [overwritePrompt, setOverwritePrompt] = useState<Host>();
+  const overwriteDecision = useRef<((confirmed: boolean) => void) | undefined>(undefined);
+  const cancelOverwriteButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (overwritePrompt) cancelOverwriteButton.current?.focus();
+  }, [overwritePrompt]);
+  useEffect(
+    () => () => {
+      overwriteDecision.current?.(false);
+      overwriteDecision.current = undefined;
+    },
+    [],
+  );
+  function decideOverwrite(confirmed: boolean) {
+    const decide = overwriteDecision.current;
+    overwriteDecision.current = undefined;
+    setOverwritePrompt(undefined);
+    decide?.(confirmed);
+  }
+  function confirmOverwrite(host: Host): Promise<boolean> {
+    setOverwritePrompt(host);
+    return new Promise((resolve) => {
+      overwriteDecision.current = resolve;
+    });
+  }
   const [connecting, setConnecting] = useState<Host>();
   const [error, setError] = useState('');
   const [importGrant, setImportGrant] = useState<FileGrant>();
@@ -361,16 +387,44 @@ export function HostsPanel({
       requestAnimationFrame(() => formElement.reportValidity());
       return;
     }
-    const form = new FormData(formElement);
     const submitAction =
       ((event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null)?.value ?? 'save';
+    await saveHostForm(formElement, submitAction);
+  }
+
+  async function saveHostForm(
+    formElement: HTMLFormElement,
+    submitAction: string,
+    retryNameConflict = true,
+  ) {
+    const form = new FormData(formElement);
     setError('');
     setSavingBookmark(true);
     const createdCredentialRefs: string[] = [];
     let referencesCommitted = false;
     let savedHost: Host | undefined;
     let savedBookmark: Bookmark | undefined;
+    let operationStage: SshHostOperationStage = 'save';
+    let retryWithFreshTarget = false;
+    let overwriteHost: Host | undefined;
+    let currentHosts = hosts;
+    let createTree: BookmarkTree | undefined;
     try {
+      if (!activeEditingHost) {
+        [currentHosts, createTree] = await Promise.all([client.hosts(), client.bookmarkTree()]);
+        queryClient.setQueryData(['hosts'], currentHosts);
+        queryClient.setQueryData(['bookmark-tree'], createTree);
+        overwriteHost = currentHosts.find(({ name }) => name === String(form.get('name')).trim());
+        if (overwriteHost && !(await confirmOverwrite(overwriteHost))) {
+          requestAnimationFrame(() =>
+            formElement
+              .querySelector<HTMLButtonElement>(`button[value="${submitAction}"]`)
+              ?.focus(),
+          );
+          return;
+        }
+      }
+      operationStage = 'credential';
       const password = String(form.get('password') ?? '');
       const save = form.get('save') === 'on';
       const selectedAuthType = String(form.get('authType')) as
@@ -522,6 +576,7 @@ export function HostsPanel({
           path: String(form.get('sshAgentPath') ?? '').trim() || null,
         },
       };
+      operationStage = 'save';
       if (activeEditingHost) {
         const tree = queryClient.getQueryData<BookmarkTree>(['bookmark-tree']) ?? bookmarkTree;
         const bookmark =
@@ -547,9 +602,12 @@ export function HostsPanel({
         savedHost = result.host;
         savedBookmark = result.bookmark;
       } else {
-        const tree = queryClient.getQueryData<BookmarkTree>(['bookmark-tree']) ?? bookmarkTree;
+        const tree = createTree;
         if (!tree) throw new HostFormInputError(x('hosts.treeUnavailable'));
         const result = await client.createSshBookmark(tree, {
+          ...(overwriteHost
+            ? { overwrite: { hostId: overwriteHost.id, hostVersion: overwriteHost.version } }
+            : {}),
           host: input,
           bookmark: {
             groupId: String(form.get('groupId') || '') || null,
@@ -564,6 +622,8 @@ export function HostsPanel({
         });
         referencesCommitted = true;
         queryClient.setQueryData(['bookmark-tree'], result.tree);
+        if (overwriteHost)
+          await cleanupReplacedCredentials(client, currentHosts, overwriteHost, result.host);
         savedHost = result.host;
         savedBookmark = result.bookmark;
       }
@@ -592,6 +652,7 @@ export function HostsPanel({
         setEditing(false);
       }
       if (submitAction === 'save-and-connect' && savedHost && savedBookmark) {
+        operationStage = 'connect';
         const connection = await client.createConnection(
           savedHost.id,
           save ? undefined : password || undefined,
@@ -601,11 +662,13 @@ export function HostsPanel({
         );
         const ready = await waitForReadyConnection(client, connection.id, x);
         await queryClient.invalidateQueries({ queryKey: ['connections'] });
+        operationStage = 'terminal';
         await openShell(
           ready,
           savedBookmark.profileId ?? undefined,
           savedBookmark.title,
           savedBookmark.id,
+          true,
         );
       }
     } catch (cause) {
@@ -613,10 +676,25 @@ export function HostsPanel({
         await Promise.allSettled(
           createdCredentialRefs.map((credentialRef) => client.deleteCredential(credentialRef)),
         );
-      setError(cause instanceof HostFormInputError ? cause.message : x('hosts.operationFailed'));
+      retryWithFreshTarget =
+        retryNameConflict &&
+        !activeEditingHost &&
+        !overwriteHost &&
+        cause instanceof RuntimeClientError &&
+        cause.code === 'HOST_NAME_CONFLICT';
+      if (!retryWithFreshTarget)
+        setError(
+          cause instanceof HostFormInputError
+            ? cause.message
+            : sshHostErrorMessage(cause, operationStage, x),
+        );
+      if (cause instanceof RuntimeClientError && cause.status === 412)
+        await queryClient.refetchQueries({ queryKey: ['bookmark-tree'] }).catch(() => undefined);
     } finally {
       setSavingBookmark(false);
     }
+    if (retryWithFreshTarget && formElement.isConnected)
+      await saveHostForm(formElement, submitAction, false);
   }
 
   async function importConfig() {
@@ -694,6 +772,7 @@ export function HostsPanel({
     requestedProfileId?: string,
     title?: string,
     requestedBookmarkId?: string,
+    propagateError = false,
   ) {
     try {
       const bookmark = requestedBookmarkId
@@ -724,7 +803,8 @@ export function HostsPanel({
         disconnected: false,
       });
     } catch (cause) {
-      setError(messageOf(cause, x));
+      if (propagateError) throw cause;
+      setError(sshHostErrorMessage(cause, 'terminal', x));
     }
   }
 
@@ -747,6 +827,7 @@ export function HostsPanel({
   }
 
   function closeEditor() {
+    if (savingBookmark) return;
     setError('');
     setEditing(false);
     setEditingHost(undefined);
@@ -1345,11 +1426,36 @@ export function HostsPanel({
       )}
       {editorOpen && (
         <Modal
-          className="host-bookmark-modal"
-          title={activeEditingHost ? x('hosts.editSshHost') : x('hosts.addSshHost')}
-          onClose={closeEditor}
+          className={overwritePrompt ? 'ssh-overwrite-modal' : 'host-bookmark-modal'}
+          title={
+            overwritePrompt
+              ? x('hosts.overwriteTitle')
+              : activeEditingHost
+                ? x('hosts.editSshHost')
+                : x('hosts.addSshHost')
+          }
+          onClose={overwritePrompt ? () => decideOverwrite(false) : closeEditor}
         >
+          {overwritePrompt && (
+            <div className="ssh-overwrite-confirmation">
+              <p>{x('hosts.overwriteMessage', { name: overwritePrompt.name })}</p>
+              <p>{x('hosts.overwriteReferences')}</p>
+              <div className="modal-actions">
+                <button
+                  ref={cancelOverwriteButton}
+                  type="button"
+                  onClick={() => decideOverwrite(false)}
+                >
+                  {x('common.cancel')}
+                </button>
+                <button className="primary" type="button" onClick={() => decideOverwrite(true)}>
+                  {x('hosts.overwriteConfirm')}
+                </button>
+              </div>
+            </div>
+          )}
           <form
+            style={overwritePrompt ? { display: 'none' } : undefined}
             className="form-grid host-protocol-form"
             data-active-tab={hostFormTab}
             key={activeEditingBookmark?.id ?? 'new'}
@@ -6938,19 +7044,20 @@ async function waitForReadyConnection(
   const deadline = Date.now() + 120_000;
   while (Date.now() < deadline) {
     const connection = (await client.connections()).find(({ id }) => id === connectionId);
-    if (!connection) throw new Error(x('app.connectionClosed'));
+    if (!connection) throw new RuntimeClientError('CONNECTION_CLOSED', x('app.connectionClosed'));
     if (connection.state === 'ready') return connection;
     if (connection.state === 'failed')
-      throw new Error(
+      throw new RuntimeClientError(
+        connection.errorCode ?? 'SSH_CONNECTION_FAILED',
         x('app.connectionFailed', {
           detail: connection.errorCode ? `: ${connection.errorCode}` : '',
         }),
       );
     if (connection.state === 'closing' || connection.state === 'closed')
-      throw new Error(x('app.connectionClosed'));
+      throw new RuntimeClientError('CONNECTION_CLOSED', x('app.connectionClosed'));
     await new Promise((resolve) => window.setTimeout(resolve, 200));
   }
-  throw new Error(x('app.sshWaitTimeout'));
+  throw new RuntimeClientError('SSH_CONNECTION_TIMEOUT', x('app.sshWaitTimeout'));
 }
 function updaterStateLabel(state: UpdaterStatus['state'], x: Translator): string {
   const labels: Record<UpdaterStatus['state'], AxtermMessageKey> = {

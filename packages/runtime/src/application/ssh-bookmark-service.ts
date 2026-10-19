@@ -31,6 +31,39 @@ export class SshBookmarkService {
     const command = createSshBookmarkSchema.parse(input);
     let result: SshBookmarkMutationResult | undefined;
     this.unitOfWork.transaction(() => {
+      if (command.overwrite) {
+        const current = this.hosts.assertHostVersion(
+          command.overwrite.hostId,
+          `"v${command.overwrite.hostVersion}"`,
+        );
+        if (current.name !== command.host.name)
+          throw new ApplicationError('PRECONDITION_FAILED', 'Overwrite target name changed', 412);
+        this.bookmarks.assertMutationTarget(command.bookmark.groupId, treeIfMatch);
+        const previousBookmark = this.bookmarks
+          .snapshot()
+          .bookmarks.find(({ protocol, hostId }) => protocol === 'ssh' && hostId === current.id);
+        const host = this.hosts.updateHost(
+          current.id,
+          { ...command.host, groupId: null },
+          `"v${current.version}"`,
+        );
+        const tree = previousBookmark
+          ? this.bookmarks.updateBookmarkWithPlacement(
+              previousBookmark.id,
+              command.bookmark,
+              treeIfMatch,
+            )
+          : this.bookmarks.createBookmark(
+              { ...command.bookmark, protocol: 'ssh', hostId: host.id },
+              treeIfMatch,
+            );
+        const bookmark = tree.bookmarks.find(({ id, hostId }) =>
+          previousBookmark ? id === previousBookmark.id : hostId === host.id,
+        );
+        if (!bookmark) throw new ApplicationError('INVALID_STATE', 'Overwritten Bookmark missing');
+        result = { host, bookmark, tree };
+        return;
+      }
       const createdHost = this.hosts.createHost({
         ...command.host,
         // BookmarkGroup is the only placement model for newly saved destinations.

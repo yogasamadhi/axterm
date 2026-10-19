@@ -35,6 +35,7 @@ import {
 } from '@workspace/contracts';
 import { ApplicationError } from '../../application/errors';
 import type { ProductDatabase } from './database';
+import { ConnectionHistoryRepository } from './connection-history-repository';
 
 interface HostGroupRow {
   id: string;
@@ -315,8 +316,9 @@ export class ProductRepository {
       reasons.push('jumpHost');
     if (
       this.database.get(
-        'SELECT id FROM recent_connections WHERE host_id = ? OR jump_host_id = ? LIMIT 1',
-        id,
+        // A primary historical target has its own secret-free snapshot. Only an
+        // actual historical jump dependency retains the saved Host (ADR-031).
+        'SELECT id FROM recent_connections WHERE jump_host_id = ? LIMIT 1',
         id,
       )
     )
@@ -392,7 +394,7 @@ export class ProductRepository {
         this.database.appendEvent('host.created', entity.id, entity);
       });
     } catch (error) {
-      throwConstraint(error, 'A host with this name already exists');
+      throwConstraint(error, 'A host with this name already exists', 'HOST_NAME_CONFLICT');
     }
     return entity;
   }
@@ -533,7 +535,7 @@ export class ProductRepository {
       });
     } catch (error) {
       if (error instanceof ApplicationError) throw error;
-      throwConstraint(error, 'A host with this name already exists');
+      throwConstraint(error, 'A host with this name already exists', 'HOST_NAME_CONFLICT');
     }
     return next;
   }
@@ -547,6 +549,7 @@ export class ProductRepository {
           'Host is referenced by a Bookmark; use the saved SSH destination delete workflow',
           409,
         );
+      new ConnectionHistoryRepository(this.database).detachHost(id);
       this.database.run(
         'UPDATE hosts SET jump_host_id = NULL, version = version + 1 WHERE jump_host_id = ?',
         id,
@@ -1798,7 +1801,17 @@ function stableJson(value: unknown): string {
       .join(',')}}`;
   return JSON.stringify(value);
 }
-function throwConstraint(error: unknown, message: string): never {
+function throwConstraint(
+  error: unknown,
+  message: string,
+  nameConflictCode?: 'HOST_NAME_CONFLICT',
+): never {
+  if (
+    nameConflictCode &&
+    error instanceof Error &&
+    /unique constraint failed: hosts\.name\b/iu.test(error.message)
+  )
+    throw new ApplicationError(nameConflictCode, message, 409);
   if (error instanceof Error && /constraint|unique/i.test(error.message))
     throw new ApplicationError('CONFLICT', message, 409);
   throw error;
