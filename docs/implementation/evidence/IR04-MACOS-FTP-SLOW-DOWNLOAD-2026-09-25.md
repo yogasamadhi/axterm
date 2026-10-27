@@ -20,11 +20,11 @@ the same journey.
 ```sh
 AXTERM_PACKAGED_APP=/tmp/axterm-isarray-legal-package.Xp737O/mac-arm64/Axterm.app \
 AXTERM_PACKAGED_FTP_LONG_TRANSFER=1 \
-bunx playwright test --project=packaged \
+pnpm exec playwright test --project=packaged \
   -g 'packaged FTP Widget runs the independent server'
 ```
 
-Result: **1/1 passed** in 1.2 minutes. `bun run typecheck` passed. The app
+Result: **1/1 passed** in 1.2 minutes. `pnpm run typecheck` passed. The app
 was copied outside the checkout by the journey; the selected package was an
 existing local unsigned build containing the corrected FTP server, not a newly
 signed or publicly downloaded installer. `sbom:packaged:check` rederived its

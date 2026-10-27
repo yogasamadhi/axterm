@@ -81,7 +81,7 @@ describe('installed package gates', () => {
     expect(windowsGate).toContain("Join-Path $installDirectory 'Axterm.exe'");
     expect(windowsGate).toContain("-Filter 'Uninstall*.exe'");
     expect(windowsGate).toContain('$env:AXTERM_PACKAGED_APP = $installDirectory');
-    expect(windowsGate).toContain('& bun run test:packaged');
+    expect(windowsGate).toContain('& pnpm run test:packaged');
     expect(windowsGate).toContain('Remove-Item -LiteralPath $installDirectory -Recurse -Force');
   });
 
@@ -96,25 +96,25 @@ describe('installed package gates', () => {
     expect(rootPackage.scripts['test:nsis:windows']).toBe(
       'pwsh -NoProfile -File scripts/test-windows-nsis.ps1',
     );
-    expect(workflow).toContain('run: bun run test:deb:linux');
-    expect(workflow).toContain('run: bun run test:appimage:linux');
+    expect(workflow).toContain('run: pnpm run test:deb:linux');
+    expect(workflow).toContain('run: pnpm run test:appimage:linux');
     expect(workflow).toContain(
       'sudo apt-get install -y curl xvfb x11-utils python3-gi gir1.2-gtk-3.0 squashfs-tools',
     );
-    expect(workflow).toContain('run: bun run test:nsis:windows');
+    expect(workflow).toContain('run: pnpm run test:nsis:windows');
   });
 
   it('checks the AppImage payload before upload and again after download', () => {
-    const firstCheck = workflow.indexOf('run: bun run test:appimage:linux');
+    const firstCheck = workflow.indexOf('run: pnpm run test:appimage:linux');
     const upload = workflow.indexOf('uses: actions/upload-artifact');
     const downloadedCheck = workflow.indexOf(
-      'run: bun run test:appimage:linux -- --artifact-dir downloaded-release',
+      'run: pnpm run test:appimage:linux -- --artifact-dir downloaded-release',
     );
     const download = workflow.indexOf('name: Download uploaded SPDX sidecar for byte verification');
-    expect(firstCheck).toBeGreaterThan(workflow.indexOf('run: bun run package'));
+    expect(firstCheck).toBeGreaterThan(workflow.indexOf('run: pnpm run package'));
     expect(firstCheck).toBeLessThan(upload);
     expect(downloadedCheck).toBeGreaterThan(download);
-    expect(workflow.match(/run: bun run test:appimage:linux(?:$| --)/gmu)).toHaveLength(2);
+    expect(workflow.match(/run: pnpm run test:appimage:linux(?:$| --)/gmu)).toHaveLength(2);
   });
 
   it('runs the real AppImage under Linux x64 before upload and after download', () => {
@@ -134,19 +134,19 @@ describe('installed package gates', () => {
     expect(packagedSuite).toContain("toHaveAttribute('data-state', 'ready')");
     expect(packagedSuite).toContain('createReadStream(copiedAppImage)');
     expect(packagedSuite).toContain('verifyAppImageRuntimeArtifact(');
-    const firstRuntime = workflow.indexOf('run: bun run test:appimage:linux:runtime');
-    const firstStatic = workflow.indexOf('run: bun run test:appimage:linux\n');
+    const firstRuntime = workflow.indexOf('run: pnpm run test:appimage:linux:runtime');
+    const firstStatic = workflow.indexOf('run: pnpm run test:appimage:linux\n');
     const upload = workflow.indexOf('uses: actions/upload-artifact');
     const downloadedRuntime = workflow.indexOf(
-      'run: bun run test:appimage:linux:runtime -- --artifact-dir downloaded-release',
+      'run: pnpm run test:appimage:linux:runtime -- --artifact-dir downloaded-release',
     );
     const downloadedStatic = workflow.indexOf(
-      'run: bun run test:appimage:linux -- --artifact-dir downloaded-release',
+      'run: pnpm run test:appimage:linux -- --artifact-dir downloaded-release',
     );
     expect(firstRuntime).toBeGreaterThan(firstStatic);
     expect(firstRuntime).toBeLessThan(upload);
     expect(downloadedRuntime).toBeGreaterThan(downloadedStatic);
-    expect(workflow.match(/run: bun run test:appimage:linux:runtime/gmu)).toHaveLength(2);
+    expect(workflow.match(/run: pnpm run test:appimage:linux:runtime/gmu)).toHaveLength(2);
     expect(workflow).toContain('downloaded-release/AXTERM_APPIMAGE_RUNTIME.*.json');
   });
 
@@ -176,13 +176,13 @@ describe('installed package gates', () => {
       ['linux-x64', 'AXTERM_RELEASE_ARTIFACTS.linux-x64.json'],
     ]) {
       expect(workflow).toContain(
-        `bun run release:hashes:check -- release --platform ${platform} --manifest release/${manifest}`,
+        `pnpm run release:hashes:check -- release --platform ${platform} --manifest release/${manifest}`,
       );
     }
-    expect(workflow.indexOf('bun run release:hashes:check')).toBeGreaterThan(
-      workflow.indexOf('run: bun run test:dmg:macos'),
+    expect(workflow.indexOf('pnpm run release:hashes:check')).toBeGreaterThan(
+      workflow.indexOf('run: pnpm run test:dmg:macos'),
     );
-    expect(workflow.indexOf('bun run release:hashes:check')).toBeLessThan(
+    expect(workflow.indexOf('pnpm run release:hashes:check')).toBeLessThan(
       workflow.indexOf('uses: actions/upload-artifact'),
     );
   });
@@ -200,7 +200,7 @@ describe('installed package gates', () => {
       ['linux-x64', 'AXTERM_RELEASE_ARTIFACTS.linux-x64.json'],
     ]) {
       expect(workflow).toContain(
-        `bun run release:hashes:check -- downloaded-release --platform ${platform} --manifest downloaded-release/${manifest} --receipt downloaded-release/AXTERM_UPLOAD_ROUNDTRIP.${platform}.json`,
+        `pnpm run release:hashes:check -- downloaded-release --platform ${platform} --manifest downloaded-release/${manifest} --receipt downloaded-release/AXTERM_UPLOAD_ROUNDTRIP.${platform}.json`,
       );
       expect(workflow).toContain(
         `--platform ${platform} --sidecar downloaded-release/AXTERM_PACKAGED_ARTIFACTS.${platform}.spdx.json --receipt downloaded-release/AXTERM_SPDX_UPLOAD_ROUNDTRIP.${platform}.json`,
@@ -209,7 +209,7 @@ describe('installed package gates', () => {
 
     const downloadIndex = workflow.indexOf('uses: actions/download-artifact');
     const downloadedVerificationIndex = workflow.indexOf(
-      'bun run release:hashes:check -- downloaded-release',
+      'pnpm run release:hashes:check -- downloaded-release',
     );
     const downloadedSpdxVerificationIndex = workflow.indexOf(
       '--sidecar downloaded-release/AXTERM_PACKAGED_ARTIFACTS.',

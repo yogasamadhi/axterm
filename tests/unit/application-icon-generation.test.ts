@@ -6,10 +6,14 @@ describe('Axterm application icon generation', () => {
   it.skipIf(process.platform !== 'darwin')(
     'keeps PNG, ICO and ICNS variants byte-identical to the editable SVG source',
     () => {
-      const result = spawnSync('bun', ['run', 'icons:check'], {
-        cwd: resolve('.'),
-        encoding: 'utf8',
-      });
+      const result = spawnSync(
+        process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm',
+        ['run', 'icons:check'],
+        {
+          cwd: resolve('.'),
+          encoding: 'utf8',
+        },
+      );
 
       expect(result.error).toBeUndefined();
       expect(result.status, `${result.stdout}\n${result.stderr}`).toBe(0);

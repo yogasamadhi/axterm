@@ -1,16 +1,26 @@
 # Resolved dependency versions
 
+2026-10-26: ADR-034 replaces Bun with pnpm as the only package manager and task
+runner. The workspace manifest, the frozen lockfile (`pnpm-lock.yaml`), the
+reviewed patches, the build-script allowlist and the dependency-audit command
+move to pnpm. Direct dependency versions are unchanged; pnpm resolves a few
+transitive patch-level versions differently from Bun, so the regenerated
+component index, license-text archive, production SBOM and attribution ledger
+record the current pnpm graph. The product runtime is unchanged: the Desktop
+Runtime still runs on the Node embedded in Electron and the Core Runtime still
+never imports a Bun runtime API.
+
 2026-10-09: ADR-030 adds the MIT pure policy/scanner/evidence source subset of
 `@erichll/pi-auto-review` 0.26.0 from `erichll/pi-packages` commit
 `6eb4d9668f6d23fb6793029d5d145b8ae0fcd0ad`. The three source modules and license
 are hash-bound in `vendor/pi-auto-review/PROVENANCE.json`, compiled only by the
 private Pi engine. No npm dependency, extension loader or permission-system is
-installed; the existing Pi 1.0.3 and Bun lock pins remain unchanged.
+installed; the existing Pi 1.0.3 and pnpm lock pins remain unchanged.
 
 Verified: 2026-09-25. Direct versions are exact; all transitive resolutions are
-recorded in `bun.lock`.
+recorded in `pnpm-lock.yaml`.
 
-Tooling host: Bun 1.4.0, Node 24.18.0, macOS arm64. Desktop Runtime uses the Node
+Tooling host: pnpm 11.22.0, Node 24.18.0, macOS arm64. Desktop Runtime uses the Node
 embedded in Electron 44.3.0. Electron-builder 27 still has no accepted stable build
 for this repository, so 26.16.1 remains the temporary exception recorded by
 [ADR-001](../adr/ADR-001-foundation-toolchain.md).
@@ -19,7 +29,7 @@ The Linux AppImage payload gate additionally requires the release-host
 `unsquashfs` CLI from `squashfs-tools`. Local static validation used Homebrew
 `squashfs` 4.7.5 on macOS arm64; Linux CI installs Ubuntu's
 `squashfs-tools` with its other native/Xvfb prerequisites. This is a release-
-host extraction tool, not an Axterm runtime or Bun dependency, and the gate
+host extraction tool, not an Axterm runtime or pnpm dependency, and the gate
 does not execute the AppImage's x64 runtime under macOS emulation.
 
 The exception was revalidated against the primary npm registry on 2026-09-22:
@@ -61,9 +71,9 @@ and native-module gates required by ADR-001.
 
 ## Security override
 
-| Resolution                            | Version | Reason                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| ------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| every `esbuild` transitive resolution | 0.28.2  | Root Bun `overrides` forces the already-pinned direct version across the graph. `drizzle-kit@0.31.10` still depends on deprecated `@esbuild-kit/esm-loader`, whose declared `~0.18.20` resolution is affected by GHSA-67mh-4wv8-2f99; the verified patched line begins at 0.25.0. Keep this override until an upstream update removes the vulnerable chain and a fresh audit/CLI/build verification approves its removal. |
+| Resolution                            | Version | Reason                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| every `esbuild` transitive resolution | 0.28.2  | Root pnpm `overrides` forces the already-pinned direct version across the graph. `drizzle-kit@0.31.10` still depends on deprecated `@esbuild-kit/esm-loader`, whose declared `~0.18.20` resolution is affected by GHSA-67mh-4wv8-2f99; the verified patched line begins at 0.25.0. Keep this override until an upstream update removes the vulnerable chain and a fresh audit/CLI/build verification approves its removal. |
 
 ## Desktop
 
@@ -283,7 +293,7 @@ Pi AI / Agent / telemetry source now builds into `@workspace/pi-engine` and is c
 by the Runtime AI adapter (ADR-027). The upstream checkout remains unchanged. Source hashes
 are bound in `packages/pi-engine/source-manifest.json`; catalog bytes are pinned to the
 upstream Nix catalog revision `sha256-c5d5070c7592ca8e27743e892a7eec1d6c883be8034f888735238cdfdb3ab70f`.
-`bun run pi:build` validates both and hydrates ignored upstream model data offline. Source
+`pnpm run pi:build` validates both and hydrates ignored upstream model data offline. Source
 snapshots retain the three engine source trees, hydration helpers, catalog pin and MIT license,
 while omitting `.gitmodules`, Git metadata and unrelated CLI packages. ADR-029 additionally
 reuses coding-agent `loadSkillsFromDir` / `stripFrontmatter` as build-time skill loaders;

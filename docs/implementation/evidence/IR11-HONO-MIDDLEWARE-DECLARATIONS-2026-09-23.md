@@ -27,7 +27,7 @@ README hashes, package identities, declarations and notice references. The
 existing source/package/About legal-document checks compare the transition
 notice bytes across those locations.
 
-Verification of the updated source snapshot: `bun run check` passed 218 test
+Verification of the updated source snapshot: `pnpm run check` passed 218 test
 files (five skipped), 1,008 tests (33 skipped), the 358-module / 1,304-dependency
 Level 1 gate, 267 Contract operations, production build/layout and all nine
 visual/accessibility journeys. A fresh unsigned macOS arm64 directory app had

@@ -8,7 +8,7 @@ fi
 
 script_directory=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
 source_root=$(CDPATH='' cd -- "$script_directory/.." && pwd)
-image="${AXTERM_LINUX_FTP_TEST_IMAGE:-oven/bun@sha256:5ff609364c049b54eb0ff560ec96319729a972078ef2c755d758f0c6ef89c2d6}"
+image="${AXTERM_LINUX_FTP_TEST_IMAGE:-node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd}"
 platform="${AXTERM_LINUX_FTP_TEST_PLATFORM:-}"
 
 case "$platform" in
@@ -48,6 +48,9 @@ docker run "$@" --rm \
   --mount "type=bind,src=$source_root,dst=/workspace,readonly" \
   --workdir /workspace \
   --env "AXTERM_LINUX_FTP_EXPECT_ARCH=$expected_arch" \
-  --entrypoint bun \
+  --entrypoint node \
   "$image" \
+  --experimental-transform-types \
+  --disable-warning=ExperimentalWarning \
+  --import ./scripts/register-ts-resolver.mjs \
   scripts/test-linux-ftp-widget-container.mjs

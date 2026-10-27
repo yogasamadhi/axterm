@@ -16,7 +16,7 @@ key. An `active` record must contain a real public HTTPS manifest URL, an
 Ed25519 SPKI public key, and a dated release-owner approval with evidence.
 `release:updater-feed:active-check` rejects the current pending state; the
 final-public promotion gate includes it as a prerequisite. The ordinary
-`bun run check` runs the structural check without pretending that a public
+`pnpm run check` runs the structural check without pretending that a public
 feed exists.
 
 Electron-builder copies the record into `AXTERM_UPDATE_FEED.json` under each
@@ -35,9 +35,9 @@ packaged file byte-for-byte against the reviewed source record; an optional
   passed **31/31**. The tests cover pending versus active promotion, public
   HTTPS/key/approval validation, package byte mismatch, missing package
   record, and precedence over hostile runtime environment values.
-- `bun run build` passed. A fresh unsigned macOS arm64 directory app was built
+- `pnpm run build` passed. A fresh unsigned macOS arm64 directory app was built
   under `/tmp/axterm-update-feed-UANiMN/mac-arm64/Axterm.app`.
-- `bun run release:updater-feed:package-check --
+- `pnpm run release:updater-feed:package-check --
 /tmp/axterm-update-feed-UANiMN/mac-arm64/Axterm.app/Contents/Resources`
   passed. The source and packaged feed record both have SHA-256
   `ce4f3e7a03e4b6239d0c972629292f7703bb6bb5c568275b2d5ffd7a0d1acdc9`.
@@ -47,7 +47,7 @@ packaged file byte-for-byte against the reviewed source record; an optional
   `7cdc3d5718966e36781af2fab0fe95047e1c557da5d1fe9d5a65bab59dcf8ed1`,
   `app.asar` SHA-256
   `ad751ce14a0db32ee4c65c0883299a89483dc6d3798632c29ff306b343637b6b`.
-- `bun run release:updater-feed:check` passes; the active check exits 1 with
+- `pnpm run release:updater-feed:check` passes; the active check exits 1 with
   `Public update-feed configuration is still pending`, as required.
 
 | Source                        | SHA-256                                                            |

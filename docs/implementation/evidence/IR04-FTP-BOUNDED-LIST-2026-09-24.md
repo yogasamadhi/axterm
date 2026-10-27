@@ -17,13 +17,13 @@ the async iterator and closes the directory handle.
 
 ## Reproduction and observed results
 
-| Check                                                                                                                                                                                                      | Result                                                                                                                                                                                          |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bunx vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts`                                                                                                                      | 27/27 passed. The new real-FTP regression rejects 1,001 entries for each of `LIST`, `NLST` and `MLSD`, accepts `NOOP` after each rejection, and lists exactly 1,000 entries after removing one. |
-| `AXTERM_LINUX_FTP_TEST_PLATFORM=linux/arm64 bun run test:ftp:linux-container`                                                                                                                              | Passed, including `linux-arm64-ftp-bounded-list=pass max=1000`.                                                                                                                                 |
-| `AXTERM_LINUX_FTP_TEST_PLATFORM=linux/amd64 bun run test:ftp:linux-container`                                                                                                                              | Passed, including `linux-x64-ftp-bounded-list=pass max=1000`.                                                                                                                                   |
-| `bun run build` and `node scripts/package-desktop.mjs --dir --output /tmp/axterm-ftp-bounded-package-Lx58xw`                                                                                               | Passed; built a new unsigned macOS arm64 directory package outside the checkout.                                                                                                                |
-| `AXTERM_PACKAGED_APP=/tmp/axterm-ftp-bounded-package-Lx58xw/mac-arm64/Axterm.app bunx playwright test --project=packaged -g 'packaged FTP Widget runs the independent server outside the source checkout'` | 1/1 passed. The packaged test exercises all three listing verbs, recovery, the exact 1,000-entry boundary and the existing transfer, rename, symlink, curl and lifecycle path.                  |
+| Check                                                                                                                                                                                                           | Result                                                                                                                                                                                          |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm exec vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts`                                                                                                                      | 27/27 passed. The new real-FTP regression rejects 1,001 entries for each of `LIST`, `NLST` and `MLSD`, accepts `NOOP` after each rejection, and lists exactly 1,000 entries after removing one. |
+| `AXTERM_LINUX_FTP_TEST_PLATFORM=linux/arm64 pnpm run test:ftp:linux-container`                                                                                                                                  | Passed, including `linux-arm64-ftp-bounded-list=pass max=1000`.                                                                                                                                 |
+| `AXTERM_LINUX_FTP_TEST_PLATFORM=linux/amd64 pnpm run test:ftp:linux-container`                                                                                                                                  | Passed, including `linux-x64-ftp-bounded-list=pass max=1000`.                                                                                                                                   |
+| `pnpm run build` and `node scripts/package-desktop.mjs --dir --output /tmp/axterm-ftp-bounded-package-Lx58xw`                                                                                                   | Passed; built a new unsigned macOS arm64 directory package outside the checkout.                                                                                                                |
+| `AXTERM_PACKAGED_APP=/tmp/axterm-ftp-bounded-package-Lx58xw/mac-arm64/Axterm.app pnpm exec playwright test --project=packaged -g 'packaged FTP Widget runs the independent server outside the source checkout'` | 1/1 passed. The packaged test exercises all three listing verbs, recovery, the exact 1,000-entry boundary and the existing transfer, rename, symlink, curl and lifecycle path.                  |
 
 | Evidence item            | SHA-256                                                            |
 | ------------------------ | ------------------------------------------------------------------ |
@@ -33,7 +33,7 @@ the async iterator and closes the directory handle.
 | Packaged FTP journey     | `160877db00d49c0915e4e6dd40335eedd671e4a1af196671b6427d719b49b56c` |
 | macOS package `app.asar` | `f443b4e1ebd8bff89af775104f4664f07dfed8dcc2371dcc9e71fee784b384f2` |
 
-The complete `bun run check` passed after the code and test changes: 221 test
+The complete `pnpm run check` passed after the code and test changes: 221 test
 files passed / 5 skipped; 1,098 tests passed / 33 skipped; 359 architecture
 modules / 1,310 dependencies; 267 Contract operations; source-snapshot,
 license/SBOM, build/package-layout and all 11 visual/accessibility journeys.
@@ -69,7 +69,7 @@ suite passed **23 applicable journeys** and skipped eight Windows-only,
 historical-binary or opt-in SSH journeys. The FTP journey included all three
 over-limit listing commands, recovery and the exact 1,000-entry boundary.
 After copying the three files into ignored
-`release/axterm-linux-ftp-bounded-20260924/`, `bun run release:hashes:check`
+`release/axterm-linux-ftp-bounded-20260924/`, `pnpm run release:hashes:check`
 again verified the retained DEB against its manifest.
 
 The Linux install gate previously forwarded only `AXTERM_PACKAGED_APP`, so

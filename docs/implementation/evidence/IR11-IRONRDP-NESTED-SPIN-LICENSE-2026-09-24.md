@@ -29,7 +29,7 @@ The full Mac packaged Playwright suite passed **22 applicable journeys** with
 11 platform/fixture skips, including exact Legal/About text access and
 official IronRDP initialization outside the checkout. This did not connect
 to a live RDP server.
-The follow-up `bun run check` passed 233 unit/integration files (1,167 tests
+The follow-up `pnpm run check` passed 233 unit/integration files (1,167 tests
 passed, 34 skipped), the Level 1 architecture check over 360 modules and
 1,310 dependencies, 267 Contract operations, source/legal checks, production
 build and all 11 visual/accessibility journeys. The final-public composite
@@ -41,14 +41,14 @@ the target inventory, scans their nested legal filenames and the 23 tagged
 workspace package directories, and compares this file to the archived bytes:
 
 ```sh
-bun run licenses:ironrdp:nested:source-check -- /path/to/IronRDP-tagged-checkout
+pnpm run licenses:ironrdp:nested:source-check -- /path/to/IronRDP-tagged-checkout
 ```
 
 On 2026-09-24 the pinned checkout at commit
 `e45f68c7e52297ca50d33b44c0ace36c9940fbe6` produced exactly one nested
 legal filename in those 259 package roots:
 `tracing-core@0.1.36 src/spin/LICENSE`. The routine
-`bun run licenses:ironrdp:nested:check` pins the source-package identity and
+`pnpm run licenses:ironrdp:nested:check` pins the source-package identity and
 preserved bytes without requiring a local Cargo cache. The 260-entry human
 review ledger now carries this nested text on the `tracing-core` candidate;
 any change to its bytes or identity resets that entry's review.

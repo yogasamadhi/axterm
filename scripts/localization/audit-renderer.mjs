@@ -87,7 +87,7 @@ if (writeBaseline) {
       ),
     );
     throw new Error(
-      'Renderer localization literals changed; migrate new text and refresh the reviewed baseline with bun run locales:audit:update',
+      'Renderer localization literals changed; migrate new text and refresh the reviewed baseline with pnpm run locales:audit:update',
     );
   }
   console.log(`Renderer localization baseline verified: ${report.total} literals remain`);

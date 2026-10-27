@@ -133,7 +133,7 @@ Axterm 保留自己的品牌和架构。Legacy Prototype 的代码、测试和�
 8. **对照验收。** 在三个固定视口运行截图差异，检查像素、几何、键盘和可访问性；不得
    为通过比较扩大 mask 或放松阈值。
 9. **更新台账。** 同步矩阵、`STATUS.md`、`UPSTREAM.md`；依赖变化更新 `VERSIONS.md`；
-   最后运行 `bun run check`。证据不完整时保持 `Partial` 或 `Implemented`。
+   最后运行 `pnpm run check`。证据不完整时保持 `Partial` 或 `Implemented`。
 
 ### 阻塞登记与 99% 交付线
 
@@ -427,7 +427,7 @@ H-12 已在 Desktop Host 落地签名更新源，生产 Electron 通过真实 lo
 5. 完成所有 route/state/menu/modal 的三档视觉 corpus 和人工几何审查。
 6. 在 macOS arm64、Windows x64、Linux x64 安装包中运行完整 golden journey；完成旧版本
    升级、SQLite/Vault 保留、原生模块、签名接入点和更新测试源验证。
-7. 运行完整架构、Contract、secret leak、依赖、ASAR 和 `bun run check` 门禁，关闭所有差异。
+7. 运行完整架构、Contract、secret leak、依赖、ASAR 和 `pnpm run check` 门禁，关闭所有差异。
 
 完成条件：常规目标为 122 项全部 Certified 或有审核通过的 Not applicable。实施交付可在
 至少 121/122 且唯一剩余行已完整登记为 Blocked 时收口；Phase 10 未关闭时，Phase 21 的

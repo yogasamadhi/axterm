@@ -1,13 +1,12 @@
-import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
 import { basename, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { format } from 'prettier';
-import { componentIndexFromBunReport } from './generate-component-index.mjs';
+import { componentIndexFromLicenseReport } from './generate-component-index.mjs';
+import { installedLicenseReport, installedPackagesRoot } from './installed-license-report.mjs';
 
 const repositoryRoot = resolve(import.meta.dirname, '../..');
-const installedPackagesRoot = resolve(repositoryRoot, 'node_modules/.bun');
 const outputPath = resolve(repositoryRoot, 'compliance/THIRD_PARTY_LICENSE_TEXTS.json');
 const rootLicenseFile = /^(?:licen[cs]e|copying|notice)(?:[._-].*)?$/i;
 
@@ -64,7 +63,7 @@ function packageAttribution(manifest, files) {
 function licenseFilesFromPackage(path, name, version) {
   const manifest = JSON.parse(readFileSync(join(path, 'package.json'), 'utf8'));
   if (manifest.name !== name || manifest.version !== version) {
-    throw new Error(`Bun package path does not match ${name}@${version}`);
+    throw new Error(`Package path does not match ${name}@${version}`);
   }
   const files = readdirSync(path, { withFileTypes: true })
     .filter((entry) => entry.isFile() && rootLicenseFile.test(entry.name))
@@ -84,21 +83,21 @@ function licenseFilesFromPackage(path, name, version) {
   return { files, attribution: packageAttribution(manifest, files) };
 }
 
-export function licenseTextsFromBunReport(report, options = {}) {
-  const index = componentIndexFromBunReport(report);
+export function licenseTextsFromLicenseReport(report, options = {}) {
+  const index = componentIndexFromLicenseReport(report);
   const allowedRoot = options.allowedRoot ? realpathSync(options.allowedRoot) : null;
   const byIdentity = new Map();
   for (const records of Object.values(report)) {
     for (const record of records) {
       if (!Array.isArray(record.paths) || record.paths.length !== record.versions.length) {
-        throw new Error(`Missing or unpaired Bun package paths for ${record.name}`);
+        throw new Error(`Missing or unpaired package paths for ${record.name}`);
       }
       for (const [offset, version] of record.versions.entries()) {
         const packagePath = realpathSync(record.paths[offset]);
         if (allowedRoot) {
           const subpath = relative(allowedRoot, packagePath);
           if (isAbsolute(subpath) || subpath === '..' || subpath.startsWith(`..${sep}`)) {
-            throw new Error(`Bun package path escapes installed graph: ${record.name}@${version}`);
+            throw new Error(`Package path escapes installed graph: ${record.name}@${version}`);
           }
         }
         const component = licenseFilesFromPackage(packagePath, record.name, version);
@@ -121,7 +120,7 @@ export function licenseTextsFromBunReport(report, options = {}) {
   });
   return {
     schemaVersion: 1,
-    source: 'Root LICENSE/COPYING/NOTICE files from bun pm licenses --json --prod package paths',
+    source: 'Root LICENSE/COPYING/NOTICE files from pnpm licenses list --json --prod package paths',
     scope: 'Installed production dependency graph, not an exact platform artifact SBOM.',
     limitations: [
       'Package root files do not cover file-level, nested, generated, inlined, native, Electron/Chromium, WASM or non-code notices.',
@@ -171,15 +170,8 @@ export function mismatchedPackagedLicenseTexts(archive, packages) {
 }
 
 async function installedArchive() {
-  const report = JSON.parse(
-    execFileSync('bun', ['pm', 'licenses', '--json', '--prod'], {
-      cwd: repositoryRoot,
-      encoding: 'utf8',
-      maxBuffer: 10 * 1024 * 1024,
-    }),
-  );
   return serializeLicenseTexts(
-    licenseTextsFromBunReport(report, { allowedRoot: installedPackagesRoot }),
+    licenseTextsFromLicenseReport(installedLicenseReport(), { allowedRoot: installedPackagesRoot }),
   );
 }
 
@@ -190,10 +182,10 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     console.log(`Updated ${outputPath}`);
   } else if (mode === '--check') {
     if (readFileSync(outputPath, 'utf8') !== (await installedArchive())) {
-      console.error('Production license texts are stale; run bun run licenses:texts:generate');
+      console.error('Production license texts are stale; run pnpm run licenses:texts:generate');
       process.exitCode = 1;
     } else {
-      console.log('Production root-license texts match the installed Bun graph.');
+      console.log('Production root-license texts match the installed pnpm graph.');
     }
   } else {
     console.error(

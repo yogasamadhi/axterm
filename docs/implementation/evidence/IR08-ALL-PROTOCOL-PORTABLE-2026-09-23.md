@@ -25,8 +25,8 @@ Host used by the SSH Bookmark and by RDP/VNC/SPICE jump-host settings. It then:
 4. Checks imported credential references are null and a repeated preview is
    unchanged instead of creating duplicate records.
 
-`bunx vitest run packages/runtime/src/application/axterm-configuration-service.test.ts`
-passed 12/12 tests on 2026-09-23. The complete `bun run check` then passed
+`pnpm exec vitest run packages/runtime/src/application/axterm-configuration-service.test.ts`
+passed 12/12 tests on 2026-09-23. The complete `pnpm run check` then passed
 219 test files with five skipped files (1,015 tests passed, 33 skipped), the
 358-module / 1,304-dependency Level 1 gate, 267 Contract operations,
 production build/layout and nine visual/accessibility journeys. The source

@@ -62,8 +62,8 @@ if ! url_types_json="$(plutil -extract CFBundleURLTypes json -o - "$plist_path")
   echo "Installed Axterm Info.plist does not declare URL protocol types." >&2
   exit 1
 fi
-if ! printf '%s\n' "$url_types_json" | bun -e '
-const urlTypes = JSON.parse(await Bun.stdin.text());
+if ! printf '%s\n' "$url_types_json" | node -e '
+const urlTypes = JSON.parse(require("node:fs").readFileSync(0, "utf8"));
 const schemes = new Set(urlTypes.flatMap((entry) => entry.CFBundleURLSchemes ?? []));
 const missing = ["axterm"].filter((scheme) => !schemes.has(scheme));
 const retiredName = ["elect", "erm"].join("");
@@ -85,7 +85,7 @@ if mount | grep -F "$mount_directory" >/dev/null 2>&1; then
   exit 1
 fi
 
-bun run sbom:packaged:check -- "$installed_app/Contents/Resources" --platform macos-arm64 --sidecar "$sidecar_path"
-bun run release:updater-feed:package-check -- "$installed_app/Contents/Resources"
+pnpm run sbom:packaged:check -- "$installed_app/Contents/Resources" --platform macos-arm64 --sidecar "$sidecar_path"
+pnpm run release:updater-feed:package-check -- "$installed_app/Contents/Resources"
 node scripts/commercialization/audit-retired-name.mjs --check "$installed_app"
-AXTERM_PACKAGED_APP="$installed_app" bun run test:packaged
+AXTERM_PACKAGED_APP="$installed_app" pnpm run test:packaged

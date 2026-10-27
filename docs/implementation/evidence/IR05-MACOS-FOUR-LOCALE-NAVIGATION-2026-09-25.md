@@ -28,7 +28,7 @@ Command form:
 
 ```sh
 AXTERM_PACKAGED_APP=/tmp/axterm-macos-current-dmg.2kk8Po/mac-arm64/Axterm.app \
-bunx playwright test --project=packaged \
+pnpm exec playwright test --project=packaged \
   -g 'packaged H-11 localization switches immediately and survives a cold restart'
 ```
 

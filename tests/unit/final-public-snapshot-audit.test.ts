@@ -14,7 +14,7 @@ async function snapshotDirectory() {
   const directory = await mkdtemp(join(tmpdir(), 'axterm-final-public-snapshot-'));
   directories.push(directory);
   await writeFile(join(directory, 'package.json'), '{"name":"snapshot-fixture"}\n', 'utf8');
-  await writeFile(join(directory, 'bun.lock'), '# frozen fixture lock\n', 'utf8');
+  await writeFile(join(directory, 'pnpm-lock.yaml'), '# frozen fixture lock\n', 'utf8');
   return directory;
 }
 

@@ -14,7 +14,7 @@ async function fixtureSource() {
   const directory = await mkdtemp(join(tmpdir(), 'axterm-git-candidate-source-'));
   directories.push(directory);
   await writeFile(join(directory, 'package.json'), '{"name":"candidate-fixture"}\n');
-  await writeFile(join(directory, 'bun.lock'), 'lockfileVersion: 1\n');
+  await writeFile(join(directory, 'pnpm-lock.yaml'), 'lockfileVersion: 1\n');
   await writeFile(join(directory, 'README.md'), '# candidate fixture\n');
   await mkdir(join(directory, 'vendor', 'legacy-prototype'), { recursive: true });
   await writeFile(join(directory, 'vendor', 'legacy-prototype', 'legacy.js'), 'excluded\n');

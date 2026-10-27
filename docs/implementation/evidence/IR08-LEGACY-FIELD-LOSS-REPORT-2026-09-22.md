@@ -48,11 +48,11 @@ invalid counter normalized to zero.
   Electron migration journey on 2026-09-22. Typecheck and production build
   also passed.
 
-The complete current-worktree `bun run check` then passed 217 test files with
+The complete current-worktree `pnpm run check` then passed 217 test files with
 five skipped files (961 tests with 33 skips), the 368-module / 1,313-dependency
 architecture gate, 267 Contract operations, all source/release hygiene checks,
 production build/layout, and five visual plus two accessibility Electron
-journeys. A fresh `bun run candidate:check` prepared a 753-file / 15,763,557-byte
+journeys. A fresh `pnpm run candidate:check` prepared a 753-file / 15,763,557-byte
 source snapshot with tree SHA-256
 `8342f5b137bbb8d3a89de044f37a200b0f73c22bdef857b2e29f47c76354ef92`.
 Temporary root commit `623416e58a98e377577d7419ea3112b3c6db2f62` and a distinct

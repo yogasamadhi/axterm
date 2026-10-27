@@ -8,7 +8,7 @@ Command:
 
 ```sh
 AXTERM_PACKAGED_APP=/tmp/axterm-macos-current-dmg.2kk8Po/mac-arm64/Axterm.app \
-  bun run test:ssh:packaged
+  pnpm run test:ssh:packaged
 ```
 
 `scripts/test-ssh-fixture.sh` created a private Docker network and three OpenSSH containers for a jump-chain fixture, verified all three TCP hops, then ran:

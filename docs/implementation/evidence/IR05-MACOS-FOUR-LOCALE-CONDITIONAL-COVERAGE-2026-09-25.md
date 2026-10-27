@@ -24,27 +24,27 @@ app, in addition to its existing navigation, representative surfaces and cold
 restart checks.
 
 ```sh
-bun run locales:core:generate
+pnpm run locales:core:generate
 # 2,587 keys in each locale; review remains pending
 
-bun run build
-bunx playwright test --project=visual \
+pnpm run build
+pnpm exec playwright test --project=visual \
   -g 'failed language changes localized'
 # 1/1 passed; four failure/retry pairs
 
 node scripts/package-desktop.mjs --dir \
   --output /tmp/axterm-w05-language-error.xeGCY2
 AXTERM_PACKAGED_APP=/tmp/axterm-w05-language-error.xeGCY2/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged H-11 localization switches immediately and survives a cold restart'
 # 1/1 passed; includes four failed-save states
 
 AXTERM_PACKAGED_APP=/tmp/axterm-w05-language-error.xeGCY2/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged P-04/P-07 localizes SSH Host Key review'
 # 1/1 passed on the same current app archive: unknown and changed key in all 4 locales
 
-bunx vitest run packages/runtime/src/adapters/sqlite/language-catalog-migration.test.ts
+pnpm exec vitest run packages/runtime/src/adapters/sqlite/language-catalog-migration.test.ts
 # 15/15 passed: all former locale IDs and the 4 retained IDs keep a recoverable backup
 ```
 
@@ -69,19 +69,19 @@ saved fingerprint remains unchanged.
 
 ```sh
 AXTERM_PACKAGED_APP=/tmp/axterm-w05-language-error.xeGCY2/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged P-04/P-07 localizes SSH Host Key review'
 # failed: en changed Host Key dialog clips unscrollable vertical content
 
 node scripts/package-desktop.mjs --dir \
   --output /tmp/axterm-w05-hostkey-zoom.JbqoMd
 AXTERM_PACKAGED_APP=/tmp/axterm-w05-hostkey-zoom.JbqoMd/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged P-04/P-07 localizes SSH Host Key review'
 # 1/1 passed; all four changed-key states at 200% zoom
 
 AXTERM_PACKAGED_APP=/tmp/axterm-w05-hostkey-zoom.JbqoMd/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged H-11 localization|packaged macOS keeps all four languages and Settings categories bounded at 200%'
 # 2/2 passed on the same new package
 ```
@@ -106,15 +106,15 @@ and terminal-recovery failures and retries in all four languages inside H-11;
 the monitor branch is covered by the source journey, not the packaged journey.
 
 ```sh
-bun run build
-bunx playwright test --project=visual \
+pnpm run build
+pnpm exec playwright test --project=visual \
   -g 'failed behavior and terminal settings saves'
 # 1/1 passed; four languages × three failed-save and retry paths
 
 node scripts/package-desktop.mjs --dir \
   --output /tmp/axterm-w05-settings-errors.3nR69r
 AXTERM_PACKAGED_APP=/tmp/axterm-w05-settings-errors.3nR69r/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged H-11 localization switches immediately and survives a cold restart'
 # 1/1 passed; four languages × behavior and terminal-recovery failure/retry
 ```
@@ -151,16 +151,16 @@ failure and proxy connection-test failure are corrected by the same code
 paths but have **not** been individually demonstrated in this packaged run.
 
 ```sh
-bun run locales:core:generate
-bun run build
-bunx playwright test --project=visual \
+pnpm run locales:core:generate
+pnpm run build
+pnpm exec playwright test --project=visual \
   -g 'proxy, tab and window preferences failures'
 # 1/1 passed; four languages, remote failure/retry and local proxy validation
 
 node scripts/package-desktop.mjs --dir \
   --output /tmp/axterm-w05-preferences-final.921mHQ
 AXTERM_PACKAGED_APP=/tmp/axterm-w05-preferences-final.921mHQ/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged H-11 localization switches immediately and survives a cold restart'
 # 1/1 passed; four-language proxy/tab/window remote failure/retry
 ```
@@ -196,10 +196,10 @@ source-only point, current Mac package and 200% evidence was still missing;
 the packaged follow-up below supplies it.
 
 ```sh
-bun run locales:core:generate
+pnpm run locales:core:generate
 # 2,591 keys per locale; human review still pending
-bun run build
-bunx playwright test --project=visual \
+pnpm run build
+pnpm exec playwright test --project=visual \
   -g 'P-07 shows localized Settings load recovery and Runtime outage'
 # 1/1 passed; controlled HTTP failures, four languages
 ```
@@ -229,7 +229,7 @@ supervision, **not** `.part` ownership/cleanup after a transfer crash (W-03-02).
 ```sh
 node scripts/package-desktop.mjs --dir --output /tmp/axterm-s1.TjntjH
 AXTERM_PACKAGED_APP=/tmp/axterm-s1.TjntjH/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged macOS S1 localizes Settings recovery and real Runtime restart'
 # 1/1 passed, four locales; synthetic HTTP failures and four separate real kills
 ```
@@ -269,13 +269,13 @@ canary in visible text. It does not claim an actual network outage, human
 translation review or Windows/Linux behavior.
 
 ```sh
-bun run build
-bunx playwright test --project=visual -g 'P-07 S2 localizes SSH, FTP and connection editor'
+pnpm run build
+pnpm exec playwright test --project=visual -g 'P-07 S2 localizes SSH, FTP and connection editor'
 # 1/1 passed; four languages × three editors
 
 node scripts/package-desktop.mjs --dir --output /tmp/axterm-s2.N9ZvQz
 AXTERM_PACKAGED_APP=/tmp/axterm-s2.N9ZvQz/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged macOS S2 localizes SSH, FTP and connection editor'
 # 1/1 passed on copied unsigned Mac app, outside the source checkout
 ```
@@ -314,13 +314,13 @@ file transfer; real transfers are covered separately. No remote SFTP directory
 listing, human language review or Windows/Linux result is inferred here.
 
 ```sh
-bun run build
-bunx playwright test --project=visual -g 'P-07 S3 localizes terminal search'
+pnpm run build
+pnpm exec playwright test --project=visual -g 'P-07 S3 localizes terminal search'
 # 1/1 passed; all four locales on source Electron
 
 node scripts/package-desktop.mjs --dir --output /tmp/axterm-s3.Gc1clT
 AXTERM_PACKAGED_APP=/tmp/axterm-s3.Gc1clT/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged -g 'packaged macOS S3'
+  pnpm exec playwright test --project=packaged -g 'packaged macOS S3'
 # 1/1 passed on a copied unsigned Mac app outside the source checkout
 ```
 

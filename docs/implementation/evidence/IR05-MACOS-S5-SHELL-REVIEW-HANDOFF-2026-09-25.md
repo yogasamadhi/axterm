@@ -27,18 +27,18 @@ languages, and a 1440×900 physical window at 200% zoom.
 Source and package results:
 
 ```sh
-bun run typecheck
-bun run build
-bunx playwright test --project=visual -g 'P-07 S5'
+pnpm run typecheck
+pnpm run build
+pnpm exec playwright test --project=visual -g 'P-07 S5'
 # 1/1 passed; four languages in source Electron
 
 node scripts/package-desktop.mjs --dir --output /tmp/axterm-s5-final.Q0rUE4
 AXTERM_PACKAGED_APP=/tmp/axterm-s5-final.Q0rUE4/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged macOS (Shell and Settings|S1|S2|S3|S4|S5|keeps all four languages)'
 # 7/7 passed
 AXTERM_PACKAGED_APP=/tmp/axterm-s5-final.Q0rUE4/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged P-04/P-07 localizes SSH Host Key review|packaged H-11 localization switches immediately and survives a cold restart'
 # 2/2 passed
 ```

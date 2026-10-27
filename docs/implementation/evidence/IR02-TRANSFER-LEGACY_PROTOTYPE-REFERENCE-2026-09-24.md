@@ -29,7 +29,7 @@ A narrow screen for identical substantive whitespace-normalized lines
 XMODEM and TRZSZ wrapper pairs, and five ZMODEM lines consisting of library
 event-condition branches. This screen is **not** a semantic or legal similarity
 analysis and cannot establish independent authorship. Product source at that
-checkpoint and `bun.lock` have no `terminal-transfer/legacy-prototype` import or
+checkpoint and `pnpm-lock.yaml` have no `terminal-transfer/legacy-prototype` import or
 `@legacy-prototype/ftp-srv`/`@legacy-prototype/ssh2` dependency.
 
 The [publisher-source record](IR02-TRANSFER-PUBLISHER-SOURCE-2026-09-24.md)

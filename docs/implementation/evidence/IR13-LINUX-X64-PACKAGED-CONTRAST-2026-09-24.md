@@ -66,7 +66,7 @@ upgrade journeys. The nine skips were declared Windows-only, historical-package
 or opt-in SSH fixtures; no Linux-applicable test was skipped due to a missing
 `xprop` dependency. The gate removed the temporary DEB installation on exit.
 
-`bun run test:appimage:linux` extracted the AppImage payload without executing
+`pnpm run test:appimage:linux` extracted the AppImage payload without executing
 the AppImage runtime and verified its legal files and SPDX sidecar. It reported
 145,970,915 bytes, a SquashFS offset of 188,392, the same SPDX SHA-256, and the
 same `app.asar` SHA-256. The release hash manifest independently reproduced

@@ -33,7 +33,7 @@ may act only on the source selected by the immediately preceding `RNFR`.
 The focused command:
 
 ```text
-bunx vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts
+pnpm exec vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts
 ```
 
 passes one file and 18 tests on macOS arm64. A raw authenticated control
@@ -42,9 +42,9 @@ connection sends the sequence `RNFR` → `NOOP` → `RNTO`; the server returns
 connection then sends adjacent `RNFR`/`RNTO`, receives `250`, verifies the
 byte-exact rename and remains usable for `NOOP`. The existing raw `FEAT`
 fixture requires exactly one ` MDTM` and ` SIZE` response line, preserving the
-mandatory leading space. Root `bun run typecheck` also passes.
+mandatory leading space. Root `pnpm run typecheck` also passes.
 
-A fresh `bun run candidate:check` then audited a 752-file / 15,739,512-byte
+A fresh `pnpm run candidate:check` then audited a 752-file / 15,739,512-byte
 source snapshot with tree SHA-256
 `60792bf2057c2e76a7be3ad12f03822b4086a0b4a6e2a6bd7f0fd6e68e56276e`.
 Temporary root commit `36c7bb3cd10286c1d7b861db89e3c4b255af91e2` and its

@@ -127,10 +127,10 @@ export function runFinalPublicReleaseChecks({ argumentsList = [], runGate }) {
   };
 }
 
-function runBunScript(script, argumentsList) {
-  const bunArguments = ['run', script];
-  if (argumentsList.length > 0) bunArguments.push('--', ...argumentsList);
-  const result = spawnSync('bun', bunArguments, {
+function runPnpmScript(script, argumentsList) {
+  const pnpmArguments = ['run', script];
+  if (argumentsList.length > 0) pnpmArguments.push('--', ...argumentsList);
+  const result = spawnSync(process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm', pnpmArguments, {
     cwd: repositoryRoot,
     encoding: 'utf8',
     env: process.env,
@@ -155,7 +155,7 @@ function writeGateResult(result) {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const outcome = runFinalPublicReleaseChecks({
     argumentsList: process.argv.slice(2),
-    runGate: runBunScript,
+    runGate: runPnpmScript,
   });
 
   if (outcome.usageError) {

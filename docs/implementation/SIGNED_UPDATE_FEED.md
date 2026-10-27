@@ -24,7 +24,7 @@ remain outside the repository and release runner logs. A partial local
 configuration reports `UPDATE_CONFIGURATION_INVALID`; an absent one reports
 `disabled` and performs no request. A later release that **enables automatic
 updates** must fill the record with the real feed, public key and release-owner
-approval, then pass `bun run release:updater-feed:active-check`. Ordinary `bun run check` accepts
+approval, then pass `pnpm run release:updater-feed:active-check`. Ordinary `pnpm run check` accepts
 the honest pending state but validates its shape. Neither check proves the
 remote feed responds or that an installed signed upgrade succeeds.
 The three installed-package gates and packaging CI also run
@@ -95,9 +95,9 @@ never receive the manifest URL, artifact URL, signing material or local installe
 The local signed-feed unit/integration and production Electron journey can be run with:
 
 ```bash
-bunx vitest run tests/unit/signed-release-updater.test.ts tests/unit/host-window-capability.test.ts tests/integration/window-capability.test.ts
-bun run build
-bunx playwright test --project=desktop -g 'H12 signed updater'
+pnpm exec vitest run tests/unit/signed-release-updater.test.ts tests/unit/host-window-capability.test.ts tests/integration/window-capability.test.ts
+pnpm run build
+pnpm exec playwright test --project=desktop -g 'H12 signed updater'
 ```
 
 The local Ed25519 fixture proves protocol behavior. Release certification additionally requires a

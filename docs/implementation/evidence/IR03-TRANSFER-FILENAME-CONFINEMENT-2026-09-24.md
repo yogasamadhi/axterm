@@ -19,7 +19,7 @@ the sanitizer in isolation:
 
 The tests are in `packages/runtime/src/adapters/terminal-transfer/zmodem-protocol.test.ts`
 and `trzsz-protocol.test.ts`. Their focused run passed 30/30 tests across both
-files. The full `bun run check` passed 1,128 tests with 33 skips, including
+files. The full `pnpm run check` passed 1,128 tests with 33 skips, including
 architecture, Contract, build/layout and 11 visual/accessibility journeys.
 The adapters use the shared `safe-transfer-name.cjs` leaf sanitizer
 before joining the name to the canonical selected directory. This protects

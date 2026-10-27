@@ -47,20 +47,20 @@ rebuild still differs from the published binary.
 From a frozen repository install:
 
 ```sh
-bun run sbom:native:macos:check
-bun run sbom:native:macos:artifact-check -- \
+pnpm run sbom:native:macos:check
+pnpm run sbom:native:macos:artifact-check -- \
   /path/to/Axterm.app/Contents/Resources \
   /path/to/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
 ```
 
-The first command is part of `bun run check`; it fails if the committed SPDX
+The first command is part of `pnpm run check`; it fails if the committed SPDX
 bytes drift from the pinned source inventory. The second is macOS arm64-only:
 it re-inventories a concrete package, verifies the complete packaged SPDX
 sidecar and compares native module, package identity and legal-supplement
 bytes. Regenerate only after source-scope review with
-`bun run sbom:native:macos:generate`.
+`pnpm run sbom:native:macos:generate`.
 
-The full `bun run check` passed after this addition: 229 unit/integration test
+The full `pnpm run check` passed after this addition: 229 unit/integration test
 files passed (1,153 tests passed, 34 skipped), architecture and Contract gates
 passed, the native source SPDX matched its pinned input, and all 11
 visual/accessibility journeys passed.

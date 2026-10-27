@@ -3,32 +3,28 @@
   "version": "0.10.0",
   "private": true,
   "type": "module",
-  "packageManager": "bun@1.4.0",
+  "packageManager": "pnpm@11.22.0",
   "engines": {
     "node": ">=24.18.0 <25",
-    "bun": ">=1.4.0 <1.5"
+    "pnpm": ">=11.22.0 <12"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "postinstall": "node scripts/prepare-native.mjs && node scripts/build-pi-engine.mjs",
-    "dev": "bun run run.ts",
+    "dev": "python3 run.py",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "typecheck": "node scripts/typecheck.mjs",
-    "test": "bun run pi:build && vitest run",
+    "test": "pnpm run pi:build && vitest run",
     "test:integration": "vitest run tests/integration",
     "test:ssh": "sh scripts/test-ssh-fixture.sh",
     "test:ssh:packaged": "AXTERM_PACKAGED_SSH=1 sh scripts/test-ssh-fixture.sh",
     "test:soak:smoke": "AXTERM_SOAK_DURATION_MS=60000 sh scripts/test-phase21-soak.sh",
     "test:soak:30m": "AXTERM_SOAK_DURATION_MS=1800000 sh scripts/test-phase21-soak.sh && node scripts/verify-phase21-soak.mjs",
     "test:soak:verify": "node scripts/verify-phase21-soak.mjs",
-    "test:e2e": "bun run build && playwright test --project=desktop",
-    "test:visual": "bun run build && playwright test --project=visual",
-    "test:a11y": "bun run build && playwright test --project=accessibility",
-    "test:performance": "bun run build && playwright test --project=performance",
+    "test:e2e": "pnpm run build && playwright test --project=desktop",
+    "test:visual": "pnpm run build && playwright test --project=visual",
+    "test:a11y": "pnpm run build && playwright test --project=accessibility",
+    "test:performance": "pnpm run build && playwright test --project=performance",
     "test:packaged": "playwright test --project=packaged",
     "test:dmg:macos": "sh scripts/test-macos-dmg.sh",
     "test:deb:linux": "sh scripts/test-linux-deb.sh",
@@ -106,7 +102,7 @@
     "source:review:worklist": "node scripts/commercialization/source-file-review-ledger.mjs --worklist",
     "source:review:reviewed-check": "node scripts/commercialization/source-file-review-ledger.mjs --reviewed-check",
     "audit:independent-snapshot": "node scripts/commercialization/audit-independent-snapshot.mjs",
-    "audit:dependencies": "npm_config_registry=https://registry.npmjs.org bun audit --json",
+    "audit:dependencies": "pnpm audit --json --registry=https://registry.npmjs.org",
     "snapshot:check": "node scripts/commercialization/prepare-independent-snapshot.mjs --check",
     "snapshot:final-public:check": "node scripts/commercialization/prepare-independent-snapshot.mjs --check --final-public",
     "release:final-public:check": "node scripts/commercialization/check-final-public-release.mjs",
@@ -130,22 +126,16 @@
     "locales:draft": "node scripts/localization/generate-axterm-navigation.mjs",
     "locales:audit": "node scripts/localization/audit-renderer.mjs",
     "locales:audit:update": "node scripts/localization/audit-renderer.mjs --write-baseline",
-    "openapi:generate": "bun scripts/contracts.ts openapi",
-    "client:generate": "bun scripts/contracts.ts client",
-    "contracts:check": "bun scripts/contracts.ts check",
-    "build": "bun run pi:build && bun run --cwd apps/desktop build && bun run --cwd packages/runtime build && node scripts/packaging-check.mjs",
-    "package": "bun run build && bun run --cwd apps/desktop package",
-    "package:dir": "bun run build && bun run --cwd apps/desktop package:dir",
-    "check": "bun run lint && bun run typecheck && bun run test && bun run architecture:check && bun run contracts:check && bun run licenses:components:check && bun run licenses:texts:check && bun run licenses:attribution:check && bun run licenses:native:check && bun run licenses:native:texts:check && bun run licenses:native:headers:check && bun run licenses:ironrdp:source:check && bun run licenses:ironrdp:missing:check && bun run licenses:ironrdp:nested:check && bun run licenses:ironrdp:headers:check && bun run licenses:ironrdp:review:check && bun run licenses:zstd:embedded:check && bun run licenses:napi:check && bun run licenses:novnc:check && bun run licenses:novnc:source-check && bun run licenses:spice:check && bun run licenses:spice:source-check && bun run sbom:check && bun run sbom:native:macos:check && bun run assets:check && bun run assets:marks:check && bun run source:review:check && bun run migration:record:check && bun run release:services:check && bun run release:updater-feed:check && bun run transition:boundaries:check && bun run locales:check && bun run locales:core:check && bun run locales:scope && bun run locales:draft && bun run locales:audit && bun run snapshot:check && bun run build && bun run licenses:novnc:bundle-check && bun run licenses:spice:bundle-check && playwright test --project=visual --project=accessibility",
+    "openapi:generate": "node scripts/run-ts.mjs scripts/contracts.ts openapi",
+    "client:generate": "node scripts/run-ts.mjs scripts/contracts.ts client",
+    "contracts:check": "node scripts/run-ts.mjs scripts/contracts.ts check",
+    "build": "pnpm run pi:build && pnpm --filter @workspace/desktop build && pnpm --filter @workspace/runtime build && node scripts/packaging-check.mjs",
+    "package": "pnpm run build && pnpm --filter @workspace/desktop package",
+    "package:dir": "pnpm run build && pnpm --filter @workspace/desktop package:dir",
+    "check": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run architecture:check && pnpm run contracts:check && pnpm run licenses:components:check && pnpm run licenses:texts:check && pnpm run licenses:attribution:check && pnpm run licenses:native:check && pnpm run licenses:native:texts:check && pnpm run licenses:native:headers:check && pnpm run licenses:ironrdp:source:check && pnpm run licenses:ironrdp:missing:check && pnpm run licenses:ironrdp:nested:check && pnpm run licenses:ironrdp:headers:check && pnpm run licenses:ironrdp:review:check && pnpm run licenses:zstd:embedded:check && pnpm run licenses:napi:check && pnpm run licenses:novnc:check && pnpm run licenses:novnc:source-check && pnpm run licenses:spice:check && pnpm run licenses:spice:source-check && pnpm run sbom:check && pnpm run sbom:native:macos:check && pnpm run assets:check && pnpm run assets:marks:check && pnpm run source:review:check && pnpm run migration:record:check && pnpm run release:services:check && pnpm run release:updater-feed:check && pnpm run transition:boundaries:check && pnpm run locales:check && pnpm run locales:core:check && pnpm run locales:scope && pnpm run locales:draft && pnpm run locales:audit && pnpm run snapshot:check && pnpm run build && pnpm run licenses:novnc:bundle-check && pnpm run licenses:spice:bundle-check && playwright test --project=visual --project=accessibility",
     "test:dev": "playwright test --project=dev",
     "pi:build": "node scripts/build-pi-engine.mjs"
   },
-  "trustedDependencies": [
-    "electron",
-    "esbuild",
-    "node-pty",
-    "@serialport/bindings-cpp"
-  ],
   "devDependencies": {
     "@electron/rebuild": "4.2.0",
     "@eslint/js": "10.0.1",
@@ -173,12 +163,5 @@
     "vitest": "5.0.0",
     "ws": "8.21.3",
     "yaml": "2.9.0"
-  },
-  "overrides": {
-    "esbuild": "0.28.2"
-  },
-  "patchedDependencies": {
-    "node-pty@1.1.0": "patches/node-pty@1.1.0.patch",
-    "trzsz2@1.2.0": "patches/trzsz2@1.2.0.patch"
   }
 }

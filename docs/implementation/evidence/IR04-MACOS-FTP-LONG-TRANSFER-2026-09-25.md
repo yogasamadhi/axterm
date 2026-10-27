@@ -23,7 +23,7 @@ The real-TCP source regressions use a 150 ms control idle limit. One pauses
 mid-upload for 300 ms; the other injects a slow file read that pauses
 mid-download for 300 ms. Both verify the final `226`, complete bytes, a
 subsequent `NOOP` and eventual idle closure of the control session. The full
-FTP Widget Adapter file passed **32/32** tests; `bun run build` passed.
+FTP Widget Adapter file passed **32/32** tests; `pnpm run build` passed.
 
 An isolated unsigned macOS arm64 directory app was built with:
 
@@ -45,7 +45,7 @@ test-fixture error without changing the product behavior.
 ```sh
 AXTERM_PACKAGED_FTP_LONG_TRANSFER=1 \
   AXTERM_PACKAGED_APP=/tmp/axterm-ftp-long-package.EeEQoe/mac-arm64/Axterm.app \
-  bunx playwright test tests/e2e/packaged.spec.ts --project=packaged \
+  pnpm exec playwright test tests/e2e/packaged.spec.ts --project=packaged \
   --grep 'packaged FTP Widget runs the independent server outside the source checkout'
 ```
 

@@ -17,7 +17,7 @@ The focused packaged journey passed **1/1**:
 
 ```sh
 AXTERM_PACKAGED_APP=<fresh-output>/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   --grep 'packaged migration and configuration surfaces pass rendered accessibility scans'
 ```
 

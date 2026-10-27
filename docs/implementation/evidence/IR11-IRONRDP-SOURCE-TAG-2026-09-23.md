@@ -16,7 +16,7 @@ byte-identical to the published and installed package manifest, SHA-256
 `5bf67de9f67a913960387500752cc79cc353366326603eafa4ba11542a165dab`.
 
 The published 0.7.0 npm tarball was downloaded separately and its SHA-512
-integrity matched both the official npm version metadata and `bun.lock`:
+integrity matched both the official npm version metadata and `pnpm-lock.yaml`:
 
 ```text
 sha512-CclAh4OS9aBoPJT0l7bih7ETOHPnB9KjT0drB0a6r5+Qh95pTEuQCx7uFN/XA2AlkFlrqx+DBAMDGYXmgsjHAQ==
@@ -38,7 +38,7 @@ existing `licenses/` packaging rule and shown in About. Source tests pin the
 installed manifest/JavaScript and license hashes; packaged tests require the
 license file to match the source and About to render it.
 
-The complete `bun run check` passed 1,007 tests (33 skipped), 375 Level 1
+The complete `pnpm run check` passed 1,007 tests (33 skipped), 375 Level 1
 modules / 1,321 dependencies, 267 Contract operations and nine visual/a11y
 journeys. A separate unsigned macOS arm64 directory app was built in an
 isolated temporary output; its `app.asar` SHA-256 is
@@ -83,13 +83,13 @@ GitHub's public run summary shows that workflow_dispatch publish run succeeded
 at the same commit on 2026-05-27. The registry attestation endpoint is
 `https://registry.npmjs.org/-/npm/v1/attestations/@devolutions%2firon-remote-desktop-rdp@0.7.0`.
 
-`bun run licenses:ironrdp:provenance-check` now reproduces the isolated,
+`pnpm run licenses:ironrdp:provenance-check` now reproduces the isolated,
 script-disabled official-registry install and npm's signature verification,
 then fails closed if the Bun lock, installed JavaScript, signed subject digest,
 source commit, workflow identity or run changes. Four focused unit tests guard
 tampered and missing evidence. The Linux CI route invokes the check after its
 dependency audit; **a remote CI run of this new step has not yet been observed**.
-The updated local `bun run check` passed 219 test files (five skipped), 1,012
+The updated local `pnpm run check` passed 219 test files (five skipped), 1,012
 tests (33 skipped), the 358-module / 1,304-dependency Level 1 gate, 267
 Contract operations, source/build checks and all nine visual/accessibility
 journeys. The independent online provenance check passed against the official

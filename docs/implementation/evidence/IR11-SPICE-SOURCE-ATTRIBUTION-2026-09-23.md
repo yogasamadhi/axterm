@@ -20,7 +20,7 @@ The ESM entry hash is
 `a18cdf1af988e626f313abd65c4f90517d1fecb5e1708482bb2ef9efd77ce821`;
 the map hash is
 `242d68151cabb7c7384366bade23902e83636a5fc74afa2cf614ac2440ce8a44`.
-`bun run licenses:spice:check` regenerates this archive and fails on drift;
+`pnpm run licenses:spice:check` regenerates this archive and fails on drift;
 its unit regression checks the distinct embedded copyright holders.
 
 The production renderer emits
@@ -62,7 +62,7 @@ and LICENSE—is now supplied as `licenses/spice-client-1.2.0-source.tar`, SHA-2
 The publisher README and unrelated web-demo files are omitted; the archive
 contains no Legacy Prototype product reference. A separate About-visible
 `spice-client-SOURCE-README.txt` explains the archive and extraction/rebuild
-steps. `bun run licenses:spice:source-check` validates the fixed commit header,
+steps. `pnpm run licenses:spice:source-check` validates the fixed commit header,
 archive hash and structure, all 30 mapped source hashes, installed manifest
 and LICENSE, and required build inputs offline. The selected upstream files
 were separately inspected for the old product name; this is a scoped archive

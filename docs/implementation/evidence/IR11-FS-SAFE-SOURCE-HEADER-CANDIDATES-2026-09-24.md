@@ -26,12 +26,12 @@ candidate counts and digests. The macOS source-scope SPDX records the same
 review leads; its SHA-256 is
 `4a457b6817f1d4a1f85458b19fa83f995db01b0200959db274887b59f074ed7d`.
 
-`bun run licenses:native:headers:check` pins the committed record and bundle
+`pnpm run licenses:native:headers:check` pins the committed record and bundle
 offline. To reconstruct them from the tagged upstream checkout and locked
 Cargo cache:
 
 ```sh
-bun run licenses:native:headers:source-check -- /path/to/fs-safe-v0.13.1-checkout
+pnpm run licenses:native:headers:source-check -- /path/to/fs-safe-v0.13.1-checkout
 ```
 
 The source check passed at upstream commit

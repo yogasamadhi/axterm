@@ -319,11 +319,15 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
       record,
       headCommit: git.status === 0 ? git.stdout.trim() : null,
       runGate(script) {
-        const result = spawnSync('bun', ['run', script], {
-          cwd: repositoryRoot,
-          encoding: 'utf8',
-          maxBuffer: 8 * 1024 * 1024,
-        });
+        const result = spawnSync(
+          process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm',
+          ['run', script],
+          {
+            cwd: repositoryRoot,
+            encoding: 'utf8',
+            maxBuffer: 8 * 1024 * 1024,
+          },
+        );
         return { exitCode: result.status ?? 1 };
       },
       verifyMac(mac) {

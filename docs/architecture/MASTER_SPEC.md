@@ -632,8 +632,8 @@ pino
 ## 11.3 Tooling
 
 ```text
-Bun Workspaces
-Bun 1.4.x line
+pnpm Workspaces
+pnpm 11.x line
 ESLint flat config
 Prettier
 Vitest
@@ -659,7 +659,7 @@ Node 24.20.x line
 Build / install：
 
 ```text
-Bun
+pnpm
 ```
 
 Core Runtime 中禁止使用：
@@ -669,7 +669,7 @@ bun:sqlite
 bun:* runtime-only API
 ```
 
-因为桌面 Runtime 不是 Bun Runtime。
+因为桌面 Runtime 是 Node/Electron Runtime，不是 Bun Runtime；工具链也不再使用 Bun。
 
 ---
 
@@ -679,7 +679,7 @@ bun:* runtime-only API
 
 1. 使用上述 major line 对应的最新 stable；
 2. 禁止在有 stable 方案时使用 beta/RC；
-3. 提交 `bun.lock`；
+3. 提交 `pnpm-lock.yaml`；
 4. 把解析后的顶级版本记录到：
 
 ```text
@@ -818,7 +818,7 @@ project/
 ├── tsconfig.base.json
 ├── eslint.config.js
 ├── .prettierrc
-└── bun.lock
+└── pnpm-lock.yaml
 ```
 
 不要为了“架构感”继续机械拆包。
@@ -3183,11 +3183,11 @@ packaging boundary
 每阶段结束至少运行：
 
 ```text
-bun run lint
-bun run typecheck
-bun run test
-bun run architecture:check
-bun run build
+pnpm run lint
+pnpm run typecheck
+pnpm run test
+pnpm run architecture:check
+pnpm run build
 ```
 
 ## Phase 0 — Repository Foundation
@@ -3196,7 +3196,7 @@ bun run build
 
 Deliverables：
 
-- Bun workspace；
+- pnpm workspace；
 - TS strict；
 - ESLint/Prettier；
 - `apps/desktop`；
@@ -3219,13 +3219,13 @@ Deliverables：
 
 Acceptance：
 
-- clean clone `bun install` 成功；
-- `bun run dev` 启动 Desktop；
+- clean clone `pnpm install` 成功；
+- `pnpm run dev` 启动 Desktop；
 - UI 显示 runtimeId/generation；
 - Runtime 在 utilityProcess；
 - Runtime 不 import Electron；
 - Renderer 无业务 IPC；
-- `bun run check` 通过。
+- `pnpm run check` 通过。
 
 ## Phase 1 — Persistence / Contract / Host Manager
 
@@ -3591,7 +3591,7 @@ H-07 将 title bar、opacity、zoom、bounds、退出确认和 `allowMultiInstan
 修改该策略或标题栏时明确返回需要重启，opacity/zoom/bounds 可即时应用。普通窗口 move/resize
 使用首尾节流持久化，退出前 flush；最大化和全屏几何不得覆盖普通 bounds。恢复时保留当前左右/
 上方显示器的 DIP 坐标和负坐标，限制到目标 work area，已断开的显示器回到主显示器中央；首次启动
-仍为 1440×900。`run.ts` 启动的非 packaged Main 必须使用 `Axterm Dev` 产品名、独立 userData
+仍为 1440×900。`run.py` 启动的非 packaged Main 必须使用 `Axterm Dev` 产品名、独立 userData
 目录、单实例锁和 Windows AppUserModelID；显式 `--user-data-dir` 仍优先，用于隔离测试。开发版
 不得激活、读取或覆盖已安装 Axterm 的进程和数据。启用退出确认时，Desktop Host 串行显示一个
 原生确认框，取消无副作用，确认只放行一次关闭，应用 shutdown 不重复提示。
@@ -3664,7 +3664,7 @@ Acceptance：Parity Matrix I 组全部 Certified；MCP 不绕过任何 Applicati
 Acceptance：常规目标为矩阵不存在 Missing/Partial/Implemented/Blocked，只有 Certified 或
 ADR 批准的 Not applicable；若采用第 48.1 节的实施收口规则，则至少 121/122 达到上述状态，
 唯一剩余行必须有完整 Blocker Register。Phase 10 和第 49 节 Distribution 未完成时，Phase 21
-正式发行认证继续 open；`bun run check` 与所有当前可执行 packaged suites 必须通过。
+正式发行认证继续 open；`pnpm run check` 与所有当前可执行 packaged suites 必须通过。
 
 ## Phase 22 — Headless / Remote Runtime（Parity 后）
 
@@ -3770,23 +3770,23 @@ does not apply to the independent product or override ADR-016.
 目标 DX：
 
 ```text
-bun install
-bun run dev
-bun run lint
-bun run typecheck
-bun run test
-bun run test:integration
-bun run test:e2e
-bun run architecture:check
-bun run openapi:generate
-bun run client:generate
-bun run contracts:check
-bun run build
-bun run package
-bun run check
+pnpm install
+pnpm run dev
+pnpm run lint
+pnpm run typecheck
+pnpm run test
+pnpm run test:integration
+pnpm run test:e2e
+pnpm run architecture:check
+pnpm run openapi:generate
+pnpm run client:generate
+pnpm run contracts:check
+pnpm run build
+pnpm run package
+pnpm run check
 ```
 
-`bun run check` 至少：
+`pnpm run check` 至少：
 
 ```text
 lint
@@ -3891,7 +3891,7 @@ openapi-typescript
 7. 补充成功、失败、取消、重试、资源释放、真实协议和桌面交互测试；
 8. 在适用的固定视口和打包平台执行对照，不扩大 mask 或放宽阈值掩盖差异；
 9. 更新 Matrix、`STATUS.md` 和 `UPSTREAM.md`，依赖变化同时更新 `VERSIONS.md`；
-10. 运行 `bun run check`，证据不足时保持 Partial 或 Implemented，再领取下一项。
+10. 运行 `pnpm run check`，证据不足时保持 Partial 或 Implemented，再领取下一项。
 
 如果当前条目只剩 Windows/Linux 实机、旧版本升级或 Matrix 明确标注的后续 Phase 依赖，
 保留 open 并继续下一个能解除依赖的条目。不得用 disabled 控件、mock、静态页面或开发模式
@@ -3916,7 +3916,7 @@ docs/implementation/COMMERCIALIZATION_CLEANUP_PLAN.md；涉及旧能力时查阅
 凭据服务。首次无已保存 bounds 的窗口必须为 1440×900。
 
 保持 Zero Business IPC、utilityProcess Runtime、REST/OpenAPI、SSE、Binary WS、streaming
-和资源确定性清理。运行 bun run check；同步 STATUS、商业化工作包及来源台账，并在
+和资源确定性清理。运行 pnpm run check；同步 STATUS、商业化工作包及来源台账，并在
 依赖变化时更新 VERSIONS。只在新计划的全部证据满足时标记工作包完成。
 ```
 
@@ -3943,7 +3943,7 @@ Matrix Certified evidence defines parity completion
 AI in Runtime
 AI Tool + Risk + Approval
 Every long-lived resource cleanup
-Run bun run check
+Run pnpm run check
 Update STATUS.md
 ```
 
@@ -4206,7 +4206,7 @@ credential storage
 public API versioning
 AI approval policy
 plugin architecture
-Node/Bun/Electron runtime policy
+Node/pnpm/Electron runtime policy
 packaging system
 ```
 
@@ -4269,7 +4269,7 @@ node:crypto AES-256-GCM
 AI Domain
 = Provider + Context + Tool + Risk + Approval + Run
 
-Bun
+pnpm
 = Workspace/package/build tooling
 
 Expo 57

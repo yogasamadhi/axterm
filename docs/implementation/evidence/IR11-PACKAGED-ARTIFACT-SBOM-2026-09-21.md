@@ -5,11 +5,11 @@ State: **macOS directory-artifact tooling verified; IR-02/IR-11 remain unaccepte
 
 The source-level `AXTERM_PRODUCTION_DEPENDENCIES.spdx.json` describes the
 frozen Bun production graph. It cannot prove the contents of a specific
-electron-builder artifact. `bun run sbom:packaged` now creates a deterministic
+electron-builder artifact. `pnpm run sbom:packaged` now creates a deterministic
 SPDX 2.3 **sidecar** from a concrete directory containing `app.asar`:
 
 ```text
-bun run sbom:packaged -- <Resources directory> --platform <platform-arch> --output <sidecar>
+pnpm run sbom:packaged -- <Resources directory> --platform <platform-arch> --output <sidecar>
 ```
 
 The platform label is required and constrained. The sidecar namespace contains
@@ -29,7 +29,7 @@ inserted into the application and is not a source-to-binary conclusion.
 The current local unsigned directory artifact was inspected with:
 
 ```text
-bun run sbom:packaged -- release/mac-arm64/Axterm.app/Contents/Resources \
+pnpm run sbom:packaged -- release/mac-arm64/Axterm.app/Contents/Resources \
   --platform macos-arm64 \
   --output release/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
 ```
@@ -50,7 +50,7 @@ binary has a complete source map.
 
 ## Current macOS arm64 directory-app sidecar — 2026-09-23
 
-After the P-03 FTP change, a fresh `bun run package:dir` built the current
+After the P-03 FTP change, a fresh `pnpm run package:dir` built the current
 unsigned directory app. The earlier standard-named sidecar and DMG/ZIP hash
 manifest remain attached to their older 2026-09-22 artifact; they were not
 overwritten or re-labeled as evidence for this new directory app. The current
@@ -89,7 +89,7 @@ namespace binds to the exact ASAR hash. The packaged
 `45b153c0c9ae06814f8a2ef22999bcbf9ba92951a05fef29c8d980a9f6ce4332`, equal
 to the source notice file.
 
-`bun run sbom:packaged:check` regenerated and byte-verified that sidecar against
+`pnpm run sbom:packaged:check` regenerated and byte-verified that sidecar against
 the concrete app resources, then wrote a local verification receipt with
 SHA-256
 `e96e90f359f95240386deb4153b1f414a7781cad1c3dfb699c05463783658457`. The
@@ -118,7 +118,7 @@ The DMG passed a full copied-install packaged journey (17 passed, 10 skipped)
 and its DMG/ZIP hash manifest verified; see the
 [installation evidence](IR13-MACOS-DMG-2026-09-21.md).
 
-The new `bun run sbom:packaged:check` regenerated the sidecar directly from
+The new `pnpm run sbom:packaged:check` regenerated the sidecar directly from
 this candidate's packaged Resources and required byte-for-byte equality with
 the retained `7fbe37…` SPDX file. It reported that exact sidecar SHA-256 and
 the candidate `app.asar` SHA-256 above. CI now applies the same post-install,
@@ -185,7 +185,7 @@ host without running its x64 launcher. Its valid superblock begins at byte
 `THIRD_PARTY_LICENSE_TEXTS.json`, `AXTERM_PRODUCTION_DEPENDENCIES.spdx.json`,
 the `licenses/` directory and Electron/Chromium license files. Its `app.asar`
 hash is the same `a09ab63…` above. Running
-`bun run test:appimage:linux -- --artifact-dir release/axterm-linux-candidate-hQGbuTZQ`
+`pnpm run test:appimage:linux -- --artifact-dir release/axterm-linux-candidate-hQGbuTZQ`
 regenerated the complete packaged inventory from the extracted AppImage and
 matched the retained sidecar SHA-256 `27f809…` byte-for-byte. CI now runs the
 same static payload check before upload and against the downloaded AppImage

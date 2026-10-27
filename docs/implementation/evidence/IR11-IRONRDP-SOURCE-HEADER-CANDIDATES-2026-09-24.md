@@ -27,12 +27,12 @@ now carry candidate file/line counts and a scope digest, so a changed
 attribution candidate invalidates a prior package review instead of being
 silently ignored.
 
-`bun run licenses:ironrdp:headers:check` verifies the committed inventory,
+`pnpm run licenses:ironrdp:headers:check` verifies the committed inventory,
 candidate record and text bundle offline. To reconstruct them, provide the
 tagged IronRDP checkout and locked Cargo cache:
 
 ```sh
-bun run licenses:ironrdp:headers:source-check -- /path/to/IronRDP-tagged-checkout
+pnpm run licenses:ironrdp:headers:source-check -- /path/to/IronRDP-tagged-checkout
 ```
 
 The source check passed at commit

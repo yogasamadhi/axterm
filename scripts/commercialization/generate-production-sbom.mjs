@@ -1,10 +1,10 @@
 import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { format } from 'prettier';
-import { componentIndexFromBunReport } from './generate-component-index.mjs';
+import { componentIndexFromLicenseReport } from './generate-component-index.mjs';
+import { installedLicenseReport } from './installed-license-report.mjs';
 
 const repositoryRoot = resolve(import.meta.dirname, '../..');
 const outputPath = resolve(repositoryRoot, 'compliance/AXTERM_PRODUCTION_DEPENDENCIES.spdx.json');
@@ -55,7 +55,7 @@ export function productionSbomFromIndex(index, product) {
       creators: ['Tool: Axterm production SBOM generator'],
       licenseListVersion: '3.23',
       comment:
-        'Reproducible source dependency inventory generated from bun pm licenses --json --prod.',
+        'Reproducible source dependency inventory generated from pnpm licenses list --json --prod.',
     },
     documentDescribes: packages.map(({ SPDXID }) => SPDXID),
     comment:
@@ -69,16 +69,9 @@ export async function serializeProductionSbom(sbom) {
 }
 
 async function installedSbom() {
-  const report = JSON.parse(
-    execFileSync('bun', ['pm', 'licenses', '--json', '--prod'], {
-      cwd: repositoryRoot,
-      encoding: 'utf8',
-      maxBuffer: 10 * 1024 * 1024,
-    }),
-  );
   const product = JSON.parse(readFileSync(resolve(repositoryRoot, 'package.json'), 'utf8'));
   return serializeProductionSbom(
-    productionSbomFromIndex(componentIndexFromBunReport(report), {
+    productionSbomFromIndex(componentIndexFromLicenseReport(installedLicenseReport()), {
       name: product.name,
       version: product.version,
     }),
@@ -92,9 +85,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     console.log(`Updated ${outputPath}`);
   } else if (mode === '--check') {
     if (readFileSync(outputPath, 'utf8') !== (await installedSbom())) {
-      console.error('Production SBOM is stale; run bun run sbom:generate');
+      console.error('Production SBOM is stale; run pnpm run sbom:generate');
       process.exitCode = 1;
-    } else console.log('Production SPDX SBOM matches the installed Bun graph.');
+    } else console.log('Production SPDX SBOM matches the installed pnpm graph.');
   } else {
     console.error(
       'Usage: node scripts/commercialization/generate-production-sbom.mjs --generate|--check',

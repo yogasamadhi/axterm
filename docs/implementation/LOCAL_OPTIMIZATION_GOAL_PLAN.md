@@ -48,7 +48,7 @@ Roadmap/Matrix 行查证，不重新领取旧 parity 队列。
 | 项目            | 已核实事实                                                                                                   | 对计划的影响                                                        |
 | --------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
 | 源码            | `main`，HEAD `483c38d`，版本 `0.10.0`；无 Git remote；分析起点已有 12 个修改文件                             | HEAD 不能单独标识当前产品源码，执行前记录 dirty diff 摘要           |
-| 总检查          | `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 1                                                            | OP-01 首先恢复完整门禁，后续不得沿用旧的全绿结论                    |
+| 总检查          | `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 1                                                           | OP-01 首先恢复完整门禁，后续不得沿用旧的全绿结论                    |
 | 单元/集成       | 244 个文件通过、5 个跳过；1,221 项测试通过、38 项跳过                                                        | 保留有效测试；跳过项逐项解释，不计入通过数                          |
 | 架构与 Contract | 363 个模块、1,295 条依赖通过 Level 1 / Zero Business IPC；260 个 operation 无漂移                            | 所有新增能力继续走现有业务边界                                      |
 | 视觉/无障碍     | 20 通过、1 失败；日文设置页 1280×800 差异 10,373 像素，比例约 0.02，超过 0.01；定向复跑同样失败              | 修复实际布局或证明自有设计变更，不能直接刷新快照或调宽阈值          |
@@ -141,7 +141,7 @@ trace 已保存在 `/tmp/axterm-plan-check-evidence-20261003-4livlzj7/`，均为
    替代修复后的完整检查。
 
 验收：日文失败场景与设置保存重试恢复通过；四语言语言设置与 200% 缩放测试通过；标签关闭/新增/固定/
-悬停语义通过；完整 `bun run check` 返回 0。任一未通过，OP-01 不得记为 completed。
+悬停语义通过；完整 `pnpm run check` 返回 0。任一未通过，OP-01 不得记为 completed。
 
 ### OP-04：SFTP 闭环与恢复语义
 
@@ -164,7 +164,7 @@ trace 已保存在 `/tmp/axterm-plan-check-evidence-20261003-4livlzj7/`，均为
 失败/取消的临时文件按既有策略清理，未授权覆盖不得损坏原文件；SSH、SFTP、stream、
 listener 和 Grant 的所属资源清理通过。存在路径穿越或越权即不通过。
 
-Docker daemon 可用时，补跑 `bun run test:ssh` 和最终候选的 packaged SSH 旅程。
+Docker daemon 可用时，补跑 `pnpm run test:ssh` 和最终候选的 packaged SSH 旅程。
 不可用时记录 OpenSSH 项的原因、已完成的本地真实协议证据和解除条件；该项保留
 `external-pending`，不能记为 OpenSSH 通过。本地 loopback 测试必须通过，不能用 mock
 响应、空列表或 disabled 下载入口替代。
@@ -277,37 +277,37 @@ sidecar。使用现有打包脚本的 `--output`，不得覆盖此前保全的 `
 
 ```sh
 # OP-01：定位现有失败；运行前保存上一轮需要保留的 test-results
-AXTERM_E2E_HIDDEN_WINDOW=1 bunx playwright test --project=visual --grep 'keeps language settings bounded'
-AXTERM_E2E_HIDDEN_WINDOW=1 bunx playwright test --project=desktop --grep 'tab close and add controls stay beside'
+AXTERM_E2E_HIDDEN_WINDOW=1 pnpm exec playwright test --project=visual --grep 'keeps language settings bounded'
+AXTERM_E2E_HIDDEN_WINDOW=1 pnpm exec playwright test --project=desktop --grep 'tab close and add controls stay beside'
 
 # Runtime 与本地 Provider 夹具
-bunx vitest run packages/runtime/src/application/transfer-service.test.ts
-bunx vitest run tests/integration/ai-provider-runtime.test.ts tests/integration/ai-conversation-runtime.test.ts
-bunx vitest run tests/unit/performance-budget.test.ts
+pnpm exec vitest run packages/runtime/src/application/transfer-service.test.ts
+pnpm exec vitest run tests/integration/ai-provider-runtime.test.ts tests/integration/ai-conversation-runtime.test.ts
+pnpm exec vitest run tests/unit/performance-budget.test.ts
 
 # 修改协议/边界后的检查
-bun run contracts:check
-bun run architecture:check
+pnpm run contracts:check
+pnpm run architecture:check
 
 # 真实 Electron、桌面、视觉与无障碍；性能用例按 OP-03 补齐
-bun run test:performance
-AXTERM_E2E_HIDDEN_WINDOW=1 bun run test:e2e
-AXTERM_E2E_HIDDEN_WINDOW=1 bun run test:visual
-AXTERM_E2E_HIDDEN_WINDOW=1 bun run test:a11y
+pnpm run test:performance
+AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run test:e2e
+AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run test:visual
+AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run test:a11y
 
 # 条件项：只有 daemon 可用时才领取 Docker OpenSSH 旅程
 docker info
-bun run test:ssh
+pnpm run test:ssh
 
 # 收尾：文件摘要变化后重算来源台账，保留未审查项 pending
-bun run source:review:generate
-AXTERM_E2E_HIDDEN_WINDOW=1 bun run check
+pnpm run source:review:generate
+AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check
 ```
 
 未签名 Mac 打包示例（`mktemp` 每次创建新的空目录；执行前核对当前脚本参数）：
 
 ```sh
-bun run build
+pnpm run build
 axterm_opt_package_dir="$(mktemp -d /tmp/axterm-local-opt-package.XXXXXX)"
 node scripts/package-desktop.mjs --output "$axterm_opt_package_dir"
 ```
@@ -335,7 +335,7 @@ OpenSSH 等扩展子项独立登记，客观外部条件不足用 `external-pend
 只有以下条件全部满足，才可宣布本地优化目标完成：
 
 1. OP-01～OP-09 的本地验收全部通过，相关 UI 与实际 Runtime/协议行为都有证据。
-2. 完整 `bun run check` 返回 0；本轮定向/桌面/性能/安装旅程通过，没有忽略未知失败。
+2. 完整 `pnpm run check` 返回 0；本轮定向/桌面/性能/安装旅程通过，没有忽略未知失败。
 3. 本地 SSH/SFTP 的真实远端列表、双向字节和恢复语义，以及 AI 本地 Provider 的
    上下文/审批/取消路径通过；未签名 Mac 候选来自同一被验收源码。
 4. `STATUS.md`、本计划状态表、预算、来源摘要和证据一致；资源 cleanup、安全与
@@ -383,6 +383,6 @@ Docker 可用则补 OpenSSH；不可用记录原因、已有证据与解除条�
 不能记为通过。不要扩展为旧 parity 队列、完整三平台发行或 Plugin Kernel 改造。
 
 持续推进到计划第 6 节的本地完成线全部满足。结束前重算必要来源摘要并运行
-bun run check；失败修代码。只有全部必需本地验收通过才能标记目标完成。
+pnpm run check；失败修代码。只有全部必需本地验收通过才能标记目标完成。
 最终报告已完成工作包、真实测试结果、未签名候选位置/摘要及剩余外部事项。
 ```

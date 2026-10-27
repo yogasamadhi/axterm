@@ -28,14 +28,14 @@ Build command:
 
 ```text
 mkdir -p /tmp/axterm-reimport-packaged.paP3Pu
-bun run --cwd apps/desktop package:dir --output /tmp/axterm-reimport-packaged.paP3Pu
+pnpm --filter @workspace/desktop package:dir --output /tmp/axterm-reimport-packaged.paP3Pu
 ```
 
 Suite command:
 
 ```text
 env AXTERM_PACKAGED_APP=/tmp/axterm-reimport-packaged.paP3Pu/mac-arm64/Axterm.app \
-  bun run test:packaged
+  pnpm run test:packaged
 ```
 
 Result: **21 passed, 10 skipped**, 31 tests discovered, one worker, 1.3 minutes.

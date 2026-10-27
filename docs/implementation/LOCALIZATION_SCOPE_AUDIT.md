@@ -29,11 +29,11 @@ executable catalogs and the current paragraph above for today's key counts and b
 
 ### Replacement scope at that recorded stage
 
-`bun run locales:scope` parses Renderer TypeScript/TSX calls to the `t()`
+`pnpm run locales:scope` parses Renderer TypeScript/TSX calls to the `t()`
 translator. It resolves literal keys and the five fixed dynamic call sites
 from the activity rail, layout selector and settings category definitions.
 Unknown dynamic expressions, aliased `useI18n().t` bindings and property-
-access `.t()` calls require an explicit audit. The check runs in `bun run check`.
+access `.t()` calls require an explicit audit. The check runs in `pnpm run check`.
 
 | Measure                               |                        Historical baseline |           Recorded working tree |
 | ------------------------------------- | -----------------------------------------: | ------------------------------: |
@@ -65,7 +65,7 @@ The executable record is
 `scripts/localization/axterm-navigation-review-ledger.json`. It records the
 44-key Renderer-scope SHA-256, draft source language/method/date, whether the
 draft author has been recorded, and independent language and rights-review
-states for every locale. `bun run locales:check` verifies it with the catalog:
+states for every locale. `pnpm run locales:check` verifies it with the catalog:
 a changed key scope invalidates the ledger, and a `reviewed` state requires a
 named reviewer/date for both review types plus a recorded draft author. All
 current records intentionally remain `pending` with author attribution
@@ -174,7 +174,7 @@ preferences and 27-key Web-session surfaces. No core keys fall back to English.
 `scripts/localization/axterm-core-review-ledger.json` binds the
 exact source path, key scope and per-locale message hashes, and records those
 two locales as complete AI-assisted drafts with attribution, language and rights
-review still pending. `bun run locales:core:check` rejects a changed catalog or
+review still pending. `pnpm run locales:core:check` rejects a changed catalog or
 an asserted coverage state that differs from the actual runtime catalog;
 `locales:core:reviewed-check` remains red until qualified human review is
 recorded. Four language choices and a complete 44-key navigation catalog must
@@ -208,7 +208,7 @@ surface; an archived or removed upstream catalog is not an eligible shortcut.
 
 ## Evidence and remaining gate
 
-- `bun run locales:check`, `locales:scope`, `locales:draft` and focused unit
+- `pnpm run locales:check`, `locales:scope`, `locales:draft` and focused unit
   tests pass. The generator reads no `vendor/legacy-prototype` path; a new generated
   file is deterministic and `--check` rejects drift.
 - The source Electron H-11 journey covers the four retained IDs, immediate

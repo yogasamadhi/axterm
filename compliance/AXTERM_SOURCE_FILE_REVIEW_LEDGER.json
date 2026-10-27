@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Prepared independent source snapshot, excluding this review ledger",
-  "sourceScopeSha256": "4fe3e1a33d497930832455ae8fd7b668d7c829b37311a0a2d652c86c6fe21c23",
+  "sourceScopeSha256": "f25821293324431044945f6f2e8b61ad0ce819cf2d263e29d228d0fe84293856",
   "limitations": [
     "A path and byte hash identify review scope; they do not establish authorship, license, rights or package inclusion.",
     "Git author metadata and prospective contribution rules do not grant retrospective permission for these bytes.",
@@ -52,8 +52,8 @@
     {
       "file": {
         "path": ".github/pull_request_template.md",
-        "bytes": 982,
-        "sha256": "235c1abdef5f11187fe955ef54c7c02e442c736e7b99efebe0302cd84445fc80"
+        "bytes": 983,
+        "sha256": "bc09ee1a040f546c38c927a7e130564f5f36388e77fff9db9df138551e1437b9"
       },
       "review": {
         "status": "pending",
@@ -72,8 +72,8 @@
     {
       "file": {
         "path": ".github/workflows/check.yml",
-        "bytes": 10207,
-        "sha256": "fa7e54bad6c1b79c323a2adcc89a8a4b3a7b3b7d1d34aa735a9e52ed9862334a"
+        "bytes": 10296,
+        "sha256": "4c15bf8c77ccd32c335da1ca30e151b31c279c9f825e64ecc276a0274006ba98"
       },
       "review": {
         "status": "pending",
@@ -112,8 +112,8 @@
     {
       "file": {
         "path": ".prettierignore",
-        "bytes": 596,
-        "sha256": "bbee88f3cd755f6b84c220d22702498256f9f98484e252fec87957a98cfa35e0"
+        "bytes": 602,
+        "sha256": "c98c74d3f486fc370c2d95bcba3f3cbbd5e520ecf04a68d901dc6284c709653d"
       },
       "review": {
         "status": "pending",
@@ -152,8 +152,8 @@
     {
       "file": {
         "path": "AGENTS.md",
-        "bytes": 6226,
-        "sha256": "06eccdec7e3812ff257294f34ebbaf4aed409c4b48e58c1a5b634965591de202"
+        "bytes": 6271,
+        "sha256": "5c471dc475e3da3ab9416e1e8db1a2e45b6293c4e18f759f35ccd35f67ccc19d"
       },
       "review": {
         "status": "pending",
@@ -172,8 +172,8 @@
     {
       "file": {
         "path": "CONTRIBUTING.md",
-        "bytes": 2868,
-        "sha256": "d0a44a97cd968c05b8a36ce528e83dfe293366c20edc13c8796b9baba061a390"
+        "bytes": 2869,
+        "sha256": "324fdf260fee86a70f35e4188baf1ecf71994e39cf3b983caee894339a38f2d6"
       },
       "review": {
         "status": "pending",
@@ -212,8 +212,8 @@
     {
       "file": {
         "path": "PRIVACY.md",
-        "bytes": 3086,
-        "sha256": "03e6edf172e2758efe8bed10944d859d290c92be0823fdb7a098c1d6078144a5"
+        "bytes": 3087,
+        "sha256": "a19a72ebee8fd11569896aafba0c6ba40172d2dc0c19346cfbeebc9ba1d63348"
       },
       "review": {
         "status": "pending",
@@ -232,8 +232,8 @@
     {
       "file": {
         "path": "README.md",
-        "bytes": 13901,
-        "sha256": "3e5406bc0076e1cdc72c93dac57fc6ab5ab579f55d41573e5272541d4d7307b4"
+        "bytes": 14365,
+        "sha256": "e03899ad32004915a660614f47262df37ae41b955d566c28b0307efb8ae32813"
       },
       "review": {
         "status": "pending",
@@ -252,8 +252,8 @@
     {
       "file": {
         "path": "SECURITY.md",
-        "bytes": 1572,
-        "sha256": "f8cb401b889833961561389475998024c260ff8f657c305b40b84bae2842072d"
+        "bytes": 1573,
+        "sha256": "bbc29c9f79fdb4feff53b5cee6df0cd0afe90835222e7a693e55dde0e06e6f34"
       },
       "review": {
         "status": "pending",
@@ -272,8 +272,8 @@
     {
       "file": {
         "path": "SUPPORT.md",
-        "bytes": 1299,
-        "sha256": "24abd1aa02697550f3304542ff56b7f03a2babd9aff4b78ff83c4bdab26d5185"
+        "bytes": 1300,
+        "sha256": "44d22398f8f5cb8e775f07393df7c2b13aa626ef41976a1a5bcd51ef851f18ad"
       },
       "review": {
         "status": "pending",
@@ -511,9 +511,29 @@
     },
     {
       "file": {
+        "path": "apps/desktop/src/main/command-line-help.json",
+        "bytes": 1476,
+        "sha256": "f28b4786e7ab1e0047b1de5573cf0ee0561111bdf58e047bbb442ff393a54222"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "apps/desktop/src/main/command-line.ts",
-        "bytes": 14386,
-        "sha256": "29fde72aadc3e92de40c94f22ac38cc123340ebdf4fbecd3b44547f8d925f5c1"
+        "bytes": 13320,
+        "sha256": "85c9b7108619aac0af9d258bf197c9d18c492177ed803365a7497e52b8523b9f"
       },
       "review": {
         "status": "pending",
@@ -4451,26 +4471,6 @@
     },
     {
       "file": {
-        "path": "bun.lock",
-        "bytes": 245728,
-        "sha256": "bdce7247f85f486e7b80065faf036f30bd5741f37561d227a3b98f2c484df195"
-      },
-      "review": {
-        "status": "pending",
-        "originKind": null,
-        "source": null,
-        "license": null,
-        "rightsHolder": null,
-        "distribution": null,
-        "disposition": null,
-        "reviewer": null,
-        "reviewedAt": null,
-        "evidence": [],
-        "conclusion": null
-      }
-    },
-    {
-      "file": {
         "path": "compliance/AXTERM_FS_SAFE_MACOS_CARGO_SOURCE.spdx.json",
         "bytes": 82477,
         "sha256": "4a457b6817f1d4a1f85458b19fa83f995db01b0200959db274887b59f074ed7d"
@@ -4512,8 +4512,8 @@
     {
       "file": {
         "path": "compliance/AXTERM_PRODUCTION_DEPENDENCIES.spdx.json",
-        "bytes": 156994,
-        "sha256": "51097f9346f76035482e282eb898e584b2d614703f86981696cab33c63b87e1f"
+        "bytes": 158425,
+        "sha256": "ee1edee1c9dc90a68439cb84bcfee25ee37e7200fb612c1c5e767c934e974319"
       },
       "review": {
         "status": "pending",
@@ -4573,7 +4573,7 @@
       "file": {
         "path": "compliance/LICENSE_ATTRIBUTION_REVIEW_LEDGER.json",
         "bytes": 6916,
-        "sha256": "645341cac30b6b8ba528be8e3a2c6bffb1ccd5eae00f9d03feb35ff04a77dbb7"
+        "sha256": "311ce999e3755d8c82ea50a9706c7487a5ecfdeef59027507383c0e6c3eb8e51"
       },
       "review": {
         "status": "pending",
@@ -4692,8 +4692,8 @@
     {
       "file": {
         "path": "compliance/THIRD_PARTY_COMPONENTS.json",
-        "bytes": 22075,
-        "sha256": "345c7dbd107aed5d160b972b75817450a4cba53b1509636090d6ad83eba62230"
+        "bytes": 22274,
+        "sha256": "989ed129ce77e8f40f2292ddd57f2fbb06d5a736750ca915a69c6b03c50305af"
       },
       "review": {
         "status": "pending",
@@ -4712,8 +4712,8 @@
     {
       "file": {
         "path": "compliance/THIRD_PARTY_LICENSE_TEXTS.json",
-        "bytes": 822696,
-        "sha256": "cee538380546c7ed47ea1d182d1f5f934430eeefb465da4ef03b44729f307740"
+        "bytes": 826539,
+        "sha256": "574efd75dc3ec0cd90ba0f6dc86ad66a9a9a7bc135fa1c0f8073e20dc99a85d7"
       },
       "review": {
         "status": "pending",
@@ -4772,8 +4772,8 @@
     {
       "file": {
         "path": "docs/README.md",
-        "bytes": 15200,
-        "sha256": "3eeb482dfaa32809d11dc9c90ed38d847693470bef8efabaf884e06643e85941"
+        "bytes": 15201,
+        "sha256": "0c80742b47109e8cdc1c9729dbaa81cbadd2fe4903a980c84ff2a68d5059a945"
       },
       "review": {
         "status": "pending",
@@ -5152,8 +5152,8 @@
     {
       "file": {
         "path": "docs/adr/ADR-019-atomic-no-replace-transfer-publication.md",
-        "bytes": 6292,
-        "sha256": "9b15806c5d8ceb957a33c89a8114d90412981489b1ab678224a13e040a3cfea9"
+        "bytes": 6298,
+        "sha256": "330d953722134a77a9feab32d86ed60b9ed25f1f8c3e734531e2c6ba8911bbaa"
       },
       "review": {
         "status": "pending",
@@ -5252,8 +5252,8 @@
     {
       "file": {
         "path": "docs/adr/ADR-024-terminal-output-consumption-window.md",
-        "bytes": 5571,
-        "sha256": "b76fa9813e3ec8ef03ee0da866c58413accab16d5f3257ff7d09771f547fc4ae"
+        "bytes": 5572,
+        "sha256": "c657312d5009fbdaa0eb81c1802f5c0e33d08b2b48acdad82892406bc5d2e561"
       },
       "review": {
         "status": "pending",
@@ -5352,8 +5352,8 @@
     {
       "file": {
         "path": "docs/adr/ADR-029-ai-modes-and-mentioned-skills.md",
-        "bytes": 3792,
-        "sha256": "96eb8b60a326a26e4c71963f33b018fa278c187f0055d56524859a99d1671cf5"
+        "bytes": 3793,
+        "sha256": "b90491839845fe2955edec9b5ade7d20e9c1556df94113dde43f5a104a69d05e"
       },
       "review": {
         "status": "pending",
@@ -5434,6 +5434,26 @@
         "path": "docs/adr/ADR-033-default-osc52-clipboard-writes.md",
         "bytes": 1603,
         "sha256": "ceeabdee9f3fe5ef1abf93c262a5f7111a2ccc98acb615262b574544fbbfde37"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "docs/adr/ADR-034-package-manager-pnpm.md",
+        "bytes": 5857,
+        "sha256": "a831e44c5e7d746ec5550905d1396457a2c23d23df34f12ab7f5d73f17889cb9"
       },
       "review": {
         "status": "pending",
@@ -5532,8 +5552,8 @@
     {
       "file": {
         "path": "docs/architecture/MASTER_SPEC.md",
-        "bytes": 129311,
-        "sha256": "c68640ceb79af971c3de3438ce55f1885e046312262456a65b8a0435a518b09d"
+        "bytes": 129414,
+        "sha256": "6105163d859b0045fa178bfef08ebeb092400289164622d60c79100c4bdf2d58"
       },
       "review": {
         "status": "pending",
@@ -5552,8 +5572,8 @@
     {
       "file": {
         "path": "docs/implementation/AXTERM_VISUAL_BASELINE.md",
-        "bytes": 36961,
-        "sha256": "86a6beb6cb7eef5398134bf7b102b3ee302437f0a638803c394eb34987771182"
+        "bytes": 36987,
+        "sha256": "4804dffa91c02a70bb636a61e27e19c00d9f1d538471db16ebdf16696277747a"
       },
       "review": {
         "status": "pending",
@@ -5572,8 +5592,8 @@
     {
       "file": {
         "path": "docs/implementation/COMMERCIALIZATION_CLEANUP_PLAN.md",
-        "bytes": 24350,
-        "sha256": "5a50ba71913f86dda4d5edb5d41ff28e814da6f056defa7c77bf7a716264c334"
+        "bytes": 24356,
+        "sha256": "540c7c69a3086c69bc770a03c257318f39a219d145bb5f7cfd5f04a8e3cc860c"
       },
       "review": {
         "status": "pending",
@@ -5592,8 +5612,8 @@
     {
       "file": {
         "path": "docs/implementation/COMMERCIALIZATION_SOURCE_AUDIT.md",
-        "bytes": 236658,
-        "sha256": "e85560820143cd9af8b28029937a09dc32edce9b7bd9c9cfcb327c0d9f7a14c5"
+        "bytes": 236772,
+        "sha256": "f886951fbdc947c1f94f5e474727fa457faa9f745acb780d3e173a983a2795d5"
       },
       "review": {
         "status": "pending",
@@ -5633,7 +5653,7 @@
       "file": {
         "path": "docs/implementation/INDEPENDENT_RELEASE_MATRIX.md",
         "bytes": 12239,
-        "sha256": "2fccbbf00c0a15543e94c6fac2ba76cd769331d523521042e4f090e8112af359"
+        "sha256": "0e715832422ae1e50a7decbbab9c8debed0a1d977f2ce789c0166056f479810f"
       },
       "review": {
         "status": "pending",
@@ -5652,8 +5672,8 @@
     {
       "file": {
         "path": "docs/implementation/LEGACY_PROTOTYPE_PARITY_MATRIX.md",
-        "bytes": 239216,
-        "sha256": "25cfa7a49b457aa254b528099df5c9add060cd82133a0efabc4c53a72c32aa68"
+        "bytes": 239242,
+        "sha256": "6459d3571589e2a655752a9a1916d7407aa263ce82e72b0f462fc558e341166d"
       },
       "review": {
         "status": "pending",
@@ -5672,8 +5692,8 @@
     {
       "file": {
         "path": "docs/implementation/LEGACY_PROTOTYPE_PARITY_ROADMAP.md",
-        "bytes": 46005,
-        "sha256": "a7dd533cf6c94d46aa20d7e7f922ed9b99450f8717cc5173aab51f72288add04"
+        "bytes": 46007,
+        "sha256": "282dafde258ec1274426ea1e23eb982646ff9285264ad2bd0252076970a927f9"
       },
       "review": {
         "status": "pending",
@@ -5692,8 +5712,8 @@
     {
       "file": {
         "path": "docs/implementation/LOCALIZATION_FALLBACK_POLICY.md",
-        "bytes": 11317,
-        "sha256": "80b4be8446d03374c5d2ee3c941ca262e75e2f184007c7e5d8f4e3fd1d9d3205"
+        "bytes": 11323,
+        "sha256": "f916a0572c25d9bede7ac3dcea1bc01c13f9c4e4ef759b1aad58c2b957ee0000"
       },
       "review": {
         "status": "pending",
@@ -5712,8 +5732,8 @@
     {
       "file": {
         "path": "docs/implementation/LOCALIZATION_SCOPE_AUDIT.md",
-        "bytes": 16106,
-        "sha256": "65249d155fc4b2ffb0092a7f98361360e5c1811026b2cdb9fb33095e00a128c4"
+        "bytes": 16111,
+        "sha256": "717b4a40e0279292ae627e769ac66b6c39fabc7f77956eb44cd2f5b3fe9cf6ad"
       },
       "review": {
         "status": "pending",
@@ -5732,8 +5752,8 @@
     {
       "file": {
         "path": "docs/implementation/LOCAL_OPTIMIZATION_GOAL_PLAN.md",
-        "bytes": 33443,
-        "sha256": "a30f9795ba71fbcc7e6964c0f55824b1013ea2f4c7a316bbbe4a5f3c39259c88"
+        "bytes": 33482,
+        "sha256": "3e1dcd22036c2bb0aa63eac39c82b26ad2c1003d0b37efa5d0279470fff63b9c"
       },
       "review": {
         "status": "pending",
@@ -5752,8 +5772,8 @@
     {
       "file": {
         "path": "docs/implementation/LOCAL_OPTIMIZATION_USAGE.md",
-        "bytes": 9791,
-        "sha256": "77829281f058f3b9f053654b92ce474e23410e8e682b41cbc6159e66ddf5dd28"
+        "bytes": 9796,
+        "sha256": "17ae0dd4c2600b4b861fb032b0057902d0d5b4d0b55998d3b115ebffd0e1dc0e"
       },
       "review": {
         "status": "pending",
@@ -5772,8 +5792,8 @@
     {
       "file": {
         "path": "docs/implementation/LONG_RUN_RELIABILITY.md",
-        "bytes": 5151,
-        "sha256": "2f9e0fa5bcf8cc72b95bad5aecfb4abd85174ecff37e4691fc3026af33ee30fc"
+        "bytes": 5154,
+        "sha256": "046348e0960aa2c6b9a4797f7b8a6c837df432d9c481067a77b507eaab7d8bce"
       },
       "review": {
         "status": "pending",
@@ -5792,8 +5812,8 @@
     {
       "file": {
         "path": "docs/implementation/MIGRATION_GUIDE.md",
-        "bytes": 21995,
-        "sha256": "2c6780da9050ed2c4f981a023da3afb8dc26f8063cdadbc1df9e8d8e62186745"
+        "bytes": 21999,
+        "sha256": "3cf939367dd8232c580b76cd1fe13c2258b00f4609e50a761833bf5299f9ae85"
       },
       "review": {
         "status": "pending",
@@ -5812,8 +5832,8 @@
     {
       "file": {
         "path": "docs/implementation/MINIMUM_COMMERCIAL_RELEASE.md",
-        "bytes": 6360,
-        "sha256": "00d2b8617b2925569db46007d4cdaa0560b1fac7712eb21188b8d39faf8dd467"
+        "bytes": 6364,
+        "sha256": "7042a93670e8f7bd4b74f8471b39d4563bfceb05ca9bef3ecb2f7674fb0783d0"
       },
       "review": {
         "status": "pending",
@@ -5852,8 +5872,8 @@
     {
       "file": {
         "path": "docs/implementation/PACKAGING.md",
-        "bytes": 36134,
-        "sha256": "81845f97037bc55c210b41f09e38cdfa2f10fbc222bbfb5965d7dfd906d650c5"
+        "bytes": 36158,
+        "sha256": "f45393215c59b6a9bd8bb4173b12bfe2da1b52e875d3cfa47f56634a5d023936"
       },
       "review": {
         "status": "pending",
@@ -5872,8 +5892,8 @@
     {
       "file": {
         "path": "docs/implementation/PARITY_HARNESS.md",
-        "bytes": 14316,
-        "sha256": "64f1e7d2de8af1d81e32f63a0ec64e2ad57f24eb6357d80353d3a72c23d1c58e"
+        "bytes": 14328,
+        "sha256": "9897eba6d12ade0fb0a1c0d51b3e4830b48ede1f1ed9f894368024ccf636d850"
       },
       "review": {
         "status": "pending",
@@ -5892,8 +5912,8 @@
     {
       "file": {
         "path": "docs/implementation/PERFORMANCE_BUDGETS.md",
-        "bytes": 9829,
-        "sha256": "275df82a7748e53e29b2d57affe5e4f8eac971a6d9e10c421664f24a8b6268cf"
+        "bytes": 9835,
+        "sha256": "1403e934284b2573b20e5296911ef6b1fa4bdef826959fcd986017cdf08e3dcc"
       },
       "review": {
         "status": "pending",
@@ -5912,8 +5932,8 @@
     {
       "file": {
         "path": "docs/implementation/PI_AI_ENGINE.md",
-        "bytes": 10674,
-        "sha256": "5fc243f11e9dbdf350bc5e883de0ba7611db43291f293611e12a8d768cd9a7c5"
+        "bytes": 10675,
+        "sha256": "cb94ab8fc1fcb14af3e188328c1e09f12441cde3cac4f7d7201f9eb1f28c749b"
       },
       "review": {
         "status": "pending",
@@ -5932,8 +5952,8 @@
     {
       "file": {
         "path": "docs/implementation/PRODUCT_ASSET_PROVENANCE.md",
-        "bytes": 10560,
-        "sha256": "443eedbec2c34f2d19db50f670d7f0c14ee7ec31302ccb26ad21c1e5e786e2cb"
+        "bytes": 10572,
+        "sha256": "15b709040f2177173383da15ba7a700f59683b0ff7d313c969f1855c6f315908"
       },
       "review": {
         "status": "pending",
@@ -5972,8 +5992,8 @@
     {
       "file": {
         "path": "docs/implementation/PUBLIC_SNAPSHOT_EXCEPTION_TEMPLATE.md",
-        "bytes": 2653,
-        "sha256": "23e71a13edfade9e061f87b63ad260282814ca1df5ffd8acf4bf77f05cb441d1"
+        "bytes": 2655,
+        "sha256": "518f37868613df5cc942deb3cb2708cf0a287f861645841f3d540ffdc8788abb"
       },
       "review": {
         "status": "pending",
@@ -5992,8 +6012,8 @@
     {
       "file": {
         "path": "docs/implementation/RELEASE_OWNER_HANDOFF.md",
-        "bytes": 39537,
-        "sha256": "3a967f6b847c480b9930ded0ff3fd8d9135730563602e30d05500ad06895f5c0"
+        "bytes": 39566,
+        "sha256": "518d2e48fae4491bb37d46e8c589f0e582eb5f0ffe6608c8a970febc94cdb28c"
       },
       "review": {
         "status": "pending",
@@ -6012,8 +6032,8 @@
     {
       "file": {
         "path": "docs/implementation/REMAINING_RELEASE_WORK.md",
-        "bytes": 38876,
-        "sha256": "176ffb8baa7e7d6f428b5713cf82c1dcef6cc6b882b9bca6b74bb4818e778a5e"
+        "bytes": 38878,
+        "sha256": "9f72c6f6bd9c52595a867781468ffd5796478d8f1730cc09448cdd2cdfa7b78e"
       },
       "review": {
         "status": "pending",
@@ -6032,8 +6052,8 @@
     {
       "file": {
         "path": "docs/implementation/SIGNED_UPDATE_FEED.md",
-        "bytes": 5236,
-        "sha256": "024e0e6644bde9d09deaa15b0bb6f52e16d1c184454a55ee483d905283e6da73"
+        "bytes": 5249,
+        "sha256": "023027ac4439d6a0749b866b0b64cbf021cb8967f5b975f840022903810306bd"
       },
       "review": {
         "status": "pending",
@@ -6052,8 +6072,8 @@
     {
       "file": {
         "path": "docs/implementation/STATUS.md",
-        "bytes": 800883,
-        "sha256": "74782d6afe6c6c76d0b0c52af6dc16d05e08598e8f86e82d71fd271f230eb57b"
+        "bytes": 806816,
+        "sha256": "01653e9c6f396bb1d520f8150a1afee138072f3703013141f906a005fa54a229"
       },
       "review": {
         "status": "pending",
@@ -6092,8 +6112,8 @@
     {
       "file": {
         "path": "docs/implementation/THIRD_PARTY_LICENSE_AUDIT.md",
-        "bytes": 46502,
-        "sha256": "931637cf09f4cb88dd3282f1f46fb2418c350aa458db4de0f354de93aadd0a06"
+        "bytes": 46525,
+        "sha256": "a0c0aeb7480e9ce6b7ac41cdbfebcc6df73ba4532e8e8178773c5b1c65c02e6a"
       },
       "review": {
         "status": "pending",
@@ -6152,8 +6172,8 @@
     {
       "file": {
         "path": "docs/implementation/VERSIONS.md",
-        "bytes": 20958,
-        "sha256": "368d8608f0a5acc217342b8e26a6a594e932411acf33972ff689869449391358"
+        "bytes": 21624,
+        "sha256": "a300ca8d463ad4f04e4ce30878f2e548916f6955ca5bdc2755f7703b9f747831"
       },
       "review": {
         "status": "pending",
@@ -6172,8 +6192,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/COMMERCIAL-DETACHMENT-SOURCE-TRIAGE-2026-09-26.md",
-        "bytes": 7480,
-        "sha256": "f855cb21cfb82891b4837758da02565a011244809a872ae378de008e50d49904"
+        "bytes": 7481,
+        "sha256": "717c61bc0024bdc04e7a5457db5e4cec7cb0526f153cc7417578b6d023726767"
       },
       "review": {
         "status": "pending",
@@ -6212,8 +6232,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR02-TRANSFER-LEGACY_PROTOTYPE-REFERENCE-2026-09-24.md",
-        "bytes": 7124,
-        "sha256": "7d8d034f34cbf28b28921011d02dfa66d0109aa03c11ba2317eafef9f597334b"
+        "bytes": 7130,
+        "sha256": "46533df4681a71d750f2b5ade8a735894046ae91bc10bb054f28a88e60bbcc07"
       },
       "review": {
         "status": "pending",
@@ -6232,8 +6252,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR02-TRANSFER-PUBLISHER-SOURCE-2026-09-24.md",
-        "bytes": 6045,
-        "sha256": "8b953a39339e79f6c8c0ca0d5e71fafb7a9d90cb9d591df04072ab5f564762a4"
+        "bytes": 6052,
+        "sha256": "d6526bf43443f47350e5bb47d63f295e1214368c4e041b7fd73a47596eeb8d3c"
       },
       "review": {
         "status": "pending",
@@ -6252,8 +6272,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR02-TRANSFER-REPRODUCIBLE-BUILD-2026-09-24.md",
-        "bytes": 7796,
-        "sha256": "0ef765d7d20bc0b78aa36fe080b8cd0f9204fab159235b2792c90cdb049549f9"
+        "bytes": 7802,
+        "sha256": "43d02adb001af0625bcd9196e9d936f2f50614842616c49dd702ecf1eeed332d"
       },
       "review": {
         "status": "pending",
@@ -6292,8 +6312,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-ADR020-OWNED-STAGE-RECOVERY-2026-09-25.md",
-        "bytes": 10711,
-        "sha256": "e199d0a2ec2495b8db279d815fc7ee7b8cb494305a5f8f2fd8c61454a43fb735"
+        "bytes": 10745,
+        "sha256": "696c2abcc174d3e27dbd04da8c89ec4ee04044bf0b6d39a21ab4f899b8e6b4bb"
       },
       "review": {
         "status": "pending",
@@ -6312,8 +6332,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-ATOMIC-PUBLICATION-NATIVE-POC-2026-09-24.md",
-        "bytes": 6110,
-        "sha256": "43e05172dd1619c53ac250cb8dda9f282f2c60273212fd010ee9e00dcc2fc60f"
+        "bytes": 6116,
+        "sha256": "ce6310e26c815dbb9ff94d14fc10d4851d604f91716f166f66260739a9e9e833"
       },
       "review": {
         "status": "pending",
@@ -6352,8 +6372,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-EXTERNAL-TRANSFER-PEER-AVAILABILITY-2026-09-21.md",
-        "bytes": 28213,
-        "sha256": "cf60256d301fbe413285fc2bed61f051aa1c643dfd1a715269beb99554786c22"
+        "bytes": 28254,
+        "sha256": "95567a851265de096bdf5ca67b9948931c9160e2815fecbd40e47611739c1d0d"
       },
       "review": {
         "status": "pending",
@@ -6372,8 +6392,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-MACOS-ARM64-NATIVE-PUBLICATION-2026-09-24.md",
-        "bytes": 12886,
-        "sha256": "42933488d18f2c94ab29a620730235be1b4e255f24a1d96d4c95d475728ed00e"
+        "bytes": 12889,
+        "sha256": "68de885215c8e1ba6b62c1d40a4669db0da0cefa348e1dfdb67109248aa8c2b5"
       },
       "review": {
         "status": "pending",
@@ -6392,8 +6412,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-MACOS-PACKAGED-OPENSSH-2026-09-21.md",
-        "bytes": 5531,
-        "sha256": "9784b51a416aea7ed18cd7048e0254eb8df2ee26d0d9a3d3b8962c8963aab4a9"
+        "bytes": 5538,
+        "sha256": "4aeb7b7d0b3e1d25ce6dbfc16bc6f13906c65fb5fd59c52f7df7a873c4ea5687"
       },
       "review": {
         "status": "pending",
@@ -6412,8 +6432,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-MACOS-SMB-FAIL-CLOSED-2026-09-24.md",
-        "bytes": 7115,
-        "sha256": "ada1babad619d1886477993c6a4deee5f60eb85101f92bb1463d9cce43019954"
+        "bytes": 7123,
+        "sha256": "4ba93570803f77fa8098e46bf5a1eb48ac52569f9fe7ef57d788778cb6ae46cd"
       },
       "review": {
         "status": "pending",
@@ -6432,8 +6452,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-RUNTIME-GRACEFUL-SHUTDOWN-2026-09-25.md",
-        "bytes": 23521,
-        "sha256": "46fe4a266565cd8adf048cbf9aa69486a574361c26adbfb12c4b1d2bf154bc20"
+        "bytes": 23554,
+        "sha256": "57c8c0c22fb7211cd132d5c456f706bad8918e32eebd27fe2e123735102ffd9a"
       },
       "review": {
         "status": "pending",
@@ -6452,8 +6472,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-TRANSFER-FILENAME-CONFINEMENT-2026-09-24.md",
-        "bytes": 3099,
-        "sha256": "f40ef293756585a8ae46831e9c34502aeba887fe860c1278d2e661ee4db1c8d4"
+        "bytes": 3100,
+        "sha256": "849a92ab98a56ae73ba11e905ffaf1acaf231952cad381799f6e90975409504c"
       },
       "review": {
         "status": "pending",
@@ -6472,8 +6492,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR03-XMODEM-ASYNC-PUBLICATION-2026-09-24.md",
-        "bytes": 2519,
-        "sha256": "898f9adfeb4c2f3403f590f42709fc65f72603c5077bea206785eb884d688c7e"
+        "bytes": 2520,
+        "sha256": "f0a4202aaf5c7cd87835585a3594410831931dd6b7bf40ebccd58b7e7374a828"
       },
       "review": {
         "status": "pending",
@@ -6492,8 +6512,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-ASCII-LEADING-REST-2026-09-24.md",
-        "bytes": 5432,
-        "sha256": "8435990354512653334606f1ac761436037ea61dcd4b8368f9b53671c169e351"
+        "bytes": 5434,
+        "sha256": "e3e315c1780551e33338d0bec3d40d8bf58b877a994ab686268bc2bf724b9c50"
       },
       "review": {
         "status": "pending",
@@ -6512,8 +6532,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-BOUNDED-LIST-2026-09-24.md",
-        "bytes": 8959,
-        "sha256": "8ac124c85566806b7111fb622400d78fcdb9948a153b84b2a9561822b0faed4a"
+        "bytes": 8996,
+        "sha256": "3caf9ae8fe27cb9a74c6654810ee2505fc49ceb12f7ba37f7dcb1d4512029807"
       },
       "review": {
         "status": "pending",
@@ -6532,8 +6552,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-FEATURE-RENAME-SEQUENCE-2026-09-22.md",
-        "bytes": 3385,
-        "sha256": "2a75785bc2bfb299dbf255ac639465ce6f15902d55f911ef3cee1aaeae63bf4d"
+        "bytes": 3392,
+        "sha256": "805472ea9d3198dc18f1645183d2ee171d7e435607f60ff89241d62fe4e24172"
       },
       "review": {
         "status": "pending",
@@ -6552,8 +6572,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-FILESYSTEM-IDENTITY-2026-09-22.md",
-        "bytes": 3499,
-        "sha256": "f2f0b2e82912c38d79cb5f1f1acbb628e4cbe5f88ef4fbaeab3d4557d28df95f"
+        "bytes": 3504,
+        "sha256": "85f7c3371bd35e1e912551193fab04296746f3f66b5b16d4842debf281afeeb5"
       },
       "review": {
         "status": "pending",
@@ -6572,8 +6592,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-LINUX-CONTAINER-2026-09-24.md",
-        "bytes": 2396,
-        "sha256": "24ce015cedc4fc249b667c414df05ccbc5d9afaf8f84908a79ce01555c49937d"
+        "bytes": 2613,
+        "sha256": "47ad16f5bf33735671afbef4c43234024c73eb173d5713b2bebe01d59d372d89"
       },
       "review": {
         "status": "pending",
@@ -6592,8 +6612,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-READ-HANDLE-IDENTITY-2026-09-24.md",
-        "bytes": 3949,
-        "sha256": "07e18f754af2aae59e72abdd685b767074386311063dff3bf5177f3dc40687f4"
+        "bytes": 3951,
+        "sha256": "5ace53d385b39b7a061fd779578bedf956721c3a4bcf040ac57a272ab4d82b84"
       },
       "review": {
         "status": "pending",
@@ -6612,8 +6632,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-READ-HANDLE-LINUX-DEB-2026-09-24.md",
-        "bytes": 4936,
-        "sha256": "f22ce7ee2a6c9f1f6226f7f114c070aaa9741c22035a6bae4ef981eba11b8349"
+        "bytes": 4937,
+        "sha256": "3e93ed42d5bef2a4c6437fc720159929db62e4779c21204639e1d2aa15f06324"
       },
       "review": {
         "status": "pending",
@@ -6632,8 +6652,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-REST-STREAM-2026-09-22.md",
-        "bytes": 9663,
-        "sha256": "9dc49f1209c33e9dacafc8a8fea4d81465e190a22b9dd831e0db63699eb54be4"
+        "bytes": 9670,
+        "sha256": "e0c5bf34f4ed4e10caa1b009429f552682537716885ba90f860e89da48b60e1e"
       },
       "review": {
         "status": "pending",
@@ -6652,8 +6672,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-RESTART-HANDLE-CLEANUP-2026-09-24.md",
-        "bytes": 5610,
-        "sha256": "f459b5cfb6f596186f95e1d484a85e5acf0ccf9259f540cbdb941d2417c4f240"
+        "bytes": 5611,
+        "sha256": "cb9a1cc59e407bc96dba848241cd8c77414045e64b4b9fdf249749ea7b52a023"
       },
       "review": {
         "status": "pending",
@@ -6672,8 +6692,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-FTP-SYMLINK-MUTATION-2026-09-24.md",
-        "bytes": 6550,
-        "sha256": "5a30dc64c02e13f9d6e19d362496ce70d7951be71a150281f8c991699849512b"
+        "bytes": 6552,
+        "sha256": "9f1ed04acddcdd49f970810f41df03c7ba229616928154ef56ae1d816cd9c249"
       },
       "review": {
         "status": "pending",
@@ -6692,8 +6712,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-LINUX-ARM64-CONTAINER-2026-09-21.md",
-        "bytes": 3842,
-        "sha256": "0274e677a23d7f8515f42c9ee9224972cd25479d4b43ad1194cac89f1df724bc"
+        "bytes": 3987,
+        "sha256": "3ec4cf962a38b12e06c2a40bd7b777bde7374285b237f061d6ec15a2c9a756b9"
       },
       "review": {
         "status": "pending",
@@ -6712,8 +6732,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-MACOS-FTP-ACTIVE-STALL-2026-09-25.md",
-        "bytes": 3840,
-        "sha256": "7224ec29fec27badee8d2e480a0c7590b566c2f1bc865d0dd011edd9b9327c04"
+        "bytes": 3845,
+        "sha256": "0643963ac494b76b4034c8e21b18588f531f53c3a64373fe016e3f1b17a2d66c"
       },
       "review": {
         "status": "pending",
@@ -6732,8 +6752,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-MACOS-FTP-EXCEPTION-MATRIX-2026-09-25.md",
-        "bytes": 6263,
-        "sha256": "fbc48897e1c2966be01e3bac87bf7e1f7a574c61acc229ea4658e8fc3185175e"
+        "bytes": 6273,
+        "sha256": "ba200782a8c0f83fa3aa225e78d131ae9493c9de3b2378d433f71a11187ef62a"
       },
       "review": {
         "status": "pending",
@@ -6752,8 +6772,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-MACOS-FTP-LONG-TRANSFER-2026-09-25.md",
-        "bytes": 3843,
-        "sha256": "94074834fe296ff49c7b2311d25c859cc74231834f2fada721b0452b4b6adceb"
+        "bytes": 3849,
+        "sha256": "f89b7094225d8820a48f765d4a19be8684956b817b2546101a378113fd9e1cc0"
       },
       "review": {
         "status": "pending",
@@ -6772,8 +6792,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-MACOS-FTP-SLOW-DOWNLOAD-2026-09-25.md",
-        "bytes": 2537,
-        "sha256": "54f6ec44f9547fab8eaa43905caa5a47c72dc8e3d230f26077f1af4265732c71"
+        "bytes": 2543,
+        "sha256": "7142ca1fb554bb60b3ccdb2c53695c500e31903a0e344f3c049dcf0821f26495"
       },
       "review": {
         "status": "pending",
@@ -6792,8 +6812,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-MACOS-FTP-STALLED-DATA-2026-09-25.md",
-        "bytes": 2962,
-        "sha256": "bb9a0b8518fd88eeb30cd83a7653c88a9ed7f472e7c3d2ecc127d3d84511d9dd"
+        "bytes": 2967,
+        "sha256": "e839ef7d9856e2b125ea81c213520f1aa3958093edd495a28f834fd8a50659b6"
       },
       "review": {
         "status": "pending",
@@ -6812,8 +6832,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR04-PACKAGED-MACOS-FTP-ASCII-2026-09-24.md",
-        "bytes": 1971,
-        "sha256": "906fbb40f150fb637172efafa10391c5a3404e5ad76e7cd51f911ae39bda1f7e"
+        "bytes": 1977,
+        "sha256": "6491c13c4c59bb5bf2be7e00433689d80adc2f71171c526c8c279e2a482b7872"
       },
       "review": {
         "status": "pending",
@@ -6832,8 +6852,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR05-MACOS-FOUR-LOCALE-CONDITIONAL-COVERAGE-2026-09-25.md",
-        "bytes": 26659,
-        "sha256": "664f640d4ca35c4fbe14e3787b9e29c2e2f5c01dd212b0e1e389bb71d434fd7e"
+        "bytes": 26753,
+        "sha256": "6a282a32c6cdf2662a8e4c16c38de079a2279d4b43ab133a2f5734b6d9ea5901"
       },
       "review": {
         "status": "pending",
@@ -6852,8 +6872,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR05-MACOS-FOUR-LOCALE-NAVIGATION-2026-09-25.md",
-        "bytes": 3901,
-        "sha256": "533a65b2c239a64507df8ea9dc3fed2407f3b324ffbd7c7f2fde443a3ad084e6"
+        "bytes": 3906,
+        "sha256": "a0e2d6060f14b9e32fdc80fc8db03e6b6ff40b3007b92434908dda201a1a159d"
       },
       "review": {
         "status": "pending",
@@ -6872,8 +6892,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR05-MACOS-FOUR-LOCALE-S4-SURFACES-2026-09-25.md",
-        "bytes": 4539,
-        "sha256": "480f851a9355dd3ae8697fde7df2056139c8f086ca20f53559cfa2e6095fa4dd"
+        "bytes": 4551,
+        "sha256": "ad654e666c9eb180da040515544981b5217164174012cd7b9acda5e10b38117e"
       },
       "review": {
         "status": "pending",
@@ -6892,8 +6912,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR05-MACOS-FOUR-LOCALE-SETTINGS-ZOOM-2026-09-25.md",
-        "bytes": 2897,
-        "sha256": "910532848b7ab3ba4441578047f06c51ff5e53a5eec9b19bef6d46cf3d4a2dd5"
+        "bytes": 2907,
+        "sha256": "938e514515f9446d77b380f05df330cd974495bf50ebb9354650cde4907bd350"
       },
       "review": {
         "status": "pending",
@@ -6912,8 +6932,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR05-MACOS-S5-SHELL-REVIEW-HANDOFF-2026-09-25.md",
-        "bytes": 3511,
-        "sha256": "496dd4cf9989f310bdce979c7744a81ea0bb3fe27a9627e03107bed9d8916443"
+        "bytes": 3528,
+        "sha256": "57da7e1ab8411093ff365e1e7f1f1788ac2bd73a6e3c3946db38215a8945692e"
       },
       "review": {
         "status": "pending",
@@ -6952,8 +6972,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR05-PACKAGED-LOCALE-MIGRATION-2026-09-24.md",
-        "bytes": 2427,
-        "sha256": "6207056822f6f6fcfbcc2f810d5a590643bc460be2685336346f555dd054f070"
+        "bytes": 2439,
+        "sha256": "c39be821bcde37fcb1749132a16168572a5aabfdb4fe9f8e73abec4fb3ac0e18"
       },
       "review": {
         "status": "pending",
@@ -6992,8 +7012,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-ALL-PROTOCOL-PORTABLE-2026-09-23.md",
-        "bytes": 2332,
-        "sha256": "40f8c45868ab5a82ef4f67ecf47653f3a3b4b1a5cf4d2101900546cb0b6ac802"
+        "bytes": 2338,
+        "sha256": "bd7dbf17d9df3343bc7299569048b404de759c6eef2e481a443fdac80995832c"
       },
       "review": {
         "status": "pending",
@@ -7012,8 +7032,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-CONFIG-EXPORT-2026-09-20.md",
-        "bytes": 6727,
-        "sha256": "73d1ffe288627d709fa55d885967005b4bbfb65e8365ccb9f954baf41183d6a2"
+        "bytes": 6759,
+        "sha256": "019f9da485a30ea3eab92e212e965e89510e0bd60b0090e6aee501203d540140"
       },
       "review": {
         "status": "pending",
@@ -7032,8 +7052,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-HISTORICAL-PACKAGE-UPGRADE-2026-09-23.md",
-        "bytes": 41780,
-        "sha256": "80e8840d066d641b2a71336d49b15eee976bc52464c840fe51362735142a6836"
+        "bytes": 41791,
+        "sha256": "7e03f16659254bcb332dfe52a6775cfc50482d1fea608970e7aabd6a85a24e0b"
       },
       "review": {
         "status": "pending",
@@ -7052,8 +7072,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-LEGACY-BATCH-WORKFLOW-2026-09-22.md",
-        "bytes": 5798,
-        "sha256": "6fbfba9cafa2a33ab48c1646db917569495d9389f3165014be3dcacf57454b2f"
+        "bytes": 5805,
+        "sha256": "89d0b7f81dfe7aa0877a832bb94038d8a75e3a12d6186c0aaa04235496ea0872"
       },
       "review": {
         "status": "pending",
@@ -7072,8 +7092,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-LEGACY-FIELD-LOSS-REPORT-2026-09-22.md",
-        "bytes": 3834,
-        "sha256": "e21493dce9308fa385e6e1c48e4becb2c8881821f3ee6e8b68ea57709e10fe6d"
+        "bytes": 3836,
+        "sha256": "12ca33041e14872de91b14e1fd72d022520b08102705e0c36486497815bd3a9c"
       },
       "review": {
         "status": "pending",
@@ -7092,8 +7112,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-MACOS-D1-SQLITE-VAULT-FAILURE-2026-09-25.md",
-        "bytes": 5418,
-        "sha256": "208d9f174559e69a6ab18270250ec6437cf60df6fabfafeed0fbaf4c07204ec6"
+        "bytes": 5433,
+        "sha256": "7163b113fa392579fa38ebecc8e1ff0cbc4f37b1b8ede0824bd9a23652c840b5"
       },
       "review": {
         "status": "pending",
@@ -7112,8 +7132,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-MACOS-D2-BOOKMARK-USER-THEME-2026-09-25.md",
-        "bytes": 4533,
-        "sha256": "48311937ed03b56da3328b44582c11ce94817484443caaf970d7283aa149ed3d"
+        "bytes": 4543,
+        "sha256": "ac93ef2f3ddff21441b01b3557f1051c1445c8ba4e99ac4768779ee9a1d8d5d9"
       },
       "review": {
         "status": "pending",
@@ -7132,8 +7152,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-MACOS-D3-LEGACY-LINK-IMPORT-EXPORT-2026-09-25.md",
-        "bytes": 6581,
-        "sha256": "67b0249261830fc5ec6df5d5600ad7f4c82b0bc4b21e99554bfb9d5dfb9abd9b"
+        "bytes": 6586,
+        "sha256": "64d1d785dc8234e5192decd51a0a922f078547fc2cb9f967396797af3bda0dec"
       },
       "review": {
         "status": "pending",
@@ -7152,8 +7172,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-MACOS-D4-REMOTE-SYNC-SAFETY-2026-09-25.md",
-        "bytes": 4980,
-        "sha256": "ae99553da360c2a92c5a8e7d8774be98f07c98ad5798f000444fb5bcd9007e97"
+        "bytes": 4985,
+        "sha256": "656260fdfaa13a3c1d9a72e4727e6d6870890b607fb6916d1487989d7f43bd7f"
       },
       "review": {
         "status": "pending",
@@ -7192,8 +7212,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR08-REMOTE-BACKUP-2026-09-20.md",
-        "bytes": 7713,
-        "sha256": "e982340a3694f92078e8cb9cbbec8960bf52e826399b4a5b906fd6929708bbca"
+        "bytes": 7749,
+        "sha256": "314c946d0d96c8ec843bdbf32eb041cb24ea204d1d00369584b1184a7a8e3211"
       },
       "review": {
         "status": "pending",
@@ -7212,8 +7232,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR10-MACOS-PACKAGED-VISUAL-2026-09-24.md",
-        "bytes": 5078,
-        "sha256": "d5eec8234f9c98d79b845e0de690e5d40a396a093938eb25a0945d3f37b4baf5"
+        "bytes": 5085,
+        "sha256": "30167ba286ecfa48fdee5e18d3c8e7d99aa74d6abecbf4ff4b6cc614367eeb42"
       },
       "review": {
         "status": "pending",
@@ -7232,8 +7252,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR10-MACOS-U1-U3-UX-ACCESSIBILITY-2026-09-25.md",
-        "bytes": 5594,
-        "sha256": "6e89132d884c2d337d0b70143d87463601fc5994c58163b7adb9b042b2fb2cfa"
+        "bytes": 5606,
+        "sha256": "ace1f5f5ad28dcb7bc0563f7c9288e79010c3edfae3eb5674ba5e2637d53d056"
       },
       "review": {
         "status": "pending",
@@ -7252,8 +7272,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR10-PACKAGED-A11Y-2026-09-23.md",
-        "bytes": 2946,
-        "sha256": "98b6895e8a2d820e6859572906dcd4f215dcb9d2100f33e55a6b696469f557a3"
+        "bytes": 2951,
+        "sha256": "bcd229f01082b326d799a65e16f209b5cc672dc65de73fb2df1b003778b62e6d"
       },
       "review": {
         "status": "pending",
@@ -7272,8 +7292,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR10-PACKAGED-CONNECTION-TABS-2026-09-24.md",
-        "bytes": 1768,
-        "sha256": "152d382bf1bc1f94a205c1066da02ea5a3596c9a6dd8faad856b11e8c4943874"
+        "bytes": 1773,
+        "sha256": "122fa39ade48e61136d3b8accf28a5f99b36b65b120708d82671f22c356e7718"
       },
       "review": {
         "status": "pending",
@@ -7292,8 +7312,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-COMPONENT-INDEX-2026-09-20.md",
-        "bytes": 3540,
-        "sha256": "3f4b0cff53a90f7eab685e7e3167171721582ac17894437935d8c06c959a11cb"
+        "bytes": 3546,
+        "sha256": "437ee10adbccf4f6bd55169d6da9a00617d10f76b0d58731fa3a7a97770c3ca0"
       },
       "review": {
         "status": "pending",
@@ -7312,8 +7332,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-DEPENDENCY-AUDIT-2026-09-21.md",
-        "bytes": 2646,
-        "sha256": "08453ee2c04a405642c30224b2cbb6411b2527fb663694ad34e51d836da20a65"
+        "bytes": 2655,
+        "sha256": "a90a3d26e9f109f6beeebbb7710b1375489e22f5f2ed66423e916b77e1c87b46"
       },
       "review": {
         "status": "pending",
@@ -7332,8 +7352,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-ELECTRON-RUNTIME-LICENSES-2026-09-21.md",
-        "bytes": 4481,
-        "sha256": "ad53fd959d19b4ccf181f3d3dfdf16d230d47412b59e985f80380f419165699e"
+        "bytes": 4512,
+        "sha256": "3f484b3f69da76f90f4d27127ad31a9f2d713bf40a3475f3e12ea1cc7e8e335f"
       },
       "review": {
         "status": "pending",
@@ -7352,8 +7372,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-FS-SAFE-MACHO-TOOLCHAIN-2026-09-24.md",
-        "bytes": 4623,
-        "sha256": "9211fefa6ae30c83ae9fad954d319440c645fd8ac2d02d428d6914610ae1d6f4"
+        "bytes": 4624,
+        "sha256": "7bc577a2d8f47d6da11af98bc6a145cc47d125c7383e273876f64da1c701f9ee"
       },
       "review": {
         "status": "pending",
@@ -7372,8 +7392,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-FS-SAFE-MACOS-SOURCE-SBOM-2026-09-24.md",
-        "bytes": 3937,
-        "sha256": "21847a1ecee5e9dcb24350a25976ebdd83a6d2019f988cf60672dce80c9c2b94"
+        "bytes": 3942,
+        "sha256": "c3a8c1d9c1fc8734b9627d8cc6c7817776b02f70343d5eec0d156649bd79ab27"
       },
       "review": {
         "status": "pending",
@@ -7412,8 +7432,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-FS-SAFE-NPM-ATTESTED-PROVENANCE-2026-09-24.md",
-        "bytes": 4006,
-        "sha256": "3eec0ed2530ddf83e9a6069bc37239891a11bf5641941bb829a70c1fc40efd12"
+        "bytes": 4009,
+        "sha256": "f5719c1a845130142dcad4c15ceacf75d98781356de88262fb16a89c1447629a"
       },
       "review": {
         "status": "pending",
@@ -7452,8 +7472,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-FS-SAFE-RUST-ROOT-TEXTS-2026-09-24.md",
-        "bytes": 3166,
-        "sha256": "7fb0857cd31319b4f71d3913eb0e997f6b45a54e7437afc9c8e2be72575f7594"
+        "bytes": 3168,
+        "sha256": "5276156d7778f96512f8824df1bdbf9929b071cafe22300aa26bd29b7ab56625"
       },
       "review": {
         "status": "pending",
@@ -7492,8 +7512,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-FS-SAFE-SOURCE-HEADER-CANDIDATES-2026-09-24.md",
-        "bytes": 3558,
-        "sha256": "e193a2665fa15b86743bdce82a1b629382f8befa9b04696efc9314bb1c1f3ac6"
+        "bytes": 3560,
+        "sha256": "e8d8bfbd1c188f48a82365239090a90eb7121b5722a96cac7c3aec5801134dd7"
       },
       "review": {
         "status": "pending",
@@ -7512,8 +7532,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-HONO-MIDDLEWARE-DECLARATIONS-2026-09-23.md",
-        "bytes": 3545,
-        "sha256": "bec0ddc08319c7b181ef9c5e79848565c65970bec67a7d30fb27d5b2088ec8be"
+        "bytes": 3546,
+        "sha256": "7ae684a73e073888e7ba1c6abf973872a17a5998e532bd8595e16a9c2ddf4aa4"
       },
       "review": {
         "status": "pending",
@@ -7552,8 +7572,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-IRONRDP-MISSING-CRATE-ROOT-TEXTS-2026-09-24.md",
-        "bytes": 4817,
-        "sha256": "aa6eb6cee2f15289a164c526e9351611ab1a46ff49d564eb72a863a1c57ea04b"
+        "bytes": 4820,
+        "sha256": "918d08a3a2c187dcb9521bd8bc041a4a679700c0cd51dcec244590398ed3ad6a"
       },
       "review": {
         "status": "pending",
@@ -7572,8 +7592,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-IRONRDP-NESTED-SPIN-LICENSE-2026-09-24.md",
-        "bytes": 3338,
-        "sha256": "36a4e13c644e309b895c83ca7942dd05fdeb18d28a58d1f1c8279f611405f88a"
+        "bytes": 3341,
+        "sha256": "c690d1e8768b4cb9fe9beb21ac71db91dbaaa4dd29e6460b5eb9ba23584a6f95"
       },
       "review": {
         "status": "pending",
@@ -7612,8 +7632,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-IRONRDP-SOURCE-HEADER-CANDIDATES-2026-09-24.md",
-        "bytes": 3621,
-        "sha256": "2b1172fe57bfd96bc66b2118511cd2f5ac737cb05287be3118173a08528ebbd2"
+        "bytes": 3623,
+        "sha256": "132a5ea105886db70dcf3cc9344f09d215a53719576fbd5eb65bad4815af62be"
       },
       "review": {
         "status": "pending",
@@ -7632,8 +7652,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-IRONRDP-SOURCE-TAG-2026-09-23.md",
-        "bytes": 6221,
-        "sha256": "418181d689bc406a2fb7e1fa2b0983372b5cf63dfc992ce071c6025d57a192de"
+        "bytes": 6230,
+        "sha256": "da29db8daaf911dfec0a769c4a2bbe94491ab8b92607750b4ef23ac7eeb6ac65"
       },
       "review": {
         "status": "pending",
@@ -7672,8 +7692,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-IRONRDP-WASM-SOURCE-SCOPE-2026-09-24.md",
-        "bytes": 8249,
-        "sha256": "2ad3248a0d4f351a7d9897c6fc0687e0a2cbcf278660f75ec30b8700401d46d8"
+        "bytes": 8256,
+        "sha256": "6084e59153bc124a7828049253f21f43f757db2c85e9dc791c0ff66b2282d6c7"
       },
       "review": {
         "status": "pending",
@@ -7732,8 +7752,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-LICENSE-TEXTS-2026-09-20.md",
-        "bytes": 4106,
-        "sha256": "e7aeaa69117d36d23f86584bc555d2b03ce3acc0dc6d375c89af230a881d35e2"
+        "bytes": 4111,
+        "sha256": "900dc5f2ca55bb13150970b0a18f003ca4a6338d52fff886551744286e250640"
       },
       "review": {
         "status": "pending",
@@ -7772,8 +7792,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-MISSING-ROOT-LICENSES-2026-09-20.md",
-        "bytes": 9972,
-        "sha256": "59c54dc731a45efb8beb748cd680f61c120da66a005f85aef0bc8c900e4a4a0b"
+        "bytes": 9973,
+        "sha256": "3bc43fa00c17f870119345aa5d3719933a9169dcd975810ad2b33e7d2f24348d"
       },
       "review": {
         "status": "pending",
@@ -7792,8 +7812,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-NAPI-RS-PUBLISHED-SOURCE-2026-09-24.md",
-        "bytes": 4421,
-        "sha256": "28c42c60754f33e0f6581e79c8c73fa26219adc8f0cfc21a9b948d6f92ca9632"
+        "bytes": 4423,
+        "sha256": "182a776762698620593354a70efde7b6cb70d99c40c002ccafae2cc49ea7374f"
       },
       "review": {
         "status": "pending",
@@ -7812,8 +7832,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-NOVNC-SOURCE-AVAILABILITY-2026-09-23.md",
-        "bytes": 2665,
-        "sha256": "5b71d9e2225313f2504fbcc63db936be5004bd68cb47970b9592e72e79fdea28"
+        "bytes": 2672,
+        "sha256": "158349189687a57fbac7c050b16e0a35c01aa4a3340f40977ce81b266c2c1a45"
       },
       "review": {
         "status": "pending",
@@ -7832,8 +7852,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-PACKAGE-ATTRIBUTION-2026-09-21.md",
-        "bytes": 9820,
-        "sha256": "d90ed66b92de30d3ea9594c162e5d4257c84022df6d16fa2f59a4348e9b9e0f7"
+        "bytes": 9832,
+        "sha256": "95d98ee46f4655aaad278c8a771b90d7225966c318653a6ba2602891ebb7167c"
       },
       "review": {
         "status": "pending",
@@ -7852,8 +7872,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-PACKAGED-ARTIFACT-SBOM-2026-09-21.md",
-        "bytes": 14873,
-        "sha256": "c5058bdb8a06f7727f621be17f5e2d26a6815d85f38b700fe2a72b317c726724"
+        "bytes": 14880,
+        "sha256": "a446e485f40dc894a0872e03029e3c5e9d5a22a22f1aef28716c628c2e59cb79"
       },
       "review": {
         "status": "pending",
@@ -7872,8 +7892,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-SPICE-SOURCE-ATTRIBUTION-2026-09-23.md",
-        "bytes": 5691,
-        "sha256": "d2f8a0b8a2e3597ad4f9e3008df30eef74add7f33f53423b1a4398562a953134"
+        "bytes": 5693,
+        "sha256": "a7c35064288e99b7a27c02b396752c2730e0997f35b910be880961ea9c8efb7e"
       },
       "review": {
         "status": "pending",
@@ -7892,8 +7912,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-TWEETNACL-AUTHORS-2026-09-23.md",
-        "bytes": 3172,
-        "sha256": "aed0142110aca21c8f656349793b71ba1e9d38e38df91893d7edfdddb646fd7d"
+        "bytes": 3173,
+        "sha256": "c131c97fce922d9a0f6f95f00853daef8474ce9063982057681a7f2392cdc401"
       },
       "review": {
         "status": "pending",
@@ -7912,8 +7932,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-XTERM-HEADLESS-VSCODE-2026-09-23.md",
-        "bytes": 4357,
-        "sha256": "7de0a75630a6443d4685ca3fbcb61d34594886126de3d17f17dc790200df2eb6"
+        "bytes": 4358,
+        "sha256": "550cedc51f27703d749a8ba694ef55cb109499025fd330e7c33c6ff92b62101e"
       },
       "review": {
         "status": "pending",
@@ -7932,8 +7952,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR11-ZSTD-NESTED-LEGAL-2026-09-24.md",
-        "bytes": 5357,
-        "sha256": "1f57c7d2dedd6c5b2c55bf5300199652876fa50e4d0275cc0d466066a42ab14f"
+        "bytes": 5359,
+        "sha256": "d6043cf57bdcd63c7cd97f941a4be37c0a8822815a4e2faa6877d2aad61d7e27"
       },
       "review": {
         "status": "pending",
@@ -7952,8 +7972,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md",
-        "bytes": 265977,
-        "sha256": "a69a46b2259323c03fcc8d6d212d75322d10c68bdd7c2bdfc9ba08ffe7ed4447"
+        "bytes": 266165,
+        "sha256": "a9e2d6e67c23382d5d32b5367887f1c3cb54b79d998fd9134246b602b1f6ab84"
       },
       "review": {
         "status": "pending",
@@ -7972,8 +7992,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR12-INDEPENDENT-COPY-2026-09-21.md",
-        "bytes": 8065,
-        "sha256": "63beba06c4c7350bacfe082f4e99e9aa157bac4a5b3ccc28853a4b6c64066874"
+        "bytes": 8076,
+        "sha256": "bdb9277a1118b0a4a516a52f32972eeceb65ed7e544992bbd39fa2ae91d24877"
       },
       "review": {
         "status": "pending",
@@ -7992,8 +8012,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR12-MACOS-INDEPENDENT-2026-09-20.md",
-        "bytes": 5625,
-        "sha256": "b6fc4a757bbb2a13be444101654baaf057b3e702925ed4d32ace44797442a4e0"
+        "bytes": 5643,
+        "sha256": "814f70b3caf27736cc8c537622677fef8c48944a4882808dfef943a22defcb14"
       },
       "review": {
         "status": "pending",
@@ -8012,8 +8032,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR12-PROTOCOL-CANDIDATE-2026-09-24.md",
-        "bytes": 3355,
-        "sha256": "5b2c487734fbb1dc6f46655b7cf11e750d6220f8cfcf69e01cf2a254c936becb"
+        "bytes": 3359,
+        "sha256": "87e54220aa06dd9a4481f61ea91785754a6d7464b5f93297487317b82adbab05"
       },
       "review": {
         "status": "pending",
@@ -8032,8 +8052,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-LINUX-APPIMAGE-RUNTIME-GATE-2026-09-24.md",
-        "bytes": 2817,
-        "sha256": "5ffdf33230e924bb7b842a1aa2a8164f1ffaefeb5874ab56bdf9b6a276d9884c"
+        "bytes": 2823,
+        "sha256": "2b90fc1cd6f2b0bdb9b127bf780500f99549c0aa7cedfc170a05720faedf4dda"
       },
       "review": {
         "status": "pending",
@@ -8052,8 +8072,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-LINUX-X64-APPIMAGE-READ-HANDLE-2026-09-24.md",
-        "bytes": 3391,
-        "sha256": "14f1707dc7d92a59ef7bcb2a56bc71cac4dd4f8303de91491a653cce57569a73"
+        "bytes": 3392,
+        "sha256": "81e810cf8cc903a716a2305433161430ded766375af710bfd99fd0d252d23f7c"
       },
       "review": {
         "status": "pending",
@@ -8072,8 +8092,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-LINUX-X64-FTP-ASCII-PACKAGED-2026-09-24.md",
-        "bytes": 5039,
-        "sha256": "053f227228b7adcbfcf5418e175e844b3595ccdb5c346eced447f4a04606a92b"
+        "bytes": 5043,
+        "sha256": "10b3daccff7dc16cc9d9dc9e9e48486edc2bf4a34ce04a2e8b35ae796040cb3c"
       },
       "review": {
         "status": "pending",
@@ -8092,8 +8112,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-LINUX-X64-INSTALL-ATTEMPT-2026-09-22.md",
-        "bytes": 13529,
-        "sha256": "f2c681f0bfa6e529ec991a8120eb92d58bdc7aedb33b1fb809a93112f0a25dda"
+        "bytes": 13661,
+        "sha256": "a42d2466a2eafbfff9c3f6314d80806ca3e36dff2423c34f7cf336d68c8e7ac7"
       },
       "review": {
         "status": "pending",
@@ -8112,8 +8132,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-LINUX-X64-PACKAGED-CONTRAST-2026-09-24.md",
-        "bytes": 4580,
-        "sha256": "e7dd43fe934e031ce4bdf2f041e42d1d2f9ce729f1f2413f0c26af82e35762d6"
+        "bytes": 4581,
+        "sha256": "016dffdd76e1a4fa20d9d228915f798dc3c38795cfa81d2acfae98b3417a7e69"
       },
       "review": {
         "status": "pending",
@@ -8132,8 +8152,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-MACOS-CURRENT-DMG-CONDITIONALS-2026-09-25.md",
-        "bytes": 4329,
-        "sha256": "a2d8d57e7bf9e4bff746a6b12c9d42dbc4a3727278cbdf028438ad0be2c55237"
+        "bytes": 4344,
+        "sha256": "89743eeb06394b95e860f733b05631cc25ae51e6b42ee618240cd2bd7d58920c"
       },
       "review": {
         "status": "pending",
@@ -8152,8 +8172,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-MACOS-CURRENT-DMG-INSTALL-2026-09-25.md",
-        "bytes": 3738,
-        "sha256": "338b9d0dd059b11e64678706ae97e8f5aa7373d5f0efda9ec51d4f02442078eb"
+        "bytes": 3741,
+        "sha256": "319b4771ddf29b1050f1fe57ed976906e9077927689fb5e0465a101ed60e6fd7"
       },
       "review": {
         "status": "pending",
@@ -8172,8 +8192,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-MACOS-CURRENT-DMG-SSH-2026-09-25.md",
-        "bytes": 1959,
-        "sha256": "95e5f5a6e55cef062532dc487abbf038a713675d449ed3f01a2098765bdcff1a"
+        "bytes": 1960,
+        "sha256": "dc1775404d5e2a07ae61734e0f01850949557471d5291f5c06b488c6dce9109c"
       },
       "review": {
         "status": "pending",
@@ -8192,8 +8212,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-MACOS-DMG-2026-09-21.md",
-        "bytes": 11995,
-        "sha256": "1aa9f287837fbbfb0ad4086cd5a9f7af76bb5b835a3163c5f7cdd38cc91a0244"
+        "bytes": 12003,
+        "sha256": "7c2273adffa5a5c80228b27fbc1ef1079d1c8cee785b4a2181deeaebe6d6118d"
       },
       "review": {
         "status": "pending",
@@ -8212,8 +8232,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-MACOS-DMG-2026-09-24.md",
-        "bytes": 4562,
-        "sha256": "6ad80b1fbc6f3609f05e8736554363bd3eeb3c57f4c6707380b52560be714dbd"
+        "bytes": 4563,
+        "sha256": "e7460dee54f6d3147c06ecd0ce839d8f162c9f2ae5696f52c289190e1322630a"
       },
       "review": {
         "status": "pending",
@@ -8252,8 +8272,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-MACOS-UNSIGNED-CANDIDATE-2026-09-24.md",
-        "bytes": 4930,
-        "sha256": "e4725c925bc6c442153f17b15927820c3b6457bc9efa8770757eab0f6d14c083"
+        "bytes": 4931,
+        "sha256": "00ddd6853c49fe77a63f41c308e508b1bdb10cb8b4770f9d9bc8c95cae146786"
       },
       "review": {
         "status": "pending",
@@ -8272,8 +8292,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-PACKAGED-UPDATE-FEED-2026-09-24.md",
-        "bytes": 3875,
-        "sha256": "8923111007ebcfe8c82c0e890badc17dae9d92f72d967250b3b19cdd67c8df62"
+        "bytes": 3879,
+        "sha256": "50ebd7872100a82356e00a4aa3ba01a8382c638cf31719031efa603904233d3d"
       },
       "review": {
         "status": "pending",
@@ -8292,8 +8312,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-UPDATER-NOTES-SIGNATURE-2026-09-24.md",
-        "bytes": 2716,
-        "sha256": "ddca33285800a392825bea61863aa075dc17e430e8dce166dc58014e0b1f9283"
+        "bytes": 2718,
+        "sha256": "0f67a43f276b3ff85ff880ad2ca413cfe893e9139d9e0c8fadfeec7c3e35024c"
       },
       "review": {
         "status": "pending",
@@ -8312,8 +8332,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-UPDATER-SEMVER-PRECEDENCE-2026-09-24.md",
-        "bytes": 3142,
-        "sha256": "6ed22c4f34cb7d0b3618250e55c36c8985c207847654ab5ca33ef2d95c528c24"
+        "bytes": 3143,
+        "sha256": "9a5c9e1f4453fe771b43b825bd3dfabbd2b886677e31b9079467b4b4f6375665"
       },
       "review": {
         "status": "pending",
@@ -8332,8 +8352,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR13-UPDATER-STREAM-WRITES-2026-09-24.md",
-        "bytes": 3500,
-        "sha256": "c4d22daeeabf7f9cb82a55cbc0daa5bd55b96d7f44db62f6850a2f79d69d3084"
+        "bytes": 3501,
+        "sha256": "6eab6b69ed2462836ed5bd7444d73a37dd8a44ab9f64f808b5e37ee0f529902e"
       },
       "review": {
         "status": "pending",
@@ -8352,8 +8372,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR14-ADR021-CURRENT-CLONE-2026-09-25.md",
-        "bytes": 5199,
-        "sha256": "2d2daa724488051856f5f96ccb7400407da091f57337afa13c4f0e7c01c13b7b"
+        "bytes": 5205,
+        "sha256": "8dc65ae76320d13df5bffa5107c4593ffcba76c279fe72454b4f5d2a1958fe4e"
       },
       "review": {
         "status": "pending",
@@ -8372,8 +8392,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/IR14-MIGRATION-PERIOD-CLEAN-CHECKOUT-2026-09-25.md",
-        "bytes": 3413,
-        "sha256": "afa6c767a29f507d574e50f10ce4c626b4c8ca8e45a92d01f3e520e2b188aceb"
+        "bytes": 3416,
+        "sha256": "92b03333b5f1c2059df1510cc9cc42de05881509b854e312b570ad7b4958dde6"
       },
       "review": {
         "status": "pending",
@@ -8413,7 +8433,7 @@
       "file": {
         "path": "docs/implementation/evidence/LOCAL-CLEAN-ROOT-MAC-2026-09-26.md",
         "bytes": 4408,
-        "sha256": "ae54606ecf74e28c36909e51ad7a641a7b8c49de99025454c2ebfe308c4f5592"
+        "sha256": "b7dfd9addce078069c1d2c8010f10371a117bf27b9643664d05ab40030206aab"
       },
       "review": {
         "status": "pending",
@@ -8432,8 +8452,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/PACKAGED-MACOS-ARM64-SUITE-2026-09-24.md",
-        "bytes": 3420,
-        "sha256": "e7c92f595d1891b7354f9d0e7a69d9c921829dcf1955bdeea63b649ddf295fd9"
+        "bytes": 3427,
+        "sha256": "e9a2a5f1195cd2d870e8dc068fde46ae86a6fec79f8c37c97dd07bc5403dfac4"
       },
       "review": {
         "status": "pending",
@@ -8472,8 +8492,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/W02-03-BOOKMARK-TRIGGER-PRESETS-2026-09-25.md",
-        "bytes": 3101,
-        "sha256": "8d7208743008913dfb82bed7ff6cc7273b5b2a60609101e8a246d2317daa930b"
+        "bytes": 3107,
+        "sha256": "b231d7e183b2b14c49b9b364fba574733759269cbf8ea9bf8f29bac8b1332348"
       },
       "review": {
         "status": "pending",
@@ -8492,8 +8512,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/W02-03-MONITOR-THEME-SIMILARITY-2026-09-25.md",
-        "bytes": 4535,
-        "sha256": "f7d38b9f9db738fc158d3a092a7f79194f44401613fa1b165456ea483491652b"
+        "bytes": 4542,
+        "sha256": "9835ef842db723bcc3c4b3c27eab4818d5fcb34887e50945d96cf92b001dd193"
       },
       "review": {
         "status": "pending",
@@ -8512,8 +8532,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/W02-03-RDP-KEYBOARD-LINEAGE-2026-09-25.md",
-        "bytes": 8044,
-        "sha256": "f23b6932191c152396e31e9f0c0adf1bf0ca9705432425b1abac30e75230c633"
+        "bytes": 8047,
+        "sha256": "8bacd49e65f6cacb5adad81650aaf3c03ef74b8b95f4bd491d01c76e4b42fe7c"
       },
       "review": {
         "status": "pending",
@@ -8552,8 +8572,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/W14-01-PROVISIONAL-HISTORY-BACKUP-2026-09-25.md",
-        "bytes": 7458,
-        "sha256": "b8692aaaeeb148a09c4635ad2dada39111e92856879782d94b8190a8908333b8"
+        "bytes": 7464,
+        "sha256": "61164cc706bd349659bbc33468d4d3b41184bdee56df2c79251746709b3f032a"
       },
       "review": {
         "status": "pending",
@@ -8572,8 +8592,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/local-optimization/OP-01-2026-10-03.md",
-        "bytes": 5546,
-        "sha256": "c06ca8ff68372c86e5dbb34630dcdcf42c1aaa6a3c78bc0128c1edb1b190df3a"
+        "bytes": 5586,
+        "sha256": "442b7a60795737d2abe4d3b54c1b7505e2c1ae292e4174b9ed6eb1f38af8b21b"
       },
       "review": {
         "status": "pending",
@@ -8593,7 +8613,7 @@
       "file": {
         "path": "docs/implementation/evidence/local-optimization/OP-02-2026-10-03.md",
         "bytes": 8917,
-        "sha256": "94dc9e8d4291d3fc7a3f2cb7d991468be2cb747237b0b56aafd9b55e1c5fd366"
+        "sha256": "70a38d4e6cc97b843c361114418c6508fc06f98b09a02ceda4460bac77dbdb03"
       },
       "review": {
         "status": "pending",
@@ -8612,8 +8632,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/local-optimization/OP-03-2026-10-03.md",
-        "bytes": 9211,
-        "sha256": "e4f3b23790015637709a5189345dcfe1197e441a0e5b9c3e6397de358500d79b"
+        "bytes": 9212,
+        "sha256": "76c3b270ec2a1f66225778be5b80f01677b510003e0029740c12eb5197e923f2"
       },
       "review": {
         "status": "pending",
@@ -8633,7 +8653,7 @@
       "file": {
         "path": "docs/implementation/evidence/local-optimization/OP-04-2026-10-03.md",
         "bytes": 9631,
-        "sha256": "ef1c208dcd152455753818273dc7bd279fe2481e0d24e0b2a1798e273b28e9af"
+        "sha256": "6694e54a1aa85579e4a664cfe43776ed86fd384bf1eeb2bcbd97d725dbd284f2"
       },
       "review": {
         "status": "pending",
@@ -8653,7 +8673,7 @@
       "file": {
         "path": "docs/implementation/evidence/local-optimization/OP-05-2026-10-03.md",
         "bytes": 8843,
-        "sha256": "d2627c3ae49700301a4f32c6ed71787ad84b7e281be10a1686588dcabc790843"
+        "sha256": "dc19c52b061ef9a0d57b91992e07677131782726ab29b48b3e7ab4f0a67c4123"
       },
       "review": {
         "status": "pending",
@@ -8712,8 +8732,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/local-optimization/OP-08-2026-10-03.md",
-        "bytes": 4014,
-        "sha256": "9d9b3eb017acc684d367f285cf50456ca1b4d06f64b1494e5a114528defb4499"
+        "bytes": 4015,
+        "sha256": "dc71329306850f56b7b07a36e7bb44a40ff892f4631052c3af25d3b10b9c5c88"
       },
       "review": {
         "status": "pending",
@@ -8732,8 +8752,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/local-optimization/OP-09-2026-10-03.md",
-        "bytes": 9211,
-        "sha256": "a5da11909bbdd96ee502ea9d685edf612d31eed349202e593368176251471f08"
+        "bytes": 9212,
+        "sha256": "300254875746b2994873d9bb3ac9295cbbaec3f6f5c8db43d5801eb4b52f53c1"
       },
       "review": {
         "status": "pending",
@@ -8752,8 +8772,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/pi-engine/2026-10-05.md",
-        "bytes": 5612,
-        "sha256": "9a43a22c634bafa7972c5b66d7c55b84f3a09fbdabba8cb5832ff5f8b6c8caed"
+        "bytes": 5621,
+        "sha256": "a17a5d6215e1a069317d1e093ff0520df22a8fb776010b258c60d1fff7f94a2c"
       },
       "review": {
         "status": "pending",
@@ -8773,7 +8793,7 @@
       "file": {
         "path": "docs/implementation/evidence/pi-engine/2026-10-06-modes-and-reuse.md",
         "bytes": 6228,
-        "sha256": "95c96edbe5b87778b2be0189618ffddf648494808a3fa4a448cadbbb71654fc5"
+        "sha256": "ca279a0f83278554269e74069da27f5622a0db8ba6f1c7fa12daa7e59094a966"
       },
       "review": {
         "status": "pending",
@@ -8792,8 +8812,8 @@
     {
       "file": {
         "path": "docs/implementation/evidence/pi-engine/2026-10-09-auto-review.md",
-        "bytes": 7918,
-        "sha256": "dd1058d1fe24f85ee7218d6413169f79ae49df84c7c10db6bda95398603198b5"
+        "bytes": 7921,
+        "sha256": "5f207e889ab5f0ae4ed7365162b88a428f39e2e53e39498a59d0cb18272e8fad"
       },
       "review": {
         "status": "pending",
@@ -9572,8 +9592,8 @@
     {
       "file": {
         "path": "package.json",
-        "bytes": 14942,
-        "sha256": "ffe631bccae7c3a0c90aa9ce513aa108c7152b8aae932e1aae28a7f1cd90b086"
+        "bytes": 14722,
+        "sha256": "235be2f7507107820bc5232f2fdda31ea09590114675fd308002841a6a664ac1"
       },
       "review": {
         "status": "pending",
@@ -14512,8 +14532,8 @@
     {
       "file": {
         "path": "packages/runtime/src/application/terminal-recording.ts",
-        "bytes": 6941,
-        "sha256": "c168987a127ee35d44f4057c7348ab6f6ea35ef49ced19a59a2a84686240d06f"
+        "bytes": 6942,
+        "sha256": "087004a121b02bb77fd28e1c2ac61f64564bfd7be7053d8210d18ed889cc5526"
       },
       "review": {
         "status": "pending",
@@ -15752,8 +15772,8 @@
     {
       "file": {
         "path": "packages/runtime/src/types/xterm-headless-entry.d.ts",
-        "bytes": 261,
-        "sha256": "2d02e88805279e6639407c13adaaae0e016eb5efa3d7dca2e4b0dc05702467e4"
+        "bytes": 257,
+        "sha256": "f8a902e4d442428de2584f8221497fc191eb8498571382a7e1addc7445a7e5d1"
       },
       "review": {
         "status": "pending",
@@ -15991,9 +16011,49 @@
     },
     {
       "file": {
-        "path": "run.ts",
-        "bytes": 4207,
-        "sha256": "27b6f03cd4cafae7571d483bcf963394e87aab8f46619724eea038dc3e07fb17"
+        "path": "pnpm-lock.yaml",
+        "bytes": 234875,
+        "sha256": "8f912d2f10fe8123222109771f8b04a17586ed3502239ece55ed795f4e90466b"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "pnpm-workspace.yaml",
+        "bytes": 920,
+        "sha256": "846efa305ca8ba15d7454680cd393795f5c8dd9d447480b7f32e38ad9043667e"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "run.py",
+        "bytes": 7645,
+        "sha256": "9d2bf777fb9024b46c989409e6cc693180b89bc5d05767e277f7e1b97c86e6a4"
       },
       "review": {
         "status": "pending",
@@ -16112,8 +16172,8 @@
     {
       "file": {
         "path": "scripts/commercialization/audit-independent-snapshot.mjs",
-        "bytes": 16932,
-        "sha256": "aa6441a9c305e7e77a323213ebb3fe2d5c8901fe5dbfe1f446c5f6ff1380e18e"
+        "bytes": 16950,
+        "sha256": "4a3b4866cc0f85765f0be8a1698c9c23af29b082c6bad03fd23bf20025714016"
       },
       "review": {
         "status": "pending",
@@ -16152,8 +16212,8 @@
     {
       "file": {
         "path": "scripts/commercialization/check-ephemeral-git-candidate.mjs",
-        "bytes": 8607,
-        "sha256": "4649c53b9a34373159415f86c46f545b97b95683239ced31e18ce4d2c0a39e38"
+        "bytes": 8706,
+        "sha256": "82bd10f444cee2584d4b5637b04b77528b04ceed71ee57576607d76c7a761a12"
       },
       "review": {
         "status": "pending",
@@ -16172,8 +16232,8 @@
     {
       "file": {
         "path": "scripts/commercialization/check-final-public-release.mjs",
-        "bytes": 5626,
-        "sha256": "cdb7620af3f4ae4a4e571d4de122bece0aeeabf4f559001aff713afde810364f"
+        "bytes": 5676,
+        "sha256": "567150582d1f9b4971fb3857fa7ea9d7682c81861e0ed8cb54c09741564aec88"
       },
       "review": {
         "status": "pending",
@@ -16192,8 +16252,8 @@
     {
       "file": {
         "path": "scripts/commercialization/check-minimum-commercial-release.mjs",
-        "bytes": 13167,
-        "sha256": "21d71117c70a62b9c228ac9c21bf4f7f7808f2e0a6a75762d3ced5061daba21e"
+        "bytes": 13261,
+        "sha256": "45b4e3e480be98746516e5852d6ae824a331a71871135bfd453328681c16f012"
       },
       "review": {
         "status": "pending",
@@ -16232,8 +16292,8 @@
     {
       "file": {
         "path": "scripts/commercialization/generate-application-icons.mjs",
-        "bytes": 4818,
-        "sha256": "75cd8592d9437edda79ab789fa778877677a0e62b1d21b48e6ec43e8cd49bdea"
+        "bytes": 4819,
+        "sha256": "fefb6e1e269c697944fff330948052ac956e292b8d774a7534035a41f704fb8c"
       },
       "review": {
         "status": "pending",
@@ -16252,8 +16312,8 @@
     {
       "file": {
         "path": "scripts/commercialization/generate-component-index.mjs",
-        "bytes": 4161,
-        "sha256": "6983bb4cdb038c497743c82a00a641a9d2f6a6df5bf344f3121aeebfe74b0d60"
+        "bytes": 4008,
+        "sha256": "109a45d098f1438af17393f3da26295f2f5a29f5396ddacae6588950d8c288c8"
       },
       "review": {
         "status": "pending",
@@ -16272,8 +16332,8 @@
     {
       "file": {
         "path": "scripts/commercialization/generate-fs-safe-macos-source-sbom.mjs",
-        "bytes": 9368,
-        "sha256": "3bf8305d086e75ef8e0b2000be1154f80f6b72668e48acc29ce3a85de46c34b3"
+        "bytes": 9369,
+        "sha256": "cb200b2ec25cd4c322183e73cf7f19b7565ac84a72a9c5c06c16bc76e21c3e8e"
       },
       "review": {
         "status": "pending",
@@ -16292,8 +16352,8 @@
     {
       "file": {
         "path": "scripts/commercialization/generate-license-texts.mjs",
-        "bytes": 8374,
-        "sha256": "e0e5979aa1043a96d16c678c210b2b1d337262264a888ebc1d27cadfec651d9f"
+        "bytes": 8176,
+        "sha256": "595d948651bfd9e3038224fd80ec433cf4539da65a7cf2efbacd7b4dfa460769"
       },
       "review": {
         "status": "pending",
@@ -16352,8 +16412,8 @@
     {
       "file": {
         "path": "scripts/commercialization/generate-product-asset-inventory.mjs",
-        "bytes": 3736,
-        "sha256": "5e88cb1818674b53e50abe8c29a84e00d0432c41657c61a1655f0687b76e6cfe"
+        "bytes": 3737,
+        "sha256": "8ae8aee30a4d6e6f387476c3e4c5d71f85aa3105cfe52f9bd41165724a461552"
       },
       "review": {
         "status": "pending",
@@ -16372,8 +16432,8 @@
     {
       "file": {
         "path": "scripts/commercialization/generate-production-sbom.mjs",
-        "bytes": 3972,
-        "sha256": "bfe6067970c731142d9c19fe61d110080b248e8590d061e18d1742d4993716be"
+        "bytes": 3831,
+        "sha256": "f0e1d39af580508f7df6deca5876c9e973ca6427cb26a7a65885c2fbfaaf664c"
       },
       "review": {
         "status": "pending",
@@ -16414,6 +16474,26 @@
         "path": "scripts/commercialization/generate-spice-source-notices.mjs",
         "bytes": 8763,
         "sha256": "c81047269d9994c202919966bb27ced9a8a51ba0ced1c86832e49bdb02cfa3cb"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "scripts/commercialization/installed-license-report.mjs",
+        "bytes": 927,
+        "sha256": "4d81f58150052f51ca26cba7ebf8f6d35076bddcd719f94c33ea833157eea4ba"
       },
       "review": {
         "status": "pending",
@@ -16652,8 +16732,8 @@
     {
       "file": {
         "path": "scripts/commercialization/product-asset-review-ledger.mjs",
-        "bytes": 9001,
-        "sha256": "30abdd3ac4b12ef8628b510fef2c72c2e4b5088fb2874919c6735c766a082315"
+        "bytes": 9002,
+        "sha256": "4cfc40dd9b13d2aca15c60063a21d8ce02f6f80df3cbc6b1adb8c4865092a39d"
       },
       "review": {
         "status": "pending",
@@ -16792,8 +16872,8 @@
     {
       "file": {
         "path": "scripts/commercialization/verify-ironrdp-npm-provenance.mjs",
-        "bytes": 7933,
-        "sha256": "9a6be980c84ab39069f938b37d8e77f0b9e414909da6292c791c571de4762b72"
+        "bytes": 7808,
+        "sha256": "c79673930a86b2866d9c5c01a86b8f324f30c55c0b389cb14f56912443c77a94"
       },
       "review": {
         "status": "pending",
@@ -16852,8 +16932,8 @@
     {
       "file": {
         "path": "scripts/commercialization/verify-novnc-source-archive.mjs",
-        "bytes": 5462,
-        "sha256": "5c1e4887561b1aed6996e498a4a5cfcf65c1b3c5ac3bce03370a92f85593e6e9"
+        "bytes": 5453,
+        "sha256": "715e3ca4232cabb09ef14908136b17651642c6aadce9d725ae409efad09d3434"
       },
       "review": {
         "status": "pending",
@@ -17012,8 +17092,8 @@
     {
       "file": {
         "path": "scripts/localization/audit-renderer.mjs",
-        "bytes": 3031,
-        "sha256": "e391af1ea84542177e9289ca1e9a4e24de6b174985f30fbbe74c7b091cd87232"
+        "bytes": 3032,
+        "sha256": "a681473eccefc6d0e29acefce3c7606426f46fd24d6571d7d232d33f2d8cd6d9"
       },
       "review": {
         "status": "pending",
@@ -17271,9 +17351,49 @@
     },
     {
       "file": {
+        "path": "scripts/register-ts-resolver.mjs",
+        "bytes": 95,
+        "sha256": "3da3ae28e493677cdfc8639f8a4b7f3fcaa8c34344e350e781b4ff8a84a9e883"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "scripts/run-ts.mjs",
+        "bytes": 1113,
+        "sha256": "97ada0589937aa1c27743cb0ff8e1dfd81c0211fc9cce872f05fe9123406a379"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "scripts/test-linux-appimage.sh",
-        "bytes": 1145,
-        "sha256": "a73a11739b5e967722f58f7559f2be10d49f60e0eb9298295bf85eac8d7e8450"
+        "bytes": 1150,
+        "sha256": "385359febe27596437f7d34d2c0fe04fcda35aa115021994c1ca2d0e4651df0b"
       },
       "review": {
         "status": "pending",
@@ -17292,8 +17412,8 @@
     {
       "file": {
         "path": "scripts/test-linux-deb.sh",
-        "bytes": 3733,
-        "sha256": "4ea980fdcd5af32c8bb2b4e9ed2b776db21def45c6c1c7323bd781b2e017f9bd"
+        "bytes": 3736,
+        "sha256": "29beb030a9ae6464de08eb7cc0ba1616d470a3256388bc5897e59a2c227fc874"
       },
       "review": {
         "status": "pending",
@@ -17332,8 +17452,8 @@
     {
       "file": {
         "path": "scripts/test-linux-ftp-widget-container.sh",
-        "bytes": 1424,
-        "sha256": "95a1f6548164a809d37094ef77878ec5ab1fcb64715075b3a063102f75b392ee"
+        "bytes": 1561,
+        "sha256": "50a53dd217ee0ac502ffe1fb9bb70132970411dd20228697f03319aed3753a2b"
       },
       "review": {
         "status": "pending",
@@ -17352,8 +17472,8 @@
     {
       "file": {
         "path": "scripts/test-macos-dmg.sh",
-        "bytes": 2939,
-        "sha256": "33e2f89ca745aa7874bfaf2c718b606a7f25b56233a644099cef7de28a00393c"
+        "bytes": 2963,
+        "sha256": "5784abcb5c9075df678ee4023efef3052b0e89d25b521764f6ede4896119b4a8"
       },
       "review": {
         "status": "pending",
@@ -17392,8 +17512,8 @@
     {
       "file": {
         "path": "scripts/test-ssh-fixture.sh",
-        "bytes": 2282,
-        "sha256": "3170ee62800e94e1afc90a4ec77613285259e94ec698b099933c6a04278fb727"
+        "bytes": 2303,
+        "sha256": "b0f5270124e3eb1bc7788fe85f943037d1ab2d73332cd4e9bbc73d7c4570a452"
       },
       "review": {
         "status": "pending",
@@ -17412,8 +17532,28 @@
     {
       "file": {
         "path": "scripts/test-windows-nsis.ps1",
-        "bytes": 6326,
-        "sha256": "f5344ea0824a2cfb648de44125390cef781d7914441ea3c6ac62dfbe92440adc"
+        "bytes": 6329,
+        "sha256": "17e87bb0db236af3a848cf0846cdd5e98a4fe3113bc5432ad6cc7b1386f5b2bc"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "scripts/ts-resolver-hooks.mjs",
+        "bytes": 1448,
+        "sha256": "cc659b9a41f9f60a2dd7e33cbabf35131d8ad23f324c7e4c727ea99fa4132821"
       },
       "review": {
         "status": "pending",
@@ -17572,8 +17712,8 @@
     {
       "file": {
         "path": "tests/e2e/dev.spec.ts",
-        "bytes": 3490,
-        "sha256": "8fe8929b4071d3ee4288dc1b6f61f5e25f52fcc1b72e06d10d78e0eca0a1bb5f"
+        "bytes": 3561,
+        "sha256": "658b5a13467411f671f920281662a24827b581338afd861cbbfc70913ee3eaef"
       },
       "review": {
         "status": "pending",
@@ -19112,8 +19252,8 @@
     {
       "file": {
         "path": "tests/unit/application-icon-generation.test.ts",
-        "bytes": 673,
-        "sha256": "4f9c5922f20923f8356d0c557eda80280e33a5540ff7ded3217a3acad6eeab51"
+        "bytes": 757,
+        "sha256": "39ce004b3fa845662e5238e267ec7ef002b0e47a90f944e89de384a6a184c974"
       },
       "review": {
         "status": "pending",
@@ -19372,8 +19512,8 @@
     {
       "file": {
         "path": "tests/unit/component-index.test.ts",
-        "bytes": 2089,
-        "sha256": "8c612e1f92bb2217e06d9310b851070acf484838fae2b826da42461a98bf9aa7"
+        "bytes": 2105,
+        "sha256": "018bc5241acd9c834c01337a72e1d7c988f8534c4eefb215a9502bceb1a2e737"
       },
       "review": {
         "status": "pending",
@@ -19552,8 +19692,8 @@
     {
       "file": {
         "path": "tests/unit/dependency-audit-policy.test.ts",
-        "bytes": 956,
-        "sha256": "11ff7ec46734aa402785444f06a7a981031a48adb627f36fabdd9ab678042ea7"
+        "bytes": 985,
+        "sha256": "d7253e16593a437f099a3c017d57a253b5fa260f098ab6f6f1ba3da8d11e743f"
       },
       "review": {
         "status": "pending",
@@ -19632,8 +19772,8 @@
     {
       "file": {
         "path": "tests/unit/ephemeral-git-candidate.test.ts",
-        "bytes": 2680,
-        "sha256": "e8971406ac13bdf13dd3ad4ac1f773d450346f38a78466ccecfb6c02ec8fbe60"
+        "bytes": 2686,
+        "sha256": "1a19164cfd41a2a5cc38b25c5efbc74195565cc3f0b4ee5cd5beebdeef350375"
       },
       "review": {
         "status": "pending",
@@ -19692,8 +19832,8 @@
     {
       "file": {
         "path": "tests/unit/final-public-snapshot-audit.test.ts",
-        "bytes": 6285,
-        "sha256": "0f94790dcf0c4a5081d7fc17eb8545cfd3191881284804f1749bdacdf07baf63"
+        "bytes": 6291,
+        "sha256": "a1712fc5723cd73f304ca642e6cfc920d8afe47fb8c7ab29c4dd2626fc5bd395"
       },
       "review": {
         "status": "pending",
@@ -19793,7 +19933,7 @@
       "file": {
         "path": "tests/unit/github-actions-provenance.test.ts",
         "bytes": 1997,
-        "sha256": "84bd36f3f053370daa170f1b7faec1f9db510c181be65209401f791e9c8246e8"
+        "sha256": "c34ccbb4bbe36e9abff96765f6ed857d584f1c662871d3ce318357992408d7b9"
       },
       "review": {
         "status": "pending",
@@ -19872,8 +20012,8 @@
     {
       "file": {
         "path": "tests/unit/independent-release-documents.test.ts",
-        "bytes": 87825,
-        "sha256": "5aae0a7b58833ac63bd02422578369917197f335201f0f591883fbcd8e7dedcf"
+        "bytes": 87837,
+        "sha256": "2fd0cd3d856840c75b1f5e8713c9692bb59c139540bb341448cb4ef7aec7bc41"
       },
       "review": {
         "status": "pending",
@@ -19892,8 +20032,8 @@
     {
       "file": {
         "path": "tests/unit/independent-snapshot-audit.test.ts",
-        "bytes": 8500,
-        "sha256": "391b0ca1a2a141ac90b845556d5f6557615918b38329533c42802e06270cda30"
+        "bytes": 8531,
+        "sha256": "62706ed51df580a033ca9f79b7c9c1b97e7f3f1c48d7fffb0d675d7de2a33580"
       },
       "review": {
         "status": "pending",
@@ -19912,8 +20052,8 @@
     {
       "file": {
         "path": "tests/unit/independent-snapshot-preparation.test.ts",
-        "bytes": 10498,
-        "sha256": "307db5da445128f28e1dfbca9c27b063ff24dd4710dcca2c8e7abda301bed0cb"
+        "bytes": 10504,
+        "sha256": "f6a8fab2846c8ac6649104a8b264ef67cca0528f30335d247a35993a184e8d31"
       },
       "review": {
         "status": "pending",
@@ -19932,8 +20072,8 @@
     {
       "file": {
         "path": "tests/unit/installed-package-gates.test.ts",
-        "bytes": 12203,
-        "sha256": "66c458909338eb910191bc863340f92b5d48a3dd2951575470c316b046b3435e"
+        "bytes": 12222,
+        "sha256": "497e71a8aeb1e300e546714b25555151fe72044ee7d84133e303cd7de6ef6a0c"
       },
       "review": {
         "status": "pending",
@@ -20112,8 +20252,8 @@
     {
       "file": {
         "path": "tests/unit/license-texts.test.ts",
-        "bytes": 6791,
-        "sha256": "4ef0c1f47c315b00eafa6e500c454b3102bfabe548c571f27c60ad3e8ff67f86"
+        "bytes": 6807,
+        "sha256": "d7b2278ccd332d58bc9a7f6b12e0066a94b28d685fce488f217bcef9d9c3114b"
       },
       "review": {
         "status": "pending",
@@ -20152,8 +20292,8 @@
     {
       "file": {
         "path": "tests/unit/linux-ftp-container-script.test.ts",
-        "bytes": 2351,
-        "sha256": "a54e9066cede57f46320bce77cef4a80688e98eceec441d335e00607a0ce2e57"
+        "bytes": 2413,
+        "sha256": "28271203a59b623f1fd069a91ea819048ca36e2cfa94bacdb5180ac18590336e"
       },
       "review": {
         "status": "pending",
@@ -20432,8 +20572,8 @@
     {
       "file": {
         "path": "tests/unit/packaged-artifact-sbom.test.ts",
-        "bytes": 10961,
-        "sha256": "c3456eba6d275ea19191d649e56a07af1283fb3ff8c94f786b2b03cc3bf10b7b"
+        "bytes": 10964,
+        "sha256": "ca1da9c5feb4a253bffe56fc991e2363419df39c1a0822fc4488deee4d1ef835"
       },
       "review": {
         "status": "pending",
@@ -20614,6 +20754,26 @@
         "path": "tests/unit/product-shell-style-provenance.test.ts",
         "bytes": 9346,
         "sha256": "b102b4651aaafba8658c94ee0b81769749d5cdcc3f1eefb76855e79dfb0d0672"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "tests/unit/product-version.test.ts",
+        "bytes": 679,
+        "sha256": "b794c6cad94eb518f4b2d10ba1d6ec4d96285da69674f1d790debc23ecccff24"
       },
       "review": {
         "status": "pending",
@@ -21492,8 +21652,8 @@
     {
       "file": {
         "path": "tests/unit/third-party-license-evidence.test.ts",
-        "bytes": 30062,
-        "sha256": "e60560c5434c1ff9e5f05d74a0b2d9c39b7d2e797c7b6defbb823142ca11413d"
+        "bytes": 30070,
+        "sha256": "6d49139a1720197f28fae257b97cbfdf5977914dc914183a27bbcdbf31dc86db"
       },
       "review": {
         "status": "pending",
@@ -21752,8 +21912,8 @@
     {
       "file": {
         "path": "tsconfig.json",
-        "bytes": 302,
-        "sha256": "aafaf8d9017a1d0e4f15074d2241842c41af8727da29b5a64d8fa6e5df3ea571"
+        "bytes": 288,
+        "sha256": "7739a4ce5e93bb7f2e211578df1fa9b04e9dacfc9a0c88b37782f311ccc1e040"
       },
       "review": {
         "status": "pending",

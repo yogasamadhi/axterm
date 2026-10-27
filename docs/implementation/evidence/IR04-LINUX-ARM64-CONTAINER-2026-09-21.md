@@ -8,18 +8,20 @@ matching expected Node architecture into the container, and fails if the
 container reports a different architecture.
 
 ```text
-bun run test:ftp:linux-container
+pnpm run test:ftp:linux-container
 linux-arm64-ftp-rename-overwrite=pass
 linux-arm64-ftp-pasv-lifecycle-smoke=pass bytes=8196
 
-AXTERM_LINUX_FTP_TEST_PLATFORM=linux/amd64 bun run test:ftp:linux-container
+AXTERM_LINUX_FTP_TEST_PLATFORM=linux/amd64 pnpm run test:ftp:linux-container
 linux-x64-ftp-rename-overwrite=pass
 linux-x64-ftp-pasv-lifecycle-smoke=pass bytes=8196
 ```
 
 `scripts/test-linux-ftp-widget-container.sh` defaults to the locally cached
-official multi-architecture Bun image pinned at
-`oven/bun@sha256:5ff609364c049b54eb0ff560ec96319729a972078ef2c755d758f0c6ef89c2d6`.
+official multi-architecture Node image pinned at
+`node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd`.
+ADR-034 replaced the previously pinned Bun image after the toolchain moved to
+pnpm; the recorded run above used the earlier image.
 That digest was inspected for both requested Linux architectures. The script
 runs a bind-mounted working tree as read-only with a read-only container root,
 no Docker network, no-new-privileges, a bounded PID limit and a 64 MiB

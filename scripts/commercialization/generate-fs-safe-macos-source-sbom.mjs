@@ -162,7 +162,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   } else if (mode === '--check') {
     const expected = await serializeFsSafeMacSourceSbom(fsSafeMacSourceSbom(inventory, product));
     if (readFileSync(outputPath, 'utf8') !== expected) {
-      console.error('macOS native source SBOM is stale; run bun run sbom:native:macos:generate');
+      console.error('macOS native source SBOM is stale; run pnpm run sbom:native:macos:generate');
       process.exitCode = 1;
     } else
       console.log(

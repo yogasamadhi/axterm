@@ -37,7 +37,7 @@ Manifest author/contributor entries are preserved as publisher metadata but do
 not clear the queue or establish copyright ownership.
 
 `LICENSE_ATTRIBUTION_REVIEW_LEDGER.json` is generated from this queue with a
-SHA-256 hash of the sorted package identities. `bun run licenses:attribution:check`
+SHA-256 hash of the sorted package identities. `pnpm run licenses:attribution:check`
 rejects a ledger whose scope no longer matches the archive. Each record starts
 as `pending`, with no asserted reviewer, date, evidence or conclusion. Before
 a record may be `reviewed` or `needs-follow-up`, it must contain a named
@@ -60,10 +60,10 @@ The rebuilt unsigned macOS arm64 directory app has these hashes:
 Verification succeeded with:
 
 ```text
-bun run licenses:texts:check
-bun run licenses:attribution:check
-bun run package:dir
-bunx playwright test tests/e2e/packaged.spec.ts --project=packaged --grep 'packaged app (includes Axterm and transition third-party license notices|exposes its exact license and notices in About)'
+pnpm run licenses:texts:check
+pnpm run licenses:attribution:check
+pnpm run package:dir
+pnpm exec playwright test tests/e2e/packaged.spec.ts --project=packaged --grep 'packaged app (includes Axterm and transition third-party license notices|exposes its exact license and notices in About)'
 ```
 
 The two packaged tests assert the source/package archive identity, the exact
@@ -130,8 +130,8 @@ comments. It identifies 32 files with such a comment and explicitly labels
 the other 20 as _not detected_, not notice-free. In particular, the reached
 `core/base64.js` retains its MPL header and Mozilla source-origin line; the
 separately preserved DES and Pako notices remain in force. The archive is
-regenerated or checked with `bun run licenses:novnc:generate` and
-`bun run licenses:novnc:check`, respectively, and the latter is in the default
+regenerated or checked with `pnpm run licenses:novnc:generate` and
+`pnpm run licenses:novnc:check`, respectively, and the latter is in the default
 source gate. Version, package entry and production import changes stop the
 generator for review rather than silently reusing an old archive.
 
@@ -161,7 +161,7 @@ changed chunk. The current manifest SHA-256 is
 `4da93a3f9e2e4dc3cc7f0c830290d99f63e574f9139c1a6e2f2b592276f43bca`;
 all 52 sources map to `assets/rfb-CxsXsMUX.js`, SHA-256
 `de332067c65ed8e994202e8e082f608bd9f65d47554406a91832296b42672a49`.
-`bun run check` now executes `licenses:novnc:bundle-check` immediately after
+`pnpm run check` now executes `licenses:novnc:bundle-check` immediately after
 the production build, avoiding a stale previous-output pass.
 
 A fresh isolated unsigned macOS arm64 directory package has `app.asar` SHA-256

@@ -18,7 +18,7 @@ async function writeSnapshotManifest(directory: string, dependencies: Record<str
     JSON.stringify({ name: 'snapshot-fixture', dependencies }),
     'utf8',
   );
-  await writeFile(join(directory, 'bun.lock'), '# frozen fixture lock\n', 'utf8');
+  await writeFile(join(directory, 'pnpm-lock.yaml'), '# frozen fixture lock\n', 'utf8');
 }
 
 afterEach(async () => {
@@ -64,7 +64,7 @@ describe('independent source snapshot audit', () => {
     const directory = await snapshotDirectory();
     await writeSnapshotManifest(directory, { '@legacy-prototype/ftp-srv': '1.0.5' });
     await writeFile(
-      join(directory, 'bun.lock'),
+      join(directory, 'pnpm-lock.yaml'),
       'packages:\n  legacy-prototype-themes: 1.0.1\n',
       'utf8',
     );
@@ -214,6 +214,8 @@ describe('independent source snapshot audit', () => {
     expect(report.packageDependencyViolations).toEqual([
       'package.json: dependencies.@legacy-prototype/ftp-srv',
     ]);
-    expect(report.lockfileDependencyViolations).toEqual(['bun.lock: legacy-prototype-themes']);
+    expect(report.lockfileDependencyViolations).toEqual([
+      'pnpm-lock.yaml: legacy-prototype-themes',
+    ]);
   });
 });

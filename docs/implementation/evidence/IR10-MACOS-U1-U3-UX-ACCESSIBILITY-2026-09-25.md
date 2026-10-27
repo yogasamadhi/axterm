@@ -4,9 +4,9 @@
 
 ## 当前制品和可复核命令
 
-- 源码构建：`bun run build`。当前目录包：`/tmp/axterm-u3-release-review.2YD40C/mac-arm64/Axterm.app`；`Contents/Resources/app.asar` SHA-256：`3c743cbb8a902a62a1d0b19c695764fa88fab9fc122e1c930d1492adec99ed2f`。Playwright 将应用复制到隔离目录，以新 user-data 启动实际 Host/Runtime。
-- `bunx playwright test --project=visual -g 'P-07 gives empty panes|P-07 U1 keeps Shell navigation|P-07 U2 keeps Settings'`：三档视口空窗格基线及 1280×800 物理窗口、200%（CSS 640×400）Shell/设置/弹窗验证；定向运行 3/3。完整视觉/无障碍检查由本轮 `bun run check` 最终记录。
-- `AXTERM_PACKAGED_APP=/tmp/axterm-u3-release-review.2YD40C/mac-arm64/Axterm.app bunx playwright test --project=packaged -g 'packaged macOS Shell and Settings remain bounded|packaged macOS keeps all four languages and Settings categories bounded|packaged macOS U3 keeps compact Shell'`：同一当前包 3/3。涵盖三档物理视口、四语言设置分类 200%、U3 空窗格/主机侧栏/连接编辑/传输浮层/设置页的键盘聚焦和 axe-core WCAG 扫描。
+- 源码构建：`pnpm run build`。当前目录包：`/tmp/axterm-u3-release-review.2YD40C/mac-arm64/Axterm.app`；`Contents/Resources/app.asar` SHA-256：`3c743cbb8a902a62a1d0b19c695764fa88fab9fc122e1c930d1492adec99ed2f`。Playwright 将应用复制到隔离目录，以新 user-data 启动实际 Host/Runtime。
+- `pnpm exec playwright test --project=visual -g 'P-07 gives empty panes|P-07 U1 keeps Shell navigation|P-07 U2 keeps Settings'`：三档视口空窗格基线及 1280×800 物理窗口、200%（CSS 640×400）Shell/设置/弹窗验证；定向运行 3/3。完整视觉/无障碍检查由本轮 `pnpm run check` 最终记录。
+- `AXTERM_PACKAGED_APP=/tmp/axterm-u3-release-review.2YD40C/mac-arm64/Axterm.app pnpm exec playwright test --project=packaged -g 'packaged macOS Shell and Settings remain bounded|packaged macOS keeps all four languages and Settings categories bounded|packaged macOS U3 keeps compact Shell'`：同一当前包 3/3。涵盖三档物理视口、四语言设置分类 200%、U3 空窗格/主机侧栏/连接编辑/传输浮层/设置页的键盘聚焦和 axe-core WCAG 扫描。
 - U3 包内截图保存在本地忽略目录 `test-results/packaged-evidence/`：`macos-u3-empty-panes-200-percent.png` SHA-256 `9800ffd65a8db5ffc9f33ecf3f093f7527cdf82560931ede915ac82c4792b49a`；`macos-u3-settings-200-percent.png` SHA-256 `44ce0e48f564491a74c1c147391b085bb1c006f5720091a862dd8148b0843846`。前者显示窄四窗格可独立滚动；后者显示顶部设置标签单行横向滚动且关闭按钮与标签分离。截图是本机生成证据，不是签名发行素材；测试脚本可重建。
 
 ## 本批修复与验证范围

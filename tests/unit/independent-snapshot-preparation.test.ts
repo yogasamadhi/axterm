@@ -12,7 +12,7 @@ async function fixtureSource() {
   const directory = await mkdtemp(join(tmpdir(), 'axterm-snapshot-source-'));
   directories.push(directory);
   await writeFile(join(directory, 'package.json'), '{"name":"fixture"}\n');
-  await writeFile(join(directory, 'bun.lock'), 'lockfileVersion: 1\n');
+  await writeFile(join(directory, 'pnpm-lock.yaml'), 'lockfileVersion: 1\n');
   await writeFile(join(directory, 'README.md'), '# fixture\n');
   await mkdir(join(directory, '.git'), { recursive: true });
   await mkdir(join(directory, 'vendor', 'legacy-prototype'), { recursive: true });

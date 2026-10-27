@@ -63,7 +63,7 @@ packaged platforms are tested.
    native binding or substitute a check-then-rename for the missing sync API.
 5. Before release adoption, review the exact library and seven optional native package
    artifacts, license/copyright texts, source-to-binary provenance and platform
-   support; pin exact versions and integrity in `bun.lock`; include only the
+   support; pin exact versions and integrity in `pnpm-lock.yaml`; include only the
    selected native binary and applicable notice in each installer and SPDX
    sidecar. Verify Electron embedded Node, Headless Node, macOS arm64,
    Windows x64 and native Linux x64 package behavior, including a real

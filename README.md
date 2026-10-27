@@ -67,19 +67,26 @@ SQLite、Drizzle、ssh2 或 node-pty 访问权限；Runtime 不 import Electron�
 
 ## 开发
 
-需要 Bun 1.4.x、Node 24.18+（24.x）和 Git。先初始化 Pi 子模块，再安装依赖：
+需要 pnpm 11.x、Node 24.18+（24.x）、Python 3.9+（开发启动器）和 Git。先初始化 Pi
+子模块，再安装依赖：
 
 ```sh
 git submodule update --init --recursive vendor/pi
-bun install --frozen-lockfile
-bun run dev
+pnpm install --frozen-lockfile
+pnpm run dev
 ```
+
+`pnpm run dev` 执行仓库根目录的 `run.py`（Python 3，仅用标准库）。它不需要
+TypeScript 运行时、打包器或实验性 Node loader；帮助文本和产品版本与打包后的
+Desktop 读取同一份资源（`apps/desktop/src/main/command-line-help.json` 与
+根 `package.json`），因此不会与产品漂移。Windows 上若 `python3` 不可用，可直接
+执行 `py -3 run.py`。
 
 第三方源码 [Pi](https://github.com/earendil-works/pi) 通过 `.gitmodules` 固定在
 `vendor/pi`，常规开发和生产构建都使用该源码。
 
 AI 请求在 Runtime Adapter 中使用 Pi AI/Agent 源码，SDK 与固定目录数据一起编入产品。
-构建前必须初始化子模块；`bun run pi:build` 校验源码与目录哈希并离线构建。
+构建前必须初始化子模块；`pnpm run pi:build` 校验源码与目录哈希并离线构建。
 独立源码快照包含必要的 Pi 源码和 MIT 许可证，排除 Git 元数据与无关 CLI。
 配置、兼容范围和安全边界见 [Pi AI 配置](docs/implementation/PI_AI_ENGINE.md)，
 固定提交见 [VERSIONS](docs/implementation/VERSIONS.md)。
@@ -88,60 +95,60 @@ AI 请求在 Runtime Adapter 中使用 Pi AI/Agent 源码，SDK 与固定目录�
 不提供这些命令，也不读取这些材料。本地新 Git 根已建立；以后公开远端仓库与正式包
 仍须基于审定的干净检出验收。
 
-最终用户运行桌面安装包时不需要安装 Node、Bun 或 Docker。Docker 只用于开发仓库中
+最终用户运行桌面安装包时不需要安装 Node、pnpm 或 Docker。Docker 只用于开发仓库中
 可丢弃的 OpenSSH/SFTP 集成测试对端，不参与应用启动、业务运行或发行。开发 Renderer 固定使用
 `127.0.0.1:5173`，Runtime 始终绑定 `127.0.0.1` 的系统分配端口。
 
-`run.ts` 启动的是独立的 **Axterm Dev** 实例。它使用操作系统应用数据目录下的
+`run.py` 启动的是独立的 **Axterm Dev** 实例。它使用操作系统应用数据目录下的
 `Axterm Dev` 子目录、独立单实例锁和 Windows AppUserModelID，因此可以与已经安装的
 Axterm 同时运行；开发配置、窗口状态、数据库和本地凭据不会读写安装版的数据目录。
 
 开发启动器会把 Axterm 连接参数转发给 Desktop：
 
 ```sh
-bun run run.ts -- -tp local -d "/path/with spaces" -t "Local workspace"
-bun run run.ts -- -l operator -P 2222 -pw session-only server.example
-bun run run.ts -- -tp telnet -opts '{"host":"router.example","port":2323}' --new-window
-bun run run.ts -- -bo "/path/to/batch-operation.json"
+pnpm run dev -- -tp local -d "/path/with spaces" -t "Local workspace"
+pnpm run dev -- -l operator -P 2222 -pw session-only server.example
+pnpm run dev -- -tp telnet -opts '{"host":"router.example","port":2323}' --new-window
+pnpm run dev -- -bo "/path/to/batch-operation.json"
 ```
 
-使用 `bun run run.ts -- --help` 查看完整选项。命令行密码、私钥口令只用于本次会话；
+使用 `pnpm run dev -- --help` 查看完整选项。命令行密码、私钥口令只用于本次会话；
 私钥、初始目录和批量文件会先转换为 Desktop Host File Grant，绝对路径不会交给 Renderer。
 `--server-port` 不受支持，因为 Runtime 固定使用 loopback 的系统分配端口。
 
 ## 验证
 
-| 命令                                          | 用途                                                                                                         |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `bun run check`                               | lint、strict typecheck、测试、架构/Contract/本地化门禁、生产构建、Axterm 视觉和可访问性回归                  |
-| `bun run test:visual`                         | Axterm 自有三档视口和迁移页面视觉回归；macOS 对比基线截图                                                    |
-| `bun run test:a11y`                           | Electron 键盘与可访问性检查                                                                                  |
-| `bun run test:e2e`                            | Electron utilityProcess、真实本地 PTY、持久化、崩溃重启与清理                                                |
-| `bun run test:performance`                    | 生产 Electron 万级书签树响应、搜索、滚动和 DOM 上限                                                          |
-| `bun run test:ssh`                            | digest-pinned Docker OpenSSH、SSH/SFTP/三类隧道                                                              |
-| `bun run test:soak:smoke`                     | 运行一分钟真实 SSH/PTY/SFTP/Widget/MCP 混合负载                                                              |
-| `bun run test:soak:30m`                       | 仅在明确要求时重新运行 J-01 的 30 分钟资源稳定性认证                                                         |
-| `bun run test:soak:verify`                    | 独立校验完整时长、连续检查点、预算、计数和最终资源释放                                                       |
-| `bun run package:dir`                         | 为当前平台生成未签名的 unpacked app                                                                          |
-| `bun run test:packaged`                       | 独立目录、受限 PATH、Runtime、本地 PTY 和 SQLite 验收                                                        |
-| `bun run test:ssh:packaged`                   | 从已打包应用连接 Docker OpenSSH 并验证 SSH PTY                                                               |
-| `bun run package`                             | 生成当前平台安装包，不发布                                                                                   |
-| `bun run contracts:check`                     | 校验当前 OpenAPI 操作与生成 Client 无漂移                                                                    |
-| `bun run licenses:components:check`           | 校验生产依赖组件索引与当前冻结安装图一致，默认 `check` 已包含                                                |
-| `bun run licenses:components:generate`        | 依赖变更后重建待审查的组件索引                                                                               |
-| `bun run licenses:texts:check`                | 校验生产依赖根许可证原文与当前冻结安装图一致，默认 `check` 已包含                                            |
-| `bun run licenses:texts:generate`             | 依赖变更后重建待审查的许可证原文归档                                                                         |
-| `bun run licenses:attribution:check`          | 校验缺少机器可读版权声明的依赖人工复核台账，默认 `check` 已包含；并不代替法律审查                            |
-| `bun run licenses:attribution:reviewed-check` | 最终公开源码门禁：要求每个当前版权归属复核条目已有合格审查，不接受 `pending` 或 `needs-follow-up`            |
-| `bun run licenses:attribution:generate`       | 从当前许可证归档重建台账，并保留范围未变条目的复核字段                                                       |
-| `bun run licenses:packaged:inventory`         | 列出实际 ASAR、unpacked 文件和包外许可证文件的哈希                                                           |
-| `bun run sbom:packaged -- …`                  | 为一个实际 electron-builder Resources 目录生成平台标识与 ASAR 哈希绑定的 SPDX sidecar                        |
-| `bun run release:final-public:check`          | 迁移移除后运行：要求迁移、来源/素材/语言审校及公开服务记录通过，再审计最终公开源码快照；不替代签名安装包验收 |
+| 命令                                           | 用途                                                                                                         |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `pnpm run check`                               | lint、strict typecheck、测试、架构/Contract/本地化门禁、生产构建、Axterm 视觉和可访问性回归                  |
+| `pnpm run test:visual`                         | Axterm 自有三档视口和迁移页面视觉回归；macOS 对比基线截图                                                    |
+| `pnpm run test:a11y`                           | Electron 键盘与可访问性检查                                                                                  |
+| `pnpm run test:e2e`                            | Electron utilityProcess、真实本地 PTY、持久化、崩溃重启与清理                                                |
+| `pnpm run test:performance`                    | 生产 Electron 万级书签树响应、搜索、滚动和 DOM 上限                                                          |
+| `pnpm run test:ssh`                            | digest-pinned Docker OpenSSH、SSH/SFTP/三类隧道                                                              |
+| `pnpm run test:soak:smoke`                     | 运行一分钟真实 SSH/PTY/SFTP/Widget/MCP 混合负载                                                              |
+| `pnpm run test:soak:30m`                       | 仅在明确要求时重新运行 J-01 的 30 分钟资源稳定性认证                                                         |
+| `pnpm run test:soak:verify`                    | 独立校验完整时长、连续检查点、预算、计数和最终资源释放                                                       |
+| `pnpm run package:dir`                         | 为当前平台生成未签名的 unpacked app                                                                          |
+| `pnpm run test:packaged`                       | 独立目录、受限 PATH、Runtime、本地 PTY 和 SQLite 验收                                                        |
+| `pnpm run test:ssh:packaged`                   | 从已打包应用连接 Docker OpenSSH 并验证 SSH PTY                                                               |
+| `pnpm run package`                             | 生成当前平台安装包，不发布                                                                                   |
+| `pnpm run contracts:check`                     | 校验当前 OpenAPI 操作与生成 Client 无漂移                                                                    |
+| `pnpm run licenses:components:check`           | 校验生产依赖组件索引与当前冻结安装图一致，默认 `check` 已包含                                                |
+| `pnpm run licenses:components:generate`        | 依赖变更后重建待审查的组件索引                                                                               |
+| `pnpm run licenses:texts:check`                | 校验生产依赖根许可证原文与当前冻结安装图一致，默认 `check` 已包含                                            |
+| `pnpm run licenses:texts:generate`             | 依赖变更后重建待审查的许可证原文归档                                                                         |
+| `pnpm run licenses:attribution:check`          | 校验缺少机器可读版权声明的依赖人工复核台账，默认 `check` 已包含；并不代替法律审查                            |
+| `pnpm run licenses:attribution:reviewed-check` | 最终公开源码门禁：要求每个当前版权归属复核条目已有合格审查，不接受 `pending` 或 `needs-follow-up`            |
+| `pnpm run licenses:attribution:generate`       | 从当前许可证归档重建台账，并保留范围未变条目的复核字段                                                       |
+| `pnpm run licenses:packaged:inventory`         | 列出实际 ASAR、unpacked 文件和包外许可证文件的哈希                                                           |
+| `pnpm run sbom:packaged -- …`                  | 为一个实际 electron-builder Resources 目录生成平台标识与 ASAR 哈希绑定的 SPDX sidecar                        |
+| `pnpm run release:final-public:check`          | 迁移移除后运行：要求迁移、来源/素材/语言审校及公开服务记录通过，再审计最终公开源码快照；不替代签名安装包验收 |
 
 macOS 未签名本地构建使用：
 
 ```sh
-bun run package
+pnpm run package
 ```
 
 打包脚本固定关闭本机签名身份自动发现，不读取开发者环境中的证书身份。

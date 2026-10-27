@@ -41,11 +41,11 @@ error rolls back all earlier writes in that transaction.
 
 ## Evidence
 
-- Final `bun run check`: 839 unit tests pass (one skipped), Level 1
+- Final `pnpm run check`: 839 unit tests pass (one skipped), Level 1
   architecture gate, 262-operation Contract gate, component/license and
   localization checks, production build/layout, and three visual/accessibility
   Playwright journeys all pass.
-- `bunx vitest run packages/runtime/src/application/axterm-configuration-service.test.ts`:
+- `pnpm exec vitest run packages/runtime/src/application/axterm-configuration-service.test.ts`:
   eight tests pass. A real SQLite fixture with SSH, Web and Telnet bookmarks,
   password references, an authenticated proxy and an image background verifies
   category coverage, redaction, safe fallback, omission paths, mode `0600`
@@ -59,11 +59,11 @@ error rolls back all earlier writes in that transaction.
   verifies rollback of an earlier host-group write; target fingerprints permit
   an unrelated lifecycle event and a default-mode setting change, but reject a
   changed setting when the opt-in path was selected.
-- `bunx vitest run tests/unit/workspace.test.ts`: four tests pass, including
+- `pnpm exec vitest run tests/unit/workspace.test.ts`: four tests pass, including
   the one-shot Renderer guard that prevents the settings-query refresh after an
   import from immediately serializing the still-open workspace over the saved
   imported layout.
-- `bunx playwright test tests/e2e/desktop.spec.ts --grep 'Legacy Prototype data migration previews' --project=desktop`:
+- `pnpm exec playwright test tests/e2e/desktop.spec.ts --grep 'Legacy Prototype data migration previews' --project=desktop`:
   one source Electron journey passes. It begins with the version-controlled
   synthetic legacy v1 fixture at
   `tests/fixtures/migration/legacy-legacy-prototype-data-v1.json`, so the native File
@@ -74,15 +74,15 @@ error rolls back all earlier writes in that transaction.
   It selects that file again, selects portable-settings restore, commits a
   zero-collection settings import and verifies the next-start/current-workspace
   safety notice plus File Grant release.
-- `bunx playwright test tests/e2e/desktop.spec.ts --grep 'claims Axterm and migration-period Legacy Prototype URLs' --project=desktop`:
+- `pnpm exec playwright test tests/e2e/desktop.spec.ts --grep 'claims Axterm and migration-period Legacy Prototype URLs' --project=desktop`:
   the source Electron journey passes after delivering one identical FTP URL as
   both a transition-period `legacy-prototype://` and a native `axterm://`
   second-instance launch. Both paths open the same prefilled form; only the
   legacy scheme carries an in-memory marker and presents a dismissible migration
   notice. The test confirms that the native scheme does not show that notice and
   that the session-only password is absent from browser storage.
-- `bun run --cwd apps/desktop package:dir` followed by
-  `bunx playwright test tests/e2e/packaged.spec.ts --grep 'packaged migration surfaces' --project=packaged`:
+- `pnpm --filter @workspace/desktop package:dir` followed by
+  `pnpm exec playwright test tests/e2e/packaged.spec.ts --grep 'packaged migration surfaces' --project=packaged`:
   one unsigned macOS arm64 packaged journey passes after copying the app
   outside the checkout. It validates the new file marker, omission marker and
   displayed SHA-256, first delivers the same legacy/native FTP deep-link pair,

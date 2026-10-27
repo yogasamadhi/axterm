@@ -22,7 +22,7 @@ security policy.
 Initialize the submodule, then run:
 
 ```sh
-bun run parity:prepare:legacy-prototype
+pnpm run parity:prepare:legacy-prototype
 ```
 
 Legacy Prototype's upstream `package-lock.json` is not synchronized with its 5.5.0
@@ -46,14 +46,14 @@ No parity command may prompt for or read a system keychain.
 ## Audit and capture
 
 ```sh
-bun run parity:audit
-bun run parity:capture:legacy-prototype -- --scenario bookmarks.tree
-bun run parity:capture:axterm -- --scenario bookmarks.tree
-bun run parity:capture:phase16
-bun run parity:capture:phase17
-bun run parity:capture:phase18
-bun run parity:trace:audit
-bun run parity:diff -- \
+pnpm run parity:audit
+pnpm run parity:capture:legacy-prototype -- --scenario bookmarks.tree
+pnpm run parity:capture:axterm -- --scenario bookmarks.tree
+pnpm run parity:capture:phase16
+pnpm run parity:capture:phase17
+pnpm run parity:capture:phase18
+pnpm run parity:trace:audit
+pnpm run parity:diff -- \
   --reference tests/parity/screenshots/legacy-prototype \
   --candidate tests/parity/screenshots/axterm \
   --output test-results/parity-diff
@@ -148,8 +148,8 @@ The capture also exposed and fixed a real compact-layout defect where the Englis
 was forced into a 24 px icon width. The complete 48-scene report contains 144 passing comparisons
 with a 95.089% minimum, and the Axterm metadata contains 1008/1008 passing hard-defect checks.
 
-The Phase 19–21 wrappers are `bun run parity:capture:phase19`,
-`bun run parity:capture:phase20` and `bun run parity:capture:phase21`. Phase 19 adds the WebDAV
+The Phase 19–21 wrappers are `pnpm run parity:capture:phase19`,
+`pnpm run parity:capture:phase20` and `pnpm run parity:capture:phase21`. Phase 19 adds the WebDAV
 sync form and completes six settings scenes. Phase 20 captures the real Provider modal, bounded
 chat composer, persisted canceled response with retained partial output, Agent approval cards and MCP tool selection. The Provider range is
 95.340%–95.868%, chat/context is 97.008%–98.452%, canceled chat is 96.600%–98.196%, Agent state is 95.926%–98.134% and MCP is

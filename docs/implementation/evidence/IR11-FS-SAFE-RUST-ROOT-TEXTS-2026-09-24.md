@@ -5,7 +5,7 @@ Status: **available source-root texts preserved and packaged; applicability and 
 The exact tagged `@openclaw/fs-safe@0.13.1` source and locked macOS arm64 Cargo
 graph are identified in the [native-source record](IR11-FS-SAFE-NATIVE-SOURCE-2026-09-24.md).
 Using that checkout and the downloaded Cargo registry sources,
-`bun run licenses:native:texts:generate -- <fs-safe v0.13.1 checkout>` read
+`pnpm run licenses:native:texts:generate -- <fs-safe v0.13.1 checkout>` read
 the publisher's root `LICENSE` plus **all 110** root `LICENSE`/`COPYING`/`NOTICE`
 files named in the [pinned 61-package inventory](IR11-FS-SAFE-RUST-DEPENDENCIES-2026-09-24.json).
 The generator verified the tagged Git commit, each original-file SHA-256 and
@@ -14,7 +14,7 @@ UTF-8 encoding before writing
 This 111-file bundle is 583,719 bytes, SHA-256
 `7d5739fef6a518b36e25ab94bd1d80c0205d83c0c41aaa828816a87037227405`.
 Length-framed sections preserve original bytes; the routine
-`bun run licenses:native:texts:check` parses every section and rejects missing,
+`pnpm run licenses:native:texts:check` parses every section and rejects missing,
 altered or trailing content against the pinned source inventory without needing
 the upstream checkout or local Cargo cache. The final-public prerequisite set
 also runs that check. `THIRD_PARTY_NOTICES.txt` points to the bundle; the app's

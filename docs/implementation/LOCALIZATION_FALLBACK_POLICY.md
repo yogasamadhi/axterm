@@ -98,9 +98,9 @@ The executable core-copy scope record is
 `scripts/localization/axterm-core-review-ledger.json`. It binds the exact
 `core.ts` key set plus per-locale message hashes to each of the four locale
 records, distinguishes complete, partial and English-fallback coverage, and
-keeps source attribution, language review and rights review separate. `bun run
+keeps source attribution, language review and rights review separate. `pnpm run
 locales:core:check` is part of the default quality gate; it rejects catalog
-drift or a ledger that claims coverage absent from the runtime catalog. `bun run
+drift or a ledger that claims coverage absent from the runtime catalog. `pnpm run
 locales:core:reviewed-check` remains intentionally red until every retained
 locale has complete core-copy coverage and qualified review. It is a content-
 review precondition only, not proof of platform behavior or IR-05 acceptance.
@@ -133,9 +133,9 @@ review path before being represented as localized.
    copy, `scripts/localization/axterm-core-review-ledger.json`. Their validators
    rejects a reviewed claim without recorded attribution, independent language
    and rights reviewers/dates, and an exact current key-scope fingerprint.
-   `bun run locales:navigation:reviewed-check` additionally rejects a stale
+   `pnpm run locales:navigation:reviewed-check` additionally rejects a stale
    generated catalog or any pending navigation review before that _navigation_
-   scope is called reviewed. `bun run locales:core:reviewed-check` rejects
+   scope is called reviewed. `pnpm run locales:core:reviewed-check` rejects
    missing core coverage, attribution or reviews. “AI-assisted” is a drafting
    method, not reviewer approval.
 4. Run the deterministic catalog checks, Renderer scope audit, immediate-switch
@@ -155,12 +155,12 @@ tests pass on supported packaged platforms, and product wording has been
 approved. This promotion is per scope: completing navigation does not silently
 promote settings, migration, security, terminal or file-management copy.
 
-`bun run locales:navigation:reviewed-check` is an enforceable precondition for
+`pnpm run locales:navigation:reviewed-check` is an enforceable precondition for
 promoting the generated navigation catalog. It is intentionally narrower than
 IR-05: it cannot pass or replace the broader-copy, product-wording, packaged
 platform and human evidence required for an independent release.
 
-`bun run locales:core:reviewed-check` applies the same promotion discipline to
+`pnpm run locales:core:reviewed-check` applies the same promotion discipline to
 the broader literal `x()` catalog, but it cannot promote navigation, establish
 visible-workflow quality, or replace supported-platform evidence. Both review
 commands must pass for a language to be described as reviewed wherever their

@@ -92,8 +92,8 @@ is opt-in (`AXTERM_EXTERNAL_LRZSZ=1`) so the normal source gate does not gain a
 Docker/network prerequisite. The successful commands were:
 
 ```text
-AXTERM_EXTERNAL_LRZSZ=1 bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-pty.test.ts
-AXTERM_EXTERNAL_LRZSZ=1 AXTERM_EXTERNAL_PEER_PLATFORM=linux/amd64 bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-pty.test.ts
+AXTERM_EXTERNAL_LRZSZ=1 pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-pty.test.ts
+AXTERM_EXTERNAL_LRZSZ=1 AXTERM_EXTERNAL_PEER_PLATFORM=linux/amd64 pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-pty.test.ts
 ```
 
 On this macOS arm64 host, both selected Linux peer architectures passed all
@@ -137,8 +137,8 @@ The suite is separately opt-in so default source and candidate gates do not
 gain a Docker or network prerequisite. The successful commands were:
 
 ```text
-AXTERM_EXTERNAL_LRZSZ_SSH=1 bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-ssh-pty.test.ts
-AXTERM_EXTERNAL_LRZSZ_SSH=1 AXTERM_EXTERNAL_PEER_PLATFORM=linux/amd64 bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-ssh-pty.test.ts
+AXTERM_EXTERNAL_LRZSZ_SSH=1 pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-ssh-pty.test.ts
+AXTERM_EXTERNAL_LRZSZ_SSH=1 AXTERM_EXTERNAL_PEER_PLATFORM=linux/amd64 pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/external-lrzsz-ssh-pty.test.ts
 ```
 
 Each platform-selected run passed sixteen tests: Debian `sz` → Axterm ZMODEM
@@ -259,8 +259,8 @@ default and Linux amd64 when explicitly requested. Its successful commands
 were:
 
 ```text
-AXTERM_EXTERNAL_TRZSZ=1 bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-pty.test.ts
-AXTERM_EXTERNAL_TRZSZ=1 AXTERM_EXTERNAL_PEER_PLATFORM=linux/amd64 bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-pty.test.ts
+AXTERM_EXTERNAL_TRZSZ=1 pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-pty.test.ts
+AXTERM_EXTERNAL_TRZSZ=1 AXTERM_EXTERNAL_PEER_PLATFORM=linux/amd64 pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-pty.test.ts
 ```
 
 Each platform-selected suite covers a 16,388-byte binary download from the
@@ -294,8 +294,8 @@ The suite is separately opt-in so default source and candidate gates do not
 gain a Docker or network prerequisite. The successful commands were:
 
 ```text
-AXTERM_EXTERNAL_TRZSZ_SSH=1 bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-ssh-pty.test.ts
-AXTERM_EXTERNAL_TRZSZ_SSH=1 AXTERM_EXTERNAL_PEER_PLATFORM=linux/amd64 bunx vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-ssh-pty.test.ts
+AXTERM_EXTERNAL_TRZSZ_SSH=1 pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-ssh-pty.test.ts
+AXTERM_EXTERNAL_TRZSZ_SSH=1 AXTERM_EXTERNAL_PEER_PLATFORM=linux/amd64 pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/external-trzsz-ssh-pty.test.ts
 ```
 
 Each platform-selected run passed seven tests: external `tsz` → Axterm TRZSZ
@@ -401,7 +401,7 @@ requirements remain open.
 
 ## Same-clone external-peer candidate — 2026-09-23
 
-The 2026-09-23 `bun run candidate:protocol:check` run additionally placed the
+The 2026-09-23 `pnpm run candidate:protocol:check` run additionally placed the
 already documented independent Debian `lrzsz` and official `trzsz-go` SSH/PTY
 suites **inside the same audited, frozen-installed clean clone** as the full
 source gate and controlled OpenSSH fixture. On the macOS arm64 host with Linux

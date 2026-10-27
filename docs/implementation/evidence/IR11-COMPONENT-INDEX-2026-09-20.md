@@ -4,9 +4,9 @@ Date: 2026-09-20
 State: **metadata coverage improved; third-party notice/SBOM gate remains open**
 
 `THIRD_PARTY_COMPONENTS.json` is deterministically generated from the frozen
-installed graph reported by `bun pm licenses --json --prod`. It records 125
+installed graph reported by `pnpm licenses list --json --prod`. It records 125
 distinct package name/version/license entries from 120 Bun report records.
-`bun run licenses:components:check` is part of the default `bun run check` and
+`pnpm run licenses:components:check` is part of the default `pnpm run check` and
 fails on drift or conflicting license declarations. The index is deliberately
 a conservative production-dependency list, not an exact artifact SBOM or a
 replacement for copyright and license texts.
@@ -22,7 +22,7 @@ packages without their own root LICENSE file (`@xterm/addon-serialize` and
 transition notice. The package tests compare source/package/About bytes and
 enforce the 86-package coverage against the **actual ASAR**.
 
-The final updated source `bun run check` passes 817 unit tests (one skipped), the
+The final updated source `pnpm run check` passes 817 unit tests (one skipped), the
 component-index check, architecture/Contract/localization/build checks and
 three visual/accessibility Playwright journeys. The unsigned DMG passed
 `hdiutil verify`, mount, independent copy, detach and the complete packaged

@@ -39,7 +39,7 @@ the authenticated client selected.
 The focused command:
 
 ```text
-bunx vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts
+pnpm exec vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts
 ```
 
 passed one file and 15 tests on macOS arm64. The added POSIX `STOR` regression

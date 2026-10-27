@@ -30,7 +30,7 @@ license and author-file hashes, byte identity, and the notice reference.
 
 Verification on 2026-09-23:
 
-- `bun run check` passed: 1,013 tests passed, 33 skipped; Level 1 and 267
+- `pnpm run check` passed: 1,013 tests passed, 33 skipped; Level 1 and 267
   Contract-operation gates passed; nine visual/accessibility journeys passed.
 - The source `THIRD_PARTY_NOTICES.txt` SHA-256 is
   `7ee177f0b5ac9672a997ef3927e6666d2454e4fa3c511f15094b64a590db0377`.

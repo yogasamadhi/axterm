@@ -47,7 +47,7 @@ The complete macOS packaged Playwright suite passed **22 applicable journeys**
 with 11 platform/fixture skips. It included exact Legal/About text comparison
 against every source `licenses/*.txt` file and official IronRDP initialization
 outside the checkout; it did not exercise a live RDP server.
-The follow-up `bun run check` passed 232 unit/integration files (1,164 tests
+The follow-up `pnpm run check` passed 232 unit/integration files (1,164 tests
 passed, 34 skipped), the Level 1 architecture check over 360 modules/1,310
 dependencies, 267 Contract operations, source/legal checks, production build,
 and all 11 visual/accessibility journeys. The final-public composite check
@@ -55,12 +55,12 @@ passed the new missing-root-text prerequisite but correctly left nine other
 prerequisites blocked and skipped the final snapshot.
 
 Reproduce the offline checks from the frozen Axterm install with
-`bun run licenses:ironrdp:missing:check`. To recheck publisher sources, first
+`pnpm run licenses:ironrdp:missing:check`. To recheck publisher sources, first
 obtain those four official repositories with the exact commits above and the
 locked crates.io archives, then run:
 
 ```sh
-bun run licenses:ironrdp:missing:source-check -- \
+pnpm run licenses:ironrdp:missing:source-check -- \
   /path/to/gloo /path/to/asn1-rs /path/to/ff /path/to/sspi-rs
 ```
 

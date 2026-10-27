@@ -1,0 +1,30 @@
+packages:
+  - apps/*
+  - packages/*
+
+# `pnpm run` must not install or mutate the dependency graph on its own. The
+# release gates install the frozen lockfile explicitly and then run the gates.
+verifyDepsBeforeRun: false
+
+# Dependency install scripts are denied by default. `true` allows the package
+# to run its build script; `false` explicitly denies it. The allowed set
+# matches the previously reviewed Bun `trustedDependencies` allowlist.
+allowBuilds:
+  '@serialport/bindings-cpp': true
+  electron: true
+  esbuild: true
+  node-pty: true
+  '@google/genai': false
+  cpu-features: false
+  electron-winstaller: false
+  protobufjs: false
+  ssh2: false
+
+# Frozen dependency graph overrides for the whole workspace.
+overrides:
+  esbuild: 0.28.2
+
+# Reviewed source patches applied to the frozen dependency graph.
+patchedDependencies:
+  node-pty@1.1.0: patches/node-pty@1.1.0.patch
+  trzsz2@1.2.0: patches/trzsz2@1.2.0.patch

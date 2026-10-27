@@ -1,0 +1,29 @@
+{
+  "comment": "Shared Axterm command-line help. The Desktop Main prints it and the Python development launcher prints the same bytes.",
+  "lines": [
+    "Axterm command line",
+    "",
+    "Usage:",
+    "  axterm [options] [user@]host[:port]",
+    "  axterm <local|ssh|telnet|rdp|vnc|serial|spice|ftp|http|https|axterm>://...",
+    "",
+    "Session options:",
+    "  -t,  --title <name>             tab title",
+    "  -l,  --user <user>              SSH/login username",
+    "  -P,  --port <port>              connection port",
+    "  -bo, --batch-op <path>          run a bounded batch-operation JSON file",
+    "  -pw, --password <password>      transient session password",
+    "  -i,  --private-key-path <path>  transient SSH private key file",
+    "  -ps, --passphrase <value>       transient private-key passphrase",
+    "  -se, --set-env <A=1 B=2>        SSH environment values",
+    "  -so, --sftp-only                open an SSH connection for file access",
+    "  -d,  --init-folder <path>       local terminal or file-workspace directory",
+    "  -tp, --tp <type>                connection type",
+    "  -opts, --opts <json>            typed connection options",
+    "       --new-window               create another application window",
+    "  -h,  --help                     show this help",
+    "  -V,  --version                  show the Axterm version",
+    "",
+    "Secrets supplied on the command line are used for this launch only and are not saved."
+  ]
+}

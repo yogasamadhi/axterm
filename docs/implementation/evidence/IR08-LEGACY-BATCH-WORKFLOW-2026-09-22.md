@@ -46,7 +46,7 @@ packaged macOS journey. It contains:
 
 Verification completed on 2026-09-22:
 
-- `bunx vitest run tests/unit/command-line-batch-operation.test.ts` passed four
+- `pnpm exec vitest run tests/unit/command-line-batch-operation.test.ts` passed four
   tests. It verifies the exact mapped commands/delays and field paths, rejects
   ungranted transfer steps, bounds/sanitizes hostile field names and proves
   omitted values are not returned.
@@ -71,12 +71,12 @@ Verification completed on 2026-09-22:
   `def175cc7f9995102b6e4536be2379e8ceedab07f0b8ac2f220c44bb4e34c5d4`.
 - Typecheck, production build and directory packaging passed before the
   focused packaged run.
-- The complete current-worktree `bun run check` passed 217 test files with
+- The complete current-worktree `pnpm run check` passed 217 test files with
   five skipped files (963 tests with 33 skips), 368 modules / 1,313
   dependencies, 267 Contract operations, the four-catalog/2,544-key
   localization gate, production layout, five visual journeys and two
   accessibility journeys.
-- A fresh `bun run candidate:check` prepared 755 files / 15,797,670 bytes with
+- A fresh `pnpm run candidate:check` prepared 755 files / 15,797,670 bytes with
   source-tree SHA-256
   `a6e0f1062276ea489943236952d09454df0df24f4c984cd29c6a1f64c64acac0`.
   Temporary root commit `cda5ad67740d3dfc0b82cc0415fd4401b07d490e`

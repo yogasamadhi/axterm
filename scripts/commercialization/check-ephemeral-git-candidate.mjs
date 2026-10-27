@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { prepareIndependentSnapshot } from './prepare-independent-snapshot.mjs';
 
 const repositoryRoot = resolve(import.meta.dirname, '../..');
+const pnpmCommand = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
 
 function commandError(command, argumentsList, code, signal) {
   const outcome = signal ? `signal ${signal}` : `exit code ${code ?? 'unknown'}`;
@@ -153,10 +154,10 @@ export function parseArguments(argumentsList) {
 async function checkEphemeralGitCandidate({ keep, ssh, externalPeers }) {
   const candidate = await createEphemeralGitCandidate();
   try {
-    await run('bun', ['install', '--frozen-lockfile'], { cwd: candidate.cloneDirectory });
-    await run('bun', ['run', 'check'], { cwd: candidate.cloneDirectory });
+    await run(pnpmCommand, ['install', '--frozen-lockfile'], { cwd: candidate.cloneDirectory });
+    await run(pnpmCommand, ['run', 'check'], { cwd: candidate.cloneDirectory });
     if (ssh) {
-      await run('bun', ['run', 'test:ssh'], { cwd: candidate.cloneDirectory });
+      await run(pnpmCommand, ['run', 'test:ssh'], { cwd: candidate.cloneDirectory });
     }
     if (externalPeers) {
       if (!['arm64', 'x64'].includes(process.arch)) {
@@ -194,7 +195,7 @@ async function checkEphemeralGitCandidate({ keep, ssh, externalPeers }) {
           path: 'packages/runtime/src/adapters/terminal-transfer/external-trzsz-ssh-pty.test.ts',
         },
       ]) {
-        await run('bun', ['x', 'vitest', 'run', fixture.path], {
+        await run(pnpmCommand, ['exec', 'vitest', 'run', fixture.path], {
           cwd: candidate.cloneDirectory,
           env: {
             ...process.env,

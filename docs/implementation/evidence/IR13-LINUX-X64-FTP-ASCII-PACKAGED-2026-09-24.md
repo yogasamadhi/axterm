@@ -21,8 +21,8 @@ Electron cache. Its SHA-256
 matched both the official release `SHASUMS256.txt` and the installed Electron
 package's `checksums.json` before packaging.
 
-In the snapshot, `bun install --frozen-lockfile` installed 613 packages. The
-production build, Runtime packaging-layout check and `bun run package`
+In the snapshot, `pnpm install --frozen-lockfile` installed 613 packages. The
+production build, Runtime packaging-layout check and `pnpm run package`
 produced the Linux x64 DEB and AppImage. The packaged SPDX generator/checker
 verified the unpacked app Resources, and the release hash generator/checker
 verified both distributable files.
@@ -41,7 +41,7 @@ The unpacked and installed `app.asar` SHA-256 was
 The release manifest's DEB/AppImage hashes were also reproduced independently
 with `shasum -a 256` on the host. Copies of these four unsigned verification
 artifacts are retained in the ignored local directory
-`release/axterm-linux-ftp-ascii-20260924/`; `bun run release:hashes:check`
+`release/axterm-linux-ftp-ascii-20260924/`; `pnpm run release:hashes:check`
 passed again against that copy. This directory is not part of the independent
 source snapshot or a public release.
 
@@ -59,7 +59,7 @@ full gate passed:
 ```text
 sh scripts/test-linux-deb.sh release/axterm_0.10.0_amd64.deb
 23 passed, 8 skipped, 0 failed
-bun run test:appimage:linux
+pnpm run test:appimage:linux
 Verified Linux AppImage: 145979132 bytes; SquashFS offset 188392;
 SPDX 85a7b382a1e3cd8664ddc385b592f716a5fc7b7c48a7afd435213edc48b545d6;
 app.asar c21ec93bb24d73de6102eacb6125618bae6e74817828b74af2cb304061dce74b

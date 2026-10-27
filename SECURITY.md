@@ -23,7 +23,7 @@ the private reporting route and record the public policy URL and owner approval
 in the external MCR-03/MCR-04 evidence. The fuller three-platform route also
 records the non-sensitive facts in
 [`RELEASE_SERVICE_RECORD.json`](compliance/RELEASE_SERVICE_RECORD.json) and passes
-`bun run release:services:active-check`. Neither a template nor a check proves
+`pnpm run release:services:active-check`. Neither a template nor a check proves
 that the reporting route is actually staffed.
 
 This pre-release statement is not a substitute for product security testing,

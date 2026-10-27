@@ -13,7 +13,7 @@ environment file or high-confidence secret. This is a source-hygiene result,
 not a source-rights or trademark decision.
 
 An emulated Debian `linux/amd64` container used Bun 1.4.0 and Node 24.18.0.
-`bun install --frozen-lockfile` installed 613 packages; the production build
+`pnpm install --frozen-lockfile` installed 613 packages; the production build
 and packaging-layout check passed; native modules were rebuilt for Electron
 44.3.0. The Electron Linux x64 ZIP was supplied explicitly to electron-builder
 as `electronDist` rather than downloaded during packaging. Its SHA-256

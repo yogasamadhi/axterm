@@ -20,7 +20,7 @@ completed with an embedded block map.
 
 ## Static artifact proof
 
-`bun run test:appimage:linux -- --artifact-dir ... --sidecar ...` located the
+`pnpm run test:appimage:linux -- --artifact-dir ... --sidecar ...` located the
 embedded SquashFS at byte **188,392**, extracted it without executing the x64
 runtime, verified the required legal entries and compared the exact extracted
 Resources to its SPDX sidecar. Its `app.asar` SHA-256 is

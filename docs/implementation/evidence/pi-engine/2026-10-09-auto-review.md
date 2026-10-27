@@ -45,7 +45,7 @@ Runtime generation、策略与有效期。SSH 另外记录实际 hostname/port/u
   Vault canary 脱敏、落库批准来源均核对。包测试 PATH 仅含 System32，不依赖系统 Pi CLI。
 
 全量门禁的已有 Windows 失败、最终计数和包身份在 STATUS 中记录。
-最终 `bun run check` 返回 1：279 文件中 254 通过、13 失败、12 条件跳过；
+最终 `pnpm run check` 返回 1：279 文件中 254 通过、13 失败、12 条件跳过；
 1,392 tests 通过、30 失败、71 跳过。新增流程没有失败，保留已有 Windows 门禁问题。
 桌面及最终目录包 2/2 通过（17.1s）；最终 `app.asar` SHA-256 为
 `1c4e384db0eb4bca6777848365524149c8282a138d37a2230ef1a31b65868841`。
@@ -68,7 +68,7 @@ UTF-8 上界，避免把 token 误算成字节，但不截断输入后自动批�
 新目录包两项流程 2/2 通过（7.8s），PATH 仅 Windows System32 和内置
 WindowsPowerShell；新包/未签名安装程序为 `release/auto-review-v2-20261009/`。
 包级 SPDX 和安装包 hash manifest 校验通过，包身份记录在 STATUS。
-最终 v2 `bun run check`：lint/typecheck 通过；253 文件、1,403 tests 通过，
+最终 v2 `pnpm run check`：lint/typecheck 通过；253 文件、1,403 tests 通过，
 13 文件、30 tests 失败，13 文件、72 tests 跳过。失败仍为现有 Windows 问题；
 日志为 `out/auto-review-v2-check.log`，不标记全量或未运行平台验收通过。
 
@@ -88,7 +88,7 @@ Electron source 两项流程通过：四步自动执行期间无弹窗，危险�
 `app.asar` SHA-256 为 `2ca30bdb55ea43dcf4d27f06f10f90c4b4d17816cd65887334bda45f914c1971`；
 安装程序 SHA-256 为 `b573130fa56e3bde74bf367d2a0fa40cc2e2dc7a9d2dbbac0c487c5568ab2546`。
 包级 SPDX、安装包 hash manifest 校验通过；NSIS 安装/升级本轮未测试。
-补修后 `bun run check` 返回 1：lint/typecheck 通过；253 文件、1,391 tests 通过，
+补修后 `pnpm run check` 返回 1：lint/typecheck 通过；253 文件、1,391 tests 通过，
 13 文件、30 tests 失败，13 文件、72 tests 跳过；现有 Windows 问题保留，
 日志为 `out/ai-approval-ui-check.log`。
 

@@ -102,16 +102,16 @@ named `spice-client-*` cannot be mistaken for another protocol implementation.
 From the frozen Axterm install:
 
 ```sh
-bun run licenses:ironrdp:source:check
-bun run licenses:ironrdp:source:upstream-check -- /path/to/IronRDP-tagged-checkout
-bun run licenses:ironrdp:source:artifact-check -- \
+pnpm run licenses:ironrdp:source:check
+pnpm run licenses:ironrdp:source:upstream-check -- /path/to/IronRDP-tagged-checkout
+pnpm run licenses:ironrdp:source:artifact-check -- \
   /path/to/Axterm.app/Contents/Resources \
   /path/to/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
 ```
 
 The upstream checkout must resolve to the commit above, have clean tracked
 files, and have the locked crates available for Cargo. The first command is
-part of `bun run check` and pins the committed inventory/SPDX/legal archive,
+part of `pnpm run check` and pins the committed inventory/SPDX/legal archive,
 the six-crate publisher supplement and installed npm/WASM bytes. The second
 reconstructs the inventory, SPDX and original root-text bundle from the tagged
 source; the six-crate supplement has its own publisher-source check. The third
@@ -125,15 +125,15 @@ named rights approval remain open. IR-02/IR-11 stay **In progress**.
 
 `IRONRDP_DEPENDENCY_REVIEW_LEDGER.json` now tracks all 259 exact source-package
 records and the published embedded WASM as **260 pending qualified decisions**.
-The routine `bun run licenses:ironrdp:review:check` verifies complete scope
+The routine `pnpm run licenses:ironrdp:review:check` verifies complete scope
 without inventing approval. Final-public promotion requires
-`bun run licenses:ironrdp:review:reviewed-check`, which currently and correctly
+`pnpm run licenses:ironrdp:review:reviewed-check`, which currently and correctly
 refuses all 260 pending entries. A prior review is reset if its package legal
 hash or published WASM identity changes. The composed
 `release:final-public:check` still refuses promotion, now listing nine pending
 prerequisite gates and skipping the final source snapshot.
 
-After these changes, the full `bun run check` passed 231 unit/integration test
+After these changes, the full `pnpm run check` passed 231 unit/integration test
 files (1,161 tests passed, 34 skipped), 360 architecture modules / 1,310
 dependencies, 267 Contract operations, build/package layout, source and legal
 checks, and all 11 visual/accessibility journeys.

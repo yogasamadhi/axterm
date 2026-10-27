@@ -19,7 +19,7 @@ the fix does not hide overflow or truncate legal notices.
 ## Verification
 
 ```sh
-bunx playwright test --project=visual \
+pnpm exec playwright test --project=visual \
   -g 'all four language settings usable at 200% interface zoom'
 # initial expanded run: failed at en/legal, 330 px scroll vs 271 px client
 # after CSS correction: 1/1 passed, all 28 states
@@ -29,7 +29,7 @@ node scripts/package-desktop.mjs --dir \
 # isolated unsigned macOS arm64 directory package; release/ untouched
 
 AXTERM_PACKAGED_APP=/tmp/axterm-w05-settings-zoom.Jg2DFi/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'keeps all four languages and Settings categories bounded at 200% zoom'
 # 1/1 passed, all 28 states inside copied current-source package
 ```

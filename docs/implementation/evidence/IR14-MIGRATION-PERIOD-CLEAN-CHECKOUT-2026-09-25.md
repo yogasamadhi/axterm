@@ -14,12 +14,12 @@ With Docker running and a disposable working directory on the project volume:
 
 ```sh
 TMPDIR=/Volumes/A/code/project/axterm-candidate-run.cdwpYa \
-  bun run candidate:check --ssh --external-peers
+  pnpm run candidate:check --ssh --external-peers
 ```
 
 The candidate script prepared a temporary Git root and a distinct
 `git clone --no-local`, installed dependencies with the frozen lockfile, ran
-`bun run check`, the authenticated SSH fixture and both independent external
+`pnpm run check`, the authenticated SSH fixture and both independent external
 SSH/PTY transfer peers. Its final report was:
 
 - Temporary source-root commit: `3f57cb6c3f95263f8fea3bca8c80762c5aeeb488`.
@@ -29,7 +29,7 @@ SSH/PTY transfer peers. Its final report was:
   `vendor/legacy-prototype`, environment files, oversized files, symlinks, transient
   artifacts, generated API files, detected credential containers or
   high-confidence textual secrets.
-- Frozen install and complete `bun run check` passed: **1,268** unit/integration
+- Frozen install and complete `pnpm run check` passed: **1,268** unit/integration
   tests passed (**38** skipped); **21/21** visual/accessibility journeys passed.
   Architecture, Contract, source-ledger, license, localization and build gates
   passed.

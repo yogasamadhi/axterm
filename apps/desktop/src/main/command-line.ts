@@ -1,4 +1,5 @@
 import { isAbsolute, resolve } from 'node:path';
+import commandLineHelp from './command-line-help.json';
 import { parseQuickConnect } from '@workspace/shared';
 
 const MAX_ARGUMENTS = 64;
@@ -18,30 +19,7 @@ const supportedProtocols = new Set([
 ]);
 const directSourcePattern = /^(?:ssh|telnet|rdp|vnc|serial|spice|ftp|https?|axterm|local):\/\//i;
 
-export const DESKTOP_COMMAND_LINE_HELP = `Axterm command line
-
-Usage:
-  axterm [options] [user@]host[:port]
-  axterm <local|ssh|telnet|rdp|vnc|serial|spice|ftp|http|https|axterm>://...
-
-Session options:
-  -t,  --title <name>             tab title
-  -l,  --user <user>              SSH/login username
-  -P,  --port <port>              connection port
-  -bo, --batch-op <path>          run a bounded batch-operation JSON file
-  -pw, --password <password>      transient session password
-  -i,  --private-key-path <path>  transient SSH private key file
-  -ps, --passphrase <value>       transient private-key passphrase
-  -se, --set-env <A=1 B=2>        SSH environment values
-  -so, --sftp-only                open an SSH connection for file access
-  -d,  --init-folder <path>       local terminal or file-workspace directory
-  -tp, --tp <type>                connection type
-  -opts, --opts <json>            typed connection options
-       --new-window               create another application window
-  -h,  --help                     show this help
-  -V,  --version                  show the Axterm version
-
-Secrets supplied on the command line are used for this launch only and are not saved.`;
+export const DESKTOP_COMMAND_LINE_HELP = commandLineHelp.lines.join('\n');
 
 export type DesktopCommandLineResult =
   | { kind: 'none'; newWindow: boolean }

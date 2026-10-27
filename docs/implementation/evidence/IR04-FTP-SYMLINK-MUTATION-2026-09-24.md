@@ -29,14 +29,14 @@ source-runtime smoke passed on both `linux/arm64` and `linux/amd64`, including
 the new `ftp-symlink-mutation-denial=pass` marker and the existing ASCII
 restart, binary transfer, authentication, passive-socket and rename checks.
 
-The current worktree's `bun run check` passed before the packaged-journey
+The current worktree's `pnpm run check` passed before the packaged-journey
 assertions were added: 221 test files passed and 5 skipped; 1,097 tests passed
 and 33 skipped; 359 architecture modules / 1,310 dependencies; 267 Contract
 operations; independent-snapshot, license/SBOM, build/package-layout and all
 11 visual/accessibility journeys. The packaged-journey test was then extended
 with the same symlink denial checks and passed **1/1** against a fresh unsigned
 macOS arm64 directory package outside the checkout. The actual Resources
-matched its generated SPDX sidecar. A final full `bun run check` after all
+matched its generated SPDX sidecar. A final full `pnpm run check` after all
 source, test and documentation edits then passed with the same 1,097/33
 unit-test result and all 11 visual/accessibility journeys.
 

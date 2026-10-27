@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "source": "bun pm licenses --json --prod",
+  "source": "pnpm licenses list --json --prod",
   "scope": "Installed production dependency graph; may include packages absent from a platform artifact.",
   "limitations": [
     "Manifest license metadata is not a complete copyright notice or source-rights review.",
@@ -25,72 +25,72 @@
     },
     {
       "name": "@aws-sdk/core",
-      "version": "3.978.1",
+      "version": "3.978.5",
       "license": "Apache-2.0"
     },
     {
       "name": "@aws-sdk/credential-provider-env",
-      "version": "3.972.72",
+      "version": "3.972.76",
       "license": "Apache-2.0"
     },
     {
       "name": "@aws-sdk/credential-provider-http",
-      "version": "3.972.74",
-      "license": "Apache-2.0"
-    },
-    {
-      "name": "@aws-sdk/credential-provider-ini",
-      "version": "3.973.17",
-      "license": "Apache-2.0"
-    },
-    {
-      "name": "@aws-sdk/credential-provider-login",
-      "version": "3.972.79",
-      "license": "Apache-2.0"
-    },
-    {
-      "name": "@aws-sdk/credential-provider-node",
-      "version": "3.972.84",
-      "license": "Apache-2.0"
-    },
-    {
-      "name": "@aws-sdk/credential-provider-process",
-      "version": "3.972.72",
-      "license": "Apache-2.0"
-    },
-    {
-      "name": "@aws-sdk/credential-provider-sso",
-      "version": "3.973.16",
-      "license": "Apache-2.0"
-    },
-    {
-      "name": "@aws-sdk/credential-provider-web-identity",
       "version": "3.972.78",
       "license": "Apache-2.0"
     },
     {
+      "name": "@aws-sdk/credential-provider-ini",
+      "version": "3.973.21",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-login",
+      "version": "3.972.83",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-node",
+      "version": "3.972.88",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-process",
+      "version": "3.972.76",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-sso",
+      "version": "3.973.20",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-web-identity",
+      "version": "3.972.82",
+      "license": "Apache-2.0"
+    },
+    {
       "name": "@aws-sdk/eventstream-handler-node",
-      "version": "3.972.35",
+      "version": "3.972.38",
       "license": "Apache-2.0"
     },
     {
       "name": "@aws-sdk/middleware-eventstream",
-      "version": "3.972.30",
+      "version": "3.972.33",
       "license": "Apache-2.0"
     },
     {
       "name": "@aws-sdk/middleware-websocket",
-      "version": "3.972.54",
+      "version": "3.972.58",
       "license": "Apache-2.0"
     },
     {
       "name": "@aws-sdk/nested-clients",
-      "version": "3.997.46",
+      "version": "3.997.50",
       "license": "Apache-2.0"
     },
     {
       "name": "@aws-sdk/signature-v4-multi-region",
-      "version": "3.996.47",
+      "version": "3.996.49",
       "license": "Apache-2.0"
     },
     {
@@ -100,12 +100,12 @@
     },
     {
       "name": "@aws-sdk/token-providers",
-      "version": "3.1138.0",
+      "version": "3.1155.0",
       "license": "Apache-2.0"
     },
     {
       "name": "@aws-sdk/types",
-      "version": "3.974.6",
+      "version": "3.975.0",
       "license": "Apache-2.0"
     },
     {
@@ -120,7 +120,7 @@
     },
     {
       "name": "@babel/runtime",
-      "version": "7.29.7",
+      "version": "7.29.10",
       "license": "MIT"
     },
     {
@@ -140,12 +140,17 @@
     },
     {
       "name": "@codemirror/language",
-      "version": "6.12.4",
+      "version": "6.13.1",
       "license": "MIT"
     },
     {
       "name": "@codemirror/state",
       "version": "6.7.4",
+      "license": "MIT"
+    },
+    {
+      "name": "@codemirror/streamparser",
+      "version": "6.0.0",
       "license": "MIT"
     },
     {
@@ -210,17 +215,17 @@
     },
     {
       "name": "@lezer/common",
-      "version": "1.5.2",
+      "version": "1.5.4",
       "license": "MIT"
     },
     {
       "name": "@lezer/highlight",
-      "version": "1.2.3",
+      "version": "1.2.5",
       "license": "MIT"
     },
     {
       "name": "@lezer/lr",
-      "version": "1.4.10",
+      "version": "1.4.11",
       "license": "MIT"
     },
     {
@@ -375,7 +380,7 @@
     },
     {
       "name": "@smithy/core",
-      "version": "3.35.1",
+      "version": "3.36.2",
       "license": "Apache-2.0"
     },
     {
@@ -755,7 +760,7 @@
     },
     {
       "name": "nan",
-      "version": "2.28.0",
+      "version": "2.30.0",
       "license": "MIT"
     },
     {
@@ -810,7 +815,7 @@
     },
     {
       "name": "openapi3-ts",
-      "version": "4.6.1",
+      "version": "4.6.2",
       "license": "MIT"
     },
     {
@@ -860,7 +865,7 @@
     },
     {
       "name": "process-warning",
-      "version": "5.1.0",
+      "version": "5.1.1",
       "license": "MIT"
     },
     {
@@ -924,6 +929,11 @@
       "license": "MIT"
     },
     {
+      "name": "safe-buffer",
+      "version": "5.2.1",
+      "license": "MIT"
+    },
+    {
       "name": "safe-stable-stringify",
       "version": "2.5.0",
       "license": "MIT"
@@ -980,7 +990,7 @@
     },
     {
       "name": "style-mod",
-      "version": "4.1.3",
+      "version": "4.1.4",
       "license": "MIT"
     },
     {
@@ -1040,7 +1050,7 @@
     },
     {
       "name": "undici",
-      "version": "6.28.1",
+      "version": "7.30.1",
       "license": "MIT"
     },
     {
@@ -1085,7 +1095,7 @@
     },
     {
       "name": "yaml",
-      "version": "2.9.0",
+      "version": "2.9.1",
       "license": "ISC"
     },
     {

@@ -52,13 +52,13 @@ sizes and latency summaries. Credentials, grants, terminal output and endpoint d
 Run the reproducible one-minute fixture check with:
 
 ```sh
-bun run test:soak:smoke
+pnpm run test:soak:smoke
 ```
 
 Run a new 30-minute certification only when explicitly requested:
 
 ```sh
-bun run test:soak:30m
+pnpm run test:soak:30m
 ```
 
 The 30-minute command writes `test-results/phase21-soak/latest.json` and then runs
@@ -67,7 +67,7 @@ wall-clock and measured duration reach 30 minutes, whose workload contains at le
 30 continuous checkpoints, whose operation counters agree, whose five measurements stay below their
 ceilings, and whose final owners are zero except for the single allowed Desktop lifecycle poller.
 Unknown future owner names cannot bypass the zero-owner rule. A running, shortened, interrupted,
-leaked or budget-violating report fails. `bun run test:soak:verify` rechecks a retained report without
+leaked or budget-violating report fails. `pnpm run test:soak:verify` rechecks a retained report without
 starting the workload.
 
 ## Accepted evidence

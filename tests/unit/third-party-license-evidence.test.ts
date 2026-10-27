@@ -14,8 +14,8 @@ const installedIronRdp = resolve('apps/desktop/node_modules/@devolutions/iron-re
 const installedXtermHeadless = resolve('packages/runtime/node_modules/@xterm/headless');
 const installedDrizzleOrm = resolve('packages/runtime/node_modules/drizzle-orm');
 const installedHonoOpenApi = resolve('packages/runtime/node_modules/@hono/zod-openapi');
-const installedTweetNacl = resolve('node_modules/.bun/tweetnacl@0.14.5/node_modules/tweetnacl');
-const installedIsarray = resolve('node_modules/.bun/isarray@1.0.0/node_modules/isarray');
+const installedTweetNacl = resolve('node_modules/.pnpm/tweetnacl@0.14.5/node_modules/tweetnacl');
+const installedIsarray = resolve('node_modules/.pnpm/isarray@1.0.0/node_modules/isarray');
 
 function sha256(content: Buffer): string {
   return createHash('sha256').update(content).digest('hex');
@@ -60,7 +60,7 @@ describe('third-party license source evidence', () => {
   });
 
   it('pins transfer-library publisher metadata without hiding its Legacy Prototype development link', async () => {
-    const lockfile = await readFile(resolve('bun.lock'), 'utf8');
+    const lockfile = await readFile(resolve('pnpm-lock.yaml'), 'utf8');
     const evidence = await readFile(
       resolve('docs/implementation/evidence/IR02-TRANSFER-PUBLISHER-SOURCE-2026-09-24.md'),
       'utf8',

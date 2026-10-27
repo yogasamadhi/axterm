@@ -119,7 +119,7 @@ try {
     });
     if (staleVariants.length > 0) {
       throw new Error(
-        `Application icon variants differ from icon.svg: ${staleVariants.map((path) => basename(path)).join(', ')}. Run bun run icons:generate on macOS.`,
+        `Application icon variants differ from icon.svg: ${staleVariants.map((path) => basename(path)).join(', ')}. Run pnpm run icons:generate on macOS.`,
       );
     }
     console.log('Application icon variants match icon.svg.');

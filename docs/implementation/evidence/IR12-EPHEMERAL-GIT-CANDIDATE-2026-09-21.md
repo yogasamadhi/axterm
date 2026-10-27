@@ -28,8 +28,8 @@ markers.
    exactly 699 tracked files (`e1c542488c92721f5b3e7e89ed7419b91261cc97`).
 3. `git clone --no-local` produced a separate checkout. Its initial
    `git status --porcelain=v1` and `git submodule status` produced no output.
-4. In the clone, `bun install --frozen-lockfile` rebuilt the macOS arm64 native
-   `node-pty` module and completed successfully. The full `bun run check` then
+4. In the clone, `pnpm install --frozen-lockfile` rebuilt the macOS arm64 native
+   `node-pty` module and completed successfully. The full `pnpm run check` then
    passed: 201 test files passed and one skipped (881 tests passed and one
    skipped), the 367-module/1,308-dependency Level 1 architecture gate, 267
    Contract operations, source legal/SBOM/asset/localization/migration-boundary
@@ -80,8 +80,8 @@ high-confidence secret findings or retired dependency markers.
    submodule status, exactly 699 tracked files, no tracked
    `docs/api/openapi.json`, and the copied `.gitignore` ignored that generated
    path under a no-index check.
-3. In the clone, `bun install --frozen-lockfile` rebuilt macOS arm64
-   `node-pty` successfully. The full `bun run check` passed: 201 test files
+3. In the clone, `pnpm install --frozen-lockfile` rebuilt macOS arm64
+   `node-pty` successfully. The full `pnpm run check` passed: 201 test files
    passed and one skipped; 881 tests passed and one skipped; the 367-module /
    1,308-dependency Level 1 architecture gate; 267 Contract operations; source
    component/license/SBOM/asset/localization/migration-boundary gates; the
@@ -90,7 +90,7 @@ high-confidence secret findings or retired dependency markers.
    check.
 
 The subsequent transient-trace/HAR guard is covered by its focused unit test
-and the normal source `bun run check`; this retained local clone predates that
+and the normal source `pnpm run check`; this retained local clone predates that
 last guard and is not presented as the final candidate after it. The temporary
 paths were not made into a GitHub repository or pushed to any remote. This is
 current local IR-12 reproducibility evidence only. It does not approve source
@@ -112,8 +112,8 @@ violation category was empty.
    `git status --porcelain=v1`, no submodule entries, and no tracked
    `docs/api/openapi.json`; its copied `.gitignore` ignored that generated
    path under a no-index check.
-3. In that clone, `bun install --frozen-lockfile` rebuilt macOS arm64
-   `node-pty` and the full `bun run check` passed: 202 test files passed and
+3. In that clone, `pnpm install --frozen-lockfile` rebuilt macOS arm64
+   `node-pty` and the full `pnpm run check` passed: 202 test files passed and
    one skipped, with 883 tests passed and one skipped; the 367-module /
    1,308-dependency Level 1 architecture gate; 267 Contract operations;
    component/license/SBOM/asset/localization/migration-boundary and snapshot
@@ -147,8 +147,8 @@ OpenAPI, high-confidence secrets and retired direct dependency markers.
 2. A separate `git clone --no-local` had no `.gitmodules`, no submodule output,
    no tracked `docs/api/openapi.json`, and an empty initial porcelain status.
    The copied `.gitignore` continued to ignore the generated OpenAPI path.
-3. `bun install --frozen-lockfile` succeeded in that separate clone and rebuilt
-   macOS arm64 `node-pty`. The clone's full `bun run check` then passed: 204
+3. `pnpm install --frozen-lockfile` succeeded in that separate clone and rebuilt
+   macOS arm64 `node-pty`. The clone's full `pnpm run check` then passed: 204
    test files passed with one skipped (890 tests passed with one skipped), the
    367-module/1,308-dependency Level 1 architecture gate, 267 Contract
    operations, source component/license/SBOM/asset/localization/migration/
@@ -186,8 +186,8 @@ OpenAPI, high-confidence secrets and retired direct dependency markers.
    no `.gitmodules`, no submodule output, no tracked `docs/api/openapi.json`,
    and an empty porcelain status. Its copied ignore rule continued to ignore the
    generated OpenAPI path.
-3. `bun install --frozen-lockfile` succeeded in the clone and rebuilt macOS
-   arm64 `node-pty`. Its complete `bun run check` exited 0, covering lint,
+3. `pnpm install --frozen-lockfile` succeeded in the clone and rebuilt macOS
+   arm64 `node-pty`. Its complete `pnpm run check` exited 0, covering lint,
    type checking, tests, the 367-module/1,308-dependency Level 1 architecture
    gate, 267 Contract operations, component/license/SBOM/asset/migration/
    release-service/localization/snapshot checks, production build/layout and
@@ -224,8 +224,8 @@ OpenAPI, high-confidence secrets and retired direct dependency markers.
 2. A separate `git clone --no-local` tracked the same 739 files, had empty
    porcelain status and no submodule output, and contained no `.gitmodules`,
    `vendor/legacy-prototype` or tracked `docs/api/openapi.json`.
-3. `bun install --frozen-lockfile` succeeded in the clone and rebuilt macOS
-   arm64 `node-pty`. Its complete `bun run check` exited 0: 213 test files
+3. `pnpm install --frozen-lockfile` succeeded in the clone and rebuilt macOS
+   arm64 `node-pty`. Its complete `pnpm run check` exited 0: 213 test files
    passed with five conditional skips (915 passing tests and 29 skips), the
    368-module/1,313-dependency Level 1 architecture gate, 267 Contract
    operations, component/license/SBOM/asset/migration/release-service/
@@ -264,8 +264,8 @@ OpenAPI, high-confidence secrets and retired direct dependency markers.
    count, no `.gitmodules`, no submodule output, no tracked
    `docs/api/openapi.json`, and an empty porcelain status. Its copied
    `.gitignore` ignored the generated OpenAPI path under a no-index check.
-3. `bun install --frozen-lockfile` succeeded in the clone and rebuilt macOS
-   arm64 `node-pty`. Its complete `bun run check` exited 0: 206 test files
+3. `pnpm install --frozen-lockfile` succeeded in the clone and rebuilt macOS
+   arm64 `node-pty`. Its complete `pnpm run check` exited 0: 206 test files
    passed and one skipped (894 tests passed and one skipped); the 367-module /
    1,308-dependency Level 1 architecture gate; 267 Contract operations;
    component/license/SBOM/asset/migration/release-service/localization/snapshot
@@ -285,7 +285,7 @@ compatibility removal. IR-12 remains **In progress**; IR-13 and IR-14 remain
 
 ## Current P-02 TRZSZ completed-session lifecycle candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the completed-session
+On 2026-09-22, `pnpm run candidate:check` was rerun after the completed-session
 TRZSZ lifecycle correction. A `TrzszManager` retains its completed object for a
 later transfer marker on the same terminal, so the implementation now clears
 closed upload readers, published download writers and collision-name state only
@@ -310,7 +310,7 @@ generated files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (917 tests passed with twenty-nine explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -350,8 +350,8 @@ OpenAPI, high-confidence secrets and retired direct dependency markers.
    count, no `.gitmodules`, no submodule output, no tracked
    `docs/api/openapi.json`, and an empty porcelain status. Its copied
    `.gitignore` ignored the generated OpenAPI path under a no-index check.
-3. `bun install --frozen-lockfile` succeeded in the clone and rebuilt macOS
-   arm64 `node-pty`. Its complete `bun run check` exited 0: 206 test files
+3. `pnpm install --frozen-lockfile` succeeded in the clone and rebuilt macOS
+   arm64 `node-pty`. Its complete `pnpm run check` exited 0: 206 test files
    passed and one skipped (894 tests passed and one skipped); the 367-module /
    1,308-dependency Level 1 architecture gate; 267 Contract operations;
    component/license/SBOM/asset/migration/release-service/localization/snapshot
@@ -391,8 +391,8 @@ OpenAPI, high-confidence secrets and retired direct dependency markers.
    count, no `.gitmodules`, no submodule output, no tracked
    `docs/api/openapi.json`, and an empty porcelain status. Its copied
    `.gitignore` ignored the generated OpenAPI path under a no-index check.
-3. `bun install --frozen-lockfile` succeeded in the clone and rebuilt macOS
-   arm64 `node-pty`. Its complete `bun run check` exited 0: 206 test files
+3. `pnpm install --frozen-lockfile` succeeded in the clone and rebuilt macOS
+   arm64 `node-pty`. Its complete `pnpm run check` exited 0: 206 test files
    passed and one skipped (894 tests passed and one skipped); the 367-module /
    1,308-dependency Level 1 architecture gate; 267 Contract operations;
    component/license/SBOM/asset/migration/release-service/localization/snapshot
@@ -431,8 +431,8 @@ OpenAPI, high-confidence secrets and retired direct dependency markers.
 2. A separate `git clone --no-local` had the same commit and tracked-file
    count; it had no `.gitmodules`, no `vendor/legacy-prototype`, no tracked generated
    OpenAPI document, and an empty porcelain status before and after checking.
-3. `bun install --frozen-lockfile` succeeded in the clone and rebuilt macOS
-   arm64 `node-pty`. Its complete `bun run check` exited 0: 208 test files
+3. `pnpm install --frozen-lockfile` succeeded in the clone and rebuilt macOS
+   arm64 `node-pty`. Its complete `pnpm run check` exited 0: 208 test files
    passed and one skipped (896 tests passed and one skipped); the Level 1
    architecture gate checked 367 modules / 1,308 dependencies; Contract drift
    checked 267 operations; component/license/SBOM/asset/migration/
@@ -454,7 +454,7 @@ IR-13 and IR-14 remain **Open**.
 ## Automated P-04 global-Shell candidate
 
 On 2026-09-21, the manual local candidate procedure was made reproducible as
-`bun run candidate:check`. The command prepares and audits a source-only
+`pnpm run candidate:check`. The command prepares and audits a source-only
 snapshot, creates a synthetic local Git root only inside that temporary
 directory, makes a non-local clone, installs frozen dependencies there, runs
 the complete quality gate, confirms that clone is still clean, and removes its
@@ -493,7 +493,7 @@ dependency markers.
    unstaged whitespace diff, no `.gitmodules`, no submodule status, no
    `vendor/legacy-prototype`, and no generated `docs/api/openapi.json`.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's full
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -519,7 +519,7 @@ IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-04 AI-workspace candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding the complete
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding the complete
 91-key AI workspace surface to the independently drafted Japanese and
 Traditional-Chinese partial catalogs. This record was written after the run, so
 the figures identify the exact pre-evidence snapshot and do not assert that this
@@ -539,7 +539,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -559,7 +559,7 @@ remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-04 AI-bookmark, host-key and tunnel candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding the remaining
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding the remaining
 74 independently drafted Japanese and Traditional-Chinese messages for AI SSH
 bookmarking, known host keys and SSH tunnels. This evidence was recorded after
 the run, so the figures describe its exact pre-evidence source snapshot.
@@ -578,7 +578,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -599,7 +599,7 @@ progress**; IR-13 and IR-14 remain **Open**.
 
 ## Historical P-02 selected-transfer peer-exit candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the external ZMODEM
+On 2026-09-22, `pnpm run candidate:check` was rerun after the external ZMODEM
 SSH-PTY suite gained its selected-transfer peer-exit cleanup regression. This
 record was written after the command, so its figures identify the exact
 pre-evidence source state.
@@ -618,7 +618,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 212 test files passed with five explicit skipped
+   `pnpm run check` passed: 212 test files passed with five explicit skipped
    files (906 tests passed with twenty-seven explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -645,7 +645,7 @@ remain **Open**.
 
 ## Current P-04 productivity, approval and host-key candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 45
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 45
 independently drafted Japanese and Traditional-Chinese productivity-panel,
 AI-Inspector, approval-card and changed-host-key confirmation messages. This
 record was written after the run, so the figures describe the exact
@@ -665,7 +665,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -685,7 +685,7 @@ compatibility removal. IR-12 remains **In progress**; IR-13 and IR-14 remain
 
 ## Current P-04 quick-command candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 63
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 63
 independently drafted Japanese and Traditional-Chinese quick-command library and
 multi-step command-editor messages. This record was written after the run, so
 the figures describe the exact pre-evidence source snapshot.
@@ -704,7 +704,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -724,7 +724,7 @@ progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-04 credential and proxy candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 50
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 50
 independently drafted Japanese and Traditional-Chinese saved-credential and
 SSH-proxy configuration messages. This record was written after the run, so the
 figures describe the exact pre-evidence source snapshot.
@@ -743,7 +743,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -764,7 +764,7 @@ and IR-14 remain **Open**.
 
 ## Current P-04 terminal-recovery candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 40
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 40
 independently drafted Japanese and Traditional-Chinese terminal-interaction and
 recovery-settings messages. This record was written after the run, so the
 figures describe the exact pre-evidence source snapshot.
@@ -783,7 +783,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -808,7 +808,7 @@ remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-04 keyboard-shortcut candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 69
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 69
 independently drafted Japanese and Traditional-Chinese keyboard-shortcut and
 global-window-visibility messages. This record was written after the run, so the
 figures describe the exact pre-evidence source snapshot.
@@ -827,7 +827,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -850,7 +850,7 @@ and IR-14 remain **Open**.
 
 ## Current P-04 observability candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 84
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 84
 independently drafted Japanese and Traditional-Chinese remote-monitor and
 terminal-information messages. This record was written after the run, so the
 figures describe the exact pre-evidence source snapshot.
@@ -869,7 +869,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -892,7 +892,7 @@ and IR-14 remain **Open**.
 
 ## Current P-04 batch-input and command-line candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 16
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 16
 independently drafted Japanese and Traditional-Chinese batch-input messages and
 all 16 command-line batch-operation messages. This record was written after the
 run, so the figures describe the exact pre-evidence source snapshot.
@@ -911,7 +911,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -938,7 +938,7 @@ compatibility removal. IR-12 remains **In progress**; IR-13 and IR-14 remain
 
 ## Current P-04 bookmark-tree candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 31
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 31
 independently drafted Japanese and Traditional-Chinese bookmark-tree messages,
 all six bookmark-group messages and all 12 bookmark-specific quick-command
 messages. This record was written after the run, so the figures describe the
@@ -958,7 +958,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -982,7 +982,7 @@ and IR-14 remain **Open**.
 
 ## Current P-04 command-history and bookmark-trigger candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding all 33
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding all 33
 independently drafted Japanese and Traditional-Chinese command-history messages
 and all 34 bookmark-trigger messages. This record was written after the run, so
 the figures describe the exact pre-evidence source snapshot.
@@ -1001,7 +1001,7 @@ files, high-confidence secrets and prohibited dependency markers.
    porcelain status and both staged and unstaged whitespace checks were empty
    before and after the full gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -1025,7 +1025,7 @@ progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-04 complete-core-draft candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the Japanese and
+On 2026-09-22, `pnpm run candidate:check` was rerun after the Japanese and
 Traditional-Chinese core catalogs each reached complete 2,543-key AI-assisted
 draft coverage. This record was written after the run, so the figures describe
 the exact pre-evidence source snapshot.
@@ -1044,7 +1044,7 @@ prohibited generated files, high-confidence secrets and dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed and one skipped (902 tests
+   `pnpm run check` passed: 211 test files passed and one skipped (902 tests
    passed and one skipped); the Level 1 gate covered 367 modules and 1,308
    dependencies; Contract drift checked 267 operations; source
    commercialization, component/license/SBOM, migration, release-service,
@@ -1064,7 +1064,7 @@ and IR-14 remain **Open**.
 
 ## Current P-02 external-peer candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after adding the opt-in,
+On 2026-09-22, `pnpm run candidate:check` was rerun after adding the opt-in,
 hash-verified external `lrzsz` and `trzsz-go` Docker-PTY tests. This record was
 written after the run, so its figures identify the exact pre-evidence snapshot.
 
@@ -1082,7 +1082,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed with three explicit skipped
+   `pnpm run check` passed: 211 test files passed with three explicit skipped
    files (902 tests passed with ten explicit skips); the Level 1 gate covered
    367 modules and 1,308 dependencies; Contract drift checked 267 operations;
    source commercialization, component/license/SBOM, migration,
@@ -1104,7 +1104,7 @@ and IR-14 remain **Open**.
 
 ## Current P-02 dual-architecture external-peer candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the opt-in external
+On 2026-09-22, `pnpm run candidate:check` was rerun after the opt-in external
 `lrzsz` and `trzsz-go` Docker-PTY suites were parameterized for fixed Linux
 arm64 and amd64 peers. This record was written after the run, so its figures
 identify the exact pre-evidence snapshot.
@@ -1123,7 +1123,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed with three explicit skipped
+   `pnpm run check` passed: 211 test files passed with three explicit skipped
    files (902 tests passed with ten explicit skips); the Level 1 gate covered
    367 modules and 1,308 dependencies; Contract drift checked 267 operations;
    source commercialization, component/license/SBOM, migration,
@@ -1145,7 +1145,7 @@ and IR-14 remain **Open**.
 
 ## Current P-02 external-peer-through-SSH candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the opt-in external
+On 2026-09-22, `pnpm run candidate:check` was rerun after the opt-in external
 `lrzsz` SSH-PTY suite was added. This record was written after the run, so its
 figures identify the exact pre-evidence snapshot.
 
@@ -1163,7 +1163,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed with four explicit skipped
+   `pnpm run check` passed: 211 test files passed with four explicit skipped
    files (902 tests passed with thirteen explicit skips); the Level 1 gate
    covered 367 modules and 1,308 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1185,7 +1185,7 @@ evidence. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 controlled-XMODEM-malformed-frame candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after a selected XMODEM
+On 2026-09-22, `pnpm run candidate:check` was rerun after a selected XMODEM
 receive was required to discard its real `.part` staging file once malformed
 CRC frames exhaust the bounded retry limit. The opt-in external Debian `sx`
 suite first verifies nonzero staging bytes, then deliberately changes a later
@@ -1209,7 +1209,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (921 tests passed with thirty-one explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1230,7 +1230,7 @@ evidence. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 all-protocol-controlled-malformed-frame candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the external SSH-PTY
+On 2026-09-22, `pnpm run candidate:check` was rerun after the external SSH-PTY
 coverage was extended from selected-XMODEM malformed frames to controlled
 selected ZMODEM and TRZSZ malformed frames. Each external case waits until the
 actual peer has written nonzero bytes into Axterm's selected hidden staging
@@ -1255,7 +1255,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (921 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1278,7 +1278,7 @@ evidence. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 external-peer-through-SSH XMODEM candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after XMODEM-1K external
+On 2026-09-22, `pnpm run candidate:check` was rerun after XMODEM-1K external
 `lrzsz` directions and receive-side cancellation were added to the opt-in SSH-
 PTY suite. This record was written after the run, so its figures identify the
 exact pre-evidence snapshot.
@@ -1297,7 +1297,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed with four explicit skipped
+   `pnpm run check` passed: 211 test files passed with four explicit skipped
    files (902 tests passed with sixteen explicit skips); the Level 1 gate
    covered 367 modules and 1,308 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1319,7 +1319,7 @@ IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 external-peer-through-SSH TRZSZ candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the opt-in external
+On 2026-09-22, `pnpm run candidate:check` was rerun after the opt-in external
 `trzsz-go` SSH-PTY suite was added. This record was written after the run, so
 its figures identify the exact pre-evidence snapshot.
 
@@ -1337,7 +1337,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed with five explicit skipped
+   `pnpm run check` passed: 211 test files passed with five explicit skipped
    files (902 tests passed with nineteen explicit skips); the Level 1 gate
    covered 367 modules and 1,308 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1362,7 +1362,7 @@ remain **Open**.
 
 ## Current P-02 staged-publication portability candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after all transfer engines
+On 2026-09-22, `pnpm run candidate:check` was rerun after all transfer engines
 received the shared staged-publication portability fallback. This record is
 written after the command, so all snapshot figures identify the exact
 pre-evidence source state.
@@ -1381,7 +1381,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 212 test files passed with five explicit skipped
+   `pnpm run check` passed: 212 test files passed with five explicit skipped
    files (906 tests passed with twenty-five explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1403,7 +1403,7 @@ IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 selection-timeout and P-07 mint-shell candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the controlled
+On 2026-09-22, `pnpm run candidate:check` was rerun after the controlled
 external-peer selection-timeout coverage and the Axterm mint selection-state
 guard were added. This record is written after the command, so all snapshot
 figures identify the exact pre-evidence source state.
@@ -1422,7 +1422,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed with five explicit skipped
+   `pnpm run check` passed: 211 test files passed with five explicit skipped
    files (902 tests passed with twenty-five explicit skips); the Level 1 gate
    covered 367 modules and 1,308 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1446,7 +1446,7 @@ remain **Open**.
 
 ## Current P-02 external-peer-through-SSH cancellation-direction candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after external SSH-PTY
+On 2026-09-22, `pnpm run candidate:check` was rerun after external SSH-PTY
 cancellation coverage expanded for the hash-pinned `lrzsz` and `trzsz-go`
 peers. This record was written after the run, so its figures identify the exact
 pre-evidence snapshot.
@@ -1465,7 +1465,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed with five explicit skipped
+   `pnpm run check` passed: 211 test files passed with five explicit skipped
    files (902 tests passed with twenty-one explicit skips); the Level 1 gate
    covered 367 modules and 1,308 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1491,7 +1491,7 @@ removal evidence. IR-12 remains **In progress**; IR-13 and IR-14 remain
 
 ## Current P-02 external-peer-through-SSH all-protocol-cancellation candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after cancellation coverage
+On 2026-09-22, `pnpm run candidate:check` was rerun after cancellation coverage
 was completed in both directions for the hash-pinned external XMODEM, ZMODEM
 and TRZSZ peers over SSH PTYs. This record was written after the run, so its
 figures identify the exact pre-evidence snapshot.
@@ -1510,7 +1510,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 211 test files passed with five explicit skipped
+   `pnpm run check` passed: 211 test files passed with five explicit skipped
    files (902 tests passed with twenty-two explicit skips); the Level 1 gate
    covered 367 modules and 1,308 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1535,7 +1535,7 @@ remain **Open**.
 
 ## Current P-02 selected-transfer data-loss candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the external ZMODEM
+On 2026-09-22, `pnpm run candidate:check` was rerun after the external ZMODEM
 SSH-PTY suite gained a selected-transfer incoming-data-loss cleanup regression.
 This record was written after the command, so its figures identify the exact
 pre-evidence source state.
@@ -1554,7 +1554,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 212 test files passed with five explicit skipped
+   `pnpm run check` passed: 212 test files passed with five explicit skipped
    files (906 tests passed with twenty-six explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1580,7 +1580,7 @@ progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 staged-partial peer-exit candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the external ZMODEM
+On 2026-09-22, `pnpm run candidate:check` was rerun after the external ZMODEM
 SSH-PTY peer-exit regression was strengthened to wait for a nonempty Axterm
 `.part` staging file before terminating the external peer. This record was
 written after the command, so its figures identify the exact pre-evidence source
@@ -1600,7 +1600,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 212 test files passed with five explicit skipped
+   `pnpm run check` passed: 212 test files passed with five explicit skipped
    files (906 tests passed with twenty-seven explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1627,7 +1627,7 @@ IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 malformed-selected-frame candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the selected-
+On 2026-09-22, `pnpm run candidate:check` was rerun after the selected-
 destination ZMODEM protocol regression began corrupting the CRC of a later peer
 data packet after prior packet bytes had been staged. This record was written
 after the command, so its figures identify the exact pre-evidence source state.
@@ -1646,7 +1646,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 212 test files passed with five explicit skipped
+   `pnpm run check` passed: 212 test files passed with five explicit skipped
    files (907 tests passed with twenty-seven explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1672,7 +1672,7 @@ removal. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 TRZSZ staged-peer-exit candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the external
+On 2026-09-22, `pnpm run candidate:check` was rerun after the external
 `trzsz-go tsz` SSH-PTY regression was added. It selects a writable destination,
 waits until nonzero peer bytes exist in Axterm's hidden `.part` staging file,
 then terminates the SSH fixture. This record was written after the command, so
@@ -1692,7 +1692,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 212 test files passed with five explicit skipped
+   `pnpm run check` passed: 212 test files passed with five explicit skipped
    files (907 tests passed with twenty-eight explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1718,7 +1718,7 @@ removal. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 XMODEM staged-peer-exit candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the external Debian
+On 2026-09-22, `pnpm run candidate:check` was rerun after the external Debian
 `sx --1k` SSH-PTY regression was added. It selects a writable destination,
 waits until nonzero peer bytes exist in Axterm's hidden `.part` staging file,
 then stops only the Docker container carrying the test's unique label. This
@@ -1739,7 +1739,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 212 test files passed with five explicit skipped
+   `pnpm run check` passed: 212 test files passed with five explicit skipped
    files (907 tests passed with twenty-nine explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1766,7 +1766,7 @@ compatibility removal. IR-12 remains **In progress**; IR-13 and IR-14 remain
 
 ## Current P-03 FTP stream-cancellation candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after FTP stream cleanup
+On 2026-09-22, `pnpm run candidate:check` was rerun after FTP stream cleanup
 was corrected for caller cancellation without an error. A normal completed
 read or write keeps its `basic-ftp` client reusable; an unsettled read or write
 stream that a caller destroys closes its data channel so queued work cannot
@@ -1784,7 +1784,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (918 tests passed with twenty-nine explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1805,7 +1805,7 @@ remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-03 FTP control-session-limit candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the local FTP Widget
+On 2026-09-22, `pnpm run candidate:check` was rerun after the local FTP Widget
 gained a raw-TCP control-session regression. The fixture retains sixteen live
 control peers through their `220` greetings, requires a seventeenth peer to
 close without acquiring a server session, then disconnects one retained peer
@@ -1828,7 +1828,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (919 tests passed with twenty-nine explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1849,7 +1849,7 @@ IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-05 product-asset-scope candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the unused,
+On 2026-09-22, `pnpm run candidate:check` was rerun after the unused,
 documentation-only `axterm-logo-concept.png` was removed from the source tree.
 It was not selected as an Electron resource and its public disposition and
 rights review were pending. The generated inventory and review ledger now cover
@@ -1871,7 +1871,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (919 tests passed with twenty-nine explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1892,7 +1892,7 @@ acceptance. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-05 documentation-asset-boundary candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the independent
+On 2026-09-22, `pnpm run candidate:check` was rerun after the independent
 source-snapshot audit was made to reject the retired `docs/product/assets/`
 location if it is reintroduced. The empty residual directory was removed from
 the working tree. This is deliberately a failure condition rather than a
@@ -1913,7 +1913,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (919 tests passed with twenty-nine explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1935,7 +1935,7 @@ IR-14 remain **Open**.
 
 ## Current P-07 connection-profile mint-focus candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the source review
+On 2026-09-22, `pnpm run candidate:check` was rerun after the source review
 replaced the remaining bright-blue connection-profile input border and focus
 halo (`#266aa2` / `#122a39`) with Axterm's `--shell-primary` semantic token.
 The source-level provenance test verifies the focused rule and rejects those
@@ -1956,7 +1956,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (919 tests passed with twenty-nine explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -1978,7 +1978,7 @@ IR-14 remain **Open**.
 
 ## Current P-01 governance and P-07 rendered-mint candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the former parity
+On 2026-09-22, `pnpm run candidate:check` was rerun after the former parity
 ADR's header was made explicitly historical/superseded by ADR-016 and a new
 source-Electron assertion read the actual connection-profile input's focused
 mint border and halo. This is a document-currentness and rendered-chrome
@@ -1999,7 +1999,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (919 tests passed with twenty-nine explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2018,7 +2018,7 @@ evidence. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 selected-XMODEM-silence and P-07 Runtime-recovery-mint candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after two narrow regressions:
+On 2026-09-22, `pnpm run candidate:check` was rerun after two narrow regressions:
 the independent selected XMODEM receiver must send `CAN CAN`, publish no file
 and emit its error/end events when a selected peer goes silent; and the real
 Core Runtime-recovery banner must render the Axterm mint primary rather than a
@@ -2040,7 +2040,7 @@ files, high-confidence secrets and prohibited dependency markers.
    its status and staged/unstaged whitespace checks were empty before and after
    the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (920 tests passed with thirty explicit skips); the Level 1 gate covered
    368 modules and 1,313 dependencies; Contract drift checked 267 operations;
    source commercialization, component/license/SBOM, migration, release-service,
@@ -2059,7 +2059,7 @@ evidence. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-02 fixed-package external-peer candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the opt-in external
+On 2026-09-22, `pnpm run candidate:check` was rerun after the opt-in external
 `lrzsz` peer suites gained a test-only `AXTERM_EXTERNAL_LRZSZ_DEB` input. It is
 for a runner whose disposable Docker container cannot download a complete Debian
 APT index within the test's fixed 40-second hook. The package is copied only to
@@ -2081,7 +2081,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (920 tests passed with thirty explicit skips); the Level 1 gate covered
    368 modules and 1,313 dependencies; Contract drift checked 267 operations;
    source commercialization, component/license/SBOM, migration, release-service,
@@ -2101,7 +2101,7 @@ evidence. IR-12 remains **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-03 FTP ABOR candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the independent
+On 2026-09-22, `pnpm run candidate:check` was rerun after the independent
 `NodeLocalFtpServer` gained a raw control/data cancellation regression. The
 test authenticates, enters PASV, begins a 32 MiB `RETR`, pauses after data
 arrives, sends `ABOR` on the live control socket, requires `426` followed by
@@ -2123,7 +2123,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (922 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2141,7 +2141,7 @@ IR-13 and IR-14 remain **Open**.
 
 ## Current P-03 pending-PASV ABOR candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the local FTP server
+On 2026-09-22, `pnpm run candidate:check` was rerun after the local FTP server
 made a pending data connection abortable. The raw authenticated client has a
 single configured PASV port, starts `RETR` without opening the announced data
 connection, receives `150`, and sends `ABOR`. It requires the transfer's `426`
@@ -2165,7 +2165,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (923 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2183,7 +2183,7 @@ IR-13 and IR-14 remain **Open**.
 
 ## Current P-03 same-peer PASV candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the local FTP passive
+On 2026-09-22, `pnpm run candidate:check` was rerun after the local FTP passive
 listener began accepting at most one data socket from its already authorized
 control peer. The raw loopback regression has a one-port PASV range and starts
 four concurrent data connections from the same peer; it requires at most one
@@ -2205,7 +2205,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (924 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2223,7 +2223,7 @@ IR-13 and IR-14 remain **Open**.
 
 ## Current P-03 Linux PASV-lifecycle candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the optional
+On 2026-09-22, `pnpm run candidate:check` was rerun after the optional
 platform-selected Linux FTP source smoke gained raw TCP coverage for the local
 PASV lifecycle fixes. The container remains read-only and network-isolated;
 both `linux/arm64` and `linux/amd64` runs require a pending passive `RETR` to
@@ -2247,7 +2247,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 213 test files passed with five explicit skipped
+   `pnpm run check` passed: 213 test files passed with five explicit skipped
    files (924 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2267,7 +2267,7 @@ IR-13 and IR-14 remain **Open**.
 
 ## Current P-03 loopback-only FTP candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the Local FTP Widget
+On 2026-09-22, `pnpm run candidate:check` was rerun after the Local FTP Widget
 was confined to loopback endpoints. Plain FTP has no transport encryption, so
 the product Contract now permits only `localhost`, `127.0.0.1` and `::1`; the
 Runtime Adapter repeats that restriction before resolving the Directory Grant or
@@ -2292,7 +2292,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 214 test files passed with five explicit skipped
+   `pnpm run check` passed: 214 test files passed with five explicit skipped
    files (926 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2310,7 +2310,7 @@ IR-13 and IR-14 remain **Open**.
 
 ## Current P-08 release-handoff candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the release-owner
+On 2026-09-22, `pnpm run candidate:check` was rerun after the release-owner
 handoff made the Local FTP Widget's plaintext threat boundary explicit for the
 independent protocol/security review. The handoff requires the reviewer to
 verify that the Contract, Runtime and Widget form reject `0.0.0.0` and `::`,
@@ -2335,7 +2335,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 214 test files passed with five explicit skipped
+   `pnpm run check` passed: 214 test files passed with five explicit skipped
    files (926 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2353,7 +2353,7 @@ evidence. IR-04 and IR-12 remain **In progress**; IR-13 and IR-14 remain
 
 ## Current P-02 ADR-018 provenance candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after ADR-018 superseded
+On 2026-09-22, `pnpm run candidate:check` was rerun after ADR-018 superseded
 ADR-013's direct-Legacy Prototype protocol-source decision. The new ADR retains the
 Runtime-owned terminal-byte, REST, File Grant and Binary WebSocket boundaries,
 but records `xmodem.ts` as Axterm-authored and `zmodem2`/`trzsz2` as separately
@@ -2376,7 +2376,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 214 test files passed with five explicit skipped
+   `pnpm run check` passed: 214 test files passed with five explicit skipped
    files (926 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2394,7 +2394,7 @@ progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-08 retired-source snapshot guard candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the independent
+On 2026-09-22, `pnpm run candidate:check` was rerun after the independent
 snapshot audit began rejecting the retired direct terminal-transfer source
 directory, local FTP Adapter, generated Legacy Prototype locale/theme data and their
 generators. These former direct P-02/P-03/P-04/P-05 source inputs are distinct
@@ -2419,7 +2419,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 214 test files passed with five explicit skipped
+   `pnpm run check` passed: 214 test files passed with five explicit skipped
    files (926 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2437,7 +2437,7 @@ progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-08 final-public promotion-gate candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the final-public
+On 2026-09-22, `pnpm run candidate:check` was rerun after the final-public
 command gained its source-promotion prerequisites. In addition to the approved
 migration-removal record and final name/content snapshot, it now requires
 current component/license inventories, reviewed dependency-attribution and
@@ -2462,7 +2462,7 @@ files, high-confidence secrets and prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation rebuilt macOS arm64 `node-pty`. The clone's complete
-   `bun run check` passed: 214 test files passed with five explicit skipped
+   `pnpm run check` passed: 214 test files passed with five explicit skipped
    files (926 tests passed with thirty-three explicit skips); the Level 1 gate
    covered 368 modules and 1,313 dependencies; Contract drift checked 267
    operations; source commercialization, component/license/SBOM, migration,
@@ -2482,7 +2482,7 @@ IR-04, IR-11 and IR-12 remain **In progress**; IR-13 and IR-14 remain **Open**.
 
 ## Current P-08 sensitive-artifact snapshot candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the independent
+On 2026-09-22, `pnpm run candidate:check` was rerun after the independent
 snapshot audit began rejecting private-key containers, common SSH private-key
 filenames, persistent database files and SQLite journal/WAL/SHM sidecars. The
 report exposes only each finding's source-relative path and category, so the
@@ -2505,7 +2505,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed: 214 test files
+   `node-pty`. The clone's complete `pnpm run check` passed: 214 test files
    passed with five explicit skipped files (931 tests passed with thirty-three
    explicit skips); the Level 1 gate covered 368 modules and 1,313
    dependencies; Contract drift checked 267 operations; source
@@ -2526,7 +2526,7 @@ installed Windows/Linux evidence. IR-02, IR-03, IR-04, IR-11 and IR-12 remain
 
 ## Current P-08 aggregated final-public diagnostics candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the final-public
+On 2026-09-22, `pnpm run candidate:check` was rerun after the final-public
 release command replaced its short-circuiting shell chain with a dedicated
 orchestrator. A real current-worktree invocation now evaluates every promotion
 prerequisite in one run, reports every failed gate, and runs the final source
@@ -2553,7 +2553,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed: 215 test files
+   `node-pty`. The clone's complete `pnpm run check` passed: 215 test files
    passed with five explicit skipped files (934 tests passed with thirty-three
    explicit skips); the Level 1 gate covered 368 modules and 1,313
    dependencies; Contract drift checked 267 operations; source
@@ -2577,7 +2577,7 @@ remain unaccepted; IR-13 and IR-14 remain **Open**.
 
 ## Current P-08 Windows/Linux real-installer gate candidate
 
-On 2026-09-22, `bun run candidate:check` was rerun after the three-platform CI
+On 2026-09-22, `pnpm run candidate:check` was rerun after the three-platform CI
 stopped treating electron-builder's `linux-unpacked` and `win-unpacked`
 directories as installation evidence. The Linux entry point now refuses to
 replace a pre-existing package, installs exactly one amd64 DEB through APT,
@@ -2606,7 +2606,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed: 216 test files
+   `node-pty`. The clone's complete `pnpm run check` passed: 216 test files
    passed with five explicit skipped files (937 tests passed with thirty-three
    explicit skips); the Level 1 gate covered 368 modules and 1,313
    dependencies; Contract drift checked 267 operations; source
@@ -2655,7 +2655,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -2696,7 +2696,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -2743,7 +2743,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -2789,7 +2789,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -2837,7 +2837,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -2887,7 +2887,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -2935,7 +2935,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -2988,7 +2988,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -3050,7 +3050,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (937 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -3110,7 +3110,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (940 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -3160,7 +3160,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (940 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -3204,7 +3204,7 @@ prohibited dependency markers.
    external peer package; its status and staged/unstaged whitespace checks were
    empty before and after the complete gate.
 3. Frozen installation installed 609 packages and rebuilt macOS arm64
-   `node-pty`. The clone's complete `bun run check` passed 216 test files with
+   `node-pty`. The clone's complete `pnpm run check` passed 216 test files with
    five explicit skipped files (942 tests passed with thirty-three explicit
    skips), the 368-module / 1,313-dependency Level 1 gate, 267 Contract
    operations, commercialization/localization/license/SBOM/snapshot checks,
@@ -3243,7 +3243,7 @@ signed upgrade, final-public snapshot or human rights review. IR-12 remains
 ## Current post-Linux-fix ephemeral Git candidate
 
 After the Linux installed-package fixes and evidence synchronization, a fresh
-`bun run candidate:check` completed on 2026-09-22. Its deliberate source
+`pnpm run candidate:check` completed on 2026-09-22. Its deliberate source
 snapshot had 748 files, 15,638,233 bytes and tree SHA-256
 `672c279d34f5656f3e3106adac21235909c802cfa9160627c68c284d4362ff81`;
 all snapshot-audit categories were empty. Temporary root commit
@@ -3253,7 +3253,7 @@ submodule, `vendor/legacy-prototype`, generated OpenAPI, external peer package,
 dependency tree or release output.
 
 The clone's frozen installation installed 609 packages and rebuilt macOS arm64
-`node-pty`. Its complete `bun run check` passed 217 test files with five
+`node-pty`. Its complete `pnpm run check` passed 217 test files with five
 skipped files (947 tests with 33 skips), the 368-module / 1,313-dependency Level
 1 architecture gate, 267 Contract operations, component/license/attribution/
 SBOM/asset/migration/service and four-language gates, its own 748-file snapshot
@@ -3281,7 +3281,7 @@ exercise a matching manifest, changed bytes, a late artifact and policy
 tampering; the current local macOS manifest also passed against its actual DMG
 and ZIP bytes.
 
-The corresponding fresh `bun run candidate:check` source snapshot had 749
+The corresponding fresh `pnpm run candidate:check` source snapshot had 749
 files, 15,662,813 bytes and tree SHA-256
 `5155e617df187b638b2ddc556d5644f05f0c770056e87cebdd75b0125e7e350e`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3315,7 +3315,7 @@ manifest or any verified artifact. Focused tests execute the receipt CLI,
 exercise both overwrite refusals, require all three platform commands, lock
 upload/download/check/receipt ordering and reject any unpinned external action.
 
-The corresponding fresh `bun run candidate:check` source snapshot had 749
+The corresponding fresh `pnpm run candidate:check` source snapshot had 749
 files, 15,675,516 bytes and tree SHA-256
 `fd3de0afa692e3b5cdb7e10f099fcc113cabd6f94528fb439988b6e7f98131dc`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3351,7 +3351,7 @@ final file nor a staging pathname. The three focused protocol files pass 34
 tests. This is intentionally scoped to staging namespace/finalization loss; it
 does not claim disk-full/write-permission or Windows unlink behavior.
 
-The corresponding fresh `bun run candidate:check` source snapshot had 749
+The corresponding fresh `pnpm run candidate:check` source snapshot had 749
 files, 15,687,694 bytes and tree SHA-256
 `afaba883048e1bbf47743b98afdc8bfd34a94833d4e55a0e5df4ffe06bfa579a`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3383,7 +3383,7 @@ and documentation files pass 16 tests; the detailed scope and residual
 path-based rename interval are recorded in the IR-04 filesystem-identity
 evidence.
 
-The corresponding fresh `bun run candidate:check` source snapshot had 750
+The corresponding fresh `pnpm run candidate:check` source snapshot had 750
 files, 15,705,225 bytes and tree SHA-256
 `6d3a2cbecb2a2921fb4c8fc3a5d57a800f4625d113b9c9b9cd3cb3223595f83f`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3414,7 +3414,7 @@ destination parent identities, and atomically publishes only if they remain
 unchanged. The focused server and documentation files pass 18 tests, including
 raw resumed `RETR`/`STOR`, rejection recovery and held-open source replacement.
 
-The corresponding fresh `bun run candidate:check` source snapshot had 751
+The corresponding fresh `pnpm run candidate:check` source snapshot had 751
 files, 15,726,520 bytes and tree SHA-256
 `75521c0b29cc3d40e90bdda600374b51d0b4289207c1934427e490ff07f3755a`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3444,7 +3444,7 @@ an intervening `NOOP` produces `503` at the later `RNTO`; a new immediately
 adjacent pair still renames the byte-exact file and keeps the authenticated
 session usable. The focused server and documentation files pass 19 tests.
 
-The corresponding fresh `bun run candidate:check` source snapshot had 752
+The corresponding fresh `pnpm run candidate:check` source snapshot had 752
 files, 15,739,512 bytes and tree SHA-256
 `60792bf2057c2e76a7be3ad12f03822b4086a0b4a6e2a6bd7f0fd6e68e56276e`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3478,7 +3478,7 @@ and Quick Command omissions before commit. The default suite retains its
 higher-concurrency full runs contended on loopback/PTY startup; no test was
 skipped and no timeout was extended.
 
-The corresponding fresh `bun run candidate:check` source snapshot had 753
+The corresponding fresh `pnpm run candidate:check` source snapshot had 753
 files, 15,763,557 bytes and tree SHA-256
 `8342f5b137bbb8d3a89de044f37a200b0f73c22bdef857b2e29f47c76354ef92`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3514,7 +3514,7 @@ from a setting-enabled import through the required restart. The recorded final
 package is a 101,540,201-byte `app.asar` with SHA-256
 `def175cc7f9995102b6e4536be2379e8ceedab07f0b8ac2f220c44bb4e34c5d4`.
 
-The corresponding fresh `bun run candidate:check` source snapshot had 755
+The corresponding fresh `pnpm run candidate:check` source snapshot had 755
 files, 15,797,670 bytes and tree SHA-256
 `a6e0f1062276ea489943236952d09454df0df24f4c984cd29c6a1f64c64acac0`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3552,7 +3552,7 @@ assertions; its 101,535,430-byte `app.asar` has SHA-256
 The complete current packaged suite passed 16 macOS-applicable journeys, with
 nine explicit Windows/Linux or optional SSH-fixture skips.
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 756 files, 15,939,636 bytes and tree SHA-256
 `6c62c3fcde2738b46ab5e2292d9c672bd4cb7f75ac5ae8492b84c28b33163664`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3592,7 +3592,7 @@ Windows/Linux or optional SSH-fixture skips, and recorded the inspected
 SHA-256
 `ff639dd259739c64fbcb940fe44fd910b439c52696353543fe63fec4ad6e86c2`.
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 757 files, 16,012,139 bytes and tree SHA-256
 `527eadd01cf6337e1a9ad540fcf91cb223f3e74317ab34f2cab4875aae741c28`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3629,7 +3629,7 @@ same width, focus, mint and action checks; its 101,538,816-byte `app.asar` has
 SHA-256
 `119152a22da8ac994f59f68967e2b26a5979771b4858718f37f1e19422f69f58`.
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 758 files, 16,127,388 bytes and tree SHA-256
 `e376c562c8e1ee4e1cd5a0d848f422455b7543e495aef108b9732ed715a56647`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3664,7 +3664,7 @@ case verifies the high-risk surface, old/new fingerprints, unchecked required
 acknowledgement and blocked destructive action. Focused Runtime, provenance,
 localization and Electron tests pass.
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 758 files, 16,161,718 bytes and tree SHA-256
 `a3d4797dbaf69eafa57d3ee5270704228569175410162d66e6b0b6e386f3cf4c`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3705,7 +3705,7 @@ platform/optional-fixture skips. The tested 101,554,061-byte `app.asar` has
 SHA-256
 `0e7335790df5c3a496f6d59ee56a832425c0db45ffc2b59b4049f9399faa3110`.
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 758 files, 16,183,445 bytes and tree SHA-256
 `4c34d34b63671063dd42688b2a6957f9a15a520d94457619bb89a2676acb4afb`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3746,7 +3746,7 @@ the focused Phase 12 journey and recorded `phase12-empty-pane.png`; its
 101,554,888-byte `app.asar` has SHA-256
 `942c1bfa1bf049841db90c14bf8362c7fcccc9645e6af30926073739219d8145`.
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 761 files, 16,381,308 bytes and tree SHA-256
 `10a9fbc16be11716790bb2049ef0aa30ed686fd6d95a4927550aed1d3fe45565`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3782,7 +3782,7 @@ byte-identical to the closed historical database. The focused journey passed;
 its exact app, database, screenshot and JSON hashes are recorded in
 [IR-08 historical package evidence](IR08-HISTORICAL-PACKAGE-UPGRADE-2026-09-23.md).
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 762 files, 16,408,469 bytes and tree SHA-256
 `aa03b105fc33f3769d80d9807564a64f6b675debcb6b1f5d0e38d74ffadf740b`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3818,7 +3818,7 @@ journey passed one of one; exact artifact, screenshot, database and evidence-JSO
 hashes are recorded in
 [IR-08 historical package evidence](IR08-HISTORICAL-PACKAGE-UPGRADE-2026-09-23.md).
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 762 files, 16,418,287 bytes and tree SHA-256
 `592215ff4b82ba2de70dcd27770af7b0f3c9d4fbc4564e69160565ca1e5681d1`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3857,7 +3857,7 @@ one of one in 7.1 seconds; exact application, database, screenshot and
 evidence-JSON hashes are recorded in
 [IR-08 historical package evidence](IR08-HISTORICAL-PACKAGE-UPGRADE-2026-09-23.md).
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 762 files, 16,432,722 bytes and tree SHA-256
 `53a12a7c5f32d30fbc96523a36c4080b8722c7de4030e673ed8a0d2f0d2f23ae`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3902,7 +3902,7 @@ The focused journey passed one of one in 10.9 seconds. Exact application,
 database and screenshot hashes are recorded in
 [IR-08 historical package evidence](IR08-HISTORICAL-PACKAGE-UPGRADE-2026-09-23.md).
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 762 files, 16,460,925 bytes and tree SHA-256
 `96be2ab858eb7fe11a79a04493d9f2b6c0926b44de4d8f577866fe93f823af09`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3939,7 +3939,7 @@ events, becomes inactive, publishes no final file and removes the partial
 staging file. The three focused files pass 43 tests and the whole terminal-
 transfer directory passes 78 tests with 32 opt-in/platform skips.
 
-The corresponding fresh `bun run candidate:check` deliberate pre-evidence
+The corresponding fresh `pnpm run candidate:check` deliberate pre-evidence
 snapshot had 762 files, 16,479,416 bytes and tree SHA-256
 `580b98847b5669534b0edc734d4d177caddd80b898a52f9bedf6fcfde826eff7`;
 every snapshot-audit category was empty. Temporary root commit
@@ -3976,7 +3976,7 @@ authenticated control connection usable. The focused server file passes 24
 tests. The production default remains Node's `createWriteStream`; only the
 test's narrow staging-stream factory injects faults.
 
-The corresponding deliberate pre-evidence `bun run candidate:check` source
+The corresponding deliberate pre-evidence `pnpm run candidate:check` source
 snapshot had 762 files / 16,486,371 bytes / tree SHA-256
 `82ed1a3de4bc2de83877c4734123fe76735a081e37e2d9be8f90ee6e8525001b`;
 every snapshot-audit category was empty. Temporary root commit
@@ -4004,7 +4004,7 @@ remains recorded above and is superseded for the current source snapshot.
 ## 2026-09-23 current UI/AppImage-gate clean-clone candidate
 
 After the AppImage payload gate and the data-migration option alignment, a new
-`bun run candidate:check` prepared an independent source snapshot of 765 files,
+`pnpm run candidate:check` prepared an independent source snapshot of 765 files,
 16,552,067 bytes and tree SHA-256
 `d145790d30bfe99bcd672f41280f70eb8246c0022d214ac98aef626a83e30628`.
 All audit violation categories were empty. The script made only a disposable
@@ -4013,8 +4013,8 @@ local root commit `f6ac1f9b9d4d419c2ca62add88bea684394c8c24` and a distinct
 `.gitmodules`, submodules, `vendor/legacy-prototype` or generated OpenAPI file, and
 its initial and final Git status were clean.
 
-The clone's `bun install --frozen-lockfile` installed 609 packages and built
-macOS arm64 `node-pty`. Its complete `bun run check` passed 218 test files
+The clone's `pnpm install --frozen-lockfile` installed 609 packages and built
+macOS arm64 `node-pty`. Its complete `pnpm run check` passed 218 test files
 with five skipped files (987 tests passed, 33 skipped), the 368-module /
 1,314-dependency Level 1 gate, 267 Contract operations, source/release
 hygiene and four-language checks, production build/layout, seven Axterm visual
@@ -4022,7 +4022,7 @@ and two accessibility journeys. The script removed its owned temporary source
 and clone after the successful check. Later evidence-document edits are not
 claimed to be part of that exact snapshot.
 
-A separate current-checkout `bun run test:ssh` subsequently passed the real
+A separate current-checkout `pnpm run test:ssh` subsequently passed the real
 controlled OpenSSH integration and source Electron save-and-connect journey;
 it did **not** run inside this deleted clone. A separately built current-source
 macOS directory app passed the packaged OpenSSH journey and complete packaged
@@ -4034,7 +4034,7 @@ progress**; IR-13/IR-14 remain **Open**.
 
 ## 2026-09-23 controlled OpenSSH in the same clean clone
 
-`bun run candidate:ssh:check` now opt-in extends the disposable candidate gate
+`pnpm run candidate:ssh:check` now opt-in extends the disposable candidate gate
 with the real Docker OpenSSH fixture. It preserves `candidate:check` for hosts
 without Docker; the extra fixture is not silently counted when only the default
 gate runs. The command first prepared and audited a 765-file, 16,557,900-byte
@@ -4046,11 +4046,11 @@ Every reported violation category was empty. Temporary root commit
 submodule, old vendor tree or generated OpenAPI file.
 
 In **that clone**, frozen Bun installation rebuilt macOS arm64 `node-pty` and
-the complete `bun run check` passed 218 test files with five skipped files
+the complete `pnpm run check` passed 218 test files with five skipped files
 (988 tests passed, 33 skipped), the 368-module / 1,314-dependency Level 1
 gate, 267 Contract operations, source/release hygiene, production build/layout,
 seven visual and two accessibility journeys. The same clone then ran
-`bun run test:ssh`: the controlled three-container OpenSSH fixture passed its
+`pnpm run test:ssh`: the controlled three-container OpenSSH fixture passed its
 Runtime integration test and the source Electron B-12 authenticated
 save-and-connect journey. The candidate's final Git status was clean. Its
 temporary source/clone were removed; the Docker fixture left no labeled
@@ -4066,7 +4066,7 @@ are not claimed to be inside the exact pre-evidence snapshot. IR-12 stays
 
 ## 2026-09-23 independent external peers in the same clean clone
 
-`bun run candidate:protocol:check` is an opt-in superset of the ordinary
+`pnpm run candidate:protocol:check` is an opt-in superset of the ordinary
 candidate and controlled-OpenSSH gates. A first attempt stopped before peer
 assertions because the Debian APT index did not finish inside the fixture's
 40-second setup deadline. The candidate gate now fetches the fixed Debian
@@ -4082,11 +4082,11 @@ All audit violation categories were empty. Disposable root commit
 `6b39e328f00c92671425aef415fb68148d94f847` and a distinct
 `git clone --no-local` each tracked 765 files with no `.gitmodules`,
 submodule, `vendor/legacy-prototype` or generated OpenAPI file. Frozen installation
-rebuilt macOS arm64 `node-pty`. In **that one clone**, the full `bun run check`
+rebuilt macOS arm64 `node-pty`. In **that one clone**, the full `pnpm run check`
 passed 218 test files with five skipped files (988 tests passed, 33 skipped),
 the 368-module / 1,314-dependency architecture gate, 267 Contract operations,
 source/release hygiene, production build/layout, seven visual journeys and two
-accessibility journeys. `bun run test:ssh` then passed its controlled OpenSSH
+accessibility journeys. `pnpm run test:ssh` then passed its controlled OpenSSH
 Runtime integration and Electron B-12 save-and-connect journey. Finally the
 opt-in external SSH/PTY suites passed 16/16 Debian `lrzsz` cases and 7/7
 official `trzsz-go` cases using Linux arm64 peers. The clone's final Git status
@@ -4104,8 +4104,8 @@ not claimed to be in the exact pre-evidence snapshot.
 
 After the historical-source portable file and the explicitly sanitized
 encrypted/plaintext sync derivatives were added to the working tree, the
-local-only candidate was rerun. Both `bun run candidate:check` and
-`bun run candidate:ssh:check` independently prepared the same **782-file,
+local-only candidate was rerun. Both `pnpm run candidate:check` and
+`pnpm run candidate:ssh:check` independently prepared the same **782-file,
 17,679,713-byte** audited source snapshot, tree SHA-256
 `f9e89cee22498784a6698c2b6272b07653f43f541ff9dcd48990e6d93d00bebb`.
 The audit reported no forbidden, transient, oversized, sensitive or
@@ -4116,8 +4116,8 @@ markers. Temporary root commits were respectively
 `git clone --no-local` tracked exactly 782 files, had no submodule or old
 vendor tree, and ended with a clean Git status.
 
-Each clone completed `bun install --frozen-lockfile` (609 packages, native
-macOS arm64 `node-pty` rebuild) and the full `bun run check`: 218 test files
+Each clone completed `pnpm install --frozen-lockfile` (609 packages, native
+macOS arm64 `node-pty` rebuild) and the full `pnpm run check`: 218 test files
 passed and five skipped, **1,003 tests passed and 33 skipped**, the
 374-module/1,320-dependency Level 1 gate, 267 Contract operations,
 source/license/SBOM/localization/snapshot checks, production layout, seven
@@ -4142,7 +4142,7 @@ remain **Open**.
 ## 2026-09-23 current-worktree clean-clone refresh
 
 After the current UI, localization and release-evidence changes, a fresh
-`bun run candidate:ssh:check` audited a **799-file, 18,158,906-byte** source
+`pnpm run candidate:ssh:check` audited a **799-file, 18,158,906-byte** source
 snapshot with tree SHA-256
 `61a29835f68ed8b91538e0c44edd981e51f5161761e6b4441c8b1f0cfd048acc` and no
 reported snapshot, secret, dependency-marker or hygiene violations. The
@@ -4152,11 +4152,11 @@ temporary root commit was
 clean final Git status. No remote or caller-checkout Git history was changed.
 
 Frozen installation completed with 609 packages and rebuilt macOS arm64
-`node-pty`. In that clone, the full `bun run check` passed 219 test files with
+`node-pty`. In that clone, the full `pnpm run check` passed 219 test files with
 five skipped files (**1,019 tests passed, 33 skipped**), the 358-module /
 1,304-dependency Level 1 gate, 267 Contract operations, source/license/SBOM/
 localization/snapshot checks, production build/layout, nine visual journeys
-and two accessibility journeys. The same clone then passed `bun run test:ssh`:
+and two accessibility journeys. The same clone then passed `pnpm run test:ssh`:
 the controlled OpenSSH Runtime fixture and Electron B-12 authenticated
 save-and-connect journey both passed. The script removed its temporary source
 snapshot and clone after completion; the post-run Docker inventory contained
@@ -4173,7 +4173,7 @@ new repository. IR-12 remains **In progress**; IR-13/IR-14 remain **Open**.
 ## 2026-09-23 current migration-accessibility snapshot
 
 After adding the keyboard-activated packaged migration accessibility journey,
-the ordinary `bun run candidate:check` created a new source-only snapshot and
+the ordinary `pnpm run candidate:check` created a new source-only snapshot and
 non-local Git clone. The audit covered **800 files / 18,196,546 bytes** with
 source-tree SHA-256
 `cb80b1e61eed562c80d0a7d8389eff028c58be7496615f27c268cd1dab0d4134` and no
@@ -4184,8 +4184,8 @@ root commit was `beeb3b41279a26a55f55be6b8ed2e0d8697d7b2f`; its separate
 confirmed a clean final Git status and absence of `.gitmodules`,
 `vendor/legacy-prototype` and `docs/api/openapi.json`.
 
-The clone completed `bun install --frozen-lockfile` with 610 packages and
-rebuilt macOS arm64 `node-pty`. In that clone, `bun run check` passed 219 test
+The clone completed `pnpm install --frozen-lockfile` with 610 packages and
+rebuilt macOS arm64 `node-pty`. In that clone, `pnpm run check` passed 219 test
 files with five skipped files (**1,019 tests passed, 33 skipped**), the
 358-module / 1,304-dependency Level 1 gate, 267 Contract operations,
 license/SBOM/localization/snapshot checks, production build/layout, nine visual
@@ -4206,7 +4206,7 @@ reported source snapshot. IR-12 remains **In progress**; IR-13/IR-14 remain
 ## 2026-09-23 retired-locale packaged-migration candidate refresh
 
 After adding the packaged retired-language migration regression and its
-macOS arm64 evidence, `bun run candidate:check` produced a clean temporary
+macOS arm64 evidence, `pnpm run candidate:check` produced a clean temporary
 source snapshot of **801 files / 18,205,025 bytes**, source-tree SHA-256
 `7e1c28b7a63646aff886ee828b4707f2b930567f0af0869711a8e93ef7c7c8c1`. The
 candidate root commit was `cd6c2ec6c251e0058b60f23c900be410e6ba21dc`; a distinct
@@ -4214,8 +4214,8 @@ candidate root commit was `cd6c2ec6c251e0058b60f23c900be410e6ba21dc`; a distinct
 script's clean-status, no-submodule, no-`vendor/legacy-prototype`, and generated
 OpenAPI-file checks. No remote was configured.
 
-In that clone, `bun install --frozen-lockfile` installed 610 packages and
-rebuilt macOS arm64 `node-pty`. The complete `bun run check` passed 219 test
+In that clone, `pnpm install --frozen-lockfile` installed 610 packages and
+rebuilt macOS arm64 `node-pty`. The complete `pnpm run check` passed 219 test
 files with five skipped (**1,019 tests passed, 33 skipped**), the 358-module /
 1,304-dependency Level 1 gate, 267 Contract operations, all source/license/
 SBOM/localization/snapshot checks, production build/layout, nine visual tests
@@ -4226,7 +4226,7 @@ external-peer fixtures.
 
 The temporary source and clone were removed by the candidate script. This
 refresh proves the current independent source snapshot and frozen-install
-`bun run check` locally; it does not prove remote CI, Windows/native-Linux
+`pnpm run check` locally; it does not prove remote CI, Windows/native-Linux
 installation, signed release, independent rights review, migration-window
 completion or creation of the owner's final repository. This evidence section
 was appended after the candidate run and is not in its recorded hash. IR-12
@@ -4244,14 +4244,14 @@ at 5.43:1. A focused unit regression guards the disabled style, and the
 keyboard-driven J-08 accessibility journey passes with the real async preview
 flow.
 
-After that fix, `bun run candidate:check` created a clean snapshot of **801
+After that fix, `pnpm run candidate:check` created a clean snapshot of **801
 files / 18,208,344 bytes**, tree SHA-256
 `6ac0aa3e8b61d0eaf03667cefe1a07b91641112fd2a26f4569cc2e172e0ea7d5`, temporary
 root commit `fc149543270888ff3f6f0b6b847cfe6722f5be40`, and a separate clean
 `git clone --no-local`. Frozen install rebuilt macOS arm64 `node-pty`; all
 1,020 source tests passed, 33 skipped, and all 11 visual/accessibility checks
 passed with the 358-module / 1,304-dependency architecture gate and 267
-Contract operations. Root-worktree `bun run check` also passed on the same
+Contract operations. Root-worktree `pnpm run check` also passed on the same
 code. The candidate did not run packaged Playwright, SSH peers or external
 protocol peers. This paragraph was added after the candidate and is not in its
 hash. IR-12 and IR-10 remain **In progress**.
@@ -4264,7 +4264,7 @@ had source-tree SHA-256
 candidate protocol check created ephemeral root commit
 `83f6056a0b427d4c55bcdc065c493e8c9ed34674`, then independently cloned it with
 `git clone --no-local`; the clone froze 610 packages and passed the complete
-`bun run check`: 1,028 tests passed, 33 skipped, 358 modules / 1,306
+`pnpm run check`: 1,028 tests passed, 33 skipped, 358 modules / 1,306
 dependencies, 267 Contract operations, nine visual and two accessibility
 journeys.
 
@@ -4284,12 +4284,12 @@ its exact source-tree hash. IR-03 and IR-12 remain **In progress**.
 
 ## 2026-09-24 IR-12 clean independent-build acceptance candidate
 
-A follow-up `bun run candidate:protocol:check` captured the current
+A follow-up `pnpm run candidate:protocol:check` captured the current
 804-file/18,270,506-byte source snapshot with tree SHA-256
 `90a24ab2709b02ca69cb19f00bb705afa14adf952cb334e597bd2bdf282ad9a6` and
 ephemeral root commit `091327a600a7cc06a93c8ba7d17122d739c5c575`. Its separate
 `git clone --no-local` froze 610 packages, rebuilt macOS arm64 `node-pty`, and
-passed the full `bun run check`: 219 test files passed, five skipped; 1,028
+passed the full `pnpm run check`: 219 test files passed, five skipped; 1,028
 tests passed, 33 skipped; 358 modules / 1,306 dependencies; 267 Contract
 operations; nine visual and two accessibility journeys; and the production
 package-layout check. Snapshot, dependency-marker and transition-boundary
@@ -4315,13 +4315,13 @@ source-tree hash. IR-03 remains **In progress**; IR-12 is **Accepted**.
 ## 2026-09-24 installer-protocol regression candidate rerun
 
 After adding installed-protocol registration assertions to the Linux DEB and
-Windows NSIS test scripts, `bun run candidate:protocol:check` again captured
+Windows NSIS test scripts, `pnpm run candidate:protocol:check` again captured
 and independently cloned the current source. The clean candidate contained
 804 files / 18,277,398 bytes, with source-tree SHA-256
 `8f48f098026c29d28ab2c6810ac6f66bca56067a5bcb929747ea84957c6cff02` and
 ephemeral root commit `65510547526bcae05d7401dc2800cf8c0ec6c222`. Frozen install
 resolved 610 packages and rebuilt macOS arm64 `node-pty`. The complete
-`bun run check` passed: 1,028 tests passed and 33 skipped, 358 modules / 1,306
+`pnpm run check` passed: 1,028 tests passed and 33 skipped, 358 modules / 1,306
 dependencies, 267 Contract operations, nine visual and two accessibility
 journeys, and the production package-layout check. Snapshot hygiene and the
 expanded Legacy Prototype-transition reference scan reported no violations.

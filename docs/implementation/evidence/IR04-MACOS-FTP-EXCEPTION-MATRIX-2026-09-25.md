@@ -20,12 +20,12 @@ review, signed distribution, Windows and native Linux remain separate tasks.
 ## Commands and results
 
 ```sh
-bunx vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts
+pnpm exec vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts
 # 36/36 passed
 
 AXTERM_PACKAGED_APP=/tmp/axterm-macos-current-dmg.2kk8Po/mac-arm64/Axterm.app \
 AXTERM_PACKAGED_FTP_STOP_RESTART=1 \
-bunx playwright test --project=packaged \
+pnpm exec playwright test --project=packaged \
   -g 'packaged FTP Widget runs the independent server'
 # 1/1 passed (4.8 s total)
 ```

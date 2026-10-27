@@ -54,7 +54,7 @@ without a recovery-side remote write. Both apps report version `0.10.0`;
 this is a source-rebuilt historical producer with synthetic data, **not** a
 published older installer, customer backup or actual version-number upgrade.
 
-The normal `bun run check` also passed 235 test files (1,179 passed, 38
+The normal `pnpm run check` also passed 235 test files (1,179 passed, 38
 skipped), Level 1 architecture, 267 Contract operations, package layout and
 all 11 source visual/accessibility journeys. It does not run the conditional
 packaged SSH or historical-app tests unless their fixtures are supplied.

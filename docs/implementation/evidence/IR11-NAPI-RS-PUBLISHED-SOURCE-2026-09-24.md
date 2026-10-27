@@ -15,7 +15,7 @@ published `.crate` archives. Their manifests point to the official
 | `napi-derive-backend@6.1.2` | `df4056ac7c18e4438ccf0edaed4340ca0d269278c8ec19284f7b23cb039fd0ae` | `956e4525fea6a676ea3680b711382f167b899af9` / `crates/backend` |                   18 |
 | `napi-sys@3.3.0`            | `85fbf1fa9f1babfe396d74bbbf52b3643770243e8f5b0b46715d4caf7f0dfc9a` | `679eb79f5cf3c7c6b2850f4ab46092126f23dc5c` / `crates/sys`     |                    4 |
 
-The opt-in `bun run licenses:napi:source-check -- <napi-rs Git checkout>
+The opt-in `pnpm run licenses:napi:source-check -- <napi-rs Git checkout>
 <fs-safe v0.13.1 checkout>` verified the pinned `fs-safe` Cargo.lock, each
 published `.crate` hash against its lock checksum, VCS metadata, original
 Cargo.toml and all **116** packaged regular source files against those Git
@@ -30,7 +30,7 @@ The exact two-block MIT text, including both the LongYinan and GitHub
 copyright notices, is preserved in
 [`licenses/napi-rs-LICENSE.txt`](../../../licenses/napi-rs-LICENSE.txt).
 `THIRD_PARTY_NOTICES.txt` maps it to the four published crates. The routine
-`bun run licenses:napi:check` rejects license-byte or missing-root inventory
+`pnpm run licenses:napi:check` rejects license-byte or missing-root inventory
 scope drift offline; it does **not** repeat the opt-in source download.
 
 The legal text is included by the app's `licenses/*.txt` Legal/About display

@@ -1,11 +1,74 @@
 # Implementation status
 
-Updated: 2026-10-11
+Updated: 2026-10-27
 Product version: `0.10.0`
+
+2026-10-27 按所有者“把所有代码合并到 main，然后推送到远端”要求执行提交前验证。
+抓取 origin 后，本地与远端均只有 main，且起点一致；本次收口包含工作区已有的
+207 个暂存文件，主要为 ADR-034 的 pnpm 迁移、Python 开发启动器及对应测试和文档。
+首轮 `pnpm run check` 在源码审阅清单处失败：三份文档的字节摘要未同步；重新生成
+清单后该门禁通过，审阅状态不作人工批准。再次完整运行 `pnpm run check` 返回 1：
+lint、strict typecheck、276 文件 / 1,504 tests（5 文件 / 39 tests 条件跳过）、
+Level 1 架构门禁（428 modules / 1,513 dependencies）、264 operations Contract、
+许可证/SBOM/资产/迁移/服务/更新源/四语言/源码快照门禁、构建及 noVNC/SPICE bundle
+检查均通过；视觉/无障碍为 18 通过 / 10 失败，与既有记录一致，涉及顶部布局、
+landmark、旧选择器/视觉基线及 OP05 原生焦点。保留失败测试与门禁，不声明全量通过。
+日志保存在本地忽略目录 `out/main-push-20261027/`，Playwright 证据保存在
+`test-results/`；本次未增加 Windows/Linux 原生验证或正式发行验收结论。
+
+2026-10-26 按所有者“不再使用 bun，改为 pnpm”要求，新增 ADR-034 并完成工具链迁移。
+仓库不再包含 Bun：`bun.lock` 已删除，改为提交 `pnpm-lock.yaml`；workspace 定义、
+install-script 允许清单、依赖覆盖与两处已审补丁迁移到 `pnpm-workspace.yaml`
+（`allowBuilds` 只放行 electron、esbuild、node-pty、@serialport/bindings-cpp，
+其余显式拒绝，与原 Bun `trustedDependencies` 允许集合一致）；`packageManager`
+固定 pnpm@11.22.0，engines 改为 pnpm >=11.22.0 <12，`verifyDepsBeforeRun: false`
+保证 `pnpm run` 不隐式改动安装图。CI 用固定 commit 的 pnpm/action-setup v6.1.0
+替换 setup-bun，`bunx` 改为 `pnpm exec`，依赖审计改为
+`pnpm audit --json --registry=https://registry.npmjs.org`。TypeScript 入口改由
+Node 执行：`scripts/run-ts.mjs` 使用 Node 自带 TypeScript 支持启动，并通过
+`scripts/register-ts-resolver.mjs` 恢复源码使用的无扩展名相对导入；契约生成、
+开发启动器与可选 Linux FTP 容器 smoke 均走该路径；`packages/runtime` 改用
+`@xterm/headless` 发布的 ESM 入口，因为其 CommonJS 包无法向 Node ESM 暴露命名
+导出。依赖门禁改读 pnpm 图：组件索引、根许可证原文与生产 SBOM 由
+`pnpm licenses list --json --prod` 生成（报告结构与原 Bun 报告一致），已安装包根
+改为 `node_modules/.pnpm`；IronRDP 与 noVNC 来源门禁从 `pnpm-lock.yaml` 读取已审
+tarball integrity；独立快照审计改扫 `pnpm-lock.yaml`；可选 Linux FTP 容器 smoke
+改用固定 digest 的 `node:24.18.0-alpine` 镜像并以 Node 执行。产品运行时边界不变：
+Desktop Runtime 仍运行在 Electron 内嵌 Node，Core Runtime 仍禁止 import 任何
+Bun runtime API，架构门禁 `runtime-no-electron-or-bun` 作为纵深防御保留。直接依赖
+版本未变；pnpm 对少量传递依赖的解析与 Bun 不同，锁文件按主 npm registry 重新解析
+（本地镜像元数据会把 `@electron/get` 解析到 3.0.0，使 electron-builder 打包失败），
+组件索引、许可证原文、生产 SBOM、归属台账与源码审阅台账已按当前 pnpm 图重新生成。
+
+同轮修复 pnpm 迁移暴露的启动器信号清理缺口：pnpm 作为脚本包装器不会把 SIGTERM
+转发给开发服务器，旧启动器只终止直接子进程，导致 Vite 开发服务器与 Electron 残留
+并占用 5173 端口和单实例锁；Python 启动器改为记录并终止整个进程组，并在退出前
+补一次 SIGKILL 清理，连续两次 `dev` 端到端回归均通过且无残留进程。
+
+同轮按所有者“原 ts 脚本改为 python 脚本”要求，把开发启动器 `run.ts` 改写为
+`run.py`（Python 3 标准库）：`pnpm run dev` 现在执行 Python 脚本，不再需要
+TypeScript 运行时、打包器或实验性 Node loader；帮助文本移到共享资源
+`apps/desktop/src/main/command-line-help.json`，由 Desktop Main 构建内联，Python
+启动器读同一份字节，产品版本取自根 `package.json` 并新增
+`tests/unit/product-version.test.ts` 防止与共享产品版本漂移。`scripts/contracts.ts`
+按 ADR-034 保留 TypeScript：它是 Runtime 自身的 composition root，必须执行产品
+TypeScript 的路由与 schema 定义才能产出 OpenAPI 文档，改写为 Python 需要把该
+wiring 变成产品路由或在 Python 中重复 Runtime 组装，都会破坏 Contract 事实源。
+
+验证：`pnpm install --frozen-lockfile` 返回 0；lint、strict typecheck、275 文件 /
+1,503 tests（39 跳过）通过；Level 1 架构门禁 427 modules / 1,512 dependencies 通过；
+264 operations Contract 无漂移；组件、许可证、归属、原生、IronRDP、noVNC、spice、
+SBOM、资产、迁移、服务、更新源、退役名、四语言与源码快照门禁全部通过；
+`pnpm run build` 与隔离 `package:dir` 通过，产出 macOS arm64 目录包并通过打包布局
+检查。本轮未运行安装包安装、Windows/Linux 原生安装、签名、公证与正式发行验收，
+也不因此前失败；视觉/无障碍仍为 18 通过 / 10 失败，与 2026-10-11 留证一致。
+`pnpm run audit:dependencies` 仍以非零退出报告当前 advisory（hono、zod、electron、
+vite、ejs、semver 等），该结果来自 advisory 数据本身而非本轮工具链变更；本轮未
+通过放宽门禁、改写依赖或跳过审计来掩盖它。
 
 2026-10-11 按所有者再次“重新打包”要求，从当前工作区源码重新构建 macOS arm64
 `0.10.0`，包含最新 ADR-033 的 OSC 52 默认复制设置及已有 SSH 修复。
-`bun run build` 与隔离输出的 package wrapper 均返回 0，新产物位于
+`pnpm run build` 与隔离输出的 package wrapper 均返回 0，新产物位于
 `release/repack-20261011-DaWGYB/`。已生成并核验 packaged SPDX 与发行文件
 SHA-256 清单；`hdiutil verify` 和 `unzip -tq` 均返回 0，仅证明文件完整性。
 DMG 为 145,066,516 bytes，SHA-256
@@ -13,7 +76,7 @@ DMG 为 145,066,516 bytes，SHA-256
 ZIP 为 139,572,735 bytes，SHA-256
 `91585e97245255b75763842e646ec3cfe7b152580dffc656cb9359b53ee35983`。
 按 `PACKAGING.md` 中所有者针对纯重打包的既定要求，不重复开发阶段验收；
-本轮曾启动 `bun run check`，lint/typecheck 通过后，在 Vitest 阶段主动停止
+本轮曾启动 `pnpm run check`，lint/typecheck 通过后，在 Vitest 阶段主动停止
 （SIGTERM / 143），没有完整检查结果，不声明测试通过。未运行 Playwright、
 安装或功能验收，也不关闭此前视觉/无障碍失败。新包及文件校验成功后，将上一套
 `release/repack-20261011-DBLspR/` 移至同卷废纸篓，原路径已不存在，项目只保留
@@ -32,7 +95,7 @@ SPDX/hash 核验回执保存在 `out/repack-20261011-hfdHUo/`。真实用户数�
 明确禁用、稀疏更新及 Runtime 重启保留权限。实际 Electron PTY 两项流程 2/2 通过（11.6s）；
 当前会话按钮选择器同步至现有入口。隔离 macOS arm64 目录包 wrapper 返回 0，上述默认
 策略和既有显式读写/粘贴保护流程从包内 `app.asar`、独立 userData 与非源码工作目录
-运行，2/2 通过（16.7s）。完整 `bun run check` 返回 1：lint、typecheck、275 文件/
+运行，2/2 通过（16.7s）。完整 `pnpm run check` 返回 1：lint、typecheck、275 文件/
 1,503 tests、Level 1 架构（426 modules / 1,512 dependencies）、264 operations Contract、
 生成清单/四语言/源码快照及构建通过，5 文件/39 tests 条件跳过。视觉/无障碍 18 通过、
 10 失败，其中 9 项名称与此前留证的顶部布局/landmark/旧视觉基线失败一致；另一项
@@ -46,8 +109,8 @@ OP05 在普通窗口模式下因初始英文语言选择框未获得焦点失败
 
 2026-10-11 按所有者“重新打包”要求，从当前工作区源码重新构建 macOS arm64
 `0.10.0`，包含 ADR-032 的 SSH 同名主机覆盖确认功能及已有错误提示/删除语义修复。
-`bun run build` 与隔离输出的 package wrapper 均返回 0，新产物位于
-`release/repack-20261011-DBLspR/`。按既定纯重打包要求，未重跑 `bun run check`、
+`pnpm run build` 与隔离输出的 package wrapper 均返回 0，新产物位于
+`release/repack-20261011-DBLspR/`。按既定纯重打包要求，未重跑 `pnpm run check`、
 Vitest、Playwright、安装或功能测试；既有 9 项视觉/无障碍失败仍未关闭，历史开发
 验收不作为本次新包的重新测试证明。DMG 为 145,066,499 bytes，SHA-256
 `f757f11ac9753d6de47967eb9653712067002ea97e164c230866439fb063ec2c`；
@@ -72,7 +135,7 @@ Host ID/version，Runtime 同一事务校验 Host version、名称与 tree ETag�
 保持 pending，源码清单 1,354 文件，依赖和产品版本未改变。Runtime/API 定向
 24 tests 通过；真实 Electron 新增/更新流程 5/5 通过（7.1s）。隔离 macOS arm64
 目录包 wrapper 返回 0，包内确认取消、三种保存、两种并发及既有删除/错误反馈回归
-8/8 通过（17.7s），另留存包内弹窗截图检查。完整 `bun run check` 返回 1：lint、
+8/8 通过（17.7s），另留存包内弹窗截图检查。完整 `pnpm run check` 返回 1：lint、
 typecheck、275 文件/1,500 tests、Level 1 架构（426 modules / 1,512 dependencies）、
 264 operations Contract、生成清单/四语言/源码快照及构建通过；5 文件/39 tests 条件
 跳过。视觉/无障碍仍为相同的 19 通过、9 项既有顶部布局/landmark/旧视觉基线失败，
@@ -82,8 +145,8 @@ Windows/Linux 原生、签名、公证或正式发行验收声明。
 
 2026-10-10 按所有者“重新打包”要求，从当前工作区源码重新构建 macOS arm64
 `0.10.0`，包含 SSH 保存/连接错误语义和 ADR-031 删除主机后释放名称、保留历史快照
-的修复。`bun run build` 与隔离输出的 package wrapper 均返回 0，产物位于
-`release/repack-20261010-aTGf2p/`；按既定纯重打包要求，未重跑 `bun run check`、
+的修复。`pnpm run build` 与隔离输出的 package wrapper 均返回 0，产物位于
+`release/repack-20261010-aTGf2p/`；按既定纯重打包要求，未重跑 `pnpm run check`、
 Vitest、Playwright、安装或功能测试，之前记录的 9 项视觉/无障碍失败仍未关闭，
 历史开发验收不作为本次新包的重新测试证明。DMG 为 145,062,900 bytes，SHA-256
 `da8b56c3292c13168dd5aabab360308fb9872d0d9f41cfd2f8ae73fdc5c70eaa`；
@@ -104,7 +167,7 @@ ZIP 为 139,570,956 bytes，SHA-256
 定向 Host/历史/API 四文件 27 tests 通过；管理页删除及书签删除后原名重建的真实 Electron
 流程 2/2 通过（5.4s），历史地址与次数保持原值。隔离 macOS arm64 目录包 wrapper 返回 0，
 上述两项删除流程及原有同名/拒绝连接错误流程从包内运行，3/3 通过（10.8s）。本轮完整
-`bun run check` 返回 1：lint/typecheck、275 文件/1,492 tests 通过，5 文件/39 tests 条件
+`pnpm run check` 返回 1：lint/typecheck、275 文件/1,492 tests 通过，5 文件/39 tests 条件
 跳过；Level 1 架构（426 modules / 1,512 dependencies）、264 operation Contract、生成
 清单/四语言/源码快照及构建通过。视觉/无障碍仍为相同的 19 通过、9 项既有顶部布局/
 landmark 失败，不放宽门禁或标记全量通过。源码清单为 1,353 文件；证据在
@@ -126,7 +189,7 @@ SSH Contract 的固定校验字段，Client 保留 fieldErrors，UI 不显示校
 失败提示及重试在 200% 缩放下通过（5.4s）。隔离 macOS arm64 目录包 wrapper 返回 0，
 上述三项流程从包内 `app.asar`、非源码工作目录和独立 userData 运行，3/3 通过（17.2s）。
 测试后清理本轮临时目录包，不修改真实用户数据或替换用户安装。
-完整 `bun run check` 返回 1：lint/typecheck、275 文件/1,488 tests 通过，5 文件/
+完整 `pnpm run check` 返回 1：lint/typecheck、275 文件/1,488 tests 通过，5 文件/
 39 tests 条件跳过；Level 1 架构（426 modules / 1,511 dependencies）、264 operation
 Contract、生成清单/四语言/快照及构建均通过。视觉与无障碍 19 通过、9 失败，涉及本轮
 未改动的全宽顶部导航：旧 rail/titlebar 坐标、旧 pane 内按钮选择器和空窗格截图基线，
@@ -138,7 +201,7 @@ Contract、生成清单/四语言/快照及构建均通过。视觉与无障碍 
 
 2026-10-10 按所有者要求纯重新打包 macOS arm64 0.10.0，从当前 `86d286f` 源码
 生成本地 Mac 包，包含全宽顶部导航、AI 命令审核/连续执行及待审批交互改动。
-`bun run build` 与打包 wrapper 均返回 0；按纯重新打包约定，未重跑 `bun run check`、
+`pnpm run build` 与打包 wrapper 均返回 0；按纯重新打包约定，未重跑 `pnpm run check`、
 单元、桌面、视觉/无障碍或 DMG 安装测试，不把历史 Windows 或 Mac 验证记成本轮
 新证据，也不关闭此前已记录的 Windows 全量门禁失败。新 DMG、ZIP、目录包、
 包级 SPDX 与 SHA-256 清单位于 `release/repack-20261010-TXeYVM/`。
@@ -156,18 +219,18 @@ ZIP（139,562,926 bytes）SHA-256 为
 返回 Already up to date，无远端新增提交或合并冲突；保留现有 AI 自动审核、
 连续执行、审批 UI、全宽顶部导航及 Windows ownership-store 修正等本地改动。
 本轮未修改产品代码、依赖或测试断言，按普通提交和推送保留已有主线历史。
-`bun run check` 返回 1：lint/typecheck 通过，279 文件中 253 通过、13 失败、
+`pnpm run check` 返回 1：lint/typecheck 通过，279 文件中 253 通过、13 失败、
 13 条件跳过；1,403 tests 通过、30 失败、72 跳过。30 条失败记录与此前
 `out/repack-mv0x01l5/check.log` 完全一致，仍为已有 Windows 权限、POSIX
 路径/命令/Unix socket 及 ownership 容量超时等问题，不标记全量门禁通过。
 独立 Level 1 架构（425 modules / 1,506 dependencies）、264 operation Contract、
-组件/许可/归属/SPDX、四语言、源码清单/快照及 `bun run build` 检查通过；
+组件/许可/归属/SPDX、四语言、源码清单/快照及 `pnpm run build` 检查通过；
 本轮日志为 `out/git-sync-20261009/`。本次仅同步源码，不新增安装包、
 Mac/Linux 原生验收、签名、公证或正式发行声明。
 
 2026-10-09 按所有者再次“重新打包”要求，用当前源码生成未签名 Windows x64
 0.10.0 NSIS 安装程序，包含最新全宽顶部导航、待审批交互与命令审核策略 v2。
-本轮未修改产品代码或依赖。`bun run build`、打包 wrapper、包级 SPDX、安装包
+本轮未修改产品代码或依赖。`pnpm run build`、打包 wrapper、包级 SPDX、安装包
 SHA-256 清单及包内 pending 更新源记录校验均返回 0；独立 Level 1 架构检查
 通过（425 modules / 1,506 dependencies），264 operation Contract 检查通过。
 新安装程序、目录包、SPDX 和 hash manifest 位于
@@ -179,7 +242,7 @@ SHA-256 清单及包内 pending 更新源记录校验均返回 0；独立 Level 
 新包及产物校验成功后，旧 `auto-review-v2-20261009/`、
 `full-width-navigation-20261009/` 与 `repack-20261009-windows-x64-mv0rf8bl/`
 整套产物移入 Windows 回收站，原目录已确认不存在；其下文记录保留为历史证据。
-日志保存在 `out/repack-mv0x01l5/`。按仓库要求执行的 `bun run check` 返回 1：
+日志保存在 `out/repack-mv0x01l5/`。按仓库要求执行的 `pnpm run check` 返回 1：
 lint/typecheck 通过；279 文件中 253 通过、13 失败、13 条件跳过；1,403 tests
 通过、30 失败、72 跳过。失败仍涉及 Windows symlink 权限、POSIX 命令/路径/
 Unix socket/权限断言及 ownership 容量超时，完整日志为该目录的 `check.log`。
@@ -203,7 +266,7 @@ Unix socket/权限断言及 ownership 容量超时，完整日志为该目录的
 `d989e33684d46945a09b25c4e3739ce38b569a6e535843f21ff8648b2c63643d`，
 安装程序 SHA-256 为
 `68021126671252f74605f36019f722844483cf423fb5b9c4b2f99e2097a4f231`。
-最终 `bun run check` 返回 1：lint/typecheck 通过；279 文件中 252 通过、14 失败、
+最终 `pnpm run check` 返回 1：lint/typecheck 通过；279 文件中 252 通过、14 失败、
 13 跳过；1,402 tests 通过、31 失败、72 跳过。保留已有 30 项 Windows 权限/POSIX
 等失败；另一次 AI context Runtime HTTP 请求不可用，独立复跑该三项集成测试通过。
 中间全量运行的 model HTTP/MCP 临时 bad-port 失败也单独复跑七项通过，原日志保留。
@@ -226,7 +289,7 @@ PowerShell 查询、文件写入、后续查询三步无需审批且文件确实
 Electron source 批准/拒绝两项流程 2/2 通过（38.9s），现在自动步骤包含 PowerShell
 查询和字面文件写入；最后删除才提示。构建、Level 1 架构（425 modules / 1,506
 dependencies）、264 operation Contract 通过，保留已有用户修改和旧发行产物。
-最终 `bun run check` 返回 1：lint/typecheck 通过；253 文件、1,403 tests 通过，
+最终 `pnpm run check` 返回 1：lint/typecheck 通过；253 文件、1,403 tests 通过，
 13 文件、30 tests 失败，13 文件、72 tests 跳过（279 文件、1,505 tests）。
 新增回归无失败；现有 Windows 权限、POSIX 路径/命令/Unix socket 与 ownership
 容量问题保留，未删测试或放松门禁。日志为 `out/auto-review-v2-check.log`。
@@ -243,7 +306,7 @@ Windows System32 与其内置 WindowsPowerShell，未依赖系统 Pi CLI。
 
 2026-10-09 按所有者再次“重新打包”要求，用当前源码生成未签名 Windows x64
 0.10.0 NSIS 安装程序，包含最新待审批弹窗、确认/拒绝交互及 ADR-030 工作模式。
-本轮未修改产品代码或依赖。`bun run build`、打包 wrapper、包级 SPDX、安装包
+本轮未修改产品代码或依赖。`pnpm run build`、打包 wrapper、包级 SPDX、安装包
 SHA-256 清单及包内 pending 更新源记录校验均返回 0；独立 Level 1 架构检查
 通过（424 modules / 1,505 dependencies），264 operation Contract 检查通过。
 新安装程序、目录包、SPDX 和 hash manifest 位于
@@ -255,7 +318,7 @@ SHA-256 清单及包内 pending 更新源记录校验均返回 0；独立 Level 
 新包及产物校验成功后，旧 `approval-ui-20261009/` 与
 `repack-20261009-windows-x64-mv0kl5z4/` 整套产物移入 Windows 回收站，原目录
 已确认不存在；其下文记录保留为历史证据。日志保存在 `out/repack-mv0rf8bl/`。
-按仓库要求执行的 `bun run check` 返回 1：lint/typecheck 通过；279 文件中
+按仓库要求执行的 `pnpm run check` 返回 1：lint/typecheck 通过；279 文件中
 253 通过、13 失败、13 条件跳过；1,391 tests 通过、30 失败、72 跳过。
 失败仍涉及 Windows symlink 权限、POSIX 命令/路径/Unix socket/权限断言及
 ownership 容量超时，完整日志为该目录的 `check.log`。本次未运行新包桌面流程
@@ -272,7 +335,7 @@ ownership 容量超时，完整日志为该目录的 `check.log`。本次未运�
 完整命令/目录、关闭再打开、卡片展开和 Tab 操作；批准继续到最终回复，拒绝停止。
 实际界面截图为 `out/ai-approval-desktop-*.png`。构建、typecheck、Renderer 本地化
 检查、Level 1 架构（424 modules / 1,505 dependencies）及 264 operation Contract 通过。
-按要求执行 `bun run check` 返回 1：lint/typecheck 通过；279 文件中 253 通过、13 失败、
+按要求执行 `pnpm run check` 返回 1：lint/typecheck 通过；279 文件中 253 通过、13 失败、
 13 跳过；1,391 tests 通过、30 失败、72 跳过。失败仍为现有 Windows 权限、POSIX
 命令/路径/Unix socket 和 ownership 容量等；日志为 `out/ai-approval-ui-check.log`。
 另复跑旧工作区桌面测试，在进入审批之前的标签单行布局断言失败，未删除断言。
@@ -289,7 +352,7 @@ ownership 容量超时，完整日志为该目录的 `check.log`。本次未运�
 
 2026-10-09 按所有者“重新打包”要求，用当前源码重新生成未签名 Windows x64
 0.10.0 NSIS 安装程序，包含 ADR-030 的 AI 自动审核与连续执行改动；本轮未修改
-产品代码或依赖。`bun run build`、打包 wrapper、包级 SPDX、安装包 SHA-256
+产品代码或依赖。`pnpm run build`、打包 wrapper、包级 SPDX、安装包 SHA-256
 清单及包内 pending 更新源记录校验均返回 0。独立 Level 1 架构检查通过
 （424 modules / 1,504 dependencies），264 operation Contract 检查通过。
 新安装程序、目录包、SPDX 和 hash manifest 位于
@@ -300,7 +363,7 @@ ownership 容量超时，完整日志为该目录的 `check.log`。本次未运�
 `a3c68a2000cd7ba672605da52aafe2f7651611de3f9a9f0e3ac1a071b7a53b7b`。
 新包及产物校验成功后，旧 `repack-20261009-windows-x64-mv0ejud9/` 整套产物
 移入 Windows 回收站，原目录已确认不存在；其下文记录保留为历史证据。
-日志保存在 `out/repack-mv0kl5z4/`。按仓库要求执行的 `bun run check` 返回 1：
+日志保存在 `out/repack-mv0kl5z4/`。按仓库要求执行的 `pnpm run check` 返回 1：
 lint/typecheck 通过；279 文件中 253 通过、13 失败、13 条件跳过；1,391 tests
 通过、30 失败、72 跳过。失败仍涉及 Windows symlink 权限、POSIX 命令/路径/
 Unix socket/权限断言及 ownership 容量超时，完整日志为该目录的 `check.log`。
@@ -330,7 +393,7 @@ SSH 决定额外绑定实际主机、用户名及连接执行代次，同 ID 重
 包内 reviewer MIT 许可、第三方通知、组件/许可清单及 SPDX 与当前源码逐字节一致。
 Level 1 架构（424 modules / 1,504 dependencies）、264 operation Contract、
 来源哈希、许可/SPDX、本地化、源码卫生与构建检查通过。
-最终 `bun run check` 返回 1：lint/typecheck 通过；279 文件中 254 通过、13 失败、
+最终 `pnpm run check` 返回 1：lint/typecheck 通过；279 文件中 254 通过、13 失败、
 12 条件跳过；1,392 tests 通过、30 失败、71 跳过。残留为原有 Windows 权限、
 POSIX 命令/Unix socket/路径断言及 ownership 容量超时等，未删除测试或放松门禁；
 完整日志为 `out/auto-review-check-completed.log`。此前 Windows 基线为 31 项失败，
@@ -346,7 +409,7 @@ POSIX 校验 group/other 权限位，Windows 沿用应用数据目录的 ACL，�
 symlink、单硬链接及适用的 owner 校验。新增 store 硬链接拒绝和 POSIX 私有权限
 回归；Windows 定向启动/重开/硬链接拒绝 3/3 通过，Runtime 历史与协议所有权
 流程通过。POSIX 权限新增用例在 Windows 按平台条件跳过，不宣称已在 Mac/Linux
-复验。`bun run build` 和打包 wrapper 返回 0，Level 1 架构（421 模块 / 1,493
+复验。`pnpm run build` 和打包 wrapper 返回 0，Level 1 架构（421 模块 / 1,493
 依赖）及 264 operation Contract 检查通过，无依赖版本或架构边界变化。
 
 未签名 NSIS 安装程序、目录包、包级 SPDX 与 SHA-256 清单位于
@@ -360,7 +423,7 @@ symlink、单硬链接及适用的 owner 校验。新增 store 硬链接拒绝�
 integrity 和冷启动通过；包内原生模块/无 foreign prebuild、四语言 runtime locale、
 About 法律文本和默认 PowerShell 7 四项 packaged 检查通过。
 
-最终 `bun run check` 返回 1：lint/typecheck 通过，274 文件中 249 通过、13 失败、
+最终 `pnpm run check` 返回 1：lint/typecheck 通过，274 文件中 249 通过、13 失败、
 12 条件跳过；测试 1,346 通过、31 失败、71 跳过。剩余失败涉及 Windows symlink
 权限、POSIX chmod/Unix socket 或路径断言、跨平台命令和 ownership 容量测试
 10 秒超时，详细证据保留在 `out/packaging-20261009/`。独立的 Windows close-button
@@ -382,7 +445,7 @@ Windows/Linux 原生验收声明。
 
 2026-10-07 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的共用
 侧栏再次加宽，以及 AI 模型选择独占一行、完整名称显示和长名称换行。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261007-qiUD7Y/`。
 DMG（145,088,891 bytes）SHA-256 为
@@ -409,7 +472,7 @@ AI 模型选择独占一行，模式置于下一行；复用原生 select 的选
 独立临时 Mac arm64 目录包打包返回 0，在临时 cwd、隔离 user-data 与受限 PATH
 下完成模型名称/键盘、三档侧栏、原生按钮及灰色无障碍四项验证，4/4 通过
 （21.4s），确认从 app.asar 运行；临时验证包已清理。最终
-`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：269 文件 / 1,408 tests 通过，
+`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：269 文件 / 1,408 tests 通过，
 5 文件 / 38 条件项跳过；28 条视觉/无障碍流程通过（2.1m）。架构、264 operation
 契约、许可/SBOM、本地化、源码快照及构建全部通过；来源台账同步为 1,333 文件，
 人工语言/权利签收不自动提升。本轮不替换既有 release 安装产物，不新增
@@ -417,7 +480,7 @@ Windows/Linux 原生或正式发行声明。
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的共用
 侧栏加宽、窄侧栏标题原生按钮避让，以及 AI 输入区边缘裁切修复。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-deZLSI/`。
 DMG（145,089,601 bytes）SHA-256 为
@@ -441,7 +504,7 @@ ZIP（139,541,100 bytes）SHA-256 为
 预览位于忽略的 `out/wider-sidebar-preview/`。独立临时 Mac arm64 目录包打包
 返回 0，在临时 cwd、隔离 user-data 与受限 PATH 下完成灰色/无障碍、原生按钮
 缩放与三档共用侧栏三项验证，3/3 通过（20.1s），确认从 app.asar 运行；临时
-验证包已清理。最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：269 文件 /
+验证包已清理。最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：269 文件 /
 1,408 tests 通过，5 文件 / 38 条件项跳过；27 条视觉/无障碍流程通过（2.1m）。
 架构、264 operation 契约、许可/SBOM、本地化、源码快照及构建全部通过；来源
 台账同步为 1,333 文件，人工语言/权利签收不自动提升。
@@ -449,7 +512,7 @@ ZIP（139,541,100 bytes）SHA-256 为
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的活动栏
 本地化名称提示，以及添加 SSH 主机弹窗保持当前页面和侧栏状态的调整。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-aDlpxS/`。
 DMG（145,089,696 bytes）SHA-256 为
@@ -479,7 +542,7 @@ ZIP（139,540,658 bytes）SHA-256 为
 Mac arm64 目录包重新打包返回 0，在临时 cwd、隔离 user-data 与受限 PATH 下完成
 弹窗、活动栏/重启、三档侧栏与含名称气泡的无障碍五项验证，5/5 通过（19.5s），
 确认从 app.asar 运行。临时验证包已清理，日志和预览位于忽略的
-`out/activity-tooltip-preview/`。最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check`
+`out/activity-tooltip-preview/`。最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check`
 返回 0：269 文件 / 1,408 tests 通过，5 文件 / 38 条件项跳过；27 条视觉/无障碍
 流程通过（2.0m），架构、264 operation 契约、许可/SBOM、本地化、源码快照及
 构建全部通过。来源台账同步为 1,333 文件，人工语言/权利签收不自动提升。
@@ -487,7 +550,7 @@ Mac arm64 目录包重新打包返回 0，在临时 cwd、隔离 user-data 与�
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的功能
 导航仅侧栏化、普通冷启动单本地终端，以及标签关闭和语言并发保存修复。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-HQDACh/`。
 DMG（145,020,334 bytes）SHA-256 为
@@ -516,7 +579,7 @@ AI 配置弹窗。旧非设置功能主面布局恢复为终端面；普通冷�
 旧主面布局恢复、AI 流式/审批、Pi Vault、入口顺序、三档侧栏、原生按钮避让、
 灰色/无障碍与语言并发保存十项验证，10/10 通过（43.1s），确认从 app.asar 运行。
 临时验证包在验收后清理，日志和主机侧栏预览保留在忽略的
-`out/sidebar-only-preview/`。最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check`
+`out/sidebar-only-preview/`。最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check`
 返回 0：269 文件 / 1,408 tests 通过，5 文件 / 38 条件项跳过；27 条视觉/无障碍
 流程通过（2.0m），架构、264 operation 契约、许可/SBOM、本地化、源码快照及
 构建全部通过。来源台账同步为 1,333 文件，人工语言/权利签收不自动提升。本轮
@@ -524,7 +587,7 @@ AI 配置弹窗。旧非设置功能主面布局恢复为终端面；普通冷�
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的 AI
 助手与主机共用侧栏、活动栏顺序/入口调整，以及窄侧栏输入区裁切修复。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-0yoROt/`。
 DMG（145,020,055 bytes）SHA-256 为
@@ -548,7 +611,7 @@ ZIP（139,509,850 bytes）SHA-256 为
 活动栏测试改为直接使用保留的添加书签入口。四项截图流程通过（9.2s），18 张
 受影响的基线已更新并复查。窄侧栏复查修复聊天容器最小高度导致输入区裁切，
 允许内部内容滚动并补齐输入框及发送按钮完整可见断言，源码两项复验通过
-（5.8s）。最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：269 文件 /
+（5.8s）。最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：269 文件 /
 1,398 tests 通过，5 文件 / 38 条件项跳过；26 条视觉/无障碍流程通过（1.9m），
 架构、264 operation 契约、许可/SBOM、本地化、源码快照及构建全部通过。
 独立临时 Mac arm64 目录包重新打包返回 0，在临时 cwd、隔离 user-data 与受限
@@ -560,7 +623,7 @@ PATH 下完成 AI 流式/工作区、活动栏顺序/重启、Pi Vault、侧栏�
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的 AI
 可见流式输出、默认本地终端启动恢复，以及布局与标签偏好并发保存冲突修复。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-kGlQ0r/`。
 DMG（145,016,740 bytes）SHA-256 为
@@ -581,7 +644,7 @@ SQLite 最终消息，取消保留已生成文字。新增公共事件 Zod Schem
 编号并激活；初次启动和 Renderer 刷新不重复新建，显式启动会话及 Runtime
 崩溃后的失效快照继续按既有规则处理。无新增依赖或业务边界变化。
 Runtime 流式/恢复/取消及会话回归三文件 10/10 通过。最终
-`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：269 文件 / 1,396 tests
+`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：269 文件 / 1,396 tests
 通过，5 文件 / 38 条件项跳过；26 条视觉/无障碍流程通过（2.1m），架构、264
 operation 契约、许可/SBOM、本地化、源码快照及构建检查全部通过。最终八项
 桌面回归 8/8 通过（29.4s），覆盖流式可见增量、切换标签/侧栏恢复、取消保留
@@ -600,7 +663,7 @@ operation 契约、许可/SBOM、本地化、源码快照及构建检查全部�
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的 AI
 聊天/工作双模式、输入框 `@` 技能菜单、Pi 技能加载及模型协议复用清理。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-Dn2zbn/`。
 DMG（145,008,222 bytes）SHA-256 为
@@ -631,7 +694,7 @@ Runtime 以 `mode` 决定命令工具可用性，旧客户端省略时默认 cha
 独立无 Git 源码副本 frozen 安装和 Pi 技能引擎构建通过。桌面定向已覆盖四语言
 审阅、选区解释、脚本插入、工具卡和附件；新增技能菜单无障碍检查捕获并修复
 textarea 角色及滚动参数/结果的键盘焦点问题。
-最终完成验证：`bun run check` 返回 0，268 文件 / 1,394 tests 通过，5 文件 /
+最终完成验证：`pnpm run check` 返回 0，268 文件 / 1,394 tests 通过，5 文件 /
 38 条件项跳过，另有 26 条视觉/无障碍流程通过。七项既有桌面 AI 流程通过；
 新增模式/技能流程最终通过，覆盖键盘/IME/光标、200% 点击与零 axe violation。
 菜单不透明灰色背景及选中小字对比度已修正。隔离的未签名 Mac arm64 目录包
@@ -652,7 +715,7 @@ Mac 包验证均已通过，临时独立源码及 Mac 目录包在验证后清�
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的标签
 驱动 AI 助手工作区、普通聊天与审批后工作区命令执行，以及最新边栏比例调整。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-A80PEt/`。
 DMG（145,015,840 bytes）SHA-256 为
@@ -687,7 +750,7 @@ Pi Vault 配置和三种 CLI 焦点重绘复制，5/5 通过。本轮不更新�
 截图复查补齐右侧聊天“模型/任务”标签的单行布局和真实显示断言；最终源码
 聊天、Pi 与灰色/无障碍三项 3/3 通过（11.4s），最终 Mac 五项 5/5 通过（24.8s）。
 预览保留在忽略的 `out/ai-workspace-preview/workspace.png`，临时 Mac 测试包已清理。
-最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：267 文件 / 1,390 项
+最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：267 文件 / 1,390 项
 通过，5 文件 / 38 项条件跳过；26 项视觉/无障碍通过（1.9m），架构、263
 operation 契约、许可/SBOM、2,605 key 四语言台账、源码快照与构建全部通过。
 来源台账同步为 1,312 文件；完成结果同步至 ADR-028，未提升人工语言/权利签收状态。
@@ -710,7 +773,7 @@ AI 助手及终端信息辅助面由 320px 加宽为 360px。不超过 1100px �
 上述三项布局/缩放/无障碍及三种 CLI 选区复制，6/6 通过（23.7s）。本轮不更新
 release 安装产物或真实用户数据，不新增依赖、架构、Windows/Linux 原生或正式
 发行声明。工作区及窄窗口预览保留在忽略的 `out/layout-preview/`。
-最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：264 文件 / 1,376 项
+最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：264 文件 / 1,376 项
 通过，5 文件 / 38 项条件跳过；26 项视觉/无障碍通过（1.9m），架构、262
 operation 契约、许可/SBOM、本地化、快照与构建检查通过。来源台账同步为
 1,304 文件，人工审查状态不提升；临时 Mac 测试包验证后已清理。
@@ -726,7 +789,7 @@ operation 契约、许可/SBOM、本地化、快照与构建检查通过。来�
 源码外未签名 Mac 目录包在临时 cwd、隔离 user-data 与受限 PATH 下验证
 辅助面名称和 Pi 入口两项流程，2/2 通过（8.6s）。当前 release 安装产物没有
 被本轮测试包替换；不新增 Windows/Linux 原生或正式发行声明。
-最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：264 文件 / 1,376 项
+最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：264 文件 / 1,376 项
 通过，5 文件 / 38 项条件跳过；26 项视觉/无障碍通过（1.9m），架构、262
 operation 契约、许可/SBOM、本地化、快照与构建检查通过。来源台账同步为
 1,304 文件，人工审查状态不提升；临时 Mac 测试包验证后清理，更新后的工作区
@@ -734,7 +797,7 @@ operation 契约、许可/SBOM、本地化、快照与构建检查通过。来�
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的中性
 深灰色终端/桌面背景，以及取消窗口加载时误报 “Axterm could not start” 的修复。
-`bun run build` 与打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、
+`pnpm run build` 与打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、
 视觉/无障碍或 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、
 ZIP、目录包、包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-iTigD8/`。
 DMG（145,004,532 bytes）SHA-256 为
@@ -769,15 +832,15 @@ Electron `loadURL` 拒绝为 `ERR_ABORTED` / `errno -3`，原 Main 将取消加�
 目录包在临时 cwd、隔离 user-data 和受限 PATH 中验证取消加载、灰色界面及
 两组主题管理流程 4/4 通过（10.6s）。本轮无新增依赖或架构/业务边界变化，
 当前安装版及真实用户数据未修改，不新增 Windows/Linux 原生或正式发行声明。
-最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：264 文件 / 1,376 项
+最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：264 文件 / 1,376 项
 通过，5 文件 / 38 项条件跳过；26 项视觉/无障碍通过（1.9m）。架构、262
 operation 契约、许可/SBOM、本地化、快照与构建检查通过；来源台账为 1,304
 文件，人工审查状态不提升。临时 Mac 测试包验证后清理，灰色界面预览保留在
 忽略的 `out/gray-preview/`；当前 release 安装产物没有被本轮测试包替换。
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的右侧
-活动栏、上下文侧栏布局及交互式 CLI 右键选区复制修复。`bun run build` 与
-打包 wrapper 均返回 0；未重跑 `bun run check`、单元、桌面、视觉/无障碍或
+活动栏、上下文侧栏布局及交互式 CLI 右键选区复制修复。`pnpm run build` 与
+打包 wrapper 均返回 0；未重跑 `pnpm run check`、单元、桌面、视觉/无障碍或
 DMG 安装测试，不把开发阶段既有验证记成本轮新证据。新 DMG、ZIP、目录包、
 包级 SPDX 与 SHA-256 清单位于 `release/repack-20261006-dDFDCc/`。
 DMG（145,000,216 bytes）SHA-256 为
@@ -801,7 +864,7 @@ ZIP（139,493,901 bytes）SHA-256 为
 新增回归及既有终端搜索/菜单流程在源码和源码外未签名 Mac 目录包各 4/4 通过。
 测试包使用临时 cwd、隔离 user-data 与受限 PATH；本轮仅修改 Renderer 交互和
 测试，不新增依赖、业务 IPC、Runtime/Contract 或架构变化。
-最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：263 文件 / 1,369 项
+最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：263 文件 / 1,369 项
 通过，5 文件 / 38 项条件跳过；25 项视觉/无障碍通过（1.9m）。架构、契约、
 许可/SBOM、本地化、快照与构建检查通过；来源台账为 1,302 文件，人工审查
 状态不提升。临时 Mac 测试包验证后清理，本轮不新增 Windows/Linux 原生验收
@@ -822,15 +885,15 @@ AI 和终端信息；窗口按钮回归覆盖 800/1280/1440px 与 0.5/1/2 倍缩
 与失败后重试；四组视觉基线更新用例通过。最终未签名 Mac 目录包在源码外运行
 相同三项回归 3/3 通过（17.6s），41 个 Renderer JS/CSS 制品与当前构建逐字节
 一致。临时测试包验证后清理，原有正式打包记录和真实用户数据保留。
-最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：263 文件 / 1,369 项
+最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：263 文件 / 1,369 项
 通过，5 文件 / 38 项条件跳过；25 项视觉/无障碍通过（1.9m），含此前失败的
 连接编辑流程。架构、262 operation 契约、许可/SBOM、本地化、快照与构建检查
 通过，来源台账保持 1,301 文件；人工审查状态不提升。
 本轮为 Renderer 布局修改，保留 Level 1 业务和安全边界；没有新增依赖。
 
 2026-10-06 按所有者要求纯重新打包 macOS arm64 0.10.0，包含当前源码的 Pi AI
-引擎、厂商/模型目录和配置接入。`bun run build` 与打包 wrapper 均返回 0；
-未重跑 `bun run check`、单元、桌面、视觉/无障碍或 DMG 安装测试，不把既有
+引擎、厂商/模型目录和配置接入。`pnpm run build` 与打包 wrapper 均返回 0；
+未重跑 `pnpm run check`、单元、桌面、视觉/无障碍或 DMG 安装测试，不把既有
 开发验证记成本轮新证据。新 DMG、ZIP、目录包、包级 SPDX 与 SHA-256 清单位于
 `release/repack-20261006-UkxUgf/`。DMG（145,000,081 bytes）SHA-256 为
 `4b893c63f9f11137d2e857153e30b5ddd4f7dde92d8aa50e8880ba39fee365f5`；
@@ -877,7 +940,7 @@ Bun workspace、产品锁文件和构建/打包输入不变，Architecture Gate 
 子模块 path/URL、160000 gitlink、对象连通与临时空仓库的远程初始化均通过；
 新副本固定提交和许可证字节一致，两份上游工作树干净。首次完整检查中，既有
 四语言设置恢复测试的复选框重试断言失败；该用例定向复跑 1/1 通过，未修改
-产品代码、测试或门禁后，完整 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check`
+产品代码、测试或门禁后，完整 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check`
 复跑返回 0：261 文件 / 1,350 项通过、5 文件 / 38 项条件跳过，24 项视觉/无障碍
 通过（1.8m）；392 模块 / 1,426 依赖、261 operation、来源/许可/本地化/
 snapshot/构建检查通过。来源台账刷新为 1,027 个文件，人工审查状态不提升。
@@ -894,8 +957,8 @@ snapshot/构建检查通过。来源台账刷新为 1,027 个文件，人工审�
 后续纯重新打包直接构建/打包、不重跑开发阶段测试，成功后只保留最新一套；
 打包说明已同步。本轮未修改产品代码或依赖，未运行功能、安装或平台测试。
 
-2026-10-05 按所有者要求执行纯重新打包：仅运行 `bun run build` 与
-`scripts/package-desktop.mjs --output`，两者返回 0；未重跑 `bun run check`、
+2026-10-05 按所有者要求执行纯重新打包：仅运行 `pnpm run build` 与
+`scripts/package-desktop.mjs --output`，两者返回 0；未重跑 `pnpm run check`、
 单元、桌面、视觉/无障碍或 DMG 安装测试，不把开发阶段已有证据记成本轮复验。
 从当前工作区生成的 macOS arm64 0.10.0 DMG、ZIP、目录包、包级 SPDX 与
 SHA-256 清单位于 `release/repack-20261005-iNsMjb/`，旧制品和真实用户数据保留。
@@ -910,7 +973,7 @@ Windows/Linux 原生验收或正式发行声明。
 拼音组合输入退格修复、独立“添加已保存连接”入口与原生文件夹拖放。
 未修改产品代码或依赖，旧安装包与真实用户数据保留。新 DMG、ZIP、目录包、
 包级 SPDX 和安装包 SHA-256 清单位于 `release/repack-20261005-oVgmz3/`。
-打包前 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：261 文件 /
+打包前 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：261 文件 /
 1,350 项通过、5 文件 / 38 项条件跳过，24 项视觉/无障碍通过（1.8m）；
 392 模块 / 1,426 依赖、261 operation、来源/许可/本地化/snapshot/构建检查通过。
 48 个包内编译文件与本轮通过完整检查的构建逐字节一致，ZIP 完整性通过。
@@ -940,7 +1003,7 @@ DEL（127）或 BS（8）。修复版覆盖两种退格配置、缺失 isComposi
 候选导航、Enter/Shift+Enter、确认后尾随按键、取消后普通退格及真实 PTY 文件
 结果；Chromium 原生组合输入接口提交“已输入”和“中文”，组合期间控制字节为零。
 八项按键单元测试和四项桌面旅程通过（19.2s），包含终端配置与命令建议既有
-行为。`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：261 文件 / 1,350 项
+行为。`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：261 文件 / 1,350 项
 通过，5 文件 / 38 项条件跳过，24 项视觉/无障碍通过（1.8m）；392 模块 /
 1,426 依赖、261 operation、来源/许可/本地化/snapshot/构建检查通过。
 新未签名 Mac 目录包复制到源码外独立位置，在受限 PATH、临时 cwd 和隔离
@@ -964,7 +1027,7 @@ ADR-026 先于实现记录极小的本地 preload 元数据 accessor；没有新
 中文/空格/引号/Shell 特殊字符目录完整路径、本地目录加载/替换及授权清理。
 测试使用真实磁盘目录作为 Chromium 原生拖放输入，不使用伪造路径或产品测试开关。
 四项视觉旅程通过（10.5s），十八张受影响自有基线已核对更新，比较阈值未变。
-`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：261 文件 / 1,345 项通过、
+`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：261 文件 / 1,345 项通过、
 5 文件 / 38 项条件跳过，24 项视觉/无障碍通过（1.8m）；392 模块 / 1,426 依赖、
 261 operation 和来源/许可/本地化/snapshot/构建检查通过。修正相关旅程的精确
 分组选择器和书签搜索 status 所属范围，未删除测试或减少断言。
@@ -980,7 +1043,7 @@ SHA-256 同为 `fd60c0212916e7b8c45ea92c82b15522b337ecb120a82a41f67bf7ee03a8f380
 包含最新顶栏避让与固定书签入口，未修改产品代码或依赖。旧 `release/` 制品
 及其验收记录保留，新 DMG、ZIP、目录包、包级 SPDX 和安装包 SHA-256 清单
 位于 `release/repack-20261005-vL1hlx/`。打包前
-`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：260 文件 / 1,332 项通过，
+`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：260 文件 / 1,332 项通过，
 5 文件 / 38 项条件跳过，24 项视觉/无障碍通过（1.8m），架构、261 operation、
 来源/许可/本地化/snapshot/构建检查通过。48 个包内编译文件与本轮通过检查
 的构建逐字节一致；DMG CRC 与 ZIP 完整性通过。新 DMG 只读挂载并复制到
@@ -1001,7 +1064,7 @@ listener 与 observer 在卸载时清理。未修改 Host、Runtime、Contract �
 新增原生 Mac 几何回归已在旧构建复现重叠；新构建覆盖 800×580、1280×800、
 1440×900 及 50%/100%/200% 缩放的 45 个工作区/终端/设置场景，通过（5.3s）。
 三项桌面与四项视觉旅程通过（13.5s），核对两张原生尺寸截图并更新一张受影响
-自有基线，比较阈值未变。`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：
+自有基线，比较阈值未变。`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：
 260 文件 / 1,332 项通过、5 文件 / 38 项条件跳过，24 项视觉/无障碍通过（1.8m），
 391 模块 / 1,425 依赖、261 operation 与来源/许可/本地化/snapshot/构建检查通过。
 新未签名 Mac 目录包复制到源码外独立位置，在受限 PATH/隔离数据目录下两项
@@ -1015,7 +1078,7 @@ SHA-256 同为 `0cacee2773983d0b9e1d32c1b994b0afed86551725d4b9b497504845b2cd3bb9
 设置中的书签行改为固定显示并保留排序。旧配置未勾选书签时在显示层补回，
 不修改原配置或用户数据；仅设置入口仍可选择隐藏。书签列表及连接流程保持
 可用，同步、组件和隧道继续从设置进入。四文件 / 十八项单元、两项桌面旅程
-通过（6.3s）；`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：260 文件 /
+通过（6.3s）；`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：260 文件 /
 1,332 项通过、5 文件 / 38 项条件跳过，23 项视觉/无障碍通过（1.7m），391 模块 /
 1,425 依赖、261 operation 与来源/许可/本地化/snapshot/构建检查通过。
 新未签名 Mac 目录包复制到源码外独立位置，在受限 PATH/隔离数据目录下两项
@@ -1038,7 +1101,7 @@ SHA-256 同为 `e74ae3d2d7a05010554831968744676b1203191f3d80c0c060a57ab51ef0a96a
 独立副本的 `app.asar` 与目录包一致，SHA-256 为
 `68182a4cbf096b60bd9d5f42eed5e0fc0c5a12e26864c9b5e8e9b9eaaa2eea28`。
 制品及日志位于源码外 `axterm-local-opt-artifacts/2026-10-05/sidebar-minimal/`。
-`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：260 文件 / 1,331 项
+`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：260 文件 / 1,331 项
 通过、5 文件 / 38 项条件跳过，23 项视觉/无障碍通过（1.7m），391 模块 /
 1,425 依赖、261 operation 与来源/许可/本地化/snapshot/构建检查通过。
 四语言各 42 个导航 key，无缺失/闲置项；核心目录仍为每语言 2,593 项，
@@ -1059,7 +1122,7 @@ Host 或用户数据目录。五文件 / 二十项单元回归、八项桌面旅
 制品及日志位于源码外 `axterm-local-opt-artifacts/2026-10-05/sidebar-cleanup/`，
 包内 `app.asar` SHA-256 为
 `5bdcb00187708045df8054806cc76efbd2de3c08b52f43c6b83d0942d687d74f`。
-最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：260 文件 / 1,331 项
+最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：260 文件 / 1,331 项
 通过、5 文件 / 38 项条件跳过，23 项视觉/无障碍通过（1.7m），391 模块 /
 1,425 依赖、261 operation 与来源/许可/本地化/snapshot/构建检查通过。
 不再使用的导航翻译项已同步移除：四语言各 43 个导航 key，无缺失/闲置项；
@@ -1073,7 +1136,7 @@ DMG 复制安装后卸载镜像，受限 PATH/隔离数据下本轮 14 项功能
 PTY 性能通过；既有 packaged suite 40 passed / 15 条件 skipped，真实 OpenSSH
 Runtime、源码 B-12 与 packaged SSH/SFTP 另各 1 项通过。H-11 保留冷启动和错误
 恢复断言，按新高级诊断入口复验通过。临时安装/挂载、所属进程、容器/网络已清理。
-最终 `AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：259 文件 / 1,328 项
+最终 `AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：259 文件 / 1,328 项
 通过、5 文件 / 38 项条件跳过，23 项视觉/无障碍通过（1.8m），391 模块 / 1,424
 依赖、261 operation 与来源/许可/本地化/snapshot/构建检查通过。新包对应最终
 构建，无源码/workspace/system Node 运行依赖。证据见
@@ -1169,7 +1232,7 @@ OP-02 保持 `in-progress`，新候选包内复验统一留到 OP-09。后续进
 replace，不支持时保留原文件并清理临时文件；Runtime 恢复包含暂停/等待冲突状态。
 4 文件 / 62 项定向回归、G-11 真实 Widget 双向/递归/多选/重启旅程，以及真实
 OpenSSH Runtime 和源码桌面 B-12 各 1 项均通过。最终
-`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：246 文件 / 1,237 项
+`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：246 文件 / 1,237 项
 单元集成通过、5 文件 / 38 项条件跳过、21 项视觉/无障碍通过；366 模块 / 1,305
 依赖的 Level 1 / Zero Business IPC、260 项 Contract、来源/许可/本地化和构建门禁
 通过。最终 G-11 与 OpenSSH 旅程再次通过。OP-09 新候选的包内 SSH/安装复验仍待
@@ -1183,7 +1246,7 @@ OpenSSH Runtime 和源码桌面 B-12 各 1 项均通过。最终
 查询取消、失败后的版本刷新及重复提交保护；三个缓存竞争回归通过。日文自有基线
 按明确设计意图核对更新后，依次核对并更新了此前被首个失败挡住的两张中文基线，
 英文/其他页面与阈值不变；四语言截图/文字边界、200% 和错误恢复共 3 项及标签
-交互 1 项通过。`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 返回 0：1,224 项
+交互 1 项通过。`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 返回 0：1,224 项
 单元/集成通过、38 项条件跳过、21 项视觉/无障碍通过，架构、260 项 Contract、
 来源/许可/本地化和构建门禁通过。证据见
 [OP-01](evidence/local-optimization/OP-01-2026-10-03.md)。目标保持 active；OP-04
@@ -1196,7 +1259,7 @@ GitHub 一手资料调研，将无需所有者填写 Token/API Key/Apple ID 的�
 可直接使用的目标模式指令；OP-01～OP-09 均为 `planned`，未把文档交付记为功能完成。
 本轮商业脱钩三项工程完成线继续有效，正式发行及 Windows/Linux 原生验收未领取。
 
-2026-10-03 当前工作树复核：`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 在分析时
+2026-10-03 当前工作树复核：`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 在分析时
 返回 1；1,221 项单元/集成通过、38 项跳过，Level 1 / Zero Business IPC、260 项
 Contract operation、来源/许可/本地化与构建门禁通过，视觉/无障碍 20 通过、1 失败。
 失败为日文设置 1280×800 快照差异 10,373 像素，比例约 0.02 超过 0.01；定向复跑
@@ -1206,7 +1269,7 @@ Contract operation、来源/许可/本地化与构建门禁通过，视觉/无�
 先按新计划 OP-01 恢复门禁，再完成其他本地优化；具体基线与限制见计划第 2 节。
 
 2026-10-03 计划文档交付复核：文档格式、本地链接与来源摘要检查通过；完整
-`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 仍返回 1，1,221 项单元/集成通过、
+`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 仍返回 1，1,221 项单元/集成通过、
 38 项跳过，视觉/无障碍 19 通过、2 失败。日文快照差异再次出现；另一个设置保存
 重试用例在 `visual.spec.ts:797` 的 checkbox 状态断言失败，该用例单独复跑通过。
 定向通过不等于完整门禁恢复，也不足以认定根因；两项均进入 OP-01 复核与验收。
@@ -1217,7 +1280,7 @@ Contract operation、来源/许可/本地化与构建门禁通过，视觉/无�
 按钮会改为锚定该悬停标签并关闭该项，未选中标签不再需要先激活。固定标签仍不显示
 关闭按钮。桌面 E2E 在两种标签栏中均悬停未选中标签，核对按钮落在目标标签边界内，
 并确认点击关闭的是悬停项。定向 Electron 回归与
-`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check` 通过。
+`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check` 通过。
 
 2026-09-27 SFTP 文件右键菜单：本地条目首项为醒目的“上传到远端”，远端条目
 首项为“下载到本地”，多选沿用现有批量传输确认、Grant 与冲突处理；远端
@@ -1225,14 +1288,14 @@ Contract operation、来源/许可/本地化与构建门禁通过，视觉/无�
 Widget 的实际右键上传通过，均在隐藏窗口运行。OpenSSH 夹具测试因本机
 Docker 守护进程未运行而未执行；对应远端下载菜单与多选确认断言已加入
 该夹具旅程，不能记为已通过。应用内 Widget 的远端文件列表在该旅程中
-未加载，未用它冒充下载验证。`AXTERM_E2E_HIDDEN_WINDOW=1 bun run check`
+未加载，未用它冒充下载验证。`AXTERM_E2E_HIDDEN_WINDOW=1 pnpm run check`
 通过：1,220 项单元/集成与 21 项视觉/无障碍测试、架构、Contract、
 源码、许可证和构建门禁均通过。
 
 2026-09-27 SFTP 工具栏传输目标：选择本地文件上传时继续以右栏当前远端路径
 为目标；选择远端文件下载时不再弹出新的原生保存位置，而是以左栏当前已授权
 目录和相对路径作为下载目标。传输服务回归覆盖该相对路径在 Directory Grant 内
-以 `write-target` 权限解析并写入；定向测试、格式/类型/构建及 `bun run check`
+以 `write-target` 权限解析并写入；定向测试、格式/类型/构建及 `pnpm run check`
 均已执行通过。
 
 2026-09-27 桌面测试后台运行：开发构建设置 `AXTERM_E2E_HIDDEN_WINDOW=1` 时，
@@ -1252,7 +1315,7 @@ Electron 测试窗保持隐藏；macOS 使用 accessory 激活策略。该开关
 
 2026-09-27 本轮脱钩复核：十五份合规 JSON/SPDX/记录搬至 `compliance/` 后，
 除按当前源码重算的逐文件审查台账外，其余十四份与搬迁前字节相同；新本地
-提交中的源码、测试和文档通过 `bun run check`（1,220 项单元/集成、21 项
+提交中的源码、测试和文档通过 `pnpm run check`（1,220 项单元/集成、21 项
 视觉/无障碍，架构、Contract、许可证、来源和构建门禁均通过）。受限旧证据
 备份中的主仓库 bundle 与固定参考源码 tar 哈希仍匹配既有保全记录，
 Runtime monitor 替换文件哈希仍匹配[具体候选复核](evidence/COMMERCIAL-DETACHMENT-SOURCE-TRIAGE-2026-09-26.md)。
@@ -1277,7 +1340,7 @@ Windows/Linux 原生验证或 MCR-01～04 正式发行签收。
 MCR 外部证据核验，完整三平台自动更新路线仍使用 active 服务与更新源门禁。
 最小发行检查不能证明工作树干净或包的构建来源，需由发行负责人记录冻结提交、
 源码快照摘要及构建链；过时迁移指南默认不进入以后公开源码快照。
-本次文档调整后 `bun run check` 通过：1,220 项单元/集成测试与 21 项视觉/无障碍
+本次文档调整后 `pnpm run check` 通过：1,220 项单元/集成测试与 21 项视觉/无障碍
 测试，架构、Contract、源码、许可证及构建门禁均通过；编辑过的 16 份文档中
 465 个本地链接可解析。`release:minimum-commercial:check` 的八项自动检查通过，
 MCR-01～04 的权利结论、签名公证与回下载 Mac 包、公开渠道和所有者签收仍为
@@ -1322,7 +1385,7 @@ engineering goal**, not a copyright non-infringement warranty, trademark
 clearance or the later publication's qualified rights signoff. Do not expand
 this queue to the 46-item full release board or require a signed package.
 
-Current source passed `bun run check`: 1,220 unit/integration tests and 21
+Current source passed `pnpm run check`: 1,220 unit/integration tests and 21
 visual/accessibility tests, plus architecture, Contract, source, license and
 build checks. The current unsigned Mac app passed the path/byte retired-name
 scan and two package legal/About tests; `app.asar` SHA-256 is
@@ -1337,7 +1400,7 @@ recheck found that the separately published `trzsz2` library derives from
 `trzsz.js`. Its original Lonny Wong MIT copyright and byte-matched license
 are now retained in `THIRD_PARTY_NOTICES.txt` and
 `licenses/trzsz-js-LICENSE.txt`; the rebuilt unsigned Mac DMG/ZIP and
-directory app contain both. `bun run check` passed (1,220 unit/integration
+directory app contain both. `pnpm run check` passed (1,220 unit/integration
 tests, 21 visual/accessibility tests), and the DMG verify/mount/copy/install
 journey passed 36 packaged tests with 19 platform/fixture-conditional skips.
 The DMG SHA-256 is
@@ -1367,7 +1430,7 @@ public release has occurred. The four conditions in
 [MINIMUM_COMMERCIAL_RELEASE](MINIMUM_COMMERCIAL_RELEASE.md) remain unchecked.
 Windows/Linux native verification belongs to the owner and remains pending.
 
-For this clean-root candidate, `bun install --frozen-lockfile`, `bun run check`
+For this clean-root candidate, `pnpm install --frozen-lockfile`, `pnpm run check`
 (1,213 unit/integration passed; 21 visual/accessibility passed), source-name
 audit, unsigned Mac packaging, source and app byte scans, complete DMG journey
 (36 passed, 19 explicitly skipped), and controlled SSH/SFTP journey passed.
@@ -1432,7 +1495,7 @@ W-14-01 私有证据 tar 中核到路径，并按精确路径从新源码候选�
 但当前大量来源回归仍读取它，故本轮保留而不删测试。定向文档/快照
 回归 12/12 通过；更新后的[961 文件独立克隆](evidence/IR14-ADR021-CURRENT-CLONE-2026-09-25.md)
 `17dbd3b9f1218941efbfa9c683a18b5b0ea1b407` 已完成冻结安装与完整
-`bun run check`（1,216 项单元/集成、21/21 界面/无障碍）。快照基础卫生通过，
+`pnpm run check`（1,216 项单元/集成、21/21 界面/无障碍）。快照基础卫生通过，
 旧名称降至 **134 个文件、144 条
 路径/内容发现、1,419 次文本命中**，来源台账覆盖 960 个待审文件。
 这是候选源码缩减，不是长期异地保管或权利审定；W/IR 计数不变。
@@ -1462,7 +1525,7 @@ W-14-01 私有证据 tar 中核到路径，并按精确路径从新源码候选�
 2026-09-25 W-14-02 当前源码独立克隆复核：一次性源快照新根提交
 `855565df9e92f777f923a28b4c803c5384583de0`、964 个文件、树 SHA-256
 `1f737a09cb37197d65d934c83928a72cc3997cf3a4d70400cbe73e4a551322a2`；
-非本地克隆冻结安装和完整 `bun run check` 通过（1,215 项单元/集成、
+非本地克隆冻结安装和完整 `pnpm run check` 通过（1,215 项单元/集成、
 21/21 界面/无障碍）。[逐项证据](evidence/IR14-ADR021-CURRENT-CLONE-2026-09-25.md)
 只证明当前 ADR-021 技术候选可从无子模块的新根独立复现；它不是权利审定、
 最终公开快照、已签名安装包或新远程仓库。W-14-02、IR-14 均不关闭，
@@ -1480,7 +1543,7 @@ Renderer、Client、REST、Contract 与 Runtime 实现已移除，Axterm 自有�
 SQLite 行、Vault 引用和远端字节原样保留，旧行不展示、不修改、不自动同步。
 四语言旧迁移面板与批量工作流文案已从 UI 目录移除；历史 SQLite 迁移及
 专门的审计脚本仍保留旧名称以识别/保全已有数据。本轮完整
-`bun run check` 已通过：1,215 项单元/集成测试（另 38 项跳过）、21/21
+`pnpm run check` 已通过：1,215 项单元/集成测试（另 38 项跳过）、21/21
 界面/无障碍测试，以及 lint、类型、架构、Contract、来源/许可审计和构建；
 Mac 桌面深链与命令行定向 E2E 2/2 通过；当前无签名 Mac arm64
 目录包构建成功，独立于源码目录和系统 Node 的包内启动/SQLite/PTY 与
@@ -1533,7 +1596,7 @@ Axterm 配置快照导出/导入、加密上传的首次 412 失败与重试、�
 已改写并通过，最终源码快照仍待处理；不改变 4/46 与 2/14 发行计数。
 同步修正设置侧栏选中态的颜色/背景异步过渡造成的瞬时 3.95:1
 对比度，定向 axe 回归通过；刷新 961 文件来源台账后完整
-`bun run check` 复跑通过：1,210 项单元/集成、21/21 界面/无障碍，
+`pnpm run check` 复跑通过：1,210 项单元/集成、21/21 界面/无障碍，
 以及 lint、类型、架构、Contract、来源/许可与构建门禁。
 原 D3 旧便携导入包测已改为 Axterm 配置快照的真实包内失败回滚：
 书签 INSERT 阶段注入失败，先前主机写入随事务回滚，本地 Vault 原值
@@ -1556,7 +1619,7 @@ Axterm 配置快照接口，并新增文档回归；`MIGRATION_GUIDE.md` 与
 和最终源码快照仍开放。
 另移除当前 Drizzle schema 中无人引用的旧导入台账导出；历史 SQLite
 迁移仍保留旧表以保护已有数据库，并增加 schema 表面回归测试。
-本轮最终 `bun run check` 通过：**1,212** 项单元/集成、**21/21**
+本轮最终 `pnpm run check` 通过：**1,212** 项单元/集成、**21/21**
 界面/无障碍，以及 lint、类型、架构、260 项 Contract、来源/许可和构建。
 `release:final-public:check` 仍为 **9 项具名审查/正式服务阻断**，
 最终快照按设计跳过；`migration:record:removal-check` 已通过。
@@ -1568,7 +1631,7 @@ Axterm 配置快照接口，并新增文档回归；`MIGRATION_GUIDE.md` 与
 等同于旧运行时入口仍存在，也不能把产品入口移除等同于来源权利审定。
 
 为防止把 W-09-02/W-14-02 误估成“删几条兼容入口”，在**当前迁移期**
-快照单独运行底层 `bun run snapshot:final-public:check` 作诊断：基础卫生检查通过
+快照单独运行底层 `pnpm run snapshot:final-public:check` 作诊断：基础卫生检查通过
 （967 个快照文件，树 SHA-256
 `d6fbc192031fc6f5a4767e59e590155798f7649fc13efda9206c05de73cfdea3`），
 最终名称/字节扫描按预期失败，检出 **166 个不同文件、183 条 path/content
@@ -1579,7 +1642,7 @@ scripts 9、apps 8、根文件 7；同一文件可有路径与内容两条发现
 批准例外，以及通用构建工具中的旧名称；不能以机械改名或提前删除用户迁移
 路径代替。**0 W、0 IR、0 M1** 新关闭，计数仍为 **4/46、2/14、14/14**。
 
-`bun run release:final-public:check` 本轮实跑：23 项前置门禁 **13 通过、10 阻断**，
+`pnpm run release:final-public:check` 本轮实跑：23 项前置门禁 **13 通过、10 阻断**，
 最终源码快照扫描按设计跳过。阻断集中在真实公开迁移窗口、正式服务/更新源、
 逐文件及原生/WASM/包级权利审查、产品标识和四语言具名审校；没有发现可由
 Mac 工程测试代签的新验收项。[负责人分组与解锁事实](RELEASE_OWNER_HANDOFF.md)
@@ -1600,7 +1663,7 @@ W-14-01 不关闭；本批 **0 W、0 IR、0 M1**，总数仍为 **4/46、2/14、
 准备快照新根提交 `3f57cb6c3f95263f8fea3bca8c80762c5aeeb488`，
 `git clone --no-local` 跟踪 **966 文件**，审计树 SHA-256 为
 `c270c54eafebc43652354da1187a04ba1c93cdbe14a7269a2b705459aa63f7e9`。
-冻结安装和完整 `bun run check` 通过 **1,268** 项单元/集成、**21/21** 项
+冻结安装和完整 `pnpm run check` 通过 **1,268** 项单元/集成、**21/21** 项
 界面/无障碍及架构、Contract、来源、许可、本地化和构建门禁；SSH fixture、
 真实 lrzsz 和 trzsz-go SSH/PTY 对端分别 **1/1、16/16、7/7** 通过。
 第一次外部对端复核暴露测试对 Docker `--rm` 异步移除的即时断言竞争；
@@ -1623,7 +1686,7 @@ W-06-02/W-08-02 的手动迁移安全说明已从文档进入应用的四语言�
 导入/导出面板：提示核对逐项映射、旧便携文件可能遗漏自建主题和背景图片、
 逐套导出主题、保留原图片、重填缺失密码，以及在核对前保留完整旧 profile
 冷备份。新增四语言文案测试与 200% 缩放界面断言，并目视核对后更新迁移
-面板截图基线。完整 `bun run check` 通过 **1,268** 项单元/集成测试、
+面板截图基线。完整 `pnpm run check` 通过 **1,268** 项单元/集成测试、
 **21/21** 界面/无障碍旅程及架构、Contract、来源、许可、本地化与构建门禁。
 提示仅说明已验证的人工步骤，不承诺自动迁移旧 SQLite/Vault。源码与审校台账分别为
 **965/965 待审文件**、每语言 **2,617 个核心键**待审。W-06-02/W-08-02
@@ -1638,7 +1701,7 @@ Axoterm UI 实际选用已移除的 `3024 Day` 内置主题和一张合成 PNG�
 书签写入阶段错误，主机、书签、迁移记录均回滚为 0 且新 Vault 无凭据；清除
 测试故障后重试成功。与冷备份恢复、两套自建主题和坏文件拒绝同属一条包内
 旅程 **1/1**；[旧/新包哈希及边界](evidence/IR08-HISTORICAL-PACKAGE-UPGRADE-2026-09-23.md)
-已记录。完整 `bun run check` 通过 **1,267** 项单元/集成测试及 **21/21**
+已记录。完整 `pnpm run check` 通过 **1,267** 项单元/集成测试及 **21/21**
 界面/无障碍旅程，架构、Contract、来源、许可、本地化与构建门禁通过。Mac 限定
 工程样本现交发行负责人审核，未具名签收前 W-06-02/W-08-02
 不关闭，任意旧主题/图片与其他平台不外推；本批 **0 W、0 IR、0 M1**，仍为
@@ -1663,7 +1726,7 @@ FAT16 正常收发 **3/3**，ExFAT 不支持安全原子发布时 **3/3** 正确
 不完整目标文件。当前包 `app.asar` SHA-256
 `be90deb22e347751e0458be27d96985705d76a509fed2d9f47f2ddbda8c970fe`；
 [命令与卷别结果](evidence/IR03-ADR020-OWNED-STAGE-RECOVERY-2026-09-25.md)。
-源码聚焦回归 **114 passed、3 skipped**；格式修复后完整 `bun run check` **通过**：
+源码聚焦回归 **114 passed、3 skipped**；格式修复后完整 `pnpm run check` **通过**：
 **1,267** 项单元/集成测试通过、**38** 跳过，**21/21** 界面/无障碍测试通过，
 架构、Contract、许可、来源、本地化与构建门禁均通过。M1 Mac 细格 **14/14 已过**、
 W-03-02 的限定 Mac 工程任务关闭；IR-03 独立协议/权利审查、Windows/Linux 原生
@@ -1700,7 +1763,7 @@ W-05-02 的后台启动导航保护现覆盖**配置的启动书签**，不仅�
 本地、SSH、Telnet、Serial、RDP、VNC、SPICE、Web 在异步连接完成时才判断
 用户是否已打开其他主页面；FTP 启动书签也不再延迟抢占该页面。用户主动点击
 书签仍正常切换。`workspace.test.ts` **7/7**、既有启动书签桌面旅程 **1/1**；
-完整 `bun run check` 通过 **1,253** 项测试、**21/21** 界面/无障碍旅程，
+完整 `pnpm run check` 通过 **1,253** 项测试、**21/21** 界面/无障碍旅程，
 以及类型、架构、Contract、来源和打包检查。当前逐文件台账仍为
 **957/957 待审**。这是已有 Mac 格的回归修复，不是新格或人工审查签收；
 新增 **0 W、0 IR、0 M1**，总数保持 **3/46、2/14、11/14**。
@@ -1711,7 +1774,7 @@ W-05-02 的四语言设置故障恢复回归发现并修复一处真实导航竞
 强制切换主界面；显式创建终端仍正常切到终端。对应
 [`workspace.test.ts`](../../tests/unit/workspace.test.ts) **6/6**，重建后的
 [`visual.spec.ts`](../../tests/e2e/visual.spec.ts) 四语言故障/重试旅程连续
-**2/2** 通过；完整 `bun run check` 随后通过 **1,252** 项测试、**21/21**
+**2/2** 通过；完整 `pnpm run check` 随后通过 **1,252** 项测试、**21/21**
 界面/无障碍旅程及架构、Contract、来源台账和打包门禁。测试保留重试后语言
 控件可用的断言，没有把故障路径跳过。
 这是已有 Mac 验收格的回归修复，新增 **0 W、0 IR、0 M1**；总数仍
@@ -1743,7 +1806,7 @@ W-03-02/T1 的安全策略决定，以及获批后连续完成 T2 强杀恢复�
 W-02-03 的[书签 Contract 限定来源复核](evidence/W02-03-BOOKMARK-CONTRACT-LINEAGE-2026-09-25.md)
 已固定当前与参考字节并记录七 token/属性名重合的范围及限制：当前 Host/Bookmark
 分离、`credentialRef` 和严格 DTO 是不同边界，不因相似度筛查去改持久字段。
-新增的 Contract 边界测试 **2/2**，类型检查和完整 `bun run check` 通过：
+新增的 Contract 边界测试 **2/2**，类型检查和完整 `pnpm run check` 通过：
 **1,251** 项单元/集成测试、**21/21** 界面/无障碍旅程；架构、Contract、
 来源台账和打包检查均过。逐文件台账 **957/957 待审**，需要具名权利判断。
 本轮新增 **0 W、0 IR、0 M1**，总数仍 **3/46、2/14、11/14**。
@@ -1753,7 +1816,7 @@ W-02-03 的[书签 Trigger 预设来源复核与替换](evidence/W02-03-BOOKMARK
 冷却值。现由 Axterm 意图选项按需生成规则，分页只发送 Space、不发送 Enter，
 密码提示只通知；用户已保存的 Trigger 不改。四语言的预设文案同步改为明确
 动作，核心键数仍为每语言 **2,602**，语言与权利审查仍 pending。实际 Trigger
-Engine 的分片分页、密码提示/安全动作测试 **3/3**，完整 `bun run check`
+Engine 的分片分页、密码提示/安全动作测试 **3/3**，完整 `pnpm run check`
 通过（**1,249** 项测试、**21/21** 界面/无障碍旅程，架构/Contract/来源/
 本地化/构建门禁均过）。逐文件源码台账现为 **955/955 待审**；提示字串作为
 设备输出事实仍保留，代码与翻译权利结论须具名审查。本轮新增 **0 W、0 IR、
@@ -1764,14 +1827,14 @@ W-02-03 的[监控模型和主题相似性复核](evidence/W02-03-MONITOR-THEME-
 现改为 Axterm 的 CPU、内存、磁盘分别告警规则，并把回差状态实际接入监控栏；
 磁盘按占用率展示，容量、速率和运行时长采用新的紧凑格式。固定默认主题两份
 参考与当前四主题源码的字面颜色键值对比为 **0** 个精确重合，但比较范围不足以
-替代主题/设计权利审查。聚焦模型测试 **4/4**、类型检查、完整 `bun run check`
+替代主题/设计权利审查。聚焦模型测试 **4/4**、类型检查、完整 `pnpm run check`
 （**1,246** 项测试、**21/21** 界面/无障碍旅程）通过；真实 Docker OpenSSH
 fixture 的集成测试 **1/1** 及打开监控栏的 B-12 Electron 旅程 **1/1** 通过。
 逐文件台账为 **952/952 待审**；监控与主题当前字节仍待具名来源/设计审查，
 本轮 **0 W、0 IR、0 M1** 新关闭，总数仍 **3/46、2/14、11/14**。
 
 W-02-03 的 Chromium 键盘映射替换后，当前**迁移期**源码通过
-`bun run candidate:check`：准备快照树哈希
+`pnpm run candidate:check`：准备快照树哈希
 `f8872ba2201352a324a6bce9d3b278d98d1064bf08ef855d02b29114a23cd709`，
 临时新根提交 `b85e650406639ccd886c418afc0f9db48f9414e0`，独立
 `git clone --no-local` 跟踪 **952 文件**，无 `.gitmodules` 或
@@ -1784,7 +1847,7 @@ W-02-03 的 RDP 键位映射已由旧内联表改为[固定 Chromium BSD 数据�
 84 键映射](evidence/W02-03-RDP-KEYBOARD-LINEAGE-2026-09-25.md)：逐项由
 Chromium 固定提交的 USB 键盘 usage-page/Windows 扫码列生成，84 个旧输入
 名称和值全部不变；新增原始版权头、单独 BSD 许可证文本、第三方声明与
-两项单元测试。聚焦测试 2/2、类型检查和完整 `bun run check` 通过
+两项单元测试。聚焦测试 2/2、类型检查和完整 `pnpm run check` 通过
 （1,244 项测试、21 项界面测试）；当前无签名 Mac 包的许可/声明及
 About 渲染 **2/2** 通过，包哈希见证据。历史 Legacy Prototype/mstsc.js
 来源疑点与当前字节的许可/版权结论仍须具名审查；尚未把 W-02-03、IR-02
@@ -1854,7 +1917,7 @@ upload source-handle close. The receive file marks its handle closed only
 after a successful close. [Focused evidence and current Mac package
 hash](evidence/IR03-RUNTIME-GRACEFUL-SHUTDOWN-2026-09-25.md) cover **29
 tests** with one conditional skip, typecheck, and **1/1** real-PTY packaged
-ZMODEM upload/download. The final `bun run check` passed **1,242
+ZMODEM upload/download. The final `pnpm run check` passed **1,242
 unit/integration tests** (38 skipped), all architecture/Contract/source/license/build
 gates, and **21/21** visual/accessibility journeys. T1 ownership/re-Grant policy, hard-kill recovery and
 T3 real-volume acceptance remain open; totals stay **3/46 W closed, 2/14 IR
@@ -1868,7 +1931,7 @@ promise through Runtime-wide close. Five new focused regression cases passed;
 the two affected suites passed **30 tests** with one conditional skip, and a
 fresh unsigned Mac app passed **1/1** real-PTY XMODEM binary upload/download.
 [Current source/package hashes and test limits](evidence/IR03-RUNTIME-GRACEFUL-SHUTDOWN-2026-09-25.md)
-are recorded. The final `bun run check` passed **1,238 unit/integration
+are recorded. The final `pnpm run check` passed **1,238 unit/integration
 tests** (38 skipped), all architecture/Contract/source/license/build gates
 and **21/21** visual/accessibility journeys. Two large-file test fixtures
 now seed through the production batch path instead of repeatedly parsing a
@@ -1884,7 +1947,7 @@ Controlled session/manager tests passed **25 tests** with one conditional skip;
 a fresh unsigned Mac package passed **1/1** real-PTY XMODEM binary
 upload/download. [Source and package hashes, test scope and remaining
 limits](evidence/IR03-RUNTIME-GRACEFUL-SHUTDOWN-2026-09-25.md) are recorded.
-The final `bun run check` passed **1,233 unit/integration tests** (38 skipped),
+The final `pnpm run check` passed **1,233 unit/integration tests** (38 skipped),
 all architecture/Contract/source/license/build gates and **21/21**
 visual/accessibility journeys after two unrelated large-import timeouts in
 the first attempt passed focused **65/65** and then passed in the full rerun;
@@ -1903,7 +1966,7 @@ propagated rather than silently treated as cleanup success; injected
 `EACCES` cancellation/post-publication tests verify retry and preserved final
 bytes. [Focused evidence](evidence/IR03-RUNTIME-GRACEFUL-SHUTDOWN-2026-09-25.md)
 passes **25 tests** with one conditional skip and typecheck. The final-source
-`bun run check` passed **1,231 unit/integration tests** (38 skipped), its
+`pnpm run check` passed **1,231 unit/integration tests** (38 skipped), its
 architecture/Contract/source/license/build gates and **21/21**
 visual/accessibility journeys. A final-guard unsigned Mac package passed **1/1**
 real-PTY ZMODEM binary upload/download; its `app.asar` SHA-256 and scope are
@@ -1940,7 +2003,7 @@ matches all 33 installed distribution files; independent rights/protocol
 review remains open. Counts stay **3/46 W
 closed, 2/14 IR Accepted, 11/14 M1 Mac cells passed**.
 
-The current-source full `bun run check` passed **1,226 unit/integration tests**
+The current-source full `pnpm run check` passed **1,226 unit/integration tests**
 (38 skipped), architecture/Contract/source/license/build gates and **21/21**
 visual/accessibility journeys. The new isolated rebuild is a separate
 publisher-source evidence check, not a source-rights approval.
@@ -1958,7 +2021,7 @@ preserved final bytes and destruction propagation. This is **T2 partial
 progress**, not T1's owner/security policy decision or T2/T3 acceptance;
 W-03-02 remains open and the W/IR/M1 totals do not change.
 
-The complete `bun run check` passed **1,213 unit/integration tests** (38
+The complete `pnpm run check` passed **1,213 unit/integration tests** (38
 skipped) and **21/21 visual/accessibility tests**. A new isolated unsigned
 Mac package passed **2/2** focused real-PTY TRZSZ roundtrip and active-receive
 graceful-quit journeys; its hash and scope are recorded in the
@@ -1984,7 +2047,7 @@ record for hashes. At that checkpoint, text-mode line bounds and hard-kill
 recovery still needed work. This was T2 partial progress only; **0 W, 0 IR and
 0 M1 cells** closed.
 
-The final `bun run check` for this source passed **1,215 unit/integration
+The final `pnpm run check` for this source passed **1,215 unit/integration
 tests** (38 skipped), the architecture/Contract/source/license/build gates,
 and **21/21 visual/accessibility tests**.
 
@@ -2000,7 +2063,7 @@ parser test. W-03-02 remains open for queued-buffer bounds, T1-owned recovery,
 and T3 real-volume verification. This closes **0 W, 0 IR and 0 M1 cells**.
 
 W-02-01 review preparation now routes the current **944 pending source files**
-into eight non-overlapping reviewer queues. `bun run source:review:worklist`
+into eight non-overlapping reviewer queues. `pnpm run source:review:worklist`
 reports 34 migration-period compatibility-boundary files, 41 asset/legal-text
 files, 293 tests/fixtures, 11 terminal-transfer/FTP implementation files, 14
 localization/theme implementation files, 276 other product implementation
@@ -2026,7 +2089,7 @@ migration clock, and retains all 46 numbered W tasks with closure evidence.
 This planning correction closes **0 additional W**, accepts **0 additional IR**
 and passes **0 additional M1 cells**; current totals remain **3/46 W closed**,
 **2/14 IR Accepted** and **11/14 M1 cells passed**. The latest complete
-`bun run check` before this documentation revision passed, including 1,210
+`pnpm run check` before this documentation revision passed, including 1,210
 unit/integration tests, the architecture/contract/source gates and 21/21
 Playwright visual/accessibility tests. Documentation-only consistency checks
 are repeated for the revised board below; a plan edit is not a new release
@@ -2471,7 +2534,7 @@ the four locales, all still awaiting human review. This closes a user-facing
 failure-semantics gap, not the public migration release or real-provider
 acceptance; W-08-01 and IR-08 remain **In progress**.
 
-A read-only `bun run release:final-public:check` audit on 2026-09-25 reported
+A read-only `pnpm run release:final-public:check` audit on 2026-09-25 reported
 **10 blocked prerequisites**: approved migration removal, dependency
 attribution, native Rust review, IronRDP review, product-mark review, 923-file
 source review, navigation and core four-language review, active release
@@ -2598,7 +2661,7 @@ P-07/IR-10's rendered accessibility audit now includes the Settings connection
 configuration page in both SSH and SPICE editor states. The new scan exposed a
 missing page-level heading and a 2.06:1 contrast ratio on the visible mint
 save button; the heading uses h1 semantics with preserved sizing and the button
-uses Axterm's dark on-primary token. `bun run test:a11y` passes 2/2, and the
+uses Axterm's dark on-primary token. `pnpm run test:a11y` passes 2/2, and the
 connection-configuration screenshot plus 200% zoom regressions pass 2/2
 without refreshing the visual baseline. This is engineering coverage, not
 human accessibility/design acceptance; IR-10 remains **In progress**.
@@ -2626,7 +2689,7 @@ truthful migration-compatibility notice remain linked. The focused documentation
 suite passes 4/4 tests. A prepared final-public source snapshot still reports
 **168** legacy-name findings, including **4** README content occurrences; the
 current migration build is deliberately not being represented as final-public
-clean or release-ready. The post-edit `bun run check` passes 236 test files
+clean or release-ready. The post-edit `pnpm run check` passes 236 test files
 (1,182 passed, 38 skipped), 360 architecture modules / 1,310 dependencies,
 267 Contract operations, package layout and all 11 visual/accessibility
 journeys. IR-10 and IR-14 remain unaccepted.
@@ -2748,7 +2811,7 @@ not original authorship or legal provenance. A [fixed-reference comparison](evid
 also confirms that the historical Legacy Prototype commit consumes those **same two
 library versions**; separately published packages are not proof of an absent
 ecosystem relationship. The focused
-third-party source suite passes 31/31, and `bun run check` passes 222 test files (1,131
+third-party source suite passes 31/31, and `pnpm run check` passes 222 test files (1,131
 passed, 33 skipped), 359 architecture modules / 1,310 dependencies, all 267
 Contract operations, build/package layout and 11 visual/accessibility journeys.
 IR-02 and IR-03 remain
@@ -2808,10 +2871,10 @@ Electron executable; the mounted-and-copied DMG passed 21 applicable packaged
 journeys (11 platform/fixture skips), including actual PTY roundtrips for all
 three terminal-transfer protocols. The local SSH fixture also passed its
 packaged journey. A verified 102-package/248-file/349-relationship SPDX sidecar
-matches the copied app. The full `bun run check` passes 222 test files (1,133
+matches the copied app. The full `pnpm run check` passes 222 test files (1,133
 passed, 33 skipped), 360 architecture modules, 267 Contract operations and 11
 visual/accessibility journeys. This is **macOS engineering evidence only**:
-an isolated fresh-Git-clone `bun run candidate:check` also passes frozen
+an isolated fresh-Git-clone `pnpm run candidate:check` also passes frozen
 installation and the complete check without the old submodule. Nevertheless,
 the native subpackage's missing root LICENSE and human rights review, network
 or removable-volume behavior, signed/notarized distribution, controlled
@@ -2861,12 +2924,12 @@ at native rename on the first fixture; it is not counted as a pass. Both
 fixtures were detached and removed. This establishes fail-closed behavior for
 two Mac/SMB2 server combinations, not SMB transfer success, all other servers,
 NFS or crash durability. IR-03 and
-IR-13 remain unaccepted. The latest `bun run check` passes 1,178
+IR-13 remain unaccepted. The latest `pnpm run check` passes 1,178
 unit/integration tests (38 skipped), 360 architecture modules / 1,310
 dependencies, 267 Contract operations and all 11 visual/accessibility
 journeys.
 
-The post-change `bun run check` passes 235 unit/integration files (1,177
+The post-change `pnpm run check` passes 235 unit/integration files (1,177
 tests passed, 38 skipped), 360 architecture modules / 1,310 dependencies,
 267 Contract operations and all 11 visual/accessibility journeys. The four-
 language core catalog/review ledger now tracks 2,585 keys; language and
@@ -2893,10 +2956,10 @@ identities and 110 root legal files; current npm notices/SBOM do not cover
 all Rust subcomponents. A new
 [`NATIVE_DEPENDENCY_REVIEW_LEDGER.json`](../../compliance/NATIVE_DEPENDENCY_REVIEW_LEDGER.json)
 keeps all 61 packages and the published binary pending for qualified review.
-`bun run check` verifies the ledger scope, while the final-public promotion
+`pnpm run check` verifies the ledger scope, while the final-public promotion
 gate requires every native entry to be reviewed. This identifies and guards
 an actual commercial-release gap; it does not resolve the rights or binary
-provenance conclusion. That full `bun run check` passed 226 test files
+provenance conclusion. That full `pnpm run check` passed 226 test files
 (1,145 passed, 34 skipped), 360 architecture modules / 1,310 dependencies,
 267 Contract operations and 11 visual/accessibility journeys. The
 `release:final-public:check` correctly reports the new native review gate
@@ -2972,7 +3035,7 @@ conditional local OpenSSH fixture also passed its integration,
 source-Electron and current macOS packaged-SSH journeys (1 each) after the
 general suite; the general suite's SSH skip remains accurately reported.
 This closes only the identified nested-text delivery gap on the local macOS
-candidate. The latest full `bun run check` passes 231 test files (1,161 tests
+candidate. The latest full `pnpm run check` passes 231 test files (1,161 tests
 passed, 34 skipped), 360 architecture modules / 1,310 dependencies, 267
 Contract operations and 11 visual/accessibility journeys. The final-public
 gate still intentionally refuses promotion on nine pending prerequisites,
@@ -3117,7 +3180,7 @@ with extract-and-run, binds the copied bytes to the release-hash manifest before
 launch and rechecks them after clean shutdown, verifies the Electron product
 version, Desktop Runtime readiness and local terminal tabs, and retains a SHA-256-linked runtime receipt
 from the downloaded run. This worktree's gate wiring and Playwright discovery
-are checked locally; `bun run check` passes 222 test files (1,124 passed,
+are checked locally; `pnpm run check` passes 222 test files (1,124 passed,
 33 skipped), 359 architecture modules / 1,310 dependencies, all 267 Contract
 operations, build/package layout and 11 visual/accessibility journeys. No
 successful native Linux x64 CI result or receipt exists yet; this is **not**
@@ -3137,7 +3200,7 @@ and oversize response refusal. A fresh isolated unsigned macOS arm64 directory
 app then passed the packaged legacy-WebDAV migration/recovery and
 GitHub/Gitee/named-file-Custom journeys (2/2; `app.asar` SHA-256
 `f2b1c15017e32b0cf98a3751966541a10df459435ee99b2627b8f0325b591eee`). The
-final `bun run check` passes 220 test files (1,085 passed, 33 skipped), 358
+final `pnpm run check` passes 220 test files (1,085 passed, 33 skipped), 358
 architecture modules / 1,307 dependencies, 267 Contract operations, the
 independent snapshot/build/package-layout gates and all 11 visual/accessibility
 journeys. This does not change IR-08 acceptance: real provider accounts, public migration
@@ -3153,12 +3216,12 @@ of reporting an error after the remote write. Gitee truncation remains
 fail-closed, and GitHub's documented over-10-MiB clone path is not implemented.
 Focused adapter and Application-boundary coverage and the remaining provider/platform limits are in the
 [IR-08 remote-backup evidence](evidence/IR08-REMOTE-BACKUP-2026-09-20.md).
-After this follow-up and its documentation edits, `bun run check` passed again:
+After this follow-up and its documentation edits, `pnpm run check` passed again:
 220 test files passed, 5 skipped; 1,090 tests passed, 33 skipped; 358
 architecture modules / 1,307 dependencies; all 267 Contract operations; build,
 package-layout, source-snapshot and all 11 visual/accessibility journeys.
 
-Current-worktree revalidation on 2026-09-24: `bun run check` passes 220 test
+Current-worktree revalidation on 2026-09-24: `pnpm run check` passes 220 test
 files (1,091 passed, 33 skipped), the Level 1 architecture gate (358 modules /
 1,307 dependencies), all 267 Contract operations, license/source and
 independent-snapshot checks, production build/package layout, and all 11
@@ -3176,7 +3239,7 @@ offers an expandable four-step manual procedure for securely cloning and
 verifying the configured sync file. The app still does not implement Git
 transport; the release migration-guide draft carries the fuller migration
 context, while the immediate recovery path is available in the sync UI. Focused
-provider/error tests pass, and `bun run check` passes on this worktree: 221 test
+provider/error tests pass, and `pnpm run check` passes on this worktree: 221 test
 files (1,095 passed, 33 skipped), 359 architecture modules / 1,309 dependencies,
 267 Contract operations, the license/SBOM/source-snapshot and production
 package-layout gates, plus all 11 visual/accessibility journeys. The core
@@ -3203,7 +3266,7 @@ regression resumes STOR at every octet boundary of the fixture stream, then
 re-downloads and compares the exact NVT bytes, including boundaries inside
 CRLF and CR-NUL. It also checks ASCII `SIZE`, `TYPE I` and host newline
 conversion.
-`bun run check` passes on 2026-09-24: 221 test files (1,096 passed, 33 skipped),
+`pnpm run check` passes on 2026-09-24: 221 test files (1,096 passed, 33 skipped),
 359 architecture modules / 1,310 dependencies, all 267 Contract operations,
 independent-snapshot, licensing, SBOM, production build/package-layout and all
 11 visual/accessibility journeys. This advances local IR-04 implementation
@@ -3278,7 +3341,7 @@ focus assertion and passed separately and in the final full run. This is
 emulated Linux, not native-Linux sign-off. Independent security/source-rights
 review and Windows/native-Linux installed evidence remain open; IR-04 stays
 **In progress** and IR-13 **Open**.
-The current worktree's complete `bun run check` passed after the fix and test
+The current worktree's complete `pnpm run check` passed after the fix and test
 updates: 221 test files passed / 5 skipped; 1,097 tests passed / 33 skipped;
 359 architecture modules / 1,310 dependencies; 267 Contract operations;
 source snapshot, license/SBOM, build/package layout and all 11 Axterm visual
@@ -3297,7 +3360,7 @@ Exact commands, source/package hashes and evidence limits are in the
 [bounded-list record](evidence/IR04-FTP-BOUNDED-LIST-2026-09-24.md). The current
 package is not signed or installed; independent security/source-rights review
 and Windows/native-Linux installed evidence remain open. IR-04 stays **In
-progress** and IR-13 **Open**. The full `bun run check` passed after this change:
+progress** and IR-13 **Open**. The full `pnpm run check` passed after this change:
 221 test files passed / 5 skipped, 1,098 tests passed / 33 skipped, and all 11
 visual/accessibility journeys passed.
 
@@ -3375,7 +3438,7 @@ exposed low contrast on its 9 px connection-state copy (3.95:1); it now uses
 Axterm's semantic muted-text token, and both the imported Host Manager and
 independent configuration preview remain in the keyboard journey. The focused
 accessibility project passes 2/2 journeys across fourteen axe-audited rendered
-scenes. The latest full `bun run check` passes 219 test files (1,028 passed,
+scenes. The latest full `pnpm run check` passes 219 test files (1,028 passed,
 33 skipped), nine visual and two accessibility journeys, plus architecture,
 Contract, release-hygiene and build gates. A separate unsigned macOS arm64
 directory package also passes one targeted keyboard-activated
@@ -3394,7 +3457,7 @@ historical scope, hashes and limits remain in the
 [IR-12 candidate evidence](evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md).
 
 The current 804-file source snapshot was then checked through
-`bun run candidate:protocol:check` on 2026-09-24. Its clean
+`pnpm run candidate:protocol:check` on 2026-09-24. Its clean
 `git clone --no-local` froze 610 packages and passed the complete `bun run
 check` (1,028 tests passed, 33 skipped; 358 modules / 1,306 dependencies;
 267 Contract operations; nine visual and two accessibility journeys), the
@@ -3409,7 +3472,7 @@ clone, peer containers and SSH fixture were confirmed cleaned. This first run
 advanced current-source reproducibility and external-peer engineering
 evidence; its follow-up is recorded below.
 
-A second `bun run candidate:protocol:check` on 2026-09-24 passed the named
+A second `pnpm run candidate:protocol:check` on 2026-09-24 passed the named
 IR-12 gates in a clean non-local clone: the 804-file/18,270,506-byte snapshot
 had no audit or dependency-marker violations, frozen install rebuilt macOS
 arm64 `node-pty`, and the complete check passed (1,028 tests, 33 skipped; 358
@@ -3428,7 +3491,7 @@ owner's new-repository actions; those remain separate gates. IR-03 remains
 **In progress**. Exact logs, scope and hashes are recorded in the
 [IR-12 candidate evidence](evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md).
 
-A third `bun run candidate:protocol:check` on 2026-09-24 revalidated the
+A third `pnpm run candidate:protocol:check` on 2026-09-24 revalidated the
 current 807-file/18,311,621-byte snapshot from a clean non-local clone. Frozen
 installation rebuilt macOS arm64 `node-pty`; the full check passed (1,074
 tests passed, 33 skipped; 358 architecture modules / 1,307 dependencies; 267
@@ -3501,14 +3564,14 @@ not signing/notarization, update-feed verification, manual design review or
 Windows/Linux proof; IR-10 and IR-13 remain **In progress/Open** respectively.
 
 P-05/P-07 now also prevent a stale platform icon from reintroducing the retired
-blue oval mark after the SVG redesign. `bun run icons:check` renders PNG, ICO and
+blue oval mark after the SVG redesign. `pnpm run icons:check` renders PNG, ICO and
 ICNS variants from the mint-green AX source into an isolated temporary directory
 and requires byte equality without modifying checked-in assets. Its
-macOS-only integration test is included in `bun run check`; the focused icon
+macOS-only integration test is included in `pnpm run check`; the focused icon
 and shell-brand tests pass 4/4, including the existing assertion that terminal
 tab numbers use the green primary token. This verifies source-to-variant
 consistency, not installed Windows/Linux appearance or trademark clearance;
-IR-07/IR-10 remain **In progress**. The latest `bun run check` on 2026-09-24
+IR-07/IR-10 remain **In progress**. The latest `pnpm run check` on 2026-09-24
 passed 220 test files with five skipped (1,080 passed, 33 skipped), 358
 architecture modules / 1,307 dependencies, all 267 Contract operations, all
 commercialization and source-snapshot checks, production build/package layout,
@@ -3556,7 +3619,7 @@ without importing upstream palettes; selected built-ins map to Axterm's own
 Default / Default light. The migration limit counts only user themes, even when
 the export includes the two automatic built-ins. The fixture retains the
 fictional test theme and selected ID plus only the built-ins' IDs and names.
-The focused importer/database/data-sync suite passes 49/49; `bun run build` passes, and
+The focused importer/database/data-sync suite passes 49/49; `pnpm run build` passes, and
 the exact native-file-grant desktop E2E passes 1/1. A separate copied-outside-
 checkout macOS arm64 package journey also passes: the field-redacted preview
 skips both built-in rows, imports the custom palette, remaps selection, and
@@ -3736,25 +3799,25 @@ failure in the data-migration/configuration workspace: global disabled-button
 opacity `0.42` faded text below 4.5:1 while a File Grant was being revoked.
 Disabled controls now retain full opacity and use Axterm muted text on a raised
 surface (5.43:1); a unit regression guards the style, and the focused J-08
-keyboard-driven preview journey passes. Root `bun run check` then passed 219
+keyboard-driven preview journey passes. Root `pnpm run check` then passed 219
 test files (1,020 passed, 33 skipped), nine visual and two accessibility
 journeys. The 358-module / 1,304-dependency architecture gate and 267 Contract
 operations also pass. IR-10 remains **In progress** because design approval
 and cross-platform evidence are still missing.
 
-After that source fix, `bun run candidate:check` verified an independent
+After that source fix, `pnpm run candidate:check` verified an independent
 snapshot of 801 files / 18,208,344 bytes, tree SHA-256
 `6ac0aa3e8b61d0eaf03667cefe1a07b91641112fd2a26f4569cc2e172e0ea7d5`, temporary
 root commit `fc149543270888ff3f6f0b6b847cfe6722f5be40`, and a separate clean
 `git clone --no-local` without submodule, `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's
-complete `bun run check` passed 219 test files (1,020 passed, 33 skipped),
+complete `pnpm run check` passed 219 test files (1,020 passed, 33 skipped),
 358 modules / 1,304 dependencies, 267 Contract operations, nine visual and two
 accessibility journeys. It did not run packaged Playwright, SSH/remote peers,
 remote CI or platform installers; therefore IR-12 remains In progress. See the
 [clean-clone evidence](evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md).
 
-Current local verification on 2026-09-23: `bun run check` passes 219 test
+Current local verification on 2026-09-23: `pnpm run check` passes 219 test
 files with five skipped files (1,026 tests passed, 33 skipped), the 358-module /
 1,306-dependency Level 1 gate, 267 Contract operations, source/release hygiene,
 production build/layout, nine visual and two accessibility journeys. The
@@ -3861,7 +3924,7 @@ pre-evidence snapshot had 782 files / 17,679,713 bytes / source-tree SHA-256
 `f9e89cee22498784a6698c2b6272b07653f43f541ff9dcd48990e6d93d00bebb`.
 Both `candidate:check` and `candidate:ssh:check` used separate temporary
 commits/clones, frozen-installed 609 packages and passed the full 1,003-pass
-`bun run check`, including the new migration regressions; the latter also
+`pnpm run check`, including the new migration regressions; the latter also
 passed controlled OpenSSH Runtime and source Electron B-12 save-and-connect
 in the **same clone**. Final clone status was clean, and temporary copies and
 fixture containers/networks were removed. This is local engineering evidence,
@@ -3870,11 +3933,11 @@ Windows/native-Linux installed release. IR-12 stays **In progress**; see the
 [refreshed IR-12 record](evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md).
 
 The clean-clone gate now has an explicit Docker-backed variant:
-`bun run candidate:ssh:check`. A 765-file source snapshot (pre-evidence tree
+`pnpm run candidate:ssh:check`. A 765-file source snapshot (pre-evidence tree
 SHA-256 `b384e23009f7c51143248bf78ed92a2d20ba5251df226911c1d561f84ed38acb`)
 became temporary commit `7ba6ecb6b67142a338f9822e88beb0f68d278a21`
 and a distinct, clean `git clone --no-local`. In that **same clone**, frozen
-install and complete `bun run check` passed 988 tests with 33 skips, then the
+install and complete `pnpm run check` passed 988 tests with 33 skips, then the
 real controlled OpenSSH Runtime fixture and Electron B-12 save-and-connect
 journey passed. The final clone Git status was clean and the temporary clone,
 fixture containers and network were removed. The ordinary `candidate:check`
@@ -3883,7 +3946,7 @@ clean-checkout evidence but leaves external peers, native Windows/Linux, remote
 CI, source-rights review and final new-repository acceptance open; see the
 [same-clone SSH record](evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md).
 
-The opt-in `bun run candidate:protocol:check` now extends that same disposable
+The opt-in `pnpm run candidate:protocol:check` now extends that same disposable
 clean-clone gate with independently distributed `lrzsz` and `trzsz-go` peers
 over the product SSH/PTY transport. Its 2026-09-23 pre-evidence snapshot had
 765 files / 16,583,503 bytes / tree SHA-256
@@ -3917,7 +3980,7 @@ The latest P-08/IR-12 refresh now checks the current 799-file source snapshot
 in a distinct `git clone --no-local`: tree SHA-256
 `61a29835f68ed8b91538e0c44edd981e51f5161761e6b4441c8b1f0cfd048acc`, temporary
 commit `ae5fda57d45df81de527557b6f8ef0a03f569a14`. Snapshot hygiene passed;
-frozen install rebuilt macOS arm64 `node-pty`, and full `bun run check` passed
+frozen install rebuilt macOS arm64 `node-pty`, and full `pnpm run check` passed
 219 test files (five skipped), 1,019 tests (33 skipped), Level 1 (358 modules /
 1,304 dependencies), 267 Contract operations, production build/layout, nine
 visual and two accessibility journeys. The same clone also passed the
@@ -3958,7 +4021,7 @@ embedded Pako). `licenses/noVNC-SOURCE-NOTICES.txt` records every file hash,
 preserves 32 leading legal/source-origin comments and explicitly labels 20
 files without a detected leading notice. Its SHA-256 is
 `077a989ef983af9c9ede129a8488c688a97e43fdd8b88027f7fb445640401994`.
-The generated-file drift check is in `bun run check`; an isolated unsigned
+The generated-file drift check is in `pnpm run check`; an isolated unsigned
 macOS arm64 directory app held byte-identical material, exposed it in About
 and passed both packaged legal/About journeys (ASAR SHA-256
 `d391080104a463eed8fdf2601dc1aa574c4738f3b018938b62e4c32cb2004b55`).
@@ -4110,7 +4173,7 @@ passes. This fills a **publisher-root text preservation** gap, not a per-file no
 WASM-linkage review. All 260 human decisions, source-to-WASM reproducibility,
 license-option selection and IR-02/IR-11 acceptance remain open.
 
-The follow-up `bun run check` passed 232 unit/integration files (1,164 tests
+The follow-up `pnpm run check` passed 232 unit/integration files (1,164 tests
 passed, 34 skipped), 360 architecture modules / 1,310 dependencies, 267
 Contract operations, build/source/legal gates and 11 visual/accessibility
 journeys. These are engineering checks, not the outstanding rights sign-off.
@@ -4128,7 +4191,7 @@ packaged journeys passed (11 platform/fixture skips), including exact
 Legal/About text. This is not a signed/notarized installer.
 This does not establish actual WASM linkage or full file-level rights review;
 IR-02/IR-11 remain **In progress** and all 260 human decisions are pending.
-The follow-up `bun run check` passed 233 unit/integration files (1,167 tests
+The follow-up `pnpm run check` passed 233 unit/integration files (1,167 tests
 passed, 34 skipped), 360 architecture modules / 1,310 dependencies, 267
 Contract operations, build/source/legal gates and 11 visual/accessibility
 journeys. The composite final-public gate still reports nine pending
@@ -4149,7 +4212,7 @@ packaged SPDX sidecar; the focused IronRDP artifact comparison and all 22
 applicable packaged journeys passed (11 platform/fixture skips), including
 Legal/About exact-text access. The final-public composite still has nine
 pending human/release prerequisites. IR-02/IR-11 remain **In progress**.
-The follow-up `bun run check` passed 234 unit/integration files (1,170 tests
+The follow-up `pnpm run check` passed 234 unit/integration files (1,170 tests
 passed, 34 skipped), 360 architecture modules / 1,310 dependencies, 267
 Contract operations, build/source/legal gates and 11 visual/accessibility
 journeys. The source-header publisher check separately revalidated all 719
@@ -4169,7 +4232,7 @@ skips). Exact artifact hashes and limitations are in the linked record. This
 is a bounded reviewer handoff, not proof that every source file enters the
 published binary, full file-level rights clearance or qualified approval.
 All 62 native decisions and IR-02/IR-11 remain **In progress**.
-The follow-up `bun run check` passed 235 unit/integration files (1,173 tests
+The follow-up `pnpm run check` passed 235 unit/integration files (1,173 tests
 passed, 34 skipped), 360 architecture modules / 1,310 dependencies, 267
 Contract operations, build/source/legal gates and 11 visual/accessibility
 journeys. Both the new native and prior IronRDP publisher-source header checks
@@ -4204,7 +4267,7 @@ installed README points to that 875-byte file; its bytes and the package's
 Unlicense text match the official `v0.14.5` source commit. The AUTHORS file
 is now declared in the source third-party notice and included in the
 application's legal-text directory. A focused source test pins its identity
-and hashes; full `bun run check` passed. A fresh unsigned macOS arm64 directory
+and hashes; full `pnpm run check` passed. A fresh unsigned macOS arm64 directory
 app includes the file, and its packaged SPDX sidecar verifies. The packaged
 file/notice journey passed; the About journey's assertions passed before an
 Electron-shutdown timeout on the first combined run, then its single-test
@@ -4222,7 +4285,7 @@ headers and the notice references. The exact VS Code source revision and
 publisher build lineage remain unproven. A separate official 6.0.0 source-tag
 comparison found all 45 mapped xterm TypeScript sources byte-identical and
 corresponding Microsoft-header TypeScript paths for the eleven VS Code modules.
-Full `bun run check` passed; a fresh unsigned macOS arm64 app has
+Full `pnpm run check` passed; a fresh unsigned macOS arm64 app has
 byte-identical notice/license files, a verified
 packaged SPDX sidecar, and separately passing packaged legal-file and About
 journeys. Native Windows/Linux, signing and qualified review remain open, so
@@ -4237,7 +4300,7 @@ three remote-desktop jump-host references, excludes six credential references
 from the file, and confirms a repeat preview is unchanged. The focused suite
 passed 12/12 tests. This is current Axterm-format source evidence, not proof
 that the legacy importer converts non-SSH records, a Vault backup or an old
-public-binary/cross-platform migration. Full `bun run check` then passed
+public-binary/cross-platform migration. Full `pnpm run check` then passed
 1,015 tests plus all nine visual/accessibility journeys. IR-08 remains **In
 progress**; see the
 [nine-protocol portable-file record](evidence/IR08-ALL-PROTOCOL-PORTABLE-2026-09-23.md).
@@ -4400,7 +4463,7 @@ Both packages still report version `0.10.0`; the old package was rebuilt from
 historical source, not preserved from a public release. This does not begin the
 public migration window or prove real-user data, Windows/native-Linux upgrades,
 rights review or release approval, so IR-08 remains **In progress** and IR-09
-remains **Open**. The subsequent full `bun run check` passed: 220 test files
+remains **Open**. The subsequent full `pnpm run check` passed: 220 test files
 (1,080 passed, 33 skipped), 358 architecture modules / 1,307 dependencies,
 267 Contract operations, all commercialization/source-snapshot gates, the
 production build and 11 visual/accessibility journeys.
@@ -4412,7 +4475,7 @@ checks both the authorized file and its opened descriptor before allocation.
 A regression creates 60 real Quick Commands, exports a file between 8 and
 16 MiB, imports and commits it into a fresh database, verifies all commands
 and steps, and rejects a file one byte over 16 MiB. The focused nine-test
-suite and complete `bun run check` pass. This removes one recoverability gap;
+suite and complete `pnpm run check` pass. This removes one recoverability gap;
 it does not start the public migration clock or accept IR-08.
 
 The independent `axterm-configuration` v1 path now has a matching large-file
@@ -4558,7 +4621,7 @@ explicit platform/optional-SSH-fixture skips. This is local macOS source and
 package evidence, not human translation/design/trademark review, signed
 installation, Windows/Linux proof, or IR-05/IR-10 acceptance.
 
-At the preceding P-02 snapshot, `bun run check` passed 217 test files with five skipped
+At the preceding P-02 snapshot, `pnpm run check` passed 217 test files with five skipped
 files (975 tests with 33 skips), the 368-module / 1,313-dependency Level 1
 gate, 267 Contract operations, the four-catalog / 2,574-key localization gate,
 all source/release hygiene checks, production layout, seven visual journeys
@@ -4597,7 +4660,7 @@ same primary token into the canvas and rejects the remaining `#36566b` /
 `#182832` blue pair. This directly protects the owner’s request that the
 previous blue badge, form border, halo or recovery chrome not reappear through a
 selector override or CSS cascade change. The focused source and Runtime-recovery
-Electron tests passed. The preceding complete `bun run check` passed 213 test
+Electron tests passed. The preceding complete `pnpm run check` passed 213 test
 files (919 tests; 29 skips), the 368-module / 1,313-dependency Level 1
 architecture gate, 267 Contract operations, all source/release hygiene checks
 and five visual plus two accessibility Electron journeys. These are narrow
@@ -4689,7 +4752,7 @@ This strengthens clean-checkout reproducibility; it does not accept source
 rights, migration, platform or release gates.
 
 P-08 now has a later-stage final-public snapshot guard in addition to the
-normal migration-period hygiene check. `bun run snapshot:final-public:check`
+normal migration-period hygiene check. `pnpm run snapshot:final-public:check`
 prepares the same source-only copy as `snapshot:check`, then scans every
 retained filename and byte stream for the legacy product name, including ASCII
 and UTF-16LE/BE literals at any byte offset. It rejects every
@@ -4702,7 +4765,7 @@ and [PUBLIC_SNAPSHOT_EXCEPTION_TEMPLATE.json](PUBLIC_SNAPSHOT_EXCEPTION_TEMPLATE
 On the current migration worktree, the guard correctly reports 135 unapproved
 findings while the underlying hygiene audit remains clean; this expected failure
 demonstrates that the guard is not being substituted for the current P-06
-compatibility boundary. It is deliberately excluded from normal `bun run check`
+compatibility boundary. It is deliberately excluded from normal `pnpm run check`
 and becomes mandatory only after IR-09 removal approval. This is an executable
 final-source boundary, not rights, trademark, similarity, remote-CI,
 installed-platform or IR-12/IR-14 acceptance.
@@ -4715,7 +4778,7 @@ now also tests UTF-16LE/BE literals, including an odd-offset embedded string;
 the focused final-snapshot/release suites pass 8/8. The lower-level diagnostic
 does **not** override the nine currently pending composite-release
 prerequisites or authorize deleting compatibility features before the public
-migration window. The full `bun run check` passes after this audit change:
+migration window. The full `pnpm run check` passes after this audit change:
 1,178 unit/integration tests passed (38 skipped), 360 architecture modules /
 1,310 dependencies, 267 Contract operations and all 11 visual/accessibility
 journeys. IR-09 and IR-14 remain Open.
@@ -4770,7 +4833,7 @@ root commit `09cee12f4119e1789f9df827e0676c1fefcc290a` and a separate clean
 `git clone --no-local` each tracked the same 740 files with no submodule
 metadata, `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 214 test files with five conditional
+clone's complete `pnpm run check` passed 214 test files with five conditional
 skips (931 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4797,7 +4860,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 742 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 215 test files with five conditional
+clone's complete `pnpm run check` passed 215 test files with five conditional
 skips (934 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4815,7 +4878,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 745 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4833,7 +4896,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4855,7 +4918,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4878,7 +4941,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4903,7 +4966,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4928,7 +4991,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4954,7 +5017,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -4982,7 +5045,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -5010,7 +5073,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -5042,7 +5105,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (937 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -5075,7 +5138,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (940 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -5105,7 +5168,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (940 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -5146,7 +5209,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked 746 files with no submodule metadata,
 `vendor/legacy-prototype`, generated OpenAPI or external peer package. Frozen
 installation installed 609 packages and rebuilt macOS arm64 `node-pty`; the
-clone's complete `bun run check` passed 216 test files with five conditional
+clone's complete `pnpm run check` passed 216 test files with five conditional
 skips (942 tests with 33 skips), the 368-module / 1,313-dependency Level 1 gate,
 267 Contract operations, commercialization/localization/SBOM/snapshot checks,
 production layout, and five visual plus two accessibility Electron journeys.
@@ -5189,7 +5252,7 @@ Every snapshot-audit category was empty. Its synthetic root commit
 `0a766dfa81898f14feeecb6ad8cda0486989192c` and a clean `git clone --no-local`
 each tracked 724 files with no `.gitmodules`, no `vendor/legacy-prototype` and no
 generated OpenAPI file. Frozen installation rebuilt macOS arm64 `node-pty`,
-and the clone's complete `bun run check` passed: 208 test files / 896 tests
+and the clone's complete `pnpm run check` passed: 208 test files / 896 tests
 with one skip, the 367-module / 1,308-dependency Level 1 gate, 267 Contract
 operations, source commercialization checks, four navigation catalogs, the
 2,543-key core fallback ledger, production build/layout and five
@@ -5349,7 +5412,7 @@ installed upgrade, signed/public distribution, Windows result or release-owner
 approval. IR-13 therefore remains **Open**.
 
 After the Linux fixes and evidence updates, the complete current-worktree
-`bun run check` passed 217 test files with five skipped files (947 tests with
+`pnpm run check` passed 217 test files with five skipped files (947 tests with
 33 skips), the 368-module / 1,313-dependency Level 1 architecture gate, 267
 Contract operations, component/license/attribution/SBOM/asset/migration/service
 and four-language gates, the 748-file independent-snapshot audit, production
@@ -5357,7 +5420,7 @@ build/layout checks, and five visual plus two accessibility Electron journeys.
 This validates the current source worktree; it does not promote any human,
 public-migration, signing, native-platform or new-repository acceptance row.
 
-The matching post-Linux-fix `bun run candidate:check` also passed from a
+The matching post-Linux-fix `pnpm run candidate:check` also passed from a
 separate ephemeral Git root and `git clone --no-local`. Its 748-file /
 15,638,233-byte audited source tree hashes to
 `672c279d34f5656f3e3106adac21235909c802cfa9160627c68c284d4362ff81`;
@@ -5377,7 +5440,7 @@ registry rather than the locally configured mirror. No stable electron-builder
 27.x is published: only `27.0.0-alpha.0` through `alpha.8` exist, while the
 stable `v26` tag remains 26.16.1. The repository therefore retains its exact
 26.16.1 pin instead of introducing a pre-release packaging tool. After these
-evidence and baseline updates, the complete `bun run check` passed 216 test
+evidence and baseline updates, the complete `pnpm run check` passed 216 test
 files with five conditional skips (937 tests with 33 skips), the 368-module /
 1,313-dependency architecture gate, 267 Contract operations, all source,
 license, asset, migration, four-language and snapshot gates, production builds,
@@ -5550,7 +5613,7 @@ Electron Host Manager and Settings at 1280×800, 1440×900 and 1920×1080, and t
 guarded Sync-format migration decision at
 1280×800. Eight checked-in macOS PNGs are compared by
 `tests/e2e/visual.spec.ts`; the same source journey and viewport-bound checks
-run without pixel comparison on other platforms. The default `bun run check`
+run without pixel comparison on other platforms. The default `pnpm run check`
 now includes this visual test and two keyboard/accessibility/reduced-motion
 tests, and no longer includes the historical parity audit/test. The source
 check at that stage passed 813 unit tests (one skipped), Level 1 and
@@ -5600,7 +5663,7 @@ stylesheet no longer contains the shape or its blue gradient. The shared Shell
 accent now resolves to the mint `--shell-primary`, including tab-number badges,
 and current Host/profile/theme/history/import/bookmark defaults no longer use
 the former blue primary literal. The AX application mark now uses a
-mint-green-only gradient; `bun run icons:generate` refreshes the PNG, ICO and
+mint-green-only gradient; `pnpm run icons:generate` refreshes the PNG, ICO and
 ICNS variants from the editable SVG on macOS, and the asset inventory/review
 handoff was regenerated for those new bytes. The owner-driven macOS
 Shell/Settings baselines were regenerated and inspected through the three
@@ -5928,7 +5991,7 @@ P-08/IR-12 has a partial independence result, not a clean-checkout sign-off.
 On 2026-09-20 a new source copy at `/tmp/axterm-independent-check.GmD68b`
 excluded `.git`, `vendor`, installed modules, build outputs and test results;
 both `.git` and `vendor` were verified absent. In that copy,
-`bun install --frozen-lockfile` and the then-current `bun run check` both exited
+`pnpm install --frozen-lockfile` and the then-current `pnpm run check` both exited
 successfully with the same 813-unit/three-Playwright gate. Standard CI now
 checks out without recursive submodules and prepares Linux Xvfb before running
 `check`. The copy is not an actual new Git checkout or CI run; real protocol
@@ -5939,8 +6002,8 @@ worktree, a second temporary source copy at
 `/tmp/axterm-independent-current.9uoPMz` explicitly excluded `.git`,
 `.gitmodules`, `vendor/legacy-prototype`, installed modules, build/release and test
 outputs, and `.env*`; every excluded path was asserted absent before the frozen
-install. Its `bun install --frozen-lockfile` rebuilt native dependencies and
-the complete `bun run check` passed with 839 unit tests (one skipped), the
+install. Its `pnpm install --frozen-lockfile` rebuilt native dependencies and
+the complete `pnpm run check` passed with 839 unit tests (one skipped), the
 Level 1 architecture gate, 262 Contract operations, production build and three
 Axterm visual/accessibility journeys. This is stronger current no-submodule
 source evidence only: it is still an uncommitted temporary copy, not a new Git
@@ -5962,7 +6025,7 @@ Git checkout, CI result, installed platform or distribution acceptance;
 IR-12 stays **In progress**.
 
 P-08 now has a reusable independent-snapshot audit rather than relying only on
-the preceding manual exclusion list. `bun run audit:independent-snapshot --
+the preceding manual exclusion list. `pnpm run audit:independent-snapshot --
 --snapshot <path>` walks a prepared source copy deterministically, hashes its
 sorted source manifest and rejects Git/submodule/parity material, dependency
 or build/test output, non-example `.env` files, symbolic links and the retired
@@ -6014,7 +6077,7 @@ new gate enforces copy hygiene, but intentionally does not claim that the
 temporary copy has itself completed a second install/build or that IR-12 is
 accepted.
 
-The working tree's direct `bun run snapshot:check` is a required current
+The working tree's direct `pnpm run snapshot:check` is a required current
 hygiene assertion: it reports its source-file count, byte count and
 content-dependent tree hash at execution, then rejects forbidden entries,
 environment files, source files over 5 MiB, symbolic links, high-confidence
@@ -6035,7 +6098,7 @@ source-rights clearance, full secret-history/content review, package test or
 IR-12 acceptance.
 
 The same portable preparation path has now produced a passing macOS arm64
-isolated copy that completed `bun install --frozen-lockfile` and the full gate:
+isolated copy that completed `pnpm install --frozen-lockfile` and the full gate:
 865 tests passed (one skipped), with the 365-module / 1,301-dependency
 architecture gate, 267 Contract operations, component/license/SBOM/product-
 asset inventories, localization, production build/layout and all three
@@ -6061,8 +6124,8 @@ The candidate above predates the final large-generated-artifact rule. Its
 tracked tree still contained the generated 8.4 MiB `docs/api/openapi.json`, so
 it is retained only as a reproducibility probe and must not be reused as the
 final source candidate. That OpenAPI document is now ignored and generated on
-demand by `bun run openapi:generate`; `bun run client:generate` and
-`bun run contracts:check` derive the client directly from the in-memory Runtime
+demand by `pnpm run openapi:generate`; `pnpm run client:generate` and
+`pnpm run contracts:check` derive the client directly from the in-memory Runtime
 contract, so the generated JSON is no longer required for correctness or
 client-drift verification. New snapshot audits reject every source file larger
 than 5 MiB and high-confidence complete PEM private-key/common-token formats.
@@ -6127,7 +6190,7 @@ category empty. A synthetic local root commit and a separate `git clone
 --no-local` both had 716 tracked files; the clone had no `.gitmodules` or
 submodule output, did not track generated OpenAPI and remained clean after the
 check. Frozen installation rebuilt macOS arm64 `node-pty`; its complete
-`bun run check` exited 0 through lint, type checking, test, the 367-module /
+`pnpm run check` exited 0 through lint, type checking, test, the 367-module /
 1,308-dependency architecture gate, 267 Contract operations, source
 commercialization checks, production build/layout and five Axterm
 visual/accessibility journeys. The detailed procedure and limits are in the
@@ -6146,7 +6209,7 @@ category empty. A synthetic local root commit and separate `git clone
 --no-local` both had 721 tracked files; the clone had no `.gitmodules` or
 submodule output, did not track generated OpenAPI and remained clean after the
 check. Frozen installation rebuilt macOS arm64 `node-pty`; its complete
-`bun run check` exited 0 through lint, type checking, 206 passing test files
+`pnpm run check` exited 0 through lint, type checking, 206 passing test files
 with one skip (894 passing tests with one skip), the 367-module /
 1,308-dependency architecture gate, 267 Contract operations, source
 commercialization checks, production build/layout and five Axterm
@@ -6167,7 +6230,7 @@ category empty. A synthetic local root commit and separate `git clone
 --no-local` both had 721 tracked files; the clone had no `.gitmodules` or
 submodule output, did not track generated OpenAPI and remained clean after the
 check. Frozen installation rebuilt macOS arm64 `node-pty`; its complete
-`bun run check` exited 0 through lint, type checking, 206 passing test files
+`pnpm run check` exited 0 through lint, type checking, 206 passing test files
 with one skip (894 passing tests with one skip), the 367-module /
 1,308-dependency architecture gate, 267 Contract operations, source
 commercialization checks, production build/layout and five Axterm
@@ -6188,7 +6251,7 @@ category empty. A synthetic local root commit and separate `git clone
 --no-local` both had 721 tracked files; the clone had no `.gitmodules` or
 submodule output, did not track generated OpenAPI and remained clean after the
 check. Frozen installation rebuilt macOS arm64 `node-pty`; its complete
-`bun run check` exited 0 through lint, type checking, 206 passing test files
+`pnpm run check` exited 0 through lint, type checking, 206 passing test files
 with one skip (894 passing tests with one skip), the 367-module /
 1,308-dependency architecture gate, 267 Contract operations, source
 commercialization checks, production build/layout and five Axterm
@@ -6233,7 +6296,7 @@ app passes 14 packaged journeys with nine platform/fixture skips. During the
 first DMG run, a ZMODEM test peer started on unrelated PTY input before the
 explicit test handshake. The peer now waits for `!`; a new real-PTY regression,
 five focused packaged repeats and the complete DMG rerun pass. Artifact hashes
-and remaining limits are in the linked record. The latest source `bun run check`
+and remaining limits are in the linked record. The latest source `pnpm run check`
 passes 817 unit tests (one skipped) and three visual/accessibility journeys.
 This closes only the component
 **metadata** gap, not exact per-component notices, an artifact SBOM,
@@ -6258,7 +6321,7 @@ remain **In progress**.
 
 On 2026-09-21, P-08 added `AXTERM_PRODUCTION_DEPENDENCIES.spdx.json`, a
 deterministic SPDX 2.3 rendering of the frozen Bun production dependency graph.
-It has 125 package identities, is guarded by `bun run sbom:check`, included in
+It has 125 package identities, is guarded by `pnpm run sbom:check`, included in
 the builder's external legal files and rendered in About alongside the
 component index and license texts. Its scope and `NOASSERTION` license fields
 explicitly avoid treating package metadata as file-level clearance. The source
@@ -6281,7 +6344,7 @@ no-`vendor` macOS arm64 `package:dir` app includes the Drizzle text and
 updated notice byte-for-byte, exposes both in About, and passes 14 packaged
 journeys with nine conditional skips. Its inventory has 14 external legal
 files and still reports both ASAR packages without internal root LICENSE
-files. The latest source `bun run check` passes 825 unit tests (one skipped),
+files. The latest source `pnpm run check` passes 825 unit tests (one skipped),
 architecture/Contract/license/localization/build gates and three
 visual/accessibility journeys. IR-02
 and IR-11 stay **In progress**.
@@ -6348,7 +6411,7 @@ option. Exact source-to-binary/rights review, live RDP connection/auth/input/
 clipboard regression and Windows/Linux package checks remain open. Module
 initialization is not RDP interoperability or legal clearance; IR-02/IR-11
 remain **In progress**.
-The post-replacement `bun run check` passes 817 tests (one skipped), Level 1
+The post-replacement `pnpm run check` passes 817 tests (one skipped), Level 1
 architecture, 256-operation Contract, 15-language navigation catalog, source
 localization and production build/packaging-layout gates. The complete
 macOS desktop E2E passes 73 tests with 11 platform/fixture skips; three
@@ -6388,7 +6451,7 @@ all-15-language switching and cold restart. Source and packaged
 `f3266e11ff2f86fa476774c66734e4c16750f1bf8bfe082777ef20f5aea959ba`;
 this app's `app.asar` SHA-256 is
 `01e74cb4dea63aa657e459b76cf746256946fd47b02c543bb72b66049dd76cf2`.
-The final post-change `bun run check` passes 816 tests (one skipped), Level 1
+The final post-change `pnpm run check` passes 816 tests (one skipped), Level 1
 architecture, 256-operation Contract, 15 × 45 catalog/drift/scope, Renderer
 localization, historical parity and production-build gates; that parity pass
 does not replace independent-release acceptance.
@@ -6413,7 +6476,7 @@ checks, production build and three Axterm visual/accessibility journeys. This
 does not replace human or supported-platform evidence.
 
 P-04 now also has the explicit, release-facing
-`bun run locales:navigation:reviewed-check` gate. It rejects a stale generated
+`pnpm run locales:navigation:reviewed-check` gate. It rejects a stale generated
 navigation catalog or any locale without recorded draft attribution and both
 qualified language/rights sign-offs, rather than allowing a release process to
 mistake `locales:draft`'s informational pending list for approval. The command
@@ -6506,9 +6569,9 @@ The machine-checked
 `scripts/localization/axterm-core-review-ledger.json` binds every retained
 locale's exact message hash and records those two locales as **partial** (2,168
 of 2,543), not complete or English-only fallback. All source-attribution,
-language and rights-review records remain pending. `bun run locales:core:check`
-is part of `bun run check` and rejects catalog drift or a false coverage claim;
-`bun run locales:core:reviewed-check` deliberately remains red until each
+language and rights-review records remain pending. `pnpm run locales:core:check`
+is part of `pnpm run check` and rejects catalog drift or a false coverage claim;
+`pnpm run locales:core:reviewed-check` deliberately remains red until each
 retained language has complete coverage, recorded attribution and independent
 language/rights reviewers. This narrow, unreviewed draft improves actual
 Settings and Shell usability; it does not promote IR-05 or claim
@@ -6729,7 +6792,7 @@ disposable root commit
 `b233ae71d796157de63f1d389e971f7e275f1570` and distinct `git clone --no-local`
 each tracked 729 clean, no-submodule files with no `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's complete
-`bun run check` passed 211 test files (902 tests) with one skip, the 367-module /
+`pnpm run check` passed 211 test files (902 tests) with one skip, the 367-module /
 1,308-dependency Level 1 gate, 267 Contract operations, four-catalog /
 2,543-key localization checks, commercialization checks, production build/layout
 and five Axterm visual/accessibility journeys. The exact pre-evidence record is
@@ -6746,7 +6809,7 @@ disposable root commit
 `f4bfd17bb882ce9aa0302782d6d4d146c3660d41` and distinct `git clone --no-local`
 each tracked 729 clean, no-submodule files with no `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's complete
-`bun run check` passed 211 test files (902 tests) with one skip, the 367-module /
+`pnpm run check` passed 211 test files (902 tests) with one skip, the 367-module /
 1,308-dependency Level 1 gate, 267 Contract operations, four-catalog /
 2,543-key localization checks, commercialization checks, production build/layout
 and five Axterm visual/accessibility journeys. The exact pre-evidence record is
@@ -6765,7 +6828,7 @@ its disposable root commit
 `20737e4de0aff42c6bfa212514bd4ac2833c55c0` and distinct `git clone --no-local`
 each tracked 729 clean, no-submodule files with no `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's complete
-`bun run check` passed 211 test files (902 tests) with one skip, the 367-module /
+`pnpm run check` passed 211 test files (902 tests) with one skip, the 367-module /
 1,308-dependency Level 1 gate, 267 Contract operations, four-catalog /
 2,543-key localization checks, commercialization checks, production build/layout
 and five Axterm visual/accessibility journeys. The exact pre-evidence record is
@@ -6784,7 +6847,7 @@ its disposable root commit
 `780a79bfc52de59607faf5cad2760751e6655faa` and distinct `git clone --no-local`
 each tracked 729 clean, no-submodule files with no `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's complete
-`bun run check` passed 211 test files (902 tests) with one skip, the 367-module /
+`pnpm run check` passed 211 test files (902 tests) with one skip, the 367-module /
 1,308-dependency Level 1 gate, 267 Contract operations, four-catalog /
 2,543-key localization checks, commercialization checks, production build/layout
 and five Axterm visual/accessibility journeys. The exact pre-evidence record is
@@ -6807,7 +6870,7 @@ disposable root commit
 `611aa9a326a804abad9bb873937ac112144815c4` and distinct `git clone --no-local`
 each tracked 729 clean, no-submodule files with no `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's complete
-`bun run check` passed 211 test files (902 tests) with one skip, the 367-module /
+`pnpm run check` passed 211 test files (902 tests) with one skip, the 367-module /
 1,308-dependency Level 1 gate, 267 Contract operations, four-catalog /
 2,543-key localization checks, commercialization checks, production build/layout
 and five Axterm visual/accessibility journeys. The exact pre-evidence record is
@@ -6831,7 +6894,7 @@ disposable root commit
 `e446cf0916665509f5c1b82dfbfdd7233fb749e3` and distinct `git clone --no-local`
 each tracked 729 clean, no-submodule files with no `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's complete
-`bun run check` passed 211 test files (902 tests) with one skip, the 367-module /
+`pnpm run check` passed 211 test files (902 tests) with one skip, the 367-module /
 1,308-dependency Level 1 gate, 267 Contract operations, four-catalog /
 2,543-key localization checks, commercialization checks, production build/layout
 and five Axterm visual/accessibility journeys. The exact pre-evidence record is
@@ -6853,7 +6916,7 @@ disposable root commit
 `c08a93e73e1709e1919b0bd73fffb671ea04b488` and distinct `git clone --no-local`
 each tracked 729 clean, no-submodule files with no `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's complete
-`bun run check` passed 211 test files (902 tests) with one skip, the 367-module /
+`pnpm run check` passed 211 test files (902 tests) with one skip, the 367-module /
 1,308-dependency Level 1 gate, 267 Contract operations, four-catalog /
 2,543-key localization checks, commercialization checks, production build/layout
 and five Axterm visual/accessibility journeys. A fresh unsigned macOS arm64
@@ -6874,7 +6937,7 @@ disposable root commit
 `e36bc833d8bd74bca566fb2f4949439cc4c8cc50` and distinct `git clone --no-local`
 each tracked 729 clean, no-submodule files with no `vendor/legacy-prototype` or generated
 OpenAPI. Frozen installation rebuilt macOS arm64 `node-pty`; the clone's complete
-`bun run check` passed 211 test files (902 tests) with one skip, the 367-module /
+`pnpm run check` passed 211 test files (902 tests) with one skip, the 367-module /
 1,308-dependency Level 1 gate, 267 Contract operations, four-catalog /
 2,543-key localization checks with no partial core locales or English fallback,
 commercialization checks, production build/layout and five Axterm
@@ -7062,7 +7125,7 @@ work or keep a removed package in scope. All eight entries deliberately remain
 pending; this is a reviewable hand-off, not IR-02/IR-11 acceptance or a legal
 conclusion.
 
-P-08 now also has `bun run licenses:attribution:reviewed-check`. It accepts
+P-08 now also has `pnpm run licenses:attribution:reviewed-check`. It accepts
 only `reviewed` entries with the existing qualified-reviewer, date, primary
 evidence and conclusion requirements; `pending` and `needs-follow-up` remain
 hard failures. `release:final-public:check` now composes that gate with the
@@ -7078,8 +7141,8 @@ bulk API, so the explicit `audit:dependencies` command uses the official npm
 registry. It initially exposed GHSA-67mh-4wv8-2f99 through
 `drizzle-kit@0.31.10`'s deprecated loader and `esbuild@0.18.20`. A root Bun
 override now resolves every `esbuild` instance to the already-direct
-`0.28.2`, above the advisory's fixed `0.25.0` line. `bun pm why esbuild`
-shows a single resolved version, `bunx drizzle-kit --version` still succeeds,
+`0.28.2`, above the advisory's fixed `0.25.0` line. `pnpm why esbuild`
+shows a single resolved version, `pnpm exec drizzle-kit --version` still succeeds,
 and full/production audit queries now return `{}`. This mitigates the current
 advisory and makes future drift visible in CI; it does not close IR-02/IR-11,
 replace source/binary review, or establish a security-support channel.
@@ -7096,7 +7159,7 @@ reporting that fact; the provenance mapping is recorded in
 [THIRD_PARTY_LICENSE_AUDIT](THIRD_PARTY_LICENSE_AUDIT.md). The unsigned
 `app.asar` SHA-256 for this build is
 `2653960c6255e0ba035b19f8d9c909ec70bfb286c1d0feb6af1ac5c262991c06`.
-The post-change `bun run check` passes 813 tests (one skipped), architecture,
+The post-change `pnpm run check` passes 813 tests (one skipped), architecture,
 Contract, localization, historical parity and build gates. This resolves one
 identified notice gap, not IR-02/IR-11 or the full SBOM.
 
@@ -7120,7 +7183,7 @@ selected by the existing terminal-transfer Adapter; its old `.cjs` source is
 removed. Tests cover bidirectional transfer, CRC/checksum handshakes, split
 1K frames, duplicate blocks, retransmission, EOT acknowledgment, cancellation,
 path-safe output, early peer handshake and timeout cleanup. The 2026-09-20
-`bun run check` passes with 761 tests (one skipped), and the rebuilt macOS
+`pnpm run check` passes with 761 tests (one skipped), and the rebuilt macOS
 arm64 app passes the packaged notice and independent-startup Playwright tests.
 The published download uses a same-directory hard link to expose only a
 completed file and cannot overwrite a prior destination. At that stage,
@@ -7139,7 +7202,7 @@ propagates stream errors, and cleans canceled/error staging files. Focused
 tests cover the prior completion defect, empty/binary files, path-length
 limits, a late destination race, missing directory and cleanup. These are
 transition safety repairs, **not** independent ZMODEM/trzsz replacement or
-real-remote/packaged transfer evidence. The subsequent full `bun run check`
+real-remote/packaged transfer evidence. The subsequent full `pnpm run check`
 passed 769 tests (one skipped), and a rebuilt macOS arm64 `package:dir` app
 passed checkout-independent startup plus packaged license tests. At that
 point, protocol transfer inside the packaged app was still unverified.
@@ -7155,7 +7218,7 @@ A separate Node child behind `node-pty` transferred binary data, and a
 rebuilt macOS arm64 `package:dir` app passed both download and upload of a
 16,388-byte binary fixture through Renderer selection, Host File Grant and the
 Runtime Adapter after being copied outside the source checkout. The
-post-removal `bun run check` passes
+post-removal `pnpm run check` passes
 787 tests (one skipped); the packaged `app.asar` SHA-256 is
 `0906d3c90fa29b4bb3b25f73f968bb48146d17ba23ea449f8d7b41a67fd3c216`.
 New safe directory-mode transfer is still unsupported (the prior writer also
@@ -7174,7 +7237,7 @@ binary directions. A macOS arm64 `package:dir` app copied outside the checkout
 passes a **sequential** download then upload of 16,388 binary bytes through
 Renderer selection, Host File Grant and Runtime. That packaged journey exposed
 and regressed a session-reuse defect: a completed session must be reset before
-the next transfer on the same terminal. The source cleanup's `bun run check`
+the next transfer on the same terminal. The source cleanup's `pnpm run check`
 passes 799 tests (one skipped), architecture/Contract/localization/parity
 gates and build. After cleanup, the rebuilt package again passes both the
 ZMODEM and TRZSZ bidirectional Playwright transfer journeys; its `app.asar`
@@ -7195,7 +7258,7 @@ unsigned `app.asar` SHA-256 is
 `d1c3518539433765f0af99aca6c09dac9ec4ba62ea2d7443b6a99e321a2ed8b7`.
 At that stage, this closed only the local macOS packaged-transfer gap, not
 P-02/IR-03's remote, cross-platform, portability or rights gates. The post-change
-`bun run check` passes 802 tests (one skipped), including the Level 1
+`pnpm run check` passes 802 tests (one skipped), including the Level 1
 architecture and Contract gates.
 
 The XMODEM fixture now also passes binary download and upload across an
@@ -7204,7 +7267,7 @@ The SSH server grants a PTY and bridges its shell channel to an independently
 running Node peer; the test checks complete file bytes and transfer completion,
 and closes channel, child and server in `finally`. This closes XMODEM's real SSH/PTY regression gap,
 not ZMODEM/trzsz remote operation or external-host interoperability. P-02 and
-IR-03 remain **In progress**. The post-fixture `bun run check` passes
+IR-03 remain **In progress**. The post-fixture `pnpm run check` passes
 804 tests (one skipped), including architecture, Contract, localization,
 parity and build gates.
 
@@ -7216,7 +7279,7 @@ receive timer in the separately published `trzsz2@1.2.0` library: successful
 data receive left its `Promise.race` timeout alive. A focused regression test
 first reproduced it, then the existing Bun patch mechanism gained a minimal
 ESM/CJS `finally` cleanup; the real PTY peer exits naturally afterward.
-`bun install --frozen-lockfile` reapplies the patch. This is a modification to
+`pnpm install --frozen-lockfile` reapplies the patch. This is a modification to
 third-party MIT code, identified in `THIRD_PARTY_NOTICES.txt`, not a claim of
 Axterm ownership. A fresh macOS arm64 `package:dir` build again passes all
 three bidirectional packaged transfer journeys and its exact-license/About
@@ -7227,7 +7290,7 @@ and the unsigned `app.asar` SHA-256 is
 The loopback SSH fixture is not an external OpenSSH interoperability test or
 Windows/Linux packaged proof. Filesystem portability, independently reviewed
 library rights and final distribution duties remain open; P-02/IR-03 stay
-**In progress**. The post-change `bun run check` passes 812 tests (one skipped),
+**In progress**. The post-change `pnpm run check` passes 812 tests (one skipped),
 Level 1 architecture, 256-operation Contract, localization, historical parity
 and production-build gates. Its historical parity pass is not independent-
 release acceptance.
@@ -7247,7 +7310,7 @@ progress**.
 
 The 2026-09-22 current-artifact OpenSSH revalidation now supersedes that older
 package-byte result in the same [IR-03 evidence record](evidence/IR03-MACOS-PACKAGED-OPENSSH-2026-09-21.md).
-After Docker Desktop 29.6.2 became available, `bun run test:ssh:packaged`
+After Docker Desktop 29.6.2 became available, `pnpm run test:ssh:packaged`
 passed the real Runtime fixture, source Electron B-12 and current packaged-app
 SSH/SFTP journeys. The packaged flow covered password authentication, Host Key
 approval, PTY output/search, live `/tmp` browsing and bookmark/history restart
@@ -7837,7 +7900,7 @@ cross-platform installed migration or historical user workflow has been
 established, so P-06/IR-08 remains **In progress** and IR-09 remains **Open**.
 See the private IR-08 v1.101.16 CSV evidence archive.
 
-After adding the released CSV shape, `bun run check` passed on 2026-09-24:
+After adding the released CSV shape, `pnpm run check` passed on 2026-09-24:
 220 test files passed and five conditional files were skipped (1,079 tests
 passed, 33 skipped); the Level 1 architecture gate checked 358 modules and
 1,307 dependencies, the Contract gate checked 267 operations, the four-locale
@@ -7855,7 +7918,7 @@ all snapshot categories were empty. Temporary root commit
 `git clone --no-local` each tracked exactly 753 files with no `.gitmodules`,
 submodule output, `vendor/legacy-prototype`, generated OpenAPI, installed dependency or
 release output. Frozen installation installed 609 packages and rebuilt macOS
-arm64 `node-pty`; the clone's complete `bun run check` passed 217 test files
+arm64 `node-pty`; the clone's complete `pnpm run check` passed 217 test files
 with five conditional skips (961 tests with 33 skips), the 368-module /
 1,313-dependency Level 1 gate, 267 Contract operations, all source/release
 hygiene checks, production layout, and five visual plus two accessibility
@@ -7985,7 +8048,7 @@ IR-09 remains **Open**.
 
 The release-owner facts that the guide requires are now held in the root
 [`MIGRATION_RELEASE_RECORD.json`](../../compliance/MIGRATION_RELEASE_RECORD.json). Its
-only valid current state is `pending`: `bun run migration:record:check` verifies
+only valid current state is `pending`: `pnpm run migration:record:check` verifies
 that it contains no accidental release claim, while the deliberately separate
 `migration:record:active-check` and `migration:record:removal-check` commands
 fail until a real public release, approved window, support scope and (for
@@ -8244,7 +8307,7 @@ protocol/security and rights review, installed Windows/native-Linux results
 and IR-04 acceptance remain open; P-03 stays **In progress**.
 
 The current P-03 FTP default path also passes a focused packaged macOS arm64
-journey after the partial-write change. `bun run package:dir` produced an
+journey after the partial-write change. `pnpm run package:dir` produced an
 unsigned app with a 101,556,447-byte `app.asar` (SHA-256
 `339af8aa667f87d106d473d4c8e30b0fe50e1e5e671d3489fd11d6b82746875e`).
 The packaged test copied it outside the checkout and passed one of one with
@@ -8296,8 +8359,8 @@ journeys skipped by condition. This is local unsigned macOS installation
 evidence only, so P-03/IR-04 remains **In progress**.
 
 P-03 additionally has repeatable Linux arm64 and x64 **source-runtime** FTP
-smokes: `bun run test:ftp:linux-container` and
-`AXTERM_LINUX_FTP_TEST_PLATFORM=linux/amd64 bun run test:ftp:linux-container`
+smokes: `pnpm run test:ftp:linux-container` and
+`AXTERM_LINUX_FTP_TEST_PLATFORM=linux/amd64 pnpm run test:ftp:linux-container`
 start `NodeLocalFtpServer` in a platform-selected local Bun container and
 verify the matching Node architecture, PASV listing, 8,196-byte binary
 upload/download and wrong-password rejection. The same real Linux TCP script
@@ -8334,7 +8397,7 @@ The Linux arm64 and emulated x64 source-runtime FTP smokes now exercise that
 own-server `RNFR`/`RNTO` overwrite over real TCP as well: regular-file
 replacement succeeds without a delete-first step, while an in-root symlink
 target returns `550` and leaves both the original and rejected stage intact.
-Both `bun run test:ftp:linux-container` and its `linux/amd64` variant passed
+Both `pnpm run test:ftp:linux-container` and its `linux/amd64` variant passed
 on 2026-09-23, as did the focused script test. This is not native installed
 Linux, third-party-server or independent security/rights evidence, so IR-04
 remains **In progress**. See the
@@ -8361,7 +8424,7 @@ dependency are now removed from the working tree. The four-language replacement
 catalog is still a draft awaiting the P-04 reviews above. Compatibility paths
 and reference screenshots remain pending their separate migration and rights
 gates.
-`bun run check` now uses Axterm's own visual and accessibility gates; the old
+`pnpm run check` now uses Axterm's own visual and accessibility gates; the old
 parity test and audit remain optional historical commands. A green result does
 not certify the independent commercial release while IR-02/IR-08/IR-09/IR-11
 through IR-14 remain open or in progress.
@@ -8386,7 +8449,7 @@ source Electron SSH first-paste tests passed five consecutive runs, and the
 packaged Windows app passed the same SSH test three consecutive runs. Source
 PowerShell/CMD and packaged PowerShell/confirmation journeys also pass. The
 Windows installer remains unsigned. On Ubuntu 22.04 x64, the repository-wide
-`bun run check` passes after checking out the pinned Legacy Prototype submodule and
+`pnpm run check` passes after checking out the pinned Legacy Prototype submodule and
 its pinned locale package.
 
 Ubuntu 22.04 x64 now produces `release/axterm_0.10.0_amd64.deb` with explicit
@@ -9310,7 +9373,7 @@ Phase 15 implementation evidence (acceptance remains open):
       and Runtime establishes the exact first-to-last sequence. Close now waits target-to-first-hop
       sequentially, preventing nested ssh2 compressed channels from writing after their parent closes.
 - [x] Repository/service and Electron tests cover persistence, reorder, path rendering and socket
-      ownership. `bun run test:ssh` now launches three isolated OpenSSH containers and proves two
+      ownership. `pnpm run test:ssh` now launches three isolated OpenSSH containers and proves two
       `forwardOut` hops followed by terminal/SFTP use with no unhandled close error.
 - [x] D-08 migration 13 persists ordered KEX, cipher, server Host Key and HMAC lists. The advanced
       SSH Bookmark controls keep empty lists on ssh2 defaults, and Runtime passes each configured
@@ -9339,7 +9402,7 @@ Phase 15 implementation evidence (acceptance remains open):
 - [x] Tunnel start failures remove their SSH-owner subscription. A bound-port collision produces a
       typed `CONFLICT` plus inspectable `TUNNEL_PORT_IN_USE`; SSH owner loss produces
       `SSH_CONNECTION_CLOSED` and releases local servers, remote forwards, channels and sockets.
-      Runtime lifecycle tests, the real Bookmark editor Electron CRUD journey and `bun run test:ssh`
+      Runtime lifecycle tests, the real Bookmark editor Electron CRUD journey and `pnpm run test:ssh`
       pass; the latter retains real local, remote and dynamic OpenSSH forwarding coverage.
 - [x] D-12 adds a real shared-transport load assertion: while a 256 MiB SFTP upload remains
       `running`, an already-open PTY completes a constructed, non-echo marker round trip below
@@ -10356,7 +10419,7 @@ formal release remains open until Phase 10 and the non-waivable gates pass.
 
 ## Verification snapshot
 
-- `bun run test`: 742 passed across 165 files; one Docker-gated test/file is skipped in the default run. H-04 adds
+- `pnpm run test`: 742 passed across 165 files; one Docker-gated test/file is skipped in the default run. H-04 adds
   terminal visual Contract defaults/cross-field validation, SQLite restart persistence and bounded
   application-local background asset import/delete coverage. C-16 adds
   a real paired XMODEM binary fixture plus ZMODEM/trzsz split-header, path-redaction, cancel,
@@ -10379,14 +10442,14 @@ formal release remains open until Phase 10 and the non-waivable gates pass.
   J-02 adds authenticated native lifecycle propagation, online/offline handling and poller cleanup.
   J-06 adds the transactional application-version transition ledger and old-version restart cases.
   J-09 adds the four 10k/64 MiB response and capacity profiles.
-- `bun run test:a11y`: two production-Electron journeys pass accessible-name/ID/tabindex checks,
+- `pnpm run test:a11y`: two production-Electron journeys pass accessible-name/ID/tabindex checks,
   keyboard-only Settings/Host-dialog focus behavior and the 0.01 ms reduced-motion ceiling.
-- `bun run test:performance`: the production Electron 10,000-Bookmark journey passed expansion,
+- `pnpm run test:performance`: the production Electron 10,000-Bookmark journey passed expansion,
   exact search, end scrolling, spacer geometry, per-action time ceilings and the 64-row DOM ceiling.
-- `bun run test:ssh`: pinned Docker OpenSSH Runtime integration, G-06 startup sequence/X11 result,
+- `pnpm run test:ssh`: pinned Docker OpenSSH Runtime integration, G-06 startup sequence/X11 result,
   G-07 Linux system sampling and desktop B-12 Save-and-Connect/information-panel/remote-monitor journey
   passed.
-- `bun run test:e2e`: 65/65 runnable production-Electron journeys pass, with the standalone
+- `pnpm run test:e2e`: 65/65 runnable production-Electron journeys pass, with the standalone
   Docker-gated B-12 journey skipped in this invocation and covered by `test:ssh`. The suite covers
   utility isolation, real local PTY,
   persistence, Runtime crash/restart, RDP, VNC and SPICE bookmark/local-Vault UI and cleanup passed;
@@ -10422,20 +10485,20 @@ formal release remains open until Phase 10 and the non-waivable gates pass.
   The closeout run also verifies all seven activity destinations, localized Settings/Theme/Profile
   navigation, the 14-action local-file menu, editable multi-level jump chains, unique SSH tunnel
   controls, reviewed AI bookmark/theme flows, connection Profiles and terminal file-drop policy.
-- `bun run test:dev`: Vite Renderer connected to the loopback Runtime WebSocket and real local PTY.
-- `bun run test:packaged` / `bun run test:dmg:macos`: copied or verified-DMG-installed macOS `.app`, restricted PATH, exact 1440×900 bounds, local PTY/search,
+- `pnpm run test:dev`: Vite Renderer connected to the loopback Runtime WebSocket and real local PTY.
+- `pnpm run test:packaged` / `pnpm run test:dmg:macos`: copied or verified-DMG-installed macOS `.app`, restricted PATH, exact 1440×900 bounds, local PTY/search,
   SQLite, native SerialPort enumeration, persisted Host/Quick Command relaunch and old-schema/local-Vault
   upgrade passed. The dedicated H-11 package journey additionally passed 15-language availability,
   immediate English switching, cold-restart persistence, Arabic RTL and physical-left activity-rail checks.
   The latest run passed all five runnable journeys and added the signed updater check/download/ready/install
   flow while proving the local installer path remains outside Renderer; the SSH-fixture case is conditionally
   separated and retains its earlier dedicated passing evidence. The same five journeys pass through the committed DMG gate: it verifies and mounts the image, copies the app into an independent temporary installation directory, detaches the image before launch, and cleans both temporary directories. The macOS CI job now runs this exact command.
-- `bun run test:ssh:packaged`: copied macOS `.app` connected to Docker OpenSSH, ran an SSH PTY and browsed
+- `pnpm run test:ssh:packaged`: copied macOS `.app` connected to Docker OpenSSH, ran an SSH PTY and browsed
   the live `/tmp` directory over SFTP; the complete source B-12 SSH/SFTP/transfer/editor journey passed first.
-- `bun run architecture:check`: 341 modules and 1222 dependencies passed the Level 1 / Zero
+- `pnpm run architecture:check`: 341 modules and 1222 dependencies passed the Level 1 / Zero
   Business IPC gate.
-- `bun run contracts:check`: 256 operations match OpenAPI and generated client.
-- `bun run parity:audit`: 122 matrix items across 50 scenarios passed with zero unmapped
+- `pnpm run contracts:check`: 256 operations match OpenAPI and generated client.
+- `pnpm run parity:audit`: 122 matrix items across 50 scenarios passed with zero unmapped
   upstream settings, actions or design tokens; 0 settings and 0 actions remain unimplemented. The
   settings map contains 50 Implemented and 22 Partial entries. The
   same gate opens all 288 current Playwright trace archives and reports zero unredacted Authorization,
@@ -10446,16 +10509,16 @@ formal release remains open until Phase 10 and the non-waivable gates pass.
   six traces across the fixed viewports. `test-results/parity-diff-h11/report.json` records all six
   comparisons at 96.660%–97.143% similarity; every scene passes the 95% rule. Axterm capture metadata
   also records all seven hard-defect checks as passing for every viewport and direction.
-- `bun run parity:diff`: 144 fixed Legacy Prototype/Axterm comparisons across 48 real scenes and three
+- `pnpm run parity:diff`: 144 fixed Legacy Prototype/Axterm comparisons across 48 real scenes and three
   viewports pass the 95% rule; the lowest similarity is 95.089%. Candidate metadata records
   1008/1008 hard-defect checks passing. Side-by-side review of all 144 pairs also confirms stable
   density, hierarchy, selected states, menus, forms, terminal surfaces and LTR/RTL direction without
   a blocking visual defect; Windows/Linux installed-package states remain external-platform evidence.
-- `bun run package:dir`: generated a self-contained macOS arm64 `.app`; node-pty and SerialPort native
+- `pnpm run package:dir`: generated a self-contained macOS arm64 `.app`; node-pty and SerialPort native
   modules were rebuilt for Electron ABI 149 and only their required `.node` files were unpacked. The
   production layout also contains independently loaded IronRDP WASM, noVNC RFB and SPICE client assets;
   ZMODEM/XMODEM/trzsz engines are bundled inside the separate Runtime artifact.
-- `bun run package`: generated unsigned macOS arm64 DMG/ZIP with ambient signing-identity discovery
+- `pnpm run package`: generated unsigned macOS arm64 DMG/ZIP with ambient signing-identity discovery
   disabled by the package wrapper. `hdiutil verify` and `unzip -tq` accept the 2026-09-14 artifacts;
   their SHA-256 digests are recorded in `PACKAGING.md`. A post-package native smoke confirms Node ABI
   node-pty was restored after the Electron build.

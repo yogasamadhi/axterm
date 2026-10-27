@@ -30,7 +30,7 @@
 
 ## 技术基线
 
-- Bun Workspaces
+- pnpm Workspaces
 - TypeScript strict
 - Electron 44.x stable
 - electron-vite 5.x stable
@@ -47,7 +47,8 @@
 - Vitest + Playwright
 - electron-builder 27.x
 
-Core Runtime 运行于 Electron embedded Node / Headless Node，不得依赖 `bun:*` runtime-only API。
+Core Runtime 运行于 Electron embedded Node / Headless Node，不得依赖 `bun:*` runtime-only API；
+工具链使用 pnpm，不再使用 Bun。
 
 ## 依赖边界
 
@@ -113,7 +114,7 @@ Electron Main → Runtime Domain/Repository/Workflow implementation
 3. 客观外部阻塞需记录原因、已有证据和解除条件后继续下一项；不得用占位或 disabled 入口冒充完成。
 4. 实现满足架构的最小完整修改。
 5. 同步增加对应测试。
-6. 运行相关检查；结束前运行 `bun run check`。
+6. 运行相关检查；结束前运行 `pnpm run check`。
 7. 失败时修代码，不删测试、不放松 Architecture Gate。
 8. 更新 `STATUS.md`；依赖发生变化时更新 `VERSIONS.md`。
 9. 架构级变化先写 `docs/adr/ADR-NNN-*.md`。

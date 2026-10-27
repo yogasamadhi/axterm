@@ -6,7 +6,7 @@
 
 - 当前无签名 Mac 包：/tmp/axterm-s5-final.Q0rUE4/mac-arm64/Axterm.app；app.asar SHA-256：08b3edb130dbf616801adfa676a4c97353fbd3507440f4422b6cd8f05b724651。Playwright 在隔离副本和独立 user-data 上运行。
 - 历史源码构建包：/Users/h/.codex/worktrees/axterm-initial-release/axterm/release/mac-arm64/Axterm.app；app.asar SHA-256：5dc53bcc5997016a33e8fa41d588462a7b441cde759b181c95e4df6f91c916b0。这是从历史提交重建的包，**不是**已证明公开分发的旧安装包。
-- bunx vitest run packages/runtime/src/application/data-sync-service.test.ts packages/runtime/src/adapters/data-sync/http-sync-providers.test.ts packages/runtime/src/adapters/data-sync/webdav-sync-provider.integration.test.ts → 3 文件、44/44 通过。
+- pnpm exec vitest run packages/runtime/src/application/data-sync-service.test.ts packages/runtime/src/adapters/data-sync/http-sync-providers.test.ts packages/runtime/src/adapters/data-sync/webdav-sync-provider.integration.test.ts → 3 文件、44/44 通过。
 - 定向当前 Mac 包：WebDAV 迁移与独立八分类恢复 1/1、GitHub/Gitee Gist 与 named-file Custom 迁移及恢复 1/1、历史源码构建包的加密/明文 WebDAV 文档升级恢复 1/1；合计 3/3。WebDAV 包内用例新增备份 503 和新路径上传 412 的失败/重试检查。
 
 ## 远端原值、备份、冲突与恢复

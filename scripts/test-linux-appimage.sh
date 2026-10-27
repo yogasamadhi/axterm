@@ -6,7 +6,7 @@ if [ "$(uname -s)" != 'Linux' ] || [ "$(uname -m)" != 'x86_64' ]; then
   exit 2
 fi
 
-for required_command in bunx xvfb-run realpath; do
+for required_command in pnpm xvfb-run realpath; do
   if ! command -v "$required_command" >/dev/null 2>&1; then
     echo "The AppImage runtime gate requires $required_command on the test host." >&2
     exit 2
@@ -33,5 +33,5 @@ AXTERM_APPIMAGE_PATH="$artifact_path" \
 AXTERM_APPIMAGE_RUNTIME_RECEIPT="$artifact_dir/AXTERM_APPIMAGE_RUNTIME.linux-x64.json" \
 APPIMAGE_EXTRACT_AND_RUN=1 \
   xvfb-run -a -s '-screen 0 1920x1080x24' \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged Linux AppImage runtime launches outside the source checkout'

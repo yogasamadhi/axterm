@@ -17,8 +17,9 @@ describe('Linux FTP Widget container smoke', () => {
     expect(script).toContain('--network none');
     expect(script).toContain('--security-opt no-new-privileges');
     expect(script).toContain(
-      'oven/bun@sha256:5ff609364c049b54eb0ff560ec96319729a972078ef2c755d758f0c6ef89c2d6',
+      'node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd',
     );
+    expect(script).toContain('--entrypoint node');
     expect(script).toContain('--mount "type=bind,src=$source_root,dst=/workspace,readonly"');
     expect(script).toContain('--tmpfs /tmp:rw,nosuid,nodev,size=64m');
     expect(script).toContain('AXTERM_LINUX_FTP_TEST_PLATFORM');

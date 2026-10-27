@@ -53,14 +53,14 @@ source text unmodified, so the patched section cannot be treated as a fresh
 source-to-code map.
 
 The `trzsz2@1.2.0` published `package.json` lists `@legacy-prototype/ssh2@^1.17.0`
-only under `devDependencies`. Axterm's frozen `bun.lock` has no
+only under `devDependencies`. Axterm's frozen `pnpm-lock.yaml` has no
 `@legacy-prototype/ssh2` entry; this is not an Axterm runtime dependency, but it is a
 relevant publisher-development link for the independent-source review. The
 installed metadata, local legal texts and absence from the lockfile are
 guarded by `tests/unit/third-party-license-evidence.test.ts`.
 
 Local verification: the focused third-party source suite passes 31/31 tests.
-After this record and its regression were added, `bun run check` passes 222
+After this record and its regression were added, `pnpm run check` passes 222
 test files (1,126 passed, 33 skipped), 359 architecture modules / 1,310
 dependencies, all 267 Contract operations, production build/package layout
 and 11 visual/accessibility journeys. This is worktree evidence only; it is

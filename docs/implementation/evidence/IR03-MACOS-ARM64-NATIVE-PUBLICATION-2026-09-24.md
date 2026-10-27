@@ -38,11 +38,11 @@ says that the final file was created before a later sync failure.
   now has **140** production component entries and **132** archived root legal
   files; the native subpackage has an MIT manifest but no own root LICENSE and
   remains in the human attribution-review queue.
-- `bun run check` passed after the implementation: **222 test files,
+- `pnpm run check` passed after the implementation: **222 test files,
   1,133 passed, 33 skipped**; 360 architecture modules / 1,310 dependencies,
   267 Contract operations, source/license/SBOM gates, build layout and
   11 visual/accessibility journeys.
-- `bun run candidate:check` also passed from a temporary new Git root and
+- `pnpm run candidate:check` also passed from a temporary new Git root and
   fresh clone without the Legacy Prototype submodule. Frozen Bun installation included
   the macOS native package, and the clone reran the same complete check.
   The snapshot guard reported 846 source files, no forbidden entries or
@@ -124,7 +124,7 @@ outputs under `/tmp/axterm-exfat-ir03-jGEesw`,
 `/tmp/axterm-exfat-dmg-ZJv4NB` and `/tmp/axterm-dmg-copied-DhetNQ` are
 ephemeral local evidence, not public release artifacts.
 After the four-locale catalog and its pending-review ledger were updated to
-2,585 keys, the complete `bun run check` passed: **235 unit/integration
+2,585 keys, the complete `pnpm run check` passed: **235 unit/integration
 files, 1,177 tests passed, 38 skipped**, 360 architecture modules / 1,310
 dependencies, 267 Contract operations, source/license/SBOM/build gates and
 11 visual/accessibility journeys. This does not replace human release

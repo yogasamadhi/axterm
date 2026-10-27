@@ -32,7 +32,7 @@ The publisher's `trzsz2` development installation included its declared
 that directory was moved outside `node_modules/@legacy-prototype/ssh2`, so it was not
 resolvable by the build; the build and full output comparison still succeeded.
 This is an **isolated diagnostic**, not an Axterm release dependency. Axterm's
-frozen `bun.lock` does not include `@legacy-prototype/ssh2`.
+frozen `pnpm-lock.yaml` does not include `@legacy-prototype/ssh2`.
 
 ## 2026-09-25 repeat for the current trzsz2 patch
 

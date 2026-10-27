@@ -42,10 +42,10 @@ the file has passed an intellectual-property review.
 Focused tests use the actual `TriggerEngine`: a pager prompt split across
 output chunks fires exactly one send action, and a sudo password prompt fires
 only a notification. They also validate the input schema, the regular
-expression safety gate and all four labels. `bunx vitest run
+expression safety gate and all four labels. `pnpm exec vitest run
 tests/unit/bookmark-trigger-presets.test.ts` passed **3/3**; typecheck passed.
 The core-language review ledger was regenerated for **2,602 keys** per
-language and remains pending for en, ja, zh-CN and zh-TW. Full `bun run check`
+language and remains pending for en, ja, zh-CN and zh-TW. Full `pnpm run check`
 then passed **1,249** unit/integration tests and **21/21**
 visual/accessibility journeys, including architecture, Contract,
 source-review-ledger, localization and build checks.

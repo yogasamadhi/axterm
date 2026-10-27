@@ -26,9 +26,9 @@ The inspected local unsigned directory artifact is
 `release/mac-arm64/Axterm.app`. The following succeeded on macOS arm64:
 
 ```text
-bunx vitest run tests/unit/packaged-license-inventory.test.ts
-bun run --cwd apps/desktop build
-bunx playwright test tests/e2e/packaged.spec.ts --project=packaged --grep 'packaged app includes Axterm and transition third-party license notices'
+pnpm exec vitest run tests/unit/packaged-license-inventory.test.ts
+pnpm --filter @workspace/desktop build
+pnpm exec playwright test tests/e2e/packaged.spec.ts --project=packaged --grep 'packaged app includes Axterm and transition third-party license notices'
 ```
 
 The focused unit test covers the `Resources`/artifact-root layout and hashed
@@ -51,9 +51,9 @@ The following focused checks passed against a freshly rebuilt macOS arm64
 directory package on 2026-09-21:
 
 ```text
-bunx vitest run tests/unit/legal-runtime-documents.test.ts
-bunx playwright test tests/e2e/desktop.spec.ts --project=desktop --grep 'production workspace, utility isolation, reattachment, crash restart and cleanup'
-bunx playwright test tests/e2e/packaged.spec.ts --project=packaged --grep 'packaged app includes Axterm and transition third-party license notices|packaged app exposes its exact license and notices in About'
+pnpm exec vitest run tests/unit/legal-runtime-documents.test.ts
+pnpm exec playwright test tests/e2e/desktop.spec.ts --project=desktop --grep 'production workspace, utility isolation, reattachment, crash restart and cleanup'
+pnpm exec playwright test tests/e2e/packaged.spec.ts --project=packaged --grep 'packaged app includes Axterm and transition third-party license notices|packaged app exposes its exact license and notices in About'
 ```
 
 The packaged About test starts a copied-outside-checkout app, reads the Electron

@@ -92,7 +92,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   } else if (mode === '--check') {
     const expected = currentInventoryText();
     if (readFileSync(outputPath, 'utf8') !== expected) {
-      console.error('Product asset inventory is stale; run bun run assets:generate');
+      console.error('Product asset inventory is stale; run pnpm run assets:generate');
       process.exitCode = 1;
     } else {
       console.log('Product asset inventory matches first-party asset bytes.');

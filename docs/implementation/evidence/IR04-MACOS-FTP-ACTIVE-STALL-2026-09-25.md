@@ -24,7 +24,7 @@ node scripts/package-desktop.mjs --dir \
   --output /tmp/axterm-ftp-active-stall-package.wCnIqt
 AXTERM_PACKAGED_APP=/tmp/axterm-ftp-active-stall-package.wCnIqt/mac-arm64/Axterm.app \
 AXTERM_PACKAGED_FTP_ACTIVE_STALLED_TRANSFER=1 \
-bunx playwright test --project=packaged \
+pnpm exec playwright test --project=packaged \
   -g 'packaged FTP Widget runs the independent server'
 ```
 

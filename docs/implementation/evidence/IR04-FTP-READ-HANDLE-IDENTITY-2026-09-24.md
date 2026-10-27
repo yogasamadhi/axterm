@@ -22,13 +22,13 @@ symbolic link precisely during `open`, restores it immediately, and requires
 `SIZE`, `MDTM` and `RETR` to fail. It checks that no download bytes were
 delivered, all opened handles were closed, both files were unchanged and the
 authenticated control channel still accepts `NOOP`. The focused Adapter suite
-passed **30/30**; `bun run typecheck` passed. The pinned Linux FTP source smoke
+passed **30/30**; `pnpm run typecheck` passed. The pinned Linux FTP source smoke
 now runs the same injected read-ancestor swap under both `linux/arm64` and
 `linux/amd64`. Both runs passed the new
 `ftp-read-ancestor-swap-denial=pass` marker, and the focused source/script
 regressions passed **31/31**.
 
-After the Linux smoke and guard-test changes, `bun run check` passed: 222 test
+After the Linux smoke and guard-test changes, `pnpm run check` passed: 222 test
 files passed / 5 skipped; 1,122 tests passed / 33 skipped; 359 architecture
 modules / 1,310 dependencies; 267 Contract operations; source-snapshot,
 license/SBOM, build/package-layout and all 11 visual/accessibility journeys.

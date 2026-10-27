@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import {
-  componentIndexFromBunReport,
+  componentIndexFromLicenseReport,
   missingPackagedComponents,
   serializeComponentIndex,
 } from '../../scripts/commercialization/generate-component-index.mjs';
 
 describe('production component index', () => {
   it('sorts and deduplicates every installed package version without turning it into a rights claim', () => {
-    const index = componentIndexFromBunReport({
+    const index = componentIndexFromLicenseReport({
       MIT: [
         { name: 'z', versions: ['2.0.0', '1.0.0'], license: 'MIT' },
         { name: 'a', versions: ['1.0.0'], license: 'MIT' },
@@ -27,7 +27,7 @@ describe('production component index', () => {
   });
 
   it('flags an actual packaged component missing from the source index or changing its license', () => {
-    const index = componentIndexFromBunReport({
+    const index = componentIndexFromLicenseReport({
       MIT: [{ name: 'included', versions: ['1.0.0'], license: 'MIT' }],
     });
     expect(
@@ -42,7 +42,7 @@ describe('production component index', () => {
 
   it('rejects conflicting declarations instead of silently choosing a license', () => {
     expect(() =>
-      componentIndexFromBunReport({
+      componentIndexFromLicenseReport({
         MIT: [{ name: 'same', versions: ['1.0.0'], license: 'MIT' }],
         ISC: [{ name: 'same', versions: ['1.0.0'], license: 'ISC' }],
       }),

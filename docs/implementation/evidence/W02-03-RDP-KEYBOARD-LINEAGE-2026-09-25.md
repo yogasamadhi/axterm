@@ -64,7 +64,7 @@ is preserved at `licenses/chromium-dom-code-data-LICENSE.txt` (SHA-256
 `368cca1106be99d39ecd32a38d8305585d802a475effb66380b91ffc9bcf709b`)
 and referenced in `THIRD_PARTY_NOTICES.txt`; both are available through the
 existing package/Legal inclusion path. The two focused map tests and typecheck
-passed. The final `bun run check` passed **1,244 unit/integration tests** (38
+passed. The final `pnpm run check` passed **1,244 unit/integration tests** (38
 skipped), its architecture/Contract/license/source/build gates and **21/21**
 visual/accessibility journeys.
 
@@ -83,14 +83,14 @@ These packaged checks do **not** exercise a live RDP server, prove Windows/Linux
 behavior, or replace qualified rights review.
 
 The migration-period source after this replacement also passed
-`bun run candidate:check`: a disposable Git root commit
+`pnpm run candidate:check`: a disposable Git root commit
 `b85e650406639ccd886c418afc0f9db48f9414e0` and a distinct
 `git clone --no-local` contained **952 tracked files** with audited source
 tree SHA-256
 `f8872ba2201352a324a6bce9d3b278d98d1064bf08ef855d02b29114a23cd709`.
 The clone had no `.gitmodules`, `vendor/legacy-prototype`, generated OpenAPI file or
 uncommitted changes. Frozen Bun installation rebuilt the macOS native
-module and the clone's complete `bun run check` passed **1,244 tests**, all
+module and the clone's complete `pnpm run check` passed **1,244 tests**, all
 its architecture/Contract/source/license/build checks and **21/21**
 visual/accessibility journeys. SSH and external-peer suites were not
 requested in this run. This is local source reproducibility for the current

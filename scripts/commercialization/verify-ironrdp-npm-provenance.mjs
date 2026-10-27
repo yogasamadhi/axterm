@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
+import YAML from 'yaml';
 
 const execFileAsync = promisify(execFile);
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -128,16 +129,10 @@ export async function verifyIronRdpNpmProvenance() {
   const desktop = JSON.parse(await readFile(resolve(projectRoot, 'apps/desktop/package.json')));
   if (desktop.dependencies?.[packageName] !== version)
     throw new Error('The desktop IronRDP dependency version changed');
-  const lock = await readFile(resolve(projectRoot, 'bun.lock'), 'utf8');
-  const matchingLockLines = lock
-    .split('\n')
-    .filter((line) =>
-      /^\s*"@devolutions\/iron-remote-desktop-rdp": \["@devolutions\/iron-remote-desktop-rdp@0\.7\.0",/u.test(
-        line,
-      ),
-    );
-  if (matchingLockLines.length !== 1 || !matchingLockLines[0].includes(`"${expectedIntegrity}"`))
-    throw new Error('The Bun lock no longer pins the reviewed IronRDP tarball');
+  const lock = YAML.parse(await readFile(resolve(projectRoot, 'pnpm-lock.yaml'), 'utf8'));
+  const lockedPackage = lock?.packages?.[`${packageName}@${version}`];
+  if (lockedPackage?.resolution?.integrity !== expectedIntegrity)
+    throw new Error('The pnpm lock no longer pins the reviewed IronRDP tarball');
   const existingJavaScript = await readFile(
     resolve(
       projectRoot,
@@ -145,7 +140,7 @@ export async function verifyIronRdpNpmProvenance() {
     ),
   );
   if (sha256(existingJavaScript) !== expectedJavaScriptSha256)
-    throw new Error('The frozen Bun install no longer matches the reviewed IronRDP JavaScript');
+    throw new Error('The frozen install graph no longer matches the reviewed IronRDP JavaScript');
 
   const directory = await mkdtemp(join(tmpdir(), 'axterm-ironrdp-provenance-'));
   try {
@@ -161,12 +156,12 @@ export async function verifyIronRdpNpmProvenance() {
     const npmLock = JSON.parse(await readFile(join(directory, 'package-lock.json'), 'utf8'));
     const npmEntry = npmLock.packages?.[`node_modules/${packageName}`];
     if (npmEntry?.integrity !== expectedIntegrity || !npmEntry.resolved?.startsWith(registry))
-      throw new Error('The isolated npm package does not match the Bun-locked tarball');
+      throw new Error('The isolated npm package does not match the pnpm-locked tarball');
     const npmJavaScript = await readFile(
       join(directory, 'node_modules', packageName, 'iron-remote-desktop-rdp.js'),
     );
     if (!npmJavaScript.equals(existingJavaScript))
-      throw new Error('The isolated npm tarball differs from the frozen Bun install');
+      throw new Error('The isolated npm tarball differs from the frozen install graph');
     const output = await runNpm(directory, [
       'audit',
       'signatures',

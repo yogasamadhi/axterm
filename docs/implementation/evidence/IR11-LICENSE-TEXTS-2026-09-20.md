@@ -6,7 +6,7 @@ State: **root-file text coverage improved; IR-02/IR-11 remain unaccepted**
 `THIRD_PARTY_LICENSE_TEXTS.json` is generated from the frozen installed Bun
 production graph, without reading `vendor/legacy-prototype`. It records the exact
 UTF-8 contents and SHA-256 of 119 root `LICENSE`/`LICENCE`/`COPYING`/`NOTICE`
-files across 125 package name/version entries. The default `bun run check`
+files across 125 package name/version entries. The default `pnpm run check`
 verifies the archive against the installed package paths. The generated file
 does not store machine-specific paths. It explicitly lists six packages
 without a published root license file:
@@ -26,8 +26,8 @@ package is unlicensed.
 A fresh source copy at `/tmp/axterm-license-texts.Z2Isya` excluded `.git`,
 `vendor`, installed modules, prior builds and local databases. Their absence
 was checked before the frozen install and again before the independent check.
-`bun install --frozen-lockfile`, `bun run licenses:texts:check`, and unsigned
-macOS arm64 `bun run package:dir` passed. The complete packaged-app suite
+`pnpm install --frozen-lockfile`, `pnpm run licenses:texts:check`, and unsigned
+macOS arm64 `pnpm run package:dir` passed. The complete packaged-app suite
 passed 14 journeys with nine platform/fixture-conditional skips. A subsequent
 unsigned DMG/ZIP build passed `hdiutil verify`; its app was mounted, copied
 outside the checkout, detached and passed the same complete 14-journey
@@ -38,7 +38,7 @@ hash with the archive, and read three different package texts in the app's
 About and licenses view. The final ASAR has 89 package manifests, no missing
 package-level license metadata, and 13 external legal files. Two actual ASAR
 packages lack an internal root license file; both are present in the archive's
-six-package review queue. Both the source and isolated-copy `bun run check`
+six-package review queue. Both the source and isolated-copy `pnpm run check`
 passed 820 unit tests (one skipped), Level 1/Contract/localization/component/text
 drift gates, production build and three visual/accessibility Playwright
 journeys.

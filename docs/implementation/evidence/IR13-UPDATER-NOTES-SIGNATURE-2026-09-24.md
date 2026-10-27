@@ -23,7 +23,7 @@ canonical-record implementation instead of hand-maintained copies.
 - The focused updater file passes **20/20** tests. A new test signs multiline
   notes, changes only the served notes, and verifies `UPDATE_SIGNATURE_INVALID`.
   The former six-field implementation would have accepted that altered text.
-- `bun run typecheck`, `bun run build`, and the production Electron `H12 signed
+- `pnpm run typecheck`, `pnpm run build`, and the production Electron `H12 signed
 updater` journey passed.
 - A fresh unsigned macOS arm64 directory app was built under
   `/tmp/axterm-updater-notes-O4E9dt/mac-arm64/Axterm.app`. Its packaged signed

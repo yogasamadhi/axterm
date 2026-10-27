@@ -60,11 +60,11 @@ unchanged.
 
 Focused tests cover pressure entry/recovery, invalid values, same-terminal
 sample transitions, terminal change and inactive reset, capacity ordering,
-byte/rate and uptime display. `bunx vitest run
+byte/rate and uptime display. `pnpm exec vitest run
 tests/unit/remote-monitor-model.test.ts` passed **4/4**; `bun run
-typecheck` and full `bun run check` passed (**1,246** unit/integration tests,
+typecheck` and full `pnpm run check` passed (**1,246** unit/integration tests,
 **21/21** visual/accessibility journeys, architecture/Contract/source/build
-checks). `bun run test:ssh` also passed its Docker OpenSSH integration case
+checks). `pnpm run test:ssh` also passed its Docker OpenSSH integration case
 **1/1** and Electron B-12 authenticated SSH journey **1/1**; B-12 opens the
 actual Terminal Information panel and remote monitor bar. This is current
 source/desktop evidence, not a new signed installed-package result or a

@@ -46,7 +46,7 @@ license metadata and 14 external legal files. Its two ASAR packages without
 an internal root license are still reported, rather than hidden by the
 external mappings.
 
-The final source `bun run check` passes 825 unit tests (one skipped), Level 1
+The final source `pnpm run check` passes 825 unit tests (one skipped), Level 1
 architecture, 256-operation Contract, component/license-text drift,
 localization and production build checks, plus three visual/accessibility
 Playwright journeys.

@@ -7,16 +7,16 @@ This run used an uncommitted source-worktree copy at
 `/tmp/axterm-independent-check.GmD68b`. The copy excluded `.git`, `vendor`,
 `node_modules`, previous build/release/test outputs, `.env*` and local databases;
 absence of both `.git` and `vendor` was checked before and after the runs.
-`bun install --frozen-lockfile` installed dependencies and rebuilt Node PTY.
+`pnpm install --frozen-lockfile` installed dependencies and rebuilt Node PTY.
 The source copy is **not** a fresh checkout of a committed new repository.
 
-| Check in the isolated copy                        | Observed result                                                                                                                                                                                                                                                        |
-| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bun run check`                                   | Passed: 813 unit tests, one skipped; Level 1/Zero Business IPC; 256 Contract operations; 15-language/45-key navigation checks; production build/layout; one Axterm visual and two accessibility Playwright tests.                                                      |
-| `bunx playwright test --project=desktop`          | 73 passed, 11 conditionally skipped on macOS. The complete run followed correction of a stale success-message assertion in the terminal-theme E2E; it did not change product behavior or skip that journey.                                                            |
-| `bun run package:dir` and `bun run test:packaged` | Unsigned macOS arm64 directory app built; 14 packaged journeys passed, nine Windows/Linux/fixture-conditional journeys skipped. The checkout-independent test copies the app outside the source tree, limits `PATH`, exercises PTY, SQLite, settings and cold restart. |
-| `bun run test:ssh:packaged`                       | Real Docker OpenSSH integration, source Electron authenticated SSH and packaged Electron authenticated SSH each passed (one test each). Fixture containers and network were removed by the test script.                                                                |
-| `bun run package` and `bun run test:dmg:macos`    | Unsigned arm64 DMG/ZIP built. `hdiutil verify` passed; the DMG was mounted, its app copied to a separate directory, detached, and the copied app passed 14 packaged journeys with nine conditional skips.                                                              |
+| Check in the isolated copy                          | Observed result                                                                                                                                                                                                                                                        |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm run check`                                    | Passed: 813 unit tests, one skipped; Level 1/Zero Business IPC; 256 Contract operations; 15-language/45-key navigation checks; production build/layout; one Axterm visual and two accessibility Playwright tests.                                                      |
+| `pnpm exec playwright test --project=desktop`       | 73 passed, 11 conditionally skipped on macOS. The complete run followed correction of a stale success-message assertion in the terminal-theme E2E; it did not change product behavior or skip that journey.                                                            |
+| `pnpm run package:dir` and `pnpm run test:packaged` | Unsigned macOS arm64 directory app built; 14 packaged journeys passed, nine Windows/Linux/fixture-conditional journeys skipped. The checkout-independent test copies the app outside the source tree, limits `PATH`, exercises PTY, SQLite, settings and cold restart. |
+| `pnpm run test:ssh:packaged`                        | Real Docker OpenSSH integration, source Electron authenticated SSH and packaged Electron authenticated SSH each passed (one test each). Fixture containers and network were removed by the test script.                                                                |
+| `pnpm run package` and `pnpm run test:dmg:macos`    | Unsigned arm64 DMG/ZIP built. `hdiutil verify` passed; the DMG was mounted, its app copied to a separate directory, detached, and the copied app passed 14 packaged journeys with nine conditional skips.                                                              |
 
 The packaged journeys include exact legal-file/About comparisons, rebuilt native
 modules, FTP Widget, local-PTY XMODEM/ZMODEM/TRZSZ roundtrips, RDP module
@@ -24,7 +24,7 @@ initialization, compatibility deprecation notice, local-Vault profile upgrade
 and signed-update test-fixture behavior. A module initialization is not a live
 RDP connection; local-PTY protocol tests are not every remote/platform case.
 
-Artifact SHA-256 values from the final `bun run package` in this copy:
+Artifact SHA-256 values from the final `pnpm run package` in this copy:
 
 These hashes identify the earlier no-submodule snapshot before the later
 third-party component index was added. The newer app/DMG hashes are recorded
@@ -44,8 +44,8 @@ On 2026-09-21, a second temporary copy at
 after the historical material had been moved to the controlled archive. The
 copy excluded `.git`, `.gitmodules`, `vendor/legacy-prototype`, `node_modules`, build
 and release outputs, test outputs, and `.env*`; each excluded path was asserted
-absent before installation. `bun install --frozen-lockfile` rebuilt the native
-dependencies, and the complete `bun run check` passed: 839 unit tests passed,
+absent before installation. `pnpm install --frozen-lockfile` rebuilt the native
+dependencies, and the complete `pnpm run check` passed: 839 unit tests passed,
 one was skipped, the Level 1/Zero Business IPC gate and 262-operation Contract
 gate passed, and production build plus the three Axterm visual/accessibility
 journeys passed. This is current, stronger no-submodule source evidence, not a

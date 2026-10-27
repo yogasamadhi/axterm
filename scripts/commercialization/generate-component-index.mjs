@@ -1,7 +1,7 @@
-import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { installedLicenseReport } from './installed-license-report.mjs';
 
 const repositoryRoot = resolve(import.meta.dirname, '../..');
 const outputPath = resolve(repositoryRoot, 'compliance/THIRD_PARTY_COMPONENTS.json');
@@ -10,13 +10,13 @@ function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
 }
 
-export function componentIndexFromBunReport(report) {
+export function componentIndexFromLicenseReport(report) {
   if (!report || typeof report !== 'object' || Array.isArray(report)) {
-    throw new Error('Expected Bun production license groups');
+    throw new Error('Expected production license groups');
   }
   const byIdentity = new Map();
   for (const [group, records] of Object.entries(report)) {
-    if (!Array.isArray(records)) throw new Error(`Invalid Bun license group: ${group}`);
+    if (!Array.isArray(records)) throw new Error(`Invalid license group: ${group}`);
     for (const record of records) {
       if (
         !record ||
@@ -24,7 +24,7 @@ export function componentIndexFromBunReport(report) {
         !Array.isArray(record.versions) ||
         record.versions.length === 0
       ) {
-        throw new Error(`Invalid Bun license record in ${group}`);
+        throw new Error(`Invalid license record in ${group}`);
       }
       const license = typeof record.license === 'string' ? record.license : group;
       if (!license.trim()) throw new Error(`Missing license for ${record.name}`);
@@ -46,7 +46,7 @@ export function componentIndexFromBunReport(report) {
   );
   return {
     schemaVersion: 1,
-    source: 'bun pm licenses --json --prod',
+    source: 'pnpm licenses list --json --prod',
     scope:
       'Installed production dependency graph; may include packages absent from a platform artifact.',
     limitations: [
@@ -78,14 +78,7 @@ export function missingPackagedComponents(index, packages) {
 }
 
 function installedIndex() {
-  const report = JSON.parse(
-    execFileSync('bun', ['pm', 'licenses', '--json', '--prod'], {
-      cwd: repositoryRoot,
-      encoding: 'utf8',
-      maxBuffer: 10 * 1024 * 1024,
-    }),
-  );
-  return serializeComponentIndex(componentIndexFromBunReport(report));
+  return serializeComponentIndex(componentIndexFromLicenseReport(installedLicenseReport()));
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -97,11 +90,11 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const expected = installedIndex();
     if (readFileSync(outputPath, 'utf8') !== expected) {
       console.error(
-        'Production component index is stale; run bun run licenses:components:generate',
+        'Production component index is stale; run pnpm run licenses:components:generate',
       );
       process.exitCode = 1;
     } else {
-      console.log('Production component index matches the installed Bun graph.');
+      console.log('Production component index matches the installed pnpm graph.');
     }
   } else {
     console.error(

@@ -639,7 +639,7 @@ describe('independent-release documentation boundaries', () => {
     expect(ephemeralCandidate).toContain('55a2f430810b98dc3ba8fb3201676918c1189e7f');
     expect(sourceAudit).toContain('Current P-03 FTP partial-write failure candidate');
     expect(status).toContain('P-03 now also has deterministic partial-write cleanup evidence');
-    expect(sourceAudit).toContain('bun run candidate:check');
+    expect(sourceAudit).toContain('pnpm run candidate:check');
     expect(sourceAudit).toContain('Historical P-04 first replacement');
     expect(sourceAudit).toContain('7f6209df5c818b0f06226c8052a840296d07726f');
     expect(sourceAudit).toContain('729 files / 15,586,052 bytes');
@@ -1086,7 +1086,7 @@ describe('independent-release documentation boundaries', () => {
     expect(linuxInstallAttempt).toContain(
       '784940945bbf84708a19cbd395465c07564b3418ab1d4508a67bded277894479',
     );
-    expect(linuxInstallAttempt).toContain('standard Linux `bun run check` remains unproven');
+    expect(linuxInstallAttempt).toContain('standard Linux `pnpm run check` remains unproven');
     expect(linuxInstallAttempt).toContain('test:appimage:linux');
     expect(linuxInstallAttempt).toContain(
       'SquashFS superblock was independently validated at byte',
@@ -1107,16 +1107,16 @@ describe('independent-release documentation boundaries', () => {
     expect(ephemeralCandidate).toContain('current UI/AppImage-gate clean-clone candidate');
     expect(ephemeralCandidate).toContain('f6ac1f9b9d4d419c2ca62add88bea684394c8c24');
     expect(ephemeralCandidate).toContain('controlled OpenSSH in the same clean clone');
-    expect(ephemeralCandidate).toContain('bun run candidate:ssh:check');
+    expect(ephemeralCandidate).toContain('pnpm run candidate:ssh:check');
     expect(ephemeralCandidate).toContain('7ba6ecb6b67142a338f9822e88beb0f68d278a21');
     expect(status).toContain('The clean-clone gate now has an explicit Docker-backed variant');
-    expect(ephemeralCandidate).toContain('bun run candidate:protocol:check');
+    expect(ephemeralCandidate).toContain('pnpm run candidate:protocol:check');
     expect(ephemeralCandidate).toContain('6b39e328f00c92671425aef415fb68148d94f847');
     expect(ephemeralCandidate).toContain('16/16 Debian `lrzsz` cases');
     expect(ephemeralCandidate).toContain('7/7');
     expect(externalTransferPeerAvailability).toContain('Same-clone external-peer candidate');
     expect(externalTransferPeerAvailability).toContain('unchanged pinned SHA-256 check');
-    expect(status).toContain('The opt-in `bun run candidate:protocol:check`');
+    expect(status).toContain('The opt-in `pnpm run candidate:protocol:check`');
     expect(workflow).toContain('Prepare pinned independent transfer peers');
     expect(workflow).toContain('Test independent lrzsz over SSH PTY');
     expect(workflow).toContain('Test independent trzsz-go over SSH PTY');
@@ -1158,7 +1158,7 @@ describe('independent-release documentation boundaries', () => {
     expect(linuxFtpEvidence).toContain('PASV lifecycle regressions');
     expect(linuxFtpEvidence).toContain('Four simultaneous same-peer connections');
     expect(linuxFtpEvidence).toContain(
-      'sha256:5ff609364c049b54eb0ff560ec96319729a972078ef2c755d758f0c6ef89c2d6',
+      'sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd',
     );
     expect(linuxFtpEvidence).toContain('not an Electron package build, installed');
     expect(linuxFtpEvidence).toMatch(/P-03\/IR-04 remains\s+\*\*In progress\*\*/u);
@@ -1362,22 +1362,22 @@ describe('independent-release documentation boundaries', () => {
     expect(security).toContain('does not invent an email address');
     expect(support).toContain('no public commercial support commitment');
     expect(support).toContain('release:services:active-check');
-    expect(workflow.indexOf('bun run snapshot:check')).toBeLessThan(
-      workflow.indexOf('bun install --frozen-lockfile'),
+    expect(workflow.indexOf('pnpm run snapshot:check')).toBeLessThan(
+      workflow.indexOf('pnpm install --frozen-lockfile'),
     );
     expect(workflow).toContain('name: packaged-installers-${{ matrix.os }}');
     for (const pattern of ['release/*.dmg', 'release/*.exe', 'release/*.AppImage', 'release/*.deb'])
       expect(workflow).toContain(pattern);
     expect(workflow).toContain('name: packaged-sbom-${{ matrix.os }}');
-    expect(workflow).toContain('bun run release:hashes -- release --platform macos-arm64');
-    expect(workflow).toContain('bun run release:hashes:check -- release --platform macos-arm64');
+    expect(workflow).toContain('pnpm run release:hashes -- release --platform macos-arm64');
+    expect(workflow).toContain('pnpm run release:hashes:check -- release --platform macos-arm64');
     expect(workflow).toContain('name: packaged-artifact-hashes-${{ matrix.os }}');
     expect(workflow).toContain(
-      'bun run release:hashes:check -- downloaded-release --platform macos-arm64',
+      'pnpm run release:hashes:check -- downloaded-release --platform macos-arm64',
     );
     expect(workflow).toContain('name: packaged-upload-roundtrip-${{ matrix.os }}');
-    expect(workflow).toContain('run: bun run test:deb:linux');
-    expect(workflow).toContain('run: bun run test:nsis:windows');
+    expect(workflow).toContain('run: pnpm run test:deb:linux');
+    expect(workflow).toContain('run: pnpm run test:nsis:windows');
     expect(packaging).toContain('rather than treating `linux-unpacked` or `win-unpacked`');
     expect(packaging).toContain('closes the build-to-upload mutation gap');
     expect(packaging).toContain('AXTERM_UPLOAD_ROUNDTRIP.<platform>.json');

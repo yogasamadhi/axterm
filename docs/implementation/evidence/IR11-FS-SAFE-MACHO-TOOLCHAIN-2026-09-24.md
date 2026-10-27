@@ -5,7 +5,7 @@ Status: **published binary identity checked; compiler fingerprint narrowed; byte
 This follows the exact published `@openclaw/fs-safe-darwin-arm64@0.13.1`
 binary and the [tagged-source rebuild](IR11-FS-SAFE-NATIVE-SOURCE-2026-09-24.md).
 The package is still pinned in Axterm's production graph. On macOS arm64,
-`bun run licenses:native:check` now resolves the actual installed optional
+`pnpm run licenses:native:check` now resolves the actual installed optional
 `.node` **from the parent package** and hashes its bytes against
 `NATIVE_DEPENDENCY_REVIEW_LEDGER.json`'s published-binary identity. A matching
 manifest version without the expected binary bytes no longer passes this

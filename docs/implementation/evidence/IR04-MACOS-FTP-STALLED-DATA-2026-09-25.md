@@ -20,7 +20,7 @@ server continues to serve requests after cleanup.
 ```sh
 AXTERM_PACKAGED_APP=/tmp/axterm-isarray-legal-package.Xp737O/mac-arm64/Axterm.app \
 AXTERM_PACKAGED_FTP_STALLED_TRANSFER=1 \
-bunx playwright test --project=packaged \
+pnpm exec playwright test --project=packaged \
   -g 'packaged FTP Widget runs the independent server'
 ```
 

@@ -85,7 +85,7 @@ third-party notices also exposed scrollable `<pre>` elements missing from the
 keyboard order; these now accept focus after their disclosure summary and show
 a visible focus ring. The Legal page's subheadings and the updater status now
 follow the page's h1→h2 hierarchy. Both accessibility journeys now pass, as do
-all nine visual journeys in the full `bun run check`.
+all nine visual journeys in the full `pnpm run check`.
 
 The first axe run against an actual imported Legacy Prototype-data preview found that
 the mapping cards had `role="row"` without table cells, and were inside an
@@ -156,10 +156,10 @@ extends that journey to the SSH/SPICE editors, including End-key selection and
 Tab into the active protocol field. Both added rendered states pass axe in the
 copied unsigned app; the candidate's exact `app.asar` hash is recorded there.
 
-Run `bun run test:visual` for this gate, `bun run test:a11y` for the existing
-keyboard, accessible-name/focus and reduced-motion journeys, or `bun run check`
+Run `pnpm run test:visual` for this gate, `pnpm run test:a11y` for the existing
+keyboard, accessible-name/focus and reduced-motion journeys, or `pnpm run check`
 for the combined default gate. To update an intentional macOS visual change,
-first run `bun run build`, then run `bunx playwright test --project=visual
+first run `pnpm run build`, then run `pnpm exec playwright test --project=visual
 --update-snapshots`; inspect every changed PNG and its diff, and record the
 design reason and reviewer in `STATUS.md` before accepting the new images. Do
 not regenerate baselines merely to make a failing test green.
@@ -362,11 +362,11 @@ in current Host, profile, theme, history, import and bookmark-group UI
 surfaces; any user-selected group color remains a user data choice.
 
 The application-mark SVG and the derived PNG, ICO and ICNS variants were also
-refreshed to use a mint-green-only AX gradient. `bun run icons:generate`
+refreshed to use a mint-green-only AX gradient. `pnpm run icons:generate`
 records the macOS derivation path; the exact current variants remain in the
 product-asset inventory and pending human brand/rights ledger. The eight macOS
 baselines were intentionally regenerated with
-`bunx playwright test --project=visual --update-snapshots` and inspected after
+`pnpm exec playwright test --project=visual --update-snapshots` and inspected after
 this change. This records the owner's visual direction and an engineering
 regression review, not a trademark, accessibility or formal product-design
 sign-off.
@@ -388,9 +388,9 @@ focused provenance test rejects those retired literals. Terminal-theme ANSI blue
 remains user-selectable terminal content, not an Axterm chrome or identity
 color.
 
-`bunx vitest run tests/unit/product-shell-style-provenance.test.ts
+`pnpm exec vitest run tests/unit/product-shell-style-provenance.test.ts
 tests/unit/axterm-shell-contrast.test.ts` passed all four checks, and the
-three normal `bunx playwright test --project=visual` journeys passed without
+three normal `pnpm exec playwright test --project=visual` journeys passed without
 an intentional baseline refresh. This is a narrow source and macOS
 source-Electron visual-regression result; it does not amount to a brand,
 design, accessibility, packaged-app or cross-platform acceptance for P-07 /

@@ -18,7 +18,7 @@ fully reviewed.
 | `zstd/LICENSE`     | `licenses/zstd-sys-Zstandard-LICENSE.txt` |  1,549 | `7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8` |
 | `zstd/COPYING`     | `licenses/zstd-sys-Zstandard-COPYING.txt` | 18,091 | `f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505` |
 
-`bun run licenses:zstd:embedded:generate -- <pinned fs-safe checkout>` checks
+`pnpm run licenses:zstd:embedded:generate -- <pinned fs-safe checkout>` checks
 the Git commit, lock-file hash, locked crate identity/checksum, archive bytes,
 extracted Cargo source bytes and both original legal-file hashes before writing
 the files. The routine offline `licenses:zstd:embedded:check` and final-public
@@ -74,7 +74,7 @@ binary pending**. The mismatch between local rebuilt and published `.node`
 bytes, other nested/inlined notices, platform-specific source graphs and
 qualified license/source-rights decisions remain open. IR-02 and IR-11 stay
 **In progress**; this macOS engineering evidence does not authorize release.
-The full `bun run check` passed **227 test files, 1,148 tests passed / 34
+The full `pnpm run check` passed **227 test files, 1,148 tests passed / 34
 skipped**, 360 architecture modules / 1,310 dependencies, 267 Contract
 operations and 11 visual/accessibility journeys. The final-public gate still
 refused promotion on eight pre-existing pending prerequisites; the new

@@ -26,14 +26,14 @@ Recovery alerts remain inside the horizontal viewport, and each retry button
 is focusable and in the viewport at 200%.
 
 ```sh
-bun run typecheck
-bun run build
-bunx playwright test --project=visual -g 'P-07 S4'
+pnpm run typecheck
+pnpm run build
+pnpm exec playwright test --project=visual -g 'P-07 S4'
 # 1/1 passed; four locales in source Electron
 
 node scripts/package-desktop.mjs --dir --output /tmp/axterm-s4-final.IJJdji
 AXTERM_PACKAGED_APP=/tmp/axterm-s4-final.IJJdji/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged -g 'packaged macOS S4'
+  pnpm exec playwright test --project=packaged -g 'packaged macOS S4'
 # 1/1 passed; copied unsigned Mac app outside the checkout
 ```
 

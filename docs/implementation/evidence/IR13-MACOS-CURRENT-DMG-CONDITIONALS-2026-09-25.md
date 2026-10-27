@@ -11,7 +11,7 @@ The old application was rebuilt from commit `657b3cc1552cd3b0dc3b0f73df1c1a4a5a8
 ```sh
 AXTERM_PREVIOUS_PACKAGED_APP=/Users/h/.codex/worktrees/axterm-initial-release/axterm/release/mac-arm64/Axterm.app \
 AXTERM_PACKAGED_APP=/tmp/axterm-macos-current-dmg.2kk8Po/mac-arm64/Axterm.app \
-bunx playwright test tests/e2e/packaged.spec.ts --project=packaged \
+pnpm exec playwright test tests/e2e/packaged.spec.ts --project=packaged \
   --grep 'current packaged app upgrades data produced by a historical packaged release'
 ```
 
@@ -24,7 +24,7 @@ A new 64 MiB writable disk image was mounted at a private temporary path. `disku
 ```sh
 AXTERM_REAL_NOHARDLINK_DIRECTORY=<verified FAT16 mount> \
 AXTERM_PACKAGED_APP=/tmp/axterm-macos-current-dmg.2kk8Po/mac-arm64/Axterm.app \
-bunx playwright test tests/e2e/packaged.spec.ts --project=packaged \
+pnpm exec playwright test tests/e2e/packaged.spec.ts --project=packaged \
   --grep 'packaged app roundtrips (TRZSZ|ZMODEM|XMODEM) binary data'
 ```
 
@@ -33,7 +33,7 @@ A separate new 128 MiB writable image was mounted at a private path. `diskutil i
 ```sh
 AXTERM_REAL_NO_REPLACE_DIRECTORY=<verified ExFAT mount> \
 AXTERM_PACKAGED_APP=/tmp/axterm-macos-current-dmg.2kk8Po/mac-arm64/Axterm.app \
-bunx playwright test tests/e2e/packaged.spec.ts --project=packaged \
+pnpm exec playwright test tests/e2e/packaged.spec.ts --project=packaged \
   --grep 'packaged app rejects unsafe real-volume publication through'
 ```
 

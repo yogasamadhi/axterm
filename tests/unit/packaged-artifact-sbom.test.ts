@@ -278,10 +278,10 @@ describe('packaged artifact SPDX sidecar', () => {
         `--platform ${platform} --sidecar release/AXTERM_PACKAGED_ARTIFACTS.${platform}.spdx.json`,
       );
     }
-    expect(workflow.indexOf('bun run sbom:packaged:check')).toBeGreaterThan(
-      workflow.indexOf('run: bun run test:dmg:macos'),
+    expect(workflow.indexOf('pnpm run sbom:packaged:check')).toBeGreaterThan(
+      workflow.indexOf('run: pnpm run test:dmg:macos'),
     );
-    expect(workflow.indexOf('bun run sbom:packaged:check')).toBeLessThan(
+    expect(workflow.indexOf('pnpm run sbom:packaged:check')).toBeLessThan(
       workflow.indexOf('uses: actions/upload-artifact'),
     );
   });

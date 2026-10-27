@@ -32,7 +32,7 @@ exact final bytes, zero-byte write failure with no `.part`/final artifact,
 and an unwritable download-directory path with a stable error. The existing
 signature, digest, origin, cancellation and installer rehash cases still pass.
 
-`bun run build` passed. A fresh unsigned macOS arm64 directory package was
+`pnpm run build` passed. A fresh unsigned macOS arm64 directory package was
 built outside the checkout at `/tmp/axterm-updater-bounds-wAcA1U`; its actual
 Resources matched the generated packaged SPDX sidecar. The packaged updater
 journey then passed **1/1** against this app after its local signed fixture

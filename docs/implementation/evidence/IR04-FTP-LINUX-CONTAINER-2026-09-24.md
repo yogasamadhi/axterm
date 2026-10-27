@@ -15,7 +15,11 @@ AXTERM_LINUX_FTP_TEST_PLATFORM=linux/arm64 sh scripts/test-linux-ftp-widget-cont
 AXTERM_LINUX_FTP_TEST_PLATFORM=linux/amd64 sh scripts/test-linux-ftp-widget-container.sh
 ```
 
-Image: `oven/bun@sha256:5ff609364c049b54eb0ff560ec96319729a972078ef2c755d758f0c6ef89c2d6`
+Image: `node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd`
+
+ADR-034 replaced the previously pinned Bun image with this pinned Node image when
+the toolchain moved to pnpm. The smoke itself is unchanged; the observed output
+below was recorded with the earlier image.
 
 Observed output:
 

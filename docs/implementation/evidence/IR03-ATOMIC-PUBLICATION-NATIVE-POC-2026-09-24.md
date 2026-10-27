@@ -60,7 +60,7 @@ three protocols without an async state/lifecycle refactor. That refactor must
 fence cancel/destroy/new-session races, ensure the pending operation owns its
 staging file, and ACK/emit completion only after publication settles.
 
-At this POC stage the candidate was not in Axterm's `package.json`, `bun.lock`, installer or
+At this POC stage the candidate was not in Axterm's `package.json`, `pnpm-lock.yaml`, installer or
 third-party notices. Adoption would be a new Runtime-only native dependency
 under [ADR-019](../../adr/ADR-019-atomic-no-replace-transfer-publication.md)
 and requires exact source/binary rights review, native binding packaging,

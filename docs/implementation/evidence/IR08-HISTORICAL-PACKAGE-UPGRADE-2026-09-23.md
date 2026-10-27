@@ -10,8 +10,8 @@ The reachable repository history contains commit
 `657b3cc1552cd3b0dc3b0f73df1c1a4a5a8a6a6e`, dated
 2026-09-14T16:36:55+08:00 and titled `Initial open-source release`. Its product
 version is `0.10.0` and its database ends at migration 33. A detached managed
-worktree at that exact commit completed `bun install --frozen-lockfile`
-(615 packages) and `bun run package:dir`. The resulting unsigned macOS arm64
+worktree at that exact commit completed `pnpm install --frozen-lockfile`
+(615 packages) and `pnpm run package:dir`. The resulting unsigned macOS arm64
 directory application was then used as the **producer** of the upgrade test's
 user data; the current test code did not construct or reverse-edit its database.
 
@@ -52,7 +52,7 @@ performed the following sequence:
 ```bash
 AXTERM_PREVIOUS_PACKAGED_APP=/absolute/path/to/historical/Axterm.app \
 AXTERM_PACKAGED_APP=/absolute/path/to/current/Axterm.app \
-bun x playwright test tests/e2e/packaged.spec.ts \
+pnpm exec playwright test tests/e2e/packaged.spec.ts \
   --project=packaged --grep 'historical packaged release'
 ```
 
@@ -455,7 +455,7 @@ Axoterm package` passed **1/1** in 8.9 seconds with:
 ```bash
 AXTERM_PREVIOUS_AXOTERM_APP=/absolute/path/to/Axoterm.app \
 AXTERM_PACKAGED_APP=/absolute/path/to/Axterm.app \
-bun x playwright test tests/e2e/packaged.spec.ts --project=packaged \
+pnpm exec playwright test tests/e2e/packaged.spec.ts --project=packaged \
   --grep 'portable file produced by the preserved Axoterm package'
 ```
 
@@ -649,7 +649,7 @@ directory (mode `0600`, SHA-256
 `56e892661ec050051fe3e6a61f3797655c5c4b459455149b55e078c8af7af93b`).
 The new source also passed the
 four-language copy test and 200%-zoom migration-panel assertions; full
-`bun run check` is recorded in [STATUS](../STATUS.md). The package is a local
+`pnpm run check` is recorded in [STATUS](../STATUS.md). The package is a local
 unsigned candidate, not a signed/notarized DMG, publicly distributed build,
 human translation review or release-owner acceptance. W-06-02/W-08-02 remain
 open pending that acceptance; Windows/Linux results and the public migration

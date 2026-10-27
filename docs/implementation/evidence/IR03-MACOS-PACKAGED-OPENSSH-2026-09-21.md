@@ -17,16 +17,16 @@ before launch. The tested `app.asar` SHA-256 was
 
 ## Result
 
-| Command                     | Result                                                                                                                                                                                                                                             |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bun run test:ssh`          | Passed the real OpenSSH Runtime integration (password authentication, Host Key approval, SSH PTY, SFTP, multi-hop, ProxyCommand, local/dynamic/remote tunnels and X11/startup-script paths) and the source Electron B-12 save-and-connect journey. |
-| `bun run test:ssh:packaged` | Repeated the source checks and passed the copied packaged-app SSH journey: password authentication, Host Key approval, rendered SSH PTY output and search, SFTP `/tmp` browsing, then saved bookmark/history persistence across app restart.       |
-| Fixture cleanup check       | Passed: zero containers with the fixture labels and zero `axterm-ssh-fixture-net-*` networks remained after the script exited.                                                                                                                     |
+| Command                      | Result                                                                                                                                                                                                                                             |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm run test:ssh`          | Passed the real OpenSSH Runtime integration (password authentication, Host Key approval, SSH PTY, SFTP, multi-hop, ProxyCommand, local/dynamic/remote tunnels and X11/startup-script paths) and the source Electron B-12 save-and-connect journey. |
+| `pnpm run test:ssh:packaged` | Repeated the source checks and passed the copied packaged-app SSH journey: password authentication, Host Key approval, rendered SSH PTY output and search, SFTP `/tmp` browsing, then saved bookmark/history persistence across app restart.       |
+| Fixture cleanup check        | Passed: zero containers with the fixture labels and zero `axterm-ssh-fixture-net-*` networks remained after the script exited.                                                                                                                     |
 
 ## 2026-09-22 current-artifact revalidation
 
 Docker Desktop 29.6.2 (`linux/aarch64`) was started after confirming the daemon
-was initially unavailable. `bun run test:ssh:packaged` then rebuilt the pinned
+was initially unavailable. `pnpm run test:ssh:packaged` then rebuilt the pinned
 fixture image, created a process-unique private network and three labelled
 OpenSSH containers, and allocated the host control port through Docker rather
 than using a fixed port.
@@ -57,7 +57,7 @@ baseline only; IR-03 remains **In progress**.
 
 ## 2026-09-23 current-source directory-app revalidation
 
-The current working tree first passed `bun run test:ssh`: the controlled
+The current working tree first passed `pnpm run test:ssh`: the controlled
 three-container OpenSSH integration and the source Electron B-12
 save-and-connect journey both exited zero. A fresh, unsigned macOS arm64
 directory app was then built in isolated ignored output

@@ -2,7 +2,7 @@ node_modules
 out
 dist
 release
-bun.lock
+pnpm-lock.yaml
 coverage
 playwright-report
 test-results

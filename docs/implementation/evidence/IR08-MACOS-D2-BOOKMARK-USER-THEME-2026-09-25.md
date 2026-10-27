@@ -28,10 +28,10 @@ The conditional package journey passed **1/1 in 17.7 seconds** on macOS arm64:
 ```sh
 AXTERM_PREVIOUS_PACKAGED_APP=/Users/h/.codex/worktrees/axterm-initial-release/axterm/release/mac-arm64/Axterm.app \
 AXTERM_PACKAGED_APP=/tmp/axterm-s5-final.Q0rUE4/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'current packaged app upgrades data produced by a historical packaged release'
 # 1/1 passed
-bunx vitest run \
+pnpm exec vitest run \
   packages/runtime/src/adapters/sqlite/theme-catalog-migration.test.ts \
   packages/runtime/src/adapters/sqlite/bookmark-migration.test.ts
 # 2/2 passed

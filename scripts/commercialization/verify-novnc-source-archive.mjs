@@ -3,6 +3,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync } from 'node:zlib';
+import YAML from 'yaml';
 import { buildNoVncSourceNotices } from './generate-novnc-source-notices.mjs';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -69,12 +70,10 @@ export async function verifyNoVncSourceArchive(inputBytes) {
     throw new Error('noVNC source archive differs from the reviewed npm tarball');
   if (hash(archive, 'sha512', 'base64') !== expectedIntegrity)
     throw new Error('noVNC source archive differs from the locked npm integrity');
-  const lock = await readFile(resolve(projectRoot, 'bun.lock'), 'utf8');
-  const lockedPackage = lock
-    .split('\n')
-    .find((line) => /^\s*"@novnc\/novnc": \["@novnc\/novnc@1\.7\.0",/u.test(line));
-  if (!lockedPackage?.includes(`"sha512-${expectedIntegrity}"`))
-    throw new Error('The Bun lock no longer pins this exact noVNC tarball');
+  const lock = YAML.parse(await readFile(resolve(projectRoot, 'pnpm-lock.yaml'), 'utf8'));
+  const lockedPackage = lock?.packages?.['@novnc/novnc@1.7.0'];
+  if (lockedPackage?.resolution?.integrity !== `sha512-${expectedIntegrity}`)
+    throw new Error('The pnpm lock no longer pins this exact noVNC tarball');
   const files = inspectNoVncSourceTar(gunzipSync(archive));
   const installed = await installedFiles(packageRoot);
   const archivedPaths = [...files.keys()].sort((left, right) => left.localeCompare(right, 'en'));

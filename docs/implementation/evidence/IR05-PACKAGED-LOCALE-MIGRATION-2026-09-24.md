@@ -16,18 +16,18 @@ Status: current-worktree macOS arm64 engineering evidence; IR-05 remains
 
 ## Reproduction and results
 
-The current source `bun run check` passed before packaging. The package was
+The current source `pnpm run check` passed before packaging. The package was
 built without using or overwriting the repository's existing `release/` output:
 
 ```text
-bun run --cwd apps/desktop package:dir --output /tmp/axterm-commercial-p04.dF8mV8/package
+pnpm --filter @workspace/desktop package:dir --output /tmp/axterm-commercial-p04.dF8mV8/package
 ```
 
 The following packaged Playwright command passed **2/2**:
 
 ```text
 env AXTERM_PACKAGED_APP=/tmp/axterm-commercial-p04.dF8mV8/package/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged --grep "packaged migration and configuration surfaces pass rendered accessibility scans|packaged upgrade migrates a retired language to English and preserves its database backup"
+  pnpm exec playwright test --project=packaged --grep "packaged migration and configuration surfaces pass rendered accessibility scans|packaged upgrade migrates a retired language to English and preserves its database backup"
 ```
 
 1. `packaged migration and configuration surfaces pass rendered accessibility

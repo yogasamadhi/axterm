@@ -30,7 +30,7 @@ established that the successful FAT16 result cannot be generalized to SMB.
 
 With `AXTERM_REAL_NO_REPLACE_DIRECTORY` set to the real `smbfs` mount:
 
-- `bunx vitest run packages/runtime/src/adapters/terminal-transfer/staged-file-publication.test.ts`
+- `pnpm exec vitest run packages/runtime/src/adapters/terminal-transfer/staged-file-publication.test.ts`
   passed **8 tests, 1 conditional skip**. Its real-volume case verified that
   no final file was created after publication failed; an existing destination
   retained its bytes and the complete private source remained available for
@@ -39,7 +39,7 @@ With `AXTERM_REAL_NO_REPLACE_DIRECTORY` set to the real `smbfs` mount:
   protocol files passed **60 tests, 1 conditional skip**. Each real-volume
   receive reported the path-free `TRANSFER_DESTINATION_UNSUPPORTED` failure,
   did not signal file completion, and removed the transfer staging name.
-- `bun run build` succeeded, then an isolated, **unsigned** macOS arm64
+- `pnpm run build` succeeded, then an isolated, **unsigned** macOS arm64
   `package:dir` was built outside the checkout. Its `app.asar` SHA-256 was
   `e49282e7b283deab3bd05633e4008f114058e6115eb5eeefd49d63271f544c3d`;
   its unpacked macOS native binding SHA-256 was
@@ -51,7 +51,7 @@ With `AXTERM_REAL_NO_REPLACE_DIRECTORY` set to the real `smbfs` mount:
   The environment-gated packaged test was renamed from ExFAT-specific wording
   to the actual generic unsafe-real-volume condition; it remains usable for
   both filesystem classes without claiming they share implementation details.
-- After the test-label and evidence changes, `bun run check` passed: 1,178
+- After the test-label and evidence changes, `pnpm run check` passed: 1,178
   unit/integration tests (38 skipped), 360 architecture modules / 1,310
   dependencies, 267 Contract operations and 11 visual/accessibility journeys.
 
@@ -101,7 +101,7 @@ the unpacked native binding was the same
 `78ca69b52d05da239bf50a6768867134265aace0195c8494f64f65b6d1ba6db0`.
 The mount was detached; the container, local image tag and exact temporary
 mount/package directories were removed.
-The complete `bun run check` passed with the two fixture source files present:
+The complete `pnpm run check` passed with the two fixture source files present:
 1,178 tests passed (38 skipped), 360 architecture modules / 1,310
 dependencies, 267 Contract operations, the independent source snapshot and all
 11 visual/accessibility journeys.

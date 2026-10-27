@@ -3,7 +3,7 @@
 
 import type { WriteStream } from 'node:fs';
 import { open } from 'node:fs/promises';
-import { Terminal } from '@xterm/headless/lib-headless/xterm-headless.js';
+import { Terminal } from '@xterm/headless/lib-headless/xterm-headless.mjs';
 import iconv from 'iconv-lite';
 import type { TerminalBehavior } from '@workspace/contracts';
 

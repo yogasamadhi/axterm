@@ -9,7 +9,7 @@ The unchanged published npm tarball is supplied as
 `32689f18d6abe96bc6530828a6bd0b9ae33bda07c083a6575ed255b5a8f2e903`.
 Its SHA-512 is the same
 `sha512-ucEJOx4T2avIRCleodk7YobZj5O2Ga2AeLfQ69A/yjG9HHba2+PDgwSkN3FttrmG+70ZGx21sElNFouK13RzyA==`
-integrity pinned for `@novnc/novnc@1.7.0` in `bun.lock`. The publisher's
+integrity pinned for `@novnc/novnc@1.7.0` in `pnpm-lock.yaml`. The publisher's
 [noVNC 1.7.0 release](https://github.com/novnc/noVNC/releases/tag/v1.7.0)
 and the installed `package.json` identify the upstream project and version.
 The tarball has 66 files; every path and byte matches the package used for
@@ -17,7 +17,7 @@ Axterm's build. It includes all 52 RFB import-graph sources (42 core, ten
 embedded Pako), package `LICENSE.txt`, `AUTHORS`, Pako LICENSE and the other
 published companion texts. No upstream-source edits were made for this copy.
 
-`bun run licenses:novnc:source-check` runs offline in the default gate. It
+`pnpm run licenses:novnc:source-check` runs offline in the default gate. It
 checks the fixed archive SHA-256 and locked SHA-512, safe tar entries, the full
 66-file match against the installed npm package and the hashes of the 52
 source inputs already recorded in `noVNC-SOURCE-NOTICES.txt`. The existing

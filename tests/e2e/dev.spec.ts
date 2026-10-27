@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import { chromium, expect, test } from '@playwright/test';
 
-test('bun run dev launches the desktop with the Vite renderer', async () => {
+test('pnpm run dev launches the desktop with the Vite renderer', async () => {
   test.skip(
     process.platform === 'win32',
     'POSIX process-group cleanup; Windows is covered by desktop and packaged E2E',
@@ -19,11 +19,15 @@ test('bun run dev launches the desktop with the Vite renderer', async () => {
   const port = address.port;
   const userData = await mkdtemp(resolve(tmpdir(), 'axterm-dev-e2e-'));
   await new Promise<void>((resolve) => listener.close(() => resolve()));
-  const child = spawn('bun', ['run', 'dev', '--', `--user-data-dir=${userData}`], {
-    detached: true,
-    env: { ...process.env, REMOTE_DEBUGGING_PORT: String(port) },
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
+  const child = spawn(
+    process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm',
+    ['run', 'dev', '--', `--user-data-dir=${userData}`],
+    {
+      detached: true,
+      env: { ...process.env, REMOTE_DEBUGGING_PORT: String(port) },
+      stdio: ['ignore', 'pipe', 'pipe'],
+    },
+  );
   let output = '';
   const collect = (chunk: Buffer) => {
     output = (output + chunk.toString()).slice(-16_000);

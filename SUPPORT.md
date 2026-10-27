@@ -20,6 +20,6 @@ For the later Mac/manual-update release, verify the public support route and
 record its URL, scope and owner approval in the external MCR-03/MCR-04 evidence.
 The fuller three-platform route also records non-sensitive facts in
 [`RELEASE_SERVICE_RECORD.json`](compliance/RELEASE_SERVICE_RECORD.json) and passes
-`bun run release:services:active-check`. Its current `pending` state is not a
+`pnpm run release:services:active-check`. Its current `pending` state is not a
 support offer. That later check does not replace rights, signing, installed-app
 or platform evidence; an automatic-update feed is a separate future gate.

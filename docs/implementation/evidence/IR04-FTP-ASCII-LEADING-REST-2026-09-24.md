@@ -37,7 +37,7 @@ linux-x64-ftp-rename-overwrite=pass
 linux-x64-ftp-pasv-lifecycle-smoke=pass bytes=8196
 ```
 
-The repaired current working tree passed `bun run check`: 221 test files
+The repaired current working tree passed `pnpm run check`: 221 test files
 passed, 5 skipped; 1,096 tests passed, 33 skipped; 359 architecture modules
 and 1,310 dependencies; all 267 Contract operations; production build and
 package-layout checks; all 11 Axterm visual/accessibility journeys.
@@ -81,7 +81,7 @@ opt-in SSH journeys skipped. AppImage SquashFS extraction found the legal
 files and matched the same sidecar (`145978823` bytes, offset `188392`).
 The four unsigned files are retained in the ignored local directory
 `release/axterm-linux-ftp-rest-prefix-20260924/`; their copied release hash
-manifest passed `bun run release:hashes:check` again. The preceding
+manifest passed `pnpm run release:hashes:check` again. The preceding
 `release/axterm-linux-ftp-ascii-20260924/` candidate predates this fix.
 
 ## Limits

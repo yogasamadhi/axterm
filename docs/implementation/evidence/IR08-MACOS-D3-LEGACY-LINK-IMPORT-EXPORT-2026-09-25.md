@@ -5,7 +5,7 @@
 ## 制品和测试
 
 - 当前无签名 Mac 包：/tmp/axterm-s5-final.Q0rUE4/mac-arm64/Axterm.app；app.asar SHA-256：08b3edb130dbf616801adfa676a4c97353fbd3507440f4422b6cd8f05b724651。每个 Playwright 用例将它复制到隔离临时目录，使用独立 user-data。
-- 源码：bunx vitest run packages/runtime/src/application/legacy-prototype-data-service.test.ts packages/runtime/src/application/axterm-configuration-service.test.ts tests/unit/legacy-deep-link-boundary.test.ts → 3 文件、66/66 通过。
+- 源码：pnpm exec vitest run packages/runtime/src/application/legacy-prototype-data-service.test.ts packages/runtime/src/application/axterm-configuration-service.test.ts tests/unit/legacy-deep-link-boundary.test.ts → 3 文件、66/66 通过。
 - 当前包：AXTERM_PACKAGED_APP 指向上述 Mac 包，定向运行 tests/e2e/packaged.spec.ts 的“packaged migration surfaces preserve legacy data”、“packaged app imports the frozen historical Axterm portable file”和新增的“packaged macOS D3 rolls back a late legacy import failure” → 3/3 通过（分别约 5.4、2.6、4.4 秒）。
 - 新增失败用例所在源码：tests/e2e/packaged.spec.ts；原有数据保护断言也补到 packages/runtime/src/application/legacy-prototype-data-service.test.ts 的后期失败用例。完整仓库检查结果另记 STATUS。
 

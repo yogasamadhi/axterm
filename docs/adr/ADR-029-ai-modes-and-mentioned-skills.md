@@ -48,7 +48,7 @@ Explanation/generation skills and chat remain reply-only, with the original MCP 
 Cover omitted/invalid modes, mode-bound receipts, disabled command proposals in chat
 and explanation/generation skills, real SSH approval in work mode, mention boundaries
 and keyboard/IME interaction. Exercise real Electron and an isolated Mac directory
-package, then run `bun run check`. Record actual evidence in STATUS; do not infer
+package, then run `pnpm run check`. Record actual evidence in STATUS; do not infer
 Windows/Linux native acceptance from macOS results.
 
 Implementation evidence: the final full gate passes 1,394 tests plus 26 visual and

@@ -39,7 +39,7 @@ following transfer command was not successfully transmitted.
 The focused command:
 
 ```text
-bunx vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts
+pnpm exec vitest run packages/runtime/src/adapters/widget/widget-server-adapters.test.ts
 ```
 
 passes one file and 17 tests on macOS arm64. The new raw TCP control/data
@@ -79,7 +79,7 @@ connection. Ordinary `STOR` publishes no target. Resumed `STOR` leaves the
 original target byte-for-byte unchanged. The focused server suite passes 24
 tests on macOS arm64.
 
-A deliberate pre-evidence `bun run candidate:check` copied 762 source files
+A deliberate pre-evidence `pnpm run candidate:check` copied 762 source files
 and 16,486,371 bytes with tree SHA-256
 `82ed1a3de4bc2de83877c4734123fe76735a081e37e2d9be8f90ee6e8525001b`.
 Its temporary commit `55a2f430810b98dc3ba8fb3201676918c1189e7f` and clean
@@ -105,7 +105,7 @@ app outside the checkout, launched with a restricted `PATH`, used `basic-ftp`
 for authenticated list and upload, then used the system `curl` client for
 passive-mode list/binary upload/binary download and active-mode upload/download.
 All transferred payloads matched byte-for-byte and the Widget stopped cleanly.
-The complete current `bun run test:packaged` run also passed 17 macOS-applicable
+The complete current `pnpm run test:packaged` run also passed 17 macOS-applicable
 journeys, with ten explicit Windows/Linux, historical-package or optional-SSH
 fixture skips. It includes this FTP journey, all three terminal-transfer
 protocols, licenses/About, migration, four-language switching and prior-schema

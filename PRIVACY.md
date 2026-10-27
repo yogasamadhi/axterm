@@ -50,5 +50,5 @@ The non-sensitive facts are recorded in
 For the later Mac/manual-update release, publish and verify the actual policy URL
 and record its approval in the external MCR-03/MCR-04 evidence. The fuller
 three-platform release route additionally requires an owner-completed service
-record passing `bun run release:services:active-check`. Neither record format
+record passing `pnpm run release:services:active-check`. Neither record format
 alone proves the published policy's contents or legal adequacy.

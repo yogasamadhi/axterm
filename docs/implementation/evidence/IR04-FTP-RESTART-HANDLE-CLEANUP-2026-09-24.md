@@ -27,7 +27,7 @@ source-handle close, unchanged original bytes and a successful subsequent
 expected `1`). After the correction, the complete real FTP Adapter file
 passes **29/29** tests.
 
-`bun run build` passed. A fresh unsigned macOS arm64 directory package was
+`pnpm run build` passed. A fresh unsigned macOS arm64 directory package was
 built outside the checkout with
 `node scripts/package-desktop.mjs --dir --output /tmp/axterm-ftp-restart-close-B6GFnA`.
 Its Resources matched a generated packaged SPDX sidecar, and the packaged

@@ -221,7 +221,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const existingText = existsSync(outputPath) ? readFileSync(outputPath, 'utf8') : undefined;
     const violations = productAssetReviewLedgerViolations(ledger, inventory, { requireReviewed });
     if (existingText !== text)
-      violations.push('Asset review ledger is stale; run bun run assets:marks:generate');
+      violations.push('Asset review ledger is stale; run pnpm run assets:marks:generate');
     if (violations.length > 0) {
       for (const violation of violations) console.error(violation);
       process.exitCode = 1;

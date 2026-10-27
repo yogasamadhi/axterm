@@ -4,20 +4,20 @@ Updated: 2026-09-24
 State: **inventory in progress; authorship, trademark and platform review pending**
 
 This record distinguishes a source or package match from a rights clearance.
-`bun run package:dir` currently produces an unsigned macOS arm64 directory app;
+`pnpm run package:dir` currently produces an unsigned macOS arm64 directory app;
 the checks below do not establish Windows/Linux package contents or the right
 to represent every asset as Axterm-owned. Historical Legacy Prototype comparison images
 must not be copied into the final independent repository.
 
 `AXTERM_PRODUCT_ASSETS.json` is the generated, deterministic content inventory
-for the five first-party application-mark files named below. `bun run
-assets:check` is part of the repository-wide `bun run check`, so a byte change,
+for the five first-party application-mark files named below. `pnpm run
+assets:check` is part of the repository-wide `pnpm run check`, so a byte change,
 missing asset or stale ledger fails before packaging. A macOS packaged-app test
 also hashes `Contents/Resources/icon.icns` and compares it to that source
-inventory. `bun run icons:check` regenerates the 1024px PNG, 512px PNG, ICO and
+inventory. `pnpm run icons:check` regenerates the 1024px PNG, 512px PNG, ICO and
 ICNS into an isolated temporary directory and compares their bytes to the
 checked-in variants without rewriting the worktree. Its macOS-only integration
-test is part of `bun run check`; other operating systems skip the platform tool
+test is part of `pnpm run check`; other operating systems skip the platform tool
 check, while the macOS CI leg executes it. The record deliberately does **not**
 infer authorship, copyright,
 trademark availability or public-snapshot approval from a matching hash; those
@@ -25,17 +25,17 @@ remain human review tasks. It also does not replace the separate third-party
 font, renderer-bundle and native/WASM inventories.
 
 `PRODUCT_ASSET_REVIEW_LEDGER.json` is the matching machine-readable hand-off
-for those same five product-mark files. `bun run assets:marks:check` is part of
+for those same five product-mark files. `pnpm run assets:marks:check` is part of
 the normal engineering gate: it rejects a stale asset scope or malformed review
 claim while allowing a truthful `pending` record during development. Before the
 _product-mark_ scope can be described as reviewed, the release owner must run
-`bun run assets:marks:reviewed-check`; it requires a recorded rights review,
+`pnpm run assets:marks:reviewed-check`; it requires a recorded rights review,
 brand review, date, evidence, conclusion and explicit `retain`/`exclude`
 decision for every current asset byte. That command does not establish a legal
 conclusion, clear third-party assets or promote IR-07 by itself.
 
 `docs/product/assets/` is deliberately absent from the independent public
-source candidate. `bun run snapshot:check` rejects that directory if it is
+source candidate. `pnpm run snapshot:check` rejects that directory if it is
 reintroduced; it is not silently filtered out while preparing the candidate.
 This prevents a documentation-only image from bypassing the five-file
 application-mark inventory and its review ledger. A future approved
@@ -44,10 +44,10 @@ being added to that retired directory.
 
 ## Product mark and static images
 
-| Asset                                                                  | Current source evidence                                                                                                                                                                                                                                                                                                                         | Current disposition                                                                                                                                                                 |
-| ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apps/desktop/build/icon.svg`                                          | [Brand record](../product/AXTERM_BRAND.md) calls this the editable AX-monogram source. `bun run icons:generate` derives the package variants with macOS `sips` and `iconutil`; `AXTERM_PRODUCT_ASSETS.json` is the current exact byte record. Git history only establishes that the source was present in the initial 2026-09-14 Axterm commit. | Retain provisionally. Obtain the creator/owner's design-rights attestation and independent trademark/visual-similarity review.                                                      |
-| `apps/desktop/build/icon.png`, `icon-512.png`, `icon.ico`, `icon.icns` | Regenerated from `icon.svg` by `bun run icons:generate`. The command emits a 1024px PNG, 512px PNG, Windows multi-resolution ICO and macOS ICNS; the generated inventory records their exact current hashes.                                                                                                                                    | Mac package's `Contents/Resources/icon.icns` matches source byte-for-byte. Verify visual consistency and generation provenance; inspect actual Windows/Linux installers separately. |
+| Asset                                                                  | Current source evidence                                                                                                                                                                                                                                                                                                                          | Current disposition                                                                                                                                                                 |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/desktop/build/icon.svg`                                          | [Brand record](../product/AXTERM_BRAND.md) calls this the editable AX-monogram source. `pnpm run icons:generate` derives the package variants with macOS `sips` and `iconutil`; `AXTERM_PRODUCT_ASSETS.json` is the current exact byte record. Git history only establishes that the source was present in the initial 2026-09-14 Axterm commit. | Retain provisionally. Obtain the creator/owner's design-rights attestation and independent trademark/visual-similarity review.                                                      |
+| `apps/desktop/build/icon.png`, `icon-512.png`, `icon.ico`, `icon.icns` | Regenerated from `icon.svg` by `pnpm run icons:generate`. The command emits a 1024px PNG, 512px PNG, Windows multi-resolution ICO and macOS ICNS; the generated inventory records their exact current hashes.                                                                                                                                    | Mac package's `Contents/Resources/icon.icns` matches source byte-for-byte. Verify visual consistency and generation provenance; inspect actual Windows/Linux installers separately. |
 
 The product mark is not an Legacy Prototype logo by file name or package reference;
 that observation is **not** a copyright or trademark non-infringement finding.

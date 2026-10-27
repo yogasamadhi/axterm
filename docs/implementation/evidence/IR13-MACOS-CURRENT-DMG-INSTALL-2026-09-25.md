@@ -2,7 +2,7 @@
 
 Status: **unsigned macOS arm64 engineering candidate verified; IR-13 remains Open**.
 
-The current source passed `bun run check` after the FTP active-data timeout
+The current source passed `pnpm run check` after the FTP active-data timeout
 regression was added. Only then was a new `0.10.0` macOS arm64 ZIP and DMG
 created with `scripts/package-desktop.mjs`. That order matters: the packaging
 script rebuilds native modules but does **not** rebuild the TypeScript/Electron
@@ -32,14 +32,14 @@ updater behavior, host-key review and prior-schema/Vault upgrade.
 ```sh
 node scripts/package-desktop.mjs \
   --output /tmp/axterm-macos-current-dmg.2kk8Po
-bun run sbom:packaged \
+pnpm run sbom:packaged \
   /tmp/axterm-macos-current-dmg.2kk8Po/mac-arm64/Axterm.app/Contents/Resources \
   --platform macos-arm64 \
   --output /tmp/axterm-macos-current-dmg.2kk8Po/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
 AXTERM_PACKAGED_FTP_LONG_TRANSFER=1 \
 AXTERM_PACKAGED_FTP_STALLED_TRANSFER=1 \
 AXTERM_PACKAGED_FTP_ACTIVE_STALLED_TRANSFER=1 \
-bun run test:dmg:macos \
+pnpm run test:dmg:macos \
   /tmp/axterm-macos-current-dmg.2kk8Po/Axterm-0.10.0-arm64.dmg
 ```
 

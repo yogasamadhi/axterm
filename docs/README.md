@@ -143,7 +143,7 @@ Host 编辑器路径和数据往返；H-11 语言项保持 Partial。`Implemente
   实施交付线是至少 121/122，并在 `STATUS.md` 完整登记唯一剩余 Blocked 项；
 - 功能、交互、视觉、配置、数据、失败恢复和平台七个维度都有对应证据；
 - macOS arm64、Windows x64、Linux x64 打包应用和旧版本升级流程通过；
-- `bun run check`、真实协议 fixture、桌面 E2E、视觉差异和长期运行门禁通过；
+- `pnpm run check`、真实协议 fixture、桌面 E2E、视觉差异和长期运行门禁通过；
 - Phase 10、Phase 21 与 `MASTER_SPEC` §49 同时关闭。
 
 `Partial`、`Implemented`、`Blocked`、静态页面、disabled 入口、mock 数据和只在开发模式

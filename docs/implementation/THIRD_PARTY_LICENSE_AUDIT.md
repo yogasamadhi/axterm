@@ -81,7 +81,7 @@ upstream `v0.13.1` source commit/successful release workflow, extracted
 match the recorded identities. This resolves an **npm publication-to-installed
 binding identity** gap; it does not make the nonmatching local rebuild
 reproducible or approve source rights and license obligations. The repeatable
-online command is `bun run licenses:native:provenance:macos -- --app <Axterm.app>`;
+online command is `pnpm run licenses:native:provenance:macos -- --app <Axterm.app>`;
 it is separate from the offline routine check and keeps the native review
 ledger pending.
 
@@ -98,7 +98,7 @@ source-file hashes, checks and remaining limits are recorded in the
 `licenses:zstd:embedded:check` is in the routine and final-public gates; it
 does not sign off IR-02/IR-11 or replace source-to-binary review.
 
-Run `bun pm licenses --json --prod` from the repository root after a frozen install. The 2026-09-20 working tree reports 120 package records (125 distinct name/version entries): 101 MIT records, 6 ISC, 4 BlueOak-1.0.0, 2 Apache-2.0, and one each of BSD-3-Clause, LGPL-3.0-or-later, `(MIT AND Zlib)`, `MIT OR Apache-2.0`, MPL-2.0, OFL-1.1 and Unlicense. The dual-license record is `@devolutions/iron-remote-desktop-rdp@0.7.0`. These are package-manifest declarations, **not** a complete installed-binary SBOM or proof that all bundled source files follow only the package-level license. The command excludes development dependencies but can include transitive packages not ultimately retained by the bundled renderer or Runtime; it does not enumerate Electron/Chromium, native binary internals, copied sources, fonts/images inside packages, or generated assets.
+Run `pnpm licenses list --json --prod` from the repository root after a frozen install. The 2026-09-20 working tree reports 120 package records (125 distinct name/version entries): 101 MIT records, 6 ISC, 4 BlueOak-1.0.0, 2 Apache-2.0, and one each of BSD-3-Clause, LGPL-3.0-or-later, `(MIT AND Zlib)`, `MIT OR Apache-2.0`, MPL-2.0, OFL-1.1 and Unlicense. The dual-license record is `@devolutions/iron-remote-desktop-rdp@0.7.0`. These are package-manifest declarations, **not** a complete installed-binary SBOM or proof that all bundled source files follow only the package-level license. The command excludes development dependencies but can include transitive packages not ultimately retained by the bundled renderer or Runtime; it does not enumerate Electron/Chromium, native binary internals, copied sources, fonts/images inside packages, or generated assets.
 
 The current [production component index](evidence/IR11-COMPONENT-INDEX-2026-09-20.md)
 records those 125 name/version/license entries in `THIRD_PARTY_COMPONENTS.json`.
@@ -113,7 +113,7 @@ rendering of the same frozen production graph. On 2026-09-21 it contains 125
 package identities, has SHA-256
 `02e91008c35e1a368b90ec55f280c459158727b8c78c291fdf7df634da55e80b`, and
 uses a namespace derived from the package version and component identities.
-`bun run sbom:check` runs in the default gate; the document is included next to
+`pnpm run sbom:check` runs in the default gate; the document is included next to
 the application and exposed in About. It deliberately records `NOASSERTION`
 for concluded/declared SPDX licenses while preserving the manifest declaration
 as a comment, because package metadata is not qualified file-level rights
@@ -201,7 +201,7 @@ queue entry.
 
 `LICENSE_ATTRIBUTION_REVIEW_LEDGER.json` turns that exact queue into a
 versioned human-review hand-off. Its scope hash must match the generated
-archive; `bun run licenses:attribution:check` is part of the default gate, so
+archive; `pnpm run licenses:attribution:check` is part of the default gate, so
 an added, removed or silently reordered queued package fails validation. A
 pending record deliberately has no reviewer, date, evidence or conclusion. A
 `reviewed` or `needs-follow-up` record requires all four, including a primary
@@ -209,7 +209,7 @@ source/notice reference and an explicit conclusion. Regeneration preserves a
 matching record's review fields while replacing a changed package scope; it is
 therefore safe for dependency-graph updates but cannot turn this mechanical
 ledger into copyright, source-rights, attribution or distribution clearance.
-`bun run licenses:attribution:reviewed-check` is intentionally stricter: every
+`pnpm run licenses:attribution:reviewed-check` is intentionally stricter: every
 current queue entry must be `reviewed`; `pending` and `needs-follow-up` fail.
 The final-public source gate invokes this stricter check after regenerability
 checks, preventing a migration-removal release from treating a merely valid
@@ -234,9 +234,9 @@ text copy nor an SPDX manifest label is silently counted as a root file.
 
 ## Reproducible packaged-file inventory
 
-Run `bun run licenses:packaged:inventory release/mac-arm64/Axterm.app/Contents/Resources` after `bun run package:dir`; on Windows and Linux pass the corresponding directory containing `app.asar`. The JSON report records the ASAR SHA-256, every package manifest immediately under any `node_modules` level, its declared license, metadata source and root LICENSE/COPYING/NOTICE file hashes, renderer asset paths, each unpacked file hash, and external legal-file hashes. It recognizes singular `license` and legacy `licenses` arrays; multiple legacy declarations remain separate instead of inventing an AND/OR relationship. It deliberately does **not** infer that a package's manifest license applies to every individual file or that a packaged file is reachable at runtime. The script uses electron-builder's installed ASAR reader and is covered by a nested-package fixture test.
+Run `pnpm run licenses:packaged:inventory release/mac-arm64/Axterm.app/Contents/Resources` after `pnpm run package:dir`; on Windows and Linux pass the corresponding directory containing `app.asar`. The JSON report records the ASAR SHA-256, every package manifest immediately under any `node_modules` level, its declared license, metadata source and root LICENSE/COPYING/NOTICE file hashes, renderer asset paths, each unpacked file hash, and external legal-file hashes. It recognizes singular `license` and legacy `licenses` arrays; multiple legacy declarations remain separate instead of inventing an AND/OR relationship. It deliberately does **not** infer that a package's manifest license applies to every individual file or that a packaged file is reachable at runtime. The script uses electron-builder's installed ASAR reader and is covered by a nested-package fixture test.
 
-`bun run sbom:packaged -- <Resources directory> --platform <platform-arch> --output <sidecar>`
+`pnpm run sbom:packaged -- <Resources directory> --platform <platform-arch> --output <sidecar>`
 converts that concrete inventory into a deterministic SPDX 2.3 release sidecar.
 It binds the document namespace to the product version, required platform label
 and observed ASAR SHA-256; it records package identities and the hashes of the
@@ -284,7 +284,7 @@ An additional 2026-09-23 IronRDP follow-up found the publisher's exact
 `npm-iron-remote-desktop-rdp-v0.7.0` tag at commit
 `e45f68c7e52297ca50d33b44c0ace36c9940fbe6`. Its public package
 manifest matches the locked/published/installed 0.7.0 manifest byte-for-byte;
-the official npm tarball integrity also matches `bun.lock`, and all three
+the official npm tarball integrity also matches `pnpm-lock.yaml`, and all three
 tarball files match the local install. The tag's exact `LICENSE-APACHE` is now
 packaged separately as `licenses/IronRDP-LICENSE-APACHE.txt` and readable in
 About. An earlier audit treated Axterm's customized root `LICENSE` as the RDP
@@ -299,7 +299,7 @@ The official npm registry also carries verified publication and SLSA
 attestations for that same tarball. An isolated `npm audit signatures` run
 against `registry.npmjs.org` verified the package and linked its locked
 SHA-512 subject to the same Devolutions commit and successful GitHub publisher
-workflow. The opt-in `bun run licenses:ironrdp:provenance-check` now rejects
+workflow. The opt-in `pnpm run licenses:ironrdp:provenance-check` now rejects
 digest, commit or workflow drift and is wired into Linux CI. This is stronger
 publisher-to-tarball evidence, **not** a reproducible embedded-WASM build,
 complete Rust notices, qualified rights approval or observed remote CI result;
@@ -468,7 +468,7 @@ distribution. Exact commands, hashes and exclusions are in the
 
 The exact published `@novnc/novnc@1.7.0` npm tarball is now also supplied
 as `licenses/noVNC-1.7.0-source.tgz` with an About-visible guide. Its SHA-512
-matches `bun.lock`; all 66 archived files are byte-identical to the installed
+matches `pnpm-lock.yaml`; all 66 archived files are byte-identical to the installed
 package, including all 52 RFB/Pako inputs in the existing module-to-chunk
 record. The offline gate detects tarball, lockfile, installed-file and
 import-graph drift. An isolated macOS package carries both files, passed both

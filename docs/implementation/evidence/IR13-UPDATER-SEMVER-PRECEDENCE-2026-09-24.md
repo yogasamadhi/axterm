@@ -30,7 +30,7 @@ After correction, the focused updater suite passes **19/19**, including
 reverse-order/downgrade, stable/prerelease and equal-precedence build-metadata
 cases. Typecheck and the 267-operation Contract drift check pass.
 
-`bun run build` passed. A fresh unsigned macOS arm64 directory package was
+`pnpm run build` passed. A fresh unsigned macOS arm64 directory package was
 built outside the checkout at `/tmp/axterm-updater-semver-hU77hf`. Its actual
 Resources matched the packaged SPDX sidecar, and the packaged signed-updater
 journey passed **1/1** against a local Ed25519-signed chunked HTTP fixture.

@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
-  licenseTextsFromBunReport,
+  licenseTextsFromLicenseReport,
   mismatchedPackagedLicenseTexts,
   serializeLicenseTexts,
 } from '../../scripts/commercialization/generate-license-texts.mjs';
@@ -64,7 +64,7 @@ describe('production root-license text archive', () => {
         { name: 'alpha', versions: ['1.0.0'], paths: [alpha], license: 'MIT' },
       ],
     };
-    const archive = licenseTextsFromBunReport(report, { allowedRoot: root });
+    const archive = licenseTextsFromLicenseReport(report, { allowedRoot: root });
     expect(archive.components.map(({ name }: { name: string }) => name)).toEqual(['alpha', 'beta']);
     expect(archive.missingRootLicenseFiles).toEqual([{ name: 'beta', version: '2.0.0' }]);
     expect(archive.components[0].files).toEqual([
@@ -117,7 +117,7 @@ describe('production root-license text archive', () => {
       '1.0.0',
       'See the copyright policy elsewhere.\n',
     );
-    const archive = licenseTextsFromBunReport(
+    const archive = licenseTextsFromLicenseReport(
       {
         MIT: [
           { name: 'compact-heading', versions: ['1.0.0'], paths: [compact], license: 'MIT' },
@@ -181,7 +181,7 @@ describe('production root-license text archive', () => {
     mkdirSync(allowed);
     const outside = packageFixture(root, 'outside', '1.0.0', 'license');
     expect(() =>
-      licenseTextsFromBunReport(
+      licenseTextsFromLicenseReport(
         {
           MIT: [{ name: 'outside', versions: ['1.0.0'], paths: [outside], license: 'MIT' }],
         },

@@ -56,7 +56,7 @@ Verify exact bytes and boundaries with delayed-parser tests: pause/resume hyster
 duplicate consumption, wrong stream, over-acknowledgement, tiny-frame capacity, overshoot, multiple
 clients, replay, old socket events, recording/transport ownership and shutdown. Run the same visible
 1/4/8 Electron profiles and preserve their pre-change reports. Also run real SSH, reconnect/restart,
-terminal-native transfer regressions, Architecture/Contract gates and `bun run check`. New Mac
+terminal-native transfer regressions, Architecture/Contract gates and `pnpm run check`. New Mac
 candidate validation belongs to OP-09. Windows/Linux native acceptance remains unperformed.
 
 ## Consequences

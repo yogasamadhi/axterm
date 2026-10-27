@@ -26,9 +26,9 @@ describe('independent-release GitHub Actions provenance', () => {
         release: 'v4.4.0',
       },
       {
-        action: 'oven-sh/setup-bun',
-        commit: '0c5077e51419868618aeaa5fe8019c62421857d6',
-        release: 'v2.2.0',
+        action: 'pnpm/action-setup',
+        commit: 'ea17c68df8912ef543352723c149a84f56e3d413',
+        release: 'v6.1.0',
       },
       ...Array.from({ length: 3 }, () => ({
         action: 'actions/upload-artifact',

@@ -37,7 +37,7 @@ were byte-identical, SHA-256
 The repeatable online command is:
 
 ```sh
-bun run licenses:native:provenance:macos -- --app /absolute/path/to/Axterm.app
+pnpm run licenses:native:provenance:macos -- --app /absolute/path/to/Axterm.app
 ```
 
 It pins and checks the npm audit result, SLSA source/workflow/run claims,
@@ -47,7 +47,7 @@ required for a concrete package claim. It uses an isolated temporary project,
 ignores install scripts and removes only that project afterward. The pure
 claim validator has unit tests for mirror substitution and altered source,
 tarball and binary identities. This is a release-engineering audit, not a
-network-dependent part of routine `bun run check`.
+network-dependent part of routine `pnpm run check`.
 
 This evidence closes the earlier **unverified npm publication-to-installed
 binding identity** question for this macOS candidate. It does **not** prove a
@@ -60,6 +60,6 @@ vendored source notices, source-file authorship, contributor rights or final
 distribution obligations. The 61 package and one published-binary review
 entries remain pending; IR-02/IR-11 are **In progress**, and no release gate is
 promoted by this record alone.
-The full `bun run check` now passes **228 test files, 1,150 tests passed / 34
+The full `pnpm run check` now passes **228 test files, 1,150 tests passed / 34
 skipped**, 360 architecture modules / 1,310 dependencies, 267 Contract
 operations and 11 visual/accessibility journeys.

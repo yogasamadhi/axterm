@@ -23,11 +23,11 @@ engineering candidate. This is not public commercial-release approval.
 
 | Check                                                        | Result                                                                                                                                           |
 | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `bun install --frozen-lockfile`                              | Passed                                                                                                                                           |
-| `bun run check`                                              | Passed: 1,213 unit/integration tests and 21 visual/accessibility tests, plus architecture, contracts, licenses, source and build gates           |
+| `pnpm install --frozen-lockfile`                             | Passed                                                                                                                                           |
+| `pnpm run check`                                             | Passed: 1,213 unit/integration tests and 21 visual/accessibility tests, plus architecture, contracts, licenses, source and build gates           |
 | Source, generated bundle, app, DMG and ZIP retired-name scan | Zero case-insensitive matches in paths and bytes                                                                                                 |
-| `bun run test:dmg:macos`                                     | Passed: DMG verified, mounted, copied independently; 36 packaged tests passed, 19 skipped by platform/fixture conditions                         |
-| `bun run test:ssh:packaged`                                  | Passed: controlled integration, Desktop SSH/SFTP journey, and packaged SSH journey                                                               |
+| `pnpm run test:dmg:macos`                                    | Passed: DMG verified, mounted, copied independently; 36 packaged tests passed, 19 skipped by platform/fixture conditions                         |
+| `pnpm run test:ssh:packaged`                                 | Passed: controlled integration, Desktop SSH/SFTP journey, and packaged SSH journey                                                               |
 | Previous data isolation                                      | Packaged test confirms old database and Vault bytes unchanged and no remote request; direct Runtime preflight rejects old schema without writing |
 
 Exact hashes for the final package invocation are written to the local,

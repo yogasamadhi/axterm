@@ -116,17 +116,17 @@ try {
   }
 
   $installedResources = Join-Path $installDirectory 'resources'
-  & bun run sbom:packaged:check -- $installedResources --platform windows-x64 --sidecar $sidecarPath
+  & pnpm run sbom:packaged:check -- $installedResources --platform windows-x64 --sidecar $sidecarPath
   if ($LASTEXITCODE -ne 0) {
     throw "Installed NSIS SPDX comparison exited with code $LASTEXITCODE."
   }
-  & bun run release:updater-feed:package-check -- $installedResources
+  & pnpm run release:updater-feed:package-check -- $installedResources
   if ($LASTEXITCODE -ne 0) {
     throw "Installed NSIS update-feed comparison exited with code $LASTEXITCODE."
   }
 
   $env:AXTERM_PACKAGED_APP = $installDirectory
-  & bun run test:packaged
+  & pnpm run test:packaged
   if ($LASTEXITCODE -ne 0) {
     throw "Installed NSIS packaged journey exited with code $LASTEXITCODE."
   }

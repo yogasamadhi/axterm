@@ -30,7 +30,7 @@
 当前技术状态：[STATUS](STATUS.md)
 
 2026-09-25 最终公开晋级门禁的实跑仍是**预期阻断**，不是发行失败后的例外批准：
-`bun run release:final-public:check` 在 23 项前置检查中通过 14 项、阻断 9 项，
+`pnpm run release:final-public:check` 在 23 项前置检查中通过 14 项、阻断 9 项，
 并按设计跳过最终源码快照扫描。阻断项按实际负责方交接：
 
 | 负责方                     | 本次仍阻断的门禁                                                                                                                                  | 解锁所需事实                                                                                                                     |
@@ -78,11 +78,11 @@ W-08-02 暂不勾选，IR-06/IR-08 不因 Mac 工程通过而 Accepted。
 权利人，也没有覆盖当前大量未提交的替换内容。权利/法务审查人须取得所有者的
 身份与授权依据、审阅最终源码/素材快照及第三方例外，并留存具名结论；未来
 贡献规则或 Git 作者字段不能追溯代替这些证明。IR-02 保持 **In progress**。
-准备最终源码快照时，先运行 `bun run source:review:generate` 更新
+准备最终源码快照时，先运行 `pnpm run source:review:generate` 更新
 [`AXTERM_SOURCE_FILE_REVIEW_LEDGER.json`](../../compliance/AXTERM_SOURCE_FILE_REVIEW_LEDGER.json)，
 由权利审查人逐项填写非敏感来源、许可证、权利人、进入发行物的位置和依据；对受限
 合同只写受控回执，不把合同原件公开。文件字节变化会使该项重新待审。最终公开门禁
-要求 `bun run source:review:reviewed-check` 全部通过；通过仍不能替代真实性或法律审查。
+要求 `pnpm run source:review:reviewed-check` 全部通过；通过仍不能替代真实性或法律审查。
 
 勾选本清单的某项不自动改变 `INDEPENDENT_RELEASE_MATRIX.md` 的状态。只有负责人
 将可复核的证据链接、日期和审查人记录进 `STATUS.md` 或对应 evidence 文件后，才能
@@ -109,15 +109,15 @@ IR-11 现在另有原生 Rust 依赖审查范围：
 列出 macOS arm64 `fs-safe` 绑定的 61 个锁定源码包和发布二进制，全部仍为
 `pending`。权利/发布审查人须逐项记录适用版权与许可证文本在源码、Legal/About
 及实际安装包中的处理，并解释本地重建与发布 `.node` 字节不一致的来源关系；
-不能仅凭父 npm 包的 MIT 标签签收。普通 `bun run licenses:native:check` 只检查
-台账完整性；`bun run licenses:native:texts:check` 验证已随 macOS 包和 About
+不能仅凭父 npm 包的 MIT 标签签收。普通 `pnpm run licenses:native:check` 只检查
+台账完整性；`pnpm run licenses:native:texts:check` 验证已随 macOS 包和 About
 提供的 111 份原始根文本，但不作适用性判断。晋级前需通过
-`bun run licenses:native:reviewed-check`；Windows/Linux 目标图仍需单独证据。
+`pnpm run licenses:native:reviewed-check`；Windows/Linux 目标图仍需单独证据。
 详见[原生源码记录](evidence/IR11-FS-SAFE-NATIVE-SOURCE-2026-09-24.md)及
 [macOS 根文本包记录](evidence/IR11-FS-SAFE-RUST-ROOT-TEXTS-2026-09-24.md)。
 四个没有自带根许可证文件的 `napi` 包已有独立的
 [发布源码与根许可记录](evidence/IR11-NAPI-RS-PUBLISHED-SOURCE-2026-09-24.md)：
-`bun run licenses:napi:check` 验证随包文本和依赖范围，但不代替最终审查。
+`pnpm run licenses:napi:check` 验证随包文本和依赖范围，但不代替最终审查。
 另见[原生 Mach-O 工具链对比](evidence/IR11-FS-SAFE-MACHO-TOOLCHAIN-2026-09-24.md)：
 实际安装的 macOS arm64 `.node` 哈希现在受常规检查约束；上游发布文件记录 SDK
 15.5/链接器 1167.5，本机 Rust 1.98.1 + SDK 27.0 重建仍未逐字节复现。
@@ -125,11 +125,11 @@ IR-11 现在另有原生 Rust 依赖审查范围：
 另有[官方 npm 来源证明链](evidence/IR11-FS-SAFE-NPM-ATTESTED-PROVENANCE-2026-09-24.md)：
 官方 registry 验证了 SLSA 声明，发布 tarball 内 `.node` 与当前 Mac 安装包字节相同，
 声明关联到锁定源码提交和成功的发布工作流。发布工程师可对最终 Mac 包重跑
-`bun run licenses:native:provenance:macos -- --app <Axterm.app>`。
+`pnpm run licenses:native:provenance:macos -- --app <Axterm.app>`。
 该结果缩小来源不明范围，但不代替可复现构建、逐文件权利/许可或具名签收。
 另有[macOS Cargo 源码范围 SPDX](evidence/IR11-FS-SAFE-MACOS-SOURCE-SBOM-2026-09-24.md)
-独立列出锁定的 61 个 Rust 源码包；常规 `bun run sbom:native:macos:check`
-检查清单漂移，`bun run sbom:native:macos:artifact-check -- <Resources>
+独立列出锁定的 61 个 Rust 源码包；常规 `pnpm run sbom:native:macos:check`
+检查清单漂移，`pnpm run sbom:native:macos:artifact-check -- <Resources>
 <packaged SPDX sidecar>` 比对最终 Mac 应用的 `.node`、npm 身份和四份补充法律文本。
 它不推定 61 个包均链接进二进制，也不代替 62 项具名权利审查。
 另有 [原生源码头候选清单](evidence/IR11-FS-SAFE-SOURCE-HEADER-CANDIDATES-2026-09-24.md)：
@@ -140,13 +140,13 @@ IR-11 现在另有原生 Rust 依赖审查范围：
 IronRDP 现另有[面向 WASM 的 Rust 来源清单](evidence/IR11-IRONRDP-WASM-SOURCE-SCOPE-2026-09-24.md)：
 锁定的上游 `ironrdp-web` 目标树列出 259 个源码包，已将 470 份可取得的根法律
 文本纳入 Mac 包与 About，并有独立来源 SPDX。常规
-`bun run licenses:ironrdp:source:check` 检查版本、清单、文本和发布 WASM；
+`pnpm run licenses:ironrdp:source:check` 检查版本、清单、文本和发布 WASM；
 发布工程师还应对最终 Mac 包执行
-`bun run licenses:ironrdp:source:artifact-check -- <Resources> <packaged SPDX sidecar>`。
+`pnpm run licenses:ironrdp:source:artifact-check -- <Resources> <packaged SPDX sidecar>`。
 六个 registry crate 缺自带根文本；已另按各自 `.cargo_vcs_info.json` 精确提交
 保留 12 份[发布者仓库根原文](evidence/IR11-IRONRDP-MISSING-CRATE-ROOT-TEXTS-2026-09-24.md)
 至 `licenses/IronRDP-MISSING-CRATE-ROOT-LICENSES.txt`，并用已发布 crate 的
-`src/lib.rs` 逐字节交叉核对。`bun run licenses:ironrdp:missing:check` 是常规
+`src/lib.rs` 逐字节交叉核对。`pnpm run licenses:ironrdp:missing:check` 是常规
 检查；这并不让缺失文本变成 crate 原包内容。嵌套/逐文件声明、双许可证选择、
 源码至 WASM 可复现构建及具名权利审查均未签收，不能据此晋级 IR-02/IR-11。
 另有 [tracing-core 嵌套声明](evidence/IR11-IRONRDP-NESTED-SPIN-LICENSE-2026-09-24.md)：
@@ -162,25 +162,25 @@ IronRDP 现另有[面向 WASM 的 Rust 来源清单](evidence/IR11-IRONRDP-WASM-
 文件。候选行不能替代完整源码头、实际 WASM 包含性或具名权利结论。
 `IRONRDP_DEPENDENCY_REVIEW_LEDGER.json` 将 259 个候选源码包和发布 WASM
 列为 260 项待审，逐项填写审查人、日期、第一手证据、许可/声明处理和结论。
-`bun run licenses:ironrdp:review:check` 只核对范围；最终公开发行须通过
-`bun run licenses:ironrdp:review:reviewed-check`，不能把随包文本当成签收。
+`pnpm run licenses:ironrdp:review:check` 只核对范围；最终公开发行须通过
+`pnpm run licenses:ironrdp:review:reviewed-check`，不能把随包文本当成签收。
 `zstd-sys` 内嵌 Zstandard 的 BSD 风格 `LICENSE` 与 GPLv2 `COPYING` 已按
 [嵌套文本证据](evidence/IR11-ZSTD-NESTED-LEGAL-2026-09-24.md) 原样纳入 macOS
 法律目录和 About；源码头说明两者为可选许可，并非已选择 GPLv2。
-`bun run licenses:zstd:embedded:check` 只核对锁定 Cargo 源码和保留文本；
+`pnpm run licenses:zstd:embedded:check` 只核对锁定 Cargo 源码和保留文本；
 适用许可选择、实际二进制范围和发行义务仍需具名审查。
 
 | 门禁          | 负责人                                   | 必须完成的外部工作                                                                                                                                                                                                                                                                                                         | 现有工程证据和交接输出                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | ------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | IR-01 / IR-02 | 产品负责人、权利/法务审查人              | 审核逐文件/包/数据/字体/图标来源、历史贡献授权与 Axterm 商标/营销表述；结论不得由代码相似度或许可证名称推定。                                                                                                                                                                                                              | 受控历史来源审计记录、[THIRD_PARTY_LICENSE_AUDIT](THIRD_PARTY_LICENSE_AUDIT.md)、`LICENSE_ATTRIBUTION_REVIEW_LEDGER.json`；为每项写入具名审查人、日期、第一手依据和结论。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | IR-03 / IR-04 | 协议安全审查人、Windows/Linux 发布工程师 | 审查独立终端传输与 FTP 实现；在真实外部 SSH/FTP 场景和 Windows/Linux 已安装应用上验证超时、取消、路径安全、权限与清理。FTP Widget 是明文协议，只能作为本机便利服务：审查须确认 Contract、Runtime 和 UI 都拒绝 `0.0.0.0`/`::`，并只接受 `localhost`、`127.0.0.1`、`::1`；需要网络共享时只验证独立认证的 SSH Server Widget。 | 现有 Runtime/PTY/Docker/macOS 证据仅为基础；P-03 当前有 Contract/Adapter 拒绝与 source、packaged macOS real-FTP 登录/列表证据，见 [PACKAGING](PACKAGING.md) 和 [IR-12 本地候选证据](evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md)。仍须保存平台、应用版本、fixture、结果与发行物哈希。                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| IR-05         | 每种语言的合格审校人、产品/品牌审查人    | 审校简体中文、繁体中文、英文和日文的导航目录、2,649 键核心文案、所改可见文本、无障碍名称和用户承诺；不得把 AI 草稿或英语回退当成审校。                                                                                                                                                                                     | [LOCALIZATION_FALLBACK_POLICY](LOCALIZATION_FALLBACK_POLICY.md) 与 `scripts/localization/axterm-navigation-review-ledger.json`、`scripts/localization/axterm-core-review-ledger.json`；每个 `reviewed` 条目必须含独立语言/权利审查人和日期，并在导航目录与核心目录晋级前分别通过 `bun run locales:navigation:reviewed-check`、`bun run locales:core:reviewed-check`。                                                                                                                                                                                                                                                                                                                                                                    |
-| IR-06 / IR-07 | 产品设计、品牌与权利审查人               | 审核精选主题的独立来源、旧主题迁移表、图标/字体/图片权利与商标风险；审阅 Shell、导航、设置、弹窗和空态的目标体验。                                                                                                                                                                                                         | [THEME_CATALOG_MIGRATION](THEME_CATALOG_MIGRATION.md)、[PRODUCT_ASSET_PROVENANCE](PRODUCT_ASSET_PROVENANCE.md)、[AXTERM_VISUAL_BASELINE](AXTERM_VISUAL_BASELINE.md)；为当前产品标识素材填写 `PRODUCT_ASSET_REVIEW_LEDGER.json` 并在晋级前执行 `bun run assets:marks:reviewed-check`，另补设计审定和三平台包内资产证据。                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| IR-05         | 每种语言的合格审校人、产品/品牌审查人    | 审校简体中文、繁体中文、英文和日文的导航目录、2,649 键核心文案、所改可见文本、无障碍名称和用户承诺；不得把 AI 草稿或英语回退当成审校。                                                                                                                                                                                     | [LOCALIZATION_FALLBACK_POLICY](LOCALIZATION_FALLBACK_POLICY.md) 与 `scripts/localization/axterm-navigation-review-ledger.json`、`scripts/localization/axterm-core-review-ledger.json`；每个 `reviewed` 条目必须含独立语言/权利审查人和日期，并在导航目录与核心目录晋级前分别通过 `pnpm run locales:navigation:reviewed-check`、`pnpm run locales:core:reviewed-check`。                                                                                                                                                                                                                                                                                                                                                                  |
+| IR-06 / IR-07 | 产品设计、品牌与权利审查人               | 审核精选主题的独立来源、旧主题迁移表、图标/字体/图片权利与商标风险；审阅 Shell、导航、设置、弹窗和空态的目标体验。                                                                                                                                                                                                         | [THEME_CATALOG_MIGRATION](THEME_CATALOG_MIGRATION.md)、[PRODUCT_ASSET_PROVENANCE](PRODUCT_ASSET_PROVENANCE.md)、[AXTERM_VISUAL_BASELINE](AXTERM_VISUAL_BASELINE.md)；为当前产品标识素材填写 `PRODUCT_ASSET_REVIEW_LEDGER.json` 并在晋级前执行 `pnpm run assets:marks:reviewed-check`，另补设计审定和三平台包内资产证据。                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | IR-08         | 发布负责人、支持负责人                   | 核准从未公开分发的旧原型退出路径：完整冷备份、旧专属文件拒绝无写入、新 `data-v2/` 与 `vault-v2/` 不读写旧 profile、手动重建主题/连接并重填密码。不得宣称旧原型原位升级、旧便携文件仍能导入或存在公开迁移窗口；未来新 profile 内的升级另行验证。                                                                            | [当前数据退出说明](UNPUBLISHED_PROTOTYPE_DATA_EXIT.md)、[旧发行物可用性审计](evidence/IR08-OLD-RELEASE-AVAILABILITY-2026-09-21.md)、当前 Mac 包新旧目录隔离回归与 `MIGRATION_RELEASE_RECORD.json` v2；发行负责人核风险、用户平台结果并具名签收。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | IR-09         | 发布负责人、支持负责人                   | 首次公开版立即移除旧深链、导入导出、主题文件和同步入口；核当前源码/API/安装包无旧兼容，Axterm 自有路径可用，旧本地行与远端对象原样保全，发行说明准确。                                                                                                                                                                     | [ADR-021](../adr/ADR-021-immediate-legacy-prototype-compatibility-removal.md)、Mac 包回归、三平台结果与最终版本 diff；`migration:record:removal-check` 已验证即时移除决定，`release:final-public:check` 仍须通过其余权利、语言、品牌、服务及最终快照门禁。                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | IR-10         | 产品设计、无障碍和品牌审查人             | 审定 Axterm 自有视觉与交互，并在三平台已安装应用上核验对比度、键盘、焦点、保留语言方向、溢出、弹窗与恢复。                                                                                                                                                                                                                 | [AXTERM_VISUAL_BASELINE](AXTERM_VISUAL_BASELINE.md)、source E2E 与复制到仓库外运行的 macOS directory-app Host Key/共享协议弹窗证据是基础，不替代设计/商标签收、签名安装或 Windows/Linux 证据。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | IR-11         | 权利/法务审查人、发布工程师              | 核查每个最终平台实际安装包的许可证/NOTICE、SBOM 与 About 可访问性；审查 LGPL/MPL、WASM、原生模块、Electron/Chromium、字体和内联资源的发行义务。                                                                                                                                                                            | `THIRD_PARTY_NOTICES.txt`、`AXTERM_PRODUCTION_DEPENDENCIES.spdx.json`、[THIRD_PARTY_LICENSE_AUDIT](THIRD_PARTY_LICENSE_AUDIT.md)；为最终签名制品生成平台 SBOM 和哈希。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| IR-12         | 发布工程师                               | 从待发布源快照的全新 Git 检出执行冻结安装、完整检查、真实协议与 Electron E2E；检查不含子模块和旧引用。                                                                                                                                                                                                                     | `bun run check`、`bun run snapshot:check`、[IR-12 本地候选证据](evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md)；临时候选不是最终远程仓库证据。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| IR-12         | 发布工程师                               | 从待发布源快照的全新 Git 检出执行冻结安装、完整检查、真实协议与 Electron E2E；检查不含子模块和旧引用。                                                                                                                                                                                                                     | `pnpm run check`、`pnpm run snapshot:check`、[IR-12 本地候选证据](evidence/IR12-EPHEMERAL-GIT-CANDIDATE-2026-09-21.md)；临时候选不是最终远程仓库证据。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | IR-13         | 各平台发布工程师、发布负责人             | 对 macOS arm64、Windows x64、Linux x64 进行真实安装和升级；完成签名/公证、正式 HTTPS 更新源、认证更新、下载和发布哈希验证。                                                                                                                                                                                                | [PACKAGING](PACKAGING.md)、[SIGNED_UPDATE_FEED](SIGNED_UPDATE_FEED.md)、[最新 Linux x64 已安装包证据](evidence/IR04-FTP-READ-HANDLE-LINUX-DEB-2026-09-24.md)；macOS 使用 `test:dmg:macos`，Linux 使用 `test:deb:linux`，Windows 使用 `test:nsis:windows`。CI 在这些安装测试后、上传前使用 `release:hashes:check` 重新核验实际制品字节，再下载刚上传的安装器与清单、复核字节并保留 `AXTERM_UPLOAD_ROUNDTRIP.<platform>.json`。最新 Linux DEB 候选已在 emulated `linux/amd64` + Xvfb 中完成 APT 安装、版本核验和 23 项适用旅程，但不是原生桌面、launcher/deep-link、外部 SSH、签名或升级证据。最终仍须保存成功远程 CI 的回执，记录原生平台、公开下载后哈希、签名/公证结果、升级来源/目标和测试人；本地模拟与工作流定义不能单独接受 IR-13。 |
 | IR-14         | 仓库所有者                               | 验证受控旧证据已保存；从最终审计树创建新根提交、远程 CI、下载和安装器，再决定旧 GitHub 仓库是否删除。                                                                                                                                                                                                                      | [HISTORICAL_REFERENCE_ARCHIVE](HISTORICAL_REFERENCE_ARCHIVE.md) 与最终 IR-12/IR-13 证据；所有者的远程仓库与删除操作不可由本地脚本执行。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
@@ -198,10 +198,10 @@ IR-13 的发布负责人须在启用自动更新的完整三平台发行前将
 [`UPDATE_FEED_RECORD.json`](../../compliance/UPDATE_FEED_RECORD.json) 从 `pending` 晋级为
 `active`：填写真实公开 HTTPS manifest URL、Ed25519 SPKI 公钥，以及具名审查人、
 日期、依据和批准结论。对应私钥不得进入仓库或发行日志。执行
-`bun run release:updater-feed:active-check` 后，还需对三平台实际安装包的
-Resources 执行 `bun run release:updater-feed:package-check -- <resources> --active`，
+`pnpm run release:updater-feed:active-check` 后，还需对三平台实际安装包的
+Resources 执行 `pnpm run release:updater-feed:package-check -- <resources> --active`，
 核对 `AXTERM_UPDATE_FEED.json` 与批准记录字节一致，保存公开 HTTPS 下载、签名验证、
-签名安装器及真实旧版升级证据。`bun run check` 只验证 pending/active 记录格式；
+签名安装器及真实旧版升级证据。`pnpm run check` 只验证 pending/active 记录格式；
 本地回环夹具和环境变量不能代替公开发行配置。包内 active 公钥与地址不能被
 运行时环境变量覆盖。当前记录仍为 **pending**，IR-13 仍为 **Open**。
 
@@ -210,11 +210,11 @@ Resources 执行 `bun run release:updater-feed:package-check -- <resources> --ac
 阶段 4 的隐私数据处理说明、安全问题接收渠道和支持政策使用
 [`RELEASE_SERVICE_RECORD.json`](../../compliance/RELEASE_SERVICE_RECORD.json) 作为非敏感事实源。
 它与迁移发布记录分开：前者不能决定何时移除兼容入口，后者也不能代替安全、隐私或支持
-承诺。常规 `bun run release:services:check` 只保证当前 `pending` 或未来 `active` 记录
+承诺。常规 `pnpm run release:services:check` 只保证当前 `pending` 或未来 `active` 记录
 没有自相矛盾。后续首次 Mac 手动更新发行须实际发布政策与联系渠道，按 MCR-03～04
 保存公开 URL、可用性和所有者批准证据；完整三平台路线另须把可访问的 HTTPS 或
 `mailto:` 渠道、具名批准、日期和证据写入此记录，并运行
-`bun run release:services:active-check`。
+`pnpm run release:services:active-check`。
 
 `PRIVACY.md`、`SECURITY.md` 和 `SUPPORT.md` 当前都明确是预发布技术或运营边界，
 而非已生效的法律政策、漏洞响应承诺或客服服务等级。任何记录、文档或 active gate
@@ -226,8 +226,8 @@ Resources 执行 `bun run release:updater-feed:package-check -- <resources> --ac
 批准首次公开版前直接移除旧兼容入口，因为旧原型从未公开分发。
 `MIGRATION_RELEASE_RECORD.json` 为 v2 `immediate-removal-approved`，其中
 `publicMigrationRelease` 与 `approvedWindow` 均为 `null`；无需虚构公开日期、
-支持窗口或稳定版里程碑。`bun run migration:record:check` 和
-`bun run migration:record:removal-check` 验证决定记录；
+支持窗口或稳定版里程碑。`pnpm run migration:record:check` 和
+`pnpm run migration:record:removal-check` 验证决定记录；
 `migration:record:active-check` 属于已废止的旧路线，不能再当作 IR-08/IR-09 阻断。
 
 决定记录只说明可以**立即移除入口**，不证明旧本地数据库/Vault、远端对象、
@@ -240,18 +240,18 @@ Resources 执行 `bun run release:updater-feed:package-check -- <resources> --ac
 在所有发布签收已收集、且由所有者准备最终源快照后，执行以下复核：
 
 1. 在不含旧 `.git`、`.gitmodules`、`vendor/`、安装依赖、构建产物、trace、非示例
-   环境文件和 `docs/api/openapi.json` 的目录运行 `bun run snapshot:check`。按 ADR-021
-   立即移除旧兼容入口并完成适用审查后，运行 `bun run release:final-public:check`。该组合门禁会在
+   环境文件和 `docs/api/openapi.json` 的目录运行 `pnpm run snapshot:check`。按 ADR-021
+   立即移除旧兼容入口并完成适用审查后，运行 `pnpm run release:final-public:check`。该组合门禁会在
    一次执行中检查并汇总 `MIGRATION_RELEASE_RECORD.json` 的移除批准、依赖版权归属、产品标识、
    四语言目录和公开服务记录，不会因第一项失败而隐藏后续待办；只有这些前置门禁全部通过时，
    才执行底层 `snapshot:final-public:check`，后者检查整个准备后快照的文件名和字节内容。
    输出必须明确列出阻塞项并说明最终快照是否跳过；没有经批准的历史文档时不得传入例外文件。确有必要保留
    单个 `docs/` 文件时，从 [PUBLIC_SNAPSHOT_EXCEPTION_TEMPLATE.json](PUBLIC_SNAPSHOT_EXCEPTION_TEMPLATE.json)
-   复制一份至受控、非公开位置，逐项填写理由、审查人、日期和审批依据，并运行 `bun run
+   复制一份至受控、非公开位置，逐项填写理由、审查人、日期和审批依据，并运行 `pnpm run
 release:final-public:check -- --exceptions /absolute/path/to/approved-record.json`。模板本身不是批准，
    代码、构建脚本、测试、素材或未命中的文档例外均不能通过该门禁。
-2. 在该快照上运行 `bun run candidate:check`。它会在自己的临时目录新建本地根提交、
-   `git clone --no-local`、运行 `bun install --frozen-lockfile` 与 `bun run check`，并在
+2. 在该快照上运行 `pnpm run candidate:check`。它会在自己的临时目录新建本地根提交、
+   `git clone --no-local`、运行 `pnpm install --frozen-lockfile` 与 `pnpm run check`，并在
    成功或失败后清理自身临时目录；不会写入当前检出或远程。这是复现检查，不能取代最终
    远程 CI。若需保留故障现场，只能由负责人显式运行脚本的 `--keep` 选项，并作为受控
    非公开证据处理。

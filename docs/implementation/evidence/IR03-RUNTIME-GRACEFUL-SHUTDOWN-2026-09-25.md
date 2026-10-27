@@ -26,32 +26,32 @@ not use Electron business IPC or change the file-grant boundary.
 ## Verification
 
 ```sh
-bunx vitest run \
+pnpm exec vitest run \
   packages/runtime/src/application/terminal-transfer-service.test.ts \
   packages/runtime/src/adapters/terminal-transfer/terminal-transfer-adapter.test.ts \
   packages/runtime/src/adapters/terminal-transfer/zmodem-protocol.test.ts \
   packages/runtime/src/adapters/terminal-transfer/trzsz-protocol.test.ts
 # 4 files: 40 passed, 2 skipped
 
-bun run typecheck
+pnpm run typecheck
 # passed
 
-bun run check
+pnpm run check
 # 1,200 unit/integration tests passed; 38 skipped; 11 visual/a11y passed
 
 AXTERM_PACKAGED_APP=/tmp/axterm-w03-current-package.rcx0j5/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged app roundtrips (TRZSZ|ZMODEM|XMODEM)'
 # 3/3 passed through real local PTYs
 
 AXTERM_PACKAGED_APP=/tmp/axterm-w03-current-package.rcx0j5/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'removes an active TRZSZ receive stage on graceful quit'
 # 1/1 passed
 
 AXTERM_PACKAGED_APP=/tmp/axterm-w03-current-package.rcx0j5/mac-arm64/Axterm.app \
 AXTERM_PACKAGED_TRANSFER_CRASH_PROBE=1 \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'active TRZSZ receive survives a hard-kill/restart'
 # 1/1 diagnostic passed; one staged file remained after restart
 ```
@@ -114,7 +114,7 @@ the final destination bytes are preserved even when stage-name removal fails.
 as a successful destruction. This is **T2 partial progress**, not T1 policy
 approval, T2/T3 acceptance, or hard-kill recovery.
 
-After this follow-up, `bun run check` passed **1,213 unit/integration tests**
+After this follow-up, `pnpm run check` passed **1,213 unit/integration tests**
 with 38 skipped and **21/21 visual/accessibility tests**. A fresh unsigned
 macOS arm64 directory app was built with
 `node scripts/package-desktop.mjs --dir --output /tmp/axterm-trzsz-cleanup.HWtFnC`.
@@ -139,7 +139,7 @@ the same protocol regression, it reports `session-error`, publishes no final
 file, removes its own stage and exposes no filesystem path. The focused TRZSZ
 protocol/writer suites then passed **22 tests** with one conditional skip.
 
-`bun run build` was run before creating a fresh unsigned Mac arm64 directory
+`pnpm run build` was run before creating a fresh unsigned Mac arm64 directory
 package. Its `app.asar` SHA-256 is
 `28d5f26d07f71e90d681ef31e3ce976bef3fdd45804b8e03edc4d4aec53e4828`;
 the revised `trzsz.ts` SHA-256 is
@@ -150,7 +150,7 @@ roundtrip, rejection of a peer that misreports its size with no destination
 or stage left, and active-receive graceful-quit cleanup. The malicious-peer
 fixture source hash is
 `be44d15c50e2922fbc26e491610d18c447ecf0800db914b91b22f2a92babce06`.
-An earlier package attempt before `bun run build` contained stale Runtime
+An earlier package attempt before `pnpm run build` contained stale Runtime
 output and is **not** evidence for the source fix. On the rebuilt package,
 the first three-test run had a transient normal-roundtrip timeout; that
 roundtrip passed on an individual rerun, then all three passed together on
@@ -168,7 +168,7 @@ error. The patch retains its earlier receive-timer cleanup and TypeScript
 declaration correction. Four focused TRZSZ test files passed **27 tests**
 with one conditional skip.
 
-After `bun run build`, a fresh unsigned Mac arm64 directory app was packaged
+After `pnpm run build`, a fresh unsigned Mac arm64 directory app was packaged
 under `/tmp/axterm-trzsz-chunk.CNGRVe`; its `app.asar` SHA-256 is
 `a45c28c2eb2e20ce71b311eae846f5991988a97412c3efcb83263d236ba45346`.
 The applied dependency patch SHA-256 is
@@ -184,7 +184,7 @@ line is bounded. T1 ownership/re-Grant policy, hard-kill recovery, remaining
 text-mode bounds and T3 real-volume acceptance remain open; W-03-02 and IR-03
 are not accepted.
 
-The final `bun run check` for this source passed **1,215 unit/integration
+The final `pnpm run check` for this source passed **1,215 unit/integration
 tests** (38 skipped), the architecture/Contract/source/license/build gates,
 and **21/21 visual/accessibility tests**.
 
@@ -198,7 +198,7 @@ protocol error. A 10-MiB incompressible text-mode DATA frame and a short
 VT100-decorated Windows line still pass; this exercises the bound without
 claiming that a Windows native package was tested. The five focused transfer
 and third-party-evidence suites passed **63 tests** with one conditional skip.
-`bun install --frozen-lockfile` preserved the patched CJS/ESM bytes; their
+`pnpm install --frozen-lockfile` preserved the patched CJS/ESM bytes; their
 current hashes and unchanged publisher source-map scope are pinned in the
 [IR-02 transfer source-map record](IR02-TRANSFER-SOURCE-MAP-2026-09-24.json).
 
@@ -237,7 +237,7 @@ conditional skip; the direct-library regressions were red before patching.
 
 The current patch SHA-256 is
 `16d94b8ddf9558f1e2ff73d3aac254b8fb1f8e8525212d4e8bfd08bb8ccb0694`.
-`bun install --frozen-lockfile` reapplied it. The patched CJS bundle is
+`pnpm install --frozen-lockfile` reapplied it. The patched CJS bundle is
 `333600a28cfd794c0e9eca0c2d8b1b6e32830ab964775332a96382c2359e63a3`
 and patched ESM buffer is
 `4055e6436d76d0fdde4f388fc3d0bc65de5632a2d48a126e399499182388b065`;
@@ -284,7 +284,7 @@ after successful no-overwrite publication, confirming final bytes survive.
 The two focused suites pass **25 tests, one conditional skip**; typecheck
 passes. Current `zmodem.ts` SHA-256:
 `beb0e266cfbab87ac1b20a21f7168a986f5f9973193a04b5e926e2b2a18a5b2e`.
-The final-source `bun run check` passed **1,231 unit/integration tests** (38
+The final-source `pnpm run check` passed **1,231 unit/integration tests** (38
 skipped), all architecture/Contract/source/license/build gates and **21/21**
 visual/accessibility journeys. The final-guard build produced
 an isolated unsigned macOS arm64 directory app at
@@ -317,7 +317,7 @@ A fresh unsigned macOS arm64 directory app at
 SHA-256
 `a377051356329c1d3462547ea7435ad70d811d382013674ec9d2613752786a7a`.
 Its real-local-PTY XMODEM binary upload/download journey passed **1/1**.
-The final `bun run check` passed **1,233 unit/integration tests** (38
+The final `pnpm run check` passed **1,233 unit/integration tests** (38
 skipped), all architecture/Contract/source/license/build gates, and **21/21**
 visual/accessibility journeys. Its first attempt had two unrelated 8–16-MiB
 configuration/import tests time out at the default 10-second threshold under
@@ -353,7 +353,7 @@ A fresh unsigned macOS arm64 directory app at
 SHA-256
 `83150b7a65cc3707008461d95c30f531557afe6200d7f60b62a4b170b0295de5`.
 Its real-local-PTY XMODEM binary upload/download journey passed **1/1**.
-The final `bun run check` passed **1,238 unit/integration tests** (38
+The final `pnpm run check` passed **1,238 unit/integration tests** (38
 skipped), all architecture/Contract/source/license/build gates and **21/21**
 visual/accessibility journeys. Two 8–16-MiB import/export fixtures now use
 the existing production batch-replacement interface to construct the same
@@ -389,7 +389,7 @@ A fresh unsigned macOS arm64 directory app at
 SHA-256
 `0dee18cb2023bba9a5db9c1d43a76027c42de587d8eb369a675daf990dd831bb`.
 Its real-local-PTY ZMODEM binary upload/download journey passed **1/1**.
-The final `bun run check` passed **1,242 unit/integration tests** (38
+The final `pnpm run check` passed **1,242 unit/integration tests** (38
 skipped), all architecture/Contract/source/license/build gates and **21/21**
 visual/accessibility journeys.
 Injected filesystem failures remain source-level, not packaged permission

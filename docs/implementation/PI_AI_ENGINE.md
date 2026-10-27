@@ -132,7 +132,7 @@ verbatim argv，审核事实与真实解释器参数一致；预算使用固定 
 ## 源码与构建
 
 Git 检出后先运行 `git submodule update --init --recursive vendor/pi`，再安装依赖。
-`bun run pi:build` 校验 `packages/pi-engine/source-manifest.json` 的源码哈希与固定
+`pnpm run pi:build` 校验 `packages/pi-engine/source-manifest.json` 的源码哈希与固定
 catalog 哈希及 `vendor/pi-auto-review/PROVENANCE.json` 的三份纯源码与 MIT 许可哈希，
 使用 Pi 的离线 hydration helper，并把 SDK 和源码编入私有引擎包。
 上游目录数据是忽略的生成输入，子模块的已跟踪文件保持不变。

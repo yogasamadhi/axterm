@@ -33,14 +33,15 @@ source input, not an accepted owner-created repository or IR-12 sign-off.
   desktop login session.
 - Image:
   `oven/bun@sha256:5ff609364c049b54eb0ff560ec96319729a972078ef2c755d758f0c6ef89c2d6`.
-- Bun: `1.4.0`.
+- Bun: `1.4.0`. ADR-034 later replaced this toolchain with pnpm 11.22.0; the
+  recorded attempt below is the historical Bun-toolchain result.
 - Node: official `v24.18.0` Linux x64 archive, SHA-256
   `55aa7153f9d88f28d765fcdad5ae6945b5c0f98a36881703817e4c450fa76742`.
 - Electron: `v44.3.0` Linux x64 archive, verified against the official
   `SHASUMS256.txt`; archive size 122,830,582 bytes and SHA-256
   `8b49b9efdd73c0f467edc3c1cd5678392c384ccf224f34ff54179f736e2f384b`.
 
-`bun install --frozen-lockfile` installed 612 packages. Production build,
+`pnpm install --frozen-lockfile` installed 612 packages. Production build,
 packaging layout checks and Linux x64 electron-builder packaging completed.
 The DEB declares package `axterm`, version `0.10.0`, architecture `amd64`, and
 the Electron runtime dependencies including `udev`, which SerialPort device
@@ -65,7 +66,7 @@ not public release artifacts.
 The committed gate ran as:
 
 ```sh
-bun run test:deb:linux
+pnpm run test:deb:linux
 ```
 
 It installed the exact DEB with APT, verified `/opt/Axterm/axterm` was
@@ -166,7 +167,7 @@ by `sbom:packaged:check` passed on the unpacked resources.
 `release:hashes:check` passed both inside the builder and against the four
 retained candidate files on the macOS host.
 
-`bun run test:deb:linux` then installed the exact current DEB through APT,
+`pnpm run test:deb:linux` then installed the exact current DEB through APT,
 verified package/binary version `0.10.0`, regenerated the SPDX inventory from
 **installed** `/opt/Axterm/resources` and matched the sidecar byte-for-byte.
 The installed-app Playwright result was **19 passed, 8 skipped, exit 0**. The
@@ -176,7 +177,7 @@ payload on exit, leaving only Debian's `config-files` package state inside
 the disposable container. This is still an emulated Xvfb session, not native
 Linux hardware or a signed public release.
 
-For source-check diagnostics, the standard `bun run check` was attempted in
+For source-check diagnostics, the standard `pnpm run check` was attempted in
 the x64-emulated container. Lint and typecheck passed, but the test phase was
 not green: the image initially lacked `git` and `ssh-keygen`, and the XMODEM
 SSH upload exceeded Vitest's default 10-second timeout under emulation. After
@@ -187,7 +188,7 @@ macOS (both cases in 433 ms). A **diagnostic**, not acceptance-equivalent,
 full Vitest run at 30 seconds passed 217 files (five skipped), 983 tests (34
 skipped). The separate Level 1 architecture gate passed 368 modules and 1,314
 dependencies. No source test or timeout was weakened to make the emulated
-check appear green; standard Linux `bun run check` remains unproven here.
+check appear green; standard Linux `pnpm run check` remains unproven here.
 
 Both `linux/amd64` and `linux/arm64` container FTP PASV lifecycle smokes passed
 with byte-exact 8,196-byte transfers. The remaining IR-13 native-platform,
@@ -200,7 +201,7 @@ result. The embedded SquashFS superblock was independently validated at byte
 Axterm and Electron/Chromium legal files were present. The extracted
 `resources/app.asar` SHA-256 was
 `a09ab63bbcf4e4e099612fd70b45e39099d4bc900758a245aa997995992a7764`;
-`bun run test:appimage:linux -- --artifact-dir release/axterm-linux-candidate-hQGbuTZQ`
+`pnpm run test:appimage:linux -- --artifact-dir release/axterm-linux-candidate-hQGbuTZQ`
 regenerated and matched the retained SPDX sidecar SHA-256
 `27f80994aa6260c98fdc5e2cfb4affa4427003b1d0a29559c99fd334de281047`.
 The static AppImage check is now a local and CI gate, including a post-download

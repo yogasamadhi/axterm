@@ -33,7 +33,7 @@ the archive owner must decide the required long-term retention scope.
 
 The evidence archive contains the point-in-time `docs/`, `licenses/`, current
 source/asset/dependency-review ledgers, `THIRD_PARTY_COMPONENTS.json`,
-`THIRD_PARTY_LICENSE_TEXTS.json`, root `package.json` and `bun.lock` (220 tar
+`THIRD_PARTY_LICENSE_TEXTS.json`, root `package.json` and `pnpm-lock.yaml` (220 tar
 entries). It is **not** a backup of all 1,251 uncommitted/changed paths or a
 final clean source snapshot. The four installer/archive files are local
 `release/` artifacts; their presence and filenames do not prove public

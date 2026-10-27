@@ -36,7 +36,7 @@ Axterm 是一个独立发布的 Apache-2.0 项目，不是 Apache Software Found
 
 - PR 模板的权利声明和第三方披露完整；
 - 适用的来源台账、`THIRD_PARTY_NOTICES.txt`、许可证/SBOM/资产记录及发行物声明已经更新；
-- 相关测试通过，且最终至少执行 `bun run check`；
+- 相关测试通过，且最终至少执行 `pnpm run check`；
 - 涉及产品边界、数据迁移、许可证或架构的决定已记录为对应 ADR 或实施证据；
 - 需要人工法律、商标、翻译或跨平台审查的事项没有被自动化结果误标为已批准。
 

@@ -7,7 +7,7 @@ checkout.
 
 ## Build and verification
 
-The repository's standard `bun run check` passed immediately before packaging.
+The repository's standard `pnpm run check` passed immediately before packaging.
 The application was built into a newly created empty temporary output directory
 with the repository packaging wrapper; the existing `release/` directory was
 not used:
@@ -25,7 +25,7 @@ Resources directory. The comparison passed with sidecar SHA-256
 The focused packaged journey passed **1/1**:
 
 ```sh
-AXTERM_PACKAGED_APP=<Axterm.app> bunx playwright test --project=packaged \
+AXTERM_PACKAGED_APP=<Axterm.app> pnpm exec playwright test --project=packaged \
   --grep 'packaged FTP Widget runs the independent server outside the source checkout' \
   --output <isolated-absolute-temp-directory>
 ```

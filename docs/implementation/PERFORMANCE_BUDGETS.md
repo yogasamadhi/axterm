@@ -43,8 +43,8 @@ CI workflow runs the same project together with the desktop and accessibility pr
 Run the gates with:
 
 ```sh
-bunx vitest run tests/unit/performance-budget.test.ts
-bun run test:performance
+pnpm exec vitest run tests/unit/performance-budget.test.ts
+pnpm run test:performance
 ```
 
 Long-duration resource certification remains J-01. Real Windows/Linux installed-app measurements

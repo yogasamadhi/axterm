@@ -18,14 +18,14 @@ source and was not a preserved publicly distributed installer.
 Commands and result:
 
 ```sh
-bunx vitest run tests/integration/migration-failure-vault.test.ts
+pnpm exec vitest run tests/integration/migration-failure-vault.test.ts
 # 1/1 passed
 AXTERM_PACKAGED_APP=/tmp/axterm-s5-final.Q0rUE4/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged \
+  pnpm exec playwright test --project=packaged \
   -g 'packaged prior-schema upgrade preserves data, legacy sync configuration and the local vault'
 # 1/1 passed
 AXTERM_PACKAGED_APP=/tmp/axterm-s5-final.Q0rUE4/mac-arm64/Axterm.app \
-  bunx playwright test --project=packaged -g 'packaged macOS D1 leaves SQLite'
+  pnpm exec playwright test --project=packaged -g 'packaged macOS D1 leaves SQLite'
 # 1/1 passed, including successful relaunch after the injected failure
 ```
 

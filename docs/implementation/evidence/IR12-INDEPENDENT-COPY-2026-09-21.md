@@ -21,9 +21,9 @@ or that a platform installer has passed its release evidence.
    `.env.*`.
 3. Asserted that `.git`, `.gitmodules`, `vendor/legacy-prototype`, `node_modules` and
    `out` did not exist before dependency installation.
-4. Ran `bun install --frozen-lockfile`. The postinstall native preparation
+4. Ran `pnpm install --frozen-lockfile`. The postinstall native preparation
    rebuilt `node-pty` on macOS arm64 from the frozen graph.
-5. Ran `bun run check` in the isolated copy.
+5. Ran `pnpm run check` in the isolated copy.
 
 ## Result
 
@@ -41,7 +41,7 @@ The isolated copy completed successfully:
 ## Reproducible snapshot-audit rerun
 
 After the initial record, the repository gained
-`bun run audit:independent-snapshot -- --snapshot <path>`. It is a read-only
+`pnpm run audit:independent-snapshot -- --snapshot <path>`. It is a read-only
 Stage-5 preparation tool with unit fixtures for both a clean source tree and
 the prohibited cases. It rejects old Git/submodule/reference-material paths,
 installed/build/test output, non-example `.env` files, symbolic links and
@@ -58,8 +58,8 @@ above. The audit passed with all violation lists empty:
 - no `.git`, `.gitmodules`, `vendor/legacy-prototype`, installed/build/test output,
   environment files, symbolic links or old direct dependency markers.
 
-`bun install --frozen-lockfile` then rebuilt `node-pty` from the frozen graph,
-and `bun run check` passed in that copy: 859 tests passed and one skipped across
+`pnpm install --frozen-lockfile` then rebuilt `node-pty` from the frozen graph,
+and `pnpm run check` passed in that copy: 859 tests passed and one skipped across
 193 files; the Level 1 architecture gate checked 365 modules / 1,301
 dependencies; Contract drift checked 267 operations; component/license/SBOM,
 15-language/localization, production build/layout and all three default
@@ -77,8 +77,8 @@ audit passed before dependency installation with all violation lists empty:
 - no `.git`, `.gitmodules`, `vendor/legacy-prototype`, installed/build/test output,
   environment files, symbolic links or retired direct dependency markers.
 
-Its `bun install --frozen-lockfile` rebuilt `node-pty` on macOS arm64 from the
-copy's frozen graph. `bun run check` then passed 862 tests with one intentional
+Its `pnpm install --frozen-lockfile` rebuilt `node-pty` on macOS arm64 from the
+copy's frozen graph. `pnpm run check` then passed 862 tests with one intentional
 skip across 194 passing files; it checked 365 modules / 1,301 dependencies and
 267 Contract operations, then passed component/license/SBOM, 15-language and
 Renderer-localization gates, the production build/layout check and all three
@@ -104,7 +104,7 @@ three default visual/accessibility Electron journeys. This proves the current
 source-copy gate includes the asset-drift control; it is still neither a new
 Git repository nor a release, rights or three-platform acceptance.
 
-The repository now has a portable `bun run snapshot:check` pre-install gate.
+The repository now has a portable `pnpm run snapshot:check` pre-install gate.
 It creates a temporary source-only copy, excluding Git metadata, `.gitmodules`,
 the entire `vendor/` tree, installed modules, build/release/test output,
 historical parity material and non-example `.env*` files, then invokes the same
@@ -118,8 +118,8 @@ new-repository gate.
 
 The new portable preparation path was also exercised as a full isolated-copy
 check on macOS arm64. It first produced a passing audited source copy through
-`prepareIndependentSnapshot()`, then ran `bun install --frozen-lockfile` and
-`bun run check` inside that copy. The isolated dependency installation rebuilt
+`prepareIndependentSnapshot()`, then ran `pnpm install --frozen-lockfile` and
+`pnpm run check` inside that copy. The isolated dependency installation rebuilt
 `node-pty`; the complete gate passed 865 tests with one intentional skip across
 196 passing files, 365 modules / 1,301 dependencies, 267 Contract operations,
 component/license/SBOM/product-asset inventories, localization, production
@@ -132,7 +132,7 @@ unchanged.
 
 The copy was made from a dirty, uncommitted working tree, so it is not a Git
 checkout and cannot prove a future new repository's initial commit or CI.
-`bun run check` intentionally runs the default visual/accessibility Electron
+`pnpm run check` intentionally runs the default visual/accessibility Electron
 journeys, not the complete desktop or packaged suites. It also does not supply
 the required Windows/Linux package, installed-upgrade, signing/notarization,
 updater, live-provider, source-rights or migration-window evidence. Keep

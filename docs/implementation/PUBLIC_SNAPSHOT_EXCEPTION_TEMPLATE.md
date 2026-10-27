@@ -24,8 +24,8 @@ release owner explicitly decides that a specific historical document belongs
 in the public source snapshot:
 
 ```sh
-bun run release:final-public:check
-bun run release:final-public:check -- --exceptions /absolute/path/to/approved-record.json
+pnpm run release:final-public:check
+pnpm run release:final-public:check -- --exceptions /absolute/path/to/approved-record.json
 ```
 
 This combined release gate first runs `migration:record:removal-check`, then

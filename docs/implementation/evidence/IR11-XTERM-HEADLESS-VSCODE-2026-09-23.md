@@ -54,7 +54,7 @@ The attribution-review ledger entry for `@xterm/headless` remains `pending`.
 
 Local verification on 2026-09-23:
 
-- `bun run check` passed 1,014 tests (33 conditional skips), the 358-module
+- `pnpm run check` passed 1,014 tests (33 conditional skips), the 358-module
   Level 1 gate, 267 Contract operations, production build/layout and nine
   visual/accessibility journeys.
 - The source and unsigned macOS arm64 directory app contain byte-identical

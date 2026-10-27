@@ -111,9 +111,9 @@ Tool 执行审批独立于上下文检查：卡片展示 tool、risk、目标、
 
 ## 验证与候选包
 
-相关单元/集成可通过 `bun run test` 执行；最终综合检查是 `bun run check`。
-桌面功能使用 `bun run test:e2e`；可见终端性能使用 `bun run test:performance`，
-原生 OpenSSH 夹具使用 `bun run test:ssh`。每次 Playwright 运行会覆盖 `test-results/`，
+相关单元/集成可通过 `pnpm run test` 执行；最终综合检查是 `pnpm run check`。
+桌面功能使用 `pnpm run test:e2e`；可见终端性能使用 `pnpm run test:performance`，
+原生 OpenSSH 夹具使用 `pnpm run test:ssh`。每次 Playwright 运行会覆盖 `test-results/`，
 先将必要 trace/截图留到源码外的本轮证据目录。
 
 OP-09 已于 2026-10-03 从对应源码生成独立目录中的未签名 `.app`、DMG/ZIP，

@@ -18,23 +18,23 @@ sync backup can contain readable private data.
 
 ## Verified here
 
-- `bun run check`: 839 unit tests passed, one skipped; Level 1 architecture,
+- `pnpm run check`: 839 unit tests passed, one skipped; Level 1 architecture,
   262-operation Contract, production build, license/localization gates and
   three visual/accessibility tests passed.
-- `bunx playwright test tests/e2e/desktop.spec.ts --grep 'H-09/H-10 setting sync' --project=desktop`:
+- `pnpm exec playwright test tests/e2e/desktop.spec.ts --grep 'H-09/H-10 setting sync' --project=desktop`:
   one source Electron test passed with a real loopback WebDAV fixture. The save
   dialog grant wrote exactly the remote UTF-8 document and did not mutate it.
-- `bunx vitest run packages/runtime/src/application/data-sync-service.test.ts`:
+- `pnpm exec vitest run packages/runtime/src/application/data-sync-service.test.ts`:
   eleven tests passed. Besides cancellation, grant, local-write and encrypted
   content cases, one test uses controlled HTTP responses from the actual
   GitHub Gist, Gitee Gist, WebDAV and Custom adapters. Each provider payload
   crosses the same Runtime save-grant boundary byte-for-byte, performs exactly
   one GET and keeps its access secret out of the URL. This is deterministic
   adapter/service coverage; it does not use real provider accounts.
-- `bun run --cwd apps/desktop package:dir`: unsigned macOS arm64 app generated.
+- `pnpm --filter @workspace/desktop package:dir`: unsigned macOS arm64 app generated.
   `app.asar` SHA-256:
   `39b14c4f0394285f8e159d8cfedb811cff383412138df2c98957f38dff25a225`.
-- `bunx playwright test --project=packaged`: 14 passed, nine conditional
+- `pnpm exec playwright test --project=packaged`: 14 passed, nine conditional
   skips. The packaged migration test copies the app outside the source checkout,
   uses a real loopback WebDAV GET and Host save dialog, verifies the saved
   encrypted-marker document and displayed SHA-256, and observes zero remote
@@ -58,12 +58,12 @@ provider's underlying stored byte stream.
 
 Focused verification on 2026-09-24:
 
-- `bunx vitest run packages/runtime/src/adapters/data-sync/http-sync-providers.test.ts packages/runtime/src/application/data-sync-service.test.ts`:
+- `pnpm exec vitest run packages/runtime/src/adapters/data-sync/http-sync-providers.test.ts packages/runtime/src/application/data-sync-service.test.ts`:
   2 files / 34 tests passed. Regressions prove byte-identical WebDAV and raw
   Custom backups through the provider and Application boundaries, strict
   rejection of invalid UTF-8 by the normal Custom sync loader, response-size
   rejection and SHA-256/byte-count reporting.
-- `bun run typecheck`: passed.
+- `pnpm run typecheck`: passed.
 - No provider mutation is performed by the backup path. Controlled tests do not
   establish real-account behavior or the provider's internal representation of
   Gist/named-file text.
@@ -76,7 +76,7 @@ Focused verification on 2026-09-24:
   UI; the invalid-byte edge itself is verified at provider and Application
   layers. This is unsigned local package evidence, not a signed install or a
   live provider account.
-- The final `bun run check` after the code and documentation edits passed **220
+- The final `pnpm run check` after the code and documentation edits passed **220
   test files** (1,085 passed, 33 skipped), 358 architecture modules / 1,307
   dependencies, 267 Contract operations, the independent-snapshot check, build
   and package-layout gates, nine visual journeys and two accessibility
@@ -104,7 +104,7 @@ verified. The documented GitHub >10 MiB Git-clone route is not implemented.
 
 Focused verification on 2026-09-24:
 
-- `bunx vitest run packages/runtime/src/adapters/data-sync/http-sync-providers.test.ts packages/runtime/src/application/data-sync-service.test.ts`:
+- `pnpm exec vitest run packages/runtime/src/adapters/data-sync/http-sync-providers.test.ts packages/runtime/src/application/data-sync-service.test.ts`:
   2 files / 39 tests passed. New adapter cases cover truncated-file load,
   byte-preserving backup, untrusted host rejection, Gitee fail-closed behavior,
   oversized raw response refusal and successful PATCH responses that return a
@@ -112,10 +112,10 @@ Focused verification on 2026-09-24:
   exercises GitHub's two-request truncated response through the save File
   Grant, checks the written bytes and SHA-256, and verifies the raw request has
   no Authorization header.
-- `bun run typecheck`: passed.
+- `pnpm run typecheck`: passed.
 - No live GitHub/Gitee account was used; these are controlled HTTP responses.
   No new packaged-app or cross-platform evidence is claimed for this follow-up.
-- The subsequent full `bun run check` passed after the code and documentation
+- The subsequent full `pnpm run check` passed after the code and documentation
   edits: 220 test files passed, five skipped; 1,090 tests passed, 33 skipped;
   358 architecture modules / 1,307 dependencies; 267 Contract operations;
   production build/package layout and all 11 visual/accessibility journeys.

@@ -43,7 +43,7 @@ fixed reference implementation into the new source root.
 The changed CPU command returned two aggregate samples in an Alpine Linux
 container; the actual output parsed to a bounded percentage. Existing model
 and service tests exercise CPU calculation and command dispatch. Full
-`bun run check` passed: 1,220 unit/integration and 21 visual/accessibility
+`pnpm run check` passed: 1,220 unit/integration and 21 visual/accessibility
 tests, architecture/Contract/source/license checks and production build. An
 unsigned current-source Mac directory app was built; its `app.asar` SHA-256 is
 `aef0cbea43106ea30a022f5389828400a9539aab296ebe28d707d54869a62be6`.

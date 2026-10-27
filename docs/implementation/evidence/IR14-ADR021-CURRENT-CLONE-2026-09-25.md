@@ -2,11 +2,11 @@
 
 Date: 2026-09-25  
 Scope: local macOS arm64 engineering candidate, before this evidence note was added  
-Command: `bun run candidate:check`
+Command: `pnpm run candidate:check`
 
 The command copied the current working tree into a disposable source-only snapshot,
 created a new Git root commit, cloned it with `git clone --no-local`, installed with
-`bun install --frozen-lockfile`, and ran the clone's full `bun run check`. It did not
+`pnpm install --frozen-lockfile`, and ran the clone's full `pnpm run check`. It did not
 write to the caller's checkout or create a remote repository.
 
 | Observed item          | Result                                                                                                                                                                        |
@@ -31,7 +31,7 @@ changed by this rehearsal alone.
 
 The two unused historical export fixtures were omitted by exact path after
 their current bytes were matched to the private W-14-01 source archive. The
-working-tree files and archive were not deleted. A second `bun run candidate:check`
+working-tree files and archive were not deleted. A second `pnpm run candidate:check`
 from the updated source completed successfully: **963 tracked files**, source
 tree SHA-256 `33c3d204ea116eef151c6aa996779faeb7e4d3a90cf7c69daf9c576cc7eae182`,
 disposable root commit `003af50ae3673d9dd6ffe137d29152b18926fdeb`.
@@ -47,7 +47,7 @@ The former migration-period boundary table and historical 1:1 design-token
 map were omitted by exact path from the prepared source; the local worktree
 and private W-14-01 evidence tar retain both. The upstream source audit was
 **not** omitted because current source-rights regression assertions still
-depend on it. The updated `bun run candidate:check` passed from a disposable
+depend on it. The updated `pnpm run candidate:check` passed from a disposable
 **961-file** root commit `17dbd3b9f1218941efbfa9c683a18b5b0ea1b407`, tree
 SHA-256 `a1485e22dc5e70e5d05286df04e40169bd43b675f940942f49f045dceed7b5ec`.
 The non-local clone completed frozen install, **1,216** unit/integration tests
@@ -61,7 +61,7 @@ Four superseded migration-period evidence notes, already present in the
 private W-14-01 evidence tar, were omitted by exact path. Their current
 documentation backlinks now point to controlled historical evidence rather
 than to absent public files; the local originals were not deleted. The next
-`bun run candidate:check` passed with **957 tracked files**, source tree SHA-256
+`pnpm run candidate:check` passed with **957 tracked files**, source tree SHA-256
 `ea0d8940e6375e6265b38291be023ad9122aa68425da2cf8c8af62e9390995d8`
 and disposable root commit `48dc615c911ca19ef424328b51ac55132fa5c05e`.
 The non-local clone completed frozen install, **1,216** unit/integration tests

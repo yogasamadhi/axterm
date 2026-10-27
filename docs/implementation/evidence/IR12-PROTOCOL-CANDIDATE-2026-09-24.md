@@ -8,12 +8,12 @@ brand, platform-installation, or signed-distribution approval.
 From the current worktree:
 
 ```text
-bun run candidate:protocol:check
+pnpm run candidate:protocol:check
 ```
 
 The command creates a clean non-local Git clone, performs a frozen install of
 610 packages, rebuilds `node-pty` for the embedded macOS arm64 Node ABI, runs
-`bun run check`, then verifies a real OpenSSH Runtime fixture, the production-
+`pnpm run check`, then verifies a real OpenSSH Runtime fixture, the production-
 Electron B-12 Save-and-Connect journey, pinned external ZMODEM/XMODEM/TRZSZ
 peers, and the `lrzsz`/`trzsz` SSH journeys.
 
@@ -41,12 +41,12 @@ repository or authorize deletion of the old one.
 
 ## Latest ExFAT/DMG-source replay
 
-The same `bun run candidate:protocol:check` was rerun after the macOS ExFAT
+The same `pnpm run candidate:protocol:check` was rerun after the macOS ExFAT
 failure-closed implementation, DMG-copied packaged journeys, historical
 upgrade replay and OpenSSH revalidation had entered the current worktree.
 It again created a **non-local clean clone without `.gitmodules` or the
 Legacy Prototype submodule**, performed frozen installation (**617 packages**) and
-passed the complete `bun run check`: **235 unit/integration files passed,
+passed the complete `pnpm run check`: **235 unit/integration files passed,
 five skipped; 1,177 tests passed, 38 skipped; 360 architecture modules /
 1,310 dependencies; 267 Contract operations; 11 visual/accessibility
 journeys**. The Docker OpenSSH Runtime fixture and source Electron B-12

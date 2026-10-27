@@ -26,7 +26,7 @@ New deferred-publisher tests check no early EOT ACK/completion, repeated EOT,
 cancel/start during commit, delayed failure cleanup and CAN, and
 destroy/restart generation isolation. The existing hostile-name, collision,
 long-name, partial-write, timeout, local-PTY and SSH-PTY regressions remain
-passing. The full `bun run check` then passed 222 test files (1,131 passed,
+passing. The full `pnpm run check` then passed 222 test files (1,131 passed,
 33 skipped), 359 architecture modules / 1,310 dependencies, 267 Contract
 operations, build/package layout and 11 visual/accessibility journeys.
 

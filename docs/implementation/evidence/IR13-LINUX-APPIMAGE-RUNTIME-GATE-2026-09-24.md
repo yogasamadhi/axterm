@@ -32,11 +32,11 @@ answer whether the distributable AppImage starts on a native Linux x64 host.
 
 ## Local verification and remaining evidence
 
-On the development host, `bunx vitest run
+On the development host, `pnpm exec vitest run
 tests/unit/installed-package-gates.test.ts` passes **10/10**; `sh -n` accepts
 the shell gate; Playwright lists the dedicated packaged journey. Invoking the
 gate on this non-Linux host exits 2 with `The AppImage runtime gate requires
-Linux x64.` The full `bun run check` passes 222 test files (1,124 passed,
+Linux x64.` The full `pnpm run check` passes 222 test files (1,124 passed,
 33 skipped), 359 Level 1 architecture modules / 1,310 dependencies, all
 267 Contract operations, build/package layout and 11 Axterm visual/accessibility
 journeys. No native AppImage launch has been claimed from these checks.

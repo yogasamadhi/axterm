@@ -319,12 +319,12 @@ function packageViolations(root, files) {
 }
 
 function lockfileViolations(root) {
-  const lockfilePath = resolve(root, 'bun.lock');
-  if (!existsSync(lockfilePath)) return ['bun.lock: missing'];
+  const lockfilePath = resolve(root, 'pnpm-lock.yaml');
+  if (!existsSync(lockfilePath)) return ['pnpm-lock.yaml: missing'];
   const lockfile = readFileSync(lockfilePath, 'utf8');
   return lockfileMarkers
     .filter((marker) => lockfile.includes(marker))
-    .map((marker) => `bun.lock: ${marker}`);
+    .map((marker) => `pnpm-lock.yaml: ${marker}`);
 }
 
 function hasCompletePrivateKey(content) {

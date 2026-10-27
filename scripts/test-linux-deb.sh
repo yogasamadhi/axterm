@@ -112,7 +112,7 @@ EOF
   fi
 done
 
-bun run sbom:packaged:check -- "$installed_root/resources" --platform linux-x64 --sidecar "$sidecar_path"
-bun run release:updater-feed:package-check -- "$installed_root/resources"
+pnpm run sbom:packaged:check -- "$installed_root/resources" --platform linux-x64 --sidecar "$sidecar_path"
+pnpm run release:updater-feed:package-check -- "$installed_root/resources"
 AXTERM_DEB_PATH="$deb_path" AXTERM_PACKAGED_APP="$installed_root" \
-  xvfb-run -a -s '-screen 0 1920x1080x24' bun run test:packaged
+  xvfb-run -a -s '-screen 0 1920x1080x24' pnpm run test:packaged

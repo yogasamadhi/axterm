@@ -31,7 +31,7 @@ superseded binary artifacts after a successful replacement package.
 OP-09 uses the existing `--output` argument and a new empty absolute directory outside source:
 
 ```sh
-bun run build
+pnpm run build
 axterm_opt_output="$(mktemp -d /tmp/axterm-local-opt-package.XXXXXX)"
 env -u CSC_LINK -u CSC_KEY_PASSWORD -u CSC_NAME -u CSC_KEYCHAIN \
   -u WIN_CSC_LINK -u WIN_CSC_KEY_PASSWORD node scripts/package-desktop.mjs \
@@ -101,7 +101,7 @@ ingress. Production Electron tests exercise those three handlers; installation-l
 registration and activation still require evidence from each target operating system.
 
 The source launcher uses a separate `Axterm Dev` application identity, user-data directory,
-single-instance domain and Windows AppUserModelID. Running `bun run.ts` therefore cannot focus or
+single-instance domain and Windows AppUserModelID. Running `pnpm run dev` therefore cannot focus or
 reuse an installed Axterm process, and development state never overwrites the packaged profile.
 An explicit Electron `--user-data-dir` remains authoritative for isolated automation.
 
@@ -133,7 +133,7 @@ gate verifies their protocol markers and that no copied source or workspace
 dependency remains. Their notices stay required and the source/provenance review
 for the two third-party engines remains open; this packaging statement is not a
 rights conclusion. `trzsz2` 1.2.0 declares a missing top-level type path; the
-committed Bun patch redirects only that declaration to the shipped
+committed pnpm patch redirects only that declaration to the shipped
 `dist/esm/lib/index.d.ts` and does not change executable code. See
 [ADR-018](../adr/ADR-018-independent-terminal-transfer-implementations.md).
 
@@ -147,7 +147,7 @@ completed source-rights, removable-volume or other-platform acceptance. A
 missing native binding fails closed instead of exposing a partial final file.
 
 The packaged tests are the ABI gate. They launch the copied application with a PATH
-that contains no user Node/Bun installation, start a local PTY, and verify output.
+that contains no user Node/pnpm installation, start a local PTY, and verify output.
 The Docker variant also establishes a real SSH terminal from the packaged app. This is a
 repository-only integration fixture: Docker is not shipped, invoked by the application or required
 on an end-user machine. Fixture containers use Docker auto-remove plus an `EXIT`/interrupt trap and
@@ -163,20 +163,20 @@ network.
 ## Commands
 
 ```sh
-bun install --frozen-lockfile
-bun run check
-bun run test:e2e
-bun run package:dir
-bun run sbom:packaged -- release/mac-arm64/Axterm.app/Contents/Resources --platform macos-arm64 --output release/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
-bun run sbom:packaged:check -- release/mac-arm64/Axterm.app/Contents/Resources --platform macos-arm64 --sidecar release/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
-bun run release:hashes -- release --platform macos-arm64 --output release/AXTERM_RELEASE_ARTIFACTS.macos-arm64.json
-bun run test:packaged
-bun run test:dmg:macos
-bun run test:deb:linux
-bun run test:nsis:windows
-bun run test:ssh:packaged
-bun run release:hashes:check -- release --platform macos-arm64 --manifest release/AXTERM_RELEASE_ARTIFACTS.macos-arm64.json
-bun run package
+pnpm install --frozen-lockfile
+pnpm run check
+pnpm run test:e2e
+pnpm run package:dir
+pnpm run sbom:packaged -- release/mac-arm64/Axterm.app/Contents/Resources --platform macos-arm64 --output release/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
+pnpm run sbom:packaged:check -- release/mac-arm64/Axterm.app/Contents/Resources --platform macos-arm64 --sidecar release/AXTERM_PACKAGED_ARTIFACTS.macos-arm64.spdx.json
+pnpm run release:hashes -- release --platform macos-arm64 --output release/AXTERM_RELEASE_ARTIFACTS.macos-arm64.json
+pnpm run test:packaged
+pnpm run test:dmg:macos
+pnpm run test:deb:linux
+pnpm run test:nsis:windows
+pnpm run test:ssh:packaged
+pnpm run release:hashes:check -- release --platform macos-arm64 --manifest release/AXTERM_RELEASE_ARTIFACTS.macos-arm64.json
+pnpm run package
 ```
 
 `test:dmg:macos` is the macOS installation gate. It verifies the sole DMG in
@@ -190,7 +190,7 @@ can be supplied explicitly through `AXTERM_PACKAGED_SIDECAR`.
 
 To rebuild a local candidate, first make a new empty directory under `release/`, then run
 `node scripts/package-desktop.mjs --output /absolute/path/to/that/directory`
-after `bun run build`. The wrapper accepts only an existing, empty, non-symlink
+after `pnpm run build`. The wrapper accepts only an existing, empty, non-symlink
 absolute output directory. Pass the resulting DMG explicitly to
 `sh scripts/test-macos-dmg.sh /absolute/path/to/candidate.dmg` and generate
 the release-hash manifest and packaged SPDX sidecar inside that same candidate
@@ -306,8 +306,8 @@ self-referential artifact hash. It is evidence for one artifact, not a complete
 source-to-binary map, a file-level license conclusion, or legal clearance.
 For macOS arm64, `AXTERM_FS_SAFE_MACOS_CARGO_SOURCE.spdx.json` separately lists
 the 61 pinned Cargo source-package identities behind the published
-`fs-safe-native.node`. `bun run sbom:native:macos:check` guards that source
-inventory in the routine check; `bun run sbom:native:macos:artifact-check --
+`fs-safe-native.node`. `pnpm run sbom:native:macos:check` guards that source
+inventory in the routine check; `pnpm run sbom:native:macos:artifact-check --
 <Resources> <packaged SPDX sidecar>` compares one concrete app's native binding,
 installed npm package identity and five native legal supplements against the
 source-scope target and verifies the complete packaged sidecar. Neither check
@@ -325,7 +325,7 @@ inventory and SPDX, with its 470 available root legal texts in
 `licenses/IronRDP-RUST-ROOT-LICENSES.txt`. Six published crates without their
 own root text have a separate, publisher-commit-pinned 12-text supplement in
 `licenses/IronRDP-MISSING-CRATE-ROOT-LICENSES.txt`; the routine
-`bun run licenses:ironrdp:missing:check` checks its provenance record and bytes.
+`pnpm run licenses:ironrdp:missing:check` checks its provenance record and bytes.
 The `tracing-core` nested spin MIT text is separately preserved as
 `licenses/tracing-core-spin-LICENSE.txt`; `licenses:ironrdp:nested:check` pins
 the crate identity and text, with an opt-in archive/target-tree source sweep.
@@ -337,7 +337,7 @@ lines from 719 files in 51 target-graph packages as
 verifies matching source files against published archives/upstream. It is a
 candidate handoff, not an exhaustive file-level rights conclusion.
 Run
-`bun run licenses:ironrdp:source:artifact-check -- <Resources> <packaged SPDX
+`pnpm run licenses:ironrdp:source:artifact-check -- <Resources> <packaged SPDX
 sidecar>` for a concrete macOS arm64 app; it checks the actual ASAR-embedded
 WASM bytes and the four supplemental packaged legal files against the pinned source scope and
 complete sidecar. See the

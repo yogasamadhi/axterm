@@ -27,12 +27,12 @@
 版本、公开日期、不可变发行物 SHA-256、批准期限、支持范围和非敏感证据链接，并运行：
 
 ```text
-bun run migration:record:active-check
+pnpm run migration:record:active-check
 ```
 
 只有该检查通过，才可将迁移窗口称为已开始。迁移期结束并准备删除兼容入口前，还必须补齐
 最终稳定版本里程碑（数量必须满足批准期限）和删除批准，并运行
-`bun run migration:record:removal-check`。记录拒绝未来的公开日期、未来的删除批准，且要求
+`pnpm run migration:record:removal-check`。记录拒绝未来的公开日期、未来的删除批准，且要求
 每个稳定版里程碑均在首次迁移版之后、删除批准之前实际公开；里程碑必须是不同于首次迁移版
 且彼此不同的后续稳定版本，移除版还必须晚于所有这些版本。版本使用稳定 SemVer；仅更改
 构建元数据或日期不能重复计数。期限批准日期不得晚于首次公开迁移版，也不能填未来日期。
@@ -228,7 +228,7 @@ Vault 备份，也不能证明所有旧功能和字段都已转换。
 在公开迁移版本发布前，逐项填写并链接到发行说明：
 
 - [ ] 将公开版本、日期、发行物 SHA-256、批准期限、支持范围和公开证据写入
-      `MIGRATION_RELEASE_RECORD.json`，并使 `bun run migration:record:active-check` 通过
+      `MIGRATION_RELEASE_RECORD.json`，并使 `pnpm run migration:record:active-check` 通过
 - [ ] 迁移版本号和不可变发行物哈希
 - [ ] 公开发布日期（不是构建日期）
 - [ ] 迁移结束日期，以及“至少一个稳定版本且至少 90 天”的核对结果
@@ -242,6 +242,6 @@ Vault 备份，也不能证明所有旧功能和字段都已转换。
 
 删除兼容入口前，除完成最终版本的 release note、远端数据不被静默删除的验证和相关平台
 验证外，发布负责人还必须把删除批准与满足批准数量的稳定版里程碑记录到
-`MIGRATION_RELEASE_RECORD.json`，使 `bun run migration:record:removal-check` 通过。这个
+`MIGRATION_RELEASE_RECORD.json`，使 `pnpm run migration:record:removal-check` 通过。这个
 命令只记录窗口条件；后续稳定版必须有不同的版本号与比首次迁移版更晚的公开日期，
 不能用首次迁移版或同一版本的多个日期满足数量要求。它不能单独将 IR-09 标记为已验收。

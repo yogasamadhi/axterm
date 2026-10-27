@@ -48,10 +48,10 @@ done
 AXTERM_SSH_FIXTURE_PORT="$fixture_port" \
 AXTERM_SSH_HOP2_HOST="$hop2_name" \
 AXTERM_SSH_TARGET_HOST="$target_name" \
-bunx vitest run tests/integration/ssh-fixture.test.ts
-bun run --cwd apps/desktop build
-AXTERM_SSH_FIXTURE_PORT="$fixture_port" bunx playwright test --project=desktop \
+pnpm exec vitest run tests/integration/ssh-fixture.test.ts
+pnpm --filter @workspace/desktop build
+AXTERM_SSH_FIXTURE_PORT="$fixture_port" pnpm exec playwright test --project=desktop \
   --grep "B-12 authenticated save-and-connect"
 if [ "${AXTERM_PACKAGED_SSH:-0}" = "1" ]; then
-  AXTERM_SSH_FIXTURE_PORT="$fixture_port" bunx playwright test --project=packaged --grep "packaged SSH"
+  AXTERM_SSH_FIXTURE_PORT="$fixture_port" pnpm exec playwright test --project=packaged --grep "packaged SSH"
 fi
