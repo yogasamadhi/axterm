@@ -1,0 +1,256 @@
+.status-transfer {
+  height: 28px;
+  min-height: 28px;
+  gap: 5px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--ax-radius-tiny);
+  background: transparent;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+}
+.status-transfer:hover,
+.status-transfer.active {
+  border: 0;
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text);
+}
+
+.status-transfer b {
+  min-width: 14px;
+  padding: 1px 4px;
+  border-radius: var(--ax-radius-soft);
+  color: var(--ax-color-transfers-transfers-status-transfer-b-color);
+  background: var(--ax-color-transfers-transfers-status-transfer-b-background);
+  font-size: var(--ax-font-size-tiny);
+}
+
+.transfer-center {
+  position: fixed;
+  z-index: var(--ax-layer-transfers-transfers-transfer-center-z-index);
+  right: 12px;
+  bottom: 36px;
+  width: min(470px, calc(100vw - 24px));
+  max-height: min(560px, calc(100vh - var(--ax-size-footer-height, 32px) - 24px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-sheet);
+  background: var(--ax-color-transfers-transfers-transfer-center-background);
+  box-shadow: var(--ax-shadow-transfers-transfers-transfer-center-box-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.transfer-center > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 52px;
+  gap: 8px;
+  padding: 8px 10px 8px 15px;
+  border-bottom: 1px solid var(--ax-color-border);
+}
+
+.transfer-center > header div {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.transfer-center > header strong {
+  font-size: var(--ax-font-size-subheading);
+}
+
+.transfer-center > header small {
+  color: var(--ax-color-text-disabled);
+  font-size: var(--ax-font-size-caption);
+  overflow-wrap: anywhere;
+}
+
+.transfer-center > header button {
+  flex: 0 0 auto;
+  width: 27px;
+  min-height: 27px;
+  height: 27px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.transfer-center-list {
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 7px;
+}
+
+.transfer-center-list article {
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: var(--ax-radius-card);
+}
+
+.transfer-center-list article:hover {
+  background: var(--ax-color-control-hover);
+}
+
+.transfer-icon {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--ax-radius-card);
+  color: var(--ax-color-transfers-transfers-transfer-icon-color);
+  background: var(--ax-color-transfers-transfers-transfer-icon-background);
+}
+
+.transfer-icon.download {
+  color: var(--ax-color-transfers-transfers-transfer-icon-download-color);
+  background: var(--ax-color-transfers-transfers-transfer-icon-download-background);
+}
+
+.transfer-center-list article > div {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.transfer-center-list article strong {
+  font-size: var(--ax-font-size-body);
+}
+
+.transfer-center-list article div > span {
+  height: 3px;
+  overflow: hidden;
+  border-radius: var(--ax-radius-tiny);
+  background: var(--ax-color-transfers-transfers-transfer-center-list-article-div-span-background);
+}
+
+.transfer-center-list article div > span i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ax-color-primary);
+}
+
+.transfer-center-list article small {
+  color: var(--ax-color-text-disabled);
+  font-size: var(--ax-font-size-caption);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transfer-center-list article button {
+  width: 27px;
+  min-height: 27px;
+  height: 27px;
+  padding: 0;
+}
+
+.transfer-center-list article small.transfer-recovery-note {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: var(--ax-line-height-reading);
+}
+
+.transfer-complete {
+  color: var(--ax-color-primary);
+}
+
+.transfer-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.transfer-center-empty {
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  color: var(--ax-color-text-disabled);
+  font-size: var(--ax-font-size-body);
+}
+
+.transfer-center-more {
+  align-self: center;
+  justify-self: center;
+  margin: 4px 0 8px;
+  font-size: var(--ax-font-size-body);
+}
+
+.transfer-center-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-card);
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-body);
+}
+
+.transfer-center-error span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.transfer-center-error button {
+  flex: 0 0 auto;
+}
+
+.transfer-center > footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  min-height: 41px;
+  gap: 4px 8px;
+  padding: 6px 9px;
+  border-top: 1px solid var(--ax-color-border);
+}
+
+.transfer-center > footer button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  border: 0;
+  color: var(--ax-color-transfers-transfers-transfer-center-footer-button-color);
+  background: transparent;
+  font-size: var(--ax-font-size-small);
+}
+
+.transfer-center {
+  bottom: calc(var(--ax-size-footer-height, 24px) + 5px);
+  border-color: var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-canvas);
+  box-shadow: var(--ax-shadow-menu);
+  backdrop-filter: none;
+}
+
+.transfer-center > header small,
+.transfer-center-empty {
+  color: var(--ax-color-text-muted);
+}
+
+/* Public nonmodal Dialog keeps the retained floating center geometry. */
+.transfer-center[role='dialog'] {
+  top: auto;
+  left: auto;
+  transform: none;
+  padding: 0;
+}

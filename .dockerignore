@@ -1,0 +1,12 @@
+.git
+**/node_modules
+**/.next
+**/dist
+**/.env
+**/.env.*
+!**/.env.example
+out
+release
+vendor
+test-results
+playwright-report

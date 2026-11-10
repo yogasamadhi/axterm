@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/deepseek-ai/deepseek-harness",
+  "commit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "sources": ["packages/typert/generator/src"],
+  "license": "MIT",
+  "adaptations": [
+    "Canonical @axterm/plugin-api exports, including installed SDK symbol resolution",
+    "Source-first generation by default in workspace and tsdown worker paths",
+    "Strict application TypeScript and application package identity"
+  ]
+}

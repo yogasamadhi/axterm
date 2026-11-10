@@ -1,0 +1,195 @@
+.shortcut-settings-panel {
+  padding: 0;
+  overflow: hidden;
+}
+
+.shortcut-settings-panel > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid var(--ax-color-border);
+}
+
+.shortcut-settings-panel > header h3,
+.shortcut-settings-panel > header small,
+.shortcut-settings-panel > header p {
+  margin: 0;
+}
+
+.shortcut-settings-panel > header h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 3px 0 5px;
+}
+
+.shortcut-settings-panel > header > button,
+.shortcut-editor-actions button,
+.shortcut-capture button,
+.shortcut-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.shortcut-table {
+  width: 100%;
+}
+
+.shortcut-table-heading,
+.shortcut-row {
+  display: grid;
+  grid-template-columns: 50px minmax(210px, 1fr) 72px minmax(180px, 0.8fr) 42px;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ax-color-border) 72%, transparent);
+}
+
+.shortcut-table-heading {
+  min-height: 32px;
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+  letter-spacing: var(--ax-letter-spacing-eyebrow);
+}
+
+.shortcut-row:hover,
+.shortcut-row.editing {
+  background: color-mix(in srgb, var(--ax-color-primary) 8%, transparent);
+}
+
+.shortcut-index,
+.shortcut-scope {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-body);
+}
+
+.shortcut-description,
+.shortcut-bindings {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.shortcut-description {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+
+.shortcut-description small {
+  color: var(--ax-color-text-muted);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-font-size-caption);
+}
+
+.shortcut-bindings kbd,
+.shortcut-capture kbd {
+  min-width: 30px;
+  padding: 3px 7px;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-small);
+  background: var(--ax-color-surface-raised);
+  box-shadow: var(
+    --ax-shadow-shortcuts-shortcuts-shortcut-bindings-kbd-shortcut-capture-kbd-box-shadow
+  );
+  color: var(--ax-color-text);
+  font: var(--ax-font-shortcuts-shortcuts-shortcut-bindings-kbd-shortcut-capture-kbd-font);
+  text-align: center;
+}
+
+.shortcut-bindings em,
+.shortcut-readonly {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+  font-style: normal;
+}
+
+.shortcut-readonly {
+  padding: 2px 5px;
+  border-radius: var(--ax-radius-pill);
+  background: var(--ax-color-surface-raised);
+}
+
+.shortcut-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shortcut-actions button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+}
+
+.shortcut-editor {
+  display: grid;
+  gap: 12px;
+  margin: 16px;
+  padding: 16px;
+  border: 1px solid var(--ax-color-primary);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-surface-raised);
+  box-shadow: var(--ax-shadow-shortcuts-shortcuts-shortcut-editor-box-shadow);
+}
+
+.shortcut-editor > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.shortcut-capture {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 58px;
+  padding: 10px;
+  border: 1px dashed var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-small);
+  outline: none;
+  background: var(--ax-color-surface-raised);
+}
+
+.shortcut-capture:focus {
+  border-color: var(--ax-color-primary);
+  box-shadow: var(--ax-shadow-shortcuts-shortcuts-shortcut-capture-focus-box-shadow);
+}
+
+.shortcut-capture > span {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-body);
+}
+
+.shortcut-capture button {
+  padding: 3px;
+  border: 0;
+  background: transparent;
+}
+
+.shortcut-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.hint {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-body);
+}
+.danger-text {
+  color: var(--ax-color-danger);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}

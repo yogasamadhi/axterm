@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "catalog": "core",
+  "scope": {
+    "sourceFile": "apps/desktop/src/renderer/src/i18n/core.ts",
+    "keyCount": 2654,
+    "keySha256": "adda64ee21e76473eab0439899bb015a6a2bde8da8bbef44e2b4be44bd158add",
+    "englishMessageSha256": "de934dec99a4816ddfffec686d6dcc741eae0a40eb7b26144fb2c504b8331300",
+    "simplifiedChineseMessageSha256": "c1a0097f8d16c57ef8cc65c5dd2568ee5f711cc1335f1fa3c7689f9fd4c59e65",
+    "messageSha256ByLocale": {
+      "en": "de934dec99a4816ddfffec686d6dcc741eae0a40eb7b26144fb2c504b8331300",
+      "ja": "b5646da54db9668165e3ce288644895d8a0e3ba9c580a34bd64f71458bfbf6ab",
+      "zh-CN": "c1a0097f8d16c57ef8cc65c5dd2568ee5f711cc1335f1fa3c7689f9fd4c59e65",
+      "zh-TW": "daefcbe9497eee7d96a11ffe8fc512ec752fa3bb12c585ac50c3a88361566e4e"
+    }
+  },
+  "locales": {
+    "en": {
+      "source": {
+        "sourceLanguage": "en",
+        "method": "Existing Axterm core catalog; provenance review pending",
+        "preparedAt": "2026-09-21",
+        "attributionStatus": "unrecorded",
+        "author": null
+      },
+      "coverage": {
+        "status": "complete",
+        "translatedKeyCount": 2654
+      },
+      "languageReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      },
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      }
+    },
+    "ja": {
+      "source": {
+        "sourceLanguage": "en",
+        "method": "AI-assisted complete Axterm core draft (2654/2654 keys); provenance review pending",
+        "preparedAt": "2026-09-21",
+        "attributionStatus": "unrecorded",
+        "author": null
+      },
+      "coverage": {
+        "status": "complete",
+        "translatedKeyCount": 2654
+      },
+      "languageReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      },
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      }
+    },
+    "zh-CN": {
+      "source": {
+        "sourceLanguage": "en",
+        "method": "Existing Axterm core catalog; provenance review pending",
+        "preparedAt": "2026-09-21",
+        "attributionStatus": "unrecorded",
+        "author": null
+      },
+      "coverage": {
+        "status": "complete",
+        "translatedKeyCount": 2654
+      },
+      "languageReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      },
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      }
+    },
+    "zh-TW": {
+      "source": {
+        "sourceLanguage": "en",
+        "method": "AI-assisted complete Axterm core draft (2654/2654 keys); provenance review pending",
+        "preparedAt": "2026-09-21",
+        "attributionStatus": "unrecorded",
+        "author": null
+      },
+      "coverage": {
+        "status": "complete",
+        "translatedKeyCount": 2654
+      },
+      "languageReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      },
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      }
+    }
+  }
+}

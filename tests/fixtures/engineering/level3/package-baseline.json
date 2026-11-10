@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "manifestPath": "release/repack-20261104-tcQTyX/AXTERM_RELEASE_ARTIFACTS.macos-arm64.json",
+  "manifestSha256": "57421a2fd29318c4872920770c16cafec0d9317162f5ffd7df033cc1c54836e4",
+  "manifest": {
+    "schemaVersion": 1,
+    "product": {
+      "name": "axterm",
+      "version": "0.10.0"
+    },
+    "platform": "macos-arm64",
+    "artifacts": [
+      {
+        "path": "Axterm-0.10.0-arm64-mac.zip",
+        "bytes": 138520006,
+        "sha256": "bb8f6c48d689ebbebbc95eb5cf5354bed75a661cdc35ab354323c83e27c37956"
+      },
+      {
+        "path": "Axterm-0.10.0-arm64.dmg",
+        "bytes": 143969637,
+        "sha256": "ff672cabca273c6d2face8a33e8dcc85a99c8b6e5a617918fe3b2be1049bb492"
+      }
+    ],
+    "limitations": [
+      "This records bytes emitted by one unsigned electron-builder run; it is not a signing, notarization, installation, upgrade, source-rights or release approval.",
+      "The corresponding packaged SPDX sidecar inventories app resources; this manifest hashes distributable installer/archive files only."
+    ]
+  },
+  "scope": "Existing unsigned macOS baseline; not a build of the migration branch, not rerun installation evidence.",
+  "localRetention": "out/level3-migration/m0-packages",
+  "retentionVerification": "Both installer/archive copies match the frozen size and SHA-256; no installation rerun."
+}

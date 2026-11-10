@@ -1,0 +1,40 @@
+{
+  "name": "@axterm/infra-desktop-native",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./credentials": {
+      "types": "./lib/types/credentials.d.ts",
+      "default": "./lib/credentials.js"
+    },
+    "./files": {
+      "types": "./lib/types/file-grants.d.ts",
+      "default": "./lib/files.js"
+    },
+    "./local-files": {
+      "types": "./lib/types/local-files.d.ts",
+      "default": "./lib/local-files.js"
+    },
+    "./applications": {
+      "types": "./lib/types/applications.d.ts",
+      "default": "./lib/applications.js"
+    }
+  },
+  "dependencies": {
+    "@axterm/infra-credential-vault": "workspace:*",
+    "@axterm/infra-credentials": "workspace:*",
+    "@openclaw/fs-safe": "0.13.1",
+    "zod": "4.4.3",
+    "@axterm/plugin-api": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  }
+}

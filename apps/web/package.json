@@ -1,0 +1,35 @@
+{
+  "name": "@axterm/web",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    "./dist": "./dist/index.html",
+    "./package.json": "./package.json",
+    "./bootstrap": {
+      "types": "./lib/types/bootstrap.d.ts",
+      "default": "./lib/types/bootstrap.js"
+    }
+  },
+  "dependencies": {
+    "@axterm/engine-api": "workspace:*",
+    "@axterm/infra-client-modules": "workspace:*",
+    "@axterm/infra-ui-renderer": "workspace:*",
+    "@axterm/infra-web-server": "workspace:*",
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/ui": "workspace:*",
+    "@deepseek-ai/cordis": "workspace:*",
+    "@deepseek-ai/cordis-plugin-loader": "workspace:*",
+    "@fontsource/maple-mono": "5.3.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zod": "4.4.3",
+    "@axterm/infra-ui-theme": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "vite": "7.3.6"
+  }
+}

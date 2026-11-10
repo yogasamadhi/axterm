@@ -1,0 +1,6 @@
+- insert:
+    - id: terminals
+      name: '@axterm/plugin-terminals'
+      inject: [profileContext]
+      config:
+        stagingDirectory: !!js "ctx.profileContext.dir + '/terminal-stages'"

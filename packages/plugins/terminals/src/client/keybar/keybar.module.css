@@ -1,0 +1,283 @@
+:global(body.shortcut-bar-on) :global(.app-shell) {
+  height: calc(100% - var(--ax-shortcut-bar-offset, 0px));
+  grid-template-rows: var(--ax-size-tab-height) minmax(0, 1fr) var(--ax-size-footer-height) var(
+      --ax-size-shortcut-bar
+    );
+}
+
+.terminal-shortcut-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--ax-layer-terminals-keybar-terminal-shortcut-bar-z-index);
+  height: var(--ax-size-shortcut-bar);
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid var(--ax-color-canvas-deep);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.terminal-shortcut-bar-fixed {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  border-right: 1px solid var(--ax-color-canvas-deep);
+}
+
+.terminal-shortcut-bar-fixed > button {
+  width: 44px;
+  min-width: 44px;
+  height: 43px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+  color: var(--ax-color-text);
+}
+
+.terminal-shortcut-bar-fixed > button:hover {
+  background: transparent;
+  color: var(--ax-color-text-strong);
+}
+
+.terminal-shortcut-bar-scroll {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.terminal-shortcut-bar-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.terminal-shortcut-button {
+  min-width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  padding: 0 10px;
+  border: 1px solid var(--ax-color-canvas-deep);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-subheading);
+  white-space: nowrap;
+}
+
+.terminal-shortcut-button:hover {
+  color: var(--ax-color-text-strong);
+}
+
+.terminal-shortcut-button:active {
+  border-color: var(--ax-color-primary);
+  background: var(--ax-color-primary);
+  color: var(--ax-color-on-primary);
+}
+
+.terminal-shortcut-editor-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ax-layer-terminals-keybar-terminal-shortcut-editor-backdrop-z-index);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--ax-color-terminals-keybar-terminal-shortcut-editor-backdrop-background);
+}
+
+.terminal-shortcut-editor {
+  z-index: var(--ax-layer-terminals-keybar-terminal-shortcut-editor-z-index);
+  width: min(560px, 92vw);
+  max-height: min(760px, 92vh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ax-color-canvas-deep);
+  border-radius: var(--ax-radius-card);
+  background: var(--ax-color-canvas);
+  box-shadow: var(--ax-shadow-menu);
+}
+
+.terminal-shortcut-editor > header,
+.terminal-shortcut-editor > footer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--ax-color-canvas-deep);
+}
+
+.terminal-shortcut-editor > header h2 {
+  margin: 0;
+  flex: 1;
+  font-size: var(--ax-font-size-heading);
+}
+
+.terminal-shortcut-editor > header button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.terminal-shortcut-editor > footer {
+  justify-content: flex-start;
+  border-top: 1px solid var(--ax-color-canvas-deep);
+  border-bottom: 0;
+}
+
+.terminal-shortcut-editor-body {
+  min-height: 0;
+  padding: 14px;
+  overflow: auto;
+}
+
+.terminal-shortcut-editor-body > section {
+  margin-bottom: 16px;
+}
+
+.terminal-shortcut-editor-body h3 {
+  margin: 0 0 8px;
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-subheading);
+}
+
+.terminal-shortcut-active-list {
+  min-height: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  border: 1px dashed var(--ax-color-canvas-deep);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-surface-sunken);
+}
+
+.terminal-shortcut-active-list > p {
+  width: 100%;
+  margin: 0;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-control);
+  line-height: var(--ax-line-height-toolbar);
+  text-align: center;
+}
+
+.terminal-shortcut-active-item {
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 3px 0 7px;
+  border: 1px solid var(--ax-color-canvas-deep);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-subheading);
+}
+
+.terminal-shortcut-active-item > span {
+  margin: 0 4px;
+  white-space: nowrap;
+}
+
+.terminal-shortcut-active-item > button {
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ax-color-text-muted);
+}
+
+.terminal-shortcut-active-item > button:hover:not(:disabled) {
+  color: var(--ax-color-text-strong);
+  background: var(--ax-color-canvas-deep);
+}
+
+.terminal-shortcut-search {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 9px;
+  border: 1px solid var(--ax-color-canvas-deep);
+  border-radius: var(--ax-radius-field);
+  background: var(--ax-color-surface-sunken);
+}
+
+.terminal-shortcut-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+.terminal-shortcut-candidates {
+  max-height: 180px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 4px;
+  overflow-y: auto;
+}
+
+.terminal-shortcut-candidates > button {
+  min-width: 34px;
+  height: 30px;
+  padding: 0 10px;
+  border-color: var(--ax-color-canvas-deep);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-subheading);
+}
+
+.terminal-shortcut-candidates > button:disabled {
+  opacity: var(--ax-opacity-terminals-keybar-terminal-shortcut-candidates-button-disabled-opacity);
+}
+
+.terminal-shortcut-combo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.terminal-shortcut-combo select {
+  min-width: 110px;
+  flex: 1;
+  height: 32px;
+  border-color: var(--ax-color-canvas-deep);
+  background: var(--ax-color-surface-sunken);
+  color: var(--ax-color-text);
+}
+
+@media (max-width: 640px) {
+  .terminal-shortcut-editor-backdrop {
+    align-items: end;
+    padding: 8px;
+  }
+
+  .terminal-shortcut-editor {
+    width: 100%;
+    max-height: 88vh;
+  }
+
+  .terminal-shortcut-active-item > button:nth-of-type(-n + 2) {
+    display: none;
+  }
+}
+.terminal-shortcut-editor {
+  padding: 0;
+}

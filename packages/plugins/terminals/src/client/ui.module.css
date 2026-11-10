@@ -1,0 +1,457 @@
+.tab-add {
+  width: 38px;
+  flex: 0 0 38px;
+  -webkit-app-region: no-drag;
+}
+.session-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 2px;
+}
+.explorer-session-row,
+.session-empty {
+  min-height: 32px;
+  padding: 0 8px;
+  text-align: left;
+}
+.explorer-session-row[aria-current='true'] {
+  background: var(--ax-color-terminals-ui-explorer-session-row-aria-current-true-background);
+  color: var(--ax-color-primary);
+}
+.empty-pane-landing {
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  gap: 18px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 24px;
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+}
+
+.empty-pane-landing[data-focused='true'] {
+  box-shadow: var(--ax-shadow-terminals-empty-111b576f9e);
+}
+
+.empty-pane-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  text-align: center;
+}
+
+.empty-pane-glyph {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--ax-color-primary) 44%, var(--ax-color-border));
+  border-radius: var(--ax-radius-sheet);
+  background: var(--ax-color-terminals-empty-5e91fe15f9);
+  color: var(--ax-color-primary);
+  box-shadow: var(--ax-shadow-terminals-empty-261da2ef76);
+}
+
+.empty-pane-intro h2 {
+  margin: 0;
+  color: var(--ax-color-text-strong);
+  font-size: var(--ax-font-size-heading);
+  font-weight: var(--ax-font-weight-semibold);
+  letter-spacing: var(--ax-letter-spacing-text);
+}
+
+.empty-pane-actions {
+  z-index: var(--ax-layer-terminals-ui-terminal-canvas-z-index);
+  width: min(390px, 100%);
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+  gap: 8px;
+}
+
+.empty-pane-actions button {
+  overflow-wrap: anywhere;
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-control);
+  line-height: var(--ax-line-terminals-empty-ad78f61afe);
+  text-align: left;
+}
+
+.empty-pane-actions button:hover,
+.empty-pane-actions button:focus-visible {
+  border-color: var(--ax-color-primary);
+  background: var(--ax-color-terminals-empty-25231d3cb8);
+  color: var(--ax-color-text-strong);
+}
+
+.empty-pane-actions .empty-pane-new-terminal {
+  border-color: var(--ax-color-primary);
+  background: var(--ax-color-primary);
+  color: var(--ax-color-on-primary);
+  font-weight: var(--ax-font-weight-semibold);
+}
+
+.empty-pane-actions .empty-pane-new-terminal:hover,
+.empty-pane-actions .empty-pane-new-terminal:focus-visible {
+  background: var(--ax-color-terminals-empty-b08331a712);
+  color: var(--ax-color-on-primary);
+}
+
+.empty-pane-landing > footer {
+  width: min(390px, 100%);
+  flex: 0 0 auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--ax-color-border);
+}
+
+.empty-pane-session {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-body);
+}
+
+.empty-pane-session select {
+  min-width: 0;
+  height: 34px;
+  padding: 0 26px 0 9px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-surface-sunken);
+  color: var(--ax-color-text);
+  cursor: pointer;
+}
+
+@media (max-width: 1300px) {
+  .empty-pane-landing[data-layout='c2x2'] {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .empty-pane-landing[data-layout='c2x2'] .empty-pane-glyph {
+    width: 38px;
+    height: 38px;
+  }
+
+  .empty-pane-landing[data-layout='c2x2'] .empty-pane-actions button {
+    min-height: 34px;
+    padding: 6px 9px;
+  }
+}
+
+.empty-pane-landing,
+.empty-pane-landing * {
+  box-sizing: border-box;
+}
+.primary {
+  background: var(--ax-color-primary) !important;
+  color: var(--ax-color-on-primary) !important;
+}
+.terminal-view,
+.terminal-canvas {
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.terminal-canvas {
+  z-index: var(--ax-layer-terminals-ui-terminal-canvas-z-index);
+  padding: 8px;
+}
+.terminal-recovery {
+  z-index: var(--ax-layer-terminals-ui-terminal-recovery-z-index);
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  padding: 10px;
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text);
+}
+.terminal-recovery button {
+  color: var(--ax-color-primary);
+}
+
+.terminal-paste-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ax-layer-terminals-ui-terminal-paste-backdrop-z-index);
+  display: grid;
+  place-items: center;
+  background: var(--ax-color-terminals-ui-terminal-paste-backdrop-background);
+}
+.terminal-paste-dialog {
+  width: min(720px, calc(100vw - 40px));
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  padding: 20px;
+  border: var(--ax-border-terminals-ui-terminal-paste-dialog-border);
+  border-radius: var(--ax-radius-card);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  box-shadow: var(--ax-shadow-terminals-ui-terminal-paste-dialog-box-shadow);
+}
+.terminal-paste-dialog header,
+.terminal-paste-dialog footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.terminal-paste-dialog h2 {
+  font-size: var(--ax-font-size-title);
+  font-weight: var(--ax-font-weight-medium);
+}
+.terminal-paste-dialog pre {
+  max-height: min(360px, 48vh);
+  overflow: auto;
+  padding: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--ax-color-canvas-deep);
+  border: var(--ax-border-terminals-ui-terminal-paste-dialog-pre-border);
+}
+.terminal-paste-dialog footer {
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+.terminal-paste-dialog button {
+  padding: 8px 16px;
+  border: var(--ax-border-terminals-ui-terminal-paste-dialog-button-border);
+  border-radius: var(--ax-radius-compact);
+  font: inherit;
+  background: var(--ax-color-surface-raised);
+  color: inherit;
+  cursor: pointer;
+}
+.terminal-paste-dialog button:focus-visible,
+.terminal-paste-dialog pre:focus-visible {
+  outline: 2px solid var(--ax-color-primary);
+}
+.eyebrow {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+  letter-spacing: var(--ax-letter-spacing-section-fixed);
+}
+
+.terminal-background {
+  position: absolute;
+  z-index: var(--ax-layer-terminals-ui-terminal-background-z-index);
+  inset: -8px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+.terminal-background-text span {
+  max-width: 90%;
+  overflow-wrap: anywhere;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+/* Retained per-session tools; the existing xterm and Files owners keep their resources. */
+.terminal-session-toolbar {
+  box-sizing: border-box;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px 0 10px;
+  border-bottom: 1px solid var(--ax-color-surface-sunken);
+  background: var(--ax-color-canvas-deep);
+  color: var(--ax-color-text-muted);
+  box-shadow: var(--ax-shadow-terminals-ui-terminal-session-toolbar-box-shadow);
+}
+.session-mode-tabs {
+  align-self: stretch;
+  display: flex;
+  align-items: stretch;
+  gap: 18px;
+  margin-right: 8px;
+  border: 0;
+}
+.session-mode-tabs button {
+  position: relative;
+  width: auto;
+  min-width: 0;
+  height: 31px;
+  min-height: 31px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-control);
+  font-weight: var(--ax-font-weight-regular);
+}
+.session-mode-tabs button[data-state='active']::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: var(--ax-color-text);
+  content: '';
+}
+.session-state {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border-radius: var(--ax-radius-circle);
+  background: var(--ax-color-success);
+}
+.session-state.disconnected {
+  background: var(--ax-color-danger);
+}
+.terminal-session-toolbar select {
+  width: auto;
+  min-width: 80px;
+  max-width: 220px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0 20px 0 4px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--ax-radius-tiny);
+  outline: 0;
+  background: transparent;
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-body);
+  text-overflow: ellipsis;
+  margin-left: auto;
+}
+.session-pane-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.session-pane-actions button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  min-height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ax-radius-tiny);
+  background: transparent;
+  color: var(--ax-color-text-muted);
+}
+.terminal-content,
+.terminal-files-content {
+  position: absolute;
+  inset: 32px 0 0;
+  padding: 0;
+  overflow: hidden;
+}
+.terminal-content[hidden],
+.terminal-files-content[hidden] {
+  display: none;
+}
+.terminal-files-error {
+  position: absolute;
+  top: 34px;
+  left: 12px;
+  z-index: var(--ax-layer-terminals-ui-terminal-files-error-z-index);
+  padding: 6px;
+  background: var(--ax-color-canvas-deep);
+  color: var(--ax-color-danger);
+}
+
+.status-encoding {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ax-color-text-muted);
+}
+.status-encoding select {
+  width: 84px;
+  height: 22px;
+  min-height: 0;
+  padding: 0 18px 0 5px;
+  border: 0;
+  border-radius: var(--ax-radius-small);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  font: inherit;
+}
+
+.terminal-files-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Original empty page composition; domain controls are supplied through child Slots. */
+.no-session-view {
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  padding: 50px 24px 28px;
+  background: var(--ax-color-canvas);
+  text-align: center;
+}
+.no-session-actions {
+  order: 1;
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.no-session-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-control);
+}
+.no-session-actions button:hover {
+  border-color: var(--ax-color-primary);
+  color: var(--ax-color-text);
+}
+
+.terminal-canvas {
+  background: inherit;
+}
+.empty-pane-landing {
+  inset: max(var(--ax-size-tab-height), var(--ax-native-controls-height, 0px)) 0 0;
+}

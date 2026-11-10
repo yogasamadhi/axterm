@@ -1,0 +1,1945 @@
+/* Theme-owned retained visual roles. See ADR-173 and theme-token-ownership.json. */
+:global(:root) {
+  --ax-border-ai-ui-agent-tool-card-border: 1px solid #303c42;
+  --ax-border-ai-ui-agent-tool-card-detail-border-top: 1px solid #2b353a;
+  --ax-border-ai-ui-agent-tool-card-detail-pre-border: 1px solid #2d393e;
+  --ax-border-ai-ui-agent-tool-card-header-em-border: 1px solid #3b4b52;
+  --ax-border-ai-ui-ai-approval-reminder-border: 1px solid #b98b48;
+  --ax-border-ai-ui-ai-bookmark-hero-ai-bookmark-review-heading-border: 1px solid #2c3b43;
+  --ax-border-ai-ui-ai-bookmark-security-border: 1px solid #584b2e;
+  --ax-border-ai-ui-ai-chat-delete-confirm-border-bottom: 1px solid #603b38;
+  --ax-border-ai-ui-ai-inspector-border-left: 1px solid #242e2a;
+  --ax-border-ai-ui-ai-inspector-header-border-bottom: 1px solid #242e2a;
+  --ax-border-ai-ui-error-banner-border: 1px solid #553630;
+  --ax-border-ai-ui-modal-border: 1px solid #35423c;
+  --ax-border-ai-ui-modal-header-border-bottom: 1px solid #27302d;
+  --ax-border-ai-ui-surface-border: 1px solid #27312e;
+  --ax-border-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--a27f197: 1px
+    solid #71c688;
+  --ax-border-catalog-bookmark-tree-bookmark-group-color-border: 1px solid #1a1a1a;
+  --ax-border-catalog-editor-checkbox-grid-border: 1px solid #2c3732;
+  --ax-border-catalog-editor-connection-options-border: 1px solid #2c3732;
+  --ax-border-catalog-editor-host-auth-note-border: 1px solid #2c3732;
+  --ax-border-catalog-editor-host-bookmark-modal-host-jump-chain-border: 1px solid #35353e;
+  --ax-border-catalog-editor-host-bookmark-modal-host-tunnel-editor-border: 1px solid #35353e;
+  --ax-border-catalog-editor-host-form-tabs-border-bottom: 1px solid #27302d;
+  --ax-border-catalog-editor-host-jump-chain-list-li-border: 1px solid #34343d;
+  --ax-border-catalog-editor-host-protocol-form-modal-actions-border-top: 1px solid #27302d;
+  --ax-border-catalog-editor-host-tunnel-row-border: 1px solid #34343d;
+  --ax-border-catalog-editor-modal-border: 1px solid #35423c;
+  --ax-border-catalog-editor-modal-button-border: 1px solid #303b37;
+  --ax-border-catalog-editor-modal-button-focus-visible-modal-input-focus-visible--2296c40: 1px
+    solid #71c688;
+  --ax-border-catalog-editor-modal-header-border-bottom: 1px solid #27302d;
+  --ax-border-catalog-editor-modal-input-modal-select-modal-textarea-border: 1px solid #2c3733;
+  --ax-border-catalog-editor-ssh-algorithm-settings-border: 1px solid #35353e;
+  --ax-border-catalog-editor-ssh-startup-script-group-border-top: 1px solid #303038;
+  --ax-border-catalog-editor-ssh-startup-settings-border: 1px solid #35353e;
+  --ax-border-catalog-editor-ssh-x11-settings-border: 1px solid #35353e;
+  --ax-border-catalog-import-modal-border: 1px solid #35423c;
+  --ax-border-catalog-import-modal-header-border-bottom: 1px solid #27302d;
+  --ax-border-catalog-import-ssh-config-import-modal-header-border-bottom: 1px solid #0d0d0e;
+  --ax-border-catalog-import-ssh-config-import-modal-ssh-import-footer-button-border: 1px solid
+    #454554;
+  --ax-border-catalog-import-ssh-config-import-modal-ssh-import-reload-border: 1px solid #454554;
+  --ax-border-catalog-import-ssh-import-includes-border: 1px solid #39483f;
+  --ax-border-catalog-manager-card-icon-border: 1px solid #294b34;
+  --ax-border-catalog-manager-host-card-border: 1px solid #27312e;
+  --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-8b57f5c: 1px
+    solid #4c4c5b;
+  --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-dc988a9: 1px
+    solid #464650;
+  --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-f6da4db: 1px
+    dashed #4c4c5b;
+  --ax-border-configuration-behavior-surface-border: 1px solid #27312e;
+  --ax-border-configuration-legal-legal-notices-panel-pre-border: 1px solid #36413d;
+  --ax-border-configuration-legal-legal-runtime-license-frame-border: 1px solid #36413d;
+  --ax-border-configuration-legal-surface-border: 1px solid #27312e;
+  --ax-border-connections-tools-error-banner-border: 1px solid #553630;
+  --ax-border-connections-tools-known-host-key-list-article-border-bottom: 1px solid #28322f;
+  --ax-border-connections-tools-known-host-key-list-border: 1px solid #28322f;
+  --ax-border-connections-tools-list-row-border: 1px solid #252f2b;
+  --ax-border-connections-tools-surface-border: 1px solid #27312e;
+  --ax-border-connections-tools-tools-root-button-border: 1px solid #303b37;
+  --ax-border-connections-tools-tools-root-button-focus-visible-tools-root-input-f-434c5c2: 1px
+    solid #71c688;
+  --ax-border-connections-tools-tools-root-input-tools-root-select-tools-root-text-e9f79aa: 1px
+    solid #2c3733;
+  --ax-border-connections-ui-modal-border: 1px solid #35423c;
+  --ax-border-connections-ui-modal-header-border-bottom: 1px solid #27302d;
+  --ax-border-desktop-diagnostics-metric-border: 1px solid #28322f;
+  --ax-border-desktop-preferences-surface-border: 1px solid #27312e;
+  --ax-border-desktop-updater-updater-error-border: 1px solid #623d45;
+  --ax-border-desktop-window-controls-modal-border: 1px solid #35423c;
+  --ax-border-desktop-window-controls-modal-header-border-bottom: 1px solid #27302d;
+  --ax-border-files-files-empty-state-border: 1px dashed #29322f;
+  --ax-border-files-files-error-banner-border: 1px solid #553630;
+  --ax-border-files-files-file-column-picker-div-border: 1px solid #34413b;
+  --ax-border-files-files-file-column-picker-summary-border: 1px solid #2a3631;
+  --ax-border-files-files-file-context-menu-border: 1px solid #46444f;
+  --ax-border-files-files-file-context-menu-button-separator-before-border-top: 1px solid #4b4954;
+  --ax-border-files-files-file-info-properties-div-border-bottom: 1px solid #222d29;
+  --ax-border-files-files-file-list-border: 1px solid #26302d;
+  --ax-border-files-files-file-permission-row-button-border: 1px solid #2d3934;
+  --ax-border-files-files-file-permission-summary-strong-border: 1px solid #314039;
+  --ax-border-files-files-file-table-file-row-focus-visible-outline: 1px solid #7ca28c;
+  --ax-border-files-files-file-table-page-border-top: 1px solid #202a30;
+  --ax-border-files-files-files-session-root-button-focus-visible-modal-button-foc-b95b03b: 1px
+    solid #71c688;
+  --ax-border-files-files-files-session-root-button-modal-button-border: 1px solid #303b37;
+  --ax-border-files-files-files-session-root-input-modal-input-files-session-root--6580250: 1px
+    solid #2c3733;
+  --ax-border-files-files-modal-border: 1px solid #35423c;
+  --ax-border-files-files-modal-header-border-bottom: 1px solid #27302d;
+  --ax-border-files-files-remote-editor-header-border-bottom: 1px solid #26302d;
+  --ax-border-files-files-remote-editor-toolbar-remote-editor-conflict-border-bottom: 1px solid
+    #26302d;
+  --ax-border-files-files-terminal-layout-split-border-left: 1px solid #2b3531;
+  --ax-border-files-files-toast-error-border: 1px solid #6a4038;
+  --ax-border-remote-desktop-remote-desktop-vnc-verification-border-bottom: 1px solid #806a32;
+  --ax-border-remote-desktop-remote-desktop-vnc-verification-button-border: 1px solid #a48942;
+  --ax-border-remote-desktop-remote-desktop-web-session-error-border: 1px solid #7c3333;
+  --ax-border-remote-desktop-remote-desktop-web-session-notice-web-session-error-b-954b90b: 1px
+    solid #806a32;
+  --ax-border-terminals-profiles-terminal-security-settings-border: 1px solid #2c3732;
+  --ax-border-terminals-reconnect-terminal-reconnect-actions-border: 1px solid
+    rgb(255 255 255 / 10%);
+  --ax-border-terminals-reconnect-terminal-reconnect-overlay-button-border: 1px solid #3b4741;
+  --ax-border-terminals-themes-terminal-background-editor-border: 1px solid #3b3d43;
+  --ax-border-terminals-themes-terminal-theme-ai-border: 1px solid #3d505b;
+  --ax-border-terminals-themes-terminal-theme-ai-heading-span-border: 1px solid #47795a;
+  --ax-border-terminals-themes-terminal-theme-ai-preview-notice-border: 1px solid #47795a;
+  --ax-border-terminals-themes-terminal-theme-color-control-border: 1px solid #42444a;
+  --ax-border-terminals-themes-terminal-theme-color-control-i-border-right: 1px solid #42444a;
+  --ax-border-terminals-themes-terminal-theme-editor-mode-border-bottom: 1px solid #34363b;
+  --ax-border-terminals-themes-terminal-theme-list-actions-border-bottom: 1px solid #34363b;
+  --ax-border-terminals-themes-terminal-theme-list-border-right: 1px solid #34363b;
+  --ax-border-terminals-themes-terminal-theme-mode-border: 1px solid rgb(255 255 255 / 25%);
+  --ax-border-terminals-themes-terminal-theme-pagination-output-border: 1px solid #42444a;
+  --ax-border-terminals-themes-terminal-theme-preview-border: 1px solid #42444a;
+  --ax-border-terminals-themes-terminal-theme-recovery-border: 1px solid #6b3d36;
+  --ax-border-terminals-themes-terminal-theme-search-border: 1px solid #44464d;
+  --ax-border-terminals-ui-terminal-paste-dialog-border: 1px solid #606060;
+  --ax-border-terminals-ui-terminal-paste-dialog-button-border: 1px solid #606060;
+  --ax-border-terminals-ui-terminal-paste-dialog-pre-border: 1px solid #3c3c3c;
+  --ax-border-workspace-palette-command-palette-border: 1px solid #39463f;
+  --ax-border-workspace-palette-command-palette-div-border-bottom: 1px solid #29322f;
+  --ax-border-workspace-startup-surface-border: 1px solid #27312e;
+  --ax-border-workspace-workspace-menu-tabs-border-bottom: 1px solid #2b2b2d;
+  --ax-border-workspace-workspace-toast-border: 1px solid #f06473;
+  --ax-color-ai-ui-agent-tool-approval-span-color: #d6b774;
+  --ax-color-ai-ui-agent-tool-card-background: #171f23;
+  --ax-color-ai-ui-agent-tool-card-detail-background: #12191c;
+  --ax-color-ai-ui-agent-tool-card-detail-dd-color: #bfc9ce;
+  --ax-color-ai-ui-agent-tool-card-detail-pre-background: #0c1114;
+  --ax-color-ai-ui-agent-tool-card-detail-pre-color: #cbd6db;
+  --ax-color-ai-ui-agent-tool-card-detail-section-strong-color: #aeb9be;
+  --ax-color-ai-ui-agent-tool-card-header-em-color: #aebbc1;
+  --ax-color-ai-ui-agent-tool-card-header-em-sensitivity-mutating-agent-tool-card-header-94ef10e: #e9bd78;
+  --ax-color-ai-ui-agent-tool-card-header-em-sensitivity-mutating-agent-tool-card-header-a1ec28a: #292116;
+  --ax-color-ai-ui-agent-tool-card-header-em-sensitivity-mutating-agent-tool-card-header-d613d59: #6e5338;
+  --ax-color-ai-ui-agent-tool-card-header-strong-color: #e4e9ec;
+  --ax-color-ai-ui-agent-tool-card-state-failed-border-color: #70404a;
+  --ax-color-ai-ui-agent-tool-card-state-running-agent-tool-card-state-waiting-ap-3aed730: #516541;
+  --ax-color-ai-ui-agent-tool-card-state-succeeded-border-color: #315640;
+  --ax-color-ai-ui-agent-tool-error-color: #ef8b9b;
+  --ax-color-ai-ui-agent-tool-list-background: #12191d;
+  --ax-color-ai-ui-ai-approval-reminder-background: #202721;
+  --ax-color-ai-ui-ai-attachment-cancel-color: #d7a858;
+  --ax-color-ai-ui-ai-attachment-drafts-em-color: #d7a858;
+  --ax-color-ai-ui-ai-attachment-drafts-span-background: rgb(0 0 0 / 16%);
+  --ax-color-ai-ui-ai-attachment-preview-background: #0b110f;
+  --ax-color-ai-ui-ai-attachment-preview-pre-color: #b9c7bf;
+  --ax-color-ai-ui-ai-bookmark-hero-ai-bookmark-review-heading-background: linear-gradient(
+    130deg,
+    #18242a,
+    #151d21
+  );
+  --ax-color-ai-ui-ai-bookmark-hero-span-background: #244631;
+  --ax-color-ai-ui-ai-bookmark-hero-span-color: #a9e8b9;
+  --ax-color-ai-ui-ai-bookmark-progress-background: #10171b;
+  --ax-color-ai-ui-ai-bookmark-progress-span-complete-color: #a9e8b9;
+  --ax-color-ai-ui-ai-bookmark-progress-span-complete-svg-background: #1c3926;
+  --ax-color-ai-ui-ai-bookmark-progress-span-complete-svg-border-color: #3e7850;
+  --ax-color-ai-ui-ai-bookmark-progress-span-svg-background: #172126;
+  --ax-color-ai-ui-ai-bookmark-security-background: #282315;
+  --ax-color-ai-ui-ai-bookmark-security-color: #dfc781;
+  --ax-color-ai-ui-ai-chat-composer-background: color-mix(
+    in srgb,
+    var(--ax-color-canvas) 94%,
+    #000
+  );
+  --ax-color-ai-ui-ai-chat-delete-confirm-background: rgb(112 55 50 / 20%);
+  --ax-color-ai-ui-ai-chat-delete-confirm-danger-border-color: #76443f;
+  --ax-color-ai-ui-ai-chat-delete-confirm-danger-color: #f09a92;
+  --ax-color-ai-ui-ai-chat-main-background:
+    radial-gradient(circle at 52% 0%, rgb(81 134 99 / 8%), transparent 34%), var(--ax-color-canvas);
+  --ax-color-ai-ui-ai-chat-message-small-color: #e48a82;
+  --ax-color-ai-ui-ai-chat-session-danger-icon-hover-color: #e27f78;
+  --ax-color-ai-ui-ai-chat-sessions-background: color-mix(
+    in srgb,
+    var(--ax-color-canvas) 88%,
+    #000
+  );
+  --ax-color-ai-ui-ai-command-approval-header-ai-command-approval-footer-background: #13191b;
+  --ax-color-ai-ui-ai-command-approval-pre-background: #0c1112;
+  --ax-color-ai-ui-ai-command-approval-risk-color: #e5b76c;
+  --ax-color-ai-ui-ai-context-review-ai-review-actions-background: #13191b;
+  --ax-color-ai-ui-ai-context-review-header-background: #13191b;
+  --ax-color-ai-ui-ai-inspector-background: #101618;
+  --ax-color-ai-ui-ai-inspector-header-span-color: #a9cbb1;
+  --ax-color-ai-ui-ai-message-attachments-em-color: #d7a858;
+  --ax-color-ai-ui-ai-message-attachments-span-background: rgb(0 0 0 / 16%);
+  --ax-color-ai-ui-ai-provider-modal-background: rgb(0 0 0 / 38%);
+  --ax-color-ai-ui-ai-provider-overlay-background: rgb(0 0 0 / 38%);
+  --ax-color-ai-ui-error-banner-background: #251918;
+  --ax-color-ai-ui-error-banner-color: #e7aaa1;
+  --ax-color-ai-ui-modal-background: #141b20;
+  --ax-color-ai-ui-modal-header-button-color: #718078;
+  --ax-color-ai-ui-panel-heading-p-color: #78847e;
+  --ax-color-ai-ui-panel-heading-small-color: #6ab47d;
+  --ax-color-ai-ui-run-state-background: #252e2b;
+  --ax-color-ai-ui-run-state-color: #85938c;
+  --ax-color-ai-ui-run-state-failed-background: #3a2421;
+  --ax-color-ai-ui-run-state-failed-color: #df978e;
+  --ax-color-ai-ui-run-state-succeeded-background: #1d3926;
+  --ax-color-ai-ui-run-state-succeeded-color: #8ed09d;
+  --ax-color-ai-ui-surface-background: #111719cc;
+  --ax-color-ai-ui-surface-h3-approval-list-h3-inspector-body-h2-color: #a7b2b6;
+  --ax-color-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--5f7f2a7: #4c925f;
+  --ax-color-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--dc5a7ef: #55636a;
+  --ax-color-automation-automation-status-quick-command-small-color: white;
+  --ax-color-automation-widgets-widget-instance-actions-button-confirm-stop-color: white;
+  --ax-color-catalog-bookmark-tree-bookmark-row-title-mark-color: #17120a;
+  --ax-color-catalog-bookmark-tree-bookmark-tree-row-hover-bookmark-row-main-background: #000;
+  --ax-color-catalog-bookmark-tree-bookmark-tree-search-background: #202026;
+  --ax-color-catalog-editor-app-sidebar-nav-button-active-session-list-button-act-00a818b: #b7e3c1;
+  --ax-color-catalog-editor-app-sidebar-nav-button-active-session-list-button-act-41e9fbc: #1d2b23;
+  --ax-color-catalog-editor-bookmark-trigger-row-header-span-color: #56b894;
+  --ax-color-catalog-editor-button-primary-background: #285039;
+  --ax-color-catalog-editor-button-primary-border-color: #3b7449;
+  --ax-color-catalog-editor-button-primary-color: #d7efdc;
+  --ax-color-catalog-editor-button-primary-hover-background: #326346;
+  --ax-color-catalog-editor-button-primary-hover-border-color: #4c925f;
+  --ax-color-catalog-editor-checkbox-grid-legend-color: #8e9a94;
+  --ax-color-catalog-editor-connection-options-legend-color: #8e9a94;
+  --ax-color-catalog-editor-connection-state-i-background: #5a666b;
+  --ax-color-catalog-editor-connection-state-ready-color: #7fcf92;
+  --ax-color-catalog-editor-danger-text-background: #2c1b1a;
+  --ax-color-catalog-editor-danger-text-color: #e6aaa1;
+  --ax-color-catalog-editor-file-keyword-filter-active-border-color: #537561;
+  --ax-color-catalog-editor-file-keyword-filter-active-color: #8fc7a4;
+  --ax-color-catalog-editor-group-strip-button-active-color: #c7ead0;
+  --ax-color-catalog-editor-group-strip-span-active-background: #1d2b23;
+  --ax-color-catalog-editor-group-strip-span-active-color: #a9d9b4;
+  --ax-color-catalog-editor-host-auth-note-background: #101619;
+  --ax-color-catalog-editor-host-auth-note-color: #84918b;
+  --ax-color-catalog-editor-host-bookmark-modal-host-field-port-input-host-bookma-4dfe15e: #0d1317;
+  --ax-color-catalog-editor-host-bookmark-modal-host-jump-chain-background: #1a1a20;
+  --ax-color-catalog-editor-host-bookmark-modal-host-jump-chain-legend-color: #dddddd;
+  --ax-color-catalog-editor-host-bookmark-modal-host-tunnel-editor-background: #1a1a20;
+  --ax-color-catalog-editor-host-bookmark-modal-host-tunnel-editor-legend-color: #dddddd;
+  --ax-color-catalog-editor-host-form-tab-intro-color: #74827b;
+  --ax-color-catalog-editor-host-form-tabs-button-active-border-bottom-color: #56b894;
+  --ax-color-catalog-editor-host-form-tabs-button-active-color: #d8e2dd;
+  --ax-color-catalog-editor-host-form-tabs-button-color: #77847e;
+  --ax-color-catalog-editor-host-form-tabs-button-hover-host-form-tabs-button-foc-43db7b0: #c8d2cd;
+  --ax-color-catalog-editor-host-jump-chain-index-color: #ffffff;
+  --ax-color-catalog-editor-host-jump-chain-list-li-background: #202027;
+  --ax-color-catalog-editor-host-jump-chain-list-small-color: #81818b;
+  --ax-color-catalog-editor-host-jump-chain-path-color: #a6a6af;
+  --ax-color-catalog-editor-host-jump-chain-path-span-span-before-color: #5f5f69;
+  --ax-color-catalog-editor-host-tunnel-row-active-border-color: #286b51;
+  --ax-color-catalog-editor-host-tunnel-row-background: #202027;
+  --ax-color-catalog-editor-host-tunnel-row-failed-border-color: #8a4545;
+  --ax-color-catalog-editor-host-tunnel-row-small-color: #85858f;
+  --ax-color-catalog-editor-modal-backdrop-has-host-bookmark-modal-background: #050809aa;
+  --ax-color-catalog-editor-modal-background: #141b20;
+  --ax-color-catalog-editor-modal-button-background: #151c1e;
+  --ax-color-catalog-editor-modal-button-hover-background: #1b2422;
+  --ax-color-catalog-editor-modal-button-hover-border-color: #46544e;
+  --ax-color-catalog-editor-modal-button-primary-background: #285039;
+  --ax-color-catalog-editor-modal-button-primary-border-color: #3b7449;
+  --ax-color-catalog-editor-modal-button-primary-color: #d7efdc;
+  --ax-color-catalog-editor-modal-button-primary-hover-background: #326346;
+  --ax-color-catalog-editor-modal-button-primary-hover-border-color: #4c925f;
+  --ax-color-catalog-editor-modal-header-button-color: #718078;
+  --ax-color-catalog-editor-modal-input-modal-select-modal-textarea-background: #111719;
+  --ax-color-catalog-editor-modal-input-modal-select-modal-textarea-color: #d8e1dc;
+  --ax-color-catalog-editor-modal-input-placeholder-modal-textarea-placeholder-color: #55636a;
+  --ax-color-catalog-editor-modal-label-color: #93a099;
+  --ax-color-catalog-editor-modal-protocol-bookmark-modal-background: color-mix(
+    in srgb,
+    var(--ax-color-canvas) 90%,
+    #111a16
+  );
+  --ax-color-catalog-editor-rdp-state-failed-color: #e77676;
+  --ax-color-catalog-editor-rdp-state-ready-color: #54c183;
+  --ax-color-catalog-editor-run-state-failed-background: #3a2421;
+  --ax-color-catalog-editor-run-state-failed-color: #df978e;
+  --ax-color-catalog-editor-runtime-led-ready-background: #77d18c;
+  --ax-color-catalog-editor-session-list-session-main-active-color: #bfe8c9;
+  --ax-color-catalog-editor-ssh-algorithm-grid-select-background: #1e1e25;
+  --ax-color-catalog-editor-ssh-algorithm-grid-select-border-color: #44444f;
+  --ax-color-catalog-editor-ssh-algorithm-grid-select-color: #dddddd;
+  --ax-color-catalog-editor-ssh-algorithm-settings-summary-color: #d7d7dd;
+  --ax-color-catalog-editor-ssh-startup-settings-open-background: #121214;
+  --ax-color-catalog-editor-ssh-startup-settings-small-color: #85858f;
+  --ax-color-catalog-editor-ssh-startup-settings-summary-color: #d7d7dd;
+  --ax-color-catalog-editor-ssh-x11-settings-summary-color: #d7d7dd;
+  --ax-color-catalog-editor-status-transfer-active-background: #17251d;
+  --ax-color-catalog-editor-status-transfer-active-color: #b6e7c2;
+  --ax-color-catalog-editor-tabbar-actions-button-active-background: #202a26;
+  --ax-color-catalog-editor-tabbar-actions-button-active-color: #a9dcb4;
+  --ax-color-catalog-editor-top-actions-button-active-background: #202926;
+  --ax-color-catalog-editor-top-actions-button-active-color: #a9deb5;
+  --ax-color-catalog-editor-tunnel-profile-row-active-border-color: #31543a;
+  --ax-color-catalog-editor-tunnel-profile-row-active-color: #9dd7aa;
+  --ax-color-catalog-editor-tunnel-profile-row-failed-border-color: #723d3d;
+  --ax-color-catalog-history-connection-history-row-hover-color: #fff;
+  --ax-color-catalog-history-connection-history-row-hover-connection-history-name-3639d37: #fff;
+  --ax-color-catalog-history-connection-history-sort-input-background: #555;
+  --ax-color-catalog-history-connection-history-sort-input-before-background: #eee;
+  --ax-color-catalog-import-button-primary-background: #285039;
+  --ax-color-catalog-import-button-primary-border-color: #3b7449;
+  --ax-color-catalog-import-button-primary-color: #d7efdc;
+  --ax-color-catalog-import-button-primary-hover-background: #326346;
+  --ax-color-catalog-import-import-backdrop-background: rgb(0 0 0 / 45%);
+  --ax-color-catalog-import-include-status-authorization-required-background: #322b1b;
+  --ax-color-catalog-import-include-status-authorization-required-color: #f0ce89;
+  --ax-color-catalog-import-include-status-authorized-background: #163126;
+  --ax-color-catalog-import-include-status-authorized-color: #bde7d1;
+  --ax-color-catalog-import-include-status-background: #252d2a;
+  --ax-color-catalog-import-modal-background: #13191b;
+  --ax-color-catalog-import-modal-header-button-color: #718078;
+  --ax-color-catalog-import-modal-ssh-config-import-modal-background: #111113;
+  --ax-color-catalog-import-ssh-config-import-modal-header-button-color: #dddddd;
+  --ax-color-catalog-import-ssh-config-import-modal-header-h2-color: #dddddd;
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-config-item-content-color: rgb(
+    221 221 221 / 85%
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-footer-button-background: #25252d;
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-footer-button-prim-f2faccd: #ffffff;
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-item-actions-button-color: rgb(
+    221 221 221 / 85%
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-item-heading-color: rgb(
+    221 221 221 / 85%
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-reload-background: #25252d;
+  --ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-background: #2b1918;
+  --ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-border-color: #7b3d38;
+  --ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-color: #f1aaa4;
+  --ax-color-catalog-import-ssh-import-footer-background: #13191bf2;
+  --ax-color-catalog-import-ssh-import-include-background: #0c1213;
+  --ax-color-catalog-import-ssh-import-includes-background: #101716;
+  --ax-color-catalog-import-ssh-import-item-background: #0d1214;
+  --ax-color-catalog-import-ssh-import-metric-background: #0e1415;
+  --ax-color-catalog-import-ssh-import-metric-strong-color: #bdd0c4;
+  --ax-color-catalog-manager-card-copy-small-color: #5f7067;
+  --ax-color-catalog-manager-card-copy-span-color: #85918b;
+  --ax-color-catalog-manager-card-icon-background: #1b2c22;
+  --ax-color-catalog-manager-card-icon-color: #88d29a;
+  --ax-color-catalog-manager-connection-state-i-background: #5a666b;
+  --ax-color-catalog-manager-connection-state-ready-color: #7fcf92;
+  --ax-color-catalog-manager-empty-state-strong-color: #aab6bb;
+  --ax-color-catalog-manager-group-strip-button-active-color: #c7ead0;
+  --ax-color-catalog-manager-host-card-background: #121719cc;
+  --ax-color-catalog-manager-host-card-hover-background: #151c1d;
+  --ax-color-catalog-manager-host-card-hover-border-color: #36453f;
+  --ax-color-catalog-manager-host-card-hover-host-card-focus-within-background: #151d21;
+  --ax-color-catalog-manager-host-card-hover-host-card-focus-within-border-color: #39484f;
+  --ax-color-catalog-manager-host-search-background: #0d1317;
+  --ax-color-catalog-manager-host-search-focus-within-border-color: #496154;
+  --ax-color-catalog-profiles-connection-profile-default-i-after-background: #f5f5f5;
+  --ax-color-catalog-profiles-connection-profile-default-i-background: #5b5b64;
+  --ax-color-catalog-profiles-connection-profile-list-background: color-mix(
+    in srgb,
+    var(--ax-color-canvas) 76%,
+    #000
+  );
+  --ax-color-catalog-profiles-connection-profile-panel-background: color-mix(
+    in srgb,
+    var(--ax-color-canvas) 88%,
+    #000
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-1b8106b: #25252d;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-6623c01: #bbbbbb;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-7c01d89: #c0c0c0;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-7edb747: #d7d7db;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-8777985: #24242c;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-b1db674: #24242c;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-c20861e: #d7d7db;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-c85109a: #c0c0c0;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-ceb62c3: #c0c0c0;
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-d129a63: #24242c;
+  --ax-color-configuration-behavior-button-primary-background: #285039;
+  --ax-color-configuration-behavior-button-primary-border-color: #3b7449;
+  --ax-color-configuration-behavior-button-primary-color: #d7efdc;
+  --ax-color-configuration-behavior-button-primary-hover-background: #326346;
+  --ax-color-configuration-behavior-button-primary-hover-border-color: #4c925f;
+  --ax-color-configuration-behavior-surface-background: #111719cc;
+  --ax-color-configuration-behavior-surface-h3-global-approval-list-h3-global-ins-d4e72cc: #a7b2b6;
+  --ax-color-configuration-legal-surface-background: #111719cc;
+  --ax-color-connections-tools-button-primary-background: #285039;
+  --ax-color-connections-tools-button-primary-border-color: #3b7449;
+  --ax-color-connections-tools-button-primary-color: #d7efdc;
+  --ax-color-connections-tools-button-primary-hover-background: #326346;
+  --ax-color-connections-tools-button-primary-hover-border-color: #4c925f;
+  --ax-color-connections-tools-danger-text-background: #2c1b1a;
+  --ax-color-connections-tools-danger-text-color: #e6aaa1;
+  --ax-color-connections-tools-error-banner-background: #251918;
+  --ax-color-connections-tools-error-banner-color: #e7aaa1;
+  --ax-color-connections-tools-known-host-key-list-article-background: #0d1214;
+  --ax-color-connections-tools-known-host-key-list-code-color: #bdd0c4;
+  --ax-color-connections-tools-known-host-key-target-span-known-host-key-list-small-color: #7f9087;
+  --ax-color-connections-tools-known-host-keys-panel-header-p-known-host-key-empty-color: #7f9087;
+  --ax-color-connections-tools-list-row-small-color: #69766f;
+  --ax-color-connections-tools-panel-heading-p-color: #78847e;
+  --ax-color-connections-tools-panel-heading-small-color: #6ab47d;
+  --ax-color-connections-tools-surface-background: #111719cc;
+  --ax-color-connections-tools-surface-h3-color: #a7b2b6;
+  --ax-color-connections-tools-tools-root-button-background: #151c1e;
+  --ax-color-connections-tools-tools-root-button-hover-background: #1b2422;
+  --ax-color-connections-tools-tools-root-button-hover-border-color: #46544e;
+  --ax-color-connections-tools-tools-root-input-placeholder-tools-root-textarea-p-13df625: #55636a;
+  --ax-color-connections-tools-tools-root-input-tools-root-select-tools-root-text-72edc0d: #111719;
+  --ax-color-connections-tools-tools-root-input-tools-root-select-tools-root-text-ef683e4: #d8e1dc;
+  --ax-color-connections-tools-tools-root-label-color: #93a099;
+  --ax-color-connections-tools-tunnel-profile-row-active-border-color: #31543a;
+  --ax-color-connections-tools-tunnel-profile-row-active-color: #9dd7aa;
+  --ax-color-connections-tools-tunnel-profile-row-failed-border-color: #723d3d;
+  --ax-color-connections-tools-tunnel-profile-row-tunnel-status-color: #8b9a93;
+  --ax-color-connections-ui-ai-chat-delete-confirm-danger-border-color: #76443f;
+  --ax-color-connections-ui-ai-chat-delete-confirm-danger-color: #f09a92;
+  --ax-color-connections-ui-button-primary-background: #285039;
+  --ax-color-connections-ui-button-primary-border-color: #3b7449;
+  --ax-color-connections-ui-button-primary-color: #d7efdc;
+  --ax-color-connections-ui-button-primary-hover-background: #326346;
+  --ax-color-connections-ui-button-primary-hover-border-color: #4c925f;
+  --ax-color-connections-ui-danger-text-background: #2c1b1a;
+  --ax-color-connections-ui-danger-text-color: #e6aaa1;
+  --ax-color-connections-ui-form-error-color: #e7aaa1;
+  --ax-color-connections-ui-modal-background: #141b20;
+  --ax-color-connections-ui-modal-header-button-color: #718078;
+  --ax-color-desktop-diagnostics-metric-background: #111719;
+  --ax-color-desktop-diagnostics-metric-strong-color: #bdd0c4;
+  --ax-color-desktop-preferences-button-primary-background: #285039;
+  --ax-color-desktop-preferences-button-primary-border-color: #3b7449;
+  --ax-color-desktop-preferences-button-primary-color: #d7efdc;
+  --ax-color-desktop-preferences-button-primary-hover-background: #326346;
+  --ax-color-desktop-preferences-button-primary-hover-border-color: #4c925f;
+  --ax-color-desktop-preferences-danger-text-background: #2c1b1a;
+  --ax-color-desktop-preferences-danger-text-color: #e6aaa1;
+  --ax-color-desktop-preferences-global-hotkey-value-span-inactive-background: color-mix(
+    in srgb,
+    #f59e0b 13%,
+    transparent
+  );
+  --ax-color-desktop-preferences-global-hotkey-value-span-inactive-color: #e7b65b;
+  --ax-color-desktop-preferences-global-hotkey-value-span-registered-background: color-mix(
+    in srgb,
+    #22c55e 14%,
+    transparent
+  );
+  --ax-color-desktop-preferences-global-hotkey-value-span-registered-color: #74d99b;
+  --ax-color-desktop-preferences-surface-background: #111719cc;
+  --ax-color-desktop-preferences-surface-h3-color: #a7b2b6;
+  --ax-color-desktop-updater-updater-detail-strong-color: #d8e1dc;
+  --ax-color-desktop-updater-updater-error-background: #211416;
+  --ax-color-desktop-updater-updater-error-color: #ef8b9b;
+  --ax-color-desktop-updater-updater-panel-h2-color: #d8e1dc;
+  --ax-color-desktop-updater-updater-panel-p-color: #87958e;
+  --ax-color-desktop-updater-updater-panel-small-updater-detail-span-updater-prog-e8fead9: #7f9087;
+  --ax-color-desktop-window-controls-ai-chat-delete-confirm-danger-border-color: #76443f;
+  --ax-color-desktop-window-controls-ai-chat-delete-confirm-danger-color: #f09a92;
+  --ax-color-desktop-window-controls-modal-background: #141b20;
+  --ax-color-desktop-window-controls-modal-header-button-color: #718078;
+  --ax-color-files-files-activity-bar-activity-item-active-background: #19271f;
+  --ax-color-files-files-app-sidebar-nav-button-active-session-list-button-active-color: #b7e3c1;
+  --ax-color-files-files-app-sidebar-nav-button-active-session-list-button-active-e711b2e: #1d2b23;
+  --ax-color-files-files-button-primary-background: #285039;
+  --ax-color-files-files-button-primary-border-color: #3b7449;
+  --ax-color-files-files-button-primary-color: #d7efdc;
+  --ax-color-files-files-button-primary-hover-background: #326346;
+  --ax-color-files-files-button-primary-hover-border-color: #4c925f;
+  --ax-color-files-files-danger-text-background: #2c1b1a;
+  --ax-color-files-files-danger-text-color: #e6aaa1;
+  --ax-color-files-files-empty-state-color: #53615a;
+  --ax-color-files-files-empty-state-strong-color: #aab6bb;
+  --ax-color-files-files-error-banner-background: #251918;
+  --ax-color-files-files-error-banner-color: #e7aaa1;
+  --ax-color-files-files-file-address-bar-input-readonly-background: #10171a;
+  --ax-color-files-files-file-address-bar-input-readonly-color: #8f9a9f;
+  --ax-color-files-files-file-column-picker-div-background: #111918;
+  --ax-color-files-files-file-column-picker-label-color: #aeb9b3;
+  --ax-color-files-files-file-column-picker-summary-color: #8f9c95;
+  --ax-color-files-files-file-column-resizer-after-background: #34413b;
+  --ax-color-files-files-file-column-resizer-hover-after-file-column-resizer-focu-f9de0f2: #7ca28c;
+  --ax-color-files-files-file-comparison-content-background: #0b0f11;
+  --ax-color-files-files-file-context-menu-background: #35333f;
+  --ax-color-files-files-file-context-menu-button-color: #dedde2;
+  --ax-color-files-files-file-context-menu-button-danger-item-color: #ff5a78;
+  --ax-color-files-files-file-context-menu-button-hover-file-context-menu-button--9c6946a: #464451;
+  --ax-color-files-files-file-context-menu-button-hover-file-context-menu-button--fb8e244: #fff;
+  --ax-color-files-files-file-context-menu-button-primary-item-background: #244238;
+  --ax-color-files-files-file-context-menu-button-primary-item-color: #c6f5df;
+  --ax-color-files-files-file-context-menu-button-primary-item-hover-file-context-3b159a1: #fff;
+  --ax-color-files-files-file-context-menu-button-primary-item-hover-file-context-9ff62b5: #31594b;
+  --ax-color-files-files-file-context-menu-kbd-color: #aaa8b0;
+  --ax-color-files-files-file-diff-row-changed-code-first-child-b-background: rgb(239 71 111 / 16%);
+  --ax-color-files-files-file-diff-row-changed-code-first-child-b-color: #ff9fb4;
+  --ax-color-files-files-file-diff-row-changed-code-last-child-b-background: rgb(6 214 160 / 14%);
+  --ax-color-files-files-file-diff-row-changed-code-last-child-b-color: #7be9c7;
+  --ax-color-files-files-file-info-properties-dd-color: #c5cfca;
+  --ax-color-files-files-file-keyword-filter-active-border-color: #537561;
+  --ax-color-files-files-file-keyword-filter-active-color: #8fc7a4;
+  --ax-color-files-files-file-list-background: #0f1519cc;
+  --ax-color-files-files-file-operation-notice-color: #91bba0;
+  --ax-color-files-files-file-pane-background: #0d1317cc;
+  --ax-color-files-files-file-pane-divider-after-background: #28332f;
+  --ax-color-files-files-file-pane-divider-hover-after-file-pane-divider-focus-vi-ce1176b: #5b8069;
+  --ax-color-files-files-file-pane-title-color: #aebbc0;
+  --ax-color-files-files-file-permission-editor-background: #101618;
+  --ax-color-files-files-file-permission-row-button-aria-pressed-true-background: #1f3d29;
+  --ax-color-files-files-file-permission-row-button-aria-pressed-true-border-color: #477e56;
+  --ax-color-files-files-file-permission-row-button-aria-pressed-true-color: #9ee4ae;
+  --ax-color-files-files-file-permission-row-button-background: #17201d;
+  --ax-color-files-files-file-row-selected-background: #1b2821;
+  --ax-color-files-files-file-table-file-row-border-color: #202a30;
+  --ax-color-files-files-file-table-file-row-color: #b5c0c4;
+  --ax-color-files-files-file-table-file-row-drop-target-background: #20362a;
+  --ax-color-files-files-file-table-file-row-hover-background: #18261f;
+  --ax-color-files-files-file-table-file-row-selected-color: #fff;
+  --ax-color-files-files-file-table-header-wrap-background: #12191d;
+  --ax-color-files-files-file-table-scroll-drop-target-background: #17251e80;
+  --ax-color-files-files-file-view-switcher-background: #0d1316;
+  --ax-color-files-files-file-view-switcher-button-aria-pressed-true-background: #26352d;
+  --ax-color-files-files-file-view-switcher-button-aria-pressed-true-color: #d6e4dc;
+  --ax-color-files-files-files-session-root-button-hover-modal-button-hover-background: #1b2422;
+  --ax-color-files-files-files-session-root-button-hover-modal-button-hover-border-color: #46544e;
+  --ax-color-files-files-files-session-root-button-modal-button-background: #151c1e;
+  --ax-color-files-files-files-session-root-button-primary-hover-modal-button-pri-113e9d2: #326346;
+  --ax-color-files-files-files-session-root-button-primary-hover-modal-button-pri-f4263af: #4c925f;
+  --ax-color-files-files-files-session-root-button-primary-modal-button-primary-b-4c8f0a5: #285039;
+  --ax-color-files-files-files-session-root-button-primary-modal-button-primary-b-c5cd5e8: #3b7449;
+  --ax-color-files-files-files-session-root-button-primary-modal-button-primary-color: #d7efdc;
+  --ax-color-files-files-files-session-root-input-modal-input-files-session-root--0277758: #111719;
+  --ax-color-files-files-files-session-root-input-modal-input-files-session-root--34400bc: #d8e1dc;
+  --ax-color-files-files-files-session-root-input-placeholder-modal-input-placeho-b6b7809: #55636a;
+  --ax-color-files-files-files-session-root-label-modal-label-color: #93a099;
+  --ax-color-files-files-form-error-color: #e7aaa1;
+  --ax-color-files-files-group-strip-button-active-color: #c7ead0;
+  --ax-color-files-files-group-strip-span-active-background: #1d2b23;
+  --ax-color-files-files-group-strip-span-active-color: #a9d9b4;
+  --ax-color-files-files-modal-backdrop-background: #050809aa;
+  --ax-color-files-files-modal-background: #141b20;
+  --ax-color-files-files-modal-header-button-color: #718078;
+  --ax-color-files-files-panel-heading-p-color: #78847e;
+  --ax-color-files-files-panel-heading-small-color: #6ab47d;
+  --ax-color-files-files-rdp-state-ready-color: #54c183;
+  --ax-color-files-files-remote-editor-background: #0d1113;
+  --ax-color-files-files-remote-editor-conflict-background: #261b18;
+  --ax-color-files-files-remote-editor-conflict-border-bottom-color: #69443a;
+  --ax-color-files-files-remote-editor-conflict-color: #eab6a8;
+  --ax-color-files-files-remote-editor-header-small-color: #718078;
+  --ax-color-files-files-remote-editor-toolbar-remote-editor-conflict-background: #101519;
+  --ax-color-files-files-runtime-led-error-background: #dd7d72;
+  --ax-color-files-files-runtime-led-ready-background: #77d18c;
+  --ax-color-files-files-session-list-session-main-active-color: #bfe8c9;
+  --ax-color-files-files-status-transfer-active-background: #17251d;
+  --ax-color-files-files-status-transfer-active-color: #b6e7c2;
+  --ax-color-files-files-tab-context-menu-danger-item-color: #d88a82;
+  --ax-color-files-files-tab-context-menu-danger-item-hover-color: #ffffff;
+  --ax-color-files-files-tabbar-actions-button-active-background: #202a26;
+  --ax-color-files-files-tabbar-actions-button-active-color: #a9dcb4;
+  --ax-color-files-files-terminal-channel-state-error-color: #e29a91;
+  --ax-color-files-files-toast-error-color: #eda79d;
+  --ax-color-files-files-top-actions-button-active-background: #202926;
+  --ax-color-files-files-top-actions-button-active-color: #a9deb5;
+  --ax-color-files-files-transfer-icon-download-background: #173527;
+  --ax-color-files-files-transfer-icon-download-color: #8bd6ad;
+  --ax-color-files-files-tunnel-profile-row-active-border-color: #31543a;
+  --ax-color-files-files-tunnel-profile-row-active-color: #9dd7aa;
+  --ax-color-files-files-workspace-tab-active-background: #505050;
+  --ax-color-files-files-workspace-tab-active-color: #dde6e9;
+  --ax-color-modal-scrim: #000b;
+  --ax-color-remote-desktop-remote-desktop-rdp-canvas-stage-background: #090909;
+  --ax-color-remote-desktop-remote-desktop-rdp-state-failed-rdp-state-closed-color: #e77676;
+  --ax-color-remote-desktop-remote-desktop-rdp-state-ready-color: #54c183;
+  --ax-color-remote-desktop-remote-desktop-rdp-toolbar-background: color-mix(
+    in srgb,
+    var(--ax-color-canvas) 94%,
+    #000
+  );
+  --ax-color-remote-desktop-remote-desktop-rdp-view-background: #111;
+  --ax-color-remote-desktop-remote-desktop-vnc-verification-background: #2c2719;
+  --ax-color-remote-desktop-remote-desktop-vnc-verification-button-background: #3a321e;
+  --ax-color-remote-desktop-remote-desktop-vnc-verification-color: #f0cf76;
+  --ax-color-remote-desktop-remote-desktop-web-session-auth-error-color: #f08d8d;
+  --ax-color-remote-desktop-remote-desktop-web-session-error-background: #351d1d;
+  --ax-color-remote-desktop-remote-desktop-web-session-error-color: #f4a6a6;
+  --ax-color-remote-desktop-remote-desktop-web-session-notice-web-session-error-b-bf0d77a: #2c2719;
+  --ax-color-remote-desktop-remote-desktop-web-session-notice-web-session-error-color: #f0cf76;
+  --ax-color-remote-desktop-remote-desktop-web-session-stage-background: #fff;
+  --ax-color-remote-desktop-remote-desktop-web-session-toolbar-background: color-mix(
+    in srgb,
+    var(--ax-color-canvas) 95%,
+    #000
+  );
+  --ax-color-remote-desktop-remote-desktop-web-session-toolbar-web-session-addres-110bd01: color-mix(
+    in srgb,
+    var(--ax-color-surface-raised) 80%,
+    #000
+  );
+  --ax-color-remote-desktop-remote-desktop-web-session-view-background: #101011;
+  --ax-color-terminals-drop-terminal-file-drop-backdrop-background: rgb(0 0 0 / 45%);
+  --ax-color-terminals-drop-terminal-file-drop-dialog-ul-background: #0d0d0e;
+  --ax-color-terminals-history-command-history-popover-background: #30303b;
+  --ax-color-terminals-history-command-history-search-field-background: #292a34;
+  --ax-color-terminals-keybar-terminal-shortcut-editor-backdrop-background: rgb(0 0 0 / 58%);
+  --ax-color-terminals-profiles-settings-item-terminal-terminal-default-profile-s-6d21dd7: #a7b2b6;
+  --ax-color-terminals-profiles-terminal-security-settings-legend-color: #8e9a94;
+  --ax-color-terminals-reconnect-terminal-reconnect-actions-background: rgb(20 20 21 / 94%);
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-background: #202725;
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-color: #b9c4be;
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-hover-not-disa-85adf3a: #66736d;
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-hover-not-disa-f57b9f9: #ffffff;
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-color: rgb(255 255 255 / 55%);
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-error-color: #e8aaa1;
+  --ax-color-terminals-rendering-terminal-unix-timestamp-tooltip-background: rgba(0, 0, 0, 0.75);
+  --ax-color-terminals-rendering-terminal-unix-timestamp-tooltip-color: #ffffff;
+  --ax-color-terminals-themes-terminal-background-editor-label-terminal-backgroun-2891ba3: #8f939c;
+  --ax-color-terminals-themes-terminal-background-editor-legend-color: #d6d8dd;
+  --ax-color-terminals-themes-terminal-theme-ai-background: linear-gradient(
+    135deg,
+    #17242b,
+    #1c2025
+  );
+  --ax-color-terminals-themes-terminal-theme-ai-fields-label-color: #aeb5ba;
+  --ax-color-terminals-themes-terminal-theme-ai-heading-p-color: #a0a8ae;
+  --ax-color-terminals-themes-terminal-theme-ai-heading-span-background: #213c2b;
+  --ax-color-terminals-themes-terminal-theme-ai-heading-span-color: #a9e8b9;
+  --ax-color-terminals-themes-terminal-theme-ai-heading-strong-color: #f2f4f6;
+  --ax-color-terminals-themes-terminal-theme-ai-preview-notice-background: #1b3324;
+  --ax-color-terminals-themes-terminal-theme-ai-preview-notice-color: #a9e8b9;
+  --ax-color-terminals-themes-terminal-theme-ai-preview-notice-small-color: #91b69a;
+  --ax-color-terminals-themes-terminal-theme-ai-safety-color: #a9d8b5;
+  --ax-color-terminals-themes-terminal-theme-color-control-background: #191a1d;
+  --ax-color-terminals-themes-terminal-theme-color-grid-label-color: #c5c7cc;
+  --ax-color-terminals-themes-terminal-theme-config-header-strong-color: #c9cbd0;
+  --ax-color-terminals-themes-terminal-theme-current-color: #b7bac2;
+  --ax-color-terminals-themes-terminal-theme-editor-actions-danger-border-color: #c14c61;
+  --ax-color-terminals-themes-terminal-theme-editor-actions-danger-color: #ff879a;
+  --ax-color-terminals-themes-terminal-theme-editor-header-p-color: #8d919b;
+  --ax-color-terminals-themes-terminal-theme-editor-mode-button-color: #c5c7cc;
+  --ax-color-terminals-themes-terminal-theme-help-terminal-theme-message-terminal-b2ea2a9: #9599a2;
+  --ax-color-terminals-themes-terminal-theme-list-background: #111113;
+  --ax-color-terminals-themes-terminal-theme-list-item-color: #c8cbd1;
+  --ax-color-terminals-themes-terminal-theme-list-item-hover-terminal-theme-list--d41788c: #383a3f;
+  --ax-color-terminals-themes-terminal-theme-list-item-hover-terminal-theme-list--de787d0: #fff;
+  --ax-color-terminals-themes-terminal-theme-message-color: #8dcfbb;
+  --ax-color-terminals-themes-terminal-theme-name-color: #aeb1b9;
+  --ax-color-terminals-themes-terminal-theme-pagination-color: #c8cbd1;
+  --ax-color-terminals-themes-terminal-theme-pagination-output-background: #1d1e22;
+  --ax-color-terminals-themes-terminal-theme-recovery-background: #291b19;
+  --ax-color-terminals-themes-terminal-theme-recovery-color: #f0b8b0;
+  --ax-color-terminals-themes-terminal-theme-search-background: #1f2023;
+  --ax-color-terminals-themes-terminal-theme-workspace-background: #111113;
+  --ax-color-terminals-tools-batch-input-targets-label-has-input-checked-batch-in-c5ccee2: white;
+  --ax-color-terminals-transfer-terminal-context-menu-background: #2d2c36;
+  --ax-color-terminals-ui-explorer-session-row-aria-current-true-background: #383838;
+  --ax-color-terminals-ui-terminal-paste-backdrop-background: rgb(0 0 0 / 50%);
+  --ax-color-transfers-transfers-status-transfer-b-background: #347346;
+  --ax-color-transfers-transfers-status-transfer-b-color: #eaffef;
+  --ax-color-transfers-transfers-transfer-center-background: #12191def;
+  --ax-color-transfers-transfers-transfer-center-footer-button-color: #9ccba7;
+  --ax-color-transfers-transfers-transfer-center-list-article-div-span-background: #2a353a;
+  --ax-color-transfers-transfers-transfer-icon-background: #183523;
+  --ax-color-transfers-transfers-transfer-icon-color: #8bd69c;
+  --ax-color-transfers-transfers-transfer-icon-download-background: #173527;
+  --ax-color-transfers-transfers-transfer-icon-download-color: #8bd6ad;
+  --ax-color-workspace-palette-command-palette-background: #141a1c;
+  --ax-color-workspace-palette-command-palette-li-button-hover-background: #1d2922;
+  --ax-color-workspace-palette-palette-backdrop-background: #050809aa;
+  --ax-color-workspace-startup-surface-background: #111719cc;
+  --ax-color-workspace-startup-surface-h3-global-approval-list-h3-global-inspecto-64e0376: #a7b2b6;
+  --ax-color-workspace-workspace-activity-brand-color: #a3a3a3;
+  --ax-color-workspace-workspace-layout-glyph-i-background: rgb(255 255 255 / 6%);
+  --ax-color-workspace-workspace-menu-tabs-button-color: #d0ced5;
+  --ax-font-ai-ui-ai-attachment-preview-pre-font:
+    9px/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --ax-font-ai-ui-panel-heading-small-font: 8px ui-monospace, monospace;
+  --ax-font-catalog-import-ssh-config-import-modal-ssh-config-item-content-font:
+    14px/22px SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  --ax-font-catalog-import-ssh-import-editor-textarea-font:
+    11px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ax-font-catalog-import-ssh-import-metric-strong-font: 13px ui-monospace, monospace;
+  --ax-font-catalog-manager-card-copy-span-font: 9px ui-monospace, monospace;
+  --ax-font-code: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ax-font-code-compact: ui-monospace, monospace;
+  --ax-font-configuration-legal-legal-notices-panel-pre-font: 12px/1.5 ui-monospace, monospace;
+  --ax-font-configuration-ui-panelheading-small-font: 9px ui-monospace, monospace;
+  --ax-font-connections-tools-panel-heading-small-font: 8px ui-monospace, monospace;
+  --ax-font-desktop-diagnostics-metric-strong-font: 14px ui-monospace, monospace;
+  --ax-font-desktop-preferences-global-hotkey-value-kbd-font: 11px var(--ax-font-mono);
+  --ax-font-desktop-preferences-shortcut-capture-kbd-font: 11px var(--ax-font-mono);
+  --ax-font-desktop-updater-updater-detail-strong-font: 12px ui-monospace, monospace;
+  --ax-font-files-files-file-context-menu-kbd-font: 11px ui-monospace, monospace;
+  --ax-font-files-files-file-diff-scroll-font: 12px/1.55 'Maple Mono', ui-monospace, monospace;
+  --ax-font-files-files-file-permission-summary-strong-font:
+    13px 'Maple Mono', ui-monospace, monospace;
+  --ax-font-files-files-file-table-page-font: 9px ui-monospace, monospace;
+  --ax-font-files-files-panel-heading-small-font: 8px ui-monospace, monospace;
+  --ax-font-files-files-remote-editor-header-font: 9px ui-monospace, monospace;
+  --ax-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --ax-font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --ax-font-shortcuts-shortcuts-shortcut-bindings-kbd-shortcut-capture-kbd-font: 11px
+    var(--ax-font-mono);
+  --ax-font-size-body: 11px;
+  --ax-font-size-caption: 9px;
+  --ax-font-size-caption-relative: 80%;
+  --ax-font-size-control: 12px;
+  --ax-font-size-dialog-title: 18px;
+  --ax-font-size-dialog-title-large: 21px;
+  --ax-font-size-display: 24px;
+  --ax-font-size-display-small: 20px;
+  --ax-font-size-heading: 14px;
+  --ax-font-size-heading-large: 15px;
+  --ax-font-size-heading-relative: 1.17em;
+  --ax-font-size-hidden: 0;
+  --ax-font-size-icon-large: 25px;
+  --ax-font-size-icon-medium: 23px;
+  --ax-font-size-micro: 7px;
+  --ax-font-size-small: 10px;
+  --ax-font-size-subheading: 13px;
+  --ax-font-size-tiny: 8px;
+  --ax-font-size-title: 17px;
+  --ax-font-size-title-large: 19px;
+  --ax-font-size-title-small: 16px;
+  --ax-font-terminals-drop-terminal-file-drop-dialog-ul-font: 11px/1.6 'Maple Mono', monospace;
+  --ax-font-terminals-interactions-terminal-normal-buffer-pre-font: 12px/1.45 var(--ax-font-mono);
+  --ax-font-terminals-tools-remote-monitor-bar-font-variant-numeric: tabular-nums;
+  --ax-font-weight-bold: 700;
+  --ax-font-weight-emphasis: 560;
+  --ax-font-weight-emphasis-soft: 550;
+  --ax-font-weight-heading: 580;
+  --ax-font-weight-medium: 500;
+  --ax-font-weight-regular: 400;
+  --ax-font-weight-semibold: 600;
+  --ax-font-weight-strong: 650;
+  --ax-layer-ai-ui-ai-approval-reminder-z-index: 1999;
+  --ax-layer-ai-ui-ai-command-approval-header-ai-command-approval-footer-z-index: 1;
+  --ax-layer-ai-ui-ai-context-review-header-z-index: 1;
+  --ax-layer-ai-ui-ai-provider-modal-z-index: 1001;
+  --ax-layer-ai-ui-ai-skill-picker-z-index: 2200;
+  --ax-layer-ai-ui-modal-backdrop-has-ai-command-approval-z-index: 2000;
+  --ax-layer-ai-ui-modal-backdrop-has-ai-context-review-z-index: 2000;
+  --ax-layer-automation-automation-automation-outcome-z-index: 1000;
+  --ax-layer-automation-automation-quick-command-popover-z-index: 140;
+  --ax-layer-automation-widgets-widget-notice-z-index: 10;
+  --ax-layer-catalog-bookmark-tree-bookmark-context-menu-z-index: 80;
+  --ax-layer-catalog-bookmark-tree-bookmark-row-actions-z-index: 1;
+  --ax-layer-catalog-bookmark-tree-bookmark-sort-menu-z-index: 12;
+  --ax-layer-catalog-bookmark-tree-bookmark-tree-row-before-bookmark-tree-row-aft-b041efe: 2;
+  --ax-layer-catalog-bookmark-tree-toast-error-z-index: 30;
+  --ax-layer-catalog-editor-host-bookmark-modal-header-z-index: 4;
+  --ax-layer-catalog-editor-host-bookmark-modal-host-protocol-form-modal-actions-z-index: 3;
+  --ax-layer-catalog-editor-modal-host-bookmark-modal-z-index: 1001;
+  --ax-layer-catalog-editor-protocol-bookmark-form-modal-actions-z-index: 2;
+  --ax-layer-catalog-editor-ssh-startup-settings-open-z-index: 2;
+  --ax-layer-catalog-import-import-backdrop-z-index: 1000;
+  --ax-layer-catalog-import-modal-ssh-config-import-modal-z-index: 1001;
+  --ax-layer-catalog-session-popover-surface-z-index: 1000;
+  --ax-layer-catalog-session-session-menu-z-index: 2000;
+  --ax-layer-configuration-ui-page-notice-not-empty-z-index: 2;
+  --ax-layer-connections-tools-tools-outcome-z-index: 90;
+  --ax-layer-connections-ui-modal-z-index: 1001;
+  --ax-layer-desktop-runtime-status-railled-z-index: 91;
+  --ax-layer-desktop-runtime-status-runtimewait-z-index: 50;
+  --ax-layer-desktop-window-controls-window-controls-z-index: 25;
+  --ax-layer-files-files-file-column-picker-z-index: 4;
+  --ax-layer-files-files-file-column-resizer-z-index: 2;
+  --ax-layer-files-files-file-context-menu-z-index: 90;
+  --ax-layer-files-files-file-table-file-row-focus-visible-z-index: 1;
+  --ax-layer-files-files-files-admission-error-z-index: 1100;
+  --ax-layer-files-files-files-session-root-remote-editor-z-index: 10;
+  --ax-layer-files-files-modal-backdrop-z-index: 2000;
+  --ax-layer-files-files-modal-role-dialog-z-index: 2001;
+  --ax-layer-files-files-remote-editor-z-index: 10;
+  --ax-layer-remote-desktop-remote-desktop-rdp-toolbar-z-index: 2;
+  --ax-layer-remote-desktop-remote-desktop-remote-desktop-outcome-z-index: 100;
+  --ax-layer-remote-desktop-remote-desktop-vnc-verification-z-index: 2;
+  --ax-layer-remote-desktop-remote-desktop-web-session-error-z-index: 4;
+  --ax-layer-remote-desktop-remote-desktop-web-session-fallback-web-session-auth-z-index: 2;
+  --ax-layer-remote-desktop-remote-desktop-web-session-notice-web-session-error-z-index: 3;
+  --ax-layer-remote-desktop-remote-desktop-web-session-toolbar-z-index: 3;
+  --ax-layer-terminals-drop-terminal-file-drop-preparing-z-index: 21;
+  --ax-layer-terminals-drop-terminal-file-drop-target-z-index: 20;
+  --ax-layer-terminals-history-command-history-popover-z-index: 1800;
+  --ax-layer-terminals-interactions-interaction-feedback-z-index: 20;
+  --ax-layer-terminals-interactions-terminal-normal-buffer-z-index: 13;
+  --ax-layer-terminals-interactions-terminal-search-z-index: 30;
+  --ax-layer-terminals-keybar-terminal-shortcut-bar-z-index: 400;
+  --ax-layer-terminals-keybar-terminal-shortcut-editor-backdrop-z-index: 1100;
+  --ax-layer-terminals-keybar-terminal-shortcut-editor-z-index: 1101;
+  --ax-layer-terminals-reconnect-terminal-reconnect-overlay-z-index: 110;
+  --ax-layer-terminals-rendering-terminal-unix-timestamp-tooltip-z-index: 9999;
+  --ax-layer-terminals-suggestions-terminal-suggestions-wrap-z-index: 100;
+  --ax-layer-terminals-tools-batch-input-feedback-z-index: 130;
+  --ax-layer-terminals-tools-batch-input-panel-z-index: 145;
+  --ax-layer-terminals-tools-remote-monitor-bar-z-index: 34;
+  --ax-layer-terminals-tools-remote-monitor-popover-z-index: 380;
+  --ax-layer-terminals-tools-terminal-information-filter-div-z-index: 5;
+  --ax-layer-terminals-tools-terminal-information-meter-span-z-index: 1;
+  --ax-layer-terminals-tools-terminal-information-panel-z-index-media-max-width-1100px: 350;
+  --ax-layer-terminals-tools-terminal-recording-indicator-z-index: 5;
+  --ax-layer-terminals-transfer-terminal-context-menu-z-index: 1500;
+  --ax-layer-terminals-transfer-terminal-transfer-indicator-z-index: 8;
+  --ax-layer-terminals-transfer-terminal-transfer-recovery-backdrop-z-index: 1800;
+  --ax-layer-terminals-transfer-terminal-transfer-recovery-dialog-role-dialog-z-index: 1801;
+  --ax-layer-terminals-transfer-transfer-ui-error-z-index: 1802;
+  --ax-layer-terminals-ui-terminal-background-z-index: 0;
+  --ax-layer-terminals-ui-terminal-canvas-z-index: 1;
+  --ax-layer-terminals-ui-terminal-files-error-z-index: 5;
+  --ax-layer-terminals-ui-terminal-paste-backdrop-z-index: 800;
+  --ax-layer-terminals-ui-terminal-recovery-z-index: 2;
+  --ax-layer-transfers-transfers-transfer-center-z-index: 1100;
+  --ax-layer-ui-controls-dialog-z-index: 1001;
+  --ax-layer-ui-controls-overlay-z-index: 1000;
+  --ax-layer-ui-controls-selectcontent-z-index: 1100;
+  --ax-layer-ui-controls-tooltip-z-index: 1200;
+  --ax-layer-workspace-palette-palette-backdrop-z-index: 50;
+  --ax-layer-workspace-workspace-activity-bar-z-index: 90;
+  --ax-layer-workspace-workspace-activity-rail-tooltip-positioner-z-index: 2000;
+  --ax-layer-workspace-workspace-explorer-header-z-index: 22;
+  --ax-layer-workspace-workspace-layout-menu-z-index: 1100;
+  --ax-layer-workspace-workspace-pane-resizer-z-index: 5;
+  --ax-layer-workspace-workspace-pane-tabbar-z-index: 2;
+  --ax-layer-workspace-workspace-section-close-z-index: 5;
+  --ax-layer-workspace-workspace-section-heading-z-index: 4;
+  --ax-layer-workspace-workspace-section-tabs-z-index: 4;
+  --ax-layer-workspace-workspace-tab-context-menu-z-index: 1100;
+  --ax-layer-workspace-workspace-terminal-pane-grid-workspace-session-z-index: 1;
+  --ax-layer-workspace-workspace-toast-z-index: 100;
+  --ax-letter-spacing-brand: 0.14em;
+  --ax-letter-spacing-brand-fixed: 1.4px;
+  --ax-letter-spacing-caption: 0.06em;
+  --ax-letter-spacing-caption-fixed: 0.8px;
+  --ax-letter-spacing-control: 0.05em;
+  --ax-letter-spacing-control-fixed: 0.7px;
+  --ax-letter-spacing-display: 0.16em;
+  --ax-letter-spacing-display-tight: -0.7px;
+  --ax-letter-spacing-eyebrow: 0.08em;
+  --ax-letter-spacing-heading-tight: -0.65px;
+  --ax-letter-spacing-label: 0.04em;
+  --ax-letter-spacing-label-fixed: 0.45px;
+  --ax-letter-spacing-normal: 0;
+  --ax-letter-spacing-section: 0.09em;
+  --ax-letter-spacing-section-fixed: 1px;
+  --ax-letter-spacing-text: 0.01em;
+  --ax-letter-spacing-wide: 0.12em;
+  --ax-line-height-body: 1.4;
+  --ax-line-height-body-fixed: 20px;
+  --ax-line-height-code: 1.55;
+  --ax-line-height-code-compact: 1.45;
+  --ax-line-height-code-fixed: 22px;
+  --ax-line-height-compact: 1;
+  --ax-line-height-control: 24px;
+  --ax-line-height-reading: 1.5;
+  --ax-line-height-relaxed: 1.6;
+  --ax-line-height-small: 18px;
+  --ax-line-height-spacious: 1.65;
+  --ax-line-height-toolbar: 32px;
+  --ax-motion-0-01ms: 0.01ms;
+  --ax-motion-easing-ease: ease;
+  --ax-motion-easing-linear: linear;
+  --ax-motion-interaction: 120ms;
+  --ax-motion-spin: 1s;
+  --ax-motion-spin-quick: 0.8s;
+  --ax-motion-spin-slow: 1.2s;
+  --ax-opacity-ai-ui-ai-bookmark-modal-is-input-textarea-disabled-opacity: 0.65;
+  --ax-opacity-connections-ui-modal-button-disabled-opacity: 0.6;
+  --ax-opacity-files-files-file-context-menu-button-primary-item-disabled-opacity: 0.5;
+  --ax-opacity-remote-desktop-remote-desktop-web-session-toolbar-button-disabled-opacity: 0.42;
+  --ax-opacity-terminals-keybar-terminal-shortcut-candidates-button-disabled-opacity: 0.45;
+  --ax-opacity-terminals-reconnect-terminal-reconnect-overlay-button-disabled-opacity: 0.55;
+  --ax-opacity-terminals-transfer-terminal-context-menu-kbd-opacity: 0.72;
+  --ax-opacity-ui-controls-button-disabled-input-disabled-opacity: 1;
+  --ax-opacity-ui-controls-selectitem-data-disabled-opacity: 0.5;
+  --ax-opacity-ui-controls-tabstrigger-disabled-opacity: 0.5;
+  --ax-opacity-workspace-palette-command-palette-li-button-aria-disabled-true-opacity: 0.55;
+  --ax-opacity-workspace-workspace-activity-brand-svg-opacity: 0.8;
+  --ax-opacity-workspace-workspace-layout-glyph-opacity: 0.84;
+  --ax-opacity-workspace-workspace-tab-context-menu-data-disabled-opacity: 0.45;
+  --ax-radius-ai-ui-ai-chat-message-border-radius: 6px 6px 6px 2px;
+  --ax-radius-ai-ui-ai-chat-message-user-border-radius: 6px 6px 2px;
+  --ax-radius-ai-ui-ai-provider-modal-ai-provider-form-border-radius: 8px 8px 0 0;
+  --ax-radius-card: 8px;
+  --ax-radius-card-soft: 9px;
+  --ax-radius-catalog-editor-protocol-bookmark-form-hint-full-field-border-radius: 0 7px 7px 0;
+  --ax-radius-circle: 50%;
+  --ax-radius-compact: 4px;
+  --ax-radius-field: 5px;
+  --ax-radius-files-files-activity-bar-activity-item-active-before-border-radius: 0 3px 3px 0;
+  --ax-radius-files-files-file-context-menu-button-separator-before-border-radius: 0 0 4px 4px;
+  --ax-radius-none: 0;
+  --ax-radius-pill: 999px;
+  --ax-radius-remote-desktop-remote-desktop-web-session-zoom-button-first-child-bo-d327ded: 3px 0 0
+    3px;
+  --ax-radius-remote-desktop-remote-desktop-web-session-zoom-button-last-child-bor-6e66f04: 0 3px
+    3px 0;
+  --ax-radius-sheet: 12px;
+  --ax-radius-sheet-small: 11px;
+  --ax-radius-sheet-soft: 13px;
+  --ax-radius-small: 3px;
+  --ax-radius-soft: 7px;
+  --ax-radius-tiny: 2px;
+  --ax-radius-workspace-workspace-section-tabs-button-border-radius: 2px 2px 0 0;
+  --ax-radius-workspace-workspace-tab-number-border-radius: 9px 2px 2px 9px;
+  --ax-shadow-ai-ui-ai-approval-reminder-box-shadow: 0 8px 32px #0008;
+  --ax-shadow-ai-ui-ai-bookmark-hero-span-box-shadow: inset 0 0 0 1px #3c7250;
+  --ax-shadow-ai-ui-ai-chat-composer-attachment-dragover-box-shadow: inset 0 0 0 2px
+    color-mix(in srgb, var(--ax-color-primary) 72%, transparent);
+  --ax-shadow-ai-ui-ai-chat-session-active-box-shadow: inset 2px 0 var(--ax-color-primary);
+  --ax-shadow-ai-ui-ai-provider-modal-ai-provider-form-box-shadow: 0 18px 60px rgb(0 0 0 / 38%);
+  --ax-shadow-ai-ui-ai-skill-picker-box-shadow: 0 6px 24px rgb(0 0 0 / 30%);
+  --ax-shadow-ai-ui-modal-box-shadow: 0 28px 100px #000d;
+  --ax-shadow-ai-ui-surface-metric-box-shadow: inset 0 1px #ffffff05;
+  --ax-shadow-automation-automation-quick-command-popover-box-shadow: 0 16px 42px rgb(0 0 0 / 36%);
+  --ax-shadow-automation-widgets-widget-instance-title-i-running-box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--ax-color-primary) 14%, transparent);
+  --ax-shadow-automation-widgets-widget-list-button-active-box-shadow: inset 2px 0
+    var(--ax-color-primary);
+  --ax-shadow-automation-widgets-widget-notice-box-shadow: 0 12px 32px rgb(0 0 0 / 24%);
+  --ax-shadow-catalog-bookmark-tree-bookmark-context-menu-box-shadow: 0 16px 42px #000a;
+  --ax-shadow-catalog-bookmark-tree-bookmark-group-palette-button-aria-pressed-tru-38fbdfb: 0 0 0
+    1px var(--ax-color-primary);
+  --ax-shadow-catalog-bookmark-tree-bookmark-tree-row-drop-inside-box-shadow: inset 0 0 0 1px
+    var(--ax-color-primary);
+  --ax-shadow-catalog-bookmark-tree-bookmark-tree-row-drop-invalid-drop-inside-box-shadow: inset 0 0
+    0 1px var(--ax-color-danger);
+  --ax-shadow-catalog-bookmark-tree-bookmark-tree-row-search-selected-box-shadow: inset 2px 0
+    var(--ax-color-primary);
+  --ax-shadow-catalog-bookmark-tree-modal-box-shadow: 0 24px 80px #000a;
+  --ax-shadow-catalog-bookmark-tree-toast-error-box-shadow: 0 8px 30px #0008;
+  --ax-shadow-catalog-editor-host-status-ready-box-shadow: 0 0 6px #65c78366;
+  --ax-shadow-catalog-editor-modal-box-shadow: 0 28px 100px #000d;
+  --ax-shadow-catalog-editor-modal-host-bookmark-modal-box-shadow: 0 28px 90px #000c;
+  --ax-shadow-catalog-editor-modal-host-key-interaction-modal-changed-box-shadow:
+    0 28px 100px #000d, 0 0 0 1px color-mix(in srgb, var(--ax-color-danger) 16%, transparent);
+  --ax-shadow-catalog-editor-modal-protocol-bookmark-modal-box-shadow:
+    0 30px 100px #000d, 0 0 0 1px color-mix(in srgb, var(--ax-color-primary) 9%, transparent);
+  --ax-shadow-catalog-editor-protocol-bookmark-form-modal-actions-box-shadow: 0 -12px 28px
+    color-mix(in srgb, var(--ax-color-canvas) 70%, transparent);
+  --ax-shadow-catalog-editor-runtime-led-ready-box-shadow: 0 0 8px #77d18c55;
+  --ax-shadow-catalog-editor-terminal-pane-active-header-box-shadow: inset 0 -1px
+    var(--ax-color-text-muted);
+  --ax-shadow-catalog-editor-terminal-pane-active-pane-tabbar-box-shadow: inset 0 -1px #1e1d1e;
+  --ax-shadow-catalog-editor-terminal-pane-empty-active-empty-pane-landing-box-shadow: inset 0 0 0
+    1px var(--ax-color-surface-raised);
+  --ax-shadow-catalog-history-connection-history-sort-input-box-shadow: inset 0 0 0 1px #0003;
+  --ax-shadow-catalog-import-modal-box-shadow: 0 24px 80px #000a;
+  --ax-shadow-catalog-import-modal-ssh-config-import-modal-box-shadow:
+    0 6px 16px rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+  --ax-shadow-catalog-manager-host-card-box-shadow: inset 0 1px #ffffff05;
+  --ax-shadow-catalog-profiles-section-settings-surface-section-connection-profile-af437cb: 0 0 0
+    2px color-mix(in srgb, var(--ax-color-primary) 24%, transparent);
+  --ax-shadow-catalog-session-popover-surface-box-shadow: 0 18px 50px #0008;
+  --ax-shadow-configuration-behavior-surface-global-metric-box-shadow: inset 0 1px #ffffff05;
+  --ax-shadow-configuration-portable-presentation-data-migration-panel-box-shadow: inset 0 1px
+    var(--ax-color-panel-highlight);
+  --ax-shadow-configuration-sync-presentation-data-sync-provider-tabs-button-activ-3cde509: inset
+    0 -2px 0 var(--ax-color-primary);
+  --ax-shadow-configuration-ui-presentationsurface-box-shadow: inset 0 1px
+    var(--ax-color-panel-highlight);
+  --ax-shadow-connections-tools-surface-box-shadow: inset 0 1px #ffffff05;
+  --ax-shadow-connections-ui-modal-box-shadow: 0 28px 100px #000d;
+  --ax-shadow-connections-ui-modal-host-key-interaction-modal-changed-box-shadow:
+    0 28px 100px #000d, 0 0 0 1px color-mix(in srgb, var(--ax-color-danger) 16%, transparent);
+  --ax-shadow-desktop-diagnostics-surface-box-shadow: inset 0 1px var(--ax-color-panel-highlight);
+  --ax-shadow-desktop-preferences-shortcut-capture-focus-box-shadow: 0 0 0 2px
+    color-mix(in srgb, var(--ax-color-primary) 24%, transparent);
+  --ax-shadow-desktop-preferences-shortcut-capture-kbd-box-shadow: inset 0 -1px 0
+    color-mix(in srgb, var(--ax-color-surface-muted) 70%, transparent);
+  --ax-shadow-desktop-preferences-surface-box-shadow: inset 0 1px #ffffff05;
+  --ax-shadow-desktop-updater-updater-panel-box-shadow: inset 0 1px var(--ax-color-panel-highlight);
+  --ax-shadow-desktop-window-controls-modal-box-shadow: 0 28px 100px #000d;
+  --ax-shadow-files-files-activity-runtime-ready-box-shadow: 0 0 8px #65c78399;
+  --ax-shadow-files-files-file-column-picker-div-box-shadow: 0 10px 28px #0009;
+  --ax-shadow-files-files-file-context-menu-box-shadow: 0 12px 32px #0009;
+  --ax-shadow-files-files-file-table-file-row-drop-target-box-shadow: inset 0 0 0 1px #7ca28c;
+  --ax-shadow-files-files-file-table-scroll-drop-target-box-shadow: inset 0 0 0 1px #5f8f72;
+  --ax-shadow-files-files-file-view-switcher-button-aria-pressed-true-box-shadow: inset 0 0 0 1px
+    #3d5548;
+  --ax-shadow-files-files-host-status-ready-box-shadow: 0 0 6px #65c78366;
+  --ax-shadow-files-files-modal-box-shadow: 0 28px 100px #000d;
+  --ax-shadow-files-files-runtime-led-ready-box-shadow: 0 0 8px #77d18c55;
+  --ax-shadow-files-files-terminal-pane-active-header-box-shadow: inset 0 -1px
+    var(--ax-color-text-muted);
+  --ax-shadow-files-files-terminal-pane-active-pane-tabbar-box-shadow: inset 0 -1px #1e1d1e;
+  --ax-shadow-files-files-terminal-pane-empty-active-empty-pane-landing-box-shadow: inset 0 0 0 1px
+    var(--ax-color-border);
+  --ax-shadow-files-files-workspace-list-menu-div-active-box-shadow: inset 2px 0
+    var(--ax-color-primary);
+  --ax-shadow-files-files-workspace-tab-active-box-shadow: inset 0 -3px #777777;
+  --ax-shadow-shortcuts-shortcuts-shortcut-bindings-kbd-shortcut-capture-kbd-box-shadow: inset
+    0 -1px 0 color-mix(in srgb, var(--ax-color-surface-muted) 70%, transparent);
+  --ax-shadow-shortcuts-shortcuts-shortcut-capture-focus-box-shadow: 0 0 0 2px
+    color-mix(in srgb, var(--ax-color-primary) 24%, transparent);
+  --ax-shadow-shortcuts-shortcuts-shortcut-editor-box-shadow: 0 14px 38px rgb(0 0 0 / 24%);
+  --ax-shadow-terminals-history-command-history-popover-box-shadow: 0 8px 24px #0005;
+  --ax-shadow-terminals-interactions-terminal-search-box-shadow: 0 8px 24px #0005;
+  --ax-shadow-terminals-reconnect-terminal-reconnect-actions-box-shadow: 0 4px 14px rgb(0 0 0 / 28%);
+  --ax-shadow-terminals-suggestions-terminal-suggestions-wrap-box-shadow: 0 0 3px 3px
+    rgb(0 0 0 / 32%);
+  --ax-shadow-terminals-themes-terminal-theme-ai-box-shadow: 0 14px 34px rgb(0 0 0 / 22%);
+  --ax-shadow-terminals-themes-terminal-theme-preview-box-shadow: 0 12px 24px rgb(0 0 0 / 18%);
+  --ax-shadow-terminals-tools-batch-input-feedback-box-shadow: 0 8px 24px rgb(0 0 0 / 28%);
+  --ax-shadow-terminals-tools-batch-input-panel-box-shadow: 0 16px 42px rgb(0 0 0 / 36%);
+  --ax-shadow-terminals-tools-terminal-recording-indicator-span-box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--ax-color-danger) 16%, transparent);
+  --ax-shadow-terminals-ui-terminal-paste-dialog-box-shadow: 0 12px 36px rgb(0 0 0 / 35%);
+  --ax-shadow-terminals-ui-terminal-session-toolbar-box-shadow: inset 0 -1px
+    var(--ax-color-text-muted);
+  --ax-shadow-transfers-transfers-transfer-center-box-shadow: 0 22px 80px #000c;
+  --ax-shadow-ui-controls-dialog-box-shadow: 0 16px 60px #0008;
+  --ax-shadow-ui-controls-selectcontent-box-shadow: 0 6px 24px #0006;
+  --ax-shadow-ui-controls-tooltip-box-shadow: 0 3px 12px #0006;
+  --ax-shadow-workspace-palette-command-palette-box-shadow: 0 25px 100px #000c;
+  --ax-shadow-workspace-startup-surface-global-metric-box-shadow: inset 0 1px #ffffff05;
+  --ax-shadow-workspace-workspace-tab-context-menu-box-shadow: 0 8px 24px #0005;
+  --ax-shadow-workspace-workspace-workspace-list-menu-div-active-box-shadow: inset 2px 0
+    var(--ax-color-primary);
+  --ax-shadow-workspace-workspace-workspace-tab-aria-selected-true-box-shadow: inset 0 -2px
+    var(--ax-color-primary);
+  --ax-shadow-workspace-workspace-workspace-tab-entry-has-workspace-tab-aria-selec-83dce31: inset
+    0 -3px var(--ax-color-tab-active-border);
+  --ax-shadow-workspace-workspace-workspace-tab-entry-pinned-box-shadow: inset 2px 0
+    var(--ax-color-primary);
+  --ax-size-inspector-width: 360px;
+}
+:global(:root[data-ax-theme='light']) {
+  --ax-border-ai-ui-agent-tool-card-border: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-agent-tool-card-detail-border-top: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-agent-tool-card-detail-pre-border: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-agent-tool-card-header-em-border: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-ai-approval-reminder-border: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-ai-bookmark-hero-ai-bookmark-review-heading-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-ai-ui-ai-bookmark-security-border: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-ai-chat-delete-confirm-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-ai-inspector-border-left: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-ai-inspector-header-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-error-banner-border: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-modal-border: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-modal-header-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-surface-border: 1px solid var(--ax-color-border);
+  --ax-border-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--a27f197: 1px
+    solid var(--ax-color-border);
+  --ax-border-catalog-bookmark-tree-bookmark-group-color-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-checkbox-grid-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-connection-options-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-host-auth-note-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-host-bookmark-modal-host-jump-chain-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-catalog-editor-host-bookmark-modal-host-tunnel-editor-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-catalog-editor-host-form-tabs-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-host-jump-chain-list-li-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-host-protocol-form-modal-actions-border-top: 1px solid
+    var(--ax-color-border);
+  --ax-border-catalog-editor-host-tunnel-row-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-modal-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-modal-button-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-modal-button-focus-visible-modal-input-focus-visible--2296c40: 1px
+    solid var(--ax-color-border);
+  --ax-border-catalog-editor-modal-header-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-modal-input-modal-select-modal-textarea-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-catalog-editor-ssh-algorithm-settings-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-ssh-startup-script-group-border-top: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-ssh-startup-settings-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-editor-ssh-x11-settings-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-import-modal-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-import-modal-header-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-catalog-import-ssh-config-import-modal-header-border-bottom: 1px solid
+    var(--ax-color-border);
+  --ax-border-catalog-import-ssh-config-import-modal-ssh-import-footer-button-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-catalog-import-ssh-config-import-modal-ssh-import-reload-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-catalog-import-ssh-import-includes-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-manager-card-icon-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-manager-host-card-border: 1px solid var(--ax-color-border);
+  --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-8b57f5c: 1px
+    solid var(--ax-color-border);
+  --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-dc988a9: 1px
+    solid var(--ax-color-border);
+  --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-f6da4db: 1px
+    dashed var(--ax-color-border);
+  --ax-border-configuration-behavior-surface-border: 1px solid var(--ax-color-border);
+  --ax-border-configuration-legal-legal-notices-panel-pre-border: 1px solid var(--ax-color-border);
+  --ax-border-configuration-legal-legal-runtime-license-frame-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-configuration-legal-surface-border: 1px solid var(--ax-color-border);
+  --ax-border-connections-tools-error-banner-border: 1px solid var(--ax-color-border);
+  --ax-border-connections-tools-known-host-key-list-article-border-bottom: 1px solid
+    var(--ax-color-border);
+  --ax-border-connections-tools-known-host-key-list-border: 1px solid var(--ax-color-border);
+  --ax-border-connections-tools-list-row-border: 1px solid var(--ax-color-border);
+  --ax-border-connections-tools-surface-border: 1px solid var(--ax-color-border);
+  --ax-border-connections-tools-tools-root-button-border: 1px solid var(--ax-color-border);
+  --ax-border-connections-tools-tools-root-button-focus-visible-tools-root-input-f-434c5c2: 1px
+    solid var(--ax-color-border);
+  --ax-border-connections-tools-tools-root-input-tools-root-select-tools-root-text-e9f79aa: 1px
+    solid var(--ax-color-border);
+  --ax-border-connections-ui-modal-border: 1px solid var(--ax-color-border);
+  --ax-border-connections-ui-modal-header-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-desktop-diagnostics-metric-border: 1px solid var(--ax-color-border);
+  --ax-border-desktop-preferences-surface-border: 1px solid var(--ax-color-border);
+  --ax-border-desktop-updater-updater-error-border: 1px solid var(--ax-color-border);
+  --ax-border-desktop-window-controls-modal-border: 1px solid var(--ax-color-border);
+  --ax-border-desktop-window-controls-modal-header-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-files-files-empty-state-border: 1px dashed var(--ax-color-border);
+  --ax-border-files-files-error-banner-border: 1px solid var(--ax-color-border);
+  --ax-border-files-files-file-column-picker-div-border: 1px solid var(--ax-color-border);
+  --ax-border-files-files-file-column-picker-summary-border: 1px solid var(--ax-color-border);
+  --ax-border-files-files-file-context-menu-border: 1px solid var(--ax-color-border);
+  --ax-border-files-files-file-context-menu-button-separator-before-border-top: 1px solid
+    var(--ax-color-border);
+  --ax-border-files-files-file-info-properties-div-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-files-files-file-list-border: 1px solid var(--ax-color-border);
+  --ax-border-files-files-file-permission-row-button-border: 1px solid var(--ax-color-border);
+  --ax-border-files-files-file-permission-summary-strong-border: 1px solid var(--ax-color-border);
+  --ax-border-files-files-file-table-file-row-focus-visible-outline: 1px solid
+    var(--ax-color-border);
+  --ax-border-files-files-file-table-page-border-top: 1px solid var(--ax-color-border);
+  --ax-border-files-files-files-session-root-button-focus-visible-modal-button-foc-b95b03b: 1px
+    solid var(--ax-color-border);
+  --ax-border-files-files-files-session-root-button-modal-button-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-files-files-files-session-root-input-modal-input-files-session-root--6580250: 1px
+    solid var(--ax-color-border);
+  --ax-border-files-files-modal-border: 1px solid var(--ax-color-border);
+  --ax-border-files-files-modal-header-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-files-files-remote-editor-header-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-files-files-remote-editor-toolbar-remote-editor-conflict-border-bottom: 1px solid
+    var(--ax-color-border);
+  --ax-border-files-files-terminal-layout-split-border-left: 1px solid var(--ax-color-border);
+  --ax-border-files-files-toast-error-border: 1px solid var(--ax-color-border);
+  --ax-border-remote-desktop-remote-desktop-vnc-verification-border-bottom: 1px solid
+    var(--ax-color-border);
+  --ax-border-remote-desktop-remote-desktop-vnc-verification-button-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-remote-desktop-remote-desktop-web-session-error-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-remote-desktop-remote-desktop-web-session-notice-web-session-error-b-954b90b: 1px
+    solid var(--ax-color-border);
+  --ax-border-terminals-profiles-terminal-security-settings-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-reconnect-terminal-reconnect-actions-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-terminals-reconnect-terminal-reconnect-overlay-button-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-background-editor-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-ai-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-ai-heading-span-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-ai-preview-notice-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-color-control-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-color-control-i-border-right: 1px solid
+    var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-editor-mode-border-bottom: 1px solid
+    var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-list-actions-border-bottom: 1px solid
+    var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-list-border-right: 1px solid var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-mode-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-pagination-output-border: 1px solid
+    var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-preview-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-recovery-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-themes-terminal-theme-search-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-ui-terminal-paste-dialog-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-ui-terminal-paste-dialog-button-border: 1px solid var(--ax-color-border);
+  --ax-border-terminals-ui-terminal-paste-dialog-pre-border: 1px solid var(--ax-color-border);
+  --ax-border-workspace-palette-command-palette-border: 1px solid var(--ax-color-border);
+  --ax-border-workspace-palette-command-palette-div-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-workspace-startup-surface-border: 1px solid var(--ax-color-border);
+  --ax-border-workspace-workspace-menu-tabs-border-bottom: 1px solid var(--ax-color-border);
+  --ax-border-workspace-workspace-toast-border: 1px solid var(--ax-color-border);
+  --ax-color-ai-ui-agent-tool-approval-span-color: var(--ax-color-text);
+  --ax-color-ai-ui-agent-tool-card-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-agent-tool-card-detail-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-agent-tool-card-detail-dd-color: var(--ax-color-text);
+  --ax-color-ai-ui-agent-tool-card-detail-pre-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-agent-tool-card-detail-pre-color: var(--ax-color-text);
+  --ax-color-ai-ui-agent-tool-card-detail-section-strong-color: var(--ax-color-text);
+  --ax-color-ai-ui-agent-tool-card-header-em-color: var(--ax-color-text);
+  --ax-color-ai-ui-agent-tool-card-header-em-sensitivity-mutating-agent-tool-card-header-94ef10e: var(
+    --ax-color-text
+  );
+  --ax-color-ai-ui-agent-tool-card-header-em-sensitivity-mutating-agent-tool-card-header-a1ec28a: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-ai-ui-agent-tool-card-header-em-sensitivity-mutating-agent-tool-card-header-d613d59: var(
+    --ax-color-border
+  );
+  --ax-color-ai-ui-agent-tool-card-header-strong-color: var(--ax-color-text);
+  --ax-color-ai-ui-agent-tool-card-state-failed-border-color: var(--ax-color-border);
+  --ax-color-ai-ui-agent-tool-card-state-running-agent-tool-card-state-waiting-ap-3aed730: var(
+    --ax-color-border
+  );
+  --ax-color-ai-ui-agent-tool-card-state-succeeded-border-color: var(--ax-color-border);
+  --ax-color-ai-ui-agent-tool-error-color: var(--ax-color-danger);
+  --ax-color-ai-ui-agent-tool-list-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-approval-reminder-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-attachment-cancel-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-attachment-drafts-em-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-attachment-drafts-span-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-attachment-preview-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-attachment-preview-pre-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-bookmark-hero-ai-bookmark-review-heading-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-ai-ui-ai-bookmark-hero-span-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-bookmark-hero-span-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-bookmark-progress-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-bookmark-progress-span-complete-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-bookmark-progress-span-complete-svg-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-ai-ui-ai-bookmark-progress-span-complete-svg-border-color: var(--ax-color-border);
+  --ax-color-ai-ui-ai-bookmark-progress-span-svg-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-bookmark-security-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-bookmark-security-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-chat-composer-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-chat-delete-confirm-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-chat-delete-confirm-danger-border-color: var(--ax-color-border);
+  --ax-color-ai-ui-ai-chat-delete-confirm-danger-color: var(--ax-color-danger);
+  --ax-color-ai-ui-ai-chat-main-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-chat-message-small-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-chat-session-danger-icon-hover-color: var(--ax-color-danger);
+  --ax-color-ai-ui-ai-chat-sessions-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-command-approval-header-ai-command-approval-footer-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-ai-ui-ai-command-approval-pre-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-command-approval-risk-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-context-review-ai-review-actions-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-context-review-header-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-inspector-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-inspector-header-span-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-message-attachments-em-color: var(--ax-color-text);
+  --ax-color-ai-ui-ai-message-attachments-span-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-provider-modal-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-ai-provider-overlay-background: var(--ax-color-modal-scrim);
+  --ax-color-ai-ui-error-banner-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-error-banner-color: var(--ax-color-danger);
+  --ax-color-ai-ui-modal-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-modal-header-button-color: var(--ax-color-text);
+  --ax-color-ai-ui-panel-heading-p-color: var(--ax-color-text);
+  --ax-color-ai-ui-panel-heading-small-color: var(--ax-color-text);
+  --ax-color-ai-ui-run-state-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-run-state-color: var(--ax-color-text);
+  --ax-color-ai-ui-run-state-failed-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-run-state-failed-color: var(--ax-color-danger);
+  --ax-color-ai-ui-run-state-succeeded-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-run-state-succeeded-color: var(--ax-color-success);
+  --ax-color-ai-ui-surface-background: var(--ax-color-surface-raised);
+  --ax-color-ai-ui-surface-h3-approval-list-h3-inspector-body-h2-color: var(--ax-color-text);
+  --ax-color-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--5f7f2a7: var(
+    --ax-color-border
+  );
+  --ax-color-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--dc5a7ef: var(
+    --ax-color-text
+  );
+  --ax-color-automation-automation-status-quick-command-small-color: var(--ax-color-text);
+  --ax-color-automation-widgets-widget-instance-actions-button-confirm-stop-color: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-bookmark-tree-bookmark-row-title-mark-color: var(--ax-color-text);
+  --ax-color-catalog-bookmark-tree-bookmark-tree-row-hover-bookmark-row-main-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-bookmark-tree-bookmark-tree-search-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-app-sidebar-nav-button-active-session-list-button-act-00a818b: var(
+    --ax-color-primary
+  );
+  --ax-color-catalog-editor-app-sidebar-nav-button-active-session-list-button-act-41e9fbc: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-editor-bookmark-trigger-row-header-span-color: var(--ax-color-text);
+  --ax-color-catalog-editor-button-primary-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-button-primary-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-button-primary-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-button-primary-hover-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-button-primary-hover-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-checkbox-grid-legend-color: var(--ax-color-text);
+  --ax-color-catalog-editor-connection-options-legend-color: var(--ax-color-text);
+  --ax-color-catalog-editor-connection-state-i-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-connection-state-ready-color: var(--ax-color-success);
+  --ax-color-catalog-editor-danger-text-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-danger-text-color: var(--ax-color-danger);
+  --ax-color-catalog-editor-file-keyword-filter-active-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-file-keyword-filter-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-group-strip-button-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-group-strip-span-active-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-group-strip-span-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-host-auth-note-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-host-auth-note-color: var(--ax-color-text);
+  --ax-color-catalog-editor-host-bookmark-modal-host-field-port-input-host-bookma-4dfe15e: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-editor-host-bookmark-modal-host-jump-chain-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-editor-host-bookmark-modal-host-jump-chain-legend-color: var(--ax-color-text);
+  --ax-color-catalog-editor-host-bookmark-modal-host-tunnel-editor-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-editor-host-bookmark-modal-host-tunnel-editor-legend-color: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-editor-host-form-tab-intro-color: var(--ax-color-text);
+  --ax-color-catalog-editor-host-form-tabs-button-active-border-bottom-color: var(
+    --ax-color-border
+  );
+  --ax-color-catalog-editor-host-form-tabs-button-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-host-form-tabs-button-color: var(--ax-color-text);
+  --ax-color-catalog-editor-host-form-tabs-button-hover-host-form-tabs-button-foc-43db7b0: var(
+    --ax-color-primary
+  );
+  --ax-color-catalog-editor-host-jump-chain-index-color: var(--ax-color-text);
+  --ax-color-catalog-editor-host-jump-chain-list-li-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-host-jump-chain-list-small-color: var(--ax-color-text);
+  --ax-color-catalog-editor-host-jump-chain-path-color: var(--ax-color-text);
+  --ax-color-catalog-editor-host-jump-chain-path-span-span-before-color: var(--ax-color-text);
+  --ax-color-catalog-editor-host-tunnel-row-active-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-host-tunnel-row-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-host-tunnel-row-failed-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-host-tunnel-row-small-color: var(--ax-color-text);
+  --ax-color-catalog-editor-modal-backdrop-has-host-bookmark-modal-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-editor-modal-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-modal-button-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-modal-button-hover-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-modal-button-hover-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-modal-button-primary-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-modal-button-primary-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-modal-button-primary-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-modal-button-primary-hover-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-modal-button-primary-hover-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-modal-header-button-color: var(--ax-color-text);
+  --ax-color-catalog-editor-modal-input-modal-select-modal-textarea-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-editor-modal-input-modal-select-modal-textarea-color: var(--ax-color-text);
+  --ax-color-catalog-editor-modal-input-placeholder-modal-textarea-placeholder-color: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-editor-modal-label-color: var(--ax-color-text);
+  --ax-color-catalog-editor-modal-protocol-bookmark-modal-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-editor-rdp-state-failed-color: var(--ax-color-danger);
+  --ax-color-catalog-editor-rdp-state-ready-color: var(--ax-color-success);
+  --ax-color-catalog-editor-run-state-failed-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-run-state-failed-color: var(--ax-color-danger);
+  --ax-color-catalog-editor-runtime-led-ready-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-session-list-session-main-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-ssh-algorithm-grid-select-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-ssh-algorithm-grid-select-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-ssh-algorithm-grid-select-color: var(--ax-color-text);
+  --ax-color-catalog-editor-ssh-algorithm-settings-summary-color: var(--ax-color-text);
+  --ax-color-catalog-editor-ssh-startup-settings-open-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-ssh-startup-settings-small-color: var(--ax-color-text);
+  --ax-color-catalog-editor-ssh-startup-settings-summary-color: var(--ax-color-text);
+  --ax-color-catalog-editor-ssh-x11-settings-summary-color: var(--ax-color-text);
+  --ax-color-catalog-editor-status-transfer-active-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-status-transfer-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-tabbar-actions-button-active-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-tabbar-actions-button-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-top-actions-button-active-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-editor-top-actions-button-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-tunnel-profile-row-active-border-color: var(--ax-color-border);
+  --ax-color-catalog-editor-tunnel-profile-row-active-color: var(--ax-color-primary);
+  --ax-color-catalog-editor-tunnel-profile-row-failed-border-color: var(--ax-color-border);
+  --ax-color-catalog-history-connection-history-row-hover-color: var(--ax-color-text);
+  --ax-color-catalog-history-connection-history-row-hover-connection-history-name-3639d37: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-history-connection-history-sort-input-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-history-connection-history-sort-input-before-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-import-button-primary-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-button-primary-border-color: var(--ax-color-border);
+  --ax-color-catalog-import-button-primary-color: var(--ax-color-primary);
+  --ax-color-catalog-import-button-primary-hover-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-import-backdrop-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-include-status-authorization-required-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-import-include-status-authorization-required-color: var(--ax-color-text);
+  --ax-color-catalog-import-include-status-authorized-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-include-status-authorized-color: var(--ax-color-text);
+  --ax-color-catalog-import-include-status-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-modal-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-modal-header-button-color: var(--ax-color-text);
+  --ax-color-catalog-import-modal-ssh-config-import-modal-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-header-button-color: var(--ax-color-text);
+  --ax-color-catalog-import-ssh-config-import-modal-header-h2-color: var(--ax-color-text);
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-config-item-content-color: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-footer-button-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-footer-button-prim-f2faccd: var(
+    --ax-color-primary
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-item-actions-button-color: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-item-heading-color: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-import-ssh-config-import-modal-ssh-import-reload-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-border-color: var(
+    --ax-color-border
+  );
+  --ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-color: var(--ax-color-danger);
+  --ax-color-catalog-import-ssh-import-footer-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-ssh-import-include-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-ssh-import-includes-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-ssh-import-item-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-ssh-import-metric-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-import-ssh-import-metric-strong-color: var(--ax-color-text);
+  --ax-color-catalog-manager-card-copy-small-color: var(--ax-color-text);
+  --ax-color-catalog-manager-card-copy-span-color: var(--ax-color-text);
+  --ax-color-catalog-manager-card-icon-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-manager-card-icon-color: var(--ax-color-text);
+  --ax-color-catalog-manager-connection-state-i-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-manager-connection-state-ready-color: var(--ax-color-success);
+  --ax-color-catalog-manager-empty-state-strong-color: var(--ax-color-text);
+  --ax-color-catalog-manager-group-strip-button-active-color: var(--ax-color-primary);
+  --ax-color-catalog-manager-host-card-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-manager-host-card-hover-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-manager-host-card-hover-border-color: var(--ax-color-border);
+  --ax-color-catalog-manager-host-card-hover-host-card-focus-within-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-manager-host-card-hover-host-card-focus-within-border-color: var(
+    --ax-color-border
+  );
+  --ax-color-catalog-manager-host-search-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-manager-host-search-focus-within-border-color: var(--ax-color-border);
+  --ax-color-catalog-profiles-connection-profile-default-i-after-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-profiles-connection-profile-default-i-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-profiles-connection-profile-list-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-profiles-connection-profile-panel-background: var(--ax-color-surface-raised);
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-1b8106b: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-6623c01: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-7c01d89: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-7edb747: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-8777985: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-b1db674: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-c20861e: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-c85109a: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-ceb62c3: var(
+    --ax-color-text
+  );
+  --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-d129a63: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-configuration-behavior-button-primary-background: var(--ax-color-surface-raised);
+  --ax-color-configuration-behavior-button-primary-border-color: var(--ax-color-border);
+  --ax-color-configuration-behavior-button-primary-color: var(--ax-color-primary);
+  --ax-color-configuration-behavior-button-primary-hover-background: var(--ax-color-surface-raised);
+  --ax-color-configuration-behavior-button-primary-hover-border-color: var(--ax-color-border);
+  --ax-color-configuration-behavior-surface-background: var(--ax-color-surface-raised);
+  --ax-color-configuration-behavior-surface-h3-global-approval-list-h3-global-ins-d4e72cc: var(
+    --ax-color-text
+  );
+  --ax-color-configuration-legal-surface-background: var(--ax-color-surface-raised);
+  --ax-color-connections-tools-button-primary-background: var(--ax-color-surface-raised);
+  --ax-color-connections-tools-button-primary-border-color: var(--ax-color-border);
+  --ax-color-connections-tools-button-primary-color: var(--ax-color-primary);
+  --ax-color-connections-tools-button-primary-hover-background: var(--ax-color-surface-raised);
+  --ax-color-connections-tools-button-primary-hover-border-color: var(--ax-color-border);
+  --ax-color-connections-tools-danger-text-background: var(--ax-color-surface-raised);
+  --ax-color-connections-tools-danger-text-color: var(--ax-color-danger);
+  --ax-color-connections-tools-error-banner-background: var(--ax-color-surface-raised);
+  --ax-color-connections-tools-error-banner-color: var(--ax-color-danger);
+  --ax-color-connections-tools-known-host-key-list-article-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-connections-tools-known-host-key-list-code-color: var(--ax-color-text);
+  --ax-color-connections-tools-known-host-key-target-span-known-host-key-list-small-color: var(
+    --ax-color-text
+  );
+  --ax-color-connections-tools-known-host-keys-panel-header-p-known-host-key-empty-color: var(
+    --ax-color-text
+  );
+  --ax-color-connections-tools-list-row-small-color: var(--ax-color-text);
+  --ax-color-connections-tools-panel-heading-p-color: var(--ax-color-text);
+  --ax-color-connections-tools-panel-heading-small-color: var(--ax-color-text);
+  --ax-color-connections-tools-surface-background: var(--ax-color-surface-raised);
+  --ax-color-connections-tools-surface-h3-color: var(--ax-color-text);
+  --ax-color-connections-tools-tools-root-button-background: var(--ax-color-surface-raised);
+  --ax-color-connections-tools-tools-root-button-hover-background: var(--ax-color-surface-raised);
+  --ax-color-connections-tools-tools-root-button-hover-border-color: var(--ax-color-border);
+  --ax-color-connections-tools-tools-root-input-placeholder-tools-root-textarea-p-13df625: var(
+    --ax-color-text
+  );
+  --ax-color-connections-tools-tools-root-input-tools-root-select-tools-root-text-72edc0d: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-connections-tools-tools-root-input-tools-root-select-tools-root-text-ef683e4: var(
+    --ax-color-text
+  );
+  --ax-color-connections-tools-tools-root-label-color: var(--ax-color-text);
+  --ax-color-connections-tools-tunnel-profile-row-active-border-color: var(--ax-color-border);
+  --ax-color-connections-tools-tunnel-profile-row-active-color: var(--ax-color-primary);
+  --ax-color-connections-tools-tunnel-profile-row-failed-border-color: var(--ax-color-border);
+  --ax-color-connections-tools-tunnel-profile-row-tunnel-status-color: var(--ax-color-text);
+  --ax-color-connections-ui-ai-chat-delete-confirm-danger-border-color: var(--ax-color-border);
+  --ax-color-connections-ui-ai-chat-delete-confirm-danger-color: var(--ax-color-danger);
+  --ax-color-connections-ui-button-primary-background: var(--ax-color-surface-raised);
+  --ax-color-connections-ui-button-primary-border-color: var(--ax-color-border);
+  --ax-color-connections-ui-button-primary-color: var(--ax-color-primary);
+  --ax-color-connections-ui-button-primary-hover-background: var(--ax-color-surface-raised);
+  --ax-color-connections-ui-button-primary-hover-border-color: var(--ax-color-border);
+  --ax-color-connections-ui-danger-text-background: var(--ax-color-surface-raised);
+  --ax-color-connections-ui-danger-text-color: var(--ax-color-danger);
+  --ax-color-connections-ui-form-error-color: var(--ax-color-danger);
+  --ax-color-connections-ui-modal-background: var(--ax-color-surface-raised);
+  --ax-color-connections-ui-modal-header-button-color: var(--ax-color-text);
+  --ax-color-desktop-diagnostics-metric-background: var(--ax-color-surface-raised);
+  --ax-color-desktop-diagnostics-metric-strong-color: var(--ax-color-text);
+  --ax-color-desktop-preferences-button-primary-background: var(--ax-color-surface-raised);
+  --ax-color-desktop-preferences-button-primary-border-color: var(--ax-color-border);
+  --ax-color-desktop-preferences-button-primary-color: var(--ax-color-primary);
+  --ax-color-desktop-preferences-button-primary-hover-background: var(--ax-color-surface-raised);
+  --ax-color-desktop-preferences-button-primary-hover-border-color: var(--ax-color-border);
+  --ax-color-desktop-preferences-danger-text-background: var(--ax-color-surface-raised);
+  --ax-color-desktop-preferences-danger-text-color: var(--ax-color-danger);
+  --ax-color-desktop-preferences-global-hotkey-value-span-inactive-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-desktop-preferences-global-hotkey-value-span-inactive-color: var(--ax-color-primary);
+  --ax-color-desktop-preferences-global-hotkey-value-span-registered-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-desktop-preferences-global-hotkey-value-span-registered-color: var(--ax-color-text);
+  --ax-color-desktop-preferences-surface-background: var(--ax-color-surface-raised);
+  --ax-color-desktop-preferences-surface-h3-color: var(--ax-color-text);
+  --ax-color-desktop-updater-updater-detail-strong-color: var(--ax-color-text);
+  --ax-color-desktop-updater-updater-error-background: var(--ax-color-surface-raised);
+  --ax-color-desktop-updater-updater-error-color: var(--ax-color-danger);
+  --ax-color-desktop-updater-updater-panel-h2-color: var(--ax-color-text);
+  --ax-color-desktop-updater-updater-panel-p-color: var(--ax-color-text);
+  --ax-color-desktop-updater-updater-panel-small-updater-detail-span-updater-prog-e8fead9: var(
+    --ax-color-text
+  );
+  --ax-color-desktop-window-controls-ai-chat-delete-confirm-danger-border-color: var(
+    --ax-color-border
+  );
+  --ax-color-desktop-window-controls-ai-chat-delete-confirm-danger-color: var(--ax-color-danger);
+  --ax-color-desktop-window-controls-modal-background: var(--ax-color-surface-raised);
+  --ax-color-desktop-window-controls-modal-header-button-color: var(--ax-color-text);
+  --ax-color-files-files-activity-bar-activity-item-active-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-app-sidebar-nav-button-active-session-list-button-active-color: var(
+    --ax-color-primary
+  );
+  --ax-color-files-files-app-sidebar-nav-button-active-session-list-button-active-e711b2e: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-button-primary-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-button-primary-border-color: var(--ax-color-border);
+  --ax-color-files-files-button-primary-color: var(--ax-color-primary);
+  --ax-color-files-files-button-primary-hover-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-button-primary-hover-border-color: var(--ax-color-border);
+  --ax-color-files-files-danger-text-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-danger-text-color: var(--ax-color-danger);
+  --ax-color-files-files-empty-state-color: var(--ax-color-text);
+  --ax-color-files-files-empty-state-strong-color: var(--ax-color-text);
+  --ax-color-files-files-error-banner-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-error-banner-color: var(--ax-color-danger);
+  --ax-color-files-files-file-address-bar-input-readonly-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-address-bar-input-readonly-color: var(--ax-color-text);
+  --ax-color-files-files-file-column-picker-div-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-column-picker-label-color: var(--ax-color-text);
+  --ax-color-files-files-file-column-picker-summary-color: var(--ax-color-text);
+  --ax-color-files-files-file-column-resizer-after-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-column-resizer-hover-after-file-column-resizer-focu-f9de0f2: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-comparison-content-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-context-menu-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-context-menu-button-color: var(--ax-color-text);
+  --ax-color-files-files-file-context-menu-button-danger-item-color: var(--ax-color-danger);
+  --ax-color-files-files-file-context-menu-button-hover-file-context-menu-button--9c6946a: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-context-menu-button-hover-file-context-menu-button--fb8e244: var(
+    --ax-color-primary
+  );
+  --ax-color-files-files-file-context-menu-button-primary-item-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-context-menu-button-primary-item-color: var(--ax-color-primary);
+  --ax-color-files-files-file-context-menu-button-primary-item-hover-file-context-3b159a1: var(
+    --ax-color-primary
+  );
+  --ax-color-files-files-file-context-menu-button-primary-item-hover-file-context-9ff62b5: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-context-menu-kbd-color: var(--ax-color-text);
+  --ax-color-files-files-file-diff-row-changed-code-first-child-b-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-diff-row-changed-code-first-child-b-color: var(--ax-color-text);
+  --ax-color-files-files-file-diff-row-changed-code-last-child-b-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-diff-row-changed-code-last-child-b-color: var(--ax-color-text);
+  --ax-color-files-files-file-info-properties-dd-color: var(--ax-color-text);
+  --ax-color-files-files-file-keyword-filter-active-border-color: var(--ax-color-border);
+  --ax-color-files-files-file-keyword-filter-active-color: var(--ax-color-primary);
+  --ax-color-files-files-file-list-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-operation-notice-color: var(--ax-color-text);
+  --ax-color-files-files-file-pane-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-pane-divider-after-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-pane-divider-hover-after-file-pane-divider-focus-vi-ce1176b: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-pane-title-color: var(--ax-color-text);
+  --ax-color-files-files-file-permission-editor-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-permission-row-button-aria-pressed-true-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-permission-row-button-aria-pressed-true-border-color: var(
+    --ax-color-border
+  );
+  --ax-color-files-files-file-permission-row-button-aria-pressed-true-color: var(--ax-color-text);
+  --ax-color-files-files-file-permission-row-button-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-row-selected-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-table-file-row-border-color: var(--ax-color-border);
+  --ax-color-files-files-file-table-file-row-color: var(--ax-color-text);
+  --ax-color-files-files-file-table-file-row-drop-target-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-table-file-row-hover-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-table-file-row-selected-color: var(--ax-color-primary);
+  --ax-color-files-files-file-table-header-wrap-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-table-scroll-drop-target-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-view-switcher-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-file-view-switcher-button-aria-pressed-true-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-file-view-switcher-button-aria-pressed-true-color: var(--ax-color-text);
+  --ax-color-files-files-files-session-root-button-hover-modal-button-hover-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-files-session-root-button-hover-modal-button-hover-border-color: var(
+    --ax-color-border
+  );
+  --ax-color-files-files-files-session-root-button-modal-button-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-files-session-root-button-primary-hover-modal-button-pri-113e9d2: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-files-session-root-button-primary-hover-modal-button-pri-f4263af: var(
+    --ax-color-border
+  );
+  --ax-color-files-files-files-session-root-button-primary-modal-button-primary-b-4c8f0a5: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-files-session-root-button-primary-modal-button-primary-b-c5cd5e8: var(
+    --ax-color-border
+  );
+  --ax-color-files-files-files-session-root-button-primary-modal-button-primary-color: var(
+    --ax-color-primary
+  );
+  --ax-color-files-files-files-session-root-input-modal-input-files-session-root--0277758: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-files-session-root-input-modal-input-files-session-root--34400bc: var(
+    --ax-color-text
+  );
+  --ax-color-files-files-files-session-root-input-placeholder-modal-input-placeho-b6b7809: var(
+    --ax-color-text
+  );
+  --ax-color-files-files-files-session-root-label-modal-label-color: var(--ax-color-text);
+  --ax-color-files-files-form-error-color: var(--ax-color-danger);
+  --ax-color-files-files-group-strip-button-active-color: var(--ax-color-primary);
+  --ax-color-files-files-group-strip-span-active-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-group-strip-span-active-color: var(--ax-color-primary);
+  --ax-color-files-files-modal-backdrop-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-modal-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-modal-header-button-color: var(--ax-color-text);
+  --ax-color-files-files-panel-heading-p-color: var(--ax-color-text);
+  --ax-color-files-files-panel-heading-small-color: var(--ax-color-text);
+  --ax-color-files-files-rdp-state-ready-color: var(--ax-color-success);
+  --ax-color-files-files-remote-editor-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-remote-editor-conflict-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-remote-editor-conflict-border-bottom-color: var(--ax-color-border);
+  --ax-color-files-files-remote-editor-conflict-color: var(--ax-color-text);
+  --ax-color-files-files-remote-editor-header-small-color: var(--ax-color-text);
+  --ax-color-files-files-remote-editor-toolbar-remote-editor-conflict-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-files-files-runtime-led-error-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-runtime-led-ready-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-session-list-session-main-active-color: var(--ax-color-primary);
+  --ax-color-files-files-status-transfer-active-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-status-transfer-active-color: var(--ax-color-primary);
+  --ax-color-files-files-tab-context-menu-danger-item-color: var(--ax-color-danger);
+  --ax-color-files-files-tab-context-menu-danger-item-hover-color: var(--ax-color-danger);
+  --ax-color-files-files-tabbar-actions-button-active-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-tabbar-actions-button-active-color: var(--ax-color-primary);
+  --ax-color-files-files-terminal-channel-state-error-color: var(--ax-color-danger);
+  --ax-color-files-files-toast-error-color: var(--ax-color-danger);
+  --ax-color-files-files-top-actions-button-active-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-top-actions-button-active-color: var(--ax-color-primary);
+  --ax-color-files-files-transfer-icon-download-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-transfer-icon-download-color: var(--ax-color-text);
+  --ax-color-files-files-tunnel-profile-row-active-border-color: var(--ax-color-border);
+  --ax-color-files-files-tunnel-profile-row-active-color: var(--ax-color-primary);
+  --ax-color-files-files-workspace-tab-active-background: var(--ax-color-surface-raised);
+  --ax-color-files-files-workspace-tab-active-color: var(--ax-color-primary);
+  --ax-color-remote-desktop-remote-desktop-rdp-canvas-stage-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-remote-desktop-remote-desktop-rdp-state-failed-rdp-state-closed-color: var(
+    --ax-color-danger
+  );
+  --ax-color-remote-desktop-remote-desktop-rdp-state-ready-color: var(--ax-color-success);
+  --ax-color-remote-desktop-remote-desktop-rdp-toolbar-background: var(--ax-color-surface-raised);
+  --ax-color-remote-desktop-remote-desktop-rdp-view-background: var(--ax-color-surface-raised);
+  --ax-color-remote-desktop-remote-desktop-vnc-verification-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-remote-desktop-remote-desktop-vnc-verification-button-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-remote-desktop-remote-desktop-vnc-verification-color: var(--ax-color-text);
+  --ax-color-remote-desktop-remote-desktop-web-session-auth-error-color: var(--ax-color-danger);
+  --ax-color-remote-desktop-remote-desktop-web-session-error-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-remote-desktop-remote-desktop-web-session-error-color: var(--ax-color-danger);
+  --ax-color-remote-desktop-remote-desktop-web-session-notice-web-session-error-b-bf0d77a: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-remote-desktop-remote-desktop-web-session-notice-web-session-error-color: var(
+    --ax-color-danger
+  );
+  --ax-color-remote-desktop-remote-desktop-web-session-stage-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-remote-desktop-remote-desktop-web-session-toolbar-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-remote-desktop-remote-desktop-web-session-toolbar-web-session-addres-110bd01: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-remote-desktop-remote-desktop-web-session-view-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-drop-terminal-file-drop-backdrop-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-drop-terminal-file-drop-dialog-ul-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-history-command-history-popover-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-history-command-history-search-field-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-keybar-terminal-shortcut-editor-backdrop-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-profiles-settings-item-terminal-terminal-default-profile-s-6d21dd7: var(
+    --ax-color-text
+  );
+  --ax-color-terminals-profiles-terminal-security-settings-legend-color: var(--ax-color-text);
+  --ax-color-terminals-reconnect-terminal-reconnect-actions-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-background: var(
+    --ax-color-modal-scrim
+  );
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-color: var(--ax-color-text);
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-hover-not-disa-85adf3a: var(
+    --ax-color-border
+  );
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-hover-not-disa-f57b9f9: var(
+    --ax-color-text
+  );
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-color: var(--ax-color-text);
+  --ax-color-terminals-reconnect-terminal-reconnect-overlay-error-color: var(--ax-color-danger);
+  --ax-color-terminals-rendering-terminal-unix-timestamp-tooltip-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-rendering-terminal-unix-timestamp-tooltip-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-background-editor-label-terminal-backgroun-2891ba3: var(
+    --ax-color-text
+  );
+  --ax-color-terminals-themes-terminal-background-editor-legend-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-ai-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-themes-terminal-theme-ai-fields-label-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-ai-heading-p-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-ai-heading-span-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-themes-terminal-theme-ai-heading-span-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-ai-heading-strong-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-ai-preview-notice-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-themes-terminal-theme-ai-preview-notice-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-ai-preview-notice-small-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-ai-safety-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-color-control-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-themes-terminal-theme-color-grid-label-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-config-header-strong-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-current-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-editor-actions-danger-border-color: var(
+    --ax-color-border
+  );
+  --ax-color-terminals-themes-terminal-theme-editor-actions-danger-color: var(--ax-color-danger);
+  --ax-color-terminals-themes-terminal-theme-editor-header-p-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-editor-mode-button-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-help-terminal-theme-message-terminal-b2ea2a9: var(
+    --ax-color-text
+  );
+  --ax-color-terminals-themes-terminal-theme-list-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-themes-terminal-theme-list-item-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-list-item-hover-terminal-theme-list--d41788c: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-themes-terminal-theme-list-item-hover-terminal-theme-list--de787d0: var(
+    --ax-color-primary
+  );
+  --ax-color-terminals-themes-terminal-theme-message-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-name-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-pagination-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-pagination-output-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-themes-terminal-theme-recovery-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-themes-terminal-theme-recovery-color: var(--ax-color-text);
+  --ax-color-terminals-themes-terminal-theme-search-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-themes-terminal-theme-workspace-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-tools-batch-input-targets-label-has-input-checked-batch-in-c5ccee2: var(
+    --ax-color-text
+  );
+  --ax-color-terminals-transfer-terminal-context-menu-background: var(--ax-color-surface-raised);
+  --ax-color-terminals-ui-explorer-session-row-aria-current-true-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-terminals-ui-terminal-paste-backdrop-background: var(--ax-color-surface-raised);
+  --ax-color-transfers-transfers-status-transfer-b-background: var(--ax-color-surface-raised);
+  --ax-color-transfers-transfers-status-transfer-b-color: var(--ax-color-text);
+  --ax-color-transfers-transfers-transfer-center-background: var(--ax-color-surface-raised);
+  --ax-color-transfers-transfers-transfer-center-footer-button-color: var(--ax-color-text);
+  --ax-color-transfers-transfers-transfer-center-list-article-div-span-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-transfers-transfers-transfer-icon-background: var(--ax-color-surface-raised);
+  --ax-color-transfers-transfers-transfer-icon-color: var(--ax-color-text);
+  --ax-color-transfers-transfers-transfer-icon-download-background: var(--ax-color-surface-raised);
+  --ax-color-transfers-transfers-transfer-icon-download-color: var(--ax-color-text);
+  --ax-color-workspace-palette-command-palette-background: var(--ax-color-surface-raised);
+  --ax-color-workspace-palette-command-palette-li-button-hover-background: var(
+    --ax-color-surface-raised
+  );
+  --ax-color-workspace-palette-palette-backdrop-background: var(--ax-color-surface-raised);
+  --ax-color-workspace-startup-surface-background: var(--ax-color-surface-raised);
+  --ax-color-workspace-startup-surface-h3-global-approval-list-h3-global-inspecto-64e0376: var(
+    --ax-color-text
+  );
+  --ax-color-workspace-workspace-activity-brand-color: var(--ax-color-text);
+  --ax-color-workspace-workspace-layout-glyph-i-background: var(--ax-color-surface-raised);
+  --ax-color-workspace-workspace-menu-tabs-button-color: var(--ax-color-text);
+}
+
+:root {
+  --ax-layer-desktop-power-banner: 38;
+  --ax-border-desktop-power-banner: 1px solid #385047;
+  --ax-shadow-desktop-power-banner: 0 12px 36px #0009;
+  --ax-color-desktop-power-icon: #9bd5ad;
+  --ax-color-desktop-power-icon-background: #1b3b2a;
+  --ax-line-height-desktop-power-copy: 1.35;
+  --ax-border-desktop-power-action: 1px solid #405249;
+  --ax-color-desktop-power-action-background: #222c28;
+}
+:root[data-theme='light'] {
+  --ax-layer-desktop-power-banner: 38;
+  --ax-border-desktop-power-banner: 1px solid var(--ax-color-border);
+  --ax-shadow-desktop-power-banner: 0 12px 36px rgb(0 0 0 / 15%);
+  --ax-color-desktop-power-icon: var(--ax-color-success);
+  --ax-color-desktop-power-icon-background: var(--ax-color-surface-raised);
+  --ax-line-height-desktop-power-copy: 1.35;
+  --ax-border-desktop-power-action: 1px solid var(--ax-color-border);
+  --ax-color-desktop-power-action-background: var(--ax-color-surface-raised);
+}
+
+:root {
+  --ax-color-desktop-power-action-hover: #fff;
+}
+:root[data-theme='light'] {
+  --ax-color-desktop-power-action-hover: var(--ax-color-text);
+}
+
+/* Retained Axterm split-pane roles (ADR-224). */
+:global(:root) {
+  --ax-shadow-terminals-empty-111b576f9e: inset 0 0 0 1px var(--ax-color-border);
+  --ax-color-terminals-empty-5e91fe15f9: color-mix(
+    in srgb,
+    var(--ax-color-primary) 9%,
+    var(--ax-color-canvas)
+  );
+  --ax-shadow-terminals-empty-261da2ef76: 0 12px 30px rgb(0 0 0 / 18%);
+  --ax-line-terminals-empty-ad78f61afe: 1.25;
+  --ax-color-terminals-empty-25231d3cb8: color-mix(
+    in srgb,
+    var(--ax-color-primary) 9%,
+    var(--ax-color-surface-raised)
+  );
+  --ax-color-terminals-empty-b08331a712: color-mix(in srgb, var(--ax-color-primary) 88%, white);
+}

@@ -1,0 +1,1342 @@
+{
+  "schemaVersion": 1,
+  "commit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "adaptations": [
+    "Application package identities and fields",
+    "Application initializes Profile templates; no upstream official catalog",
+    "No upstream product Profile normalization or retired bundle deletion",
+    "Strict application TypeScript and retained causes for safe IO errors",
+    "Redacted configuration parser diagnostics omit source buffers and raw causes",
+    "Compatibility checks distinguish runtime version from public SDK and framework versions",
+    "Shared CLI runner with deterministic signal, proxy and cross-process lock disposal",
+    "Profile HMR preserves upstream serialization/reconciliation, with configuration and module diagnostic redaction",
+    "Credential references are opaque identifiers, not ambient-secret discovery; contained listener diagnostics omit thrown data",
+    "POST-only bounded authentication exchange, session cookies tied to Host generation and protected temporary bootstrap file delivery",
+    "Bounded pending exchanges and API peer lifetimes, peer-scoped cancellation and deterministic Fetch reader cleanup",
+    "Source-based Host checks/test resolution and application-wide dependency discovery",
+    "Public Remote generator targets canonical SDK modules and the SDK JsonValue recursion root; compiler runtime pinned to upstream TypeScript 6.0.3",
+    "Public reflection contracts live in canonical SDK; registry Host/Client providers share implementation, observer failures omit thrown data",
+    "Remote compiler excludes the unused upstream Cordis-inspector catalog projection and product-specific generation instructions",
+    "Registry effects are paired to caller and provider fibers; provider unload drains root-owned entries and rejects cached mutation views without effect accumulation",
+    "Strict generated-only Remote dispatch, generic Context-scoped forwarded events, independent Connection and Gateway Client faces",
+    "Content-fingerprinted artifact replacement, generic single-subject event typing, strict Client result codecs, bounded Host/Client queues and redacted unknown listener rejections",
+    "Canonical public storage contracts, caller/provider-owned hub contributions, owned validated document domains and private SQLite records with cross-process unit leases; relational facts use a separate native SQL facet without KV conversion",
+    "Desktop authentication uses only a shell-created generation-bound verifier in the Host, rejects cookie/token-file exchange, and retains the independent Host/Origin fence; Web keeps its protected POST exchange",
+    "Client module graphs, lazy browser factories and static assets use Axterm metadata/globals, canonical SDK observables, independent Node/browser artifacts and redacted observer/reconciliation diagnostics",
+    "Public UI Slot/store definitions retain framework-neutral SDK observables; the private React 18 renderer owns mounting and binding; upstream DSH product/session test assemblies are not imported",
+    "Application-owned Web carrier seeds the exact shared browser identities, supplies the unchanged framework Loader a browser resolver, owns fail-closed boot cleanup and reports redacted activation failures",
+    "Pinned Electron RunAsNode boot uses the same exposed Node module internals as the unchanged Cordis Loader; package HMR uses the exposed native module binding with explicit warning and guarded shapes instead of unsupported native fingerprint guesses",
+    "Desktop static document and streaming proxy retain same-document boot, use shell-memory generation headers instead of cookies, reject foreign redirects and strip credentials before ownership decisions",
+    "Legacy dependency analysis uses source-first application aliases and treats the hash-checked framework as vendor; canonical public descriptors/error class and scoped implementation are factored without circular module dependencies",
+    "A bounded, caller/provider-owned typed Remote event selection registry replaces the upstream Agent/product catalog and is mounted in the real Profile so Client generations remain live",
+    "Owned subprocess capability and its local/Win32/lazy-loader dependency closure use Axterm identities and the existing PTY pin; public selected Host contracts, bounded output/disposal and actual caller/provider lifecycle integration follow ADR-070. Implementation is not accepted until native/source-free tests pass."
+  ],
+  "files": [
+    {
+      "path": "packages/infra/app-boot/src/bundle-platform.ts",
+      "source": "packages/boot/app-boot/src/bundle-platform.ts",
+      "sourceSha256": "b7560e95789f73423d20e247b11fc1fb3f5ddf6075146f2964aad7c4e1598f55",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile-plugins.ts",
+      "source": "packages/boot/app-boot/src/profile-plugins.ts",
+      "sourceSha256": "ad589b959d2693474782cf87f5a340d3363833e066e2318a3e0b6150d63b230f",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/startup-diagnostics.ts",
+      "source": "packages/boot/app-boot/src/startup-diagnostics.ts",
+      "sourceSha256": "b6ffe483a66bf4633597f1c7b443784b36dcc5b80d3baa9f01d46e9ca3d7033e",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/compatibility-preflight.ts",
+      "source": "packages/boot/app-boot/src/compatibility-preflight.ts",
+      "sourceSha256": "3c2ef3bc4a6201400df85669bc9d97a44bd2ac36f71e47c8dedf1704cb83fa27",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/plugin-compatibility.ts",
+      "source": "packages/boot/app-boot/src/plugin-compatibility.ts",
+      "sourceSha256": "3aaddccc788734dbcea920f078ae7f8209f57b3330e8431d2f4a5936cf65558f",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile-sanitize.ts",
+      "source": "packages/boot/app-boot/src/profile-sanitize.ts",
+      "sourceSha256": "751d3093896d5e0cdf91b6507a42b73b6ba1169e37924a2538e597bdc2d4b425",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile-context.ts",
+      "source": "packages/boot/app-boot/src/profile-context.ts",
+      "sourceSha256": "67b749c28496e903d00fb843b772703b6b9bb2b5faf8b8838d8d982ebd7e89b1",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile-compatibility.ts",
+      "source": "packages/boot/app-boot/src/profile-compatibility.ts",
+      "sourceSha256": "e1b2ae8907cd3220f622c49e94819f09d3e24fd8734a95b6d1efc1fa6d088162",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile.ts",
+      "source": "packages/boot/app-boot/src/profile.ts",
+      "sourceSha256": "a7ad9cc9ae18bbdf6f01255c0ab29f6edcd4385cb2a7421ddeed29c47160a530",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/package-meta.ts",
+      "source": "packages/boot/app-boot/src/package-meta.ts",
+      "sourceSha256": "2b09e3ce0ec793971c53176eded347b735ee41be2ddfdcbfd3492f945fd68e2a",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/index.ts",
+      "source": "packages/boot/app-boot/src/index.ts",
+      "sourceSha256": "ddb7395c4ada95272581c4e13fee4a66975a1c81b0db838f6faf5cf855592d9c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/config-schema/document.ts",
+      "source": "packages/boot/app-boot/src/config-schema/document.ts",
+      "sourceSha256": "9507b66d6e93ecc79d79597e442d09c385312faf492dfd5c1aa7e19942e30395",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/config-schema/projector.ts",
+      "source": "packages/boot/app-boot/src/config-schema/projector.ts",
+      "sourceSha256": "6958a20b5bce6f730899aef263e594825f127f091c41606c267ed41857d44bba",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/config-schema/types.ts",
+      "source": "packages/boot/app-boot/src/config-schema/types.ts",
+      "sourceSha256": "94965fdcf9d6e5724cf0f4fe672ceeeced58b886a99059d29c8ee0871a97ec77",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/config-schema/pattern.ts",
+      "source": "packages/boot/app-boot/src/config-schema/pattern.ts",
+      "sourceSha256": "fb94255cfde7c316d058c43a1ea4ed9e88437af05796caf5e40d1373cd7d43dd",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/config-schema/native.ts",
+      "source": "packages/boot/app-boot/src/config-schema/native.ts",
+      "sourceSha256": "74c76cc02dbee5be5bd7f0029e2187728a7c52091392dab0e9156f822609166b",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/config-schema/index.ts",
+      "source": "packages/boot/app-boot/src/config-schema/index.ts",
+      "sourceSha256": "ca3d6bd3d9a0de71d212c3b4372500eea9e3f8bd892b9884af7d88fcaf6ba76b",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/config-schema/collect.ts",
+      "source": "packages/boot/app-boot/src/config-schema/collect.ts",
+      "sourceSha256": "64197ab7122e43a66e0b6565cda84b924a7a11473b6f45a6189ab66c44f87a48",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile-resolution/worker-bootstrap.ts",
+      "source": "packages/boot/app-boot/src/profile-resolution/worker-bootstrap.ts",
+      "sourceSha256": "969511ddb52d67857c03e8ace0a692753dd84e6c0e2e76b1d00159eb1f8947fc",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile-resolution/resolver.ts",
+      "source": "packages/boot/app-boot/src/profile-resolution/resolver.ts",
+      "sourceSha256": "0914b65b5eb239940327c01dfe1547a61b47a87915d27f94b8b2b64602e78b55",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile-resolution/legacy-links.ts",
+      "source": "packages/boot/app-boot/src/profile-resolution/legacy-links.ts",
+      "sourceSha256": "781031f1480e0115a616f12e93401f139d34248185ddd97bf7f0292ec4d0c440",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/app-boot/src/profile-resolution/service.ts",
+      "source": "packages/boot/app-boot/src/profile-resolution/service.ts",
+      "sourceSha256": "83bb464e19ed9ad798b8c837d22fddb57c86d4b87b6771e0a58a162e91efab39",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/home-paths/src/index.ts",
+      "source": "packages/util/home-paths/src/index.ts",
+      "sourceSha256": "143a1583d9f5203f000da672de1dd27fe9994db9332d8c25f101c149c91cb643",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/launch-environment/src/index.ts",
+      "source": "packages/util/launch-environment/src/index.ts",
+      "sourceSha256": "4b9cb39fd421108a1b4d3a38fe98814efad96b36770c2508ef223a090b5c1695",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/cmdline/src/index.ts",
+      "source": "packages/boot/cmdline/src/index.ts",
+      "sourceSha256": "943a8d9c5c1531ca8b98d081117a4c3e4c6597b53b00b5d2483a6999beaa23af",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/http-proxy/src/install.ts",
+      "source": "packages/util/http-proxy/src/install.ts",
+      "sourceSha256": "5049f442fe3b8b0d786295001e295546a9719e386a25410ab535b7ce70f96680",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/http-proxy/src/policy.ts",
+      "source": "packages/util/http-proxy/src/policy.ts",
+      "sourceSha256": "4827eabf9fac440298fa38e1bdc4189bafa9a7d98852a25848d62b03ecc6aacf",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/http-proxy/src/index.ts",
+      "source": "packages/util/http-proxy/src/index.ts",
+      "sourceSha256": "ec187c4423adde1262f82e6a327b17dc34f0288db51a2ffb96f3e5462ef70594",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/package-manifest/src/types.ts",
+      "source": "packages/util/package-manifest/src/types.ts",
+      "sourceSha256": "d4a86fe76d8aacd3d9bf1e6787c69c243b3b84c6d5efd3f88f8a59f62bb84321",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/package-manifest/src/index.ts",
+      "source": "packages/util/package-manifest/src/index.ts",
+      "sourceSha256": "2371370db9a92c3d4e69b46c10ecc89435a343fb6ccb3dfc1187bd984b429b95",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/atomic-write/src/index.ts",
+      "source": "packages/util/atomic-write/src/index.ts",
+      "sourceSha256": "dfcdf7ab738f1cc9c5fcbc583dd4b96c5f299f4c707e1a47ffdeb7fcbe18ad2e",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/hmr/src/error.ts",
+      "source": "packages/boot/hmr/src/error.ts",
+      "sourceSha256": "e46d9c5eba95540d768f79f4fd2bc4a57a5ad88856f55fa7805437aa6e4fe822",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/hmr/src/index.ts",
+      "source": "packages/boot/hmr/src/index.ts",
+      "sourceSha256": "c33b89cb193eb904c6213c3d8bc6ee81c9f2990cbb093f578ef5f474b467644c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/hmr/src/module-files.ts",
+      "source": "packages/boot/hmr/src/module-files.ts",
+      "sourceSha256": "76fb315ca9b374d476246a0d805c64bf24ecc4c4892d6cfc040c7a647e42c9ab",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/hmr/src/package-manifest.ts",
+      "source": "packages/boot/hmr/src/package-manifest.ts",
+      "sourceSha256": "df39781b80bb5c53ff3acfee8e054f3dd7c765d83d8340077268913a427e89fb",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/hmr/src/watch-config.ts",
+      "source": "packages/boot/hmr/src/watch-config.ts",
+      "sourceSha256": "8c845e23a3752926dcc4bcd6e5f87469ae647daee400f7889786c58cc82f0a13",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/brand.ts",
+      "source": "packages/util/brand/src/index.ts",
+      "sourceSha256": "f9d6da858d7308117227dcc2306ce7246b7309b2ae22d413d289cbae51e83e98",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/index.ts",
+      "source": "packages/typert/protocol/src/index.ts",
+      "sourceSha256": "ad89508f0790243d6519693e2a80b40e3712745c11b0e64d8767b8670f516925",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/json-value.ts",
+      "source": "packages/typert/protocol/src/json-value.ts",
+      "sourceSha256": "c5d58b60b7e085004041326055737f7e718e719f5df7b7df5b09d2fb147e57c0",
+      "license": "MIT",
+      "supplementalSources": [
+        {
+          "source": "packages/util/values/src/index.ts",
+          "sourceSha256": "28a44a8df506ff9481de968135b8b20c240d7771f331bdc9e8cd634d04758858",
+          "scope": "JsonValue recursive type alias only",
+          "license": "MIT"
+        }
+      ]
+    },
+    {
+      "path": "packages/api/plugin-api/src/owned-value.ts",
+      "source": "packages/typert/protocol/src/owned-value.ts",
+      "sourceSha256": "096c583e2093cd814d0cef5bc3f8161f6aabfe8cfe97eff78c3a340c0c95a44d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/principal.ts",
+      "source": "packages/typert/protocol/src/principal.ts",
+      "sourceSha256": "3af661e55a7f3f3ad11fac0d35abe4fba5529fc7054ec923dbd05dc56326c1e9",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/remote-access.ts",
+      "source": "packages/typert/protocol/src/remote-access.ts",
+      "sourceSha256": "dbedd1563d0e7ae2b1a3d7879582f26335ff97190d674edf62cf8733b396dfab",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/remote-error.ts",
+      "source": "packages/typert/protocol/src/remote-error.ts",
+      "sourceSha256": "bb902ec537e1dfbc74885e77a01192e6532b50a959a5bc4cc55c1fbf52e0a368",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/remote-info.ts",
+      "source": "packages/typert/protocol/src/remote-info.ts",
+      "sourceSha256": "e89fc959e61271aa57366b8c64a56278099e58e7d82936a2fc305398e507f79d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/types.ts",
+      "source": "packages/typert/protocol/src/types.ts",
+      "sourceSha256": "e953bdb0b0836b3822e50236a41ea6c513c890dcdbfc6b83751861a33af5a4c0",
+      "license": "MIT",
+      "supplementalSources": [
+        {
+          "source": "packages/typert/registry/src/index.ts",
+          "sourceSha256": "a6c1aa498660cb50d768c867411943d3760e2bbb8dcd016c950c6294ed626e2a",
+          "scope": "Public reflection methods formerly contributed by Host entry declaration merge",
+          "license": "MIT"
+        }
+      ]
+    },
+    {
+      "path": "packages/infra/web-server/src/index.ts",
+      "source": "packages/host/webserver/src/index.ts",
+      "sourceSha256": "84bc7eeb1777f6a759ed880d81f04d15270ab533eb3206c32218a7d81c94cf2d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/web-server/src/injections.ts",
+      "source": "packages/host/webserver/src/injections.ts",
+      "sourceSha256": "9a9687608fe7b5cbf8d2d13b081db283251c10efadbcdde75485342807c47b93",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/credentials/src/index.ts",
+      "source": "packages/credentials/credentials/src/index.ts",
+      "sourceSha256": "07b978385aea0333e741482c7deecd208fdf3fedb3369f74be45d267160c94c5",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/credentials/src/types.ts",
+      "source": "packages/credentials/credentials/src/types.ts",
+      "sourceSha256": "c4477b743020e14f6a191172d2f662765ffceabbe6b67b7c3681662dfed8049a",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/scope/src/index.ts",
+      "source": "packages/core/scope/src/index.ts",
+      "sourceSha256": "074b8f0c3fa2e240effd0a7e65c54be7c14debc1e53bb712334ce20d15affe4a",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/scope/src/store.ts",
+      "source": "packages/core/scope/src/store.ts",
+      "sourceSha256": "e2f6c98e271cbae483393ccd1e5212a255def165a8a591d308efbd827af67278",
+      "license": "MIT"
+    },
+    {
+      "path": "tests/unit/level3-scope.test.ts",
+      "source": "packages/core/scope/tests/scope.spec.ts",
+      "sourceSha256": "491dc7c01521e78cd29d19d5762d3460af40dc67aa3ee68cb0480fae10454095",
+      "license": "MIT"
+    },
+    {
+      "path": "tests/unit/level3-scope-store.test.ts",
+      "source": "packages/core/scope/tests/store.spec.ts",
+      "sourceSha256": "3c1e5e3ff4ba50445d140aa0f09dc1e6c5e80cf6244fce628841bdc4e8029ad5",
+      "license": "MIT"
+    },
+    {
+      "path": "tests/unit/level3-credentials.test.ts",
+      "source": "packages/credentials/credentials/tests/credentials.spec.ts",
+      "sourceSha256": "9fb29352b890a30ac37bb50006b6a10b0a3b35fdd4eaad486284a90da6e3c4bf",
+      "license": "MIT"
+    },
+    {
+      "path": "tests/support/level3-memory-credentials.ts",
+      "source": "packages/credentials/credentials/tests/memory.ts",
+      "sourceSha256": "e35c03fd5f18b4befd456671e724060de82151cd180ef59a2f80bec216f9f3db",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/api-path.ts",
+      "source": "packages/client/connection/src/api-path.ts",
+      "sourceSha256": "8d420a69c9e80584818433e3d909f09e9be13bc9a9d6a5be3bb02c427c328934",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/api-request-trust.ts",
+      "source": "packages/client/connection/src/api-request-trust.ts",
+      "sourceSha256": "879a4f497ad41355771303a5956851da04661be24b08435fe7bf13d42e1e3b9b",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/browser-auth.ts",
+      "source": "packages/client/connection/src/browser-auth.ts",
+      "sourceSha256": "f1ebdb9fa8706414852420393d9f34b2d604a128928a2f5852d4832ce38b45f7",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/connect-protocol.ts",
+      "source": "packages/client/connection/src/connect-protocol.ts",
+      "sourceSha256": "ebae51ec20464a50fdd5a840bda57e5660fa3f2ffbc027a93f3e96ea39f784cc",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/http-bridge.ts",
+      "source": "packages/client/connection/src/http-bridge.ts",
+      "sourceSha256": "182a668579ec5701489f54449bb4b0e63e80b77f90edc147b993b1acba4bae86",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/index.ts",
+      "source": "packages/client/connection/src/index.ts",
+      "sourceSha256": "33a14e80298e0a0bc7bafef515d853d13584cd2433844b3dc2a89d4980d315e1",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/loopback-hostname.ts",
+      "source": "packages/client/connection/src/loopback-hostname.ts",
+      "sourceSha256": "4c21ef048250d543659c29a4876e820e90bdeb452f424dfbdbc19f3b500efa62",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/peer.ts",
+      "source": "packages/client/connection/src/peer.ts",
+      "sourceSha256": "ceba1eda231ee9554a3620607360165479078cce994f74e13df83a53a92e6cc3",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/recovery-config.ts",
+      "source": "packages/client/connection/src/recovery-config.ts",
+      "sourceSha256": "677ba43668fc82c7e9da4c7e79389aae9d594055f49a5073349edd38ee111d6e",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/rpc-host.ts",
+      "source": "packages/client/connection/src/rpc-host.ts",
+      "sourceSha256": "55cd4aaf34103aba890146a8168ec88ba45c0373e55367a74d4f547ed579bcf7",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/rpc-schema.ts",
+      "source": "packages/client/connection/src/rpc-schema.ts",
+      "sourceSha256": "4224e854bb62b0c195c5a401683322fdc69cadf2a0cf27abd3fb7690ee35ffb2",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/rpc.ts",
+      "source": "packages/client/connection/src/rpc.ts",
+      "sourceSha256": "74ba5632fea441a4c76de677ddeb840de51a775b42514c0908a3ef207339d94b",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/analyzer.ts",
+      "source": "packages/typert/generator/src/analyzer.ts",
+      "sourceSha256": "12ff5493fcac7edf73e7fef9d478de35d8a8137f649907848fd99e58f77b57d4",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/artifact-files.ts",
+      "source": "packages/typert/generator/src/artifact-files.ts",
+      "sourceSha256": "1d417396691def6fd1592364bf96338349c99e425c0d6bcbfae296b271ada285",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/build-output-guard.ts",
+      "source": "packages/typert/generator/src/build-output-guard.ts",
+      "sourceSha256": "e1022ceff1ec201e5f6cc97dd78239dab34f1213317eb8c493b684c020cc92e7",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/emitter.ts",
+      "source": "packages/typert/generator/src/emitter.ts",
+      "sourceSha256": "f41f1bbe1e633b841b80155e1a93752dcbc011677c4f2a919151a7e8734d2bf1",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/index.ts",
+      "source": "packages/typert/generator/src/index.ts",
+      "sourceSha256": "c98b1b5776c46bbf9c7b3c0bf713792e9da186543cc9ab5cbd221a41870d5394",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/model.ts",
+      "source": "packages/typert/generator/src/model.ts",
+      "sourceSha256": "1f764bf3c28d6f9baaad89f3b5366192c40832fede3b46cbb11573de5f1c9879",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/renderer.ts",
+      "source": "packages/typert/generator/src/renderer.ts",
+      "sourceSha256": "179c9f35eac45c2f860f549312fdfdb41fe4d78375c3691f5257053fe82d4331",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/tool-schema.ts",
+      "source": "packages/typert/generator/src/tool-schema.ts",
+      "sourceSha256": "1a98a2048640e296178bcc33aa8e2f177b20461c1b6c6cd760b2f7fc352f54e5",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/tsdown-plugin.ts",
+      "source": "packages/typert/generator/src/tsdown-plugin.ts",
+      "sourceSha256": "d8e1ea65a1219e7a82dd41be738bbf546e722445f0d33ecef7722a66221a8b8e",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/worker.ts",
+      "source": "packages/typert/generator/src/worker.ts",
+      "sourceSha256": "954aafc09e0826648ed082848934ca09aa14b2b36fa390b34d67a61fbf08dadc",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/tooling/remote-generator/src/workspace.ts",
+      "source": "packages/typert/generator/src/workspace.ts",
+      "sourceSha256": "5f3ec7e04cc1ae82b1e7e718501c8bea0dfbf38d32c6aac008613bb04fae2283",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/typert-registry/src/service.ts",
+      "source": "packages/typert/registry/src/service.ts",
+      "sourceSha256": "ed1373acaa3256e7cd78239b6b8eec58d9b62fe0064ec8a253fc4feea908f514",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/typert-registry/src/client/index.ts",
+      "source": "packages/typert/registry/src/client/index.ts",
+      "sourceSha256": "277a158156b24bc158d8379851e6330d29328ef321716dbd2420ce6d602ede57",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/reflection.ts",
+      "source": "packages/typert/registry/src/types.ts",
+      "sourceSha256": "462f577ca91f8b4807107b89ec3d58935f10053634e4dfe890dce762d8349c41",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/typert-registry/tests/registry.test.ts",
+      "source": "packages/typert/registry/tests/typert.spec.ts",
+      "sourceSha256": "5732c68c15acfe4c98c91b12b10af0b2958c1c91410e141300546251a7071a90",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/typert-loader/src/index.ts",
+      "source": "packages/typert/loader/src/index.ts",
+      "sourceSha256": "36c3adc83094b56c9f021eca0b5be2050b254b237b7c980b4c1da56645a6d379",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/deque/src/index.ts",
+      "source": "packages/util/deque/src/index.ts",
+      "sourceSha256": "6dd9b24cc99aeeffb1e70c880306d76ced4a3b769dbd2131d7f129fa8a6649e7",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/timeout/src/index.ts",
+      "source": "packages/util/timeout/src/index.ts",
+      "sourceSha256": "cadc1aea5b85854f59ca68cee8b7d08c4ebdd378d1c8e081e0031423c262e6b1",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/remote-access/src/snapshot.ts",
+      "source": "packages/api/remote-access/src/snapshot.ts",
+      "sourceSha256": "5e8411d33f23f825cd82c7e64cbf021c6c4c7ba6541dab5081044e52b51f9240",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/remote-access-types.ts",
+      "source": "packages/api/remote-access/src/types.ts",
+      "sourceSha256": "06cb0fbe12dddb23d817cc32cea88bf39caf25e7b0ab83a5d1318d0ec1ec0646",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/remote-access/src/index.ts",
+      "source": "packages/api/remote-access/src/index.ts",
+      "sourceSha256": "fdbd14722dcecb20311aa9feb84b3046a231ecab4431271d7ab1363f14eda09c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/stream-protocol.ts",
+      "source": "packages/api/gateway/src/stream-protocol.ts",
+      "sourceSha256": "c0d26dd8d3be737cbb9ae8ecf4e7084d1fb31b37693e94d7e79263c4aa8ce040",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/stream-server.ts",
+      "source": "packages/api/gateway/src/stream-server.ts",
+      "sourceSha256": "80a08c0274600c3ef7c0479ca3cb110a559fb6697942f9821bd33f6e2c5f0f07",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/gateway-types.ts",
+      "source": "packages/api/gateway/src/types.ts",
+      "sourceSha256": "4d534cdaeb5c4ea9cbaabda4870fcc6317a04860d196bab5bd40760a4aba7af7",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/access.ts",
+      "source": "packages/api/gateway/src/access.ts",
+      "sourceSha256": "ae4559eb608ed87effdfaceb02b451d577cb414cb589bf5137001e2924e79546",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/index.ts",
+      "source": "packages/api/gateway/src/index.ts",
+      "sourceSha256": "ff9c0de37a8810c6ea2fe9d5a285425017c5cfbc3902d5f90315796c76285686",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/gateway-errors.ts",
+      "source": "packages/api/gateway/src/remote-error-codes.ts",
+      "sourceSha256": "01a5522d5c2328aaea391dcfedd96bf9a6e1dda112e075a4ecfca9ba91ae38cf",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/client/stream-client.ts",
+      "source": "packages/api/gateway/src/client/stream-client.ts",
+      "sourceSha256": "4acd9e39179f9c1e9ffe899f5ed08b54564a30ef1f194cc5ef19ad539d7f0d97",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/client/journal-stream.ts",
+      "source": "packages/api/gateway/src/client/journal-stream.ts",
+      "sourceSha256": "b867f384cc49fca6d8c0cd4731e0e0ec2b6819c2dacefdca78aa51cb8b1ae013",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/client/remote-stream.ts",
+      "source": "packages/api/gateway/src/client/remote-stream.ts",
+      "sourceSha256": "0baca65bbdc5cc55c43e6c92c1affcf152a98a25e4a9e6304da9d706e778f92a",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/client/remote-events.ts",
+      "source": "packages/api/gateway/src/client/remote-events.ts",
+      "sourceSha256": "af65a57c7758cb31cfa4f59870de78bc6606a50ce1a49bcabd86720b5ae05bb7",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/client/index.ts",
+      "source": "packages/api/gateway/src/client/index.ts",
+      "sourceSha256": "67b346bbb099b65ec37c6fcedb08e4efeae2aee291fe1809e7a2d6fea080030c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/client/snapshot-stream.ts",
+      "source": "packages/api/gateway/src/client/snapshot-stream.ts",
+      "sourceSha256": "d02390b6ae57bbdafa257d832d26dc1c5530f0f250e8a989bc8f3a1f888ea031",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/client/random-uuid.ts",
+      "source": "packages/client/connection/src/client/random-uuid.ts",
+      "sourceSha256": "c037b0e0224ca27a70682fd86d06e3527e6f45acf467b0b70a56e1d8c3000f7c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/client/socket.ts",
+      "source": "packages/client/connection/src/client/socket.ts",
+      "sourceSha256": "f9ef8a0ec2cc0b0ca5b85b90dcc7615d16e5722d3799cbba35c9228208828d61",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/client/rpc.ts",
+      "source": "packages/client/connection/src/client/rpc.ts",
+      "sourceSha256": "8a55426351dfc3b4150b6fdd60daf20735824cbb90b4b806321ec442c639e460",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/client/api.ts",
+      "source": "packages/client/connection/src/client/api.ts",
+      "sourceSha256": "54aa86f493b80693b2a6ce89bfc5df6105386717bb5307866d11320345c8a747",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/client/connection.ts",
+      "source": "packages/client/connection/src/client/connection.ts",
+      "sourceSha256": "efe3168500645825630af073428bf88f21e7b92e15d73d12fb849ba4e480bd41",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/connection/src/client/index.ts",
+      "source": "packages/client/connection/src/client/index.ts",
+      "sourceSha256": "b508d7ab09e83685336d1e9d3649f4c9cf77ca7825835069201b04a66e60c31d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/typert-loader/tests/loader.test.ts",
+      "source": "packages/typert/loader/tests/loader.spec.ts",
+      "sourceSha256": "6ef496447b95ffeef16695afc069d4072d940ea1343a5cd4e15aabb940f5ca9f",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/typert-loader/tests/lazy-info.test.ts",
+      "source": "packages/typert/loader/tests/lazy-info.spec.ts",
+      "sourceSha256": "73b505a914b29ae10c37c82b418c711eb403cdfe65ed67cf9621b47c94e40c1a",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/tests/stream-server.test.ts",
+      "source": "packages/api/gateway/tests/stream-server.host.spec.ts",
+      "sourceSha256": "1319c927fe62111922918e896ccd6089b780e95c7a3d6ff0cb6c6a743bbfbcac",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/storage/backend.ts",
+      "source": "packages/storage/storage/src/backend.ts",
+      "sourceSha256": "481bb98faf36815bd5cf19923909c4754ea9fffc28085c69a5c22c5ddd7acd92",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/storage/error.ts",
+      "source": "packages/storage/storage/src/error.ts",
+      "sourceSha256": "f1c2df2f3b214cb015bfe123785786782f185f39f27450e332ef7f6886e4fb2e",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/storage/spec.ts",
+      "source": "packages/storage/storage-domain/src/spec.ts",
+      "sourceSha256": "06803154f2f469d605f1815c8ea5840fdca2bb12203b0e9fb0d2dbc0bc6ab306",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/storage/events.ts",
+      "source": "packages/storage/storage-domain/src/events.ts",
+      "sourceSha256": "3c239eca0157166ce7ae8b417215e1e5366e5c6f36e375f3680f4bacfaf1da1c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/storage/domain-error.ts",
+      "source": "packages/storage/storage-domain/src/error.ts",
+      "sourceSha256": "1f285ff8b6aeba68b96f048fc1f427212b5f6e1938770915adf40ecff3f938da",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/storage-domain/src/domain.ts",
+      "source": "packages/storage/storage-domain/src/domain.ts",
+      "sourceSha256": "cd1ab8b67f682024ff620f845004a5561b960f74f16a214ff3c389def610604c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/storage-domain/src/index.ts",
+      "source": "packages/storage/storage-domain/src/index.ts",
+      "sourceSha256": "12f9dc7a1ba7bf0d4721e60b03f08a2132e0a8576c328c0b4c179b1c7baedbd8",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/storage-sqlite/src/index.ts",
+      "source": "packages/storage/storage-sqlite/src/index.ts",
+      "sourceSha256": "2207d3028b67cc2f405e0fb95090fa502b1aa3ee01e4024b961feb56419d942f",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/storage-sqlite/src/schema.ts",
+      "source": "packages/storage/storage-sqlite/src/schema.ts",
+      "sourceSha256": "7536636af47b23ffffd85cbdbf6ead1a32031bd582accc4bf573ec2c7df397fa",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/storage-sqlite/src/unit.ts",
+      "source": "packages/storage/storage-sqlite/src/unit.ts",
+      "sourceSha256": "748032a9246a752afa883a4f7691d7887cd4749427cc3ae9cfc68c4851f23b17",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/storage/domain-types.ts",
+      "source": "packages/storage/storage-domain/src/domain.ts",
+      "sourceSha256": "cd1ab8b67f682024ff620f845004a5561b960f74f16a214ff3c389def610604c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/storage/src/index.ts",
+      "source": "packages/storage/storage/src/index.ts",
+      "sourceSha256": "007fd253361aba1f65b0e846a58ebf5f4ae29e5c834ccc3732b1977cc2c78c6b",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/assets.ts",
+      "source": "packages/client/modules/src/assets.ts",
+      "sourceSha256": "c8a7f05107fc1251cdcaeaa74dacfe5b0ec4ea2cdb52d66cfdcc846a80c20d5e",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/index.ts",
+      "source": "packages/client/modules/src/index.ts",
+      "sourceSha256": "b1f08572d42325673fe27eba022b58f8831f816e8eac5876894f23823b46fe22",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/client/entries.ts",
+      "source": "packages/client/modules/src/client/entries.ts",
+      "sourceSha256": "1a26faf4eb66d6ede6cde5c919b11ce04320c787da088f25d8dfa9b0e58d3a8d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/client/release-change.ts",
+      "source": "packages/client/modules/src/client/release-change.ts",
+      "sourceSha256": "756a26411ba30c4da16e48c5367a6b941b8f2f381c2e49823bc5fca65e35aada",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/client/notify.ts",
+      "source": "packages/client/modules/src/client/notify.ts",
+      "sourceSha256": "e1015b1044e66d86ec7d347bf1a441f672b1c2e172682195ad390087d25d0891",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/client/entry-lifecycle.ts",
+      "source": "packages/client/modules/src/client/entry-lifecycle.ts",
+      "sourceSha256": "1b6f54b4fbebf5c440e753b9c104d4741e632b744b496a6a23af6f8fc20cc198",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/client/manifest.ts",
+      "source": "packages/client/modules/src/client/manifest.ts",
+      "sourceSha256": "d18d83549dbe786ffd319e4bc18ffb0a03deb507a67bd3b00c06d7d087532b8b",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/client/index.ts",
+      "source": "packages/client/modules/src/client/index.ts",
+      "sourceSha256": "cd27cc3a413b7751793bdf8c0ec319c455a5ae73844e6764a94ac58d53f5e98f",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/src/client/system.ts",
+      "source": "packages/client/modules/src/client/system.ts",
+      "sourceSha256": "f3333fc85ca0a454327ebe3eb705346130a53d51f177597583134c2d93c57ca5",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/tests/node-half.client.test.ts",
+      "source": "packages/client/modules/tests/node-half.client.spec.ts",
+      "sourceSha256": "b97adf87c98402a80a3911e08168f7cc02b4892b8c7785d0726729b4dac0d778",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/tests/entries.client.test.ts",
+      "source": "packages/client/modules/tests/entries.client.spec.ts",
+      "sourceSha256": "3eb8b42dc973ec0a0abc82aa316c248b8d9b79568cee7f04b6dba4f830e85af9",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/tests/assets.client.test.ts",
+      "source": "packages/client/modules/tests/assets.client.spec.ts",
+      "sourceSha256": "6e2a1430dde092654e3dbfdd9129605e25b454f68d191530b3aee3361fc9613d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/tests/loader.client.test.ts",
+      "source": "packages/client/modules/tests/loader.client.spec.ts",
+      "sourceSha256": "04a0f4e9c914aed1bbcdac2bfe5a7d260d1fa1354d9ad789aad927673eb10f7e",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/tests/package-assets.client.test.ts",
+      "source": "packages/client/modules/tests/package-assets.client.spec.ts",
+      "sourceSha256": "7fd74edac52d720373d3c57cae9a1972fc7e64324a4ccac60977a2a58c42b581",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/client-modules/LICENSE",
+      "source": "LICENSE",
+      "sourceSha256": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/frontend-static/src/index.ts",
+      "source": "packages/host/frontend-static/src/index.ts",
+      "sourceSha256": "d10693ae942859163d91daf72ceefee2ac4f830b1e81c21e30306060f59ac905",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/frontend-static/tests/frontend-static.test.ts",
+      "source": "packages/host/frontend-static/tests/frontend-static.spec.ts",
+      "sourceSha256": "2bd4527d56aa24b9d5374d57f35cfba7b9f1ff84c15b5e09e2153a287b790515",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/frontend-static/LICENSE",
+      "source": "LICENSE",
+      "sourceSha256": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/src/renderer.ts",
+      "source": "packages/client/ui-slots/src/renderer.ts",
+      "sourceSha256": "43ba3492fff724ffbe71d0b4bcfca410ab695d019aa2e163d2c8dd56cab1a849",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/src/index.ts",
+      "source": "packages/client/ui-slots/src/index.ts",
+      "sourceSha256": "43989fb355e1e85316caa70b28de3294f9d6e7b179199a4e429dcd1ef73f2e24",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/src/store.ts",
+      "source": "packages/client/ui-slots/src/store.ts",
+      "sourceSha256": "4233ae32911848aa771910286e5f41b4c683e8c5b16da190935082ac4249cca0",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/tests/core.client.test.ts",
+      "source": "packages/client/ui-slots/tests/core.client.spec.ts",
+      "sourceSha256": "2963fd108c55f88f182151bd40d5c95701900daf94c4e2b09c1829bb3648fb9c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/tests/type-chain.client.test.tsx",
+      "source": "packages/client/ui-slots/tests/type-chain.client.spec.tsx",
+      "sourceSha256": "cce8a0882cc3fabebd0bebb81b845bb7e04713e4931b3b738c3500ee384e612f",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/tests/dynamic-keys.client.test.ts",
+      "source": "packages/client/ui-slots/tests/dynamic-keys.client.spec.ts",
+      "sourceSha256": "0b5e9e56cb2bf0531fca18fe4e14a2bc5a16708bab4451f333bae6d7a7ecb1cf",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/LICENSE",
+      "source": "LICENSE",
+      "sourceSha256": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/index.ts",
+      "source": "packages/client/ui-renderer/src/index.ts",
+      "sourceSha256": "650c95e1bff0cfdd2c00e4eaa29e5cb1d9103845500c3d244c04603a3b6bd2f6",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/client/app.tsx",
+      "source": "packages/client/ui-renderer/src/client/app.tsx",
+      "sourceSha256": "cd3328d22018734edfa72ade57f7806edfb5254c0b9a08b323373624a2e48d64",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/client/bindings.tsx",
+      "source": "packages/client/ui-renderer/src/client/bindings.tsx",
+      "sourceSha256": "ceaf302fcb4eb4ec419fc92c5b39f3667d753e67584dffbaf4540a67fc4f6672",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/client/errors.ts",
+      "source": "packages/client/ui-renderer/src/client/errors.ts",
+      "sourceSha256": "594e7de016772aa6ffa3b00a83387b891d660cfb6cbbe719e82ec28871b8edac",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/client/bind.ts",
+      "source": "packages/client/ui-renderer/src/client/bind.ts",
+      "sourceSha256": "91e70ae7ae0eca972de8c809b3e6ea77cc8d228bae6886ee782ae496cc1d4f45",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/client/scoped-slots.tsx",
+      "source": "packages/client/ui-renderer/src/client/scoped-slots.tsx",
+      "sourceSha256": "ff53b648f9a6fbd59bc13b89fbe33c67b32421c99ab7923689bfa1b47cea95c1",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/client/use-sync-external-store.d.ts",
+      "source": "packages/client/ui-renderer/src/client/use-sync-external-store.d.ts",
+      "sourceSha256": "88a8490fa853c36930c81fa53a5e3219c33a904b541fbbecc73956299c8a7105",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/client/registry.ts",
+      "source": "packages/client/ui-renderer/src/client/registry.ts",
+      "sourceSha256": "6b8b6b969d8bcf0314ea20438a223f3a90e1bd516571faecae5c3c01008ecf21",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/src/client/index.ts",
+      "source": "packages/client/ui-renderer/src/client/index.ts",
+      "sourceSha256": "bc0e0e4beaefa5d1b20cd94b64d65a38e9500b6d0a830de300b1c24e5394bb3c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/tests/ui-renderer.client.test.tsx",
+      "source": "packages/client/ui-renderer/tests/ui-renderer.client.spec.tsx",
+      "sourceSha256": "71dad508173f45b64e148caa4b0ee62c168e13cf63da685468833a2ad1f0f31c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/tests/bind.client.test.tsx",
+      "source": "packages/client/ui-renderer/tests/bind.client.spec.tsx",
+      "sourceSha256": "ace1b4ccd8916e0312f2276e25710cc24e876059a03582c0b6ec45f0302e366e",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/tests/registry.client.test.ts",
+      "source": "packages/client/ui-renderer/tests/registry.client.spec.ts",
+      "sourceSha256": "169192cd55a4aa6308acc5dcc6e536d8dfb6da7d60b05d5b35d34991ded3c12b",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/tests/stale-authorization.client.test.tsx",
+      "source": "packages/client/ui-renderer/tests/stale-authorization.client.spec.tsx",
+      "sourceSha256": "8c0d04267fbe09c72e22e9845b41514de01d8de31c45898094c7cbce23a45cbe",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/tests/scoped-slots-real-core.client.test.tsx",
+      "source": "packages/client/ui-renderer/tests/scoped-slots-real-core.client.spec.tsx",
+      "sourceSha256": "37cf5bbf632249a74bbe2c9ae22fde81db7a4f5447edcd42c68d82c84026e1b6",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/tests/keyed-hook-member.client.test.tsx",
+      "source": "packages/client/ui-renderer/tests/keyed-hook-member.client.spec.tsx",
+      "sourceSha256": "362b916a2a21fb306a30eac7d0575cac0cc74c3ce011c988e4e328694a52af22",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-renderer/LICENSE",
+      "source": "LICENSE",
+      "sourceSha256": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/src/store-contract.ts",
+      "source": "packages/client/store/src/contract.ts",
+      "sourceSha256": "d4ba75c2559f22713f1f3659d03fce6cf17b6f1c1fe82a9615b71f6a504e9e81",
+      "license": "MIT"
+    },
+    {
+      "path": "scripts/client-bundle.mjs",
+      "source": "packages/client/tsdown.client.ts",
+      "sourceSha256": "e0c559f871fc10541cb7d35691c40c252f8fca77ae75f0d5b721e57aebd5460f",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/boot-client.ts",
+      "source": "packages/client/web/src/boot-client.ts",
+      "sourceSha256": "942fcefba3bfad2371374a4f50721391fb0a054756105c4cdc56bf68c38a07f7",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/loader-status.ts",
+      "source": "packages/client/web/src/loader-status.ts",
+      "sourceSha256": "030f657975cefa65ad44a735170c2894a9d1a8f545a867e84af22eb8cf442a8c",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/mount.ts",
+      "source": "packages/client/web/src/mount.ts",
+      "sourceSha256": "45b6e01d0872c3b2b568415425d1e0794e58aee891fa6c6bf5d4e5ac36be8801",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/boot-page.ts",
+      "source": "packages/client/web/src/boot-page.ts",
+      "sourceSha256": "6a25433fd9db125253a0c80973ec55962f2a890b1f8a551da118a41d0e275dec",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/boot-page.module.css",
+      "source": "packages/client/web/src/boot-page.module.css",
+      "sourceSha256": "0e8312489cf10b6d0c1e4d9298137ffd3bf6d65c74ca1d4a06c4c430bfda8d4b",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/css-modules.d.ts",
+      "source": "packages/client/web/src/css-modules.d.ts",
+      "sourceSha256": "e28410d74a0d763364c04fa690c2ca2202ad3019c74f8f5205e8dc6cba69c02f",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/window-drag/recall.ts",
+      "source": "packages/client/web/src/window-drag/recall.ts",
+      "sourceSha256": "392014d25beab1e9283ca63de2eda43650f86244f69b06b637b744c4fb2293d7",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/window-drag/regions.ts",
+      "source": "packages/client/web/src/window-drag/regions.ts",
+      "sourceSha256": "a7b692266e357b5876e5a5561b16843f85f35de8dd78c5a2061ef14df1f1880b",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/node-module-stub.ts",
+      "source": "apps/web/src/node-module-stub.ts",
+      "sourceSha256": "cf0eac2a050ca8392fab190a648f5b0c359a3b2aa5b819ec26e901900c4a532e",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/LICENSE",
+      "source": "LICENSE",
+      "sourceSha256": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/web/src/apply-injections.ts",
+      "source": "packages/client/web/src/apply-injections.ts",
+      "sourceSha256": "09b79b2f71877da4dbfb0c9eb1110c286a4bfc722d92e1691bb90bd1656f9d5c",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/desktop/src/shell/web-document.ts",
+      "source": "apps/desktop/src/web-document.ts",
+      "sourceSha256": "70da9451b517f8a3b094b2e361b4d666662052b7761cc0302b97d10e46b3f3ce",
+      "license": "MIT"
+    },
+    {
+      "path": "apps/desktop/src/shell/login-environment.ts",
+      "source": "apps/desktop/src/login-shell-environment.ts",
+      "sourceSha256": "d8a6730a92c057ad70fb7fa163df72aca13eff9cfe54edb7a823594e8680e348",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/scope/src/scope.ts",
+      "source": "packages/core/scope/src/index.ts",
+      "sourceSha256": "074b8f0c3fa2e240effd0a7e65c54be7c14debc1e53bb712334ce20d15affe4a",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/gateway/src/events.ts",
+      "source": "packages/api/remotes/src/index.ts",
+      "sourceSha256": "6f20d6945dfe057b3de08ce2a225abf7e1632212976eff25aec1aec819a1d7df",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/locale/src/client/index.ts",
+      "source": "packages/client/locale/src/client/index.ts",
+      "sourceSha256": "42faa634839243668e834b84118961ea4c9dbf5df78b6596d0b2ae17094a626d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/ui-theme/src/client/index.ts",
+      "source": "packages/client/ui-theme/src/client/index.ts",
+      "sourceSha256": "471edc1b1820f9282ee095ab3a5a21759deea6ff4a58fc746100daf99a3dd1b2",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/src/presentation.ts",
+      "source": "packages/client/locale/src/client/index.ts",
+      "sourceSha256": "42faa634839243668e834b84118961ea4c9dbf5df78b6596d0b2ae17094a626d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/ui/src/presentation.ts",
+      "source": "packages/client/ui-theme/src/client/index.ts",
+      "sourceSha256": "471edc1b1820f9282ee095ab3a5a21759deea6ff4a58fc746100daf99a3dd1b2",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/credentials.ts",
+      "source": "packages/credentials/credentials/src/types.ts",
+      "sourceSha256": "c4477b743020e14f6a191172d2f662765ffceabbe6b67b7c3681662dfed8049a",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/host/credentials.ts",
+      "source": "packages/credentials/credentials/src/index.ts",
+      "sourceSha256": "07b978385aea0333e741482c7deecd208fdf3fedb3369f74be45d267160c94c5",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess/src/types.ts",
+      "source": "packages/subprocess/subprocess/src/types.ts",
+      "sourceSha256": "e65166444ff791994a7198a86ac4a821e8329120bd551f342913623c87e5a715",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess/src/control.ts",
+      "source": "packages/subprocess/subprocess/src/control.ts",
+      "sourceSha256": "50db21bb7ca66c69757333ac0b4e1ccf067afe40d9b451d74c71d51ea2445665",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess/src/index.ts",
+      "source": "packages/subprocess/subprocess/src/index.ts",
+      "sourceSha256": "19e3fde571d0cd1f76e95696477a7d38677529aaf51b07c429965f2e4330065f",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/output.ts",
+      "source": "packages/subprocess/subprocess-local/src/output.ts",
+      "sourceSha256": "1151a91d7bc31ffcd6ea3db85af2ef8c19ac4bc2d3a41654da9feac29cae7433",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/shell-activity.ts",
+      "source": "packages/subprocess/subprocess-local/src/shell-activity.ts",
+      "sourceSha256": "86c0fadc2f61d245ec0b17ef65c333f59d3614433701788504f27e7583181dcf",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/windows-job.ts",
+      "source": "packages/subprocess/subprocess-local/src/windows-job.ts",
+      "sourceSha256": "220d210e72df9da21a313a70a400e6f5443b17b4a08188f0131bc09167067f63",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/spawn-runner.ts",
+      "source": "packages/subprocess/subprocess-local/src/spawn-runner.ts",
+      "sourceSha256": "d4ba8aeec4427437cf4b7f23d2ea61c3a25becb43ee3944df190eef537a4679d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/control-spawn.ts",
+      "source": "packages/subprocess/subprocess-local/src/control-spawn.ts",
+      "sourceSha256": "cefa514393081def31a259ad69757336ca9ceeaf947409e9cd95633e067656c1",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/windows-inspector.ts",
+      "source": "packages/subprocess/subprocess-local/src/windows-inspector.ts",
+      "sourceSha256": "b11489dba93ec3747daa2e6812f99ce7e57829e68b3b5597af52d45039b6038b",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/spawn.ts",
+      "source": "packages/subprocess/subprocess-local/src/spawn.ts",
+      "sourceSha256": "1087f9ed1704167865e1a35cea0604f335cc348ac17da9c83c542fc454d00ae0",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/runner-protocol.ts",
+      "source": "packages/subprocess/subprocess-local/src/runner-protocol.ts",
+      "sourceSha256": "0ada1f271cede3a0a0f04fa1c7df4fb76a3466dc239315b7332cd4e3630a306c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/bin.ts",
+      "source": "packages/subprocess/subprocess-local/src/bin.ts",
+      "sourceSha256": "2f4ed2f5b9a08d8b828a73c81f82ed3a9416787e73c3d50acf6c50f71884010f",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/managed-owner.ts",
+      "source": "packages/subprocess/subprocess-local/src/managed-owner.ts",
+      "sourceSha256": "c8153bbb1093f2ed69b45170f59ebadc9ac770210fff23e4a99c6228522a286d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/linux-execve.ts",
+      "source": "packages/subprocess/subprocess-local/src/linux-execve.ts",
+      "sourceSha256": "0b6857c340fc4f43e4a86544ea41af536e1552be5a69c5a53c91187ad205a2dc",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/terminal.ts",
+      "source": "packages/subprocess/subprocess-local/src/terminal.ts",
+      "sourceSha256": "ab720272e6a3583c665f916b96d98654766acc872141026a120f95205863107c",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/index.ts",
+      "source": "packages/subprocess/subprocess-local/src/index.ts",
+      "sourceSha256": "0839baefcbc7562ac73562cc7c5c3f1f983a8693bf3b76e0c956a5f93b4548ce",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/process-inspector.ts",
+      "source": "packages/subprocess/subprocess-local/src/process-inspector.ts",
+      "sourceSha256": "1e4ca66f18c2118c1336d198f265f994e3eaf9d450fd2c974ea207d31a58238d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/linux-scope.ts",
+      "source": "packages/subprocess/subprocess-local/src/linux-scope.ts",
+      "sourceSha256": "45bf7868740f9dc3ab2a549c99ad2ed73cd222587563b0b9bae30e9a05d871c8",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/runner-launch.ts",
+      "source": "packages/subprocess/subprocess-local/src/runner-launch.ts",
+      "sourceSha256": "5cac2782d724a12056f049e0275a1897c659b306db628aed86dbd72d502a5d7a",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/subprocess-local/src/linux-scope-selector.ts",
+      "source": "packages/subprocess/subprocess-local/src/linux-scope-selector.ts",
+      "sourceSha256": "198c568df54f13f681e7029c056c9abd53bcde4701d9ac0266b629efb8e91c4d",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/win32-process/src/ffi.ts",
+      "source": "packages/subprocess/win32-process/src/ffi.ts",
+      "sourceSha256": "988331864f460138336a29f9290b46e4cd6b46ba5042b39b74621bfb3f72f940",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/win32-process/src/control-stdio.ts",
+      "source": "packages/subprocess/win32-process/src/control-stdio.ts",
+      "sourceSha256": "8870419b7d48e58acef5e18f98cdfcdb4cc462ec549b3ed853d60a04c3a93c37",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/win32-process/src/errors.ts",
+      "source": "packages/subprocess/win32-process/src/errors.ts",
+      "sourceSha256": "e0e7377a376ab5c16289d0c9d455ee0460efdcca5f45dd6bad99dfa39e313295",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/win32-process/src/abi.ts",
+      "source": "packages/subprocess/win32-process/src/abi.ts",
+      "sourceSha256": "02983fd084440c864300ab5c5c4c10bbbcf2e2b1575c01dc2589917b68721126",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/win32-process/src/process.ts",
+      "source": "packages/subprocess/win32-process/src/process.ts",
+      "sourceSha256": "2043f59d97f320f83d731fb2f81ec15c77065d4ff98f305be3a95cebb5e776be",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/win32-process/src/index.ts",
+      "source": "packages/subprocess/win32-process/src/index.ts",
+      "sourceSha256": "ef120e78e18da1f01fe27066d41eda6eca9ec214f2473e866c7e245b94b2d0bd",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/win32-process/src/koffi.ts",
+      "source": "packages/subprocess/win32-process/src/koffi.ts",
+      "sourceSha256": "13aa290917b636816e17a2656e01a776014b7ea4990bdf799de74d962ce4fec6",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/infra/lazy-require/src/index.ts",
+      "source": "packages/util/lazy-require/src/index.ts",
+      "sourceSha256": "3453ea694b03c110b366c4d6c18ff6f2d32004ded38cd43ceb89c3ed7aa11fdf",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/host/subprocess.ts",
+      "source": "packages/subprocess/subprocess/src/types.ts",
+      "sourceSha256": "e65166444ff791994a7198a86ac4a821e8329120bd551f342913623c87e5a715",
+      "license": "MIT"
+    },
+    {
+      "path": "packages/api/plugin-api/src/subprocess.ts",
+      "source": "packages/subprocess/subprocess/src/index.ts",
+      "sourceSha256": "19e3fde571d0cd1f76e95696477a7d38677529aaf51b07c429965f2e4330065f",
+      "license": "MIT"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+/* Copyright (c) 2026 DeepSeek. SPDX-License-Identifier: MIT
+Adapted from packages/client/web/src/boot-page.module.css at 8bd073392eef6f54e921a093b95076248eb08cbb. */
+/* The framework-free boot page cannot depend on theme delivery succeeding. */
+
+.boot {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--ax-color-boot-canvas);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.wordmark {
+  font-size: var(--ax-font-size-boot-brand);
+  line-height: var(--ax-line-height-boot-brand);
+  font-weight: var(--ax-font-weight-boot-brand);
+  letter-spacing: var(--ax-letter-spacing-boot-brand);
+  color: var(--ax-color-boot-label-primary);
+}
+
+.hint {
+  font-size: var(--ax-font-size-boot-hint);
+  line-height: var(--ax-line-height-boot-hint);
+  color: var(--ax-color-boot-label-tertiary);
+}
+
+.spinner {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--ax-radius-circle);
+  corner-shape: round;
+  border: 2px solid var(--ax-color-boot-border);
+  animation: spin var(--ax-motion-boot-spin) var(--ax-motion-easing-linear) infinite;
+}
+
+.spinner::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    var(--ax-color-boot-brand) var(--ax-angle-boot-progress, 72deg),
+    transparent 0
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 2px),
+    var(--ax-color-mask-opaque) 0
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), var(--ax-color-mask-opaque) 0);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.failed {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.failedTitle {
+  font-size: var(--ax-font-size-boot-error);
+  line-height: var(--ax-line-height-boot-error);
+  font-weight: var(--ax-font-weight-boot-brand);
+  color: var(--ax-color-boot-label-primary);
+}
+
+.failedItem {
+  font-family: var(--ax-font-boot-code);
+  font-size: var(--ax-font-size-boot-hint);
+  line-height: var(--ax-line-height-boot-hint);
+  color: var(--ax-color-boot-label-secondary);
+  white-space: pre-wrap;
+}

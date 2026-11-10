@@ -1,0 +1,188 @@
+.terminal-transfer-indicator {
+  position: absolute;
+  z-index: var(--ax-layer-terminals-transfer-terminal-transfer-indicator-z-index);
+  left: 13px;
+  bottom: 34px;
+  display: grid;
+  grid-template-columns: minmax(160px, 280px) auto;
+  align-items: center;
+  gap: 7px 12px;
+  min-width: 260px;
+  max-width: min(380px, calc(100% - 26px));
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--ax-color-primary) 44%, var(--ax-color-surface-muted));
+  border-radius: var(--ax-radius-compact);
+  background: color-mix(in srgb, var(--ax-color-canvas) 92%, transparent);
+  box-shadow: var(--ax-shadow-menu);
+  backdrop-filter: blur(12px);
+}
+
+.terminal-transfer-indicator > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.terminal-transfer-indicator strong {
+  color: var(--ax-color-primary);
+  font-size: var(--ax-font-size-caption);
+  letter-spacing: var(--ax-letter-spacing-eyebrow);
+}
+
+.terminal-transfer-indicator span {
+  overflow: hidden;
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-small);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.terminal-transfer-indicator progress {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 4px;
+  accent-color: var(--ax-color-primary);
+}
+
+.terminal-transfer-indicator button {
+  border: 0;
+  background: transparent;
+  color: var(--ax-color-text-muted);
+  cursor: pointer;
+  font-size: var(--ax-font-size-small);
+}
+
+.terminal-transfer-indicator.completed {
+  border-color: color-mix(in srgb, var(--ax-color-success) 55%, var(--ax-color-surface-muted));
+}
+
+.terminal-transfer-indicator.failed,
+.terminal-transfer-indicator.canceled {
+  border-color: color-mix(in srgb, var(--ax-color-danger) 55%, var(--ax-color-surface-muted));
+}
+
+.terminal-transfer-recovery-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ax-layer-terminals-transfer-terminal-transfer-recovery-backdrop-z-index);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: color-mix(in srgb, var(--ax-color-canvas) 72%, transparent);
+}
+
+.terminal-transfer-recovery-dialog {
+  width: min(560px, 100%);
+  max-height: min(80vh, 720px);
+  overflow: auto;
+  padding: 20px;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-sheet);
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text);
+  box-shadow: var(--ax-shadow-menu);
+}
+
+.terminal-transfer-recovery-dialog h2 {
+  margin: 0 0 10px;
+  font-size: var(--ax-font-size-dialog-title);
+}
+.terminal-transfer-recovery-dialog p {
+  line-height: var(--ax-line-height-reading);
+}
+.terminal-transfer-recovery-dialog ul {
+  padding: 0;
+  list-style: none;
+}
+.terminal-transfer-recovery-dialog li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-block-start: 1px solid var(--ax-color-surface-muted);
+}
+.terminal-transfer-recovery-dialog li > div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+.terminal-transfer-recovery-dialog li span {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-control);
+}
+.terminal-transfer-recovery-dialog button {
+  align-self: start;
+  padding: 6px 10px;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  cursor: pointer;
+}
+.terminal-transfer-recovery-dialog button:focus-visible {
+  outline: 2px solid var(--ax-color-primary);
+}
+
+.terminal-context-menu {
+  box-sizing: border-box;
+  max-width: calc(100vw - 12px);
+  max-height: calc(100vh - 12px);
+  overflow: auto;
+  position: fixed;
+  z-index: var(--ax-layer-terminals-transfer-terminal-context-menu-z-index);
+  width: 205px;
+  padding: 4px 0;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-terminals-transfer-terminal-context-menu-background);
+  box-shadow: var(--ax-shadow-menu);
+}
+.terminal-context-menu button {
+  width: 100%;
+  height: 32px;
+  min-height: 32px;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-body);
+  text-align: left;
+}
+.terminal-context-menu button:hover,
+.terminal-context-menu button:focus-visible {
+  background: var(--ax-color-primary);
+  color: var(--ax-color-on-primary);
+}
+.terminal-context-menu button:disabled {
+  background: transparent;
+  color: var(--ax-color-text-disabled);
+}
+.terminal-context-menu kbd {
+  color: currentColor;
+  font-family: inherit;
+  font-size: var(--ax-font-size-caption);
+  opacity: var(--ax-opacity-terminals-transfer-terminal-context-menu-kbd-opacity);
+}
+.terminal-transfer-recovery-dialog[role='dialog'] {
+  position: fixed;
+  z-index: var(--ax-layer-terminals-transfer-terminal-transfer-recovery-dialog-role-dialog-z-index);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.transfer-ui-error {
+  position: fixed;
+  z-index: var(--ax-layer-terminals-transfer-transfer-ui-error-z-index);
+  right: 16px;
+  bottom: 48px;
+  padding: 10px;
+  border: 1px solid var(--ax-color-surface-muted);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+}

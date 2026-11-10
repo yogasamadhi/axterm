@@ -1,0 +1,577 @@
+.modal {
+}
+.modal button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 30px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-soft);
+  background: var(--ax-color-surface-raised);
+  padding: 6px 10px;
+  font-size: var(--ax-font-size-control);
+  color: var(--ax-color-text);
+}
+:where(.modal) button:hover {
+  background: var(--ax-color-surface-muted);
+}
+.modal :is(button, input):focus-visible {
+  outline: 1px solid var(--ax-color-primary);
+  outline-offset: 1px;
+}
+.modal input[type='checkbox'] {
+  accent-color: var(--ax-color-primary);
+}
+.modal {
+  box-sizing: border-box;
+}
+.modal * {
+  box-sizing: border-box;
+}
+.modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.modal input {
+  min-width: 0;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  font: inherit;
+}
+.modal button {
+  font: inherit;
+  cursor: pointer;
+}
+button.primary {
+  border-color: var(--ax-color-catalog-import-button-primary-border-color);
+  background: var(--ax-color-catalog-import-button-primary-background);
+  color: var(--ax-color-catalog-import-button-primary-color);
+}
+button.primary:hover {
+  background: var(--ax-color-catalog-import-button-primary-hover-background);
+}
+button.danger {
+  border-color: var(--ax-color-action-danger-border);
+  background: var(--ax-color-action-danger);
+  color: var(--ax-color-on-action-danger);
+}
+.modal {
+  width: min(580px, calc(100vw - 40px));
+  max-height: calc(100vh - 60px);
+  overflow: auto;
+  border: var(--ax-border-catalog-import-modal-border);
+  border-radius: var(--ax-radius-card-soft);
+  background: var(--ax-color-catalog-import-modal-background);
+  box-shadow: var(--ax-shadow-catalog-import-modal-box-shadow);
+}
+.modal > header {
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: var(--ax-border-catalog-import-modal-header-border-bottom);
+}
+.modal > header h2 {
+  margin: 0;
+  font-size: var(--ax-font-size-subheading);
+  font-weight: var(--ax-font-weight-emphasis);
+}
+.modal > header button {
+  border: 0;
+  background: transparent;
+  font-size: var(--ax-font-size-title-large);
+  color: var(--ax-color-catalog-import-modal-header-button-color);
+}
+.modal > form {
+  padding: 16px;
+}
+.form-grid label:has(textarea),
+.form-grid .full-field,
+.form-grid .modal-actions {
+  grid-column: 1 / -1;
+}
+.modal.ssh-config-import-modal {
+  width: min(1080px, calc(100vw - 40px));
+  overflow: hidden;
+}
+
+.ssh-config-import-modal > header {
+  min-height: 48px;
+  height: auto;
+}
+
+.ssh-config-import-modal > header > div {
+  display: grid;
+  gap: 2px;
+}
+
+.ssh-config-import-modal > header small,
+.ssh-import-section-title span,
+.ssh-import-item small,
+.ssh-import-include small,
+.ssh-import-include span,
+.ssh-import-footer > span {
+  color: var(--ax-color-text-disabled);
+  font-size: var(--ax-font-size-small);
+}
+
+.ssh-import-body {
+  display: grid;
+  gap: 12px;
+  max-height: calc(100vh - 110px);
+  padding: 14px;
+  overflow: auto;
+}
+
+.ssh-import-loading,
+.ssh-import-error {
+  margin: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+  font-size: var(--ax-font-size-body);
+}
+
+.ssh-import-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ax-color-text-muted);
+}
+
+.ssh-import-error,
+.ssh-import-edit-error {
+  color: var(--ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-color);
+  border-color: var(--ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-border-color);
+  background: var(--ax-color-catalog-import-ssh-import-error-ssh-import-edit-error-background);
+}
+
+.ssh-import-toolbar,
+.ssh-import-footer,
+.ssh-import-section-title,
+.ssh-import-item-heading,
+.ssh-import-include {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ssh-import-metrics {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(68px, 1fr));
+  gap: 6px;
+  flex: 1;
+}
+
+.ssh-import-metric {
+  display: grid;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-field);
+  background: var(--ax-color-catalog-import-ssh-import-metric-background);
+}
+
+.ssh-import-metric span {
+  color: var(--ax-color-text-disabled);
+  font-size: var(--ax-font-size-tiny);
+}
+
+.ssh-import-metric strong {
+  color: var(--ax-color-catalog-import-ssh-import-metric-strong-color);
+  font: var(--ax-font-catalog-import-ssh-import-metric-strong-font);
+}
+
+.ssh-import-includes {
+  display: grid;
+  gap: 5px;
+  padding: 10px;
+  border: var(--ax-border-catalog-import-ssh-import-includes-border);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-catalog-import-ssh-import-includes-background);
+}
+
+.ssh-import-section-title {
+  padding: 0 2px 5px;
+}
+
+.ssh-import-include {
+  min-height: 42px;
+  padding: 7px 8px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-field);
+  background: var(--ax-color-catalog-import-ssh-import-include-background);
+}
+
+.ssh-import-include > div:first-child {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 2px;
+}
+
+.ssh-import-include p,
+.ssh-import-item > p,
+.ssh-import-global-notice,
+.ssh-import-edit-error {
+  margin: 3px 0 0;
+  color: var(--ax-color-text-disabled);
+  font-size: var(--ax-font-size-small);
+}
+
+.ssh-import-include-actions,
+.ssh-import-item-actions,
+.ssh-import-editor > div,
+.ssh-import-footer > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.include-status {
+  min-width: 58px;
+  padding: 3px 6px;
+  border-radius: var(--ax-radius-compact);
+  text-align: center;
+  background: var(--ax-color-catalog-import-include-status-background);
+}
+
+.include-status.authorization-required {
+  color: var(--ax-color-catalog-import-include-status-authorization-required-color);
+  background: var(--ax-color-catalog-import-include-status-authorization-required-background);
+}
+
+.include-status.authorized {
+  color: var(--ax-color-catalog-import-include-status-authorized-color);
+  background: var(--ax-color-catalog-import-include-status-authorized-background);
+}
+
+.ssh-import-items {
+  display: grid;
+  gap: 4px;
+}
+
+.ssh-import-item {
+  display: grid;
+  gap: 5px;
+  padding: 8px 9px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-field);
+  background: var(--ax-color-catalog-import-ssh-import-item-background);
+}
+
+.ssh-import-item-heading > div:nth-child(2):not(.ssh-import-item-actions) {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 3px;
+}
+
+.ssh-import-item-heading strong,
+.ssh-import-item-heading small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ssh-import-item-actions label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+}
+
+.ssh-import-item-actions input {
+  width: auto;
+}
+
+.ssh-import-editor {
+  display: grid;
+  gap: 7px;
+  padding: 9px;
+  border-top: 1px solid var(--ax-color-border);
+}
+
+.ssh-import-editor label {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+}
+
+.ssh-import-editor textarea {
+  min-height: 250px;
+  resize: vertical;
+  font: var(--ax-font-catalog-import-ssh-import-editor-textarea-font);
+}
+
+.ssh-import-editor > div {
+  justify-content: flex-end;
+}
+
+.ssh-import-footer {
+  position: sticky;
+  bottom: -14px;
+  margin: 0 -14px -14px;
+  padding: 11px 14px;
+  border-top: 1px solid var(--ax-color-border);
+  background: var(--ax-color-catalog-import-ssh-import-footer-background);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 760px) {
+  .ssh-import-toolbar,
+  .ssh-import-footer,
+  .ssh-import-include {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ssh-import-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ssh-import-include-actions,
+  .ssh-import-footer > div {
+    justify-content: flex-end;
+  }
+}
+
+/* SSH Config dialog geometry, kept local to this workflow. */
+.import-backdrop {
+  place-items: unset;
+  align-items: flex-start;
+  justify-items: center;
+  box-sizing: border-box;
+  padding: 24px;
+  background: var(--ax-color-catalog-import-import-backdrop-background);
+  backdrop-filter: none;
+}
+
+.modal.ssh-config-import-modal {
+  width: 80%;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
+  margin-top: 50px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--ax-radius-card);
+  background: var(--ax-color-catalog-import-modal-ssh-config-import-modal-background);
+  box-shadow: var(--ax-shadow-catalog-import-modal-ssh-config-import-modal-box-shadow);
+}
+
+.ssh-config-import-modal > header {
+  height: 57px;
+  min-height: 57px;
+  padding: 16px 24px;
+  border-bottom: var(--ax-border-catalog-import-ssh-config-import-modal-header-border-bottom);
+}
+
+.ssh-config-import-modal > header h2 {
+  color: var(--ax-color-catalog-import-ssh-config-import-modal-header-h2-color);
+  font-size: var(--ax-font-size-title-small);
+  font-weight: var(--ax-font-weight-semibold);
+  line-height: var(--ax-line-height-control);
+}
+
+.ssh-config-import-modal > header small {
+  display: none;
+}
+
+.ssh-config-import-modal > header button {
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  color: var(--ax-color-catalog-import-ssh-config-import-modal-header-button-color);
+  font-size: var(--ax-font-size-title-large);
+}
+
+.ssh-config-import-modal .ssh-import-body {
+  display: block;
+  max-height: calc(100vh - 129px);
+  padding: 0 24px 24px;
+  overflow: auto;
+}
+
+.ssh-config-import-modal .ssh-import-toolbar {
+  display: flex;
+  height: 54px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 12px 0 9px;
+}
+
+.ssh-config-import-modal .ssh-import-reload {
+  width: 112px;
+  min-width: 112px;
+  height: 33px;
+  min-height: 33px;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 15px;
+  border: var(--ax-border-catalog-import-ssh-config-import-modal-ssh-import-reload-border);
+  border-radius: var(--ax-radius-small);
+  background: var(--ax-color-catalog-import-ssh-config-import-modal-ssh-import-reload-background);
+  color: var(--ax-color-settings-text);
+  font-size: var(--ax-font-size-heading);
+  white-space: nowrap;
+}
+
+.ssh-config-import-modal .ssh-import-summary {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.ssh-config-import-modal .ssh-import-items.ssh-config-list {
+  display: block;
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.ssh-config-import-modal .ssh-import-item {
+  display: block;
+  height: 249px;
+  padding: 5px;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+}
+
+.ssh-config-import-modal .ssh-import-item-heading {
+  display: flex;
+  height: 27px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 0 0 5px;
+  color: var(--ax-color-catalog-import-ssh-config-import-modal-ssh-import-item-heading-color);
+  font-size: var(--ax-font-size-heading);
+  line-height: var(--ax-line-height-code-fixed);
+}
+
+.ssh-config-import-modal .ssh-import-item-actions {
+  display: flex;
+  height: 22px;
+  align-items: center;
+  gap: 5px;
+}
+
+.ssh-config-import-modal .ssh-import-item-actions button {
+  display: grid;
+  width: 14px;
+  height: 22px;
+  min-height: 22px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(
+    --ax-color-catalog-import-ssh-config-import-modal-ssh-import-item-actions-button-color
+  );
+}
+
+.ssh-config-import-modal .ssh-config-item-content {
+  width: 100%;
+  height: 198px;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ax-color-catalog-import-ssh-config-import-modal-ssh-config-item-content-color);
+  background: transparent;
+  font: var(--ax-font-catalog-import-ssh-config-import-modal-ssh-config-item-content-font);
+  white-space: pre-wrap;
+}
+
+.ssh-config-import-modal .ssh-import-footer {
+  position: static;
+  display: flex;
+  height: 48px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 5px 0 10px;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.ssh-config-import-modal .ssh-import-footer > div {
+  display: flex;
+  gap: 5px;
+}
+
+.ssh-config-import-modal .ssh-import-footer button {
+  height: 33px;
+  min-height: 33px;
+  padding: 0 15px;
+  border: var(--ax-border-catalog-import-ssh-config-import-modal-ssh-import-footer-button-border);
+  border-radius: var(--ax-radius-small);
+  background: var(
+    --ax-color-catalog-import-ssh-config-import-modal-ssh-import-footer-button-background
+  );
+  color: var(--ax-color-settings-text);
+  font-size: var(--ax-font-size-heading);
+}
+
+.ssh-config-import-modal .ssh-import-footer button.primary {
+  border-color: var(--ax-color-primary);
+  background: var(--ax-color-primary);
+  color: var(
+    --ax-color-catalog-import-ssh-config-import-modal-ssh-import-footer-button-prim-f2faccd
+  );
+}
+
+.ssh-config-import-modal .ssh-import-footer > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.import-backdrop {
+  z-index: var(--ax-layer-catalog-import-import-backdrop-z-index);
+}
+.modal.ssh-config-import-modal {
+  position: fixed;
+  z-index: var(--ax-layer-catalog-import-modal-ssh-config-import-modal-z-index);
+  top: 74px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+}
+.spin {
+  animation: import-spin var(--ax-motion-spin) var(--ax-motion-easing-linear) infinite;
+}
+@keyframes import-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Keep the retained header and scrolling content inside the real viewport at 200% zoom. */
+.modal.ssh-config-import-modal {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 98px);
+}
+.ssh-config-import-modal > header {
+  flex-shrink: 0;
+}
+.ssh-config-import-modal .ssh-import-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+}

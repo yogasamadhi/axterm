@@ -1,0 +1,135 @@
+.terminal-suggestions-wrap {
+  position: absolute;
+  z-index: var(--ax-layer-terminals-suggestions-terminal-suggestions-wrap-z-index);
+  display: flex;
+  min-width: 200px;
+  max-width: min(300px, calc(100% - 16px));
+  max-height: 300px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  box-shadow: var(--ax-shadow-terminals-suggestions-terminal-suggestions-wrap-box-shadow);
+}
+
+.terminal-suggestions-list {
+  min-height: 0;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 268px;
+  border-bottom: 1px solid var(--ax-color-surface-raised);
+}
+
+.terminal-suggestions-wrap.reverse .terminal-suggestions-list {
+  border-top: 1px solid var(--ax-color-surface-raised);
+  border-bottom: 0;
+}
+
+.terminal-suggestion-item {
+  display: flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 5px 10px;
+  color: var(--ax-color-text);
+}
+
+.terminal-suggestion-item:hover,
+.terminal-suggestion-item.selected {
+  background: var(--ax-color-surface-raised);
+}
+
+.terminal-suggestion-command {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.terminal-suggestion-type {
+  flex: none;
+  margin-left: 5px;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+}
+
+.terminal-suggestion-delete {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  place-items: center;
+  margin-left: 5px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ax-color-text-muted);
+  visibility: hidden;
+}
+
+.terminal-suggestion-item:hover .terminal-suggestion-delete,
+.terminal-suggestion-item:focus-within .terminal-suggestion-delete,
+.terminal-suggestion-item.selected .terminal-suggestion-delete {
+  visibility: visible;
+}
+
+.terminal-suggestion-delete:hover {
+  color: var(--ax-color-danger);
+}
+
+.terminal-suggestions-ai {
+  display: flex;
+  height: 32px;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-body);
+  text-align: left;
+}
+
+.terminal-suggestions-ai:hover:not(:disabled) {
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text-strong);
+}
+
+.terminal-suggestions-empty,
+.terminal-suggestions-error {
+  margin: 0;
+  padding: 9px 10px;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+}
+
+.terminal-suggestions-error {
+  color: var(--ax-color-danger);
+}
+
+.terminal-suggestions-ai .spin {
+  animation: terminal-suggestion-spin var(--ax-motion-spin-quick) var(--ax-motion-easing-linear)
+    infinite;
+}
+
+@keyframes terminal-suggestion-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-suggestions-ai .spin {
+    animation: none;
+  }
+}

@@ -1,0 +1,54 @@
+.no-session-quick {
+  order: 2;
+  width: min(480px, 100%);
+  flex: 0 0 auto;
+  margin-top: 8px;
+}
+.no-session-quick > label {
+  display: none;
+}
+.no-session-quick > div {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-left: 8px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-surface-sunken);
+  color: var(--ax-color-text-muted);
+}
+.no-session-quick > div:focus-within {
+  border-color: var(--ax-color-primary);
+}
+.no-session-quick input {
+  min-width: 0;
+  height: 32px;
+  min-height: 32px;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-small);
+}
+.no-session-quick button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--ax-color-border);
+  border-width: 0 0 0 1px;
+  border-radius: var(--ax-radius-none);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+}
+.no-session-quick > small {
+  display: block;
+  margin-top: 5px;
+  color: var(--ax-color-danger);
+  font-size: var(--ax-font-size-small);
+}

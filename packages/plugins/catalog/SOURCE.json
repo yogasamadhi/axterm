@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "firstParty": {
+    "name": "Axterm",
+    "license": "Apache-2.0",
+    "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+    "files": [
+      {
+        "path": "src/application/host-import-service.ts",
+        "source": "packages/runtime/src/application/host-import-service.ts",
+        "sourceSha256": "6967fe6c000fdb5e0519773593dbc22091130ab2f17052b87bdd56e7ba2dc81c",
+        "scope": "Retained parser, editable preview, Include and atomic import semantics; grant-scoped port replaces raw FS and legacy ProductRepository."
+      },
+      {
+        "path": "src/client/ui/import-dialog.tsx",
+        "source": "apps/desktop/src/renderer/src/app/ssh-config-import/ssh-config-import-dialog.tsx",
+        "sourceSha256": "cefed35ef8ac58a03d86c91888feaaeefd0cfc61013b75f9e19c1d750a45d7c4",
+        "scope": "Retained markup, editable JSON, Include selection and report presentation; owned generated Client actions replace legacy transport/lifecycle and Radix owns focus."
+      },
+      {
+        "path": "src/client/ui/import-model.ts",
+        "source": "apps/desktop/src/renderer/src/app/ssh-config-import/ssh-config-import-model.ts",
+        "sourceSha256": "cc86352b659b6c5b29b2b550715d209a0f8170d049090200c89fd1106926c8a4",
+        "scope": "Retained pure editable draft and Include-binding operations."
+      },
+      {
+        "path": "src/client/ui/locales.ts",
+        "source": "apps/desktop/src/renderer/src/i18n/core.ts",
+        "sourceSha256": "44b698ce7e52f546733b3f6ddd3c662f58714b7fbb1d9f655eb96f4d4a18941b",
+        "scope": "Selected retained four-language import text; additional uncertainty/report recovery strings remain pending owner localization review."
+      },
+      {
+        "path": "src/client/ui/import.module.css",
+        "source": "apps/desktop/src/renderer/src/app/ssh-config-import/ssh-config-import.css",
+        "sourceSha256": "39943461968d9b2763547cc231f9ca37ac2dfe38806b4464e370abafc679aaae",
+        "scope": "Retained scoped styles with viewport clipping and action-selector corrections; no replacement screenshot goldens."
+      },
+      {
+        "path": "src/client/ui/import.module.css",
+        "source": "apps/desktop/src/renderer/src/styles/globals.css",
+        "sourceSha256": "e1c0c9df0f5b84c78b09281533f4046660178427c3f44ae6bb15a399b60e170a",
+        "scope": "Selected first-party modal foundations adapted to scoped token/controls integration."
+      },
+      {
+        "path": "src/history-promotion.ts",
+        "source": "packages/runtime/src/application/connection-history-service.ts",
+        "sourceSha256": "4150b4b355a9b15c12c53637deac55a8c1db6cbb82855d13ba361569a76bd533",
+        "scope": "Retained transactional promotion semantics adapted to Catalog-owned repositories, optimistic history/tree revisions and compact durable command receipts."
+      },
+      {
+        "path": "src/client/ui/history-panel.tsx",
+        "source": "apps/desktop/src/renderer/src/app/history/history-panel.tsx",
+        "sourceSha256": "43a195719ebf769a752a84047e5914f6062537fa80c36d65318fb5b3ae0233c5",
+        "scope": "Retained history markup and keyboard controls; accepted Client view and CSS Modules replace legacy React Query transport."
+      },
+      {
+        "path": "src/client/ui/history-model.ts",
+        "source": "apps/desktop/src/renderer/src/app/history/history-model.ts",
+        "sourceSha256": "59570b39104223ee7116dff4cc6daed98cf72f6484f8fc153bddeba18ab8f5db",
+        "scope": "Retained bounded pure target/time/frequency formatting with selected public locale types."
+      },
+      {
+        "path": "src/client/ui/history.module.css",
+        "source": "apps/desktop/src/renderer/src/app/history/history-panel.css",
+        "sourceSha256": "3bce3cc667f7fbfe62a85f4f689c100045c6a2acc6504888ab407b80448fb2ed",
+        "scope": "Retained history geometry and scoped token integration; no replacement screenshot goldens."
+      },
+      {
+        "path": "src/client/ui/history-sidebar.tsx",
+        "source": "apps/desktop/src/renderer/src/app/history/history-secret-dialog.tsx",
+        "sourceSha256": "131cd2e840c689eed8a7571cb0e3d3874fb56cf41870c2574b4d38c4479bcb6e",
+        "scope": "Selected retained transient secret form text and interaction semantics, adapted to public Radix focus ownership and Connections UI admission."
+      },
+      {
+        "path": "src/client/ui/history-actions.ts",
+        "source": "apps/desktop/src/renderer/src/app/history/history-actions.ts",
+        "sourceSha256": "6f751793f0372524d47ee1209dda21adba2af303511d67aed2856d98a48c161b",
+        "scope": "Retained history action intent; domain Client owners, generation-local admission and keyed durable commands replace REST/Query cache."
+      },
+      {
+        "path": "src/client/ui/privacy.ts",
+        "source": "apps/desktop/src/renderer/src/app/privacy.ts",
+        "sourceSha256": "66e7bad4b424cb2032ec54ab37ba2c1dfcc10f9f2d16823b617c6449a0a40422",
+        "scope": "Retained pure host address masking."
+      }
+    ]
+  },
+  "status": "Catalog import and history slices implemented; current combined validation, remaining Catalog UI, owner fidelity and M4\u2013M7 acceptance remain open."
+}

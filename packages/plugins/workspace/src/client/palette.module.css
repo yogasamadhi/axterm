@@ -1,0 +1,97 @@
+.palette-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ax-layer-workspace-palette-palette-backdrop-z-index);
+  display: grid;
+  place-items: center;
+  background: var(--ax-color-workspace-palette-palette-backdrop-background);
+  backdrop-filter: blur(4px);
+}
+.command-palette {
+  width: min(610px, calc(100vw - 50px));
+  max-height: calc(100dvh - 32px);
+  display: flex;
+  flex-direction: column;
+  border: var(--ax-border-workspace-palette-command-palette-border);
+  border-radius: var(--ax-radius-card-soft);
+  overflow: hidden;
+  background: var(--ax-color-workspace-palette-command-palette-background);
+  box-shadow: var(--ax-shadow-workspace-palette-command-palette-box-shadow);
+}
+.command-palette > div {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 13px;
+  border-bottom: var(--ax-border-workspace-palette-command-palette-div-border-bottom);
+  flex-shrink: 0;
+}
+.command-palette input {
+  border: 0;
+  background: transparent;
+  font-size: var(--ax-font-size-control);
+  min-width: 0;
+  flex: 1;
+}
+.command-palette ul {
+  list-style: none;
+  padding: 6px;
+  margin: 0;
+  max-height: min(50vh, 440px);
+  min-height: 0;
+  overflow: auto;
+}
+.command-palette li button {
+  width: 100%;
+  min-height: 38px;
+  height: auto;
+  padding: 8px;
+  gap: 12px;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  justify-content: flex-start;
+}
+.command-palette li button:hover {
+  background: var(--ax-color-workspace-palette-command-palette-li-button-hover-background);
+}
+.command-palette li kbd {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.command-palette .palette-item-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.command-palette li button.active {
+  background: var(--ax-color-panel-highlight);
+  outline: 1px solid var(--ax-color-primary);
+}
+.command-palette li button[aria-disabled='true'] {
+  opacity: var(--ax-opacity-workspace-palette-command-palette-li-button-aria-disabled-true-opacity);
+  cursor: default;
+}
+.palette-group {
+  margin: 10px 8px 4px;
+  font-size: var(--ax-font-size-body);
+  color: var(--ax-color-text-muted);
+}
+.palette-reason,
+.palette-empty,
+.palette-help {
+  margin: 4px 14px 10px;
+  font-size: var(--ax-font-size-body);
+  line-height: var(--ax-line-height-reading);
+  overflow-wrap: anywhere;
+  color: var(--ax-color-text-muted);
+}
+.palette-help {
+  flex-shrink: 0;
+}
+.palette-close {
+  flex-shrink: 0;
+  width: 32px;
+  min-height: 32px;
+  padding: 0;
+}

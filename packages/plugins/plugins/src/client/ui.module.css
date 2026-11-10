@@ -1,0 +1,41 @@
+.dialog {
+  width: min(820px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+}
+.form {
+  display: grid;
+  gap: 10px;
+  margin-block: 16px;
+  padding: 16px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-card);
+}
+.form label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.packages {
+  list-style: none;
+  padding: 0;
+  margin-block: 12px;
+  display: grid;
+  gap: 8px;
+}
+.packages li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+  padding: 10px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+}
+.actions {
+  display: flex;
+  gap: 6px;
+  margin-inline-start: auto;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "source": "IR11-IRONRDP-WASM-SOURCE-DEPENDENCIES-2026-09-24.json",
+  "target": "wasm32-unknown-unknown",
+  "publishedCrateCount": 6,
+  "publisherRootLegalFileCount": 12,
+  "packages": [
+    {
+      "name": "asn1-rs-impl",
+      "version": "0.2.0",
+      "license": "MIT/Apache-2.0",
+      "archiveSha256": "7b18050c2cd6fe86c3a76584ef5e0baf286d038cda203eb6223df2cc413565f7",
+      "repository": "https://github.com/rusticata/asn1-rs",
+      "commit": "a20e5f7319c896737ad0f2557037817b91ad854f",
+      "pathInVcs": "impl",
+      "matchedLibSha256": "c052170f4c8f719ef07a722a1961c0e52423e28951ddbdf3700d7329bb79a277",
+      "rootLegalFiles": [
+        {
+          "name": "LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "bytes": 1060,
+          "sha256": "a5c61b93b6ee1d104af9920cf020ff3c7efe818e31fe562c72261847a728f513"
+        }
+      ]
+    },
+    {
+      "name": "gloo-net",
+      "version": "0.7.0",
+      "license": "MIT OR Apache-2.0",
+      "archiveSha256": "a6420f887c48417e9e86c6cf61274eb231830cccc100e49613f7952e269a1fe1",
+      "repository": "https://github.com/rustwasm/gloo",
+      "commit": "d69fcff62ee63f37076c4a0715a6f828b0036599",
+      "pathInVcs": "crates/net",
+      "matchedLibSha256": "c7ce332978cfbdc3a113d2852b331635d341dc352fc73a63e9e2ad1284b17f13",
+      "rootLegalFiles": [
+        {
+          "name": "LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "bytes": 1078,
+          "sha256": "5a6f5443ea473f130adbdcf84254761d1292bc79759b5253915d4b5e7afbef66"
+        }
+      ]
+    },
+    {
+      "name": "gloo-timers",
+      "version": "0.4.0",
+      "license": "MIT OR Apache-2.0",
+      "archiveSha256": "482ce8a491a501da4cd806bd190275363d674f2845005c6ddbd5d3e1dd54495d",
+      "repository": "https://github.com/rustwasm/gloo",
+      "commit": "c8feeb18bf5dde6b7aed80c749e1aef89b34fb52",
+      "pathInVcs": "crates/timers",
+      "matchedLibSha256": "45e2413fa20c82e3c8d979445d9221fc604c8b5a96b6e79aebef55134816dc9d",
+      "rootLegalFiles": [
+        {
+          "name": "LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "bytes": 1078,
+          "sha256": "5a6f5443ea473f130adbdcf84254761d1292bc79759b5253915d4b5e7afbef66"
+        }
+      ]
+    },
+    {
+      "name": "gloo-utils",
+      "version": "0.3.0",
+      "license": "MIT OR Apache-2.0",
+      "archiveSha256": "4202275d95a142fa209a1e35e91c250a710c5600731372cd3464a39ed01573d6",
+      "repository": "https://github.com/rustwasm/gloo",
+      "commit": "e6280d4b93c86a478a8f2f31af5f13d770b156b7",
+      "pathInVcs": "crates/utils",
+      "matchedLibSha256": "8858114054089021f6b7750d8a3e8b5b0db9e4d260b9611fbaf9926ebb595bf5",
+      "rootLegalFiles": [
+        {
+          "name": "LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "bytes": 1078,
+          "sha256": "5a6f5443ea473f130adbdcf84254761d1292bc79759b5253915d4b5e7afbef66"
+        }
+      ]
+    },
+    {
+      "name": "rustcrypto-ff_derive",
+      "version": "0.14.0-rc.0",
+      "license": "MIT/Apache-2.0",
+      "archiveSha256": "4cda22ea03582974ab5687fc131eba2dc78e258e7eef4d7e01bcd0522ed79f66",
+      "repository": "https://github.com/zkcrypto/ff",
+      "commit": "8417973539baabf561975144e0a68d166d0f9a95",
+      "pathInVcs": "ff_derive",
+      "matchedLibSha256": "932e49105a795c49a45ea78574bb9adb35103da803e4d1839c6735ad666dca91",
+      "rootLegalFiles": [
+        {
+          "name": "LICENSE-APACHE",
+          "bytes": 10848,
+          "sha256": "3708458dee7f359ac6c9c5558023ed481be87e5372c43ebd7f2ca7ad23c12026"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "bytes": 1076,
+          "sha256": "8d0c1d1d4b2bebf5b9211f0e883d5a482b7808f3ed31320da14ddee95811f4ef"
+        }
+      ]
+    },
+    {
+      "name": "winscard",
+      "version": "0.3.2",
+      "license": "MIT/Apache-2.0",
+      "archiveSha256": "1210bde4c851460210856b10dbbbad824f9e1e635794f44cf2ce552972521e44",
+      "repository": "https://github.com/Devolutions/sspi-rs",
+      "commit": "fee71292aa03c569caeb44ec2782f3b5598f20c8",
+      "pathInVcs": "crates/winscard",
+      "matchedLibSha256": "0c7307595b9de62490ac39ea0daa78eef2eddb498e192a44812a9cf31ec3ff18",
+      "rootLegalFiles": [
+        {
+          "name": "LICENSE-APACHE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "The published crate archives omit their own root legal text; these are exact publisher-repository-root texts at each crate VCS commit.",
+    "Matching one published src/lib.rs per crate is an identity cross-check, not an exhaustive source-to-binary map.",
+    "Preserving both alternatives does not select a license option or complete nested/file-level rights review."
+  ]
+}

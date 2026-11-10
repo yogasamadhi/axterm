@@ -1,0 +1,102 @@
+{
+  "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+  "origins": [
+    {
+      "file": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+      "sha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677"
+    },
+    {
+      "file": "packages/runtime/src/adapters/sqlite/connection-history-repository.ts",
+      "sha256": "69ff76503d1bbbbd7e8d4cb4ee7c999a4a399d3fdc3d73facc35ab8c4f33c82b"
+    },
+    {
+      "file": "packages/runtime/src/adapters/sqlite/command-history-repository.ts",
+      "sha256": "0d138c43c4f473e871afa007c63ba960298e1ad0a1c549511930e7451fbc2473"
+    }
+  ],
+  "tables": {
+    "hosts": [
+      {
+        "id": "ebe6f1bf-e98e-4264-84f4-016533406a2c",
+        "group_id": null,
+        "name": "Fixture history",
+        "hostname": "fixture.example",
+        "port": 22,
+        "username": "operator",
+        "auth_type": "password",
+        "credential_ref": null,
+        "passphrase_credential_ref": null,
+        "jump_host_id": null,
+        "favorite": 0,
+        "created_at": "2026-11-08T11:09:54.097Z",
+        "updated_at": "2026-11-08T11:09:54.097Z",
+        "version": 1,
+        "connection_timeout_ms": 50000,
+        "keepalive_interval_ms": 10000,
+        "keepalive_count_max": 10,
+        "compression": 1,
+        "reconnect_mode": "manual",
+        "reconnect_delay_ms": 3000,
+        "reconnect_max_attempts": 10,
+        "proxy_mode": "inherit",
+        "proxy_url": null,
+        "proxy_username": null,
+        "proxy_credential_ref": null,
+        "proxy_command_executable": null,
+        "proxy_command_arguments": null,
+        "jump_host_ids": "[]",
+        "ssh_algorithms": "{\"kex\":[],\"cipher\":[],\"serverHostKey\":[],\"hmac\":[]}",
+        "ssh_startup": "{\"directory\":null,\"environment\":{},\"loginScripts\":[],\"runScripts\":[]}",
+        "ssh_x11": "{\"enabled\":false,\"display\":null}",
+        "certificate_credential_ref": null,
+        "ssh_agent": "{\"enabled\":true,\"path\":null}"
+      }
+    ],
+    "recent_connections": [
+      {
+        "id": "37765263-b3b5-429a-a176-bf2119c2837b",
+        "target_key": "[\"fixture.example\",22,\"operator\"]",
+        "host_id": "ebe6f1bf-e98e-4264-84f4-016533406a2c",
+        "name": "Fixture history",
+        "hostname": "fixture.example",
+        "port": 22,
+        "username": "operator",
+        "auth_type": "password",
+        "jump_host_id": null,
+        "connection_timeout_ms": 50000,
+        "keepalive_interval_ms": 10000,
+        "keepalive_count_max": 10,
+        "compression": 1,
+        "reconnect_mode": "manual",
+        "reconnect_delay_ms": 3000,
+        "reconnect_max_attempts": 10,
+        "connection_count": 1,
+        "last_connected_at": "2026-11-08T11:09:54.098Z",
+        "created_at": "2026-11-08T11:09:54.098Z",
+        "updated_at": "2026-11-08T11:09:54.098Z",
+        "version": 1
+      }
+    ],
+    "command_history": [
+      {
+        "id": "c398c7ad-3ab9-47b0-b1aa-24d7b5b059f6",
+        "command_text": "fixture command",
+        "use_count": 1,
+        "last_used_at": "2026-11-08T11:09:54.099Z",
+        "created_at": "2026-11-08T11:09:54.099Z",
+        "updated_at": "2026-11-08T11:09:54.099Z",
+        "version": 1
+      }
+    ]
+  },
+  "revisions": [
+    {
+      "key": "command-history:revision",
+      "value": "2"
+    },
+    {
+      "key": "connection-history:revision",
+      "value": "2"
+    }
+  ]
+}

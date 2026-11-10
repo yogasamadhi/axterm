@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/deepseek-ai/deepseek-harness",
+  "commit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "sources": ["packages/client/locale/src/client/index.ts"],
+  "license": "MIT",
+  "firstParty": {
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE.AXTERM",
+    "scope": "Axterm accepted-preference port, four product languages, bounded registry and lifecycle adaptations."
+  }
+}

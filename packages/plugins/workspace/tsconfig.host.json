@@ -1,0 +1,8 @@
+{
+  "extends": "../../../tsconfig.host.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  },
+  "exclude": ["src/client", "src/**/*.test.ts"]
+}

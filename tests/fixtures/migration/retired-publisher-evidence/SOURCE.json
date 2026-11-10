@@ -1,0 +1,17 @@
+{
+  "purpose": "Read-only publisher/source evidence for retired generation-2 dependencies; never production imports. Current runtime adapter tests are owned by the new plugins.",
+  "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+  "files": {
+    "tests/fixtures/migration/retired-publisher-evidence/drizzle-orm/package.json": "9fd30ce718965c19178ac6936462b77017f1fffe56865124d0cfe55850de09ff",
+    "tests/fixtures/migration/retired-publisher-evidence/drizzle-orm/index.js.map": "a1d1c9f1ab959b2bcff492cc684057f8607e976851f563689df7a2d313093ee6",
+    "tests/fixtures/migration/retired-publisher-evidence/drizzle-orm/sqlite-core/index.js.map": "452ef65f8fac19e6446eb600c058ad51923738f946be98ff006d98835ba8b733",
+    "tests/fixtures/migration/retired-publisher-evidence/drizzle-orm/sqlite-core/dialect.js.map": "51d1da5ff33cef6c0d86d2d3e440d6328e9c01e6f5f4f1aca4dec3bd547ab0fa",
+    "tests/fixtures/migration/retired-publisher-evidence/zod-openapi/package.json": "c1caa031228983cb2a91551bcd1e74d55a013b0a8a294a8c6f59c88763252aee",
+    "tests/fixtures/migration/retired-publisher-evidence/zod-openapi/README.md": "526d11cb80f13a2b8a77754e274e64efbf13dec7073bc52db45197e4ed361778",
+    "tests/fixtures/migration/retired-publisher-evidence/zod-validator/package.json": "860c35f665aa096362a8042b1f918a30d6ac1b8db3cc0e9bf92660f2f1d140fb",
+    "tests/fixtures/migration/retired-publisher-evidence/zod-validator/README.md": "6d10c6e36fd42589bc10aa2ae7507eebe4d9601ba45e8a3fee6348f3eec3462d",
+    "tests/fixtures/migration/retired-publisher-evidence/transfer-wrappers/xmodem.ts.txt": "01acaf9cf6c8111465f0627a0a79ff55904bcd1b2c5b1ee7b85be7c482ff05f1",
+    "tests/fixtures/migration/retired-publisher-evidence/transfer-wrappers/zmodem.ts.txt": "aa187f75401fe10df88075f11adb4cdc5636a5f12529cb5ba9c8192e1e2d995f",
+    "tests/fixtures/migration/retired-publisher-evidence/transfer-wrappers/trzsz.ts.txt": "c776f849730521f413c7fb28fa8dda9eb74327d9a31beefd8501861f04827130"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+  "sourceIdentities": {
+    "apps/desktop/src/renderer/src/i18n/core.ts": "44b698ce7e52f546733b3f6ddd3c662f58714b7fbb1d9f655eb96f4d4a18941b",
+    "apps/desktop/src/renderer/src/i18n/axterm-navigation.generated.json": "297d8939515b735a0fa7508ea7d7f35214ec98ee6826fe43cd05155ad041a96e"
+  },
+  "usage": {
+    "catalogKeyCount": 42,
+    "literalCalls": 52,
+    "dynamicCalls": [
+      {
+        "file": "app/activity-rail-settings-panel.tsx",
+        "line": 86,
+        "expression": "translationKeys[item]",
+        "keys": [
+          "bookmarks",
+          "newBookmark",
+          "setting"
+        ]
+      },
+      {
+        "file": "app/app.tsx",
+        "line": 2713,
+        "expression": "definition.translationKey",
+        "keys": [
+          "bookmarks",
+          "newBookmark",
+          "setting"
+        ]
+      },
+      {
+        "file": "app/panels.tsx",
+        "line": 5552,
+        "expression": "translationKey",
+        "keys": [
+          "about",
+          "aiConfig",
+          "common",
+          "password",
+          "settingShortcuts",
+          "settingSync",
+          "terminal"
+        ]
+      },
+      {
+        "file": "app/panels.tsx",
+        "line": 5741,
+        "expression": "translationKey",
+        "keys": [
+          "about",
+          "aiConfig",
+          "common",
+          "password",
+          "settingShortcuts",
+          "settingSync",
+          "terminal"
+        ]
+      },
+      {
+        "file": "app/shell-controls.tsx",
+        "line": 368,
+        "expression": "choice.labelKey",
+        "keys": [
+          "grid2x2",
+          "single",
+          "threeColumns",
+          "threeRows",
+          "twoColumns",
+          "twoColumnsBottom",
+          "twoRows",
+          "twoRowsRight"
+        ]
+      }
+    ],
+    "usedKeys": [
+      "about",
+      "aiConfig",
+      "bookmarks",
+      "cancel",
+      "clear",
+      "collapse",
+      "common",
+      "connect",
+      "copy",
+      "createBookmarkByAI",
+      "edit",
+      "grid2x2",
+      "language",
+      "leftSideBarIcons",
+      "matchCase",
+      "matchWholeWord",
+      "newBookmark",
+      "newTerminal",
+      "nextMatch",
+      "password",
+      "paste",
+      "pasteSelected",
+      "prevMatch",
+      "profiles",
+      "quickCommands",
+      "quickConnect",
+      "save",
+      "search",
+      "selectAll",
+      "setting",
+      "settingShortcuts",
+      "settingSync",
+      "single",
+      "terminal",
+      "threeColumns",
+      "threeRows",
+      "twoColumns",
+      "twoColumnsBottom",
+      "twoRows",
+      "twoRowsRight",
+      "uiThemes",
+      "useRegExp"
+    ],
+    "unusedKeys": [],
+    "missingKeys": [],
+    "unexpectedMissingKeys": [],
+    "unrecognizedDynamicCalls": []
+  }
+}

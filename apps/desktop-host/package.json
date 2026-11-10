@@ -1,0 +1,62 @@
+{
+  "name": "@axterm/desktop-host",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./protocol": {
+      "types": "./lib/types/protocol.d.ts",
+      "default": "./lib/protocol.js"
+    },
+    "./package.json": "./package.json",
+    "./copy": {
+      "types": "./lib/types/copy/home.d.ts",
+      "default": "./lib/copy.js"
+    }
+  },
+  "dependencies": {
+    "@axterm/cli": "workspace:*",
+    "@axterm/web": "workspace:*",
+    "@axterm/bundle-base": "workspace:*",
+    "@axterm/bundle-web": "workspace:*",
+    "@axterm/infra-desktop-native": "workspace:*",
+    "@axterm/infra-connection": "workspace:*",
+    "@axterm/infra-web-startup": "workspace:*",
+    "zod": "4.4.3",
+    "@axterm/infra-web-server": "workspace:*",
+    "@axterm/bundle-terminals": "workspace:*",
+    "@axterm/bundle-catalog": "workspace:*",
+    "@axterm/bundle-configuration": "workspace:*",
+    "@axterm/bundle-connections": "workspace:*",
+    "@axterm/bundle-files": "workspace:*",
+    "@axterm/bundle-transfers": "workspace:*",
+    "@axterm/bundle-remote-desktop": "workspace:*",
+    "@axterm/bundle-automation": "workspace:*",
+    "@axterm/bundle-workspace": "workspace:*",
+    "@axterm/bundle-engine-pi": "workspace:*",
+    "@axterm/bundle-ai": "workspace:*",
+    "@axterm/bundle-plugins": "workspace:*",
+    "@axterm/bundle-market": "workspace:*",
+    "@axterm/infra-storage": "workspace:*",
+    "@axterm/data-schema": "workspace:*",
+    "@axterm/infra-storage-relational": "workspace:*",
+    "@axterm/infra-storage-domain": "workspace:*",
+    "@axterm/infra-atomic-write": "workspace:*",
+    "@axterm/infra-credential-vault": "workspace:*",
+    "@axterm/plugin-catalog": "workspace:*",
+    "@axterm/plugin-configuration": "workspace:*",
+    "@axterm/plugin-ai": "workspace:*",
+    "@axterm/plugin-automation": "workspace:*",
+    "@axterm/plugin-transfers": "workspace:*",
+    "@axterm/plugin-desktop": "workspace:*",
+    "@axterm/plugin-terminals": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  }
+}

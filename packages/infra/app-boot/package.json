@@ -1,0 +1,50 @@
+{
+  "name": "@axterm/infra-app-boot",
+  "description": "Shared boot glue for the app bins: .env loading, fail-loud Loader guards, snapshot-aware config resolution, and the Loader boot sequence",
+  "version": "0.10.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./worker/profile-resolution-bootstrap": {
+      "types": "./lib/types/profile-resolution/worker-bootstrap.d.ts",
+      "default": "./lib/worker/profile-resolution-bootstrap.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/worker/profile-resolution-bootstrap.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@axterm/infra-atomic-write": "workspace:*",
+    "@axterm/infra-package-manifest": "workspace:*",
+    "@eslint-community/regexpp": "^4.12.2",
+    "ajv": "^8.20.0",
+    "js-yaml": "^4.3.2",
+    "node-addon-require-builtin": "^0.1.9",
+    "resolve.exports": "^2.0.3",
+    "semver": "^7.8.5"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis-plugin-group": "workspace:~",
+    "@deepseek-ai/cordis-plugin-include": "workspace:~",
+    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
+    "@axterm/infra-launch-environment": "workspace:*",
+    "@axterm/infra-home-paths": "workspace:*",
+    "@deepseek-ai/cordis": "workspace:~",
+    "@axterm/plugin-api": "workspace:*",
+    "@deepseek-ai/cordis-plugin-timer": "workspace:~"
+  },
+  "private": true,
+  "scripts": {
+    "build": "node ../../../scripts/build-level3.mjs"
+  }
+}

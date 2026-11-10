@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/deepseek-ai/deepseek-harness",
+  "commit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "sources": [
+    "packages/client/shortcuts/src/client",
+    "packages/client/ui-primitives/src (composition guards)",
+    "packages/client/ui-shortcuts/src/client/Editor.tsx (recording and revision/conflict semantics)",
+    "packages/client/ui-shortcuts/src/client/fixed.ts",
+    "packages/client/ui-shortcuts/src/client/locales.ts (selected feedback)"
+  ],
+  "license": "MIT",
+  "firstParty": {
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE.AXTERM",
+    "scope": "Configuration-owned durable preference seat, bounded generation/lifecycle ownership and Axterm native bridge adaptation."
+  }
+}

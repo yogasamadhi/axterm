@@ -1,0 +1,50 @@
+packages:
+  - apps/*
+  - packages/*
+  - packages/framework/*
+  - packages/infra/*
+  - packages/api/*
+  - packages/engines/*
+  - packages/plugins/*
+  - packages/data/*
+  - packages/tooling/*
+  - packages/bundles/*
+
+# `pnpm run` must not install or mutate the dependency graph on its own. The
+# release gates install the frozen lockfile explicitly and then run the gates.
+verifyDepsBeforeRun: false
+
+# Dependency install scripts are denied by default. `true` allows the package
+# to run its build script; `false` explicitly denies it. The allowed set
+# matches the previously reviewed Bun `trustedDependencies` allowlist.
+allowBuilds:
+  '@serialport/bindings-cpp': true
+  electron: true
+  esbuild: true
+  node-pty: true
+  # Fixed Koffi prebuilds are loaded directly; its installer is not approved.
+  koffi: false
+  '@google/genai': false
+  cpu-features: false
+  electron-winstaller: false
+  protobufjs: false
+  ssh2: false
+
+# Frozen dependency graph overrides for the whole workspace.
+overrides:
+  esbuild: 0.28.2
+
+# Reviewed source patches applied to the frozen dependency graph.
+patchedDependencies:
+  node-pty@1.1.0: patches/node-pty@1.1.0.patch
+  trzsz2@1.2.0: patches/trzsz2@1.2.0.patch
+
+# Lucide's declarations import React but omit its type peer. Keep each React
+# 18.3.1 Client face paired with its own types.
+packageExtensions:
+  lucide-react@1.44.0:
+    peerDependencies:
+      '@types/react': '*'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true

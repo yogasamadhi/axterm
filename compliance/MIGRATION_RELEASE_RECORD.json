@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 2,
+  "status": "immediate-removal-approved",
+  "publicMigrationRelease": null,
+  "approvedWindow": null,
+  "support": null,
+  "removalApproval": null,
+  "immediateRemovalApproval": {
+    "approvedBy": "Repository owner",
+    "approvedAt": "2026-09-25",
+    "priorPublicDistribution": false,
+    "localDataPolicy": "preserve-inert",
+    "remoteDataPolicy": "preserve",
+    "decisionEvidence": ["docs/adr/ADR-021-immediate-legacy-prototype-compatibility-removal.md"]
+  },
+  "limitations": [
+    "The owner approved immediate removal because the old prototype was never publicly distributed; no migration release or waiting period is required.",
+    "This decision record does not replace old-data preservation, source-rights, platform-package or release-owner acceptance evidence.",
+    "Do not put secrets, user backups, private support conversations or non-public old artifacts in this record."
+  ]
+}

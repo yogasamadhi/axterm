@@ -1,0 +1,9 @@
+- insert:
+    - id: configuration
+      name: '@axterm/plugin-configuration'
+      inject: [profileContext]
+      config:
+        profile: !!js ctx.profileContext.name
+        coordinationDirectory: !!js "ctx.profileContext.home + '/data-v2/coordination/sync'"
+    - id: terminal-facts
+      name: '@axterm/plugin-terminals/facts'

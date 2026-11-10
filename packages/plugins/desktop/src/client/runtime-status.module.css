@@ -1,0 +1,75 @@
+.led,
+.railLed {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: var(--ax-radius-circle);
+  background: var(--ax-color-warning);
+}
+.led[data-runtime-led='ready'],
+.railLed[data-runtime-led='ready'] {
+  background: var(--ax-color-success);
+}
+.led[data-runtime-led='degraded'],
+.railLed[data-runtime-led='degraded'] {
+  background: var(--ax-color-danger);
+}
+.railLed {
+  position: fixed;
+  z-index: var(--ax-layer-desktop-runtime-status-railled-z-index);
+  right: 16px;
+  bottom: 9px;
+  pointer-events: none;
+}
+.identity {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.summary {
+  margin-inline-start: auto;
+  color: var(--ax-color-text-muted);
+  font: inherit;
+  white-space: nowrap;
+}
+
+.health {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.control {
+  width: 32px;
+  height: 38px;
+  min-height: 0;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 32px;
+  -webkit-app-region: no-drag;
+}
+
+.runtimeWait {
+  position: absolute;
+  z-index: var(--ax-layer-desktop-runtime-status-runtimewait-z-index);
+  inset: max(38px, var(--ax-native-controls-height, 0px)) 0 24px 40px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 9px;
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text-muted);
+}
+.runtimeWait h2 {
+  margin: 0;
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-title);
+}

@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/deepseek-ai/deepseek-harness",
+  "commit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "sources": ["packages/client/ui-theme/src/client/index.ts"],
+  "license": "MIT",
+  "firstParty": {
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE.AXTERM",
+    "scope": "Axterm semantic tokens, accepted-preference port, selected registry/token layers and DOM/media lifecycle. Fonts, SVG assets and DSH product settings UI are not copied."
+  }
+}

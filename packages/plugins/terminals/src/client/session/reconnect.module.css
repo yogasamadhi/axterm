@@ -1,0 +1,75 @@
+.terminal-reconnect-overlay {
+  position: absolute;
+  right: 12px;
+  bottom: 6px;
+  z-index: var(--ax-layer-terminals-reconnect-terminal-reconnect-overlay-z-index);
+  display: flex;
+  align-items: center;
+  color: var(--ax-color-terminals-reconnect-terminal-reconnect-overlay-color);
+  font-size: var(--ax-font-size-body);
+}
+
+.terminal-reconnect-message {
+  pointer-events: none;
+}
+
+.terminal-reconnect-actions {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: var(--ax-border-terminals-reconnect-terminal-reconnect-actions-border);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-terminals-reconnect-terminal-reconnect-actions-background);
+  box-shadow: var(--ax-shadow-terminals-reconnect-terminal-reconnect-actions-box-shadow);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.terminal-reconnect-overlay:hover .terminal-reconnect-actions,
+.terminal-reconnect-overlay:focus-within .terminal-reconnect-actions,
+.terminal-reconnect-overlay.error .terminal-reconnect-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.terminal-reconnect-overlay.error {
+  color: var(--ax-color-terminals-reconnect-terminal-reconnect-overlay-error-color);
+}
+
+.terminal-reconnect-overlay button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 22px;
+  padding: 2px 7px;
+  color: var(--ax-color-terminals-reconnect-terminal-reconnect-overlay-button-color);
+  font: inherit;
+  border: var(--ax-border-terminals-reconnect-terminal-reconnect-overlay-button-border);
+  border-radius: var(--ax-radius-small);
+  background: var(--ax-color-terminals-reconnect-terminal-reconnect-overlay-button-background);
+}
+
+.terminal-reconnect-overlay button:hover:not(:disabled) {
+  color: var(
+    --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-hover-not-disa-f57b9f9
+  );
+  border-color: var(
+    --ax-color-terminals-reconnect-terminal-reconnect-overlay-button-hover-not-disa-85adf3a
+  );
+}
+
+.terminal-reconnect-overlay button:disabled {
+  opacity: var(--ax-opacity-terminals-reconnect-terminal-reconnect-overlay-button-disabled-opacity);
+}
+
+.spin {
+  animation: session-spin var(--ax-motion-spin) var(--ax-motion-easing-linear) infinite;
+}
+@keyframes session-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

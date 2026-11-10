@@ -1,0 +1,24 @@
+diff --git a/src/unix/pty.cc b/src/unix/pty.cc
+--- a/src/unix/pty.cc
++++ b/src/unix/pty.cc
+@@ -696,8 +696,10 @@
+ 
+   for (; count < 3; count++) {
+     low_fds[count] = posix_openpt(O_RDWR);
+-    if (low_fds[count] >= STDERR_FILENO)
++    if (low_fds[count] >= STDERR_FILENO) {
++      count++;
+       break;
++    }
+   }
+ 
+   int flags = POSIX_SPAWN_CLOEXEC_DEFAULT |
+@@ -779,7 +781,7 @@
+   posix_spawnattr_destroy(&attrs);
+ 
+   for (; count > 0; count--) {
+-    close(low_fds[count]);
++    close(low_fds[count - 1]);
+   }
+ }
+ #endif

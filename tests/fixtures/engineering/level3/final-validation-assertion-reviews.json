@@ -1,0 +1,245 @@
+{
+  "date": "2026-11-09",
+  "scope": "Explicit paired successor assertion revisions and one named semantic replacement. Original retired source identities and original baselines remain immutable; new assertions strengthen their current owner contracts.",
+  "reviews": [
+    {
+      "path": "tests/integration/level3-catalog.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "1e8a8db133a79c0062987e84591275be46fc9ae00289342f45c31572365b5d2f",
+      "afterSha256": "d2bd53869a3d200689e3710817ba17d7acb21305aff636c3b65bb13fc6e6593b",
+      "assertionCount": 85,
+      "revisions": [
+        {
+          "before": "dec4768b3155b874143dcbd0fbfcd57fb777b4e26df830ef1689196649fa7c2f",
+          "after": "80d6c3c2c6c63dc4103a134d4e897543250b45b8da27f0ea4bdf3820ab8effca",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "e20e7aff362cfe318cea87daba3b67dfa219d86768255e4411c6abaad6779d45",
+          "after": "760122805bfae6273e8e5d1156f03f2a16a4f4642d681bce0b0b04a83c769929",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "9e5cd2fd3da86b918d5139ce6f13c6069e44b726696443543c715e312bffabb5",
+          "after": "a14d48d9ce4339150b9476d5ec65b1286d9e900b91fe212c1140f38d6f12aea4",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "81b674d1a0ca036db037670a501b43eb6a4532b60b88bb26f8c6f5176eb09937",
+          "after": "ac1c6b52cab788f4db25240e3908a6c0c505dbddb18039b9834d9e202580a03f",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "1084050783f328970575b99906c6e419e3176ca2d7fc5e2ff33c027b600297d8",
+          "after": "711060d31a2210dfea927440267f781ccf13729abf60f170f97107ba0164ab39",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "0a5dc306886cd022064f18b6bf6e4cf047861ba142f82e7325827171e0168334",
+          "after": "9b2474884cc2301bae8e701db49b7cf617a1dc92f61739f457fbdbe506e291f6",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "52832a5888083e9cad12fdcecc373d1e8a80e938661c0c093c670ef0304fa6a6",
+          "after": "6ba5292f53283dc5ab6330b85e632c00a2a95e619177ec912a719c4ee3a03067",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "dd7ecd7ba9d581256f5f6b8d171e19f921ef4c0df06054578ea03b7a0eab0a8f",
+          "after": "24a6980b76111762f8e6fddf704b65f1b12d938489279b39872b87d5e575920d",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "1726e5b77091934f1f6c6449061a36b3f32a74e2df1b304810cffa5a879012d2",
+          "after": "45eba8b7951f79c165fa5303e8bb4b02d9f2ab8600af688bde2a385a90286504",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        },
+        {
+          "before": "03227573b2b3fa874ef03812aa8541abc428e68dd1e782665c7336ef76f2240e",
+          "after": "d51860016f18e545afeb787b92ffc64c92ab29b79c9e62862c73b7b3755513ef",
+          "reason": "Retain every original error reason and all rollback/resource assertions; the approved typed diagnostic field is an additional public member, not a reason mismatch."
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/level3-web-sessions.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "8283fcc378efd759a8904553bae910dbef21828d3044bd7397a7a2934df76ccb",
+      "afterSha256": "dd37a6d809fa0c9094970fea6a7332fcfa9d69123f656a46eb3329e9c4b2522f",
+      "assertionCount": 16,
+      "revisions": [
+        {
+          "before": "a04dc6a4c995984084221a87dd58cf155b33b7fee7786858b455809229daf8b0",
+          "after": "d41465395d230717152259608f5eb30d093ee36eb52c886554917df11df47b4a",
+          "reason": "Add the strict TypeScript non-null assertion for the existing first-session assertion; emitted runtime assertion is unchanged."
+        }
+      ]
+    },
+    {
+      "path": "packages/plugins/ai/tests/retained-model-http.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "b378ada576642719c80e74d412b6908d3b5d3b5962d4903459dde620cb6dd735",
+      "afterSha256": "7481cc4bafe36e84d7e7ef6d45255338bc4b1f87e24fe2dfd0371dfdd3a2517e",
+      "beforeAssertionCount": 16,
+      "afterAssertionCount": 17,
+      "removed": ["bb097a08cd9b6e35bce08103d4b5c1f4ec8923187749f2e00336ce6af6faf8be"],
+      "added": [
+        "257a98be8375e8d66dbc1c45785049d7bcf0310f53d797929b74d4bebd5277c1",
+        "0bec86cf5ed66920d6bc4d8c514738f992a9caf2905769deca4f24bbe9eb2069"
+      ],
+      "reason": "Preserve exact joined visible Hello, multiple streamed deltas, original usage/command/completion and HTTP/auth assertions. Pi secret-prefix withholding determines chunk boundaries; chunk partition is not an application fact."
+    },
+    {
+      "path": "packages/plugins/terminals/tests/terminal-transfer/transfer-nonce.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "c1eab74706f5e91bdcddd79e2728bafdb31693c10f8f133e9f798b88cd316ce2",
+      "afterSha256": "68eadf736d6216232eec93e64f132456e7506ec0816c9a4e6bec62c4e1fe67f7",
+      "beforeAssertionCount": 2,
+      "afterAssertionCount": 5,
+      "removed": ["4f8ee351f220deb0481e54665a782069eaba47319f18e6bc866e2373bcd9c0d2"],
+      "added": [
+        "86083347a12110e945765880dfbbd2a847165c657eff9e4f80f9d71ae195a656",
+        "d60630f0d88cb3850fcd9448715714fefda58eb6d7d2abd20ea5ec5fc6c928f3",
+        "e4425a6b2b6ca099c333c58177f3ae2c1551fc525a23773805a8353f7ca72081",
+        "5576f6b6beae33a278607c76ffbea8590461b3946a8c46f036b663d8f744249d"
+      ],
+      "reason": "Replace a missing unused CJS utility with 256 real owned private staging allocations: unique UUID v4 identities, confined private paths, actual recovery deletion and zero resources. Original source and original assertion baseline remain immutable; named semantic mapping records the new representation."
+    },
+    {
+      "path": "tests/integration/level3-automation-ui.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "c097dc878e5b81dabdbee3f255098b9b341e88dbdd62c241d1ba3963e66f3671",
+      "afterSha256": "4e25db67ddd6c689d657cc28e4fa787fad21fafbd44b61f57139a5edfa316044",
+      "beforeAssertionCount": 3,
+      "afterAssertionCount": 3,
+      "removed": ["9cbdbcfd75e3a2eae6e62a28bfc6807b1035a0dcbe4eb4b2d4b857395bdc5987"],
+      "added": ["14143aa4fbd55f67bf70ab4b6b4bee356c34d91f635d8cf33908397000257b88"],
+      "reason": "Keep exactly one owned workspace tab while the full Settings section temporarily hides its DOM. This is a resource count assertion; visible actions still require visible controls."
+    },
+    {
+      "path": "tests/integration/level3-desktop-launch-ui.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "c12852349a96d7d8d51cd97d7a69db8b214c2f876f3dd82ed66ec46858bfb313",
+      "afterSha256": "84bdde50425dd059482f8728c464b6df98012adf452aeafd3b8b133f83df62e3",
+      "beforeAssertionCount": 5,
+      "afterAssertionCount": 5,
+      "removed": ["3fb4baa49685177058a897413a77616f7d1452d7895e1d88547574a1f46ff6ee"],
+      "added": ["59ed84b03fe88afc4f402dd025bbcfe956be0dcd8cab1c8b11bd1cdb4dd6fc65"],
+      "reason": "Scope unchanged selected-tab identity and tab count assertions to the actual global workspace tabs, excluding the additional selected Terminal/Files inner tab; preserve exactly one window-local admission and no replay. Use registered axterm wrapper for OS ingress; local URLs remain CLI-only."
+    },
+    {
+      "path": "tests/integration/level3-retained-ai-continuous-work.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "4a3f9dca101634bdb81495c714e59cdfbc9d86d2572cb847974c9c43ddb1aee4",
+      "afterSha256": "3d6b50d8969c6a29414e449e352ca50e3dc9808b4d2e131838074596452feea4",
+      "beforeAssertionCount": 68,
+      "afterAssertionCount": 68,
+      "removed": ["2bcc9f232ace3b67372b3923ba382b2eb780c6729e33f2b73c04ff66bfbd70a2"],
+      "added": ["cbf617b9fc9d6b423fd8e767ee200779aefbd344e4f655919f29982b566eab29"],
+      "reason": "Preserve exactly 50 command executions and 50 tool facts, with no command 51 or replacement task. The DSH Engine registry reaches its 50-call capacity first and emits AI_ENGINE_CAPACITY before the application budget."
+    },
+    {
+      "path": "tests/integration/level3-retained-ai-workspace-service.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "9437126dae3675e38265a895d845507aabd8c244e8a0311ecc9855baac2239b6",
+      "afterSha256": "34611477c957f7d390efc8b0cfe2687247f06b89ee8e4cf8b57f40c2bea73d57",
+      "beforeAssertionCount": 31,
+      "afterAssertionCount": 31,
+      "removed": ["f3d13c651a640cc8baf4f3e50a11a313fc1035ffab16f9d16ea6cb5aaebce526"],
+      "added": ["be243b7e70f8f73419bf6bc9c032b1607a8cd09c85e20064e623d9935ae4c2e4"],
+      "reason": "Assert the actual public PAYLOAD_TOO_LARGE code and 413 status while preserving real noisy child output cancellation and process cleanup instead of an obsolete error-message substring.",
+      "formatNote": "Prettier multiline object trailing-comma metadata normalized before freezing the final assertion hash; typed code/status behavior is unchanged."
+    },
+    {
+      "path": "tests/integration/level3-workspace-presentation.test.ts",
+      "adr": "ADR-220",
+      "beforeSha256": "3f8f52481d1203e32896aba5340cf1185286631ea08efdd9e139a57ea0ef18ac",
+      "afterSha256": "2381746114cdf786bcdbd1d4b943f43f1569646b6b8d353233d0d7bb7a860e58",
+      "beforeAssertionCount": 29,
+      "afterAssertionCount": 29,
+      "removed": ["472a411dadf21cf3812f35c5c0c625a019b5df64acd5058ad69aa58295837297"],
+      "added": ["58a70cb6c3d8e65c89bd5eea179f8c408afd7dcb144ef3cdbf6041a20a93465a"],
+      "reason": "Use the approved current Sync comparison surface and case-normalize the translated Equal label; retain equality, actual network upload count, no secret leakage, explicit preview confirmation and shared credential preservation."
+    },
+    {
+      "path": "tests/e2e/visual.spec.ts",
+      "adr": "ADR-224",
+      "beforeSha256": "6be7fae7cf2a19fb4c62a6081b61aa9d9468f73244f4934a5aa8feba3de338fd",
+      "afterSha256": "a0e5f2268628bde2048e8630db506898c8be9b3b33c3b1de1d26fd76ed5c8c4d",
+      "beforeAssertionCount": 431,
+      "afterAssertionCount": 431,
+      "retainedBy": ["tests/e2e/desktop.spec.ts", "tests/e2e/packaged.spec.ts"],
+      "revisions": [
+        {
+          "before": "c1c52a5a7b4c1162ec6eb48cb7bcf44d044d5061af3d7cb80c2843a155f9c581",
+          "after": "0022eb44dd6ccf08d33acfb17dbb10174192e1eb7f325389aae765d1073bf0c7",
+          "reason": "Traverse the required DSH display:contents anchor to the first actual activity button. Keep exact expected AI identity, all action-order/tooltip/focus/edge assertions, all 431 expressions and all frozen image bytes/thresholds."
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/visual.spec.ts",
+      "adr": "ADR-225",
+      "scope": "Narrow layout-menu presentation under owner 95% requirement",
+      "previous": "Exact 4px gap to the right activity rail for the layout popup.",
+      "replacement": "Radix trigger alignment is allowed; retain visible menu, nonnegative x/y, complete vertical bounds and right edge left of the activity rail; retain Escape dismissal and all following panel/navigation assertions.",
+      "preserved": "Other sidebar/menu right docking, all original 431 assertion expressions and frozen screenshot bytes/thresholds remain.",
+      "ownerVisualReview": "Pending final candidate; this is not a 95% self-approval."
+    },
+    {
+      "path": "tests/unit/level3-runtime-legal-paths.test.ts",
+      "adr": "ADR-228",
+      "beforeSha256": "0c69893d02422dc3547f35ab0175435b4768827e61a998065ce37f69eb18944f",
+      "afterSha256": "21a19ce909d82e430a77d7155b35716b51049e9de71834da61c29150d9b33496",
+      "beforeAssertionCount": 7,
+      "afterAssertionCount": 7,
+      "removed": [
+        "b6eccaedeec65d7e4b085c8bc36eed634f7a323ed141a194176d491039fef8f4",
+        "e08f0ceaf3269ae1a334923b34e7d4077667cfa6eba01704c76c0d4a7356a1d6",
+        "9c5efbee28cd88858c7c3c09496d7a348ece683c6b99076b9e1a9311f0fa06be"
+      ],
+      "added": [
+        "cede192229c57bb13094a2ea06534afecec0278ab557ebe3612bf9c26f4cfad3",
+        "782cfd6c6f48c8795bc0a3910ed3ca91b0e4bb8c31c058afebf9f899ab8b3739",
+        "1c889ae52ac3b4a545e3689178868d4c741b10507920499fd740e8dabda99824"
+      ],
+      "reason": "ADR-228: fixed Mac paths now match the actual prepared Contents extraFiles. Both exact URI/file identities, media types, development names and all traversal/credential/query/port rejections remain.",
+      "successorReferences": 1
+    },
+    {
+      "path": "tests/e2e/top-navigation.spec.ts",
+      "adr": "ADR-228",
+      "beforeSha256": "376cd51fb178af9471db72a14626fbf1436e1406e3a25c53b2622d5809fbf72f",
+      "afterSha256": "e165c3a10eed6304006b6658cb6659b765a6fea64aa09e80d73b73b1938540cc",
+      "beforeAssertionCount": 20,
+      "afterAssertionCount": 22,
+      "removed": [
+        "2b618d50c9d71f9d918f62eb0bf2bf5b75e13e31ab4e6c85166041c87861e866",
+        "923de3076e071486b081e3ffd8f5f37eef2e83ab4496c7891d8fcbf6ad416dec"
+      ],
+      "added": [
+        "4f19b02239a3c5af0ba0be6a46aedb967262fa98da0e51ac42896aaf4e42e3da",
+        "bb6ec1c4c9f205b20961f9f83a906e219903ff683ac9e9cb07defbf905fdb288",
+        "1c69af91148172dc8f70f53033bf467f0deb0523907c9a48dc675a9c1cdd1712",
+        "a3992960c50300653d1eaf50dc3ff7c4dc45a1a408a2e0c01c2d05c53d8de00f"
+      ],
+      "reason": "ADR-228/224: the docked owning aside includes its first-row header. Check the exact header/navigation row and all visible body children below it, retaining full-window navigation, pane placement, actual clicks and maximize/restore. No screenshot or numeric tolerance change; owner 95% review remains pending.",
+      "successorReferences": 1
+    },
+    {
+      "path": "tests/e2e/visual.spec.ts",
+      "adr": "ADR-230",
+      "beforeSha256": "df75c7c1daa341d797f2dbaf3bcbedc9655ef5483e67f5dac2397cd72a2a3ba9",
+      "afterSha256": "e944b24f5710cc4f3fefa65eafe7ebd0e42974de954ac53f0c32380cdea5c3ea",
+      "beforeAssertionCount": 437,
+      "afterAssertionCount": 440,
+      "removed": [],
+      "added": [
+        "e5711b1eb67a7431105c54a9111b092bc7890e8bef114ace9b8f3fe5f598f5d7",
+        "17032c8bb75797af300d82acd614ecb24e5f5a7904df5af5852c8d38ae6ef12b",
+        "16514be2a46e87b4ce5bbe67df77184c79359eabfd3b44f814d6254101af4234"
+      ],
+      "reason": "All existing assertions retained. Settle real Settings close before holding a persistent AI workspace save; explicitly verify the retained tab remains keyboard-reachable after empty-pane focus at 200% zoom."
+    }
+  ]
+}

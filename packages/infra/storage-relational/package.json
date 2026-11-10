@@ -1,0 +1,26 @@
+{
+  "name": "@axterm/infra-storage-relational",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./copy": {
+      "types": "./lib/types/copy.d.ts",
+      "default": "./lib/copy.js"
+    }
+  },
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/infra-atomic-write": "workspace:*",
+    "@deepseek-ai/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  }
+}

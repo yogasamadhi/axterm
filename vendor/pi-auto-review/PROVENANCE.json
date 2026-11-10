@@ -1,0 +1,31 @@
+{
+  "repository": "https://github.com/erichll/pi-packages",
+  "revision": "6eb4d9668f6d23fb6793029d5d145b8ae0fcd0ad",
+  "package": "@erichll/pi-auto-review",
+  "version": "0.26.0",
+  "license": "MIT",
+  "scope": [
+    "src/policy.ts",
+    "src/path-surfaces.ts",
+    "src/review/shell-text.ts",
+    "LICENSE"
+  ],
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "75054b6a08e1008c86b6045ab99add2c8fa571987880951a9929f11ee56a7d64"
+    },
+    {
+      "path": "src/path-surfaces.ts",
+      "sha256": "e80c43c5a0d0ae6bcf1a3d358f7c388e6e7b6f18fbed81d408c2cf58a54225fb"
+    },
+    {
+      "path": "src/policy.ts",
+      "sha256": "6ed03ed1cdad5073f92b45efabfa9a1520af552ae479b2708dbbcc18cddfd180"
+    },
+    {
+      "path": "src/review/shell-text.ts",
+      "sha256": "b4145845c1f9f389132692ba18f6a57bda1669e465536851a7ae7dbd1ccb2cc3"
+    }
+  ]
+}

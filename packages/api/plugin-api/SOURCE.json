@@ -1,0 +1,127 @@
+{
+  "repository": "https://github.com/deepseek-ai/deepseek-harness",
+  "commit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "sources": [
+    "packages/typert/protocol/src",
+    "packages/util/brand/src",
+    "packages/util/values/src/index.ts (JsonValue type alias only)",
+    "packages/typert/registry/src/types.ts",
+    "packages/typert/registry/src/index.ts (registry contract methods only)",
+    "packages/api/gateway/src/types.ts",
+    "packages/api/gateway/src/remote-error-codes.ts",
+    "packages/api/gateway/src/stream-protocol.ts",
+    "packages/api/remote-access/src/types.ts",
+    "packages/storage/storage/src/backend.ts",
+    "packages/storage/storage/src/error.ts",
+    "packages/storage/storage-domain/src/spec.ts",
+    "packages/storage/storage-domain/src/events.ts",
+    "packages/storage/storage-domain/src/error.ts",
+    "packages/storage/storage-domain/src/domain.ts (interfaces only)",
+    "packages/credentials/credentials/src/types.ts",
+    "packages/credentials/credentials/src/index.ts (constructors and service contract only)",
+    "packages/subprocess/subprocess/src/types.ts (selected structural Host contract)",
+    "packages/subprocess/subprocess/src/index.ts (portable error identity and environment prefix only)",
+    "packages/client/shortcuts/src (pure physical-key/configuration/persistence/native contracts)"
+  ],
+  "license": "MIT",
+  "scope": "Public Remote, reflection, carrier, access, storage and subprocess contracts; no application business or native provider implementation",
+  "firstParty": {
+    "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE.AXTERM",
+    "scope": "Axterm-authored additions and migrated first-party DTO contracts; upstream adapted portions retain the MIT notice in LICENSE.",
+    "migrations": "compliance/LEVEL3_BUSINESS_SOURCE.json",
+    "files": [
+      {
+        "path": "packages/api/plugin-api/src/terminals.ts",
+        "source": "packages/contracts/src/schemas/resources.ts",
+        "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/resources.ts",
+        "source": "packages/contracts/src/schemas/resources.ts",
+        "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/bookmarks.ts",
+        "source": "packages/contracts/src/schemas/bookmarks.ts",
+        "sourceSha256": "72b1811e2cd582a0f59fcdbd232acd6de17162f2624b0252f349da131d91956a"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/connection-history.ts",
+        "source": "packages/contracts/src/schemas/connection-history.ts",
+        "sourceSha256": "44f6b56b0bf3a991f33491b67dd32349f5e261f20787c3c96ab266b4bb9c08e6"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/connection-profiles.ts",
+        "source": "packages/contracts/src/schemas/connection-profiles.ts",
+        "sourceSha256": "3c9a15c35b943a212109147a199e28361a58e8cd9c001c449bebe02b3c660b3d"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/shortcuts.ts",
+        "source": "packages/contracts/src/schemas/shortcuts.ts",
+        "sourceSha256": "2dcb2852dfd7997240cb00c6a9e979b7113894b61205d9da9763d7f5654011f8"
+      },
+      {
+        "path": "packages/api/plugin-api/src/host/terminal-channel.ts",
+        "source": "packages/runtime/src/ports/terminal-channel.ts",
+        "sourceSha256": "a405a3fe6221455a16e076f4dca9f202c33a9611e92abedeb6b198e50c269a8a"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/command-history.ts",
+        "source": "packages/contracts/src/schemas/command-history.ts",
+        "sourceSha256": "7c95ccbc1941ff9aa997faf79d48c04fe91bcc35ad9adac2305fa9a469fbf256"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/terminal-themes.ts",
+        "source": "packages/contracts/src/schemas/terminal-themes.ts",
+        "sourceSha256": "7f3c78bf8919c7002bf03a8e3f16f715808f5ee21361aff325e19e7348ab70b4"
+      },
+      {
+        "path": "packages/api/plugin-api/src/files.ts",
+        "source": "packages/contracts/src/host-capabilities/desktop.ts",
+        "sourceSha256": "904f77c123520a3fdcb49141dc7e058d14deb144c688c40323cc684fe1647964"
+      },
+      {
+        "path": "packages/api/plugin-api/src/files.ts",
+        "source": "packages/contracts/src/schemas/resources.ts",
+        "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+      },
+      {
+        "path": "packages/api/plugin-api/src/host/remote-files.ts",
+        "source": "packages/runtime/src/ports/ssh-transport.ts",
+        "sourceSha256": "9522c0fcebe12afacf085cd4aa086912ccdcc0b31717171f1b13121c69a3f930"
+      },
+      {
+        "path": "packages/api/plugin-api/src/transfers.ts",
+        "source": "packages/contracts/src/schemas/resources.ts",
+        "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+      },
+      {
+        "path": "packages/api/plugin-api/src/saved-credentials.ts",
+        "source": "packages/contracts/src/schemas/resources.ts",
+        "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/axterm-configuration.ts",
+        "source": "packages/contracts/src/schemas/axterm-configuration.ts",
+        "sourceSha256": "6c94457754440332aabb857c6ee85520618f88a14c1cdd2ec86c4573fd11865a"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/data-sync.ts",
+        "source": "packages/contracts/src/schemas/data-sync.ts",
+        "sourceSha256": "27426dcbda9a711f10b3c9300c8d2d5b39f332572ea07fb0bbdd01b79c342541"
+      },
+      {
+        "path": "packages/api/plugin-api/src/schemas/axterm-sync.ts",
+        "source": "packages/contracts/src/schemas/axterm-sync.ts",
+        "sourceSha256": "905fd83e4ae62caa02cb277789e008d38dde3ef76ea12f657bdc7dfb21bf738c"
+      },
+      {
+        "path": "packages/api/plugin-api/src/ai.ts",
+        "source": "packages/contracts/src/schemas/resources.ts",
+        "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+      }
+    ]
+  }
+}

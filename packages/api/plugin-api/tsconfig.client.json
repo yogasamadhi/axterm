@@ -1,0 +1,10 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "lib": ["ES2024", "DOM", "DOM.Iterable", "DOM.AsyncIterable", "ESNext.Disposable"],
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src"],
+  "exclude": ["src/host"]
+}

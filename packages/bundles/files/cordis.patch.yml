@@ -1,0 +1,6 @@
+- insert:
+    - id: files
+      name: '@axterm/plugin-files'
+      inject: [profileContext]
+      config:
+        profile: !!js ctx.profileContext.name

@@ -1,0 +1,59 @@
+.diagnostic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.metric {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+  padding: 13px;
+  border: var(--ax-border-desktop-diagnostics-metric-border);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-desktop-diagnostics-metric-background);
+}
+.metric span {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-tiny);
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  letter-spacing: var(--ax-letter-spacing-caption-fixed);
+  white-space: nowrap;
+}
+.metric strong {
+  font: var(--ax-font-desktop-diagnostics-metric-strong-font);
+  color: var(--ax-color-desktop-diagnostics-metric-strong-color);
+}
+
+.settings-advanced-diagnostics {
+  margin-block: 24px;
+  min-width: 0;
+}
+
+.settings-advanced-diagnostics > summary {
+  cursor: pointer;
+  font-weight: var(--ax-font-weight-semibold);
+  min-height: 32px;
+  overflow-wrap: anywhere;
+}
+
+.settings-diagnostics-content {
+  margin-top: 12px;
+  min-width: 0;
+}
+
+.settings-diagnostics-content .metric span {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.surface {
+  padding: 16px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-card-soft);
+  background: var(--ax-color-surface-sunken);
+  box-shadow: var(--ax-shadow-desktop-diagnostics-surface-box-shadow);
+}

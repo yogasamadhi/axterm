@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+  "scope": "Historical generation 2 data validators, test input only; no application services, routes, RPC or client.",
+  "externalDependencies": {
+    "zod": "4.4.3"
+  },
+  "files": [
+    {
+      "source": "packages/contracts/src/schemas/axterm-configuration.ts",
+      "path": "schemas/axterm-configuration.ts",
+      "sha256": "6c94457754440332aabb857c6ee85520618f88a14c1cdd2ec86c4573fd11865a"
+    },
+    {
+      "source": "packages/contracts/src/schemas/resources.ts",
+      "path": "schemas/resources.ts",
+      "sha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+    },
+    {
+      "source": "packages/contracts/src/host-capabilities/desktop.ts",
+      "path": "host-capabilities/desktop.ts",
+      "sha256": "904f77c123520a3fdcb49141dc7e058d14deb144c688c40323cc684fe1647964"
+    },
+    {
+      "source": "packages/contracts/src/schemas/bookmarks.ts",
+      "path": "schemas/bookmarks.ts",
+      "sha256": "72b1811e2cd582a0f59fcdbd232acd6de17162f2624b0252f349da131d91956a"
+    },
+    {
+      "source": "packages/contracts/src/schemas/connection-profiles.ts",
+      "path": "schemas/connection-profiles.ts",
+      "sha256": "3c9a15c35b943a212109147a199e28361a58e8cd9c001c449bebe02b3c660b3d"
+    },
+    {
+      "source": "packages/contracts/src/schemas/terminal-themes.ts",
+      "path": "schemas/terminal-themes.ts",
+      "sha256": "7f3c78bf8919c7002bf03a8e3f16f715808f5ee21361aff325e19e7348ab70b4"
+    },
+    {
+      "source": "packages/contracts/src/schemas/shortcuts.ts",
+      "path": "schemas/shortcuts.ts",
+      "sha256": "2dcb2852dfd7997240cb00c6a9e979b7113894b61205d9da9763d7f5654011f8"
+    }
+  ]
+}

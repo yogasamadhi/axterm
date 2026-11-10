@@ -1,0 +1,28 @@
+{
+  "name": "@axterm/infra-hmr",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "chokidar": "5.0.0",
+    "node-addon-require-builtin": "^0.1.9",
+    "picomatch": "^4.0.7",
+    "@deepseek-ai/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:*",
+    "@deepseek-ai/cordis-plugin-loader": "workspace:*",
+    "@deepseek-ai/cordis-plugin-include": "workspace:*",
+    "@deepseek-ai/cordis-plugin-timer": "workspace:*",
+    "@axterm/infra-app-boot": "workspace:*",
+    "@axterm/infra-cmdline": "workspace:*"
+  }
+}

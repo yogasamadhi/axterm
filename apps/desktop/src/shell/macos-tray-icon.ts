@@ -1,0 +1,17 @@
+import type { nativeImage } from 'electron';
+
+// Monochrome rendering of the existing AX path in apps/desktop/build/icon.svg.
+// Only the background and gradients are removed; explicit scale representations
+// keep the template crisp on standard and Retina menu bars without external files.
+const icon1x =
+  'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAEKADAAQAAAABAAAAEAAAAAA0VXHyAAABNUlEQVQ4Ec2RvyuFYRTHHy65EQOSMpgMsiEZbMJglOEuBmW5k8XAooyyicViMEqZTAb/gUFmg4XIIL/Kr8/37Zw6N89VNqc+7znP93uec89735T+a4yz2Nwvy83jbUNjrqcf8RW+YDPTMIX2Zv5uxk87ZmqAWAlNY9SPpiuPBq8oe3m+gC5+Wla9CINwZ5o2nIQfsYXil2epr+38Tr6x+oOc/X+6MHy9I2rFENyDhjpL1NnYQPWmEetoJ58H/Zl62Lya1MHpATTgxJwW8qlpPlhZrzIANbHKyZsmqEtwGLR96gro/dV3BX1QRCvPW5BxVigp7dlZ2jE0mV4N+gV1p/TlIE5T65d8Gw0sQ4x1Du4faNUn8C+wRn0JPdAMMyA/hoZ2g7ZaiIYuxNAXqBcNGG31zD/p31O3V9iOig9rAAAAAElFTkSuQmCC';
+const icon2x =
+  'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACn0lEQVRYCe2WW4jNURTGj+u4j9JEbiUPSBNilEuRkuT64pIHaUpePCh5lgfFkyI1kkIuRZRLkVJISSl5QWmUhAcScsnd79NZ2q1Z+5w9kqez6mutvdb3rb1n7332/CuVhjV24P/uwGym6wC9/2baaYiug06wE/QC3bFWyK/BT3Ae9APFNgDmcyCx4VCxulIZB/dZolUP/THNoMi2wLKJU7+7QD0czqOMfleBvtIEya8+XcS2Gk2GULsLUr7FV8mrd13bBMNEOd8edNEZa5sjzR3ygwNNl5Ru62MQNUlz3+CsTNS6oOcyuofkWxJuzXB90ORrkNNiPoH5oAc4DNIFWvyU/FhQZD1hPQAmNr+X3PYgr/pbcDxTe0V+Eii2VTBtUvOfyY2pdtgX1I3n/Xu4M6u6Yhfd3oOJWlt9AvjJ/FiLXpjoisIlQWNdtPFO3YfxpYBri/hObbXTFA1vBU2PZZTLAq4tQDd+YEaXTS8IGv4gNzlQzCD3LuDbAuQvA+1UsemFShsoPhuoJ5B7GXC9VuOTQL+qujYLRtRgulOOZvwkw9VdiXrsdz3C4cVArEuW2jAG90E0ifRtQO9BVN9BPmtTqUSiOYliEPHtDO8m+f5V7jy8Xsao3+Yqp4s7HQiuJay+xFcCjia5B4aC1FYwiI5DF3pdSlQ8Eeg361dsD4gu0KmgLn4nGAEi20BSE/q+X8gtBn/sKJEnaavNOgh8XeMXwD9OpjG/lSDSfiCvb8Tfn0vRf7jlKmI61xvAN3lDbgooMX35eL12fKPEI8EBoDfbSDpTvfVmWsQFYPWPxHOtWOj1f8T0OoK1XjeKxB6grVnji4z1cXIEaLeWgu6aPlLOAPVfVEvcQjH3amlX2mqJ69SaqJceW51WjfI/2oFfNQBaNqvsClIAAAAASUVORK5CYII=';
+
+export function createMacosTrayIcon(images: Pick<typeof nativeImage, 'createEmpty'>) {
+  const image = images.createEmpty();
+  image.addRepresentation({ scaleFactor: 1, buffer: Buffer.from(icon1x, 'base64') });
+  image.addRepresentation({ scaleFactor: 2, buffer: Buffer.from(icon2x, 'base64') });
+  image.setTemplateImage(true);
+  return image;
+}

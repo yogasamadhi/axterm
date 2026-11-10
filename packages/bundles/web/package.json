@@ -1,0 +1,27 @@
+{
+  "name": "@axterm/bundle-web",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "cordis.patch.yml"
+  ],
+  "axterm": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@axterm/infra-web-server": "workspace:*",
+    "@axterm/infra-connection": "workspace:*",
+    "@axterm/infra-client-modules": "workspace:*",
+    "@axterm/infra-ui-renderer": "workspace:*",
+    "@axterm/infra-frontend-static": "workspace:*",
+    "@axterm/infra-web-startup": "workspace:*",
+    "@axterm/infra-locale": "workspace:*",
+    "@axterm/infra-ui-theme": "workspace:*",
+    "@axterm/infra-client-hmr": "workspace:*",
+    "@axterm/infra-shortcuts": "workspace:*"
+  }
+}

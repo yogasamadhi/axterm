@@ -1,0 +1,58 @@
+{
+  "en": {
+    "behaviorSettings.title": "Startup, files and accessibility",
+    "behaviorSettings.description": "Defaults for startup sessions, SFTP behavior and terminal accessibility.",
+    "behaviorSettings.startup": "Sessions opened at startup",
+    "behaviorSettings.startupBookmarks": "Bookmarks",
+    "behaviorSettings.startupWorkspace": "Workspace",
+    "behaviorSettings.noStartupBookmarks": "No bookmarks are available yet",
+    "behaviorSettings.startupBookmarksHint": "Select up to 20 bookmarks. Hold Ctrl or Command to select more than one.",
+    "behaviorSettings.noStartupWorkspace": "Do not load a workspace",
+    "behaviorSettings.startupWorkspaceHint": "The selected named workspace takes priority over last-layout restoration.",
+    "behaviorSettings.saved": "Setting saved.",
+    "behaviorSettings.saveFailed": "Unable to save the setting.",
+    "common.retry": "Retry"
+  },
+  "zh-CN": {
+    "behaviorSettings.title": "启动、文件与无障碍",
+    "behaviorSettings.description": "启动会话、SFTP 行为和终端无障碍的默认设置。",
+    "behaviorSettings.startup": "启动时打开的会话",
+    "behaviorSettings.startupBookmarks": "书签",
+    "behaviorSettings.startupWorkspace": "工作区",
+    "behaviorSettings.noStartupBookmarks": "尚无可用书签",
+    "behaviorSettings.startupBookmarksHint": "最多选择 20 个书签；按住 Ctrl 或 Command 可多选。",
+    "behaviorSettings.noStartupWorkspace": "不加载工作区",
+    "behaviorSettings.startupWorkspaceHint": "所选命名工作区优先于上次布局恢复。",
+    "behaviorSettings.saved": "设置已保存。",
+    "behaviorSettings.saveFailed": "无法保存设置。",
+    "common.retry": "重试"
+  },
+  "ja": {
+    "behaviorSettings.title": "起動、ファイル、アクセシビリティ",
+    "behaviorSettings.description": "起動時のセッション、SFTP の動作、ターミナルのアクセシビリティの既定値。",
+    "behaviorSettings.startup": "起動時に開くセッション",
+    "behaviorSettings.startupBookmarks": "ブックマーク",
+    "behaviorSettings.startupWorkspace": "ワークスペース",
+    "behaviorSettings.noStartupBookmarks": "利用できるブックマークはまだありません",
+    "behaviorSettings.startupBookmarksHint": "最大 20 個のブックマークを選択できます。複数選択するには Ctrl または Command を押したままにします。",
+    "behaviorSettings.noStartupWorkspace": "ワークスペースを読み込まない",
+    "behaviorSettings.startupWorkspaceHint": "選択した名前付きワークスペースは、前回のレイアウトの復元より優先されます。",
+    "behaviorSettings.saved": "設定を保存しました。",
+    "behaviorSettings.saveFailed": "設定を保存できませんでした。",
+    "common.retry": "再試行"
+  },
+  "zh-TW": {
+    "behaviorSettings.title": "啟動、檔案與無障礙功能",
+    "behaviorSettings.description": "啟動工作階段、SFTP 行為與終端機無障礙功能的預設設定。",
+    "behaviorSettings.startup": "啟動時開啟的工作階段",
+    "behaviorSettings.startupBookmarks": "書籤",
+    "behaviorSettings.startupWorkspace": "工作區",
+    "behaviorSettings.noStartupBookmarks": "尚無可用書籤",
+    "behaviorSettings.startupBookmarksHint": "最多選取 20 個書籤。按住 Ctrl 或 Command 可選取多個。",
+    "behaviorSettings.noStartupWorkspace": "不載入工作區",
+    "behaviorSettings.startupWorkspaceHint": "選取的具名工作區會優先於上次版面配置的還原。",
+    "behaviorSettings.saved": "設定已儲存。",
+    "behaviorSettings.saveFailed": "無法儲存設定。",
+    "common.retry": "重試"
+  }
+}

@@ -1,0 +1,3 @@
+- insert:
+    - id: catalog
+      name: '@axterm/plugin-catalog'

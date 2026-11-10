@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "privacyAndDataHandling": null,
+  "securityReporting": null,
+  "supportPolicy": null,
+  "limitations": [
+    "This pending record does not establish a public privacy policy, security reporting channel, support commitment or commercial release.",
+    "The completed active record is a release-owner service-policy handoff. It does not replace source-rights, product-security, platform-installation, updater, migration or legal review evidence.",
+    "Do not put credentials, access tokens, private incident reports, customer data, user backups or unpublished release artifacts in this record."
+  ]
+}

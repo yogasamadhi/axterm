@@ -1,0 +1,3 @@
+- insert:
+    - id: remoteDesktop
+      name: '@axterm/plugin-remote-desktop'

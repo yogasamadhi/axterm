@@ -1,0 +1,54 @@
+{
+  "name": "@axterm/cli",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "axterm": "lib/index.js"
+  },
+  "exports": {
+    "./profile-boot": {
+      "types": "./lib/types/profile-boot.d.ts",
+      "default": "./lib/profile-boot.js"
+    },
+    "./profile-templates": {
+      "types": "./lib/types/profile-templates.d.ts",
+      "default": "./lib/profile-templates.js"
+    }
+  },
+  "dependencies": {
+    "@axterm/infra-app-boot": "workspace:*",
+    "@axterm/infra-home-paths": "workspace:*",
+    "@axterm/infra-launch-environment": "workspace:*",
+    "@axterm/infra-http-proxy": "workspace:*",
+    "@axterm/infra-cmdline": "workspace:*",
+    "@axterm/infra-atomic-write": "workspace:*",
+    "@axterm/bundle-base": "workspace:*",
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/bundle-web": "workspace:*",
+    "@axterm/bundle-headless": "workspace:*",
+    "@axterm/web": "workspace:*",
+    "@axterm/bundle-terminals": "workspace:*",
+    "@axterm/bundle-catalog": "workspace:*",
+    "@axterm/bundle-configuration": "workspace:*",
+    "@axterm/bundle-connections": "workspace:*",
+    "@axterm/bundle-files": "workspace:*",
+    "@axterm/bundle-transfers": "workspace:*",
+    "@axterm/bundle-remote-desktop": "workspace:*",
+    "@axterm/bundle-automation": "workspace:*",
+    "@axterm/bundle-workspace": "workspace:*",
+    "@axterm/bundle-engine-pi": "workspace:*",
+    "@axterm/bundle-ai": "workspace:*",
+    "@axterm/infra-plugin-manager": "workspace:*",
+    "@axterm/infra-subprocess-local": "workspace:*",
+    "@deepseek-ai/cordis": "workspace:*",
+    "@axterm/bundle-plugins": "workspace:*",
+    "@axterm/infra-profile-recovery": "workspace:*",
+    "@axterm/bundle-market": "workspace:*",
+    "@axterm/infra-storage-relational": "workspace:*"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis-plugin-include": "workspace:*"
+  },
+  "license": "Apache-2.0"
+}

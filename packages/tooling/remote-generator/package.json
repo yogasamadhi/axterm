@@ -1,0 +1,38 @@
+{
+  "name": "@axterm/remote-generator",
+  "version": "0.10.0",
+  "private": false,
+  "type": "module",
+  "license": "MIT",
+  "description": "Axterm source-first Remote reflection and codec generator",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./tsdown": {
+      "types": "./lib/types/tsdown-plugin.d.ts",
+      "default": "./lib/types/tsdown-plugin.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "LICENSE",
+    "README.md",
+    "SOURCE.json"
+  ],
+  "dependencies": {
+    "typescript": "6.0.3",
+    "@jridgewell/gen-mapping": "0.3.13"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~",
+    "@axterm/plugin-api": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15"
+  }
+}

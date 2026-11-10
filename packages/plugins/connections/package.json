@@ -1,0 +1,78 @@
+{
+  "name": "@axterm/plugin-connections",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./package.json": "./package.json",
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    }
+  },
+  "files": [
+    "lib",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts",
+    "SOURCE.json"
+  ],
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/data-schema": "workspace:*",
+    "@axterm/infra-credentials": "workspace:*",
+    "@axterm/infra-storage-domain": "workspace:*",
+    "@axterm/infra-scope": "workspace:*",
+    "ssh2": "1.17.0",
+    "zod": "4.4.3",
+    "@axterm/infra-gateway": "workspace:*",
+    "basic-ftp": "6.2.1",
+    "iconv-lite": "0.7.2",
+    "serialport": "13.0.0",
+    "@axterm/ui": "workspace:*",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "lucide-react": "1.44.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "vitest": "5.0.0",
+    "@types/ssh2": "1.15.5",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "external": [
+        "@axterm/infra-gateway/client",
+        "@axterm/ui",
+        "@axterm/ui/controls",
+        "@axterm/ui/workspace",
+        "@axterm/ui/presentation"
+      ]
+    }
+  }
+}

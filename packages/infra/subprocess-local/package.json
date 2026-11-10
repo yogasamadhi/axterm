@@ -1,0 +1,40 @@
+{
+  "name": "@axterm/infra-subprocess-local",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./runner": {
+      "types": "./lib/types/bin.d.ts",
+      "default": "./lib/runner.js"
+    },
+    "./output": {
+      "types": "./lib/types/output.d.ts",
+      "default": "./lib/output.js"
+    }
+  },
+  "files": [
+    "lib",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@axterm/infra-lazy-require": "workspace:*",
+    "@axterm/infra-win32-process": "workspace:*",
+    "koffi": "3.1.1",
+    "node-pty": "1.1.0",
+    "@axterm/infra-scope": "workspace:*"
+  },
+  "peerDependencies": {
+    "@axterm/infra-subprocess": "workspace:*",
+    "@axterm/infra-timeout": "workspace:*",
+    "@deepseek-ai/cordis": "workspace:~"
+  }
+}

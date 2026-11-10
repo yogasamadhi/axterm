@@ -1,0 +1,31 @@
+{
+  "name": "@axterm/infra-locale",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "(MIT AND Apache-2.0)",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@axterm/ui": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}

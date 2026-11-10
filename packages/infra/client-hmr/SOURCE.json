@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "source": "https://github.com/deepseek-ai/deepseek-harness",
+  "sourceCommit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "src/index.ts",
+      "source": "packages/client/hmr/src/index.ts",
+      "sourceSha256": "c44bd4146a459aae2ebf75adaa31a5db96e3e5d17279ec6d80cb3682c1e17534"
+    },
+    {
+      "path": "src/events.ts",
+      "source": "packages/client/hmr/src/events.ts",
+      "sourceSha256": "c7afe34a62b3ad4e1047ad52ed0370112aaeb63d9c17f1f19ba75cae6ddcc5b1"
+    }
+  ],
+  "application": "Authenticated graph streams, bounded coalescing, cancellation and current carrier integration are Axterm adaptations."
+}

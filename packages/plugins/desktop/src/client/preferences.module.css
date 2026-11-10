@@ -1,0 +1,279 @@
+/* Frozen product preference selectors; all classes are module scoped. */
+button.primary {
+  border-color: var(--ax-color-desktop-preferences-button-primary-border-color);
+  background: var(--ax-color-desktop-preferences-button-primary-background);
+  color: var(--ax-color-desktop-preferences-button-primary-color);
+}
+button.primary:hover {
+  background: var(--ax-color-desktop-preferences-button-primary-hover-background);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.form-grid label:has(textarea),
+.form-grid .full-field,
+.form-grid .modal-actions {
+  grid-column: 1 / -1;
+}
+.terminal-security-settings .hint {
+  grid-column: 1 / -1;
+}
+.stack {
+  display: grid;
+  gap: 12px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+  margin-top: 5px;
+}
+.hint {
+  margin: 0;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-caption);
+  line-height: var(--ax-line-height-relaxed);
+}
+.danger-text {
+  white-space: pre-wrap;
+  color: var(--ax-color-desktop-preferences-danger-text-color);
+  background: var(--ax-color-desktop-preferences-danger-text-background);
+  padding: 10px;
+  border-radius: var(--ax-radius-field);
+}
+.surface h3 {
+  margin: 0 0 10px;
+  font-size: var(--ax-font-size-small);
+  font-weight: var(--ax-font-weight-emphasis-soft);
+  color: var(--ax-color-desktop-preferences-surface-h3-color);
+}
+.surface {
+  padding: 14px;
+  border: var(--ax-border-desktop-preferences-surface-border);
+  border-radius: var(--ax-radius-soft);
+  background: var(--ax-color-desktop-preferences-surface-background);
+}
+.ai-chat-workspace > .surface {
+  margin: 0;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+}
+.spin {
+  animation: spin var(--ax-motion-spin) var(--ax-motion-easing-linear) infinite;
+}
+button.primary {
+  border-color: var(--ax-color-action-success-border);
+  background: var(--ax-color-action-success);
+  color: var(--ax-color-on-action-success);
+  transition: border-color var(--ax-motion-interaction) var(--ax-motion-easing-ease);
+}
+button.primary:hover {
+  border-color: var(--ax-color-desktop-preferences-button-primary-hover-border-color);
+  background: var(--ax-color-action-success-hover);
+}
+button.primary:disabled {
+  border-color: var(--ax-color-border);
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text-muted);
+}
+.surface {
+  border-color: var(--ax-color-border);
+  border-radius: var(--ax-radius-card-soft);
+  background: var(--ax-color-surface-sunken);
+  box-shadow: var(--ax-shadow-desktop-preferences-surface-box-shadow);
+}
+.surface {
+  padding: 16px;
+}
+.surface h3 {
+  color: var(--ax-color-desktop-preferences-surface-h3-color);
+  font-size: var(--ax-font-size-control);
+}
+.file-permission-editor .hint,
+.file-permission-editor .danger-text {
+  margin: 9px 0 0;
+}
+.hint {
+  font-size: var(--ax-font-size-body);
+}
+.host-manager-toolbar > .primary {
+  order: -1;
+}
+.terminal-suggestions-ai .spin {
+  animation: terminal-suggestion-spin var(--ax-motion-spin-quick) var(--ax-motion-easing-linear)
+    infinite;
+}
+.terminal-suggestions-ai .spin {
+  animation: none;
+}
+.no-session-actions button.primary {
+  border-color: var(--ax-color-surface-muted);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+}
+.settings-item-terminal .terminal-profile-settings > form > .modal-actions {
+  order: 30;
+}
+.settings-item-terminal .terminal-profile-settings > .surface.list {
+  margin-top: 24px;
+}
+.settings-item-common .surface > header {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.settings-item-common .form-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.shortcut-editor-actions button,
+.shortcut-capture button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.shortcut-capture kbd {
+  min-width: 30px;
+  padding: 3px 7px;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-small);
+  background: var(--ax-color-surface-raised);
+  box-shadow: var(--ax-shadow-desktop-preferences-shortcut-capture-kbd-box-shadow);
+  color: var(--ax-color-text);
+  font: var(--ax-font-desktop-preferences-shortcut-capture-kbd-font);
+  text-align: center;
+}
+.shortcut-capture {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 58px;
+  padding: 10px;
+  border: 1px dashed var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-small);
+  outline: none;
+  background: var(--ax-color-surface-raised);
+}
+.shortcut-capture:focus {
+  border-color: var(--ax-color-primary);
+  box-shadow: var(--ax-shadow-desktop-preferences-shortcut-capture-focus-box-shadow);
+}
+.shortcut-capture > span {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-body);
+}
+.shortcut-capture button {
+  padding: 3px;
+  border: 0;
+  background: transparent;
+}
+.shortcut-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.global-hotkey-setting {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  align-items: center;
+  gap: 14px 24px;
+  padding: 18px 20px;
+  border-top: 1px solid var(--ax-color-border);
+  background: color-mix(in srgb, var(--ax-color-surface-raised) 48%, transparent);
+}
+.global-hotkey-setting > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.global-hotkey-setting small,
+.global-hotkey-setting p {
+  margin: 0;
+}
+.global-hotkey-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.global-hotkey-value kbd {
+  padding: 4px 8px;
+  border: 1px solid var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-small);
+  background: var(--ax-color-surface-raised);
+  font: var(--ax-font-desktop-preferences-global-hotkey-value-kbd-font);
+}
+.global-hotkey-value > span {
+  padding: 2px 6px;
+  border-radius: var(--ax-radius-pill);
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-caption);
+}
+.global-hotkey-value > span.registered {
+  background: var(--ax-color-desktop-preferences-global-hotkey-value-span-registered-background);
+  color: var(--ax-color-desktop-preferences-global-hotkey-value-span-registered-color);
+}
+.global-hotkey-value > span.inactive {
+  background: var(--ax-color-desktop-preferences-global-hotkey-value-span-inactive-background);
+  color: var(--ax-color-desktop-preferences-global-hotkey-value-span-inactive-color);
+}
+.global-hotkey-editor {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 10px;
+}
+
+.preferences :where(input, select, button) {
+  font: inherit;
+  color: inherit;
+}
+.preferences label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.preferences :where(input:not([type='checkbox']), select) {
+  min-height: 30px;
+  padding: 6px 8px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-surface-raised);
+}
+.preferences .checkbox-line {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.preferences .checkbox-line small {
+  flex-basis: 100%;
+}
+
+.preferences > h3 svg {
+  display: block;
+}
+
+.preferences {
+  min-width: 0;
+}
+.preferences .stack {
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+.preferences .form-grid {
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+.preferences label,
+.preferences input,
+.preferences select {
+  min-width: 0;
+  max-width: 100%;
+}
+.preferences .modal-actions {
+  flex-wrap: wrap;
+}
+.preferences .modal-actions button {
+  min-height: 32px;
+  padding: 6px 10px;
+}

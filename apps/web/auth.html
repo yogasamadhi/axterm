@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Connect to Axterm</title>
+  </head>
+  <body>
+    <main>
+      <h1>Connect to Axterm</h1>
+      <form>
+        <label for="credential">Launch token</label
+        ><input
+          id="credential"
+          type="password"
+          required
+          autocomplete="off"
+          maxlength="256"
+        /><button type="submit">Connect</button>
+        <p role="status" aria-live="polite"></p>
+      </form>
+    </main>
+    <script type="module" src="/src/auth.ts"></script>
+  </body>
+</html>

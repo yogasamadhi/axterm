@@ -1,0 +1,16 @@
+.terminal-unix-timestamp-tooltip {
+  position: fixed;
+  z-index: var(--ax-layer-terminals-rendering-terminal-unix-timestamp-tooltip-z-index);
+  max-width: calc(100vw - 16px);
+  overflow: hidden;
+  padding: 3px 8px;
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-terminals-rendering-terminal-unix-timestamp-tooltip-background);
+  color: var(--ax-color-terminals-rendering-terminal-unix-timestamp-tooltip-color);
+  font-size: var(--ax-font-size-control);
+  line-height: var(--ax-line-height-small);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}

@@ -1,0 +1,59 @@
+{
+  "name": "@axterm/ui",
+  "version": "0.10.0",
+  "private": false,
+  "type": "module",
+  "license": "(MIT AND Apache-2.0)",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./store-contract": {
+      "types": "./lib/types/store-contract.d.ts",
+      "default": "./lib/store-contract.js"
+    },
+    "./package.json": "./package.json",
+    "./workspace": {
+      "types": "./lib/types/workspace.d.ts",
+      "default": "./lib/workspace.js"
+    },
+    "./controls": {
+      "types": "./lib/types/client/controls.d.ts",
+      "default": "./lib/controls.js"
+    },
+    "./presentation": {
+      "types": "./lib/types/presentation.d.ts",
+      "default": "./lib/presentation.js"
+    },
+    "./preference": {
+      "types": "./lib/types/preference.d.ts",
+      "default": "./lib/preference.js"
+    },
+    "./shortcuts": {
+      "types": "./lib/types/shortcuts.d.ts",
+      "default": "./lib/shortcuts.js"
+    }
+  },
+  "files": [
+    "lib/*.js",
+    "lib/types/**/*.d.ts",
+    "LICENSE",
+    "LICENSE.AXTERM",
+    "SOURCE.json"
+  ],
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "radix-ui": "1.8.1",
+    "class-variance-authority": "0.7.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@axterm/infra-storage-sqlite",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/infra-scope": "workspace:*",
+    "@axterm/infra-storage": "workspace:*",
+    "@deepseek-ai/schemastery": "workspace:~",
+    "@axterm/infra-atomic-write": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  }
+}

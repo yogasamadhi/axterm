@@ -1,0 +1,26 @@
+{
+  "en": {
+    "title": "Computer resumed",
+    "message": "Runtime channels were refreshed. Interrupted remote work remains stopped until you reconnect it.",
+    "refresh": "Refresh state",
+    "dismiss": "Dismiss recovery status"
+  },
+  "ja": {
+    "title": "コンピューターが復帰しました",
+    "message": "Runtime チャネルを更新しました。中断したリモート作業は、再接続するまで停止したままです。",
+    "refresh": "状態を更新",
+    "dismiss": "復旧状態を閉じる"
+  },
+  "zh-CN": {
+    "title": "电脑已从休眠中唤醒",
+    "message": "Runtime 通道已刷新。已中断的远程任务保持停止，需由你重新连接。",
+    "refresh": "刷新状态",
+    "dismiss": "关闭恢复状态提示"
+  },
+  "zh-TW": {
+    "title": "電腦已恢復",
+    "message": "Runtime 通道已重新整理。中斷的遠端工作會保持停止，直到您重新連線。",
+    "refresh": "重新整理狀態",
+    "dismiss": "關閉恢復狀態"
+  }
+}

@@ -1,0 +1,135 @@
+/* Retained frozen window-control and confirmation selectors. */
+button.danger {
+  border-color: var(--ax-color-action-danger-border);
+  background: var(--ax-color-action-danger);
+  color: var(--ax-color-on-action-danger);
+}
+.modal {
+  width: min(580px, calc(100vw - 40px));
+  max-height: calc(100vh - 60px);
+  overflow: auto;
+  border: var(--ax-border-desktop-window-controls-modal-border);
+  border-radius: var(--ax-radius-card-soft);
+  background: var(--ax-color-desktop-window-controls-modal-background);
+  box-shadow: var(--ax-shadow-desktop-window-controls-modal-box-shadow);
+}
+.modal > header {
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: var(--ax-border-desktop-window-controls-modal-header-border-bottom);
+}
+.modal > header h2 {
+  margin: 0;
+  font-size: var(--ax-font-size-subheading);
+  font-weight: var(--ax-font-weight-emphasis);
+}
+.modal > header button {
+  border: 0;
+  background: transparent;
+  font-size: var(--ax-font-size-title-large);
+  color: var(--ax-color-desktop-window-controls-modal-header-button-color);
+}
+.modal > form {
+  padding: 16px;
+}
+.form-grid .modal-actions {
+  grid-column: 1 / -1;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+  margin-top: 5px;
+}
+.ai-chat-delete-confirm .danger {
+  border-color: var(--ax-color-desktop-window-controls-ai-chat-delete-confirm-danger-border-color);
+  color: var(--ax-color-desktop-window-controls-ai-chat-delete-confirm-danger-color);
+}
+.modal {
+  border-color: var(--ax-color-surface-muted);
+  border-radius: var(--ax-radius-sheet);
+  background: var(--ax-color-desktop-window-controls-modal-background);
+  box-shadow: var(--ax-shadow-desktop-window-controls-modal-box-shadow);
+}
+.modal > header {
+  height: 48px;
+  padding: 0 17px;
+  border-color: var(--ax-color-border);
+}
+.modal > header h2 {
+  font-size: var(--ax-font-size-heading);
+}
+.modal > form {
+  padding: 18px;
+}
+.terminal-workspace > .tabbar .window-controls {
+  pointer-events: auto;
+}
+.window-controls button {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  min-height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+  color: var(--ax-color-text-muted);
+}
+.window-controls button:hover {
+  border: 0;
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+}
+.window-controls {
+  position: relative;
+  z-index: var(--ax-layer-desktop-window-controls-window-controls-z-index);
+  height: var(--ax-size-tab-height);
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background: var(--ax-color-canvas-deep);
+  app-region: no-drag;
+  -webkit-app-region: no-drag;
+}
+.window-controls button {
+  app-region: no-drag;
+  -webkit-app-region: no-drag;
+}
+.window-controls .window-control-close:hover,
+.window-controls [data-window-action='close']:hover {
+  background: var(--ax-color-danger);
+  color: var(--ax-color-on-danger);
+}
+.window-close-confirmation {
+  width: min(420px, calc(100vw - 40px));
+}
+.window-close-confirmation-body {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  font-size: var(--ax-font-size-control);
+}
+.window-close-confirmation-body p {
+  margin: 0;
+}
+.window-close-error {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: max-content;
+  max-width: 300px;
+  padding: 8px 12px;
+  background: var(--ax-color-danger);
+  color: var(--ax-color-on-danger);
+  font-size: var(--ax-font-size-body);
+}
+.settings-item-terminal .terminal-profile-settings > form > .modal-actions {
+  order: 30;
+}

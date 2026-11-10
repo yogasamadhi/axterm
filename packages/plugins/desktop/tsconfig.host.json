@@ -1,0 +1,12 @@
+{
+  "extends": "../../../tsconfig.host.json",
+  "include": [
+    "src/index.ts",
+    "src/launches.ts",
+    "src/types.ts",
+    "src/headless.ts",
+    "src/tasks.ts",
+    "src/copy.ts"
+  ],
+  "exclude": ["src/client"]
+}

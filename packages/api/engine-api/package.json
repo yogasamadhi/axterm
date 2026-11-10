@@ -1,0 +1,35 @@
+{
+  "name": "@axterm/engine-api",
+  "version": "0.10.0",
+  "private": false,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Public Axterm Engine provider and Session/Run contracts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./host": {
+      "types": "./lib/types/host/index.d.ts",
+      "default": "./lib/host.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "files": [
+    "lib/*.js",
+    "lib/types/**/*.d.ts",
+    "LICENSE",
+    "README.md",
+    "SOURCE.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

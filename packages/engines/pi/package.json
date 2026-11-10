@@ -1,0 +1,28 @@
+{
+  "name": "@axterm/engine-pi",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./discovery": {
+      "types": "./lib/types/discovery.d.ts",
+      "default": "./lib/discovery.js"
+    }
+  },
+  "dependencies": {
+    "@axterm/engine-api": "workspace:*",
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/engine-pi-core": "workspace:*",
+    "@deepseek-ai/schemastery": "workspace:~",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  }
+}

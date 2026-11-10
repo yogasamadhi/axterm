@@ -1,0 +1,259 @@
+{
+  "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+  "source": "packages/runtime/src/adapters/sqlite/database.ts",
+  "sourceSha256": "eea7b5d2fe79ed35a0eb6dde16532075dffd6425eba7fbf0b4780abf812bdf21",
+  "migrations": [
+    {
+      "id": 1,
+      "sql": "\n      PRAGMA foreign_keys = ON;\n      CREATE TABLE app_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);\n      CREATE TABLE host_groups (\n        id TEXT PRIMARY KEY, name TEXT NOT NULL UNIQUE, sort_order INTEGER NOT NULL DEFAULT 0,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE hosts (\n        id TEXT PRIMARY KEY, group_id TEXT REFERENCES host_groups(id) ON DELETE SET NULL,\n        name TEXT NOT NULL UNIQUE, hostname TEXT NOT NULL, port INTEGER NOT NULL DEFAULT 22,\n        username TEXT NOT NULL, auth_type TEXT NOT NULL DEFAULT 'password', credential_ref TEXT,\n        passphrase_credential_ref TEXT,\n        jump_host_id TEXT, favorite INTEGER NOT NULL DEFAULT 0,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1,\n        CHECK (port BETWEEN 1 AND 65535), CHECK (id != jump_host_id)\n      );\n      CREATE TABLE host_auth_refs (\n        id TEXT PRIMARY KEY, host_id TEXT NOT NULL REFERENCES hosts(id) ON DELETE CASCADE,\n        kind TEXT NOT NULL, credential_ref TEXT NOT NULL, label TEXT NOT NULL,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE terminal_profiles (\n        id TEXT PRIMARY KEY, name TEXT NOT NULL, payload TEXT NOT NULL,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE quick_commands (\n        id TEXT PRIMARY KEY, name TEXT NOT NULL, payload TEXT NOT NULL,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE tunnel_profiles (\n        id TEXT PRIMARY KEY, name TEXT NOT NULL, payload TEXT NOT NULL,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE known_host_keys (\n        id TEXT PRIMARY KEY, host TEXT NOT NULL, port INTEGER NOT NULL, algorithm TEXT NOT NULL,\n        fingerprint TEXT NOT NULL, public_key TEXT NOT NULL, first_seen_at TEXT NOT NULL,\n        last_seen_at TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1, UNIQUE(host, port)\n      );\n      CREATE TABLE recent_connections (\n        id TEXT PRIMARY KEY, host_id TEXT NOT NULL REFERENCES hosts(id) ON DELETE CASCADE,\n        connected_at TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE ai_providers (\n        id TEXT PRIMARY KEY, name TEXT NOT NULL, payload TEXT NOT NULL,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE ai_models (\n        id TEXT PRIMARY KEY, name TEXT NOT NULL, payload TEXT NOT NULL,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE ai_conversations (\n        id TEXT PRIMARY KEY, name TEXT NOT NULL, payload TEXT NOT NULL,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE ai_messages (\n        id TEXT PRIMARY KEY, conversation_id TEXT NOT NULL, role TEXT NOT NULL, content TEXT NOT NULL,\n        created_at TEXT NOT NULL, updated_at TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE ai_runs (\n        id TEXT PRIMARY KEY, state TEXT NOT NULL, use_case TEXT NOT NULL, request TEXT NOT NULL,\n        result TEXT, error_code TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE ai_tool_calls (\n        id TEXT PRIMARY KEY, run_id TEXT NOT NULL REFERENCES ai_runs(id) ON DELETE CASCADE,\n        tool_name TEXT NOT NULL, risk TEXT NOT NULL, args_hash TEXT NOT NULL, args_json TEXT NOT NULL,\n        state TEXT NOT NULL, result_metadata TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE ai_approvals (\n        id TEXT PRIMARY KEY, run_id TEXT NOT NULL REFERENCES ai_runs(id) ON DELETE CASCADE,\n        tool_call_id TEXT NOT NULL REFERENCES ai_tool_calls(id) ON DELETE CASCADE,\n        args_hash TEXT NOT NULL, target TEXT NOT NULL, state TEXT NOT NULL, expires_at TEXT NOT NULL,\n        decided_at TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE app_settings (\n        section TEXT PRIMARY KEY, payload TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1,\n        updated_at TEXT NOT NULL\n      );\n      CREATE TABLE domain_events (\n        id INTEGER PRIMARY KEY AUTOINCREMENT, event_id TEXT NOT NULL UNIQUE, type TEXT NOT NULL,\n        aggregate_id TEXT NOT NULL, payload TEXT NOT NULL, created_at TEXT NOT NULL\n      );\n      CREATE TABLE transfer_history (\n        id TEXT PRIMARY KEY, connection_id TEXT NOT NULL, direction TEXT NOT NULL, state TEXT NOT NULL, source TEXT NOT NULL,\n        destination TEXT NOT NULL, bytes_transferred INTEGER NOT NULL DEFAULT 0, total_bytes INTEGER,\n        error_code TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE TABLE idempotency_records (\n        key TEXT PRIMARY KEY, operation TEXT NOT NULL, request_hash TEXT NOT NULL,\n        response TEXT NOT NULL, created_at TEXT NOT NULL\n      );\n      CREATE INDEX domain_events_cursor ON domain_events(id);\n      CREATE INDEX recent_connections_host ON recent_connections(host_id, connected_at DESC);\n      CREATE INDEX transfer_history_state ON transfer_history(state, updated_at DESC);\n      INSERT INTO app_settings(section, payload, version, updated_at)\n        VALUES ('appearance', '{\"theme\":\"dark\",\"language\":\"zh-CN\"}', 1, CURRENT_TIMESTAMP);\n    ",
+      "sha256": "451e2329fe2305a40d5365af0391142f7bfc5e2e5c75ff7197294c4e1fba0bbd",
+      "hasApply": false
+    },
+    {
+      "id": 2,
+      "sql": "ALTER TABLE ai_tool_calls ADD COLUMN target TEXT NOT NULL DEFAULT '';",
+      "sha256": "4939d3217af316993fae57bb5b25febf15eb933d513657acbf2734fe5052acc7",
+      "hasApply": false
+    },
+    {
+      "id": 3,
+      "sql": "\n      CREATE TABLE bookmark_groups (\n        id TEXT PRIMARY KEY,\n        parent_id TEXT REFERENCES bookmark_groups(id) ON DELETE RESTRICT,\n        name TEXT NOT NULL,\n        color TEXT,\n        description TEXT NOT NULL DEFAULT '',\n        position INTEGER NOT NULL DEFAULT 0 CHECK (position >= 0),\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1,\n        CHECK (id != parent_id)\n      );\n      CREATE TABLE bookmarks (\n        id TEXT PRIMARY KEY,\n        group_id TEXT REFERENCES bookmark_groups(id) ON DELETE SET NULL,\n        protocol TEXT NOT NULL CHECK (protocol IN ('ssh','local','telnet','serial','rdp','vnc','ftp','spice','web')),\n        host_id TEXT REFERENCES hosts(id) ON DELETE RESTRICT,\n        title TEXT NOT NULL,\n        color TEXT,\n        description TEXT NOT NULL DEFAULT '',\n        position INTEGER NOT NULL DEFAULT 0 CHECK (position >= 0),\n        profile_id TEXT,\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1,\n        CHECK (protocol != 'ssh' OR host_id IS NOT NULL)\n      );\n      CREATE INDEX bookmark_groups_parent_position\n        ON bookmark_groups(parent_id, position, id);\n      CREATE INDEX bookmarks_group_position\n        ON bookmarks(group_id, position, id);\n      CREATE INDEX bookmarks_host ON bookmarks(host_id);\n\n      INSERT INTO bookmark_groups(\n        id, parent_id, name, color, description, position,\n        created_at, updated_at, version\n      )\n      SELECT\n        id,\n        NULL,\n        name,\n        NULL,\n        '',\n        ROW_NUMBER() OVER (ORDER BY sort_order, lower(name), id) - 1,\n        created_at,\n        updated_at,\n        version\n      FROM host_groups;\n\n      INSERT INTO bookmarks(\n        id, group_id, protocol, host_id, title, color, description, position,\n        profile_id, created_at, updated_at, version\n      )\n      SELECT\n        h.id,\n        h.group_id,\n        'ssh',\n        h.id,\n        h.name,\n        NULL,\n        '',\n        (\n          SELECT COUNT(*)\n          FROM bookmark_groups g\n          WHERE g.parent_id IS h.group_id\n        ) + ROW_NUMBER() OVER (\n          PARTITION BY h.group_id\n          ORDER BY h.favorite DESC, lower(h.name), h.id\n        ) - 1,\n        NULL,\n        h.created_at,\n        h.updated_at,\n        h.version\n      FROM hosts h;\n\n      CREATE TEMP TABLE bookmark_position_assertion (\n        valid INTEGER NOT NULL CHECK (valid = 1)\n      );\n      INSERT INTO bookmark_position_assertion(valid)\n      SELECT CASE WHEN NOT EXISTS (\n        SELECT parent_key\n        FROM (\n          SELECT COALESCE(parent_id, '') AS parent_key, position FROM bookmark_groups\n          UNION ALL\n          SELECT COALESCE(group_id, '') AS parent_key, position FROM bookmarks\n        ) nodes\n        GROUP BY parent_key\n        HAVING MIN(position) != 0\n          OR MAX(position) != COUNT(*) - 1\n          OR COUNT(DISTINCT position) != COUNT(*)\n      ) THEN 1 ELSE 0 END;\n      DROP TABLE bookmark_position_assertion;\n\n      INSERT INTO app_meta(key, value) VALUES ('bookmark-tree:revision', '1');\n    ",
+      "sha256": "cd0bc8d70919fa85840bf7e1c0dbbc5490524afccdcfcc4d031d7f51fdf9604f",
+      "hasApply": false
+    },
+    {
+      "id": 4,
+      "sql": "\n      ALTER TABLE hosts ADD COLUMN connection_timeout_ms INTEGER NOT NULL DEFAULT 50000\n        CHECK (connection_timeout_ms BETWEEN 1000 AND 300000);\n      ALTER TABLE hosts ADD COLUMN keepalive_interval_ms INTEGER NOT NULL DEFAULT 10000\n        CHECK (keepalive_interval_ms BETWEEN 0 AND 300000);\n      ALTER TABLE hosts ADD COLUMN keepalive_count_max INTEGER NOT NULL DEFAULT 10\n        CHECK (keepalive_count_max BETWEEN 1 AND 100);\n      ALTER TABLE hosts ADD COLUMN compression INTEGER NOT NULL DEFAULT 1\n        CHECK (compression IN (0, 1));\n      ALTER TABLE hosts ADD COLUMN reconnect_mode TEXT NOT NULL DEFAULT 'manual'\n        CHECK (reconnect_mode IN ('manual', 'automatic'));\n      ALTER TABLE hosts ADD COLUMN reconnect_delay_ms INTEGER NOT NULL DEFAULT 3000\n        CHECK (reconnect_delay_ms BETWEEN 250 AND 60000);\n      ALTER TABLE hosts ADD COLUMN reconnect_max_attempts INTEGER NOT NULL DEFAULT 10\n        CHECK (reconnect_max_attempts BETWEEN 1 AND 20);\n    ",
+      "sha256": "c2aa79ab6fd7d38c4132dab1a26034e827d408c8d8ff812fe2c21ab2b4487d84",
+      "hasApply": false
+    },
+    {
+      "id": 5,
+      "sql": "\n      DROP INDEX recent_connections_host;\n      ALTER TABLE recent_connections RENAME TO recent_connections_legacy;\n\n      CREATE TABLE recent_connections (\n        id TEXT PRIMARY KEY,\n        target_key TEXT NOT NULL UNIQUE,\n        host_id TEXT REFERENCES hosts(id) ON DELETE SET NULL,\n        name TEXT NOT NULL,\n        hostname TEXT NOT NULL,\n        port INTEGER NOT NULL CHECK (port BETWEEN 1 AND 65535),\n        username TEXT NOT NULL,\n        auth_type TEXT NOT NULL CHECK (\n          auth_type IN ('password', 'privateKey', 'keyboardInteractive', 'agent')\n        ),\n        jump_host_id TEXT REFERENCES hosts(id) ON DELETE SET NULL,\n        connection_timeout_ms INTEGER NOT NULL DEFAULT 50000\n          CHECK (connection_timeout_ms BETWEEN 1000 AND 300000),\n        keepalive_interval_ms INTEGER NOT NULL DEFAULT 10000\n          CHECK (keepalive_interval_ms BETWEEN 0 AND 300000),\n        keepalive_count_max INTEGER NOT NULL DEFAULT 10\n          CHECK (keepalive_count_max BETWEEN 1 AND 100),\n        compression INTEGER NOT NULL DEFAULT 1 CHECK (compression IN (0, 1)),\n        reconnect_mode TEXT NOT NULL DEFAULT 'manual'\n          CHECK (reconnect_mode IN ('manual', 'automatic')),\n        reconnect_delay_ms INTEGER NOT NULL DEFAULT 3000\n          CHECK (reconnect_delay_ms BETWEEN 250 AND 60000),\n        reconnect_max_attempts INTEGER NOT NULL DEFAULT 10\n          CHECK (reconnect_max_attempts BETWEEN 1 AND 20),\n        connection_count INTEGER NOT NULL DEFAULT 1 CHECK (connection_count > 0),\n        last_connected_at TEXT NOT NULL,\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1 CHECK (version > 0)\n      );\n\n      INSERT INTO recent_connections(\n        id, target_key, host_id, name, hostname, port, username, auth_type, jump_host_id,\n        connection_timeout_ms, keepalive_interval_ms, keepalive_count_max, compression,\n        reconnect_mode, reconnect_delay_ms, reconnect_max_attempts, connection_count,\n        last_connected_at, created_at, updated_at, version\n      )\n      SELECT\n        MIN(rc.id),\n        json_array(\n          lower(rtrim(h.hostname, '.')),\n          h.port,\n          h.username,\n          CASE\n            WHEN h.auth_type IN ('password', 'privateKey', 'keyboardInteractive', 'agent')\n              THEN h.auth_type\n            ELSE 'agent'\n          END,\n          h.jump_host_id,\n          h.connection_timeout_ms,\n          h.keepalive_interval_ms,\n          h.keepalive_count_max,\n          h.compression,\n          h.reconnect_mode,\n          h.reconnect_delay_ms,\n          h.reconnect_max_attempts\n        ),\n        MIN(rc.host_id),\n        MIN(h.name),\n        h.hostname,\n        h.port,\n        h.username,\n        CASE\n          WHEN h.auth_type IN ('password', 'privateKey', 'keyboardInteractive', 'agent')\n            THEN h.auth_type\n          ELSE 'agent'\n        END,\n        h.jump_host_id,\n        h.connection_timeout_ms,\n        h.keepalive_interval_ms,\n        h.keepalive_count_max,\n        h.compression,\n        h.reconnect_mode,\n        h.reconnect_delay_ms,\n        h.reconnect_max_attempts,\n        COUNT(*),\n        MAX(rc.connected_at),\n        MIN(rc.created_at),\n        MAX(rc.updated_at),\n        MAX(rc.version)\n      FROM recent_connections_legacy rc\n      JOIN hosts h ON h.id = rc.host_id\n      GROUP BY 2;\n\n      DROP TABLE recent_connections_legacy;\n      CREATE INDEX recent_connections_host ON recent_connections(host_id, last_connected_at DESC);\n      CREATE INDEX recent_connections_recent ON recent_connections(last_connected_at DESC, id);\n      CREATE INDEX recent_connections_frequency\n        ON recent_connections(connection_count DESC, last_connected_at DESC, id);\n      INSERT INTO app_meta(key, value) VALUES ('connection-history:revision', '1');\n      INSERT OR IGNORE INTO app_settings(section, payload, version, updated_at)\n        VALUES ('privacy', '{\"connectionHistoryEnabled\":true}', 1, CURRENT_TIMESTAMP);\n    ",
+      "sha256": "e00cbcd32d35e318b85e7b3c119e8eda6f8422c702c6058f06595fd802c1d882",
+      "hasApply": false
+    },
+    {
+      "id": 6,
+      "sql": "\n      DROP INDEX recent_connections_host;\n      DROP INDEX recent_connections_recent;\n      DROP INDEX recent_connections_frequency;\n      ALTER TABLE recent_connections RENAME TO recent_connections_pre_identity;\n\n      CREATE TABLE recent_connections (\n        id TEXT PRIMARY KEY,\n        target_key TEXT NOT NULL UNIQUE,\n        host_id TEXT REFERENCES hosts(id) ON DELETE SET NULL,\n        name TEXT NOT NULL,\n        hostname TEXT NOT NULL,\n        port INTEGER NOT NULL CHECK (port BETWEEN 1 AND 65535),\n        username TEXT NOT NULL,\n        auth_type TEXT NOT NULL CHECK (\n          auth_type IN ('password', 'privateKey', 'keyboardInteractive', 'agent')\n        ),\n        jump_host_id TEXT REFERENCES hosts(id) ON DELETE SET NULL,\n        connection_timeout_ms INTEGER NOT NULL DEFAULT 50000\n          CHECK (connection_timeout_ms BETWEEN 1000 AND 300000),\n        keepalive_interval_ms INTEGER NOT NULL DEFAULT 10000\n          CHECK (keepalive_interval_ms BETWEEN 0 AND 300000),\n        keepalive_count_max INTEGER NOT NULL DEFAULT 10\n          CHECK (keepalive_count_max BETWEEN 1 AND 100),\n        compression INTEGER NOT NULL DEFAULT 1 CHECK (compression IN (0, 1)),\n        reconnect_mode TEXT NOT NULL DEFAULT 'manual'\n          CHECK (reconnect_mode IN ('manual', 'automatic')),\n        reconnect_delay_ms INTEGER NOT NULL DEFAULT 3000\n          CHECK (reconnect_delay_ms BETWEEN 250 AND 60000),\n        reconnect_max_attempts INTEGER NOT NULL DEFAULT 10\n          CHECK (reconnect_max_attempts BETWEEN 1 AND 20),\n        connection_count INTEGER NOT NULL DEFAULT 1 CHECK (connection_count > 0),\n        last_connected_at TEXT NOT NULL,\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1 CHECK (version > 0)\n      );\n\n      WITH ranked AS (\n        SELECT\n          rc.*,\n          ROW_NUMBER() OVER (\n            PARTITION BY lower(rtrim(hostname, '.')), port, username\n            ORDER BY last_connected_at DESC, updated_at DESC, id\n          ) AS target_rank,\n          SUM(connection_count) OVER (\n            PARTITION BY lower(rtrim(hostname, '.')), port, username\n          ) AS aggregate_count,\n          MIN(created_at) OVER (\n            PARTITION BY lower(rtrim(hostname, '.')), port, username\n          ) AS aggregate_created_at,\n          MAX(updated_at) OVER (\n            PARTITION BY lower(rtrim(hostname, '.')), port, username\n          ) AS aggregate_updated_at,\n          MAX(version) OVER (\n            PARTITION BY lower(rtrim(hostname, '.')), port, username\n          ) AS aggregate_version\n        FROM recent_connections_pre_identity rc\n      )\n      INSERT INTO recent_connections(\n        id, target_key, host_id, name, hostname, port, username, auth_type, jump_host_id,\n        connection_timeout_ms, keepalive_interval_ms, keepalive_count_max, compression,\n        reconnect_mode, reconnect_delay_ms, reconnect_max_attempts, connection_count,\n        last_connected_at, created_at, updated_at, version\n      )\n      SELECT\n        id,\n        json_array(lower(rtrim(hostname, '.')), port, username),\n        host_id,\n        name,\n        hostname,\n        port,\n        username,\n        auth_type,\n        jump_host_id,\n        connection_timeout_ms,\n        keepalive_interval_ms,\n        keepalive_count_max,\n        compression,\n        reconnect_mode,\n        reconnect_delay_ms,\n        reconnect_max_attempts,\n        aggregate_count,\n        last_connected_at,\n        aggregate_created_at,\n        aggregate_updated_at,\n        aggregate_version\n      FROM ranked\n      WHERE target_rank=1;\n\n      DROP TABLE recent_connections_pre_identity;\n      CREATE INDEX recent_connections_host ON recent_connections(host_id, last_connected_at DESC);\n      CREATE INDEX recent_connections_recent ON recent_connections(last_connected_at DESC, id);\n      CREATE INDEX recent_connections_frequency\n        ON recent_connections(connection_count DESC, last_connected_at DESC, id);\n      UPDATE app_meta SET value=CAST(CAST(value AS INTEGER) + 1 AS TEXT)\n        WHERE key='connection-history:revision'\n          AND EXISTS (SELECT 1 FROM recent_connections);\n    ",
+      "sha256": "a57d21048175e8d9b68a3282f3055d1bf9d62445e14bd432532215e881e7f090",
+      "hasApply": false
+    },
+    {
+      "id": 7,
+      "sql": "\n      ALTER TABLE hosts ADD COLUMN proxy_mode TEXT NOT NULL DEFAULT 'inherit'\n        CHECK (proxy_mode IN ('inherit', 'direct', 'custom'));\n      ALTER TABLE hosts ADD COLUMN proxy_url TEXT;\n      ALTER TABLE hosts ADD COLUMN proxy_username TEXT;\n      ALTER TABLE hosts ADD COLUMN proxy_credential_ref TEXT;\n      INSERT OR IGNORE INTO app_settings(section, payload, version, updated_at)\n        VALUES ('network', '{\"proxy\":{\"mode\":\"direct\"}}', 1, CURRENT_TIMESTAMP);\n    ",
+      "sha256": "34b856e7f5be8e6d2853748270bb8f20479e88a8d1bc22c41b8cc88934c8606d",
+      "hasApply": false
+    },
+    {
+      "id": 8,
+      "sql": "\n      CREATE TABLE command_history (\n        id TEXT PRIMARY KEY,\n        command_text TEXT NOT NULL UNIQUE,\n        use_count INTEGER NOT NULL DEFAULT 1 CHECK (use_count > 0),\n        last_used_at TEXT NOT NULL,\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1 CHECK (version > 0),\n        CHECK (length(command_text) BETWEEN 1 AND 4096),\n        CHECK (instr(command_text, char(0)) = 0),\n        CHECK (instr(command_text, char(10)) = 0),\n        CHECK (instr(command_text, char(13)) = 0)\n      );\n      CREATE INDEX command_history_recent\n        ON command_history(last_used_at DESC, id);\n      CREATE INDEX command_history_frequency\n        ON command_history(use_count DESC, last_used_at DESC, id);\n      INSERT INTO app_meta(key, value) VALUES ('command-history:revision', '1');\n      UPDATE app_settings\n        SET payload=json_set(payload, '$.commandHistoryEnabled', json('false'))\n        WHERE section='privacy'\n          AND json_type(payload, '$.commandHistoryEnabled') IS NULL;\n    ",
+      "sha256": "ac37323cfdede9b9ec5297eca28b09556311ee08b5301444cbafb07030180de6",
+      "hasApply": false
+    },
+    {
+      "id": 9,
+      "sql": "\n      CREATE TABLE connection_profiles (\n        id TEXT PRIMARY KEY,\n        name TEXT NOT NULL,\n        payload TEXT NOT NULL,\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1 CHECK (version > 0)\n      );\n      CREATE UNIQUE INDEX connection_profiles_name_unique\n        ON connection_profiles(lower(name));\n      ALTER TABLE bookmarks ADD COLUMN connection_profile_id TEXT\n        REFERENCES connection_profiles(id) ON DELETE RESTRICT;\n      CREATE INDEX bookmarks_connection_profile\n        ON bookmarks(connection_profile_id);\n    ",
+      "sha256": "d72863ad438a26e58d71f7475dd03a3df32de00389c74844cb11adb237100694",
+      "hasApply": false
+    },
+    {
+      "id": 10,
+      "sql": "\n      SELECT 1;\n    ",
+      "sha256": "118bc89c6ea9ae0010fa0d97163514443f45ec86c5bf4946ec79909c94903020",
+      "hasApply": false
+    },
+    {
+      "id": 11,
+      "sql": "\n      ALTER TABLE hosts ADD COLUMN proxy_command_executable TEXT;\n      ALTER TABLE hosts ADD COLUMN proxy_command_arguments TEXT;\n    ",
+      "sha256": "572b60d4f8ec4c850b8420edac9f9c766c1039df56ef51a92dfd5add15aff904",
+      "hasApply": false
+    },
+    {
+      "id": 12,
+      "sql": "\n      ALTER TABLE hosts ADD COLUMN jump_host_ids TEXT NOT NULL DEFAULT '[]'\n        CHECK (json_valid(jump_host_ids) AND json_type(jump_host_ids) = 'array');\n    ",
+      "sha256": "c31518085ed4a7ab27bab8813d5a91b872be075b20b5b70432dee7549f0de941",
+      "hasApply": false
+    },
+    {
+      "id": 13,
+      "sql": "\n      ALTER TABLE hosts ADD COLUMN ssh_algorithms TEXT NOT NULL\n        DEFAULT '{\"kex\":[],\"cipher\":[],\"serverHostKey\":[],\"hmac\":[]}'\n        CHECK (json_valid(ssh_algorithms) AND json_type(ssh_algorithms) = 'object');\n    ",
+      "sha256": "438dc233cdb4ee451e1d750d0a9d980418f3ef47ea95924cf3cd21b0d53b19bb",
+      "hasApply": false
+    },
+    {
+      "id": 14,
+      "sql": "\n      ALTER TABLE hosts ADD COLUMN ssh_startup TEXT NOT NULL\n        DEFAULT '{\"directory\":null,\"environment\":{},\"loginScripts\":[],\"runScripts\":[]}'\n        CHECK (json_valid(ssh_startup) AND json_type(ssh_startup) = 'object');\n    ",
+      "sha256": "46c74c7c6dbc79660d01046693e1d06ce789937cdd9700db3a7ced8de084ca65",
+      "hasApply": false
+    },
+    {
+      "id": 15,
+      "sql": "\n      ALTER TABLE hosts ADD COLUMN ssh_x11 TEXT NOT NULL\n        DEFAULT '{\"enabled\":false,\"display\":null}'\n        CHECK (json_valid(ssh_x11) AND json_type(ssh_x11) = 'object');\n    ",
+      "sha256": "aa5ab87d097bfb82e0672aee90c1a49e748815333f3931c65e7ff15eaf826db0",
+      "hasApply": false
+    },
+    {
+      "id": 16,
+      "sql": "\n      ALTER TABLE hosts ADD COLUMN certificate_credential_ref TEXT;\n      ALTER TABLE hosts ADD COLUMN ssh_agent TEXT NOT NULL\n        DEFAULT '{\"enabled\":true,\"path\":null}'\n        CHECK (json_valid(ssh_agent) AND json_type(ssh_agent) = 'object');\n    ",
+      "sha256": "5c998cdc7606ed3726785c42563e7eb3a3bca582036f391486931b2732522b62",
+      "hasApply": false
+    },
+    {
+      "id": 17,
+      "sql": "ALTER TABLE transfer_history ADD COLUMN bytes_per_second REAL;",
+      "sha256": "2e3bf3d08cf096681416055869e72459ef7dc387617effb4e12e0bfcf0f0857f",
+      "hasApply": false
+    },
+    {
+      "id": 18,
+      "sql": "ALTER TABLE bookmarks ADD COLUMN ftp_payload TEXT NOT NULL DEFAULT 'null'\n      CHECK (json_valid(ftp_payload));",
+      "sha256": "159829b1caf2a08f87b0933b93566f43fe3c9ba85ca8fca40e54b798d27d3a9b",
+      "hasApply": false
+    },
+    {
+      "id": 19,
+      "sql": "ALTER TABLE bookmarks ADD COLUMN telnet_payload TEXT NOT NULL DEFAULT 'null'\n      CHECK (json_valid(telnet_payload));",
+      "sha256": "583e5364f5a56a10e8b8217d455a855256482f2457c9e88f8510cf9213a810d9",
+      "hasApply": false
+    },
+    {
+      "id": 20,
+      "sql": "ALTER TABLE bookmarks ADD COLUMN serial_payload TEXT NOT NULL DEFAULT 'null'\n      CHECK (json_valid(serial_payload));",
+      "sha256": "9018ed35d4a7fa3fe53efa186acaafb151e0f94d14f017181ae4922e9276403b",
+      "hasApply": false
+    },
+    {
+      "id": 21,
+      "sql": "ALTER TABLE bookmarks ADD COLUMN rdp_payload TEXT NOT NULL DEFAULT 'null'\n      CHECK (json_valid(rdp_payload));",
+      "sha256": "f49474c30146c6eac80ba6b2afb23590d930e5bf810e136b64853e92f00faf40",
+      "hasApply": false
+    },
+    {
+      "id": 22,
+      "sql": "ALTER TABLE bookmarks ADD COLUMN vnc_payload TEXT NOT NULL DEFAULT 'null'\n      CHECK (json_valid(vnc_payload));",
+      "sha256": "0ba2730ad340b216f3c03c1358792e9ec9df41d0dc91fec1954b420b34056787",
+      "hasApply": false
+    },
+    {
+      "id": 23,
+      "sql": "ALTER TABLE bookmarks ADD COLUMN spice_payload TEXT NOT NULL DEFAULT 'null'\n      CHECK (json_valid(spice_payload));",
+      "sha256": "d009e2d09bdf07991bd544a732a62bdc546679070590d375a698fcaedac783e2",
+      "hasApply": false
+    },
+    {
+      "id": 24,
+      "sql": "ALTER TABLE bookmarks ADD COLUMN web_payload TEXT NOT NULL DEFAULT 'null'\n      CHECK (json_valid(web_payload));",
+      "sha256": "354dbad6641f78fcfc056dff5e60bc7fb5ee8c6c738417888d9bbcfcc0352832",
+      "hasApply": false
+    },
+    {
+      "id": 25,
+      "sql": "\n      CREATE TABLE quick_command_groups (\n        id TEXT PRIMARY KEY,\n        parent_id TEXT REFERENCES quick_command_groups(id) ON DELETE RESTRICT,\n        name TEXT NOT NULL,\n        position INTEGER NOT NULL DEFAULT 0 CHECK (position >= 0),\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1,\n        CHECK (id != parent_id)\n      );\n      ALTER TABLE quick_commands ADD COLUMN group_id TEXT\n        REFERENCES quick_command_groups(id) ON DELETE SET NULL;\n      ALTER TABLE quick_commands ADD COLUMN position INTEGER NOT NULL DEFAULT 0\n        CHECK (position >= 0);\n      UPDATE quick_commands AS current\n      SET position = (\n        SELECT COUNT(*) FROM quick_commands AS preceding\n        WHERE lower(preceding.name) < lower(current.name)\n           OR (lower(preceding.name) = lower(current.name) AND preceding.id < current.id)\n      );\n      CREATE INDEX quick_command_groups_parent_position\n        ON quick_command_groups(parent_id, position, id);\n      CREATE INDEX quick_commands_group_position\n        ON quick_commands(group_id, position, id);\n      INSERT INTO app_meta(key, value) VALUES ('quick-command-tree:revision', '1');\n    ",
+      "sha256": "69dfce42904849df458fccfe4ebd045b829aa06f27e77de9a117d3516d60b1bf",
+      "hasApply": false
+    },
+    {
+      "id": 26,
+      "sql": "ALTER TABLE bookmarks ADD COLUMN quick_commands_payload TEXT NOT NULL DEFAULT '[]'\n      CHECK (json_valid(quick_commands_payload) AND json_type(quick_commands_payload) = 'array');",
+      "sha256": "8d7803e55db6aad8278fbb775974de593737cf4ecdafc882a525a2db1c8e4b60",
+      "hasApply": false
+    },
+    {
+      "id": 27,
+      "sql": "\n      CREATE TABLE batch_operations (\n        id TEXT PRIMARY KEY,\n        name TEXT NOT NULL,\n        state TEXT NOT NULL,\n        target_count INTEGER NOT NULL CHECK (target_count > 0 AND target_count <= 64),\n        payload TEXT NOT NULL CHECK (json_valid(payload)),\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE INDEX batch_operations_updated_at ON batch_operations(updated_at DESC, id DESC);\n    ",
+      "sha256": "25b105fac7fb5fc2863ae09480364ae3c0fea906ef7591077ffa676f0ab268e7",
+      "hasApply": false
+    },
+    {
+      "id": 28,
+      "sql": "\n      CREATE TABLE automation_triggers (\n        id TEXT PRIMARY KEY,\n        name TEXT NOT NULL,\n        payload TEXT NOT NULL CHECK (json_valid(payload)),\n        position INTEGER NOT NULL CHECK (position >= 0),\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE INDEX automation_triggers_position ON automation_triggers(position, id);\n      INSERT INTO app_meta(key, value) VALUES ('trigger-list:revision', '1');\n      ALTER TABLE bookmarks ADD COLUMN triggers_payload TEXT NOT NULL DEFAULT '[]'\n        CHECK (json_valid(triggers_payload) AND json_type(triggers_payload) = 'array');\n    ",
+      "sha256": "4c33509ac571b083b2d16a624adfaa5982d91c14a1a37d94670fb4c65ede1da6",
+      "hasApply": false
+    },
+    {
+      "id": 29,
+      "sql": "\n      CREATE TABLE terminal_themes (\n        id TEXT PRIMARY KEY,\n        name TEXT NOT NULL,\n        payload TEXT NOT NULL CHECK (json_valid(payload)),\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE INDEX terminal_themes_name ON terminal_themes(lower(name), id);\n    ",
+      "sha256": "6757a110bf08d034a1546f33f555d904bddb92627d7190961675545b8be7e92e",
+      "hasApply": false
+    },
+    {
+      "id": 30,
+      "sql": "\n      CREATE TABLE sync_profiles (\n        id TEXT PRIMARY KEY,\n        provider TEXT NOT NULL UNIQUE\n          CHECK (provider IN ('github','gitee','webdav','custom')),\n        name TEXT NOT NULL,\n        endpoint_url TEXT NOT NULL,\n        remote_id TEXT NOT NULL,\n        username TEXT,\n        access_credential_ref TEXT,\n        encryption_credential_ref TEXT,\n        selected_categories TEXT NOT NULL CHECK (\n          json_valid(selected_categories) AND json_type(selected_categories) = 'array'\n        ),\n        auto_sync_enabled INTEGER NOT NULL DEFAULT 0,\n        auto_sync_interval_minutes INTEGER NOT NULL DEFAULT 5\n          CHECK (auto_sync_interval_minutes BETWEEN 1 AND 1440),\n        auto_sync_direction TEXT NOT NULL DEFAULT 'upload'\n          CHECK (auto_sync_direction IN ('upload','download')),\n        state TEXT NOT NULL DEFAULT 'idle'\n          CHECK (state IN ('idle','checking','uploading','download-preview','failed')),\n        remote_revision TEXT,\n        last_sync_at TEXT,\n        last_error_code TEXT,\n        pending_preview_id TEXT,\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      CREATE INDEX sync_profiles_auto ON sync_profiles(auto_sync_enabled, updated_at);\n    ",
+      "sha256": "f7c8003ceb98df227d6c46264d87f62ac20d2580ca849a574fc16767fde7287b",
+      "hasApply": false
+    },
+    {
+      "id": 31,
+      "sql": "\n      ALTER TABLE ai_runs ADD COLUMN conversation_id TEXT;\n      ALTER TABLE ai_messages ADD COLUMN run_id TEXT;\n      ALTER TABLE ai_messages ADD COLUMN state TEXT NOT NULL DEFAULT 'complete'\n        CHECK (state IN ('complete','failed','canceled'));\n      ALTER TABLE ai_messages ADD COLUMN error_code TEXT;\n      CREATE INDEX ai_runs_conversation ON ai_runs(conversation_id, created_at, id);\n      CREATE UNIQUE INDEX ai_messages_run_role ON ai_messages(run_id, role)\n        WHERE run_id IS NOT NULL;\n      CREATE INDEX ai_messages_conversation ON ai_messages(conversation_id, created_at, id);\n    ",
+      "sha256": "74a9839abd51cc41b3d0e7c372ff1cef6e41d162c88c92ec5dd0d850b4185fc7",
+      "hasApply": false
+    },
+    {
+      "id": 32,
+      "sql": "\n      ALTER TABLE ai_messages ADD COLUMN attachments_json TEXT NOT NULL DEFAULT '[]'\n        CHECK (json_valid(attachments_json) AND json_type(attachments_json) = 'array');\n    ",
+      "sha256": "65feb206b4b2518f01b8fbc0013f3e88bb5398e518a5c74ec00ea484a6a3f413",
+      "hasApply": false
+    },
+    {
+      "id": 33,
+      "sql": "\n      UPDATE app_settings\n      SET payload = json_set(\n            payload,\n            '$.restoreLayout', json('false'),\n            '$.startupSessions', json('[]')\n          ),\n          version = version + 1,\n          updated_at = CURRENT_TIMESTAMP\n      WHERE section = 'workspace' AND json_valid(payload);\n    ",
+      "sha256": "39ef1596cd2ef4383aea876ebdcde793e1c99da6d593da115ee9f641b2bc1db7",
+      "hasApply": false
+    },
+    {
+      "id": 34,
+      "sql": "-- Map removed built-in theme IDs 3..312 in persisted terminal and workspace visuals to the Axterm default; preserve user-created theme IDs.",
+      "sha256": "0e24ea3998c7d393c53065358a345482eb16e2e038b41a2a8d05cf90ecae3fb6",
+      "hasApply": true
+    },
+    {
+      "id": 35,
+      "sql": "\n      CREATE TABLE axterm_configuration_import_entries (\n        kind TEXT NOT NULL CHECK (kind IN (\n          'hostGroups', 'hosts', 'bookmarkGroups', 'bookmarks',\n          'connectionProfiles', 'terminalProfiles', 'tunnelProfiles',\n          'quickCommandGroups', 'quickCommands', 'terminalThemes', 'triggers'\n        )),\n        source_id TEXT NOT NULL,\n        fingerprint TEXT NOT NULL,\n        target_id TEXT NOT NULL,\n        imported_at TEXT NOT NULL,\n        PRIMARY KEY (kind, source_id)\n      );\n      CREATE INDEX axterm_configuration_import_entries_target\n        ON axterm_configuration_import_entries(kind, target_id);\n    ",
+      "sha256": "297502f90fe84b782bf372d0705ab2d91ef177beacab9329dcc94c6bad2a4253",
+      "hasApply": false
+    },
+    {
+      "id": 36,
+      "sql": "\n      ALTER TABLE sync_profiles ADD COLUMN format TEXT NOT NULL DEFAULT 'axterm-sync-v1'\n        CHECK (format = 'axterm-sync-v1');\n    ",
+      "sha256": "668241ea33e2cb0ead8aab301fddc0e31191e953cdc23ff898c4ca554edec4a7",
+      "hasApply": false
+    },
+    {
+      "id": 37,
+      "sql": "\n      CREATE TABLE sync_profiles_replacement (\n        id TEXT PRIMARY KEY,\n        provider TEXT NOT NULL CHECK (provider IN ('github','gitee','webdav','custom')),\n        format TEXT NOT NULL CHECK (format = 'axterm-sync-v1'),\n        name TEXT NOT NULL,\n        endpoint_url TEXT NOT NULL,\n        remote_id TEXT NOT NULL,\n        username TEXT,\n        access_credential_ref TEXT,\n        encryption_credential_ref TEXT,\n        selected_categories TEXT NOT NULL CHECK (\n          json_valid(selected_categories) AND json_type(selected_categories) = 'array'\n        ),\n        auto_sync_enabled INTEGER NOT NULL DEFAULT 0,\n        auto_sync_interval_minutes INTEGER NOT NULL DEFAULT 5\n          CHECK (auto_sync_interval_minutes BETWEEN 1 AND 1440),\n        auto_sync_direction TEXT NOT NULL DEFAULT 'upload'\n          CHECK (auto_sync_direction IN ('upload','download')),\n        state TEXT NOT NULL DEFAULT 'idle'\n          CHECK (state IN ('idle','checking','uploading','download-preview','failed')),\n        remote_revision TEXT,\n        last_sync_at TEXT,\n        last_error_code TEXT,\n        pending_preview_id TEXT,\n        created_at TEXT NOT NULL,\n        updated_at TEXT NOT NULL,\n        version INTEGER NOT NULL DEFAULT 1\n      );\n      INSERT INTO sync_profiles_replacement(\n        id, provider, format, name, endpoint_url, remote_id, username,\n        access_credential_ref, encryption_credential_ref, selected_categories,\n        auto_sync_enabled, auto_sync_interval_minutes, auto_sync_direction,\n        state, remote_revision, last_sync_at, last_error_code, pending_preview_id,\n        created_at, updated_at, version\n      ) SELECT\n        id, provider, format, name, endpoint_url, remote_id, username,\n        access_credential_ref, encryption_credential_ref, selected_categories,\n        auto_sync_enabled, auto_sync_interval_minutes, auto_sync_direction,\n        state, remote_revision, last_sync_at, last_error_code, pending_preview_id,\n        created_at, updated_at, version\n      FROM sync_profiles;\n      DROP TABLE sync_profiles;\n      ALTER TABLE sync_profiles_replacement RENAME TO sync_profiles;\n      CREATE UNIQUE INDEX sync_profiles_provider_format_unique\n        ON sync_profiles(provider, format);\n      CREATE INDEX sync_profiles_auto ON sync_profiles(auto_sync_enabled, updated_at);\n    ",
+      "sha256": "470b66404befcce6cc7e42c4bef58ba3beb42d242bc7cb1e35c4e095d4aec5ed",
+      "hasApply": false
+    },
+    {
+      "id": 38,
+      "sql": "\n      UPDATE app_settings\n      SET payload = json_set(payload, '$.language', 'en'),\n          version = version + 1,\n          updated_at = CURRENT_TIMESTAMP\n      WHERE section = 'appearance'\n        AND json_valid(payload)\n        AND json_type(payload, '$.language') = 'text'\n        AND json_extract(payload, '$.language') NOT IN ('en', 'ja', 'zh-CN', 'zh-TW');\n    ",
+      "sha256": "21d822c29324580f1c0f1163eb4837275c95667a2edb775babafdf24de8b16b2",
+      "hasApply": false
+    },
+    {
+      "id": 39,
+      "sql": "\n      SELECT 1;\n    ",
+      "sha256": "118bc89c6ea9ae0010fa0d97163514443f45ec86c5bf4946ec79909c94903020",
+      "hasApply": false
+    },
+    {
+      "id": 40,
+      "sql": "\n      SELECT 1;\n    ",
+      "sha256": "118bc89c6ea9ae0010fa0d97163514443f45ec86c5bf4946ec79909c94903020",
+      "hasApply": false
+    },
+    {
+      "id": 41,
+      "sql": "INSERT INTO app_meta(key, value) VALUES ('axterm:schema-generation', '2');",
+      "sha256": "62995689f5ba61bd983f3f1649772027cee23b3346f5656b3a3e688af86c503b",
+      "hasApply": false
+    },
+    {
+      "id": 42,
+      "sql": "ALTER TABLE ai_tool_calls ADD COLUMN review_json TEXT; ALTER TABLE ai_tool_calls ADD COLUMN step INTEGER; ALTER TABLE ai_tool_calls ADD COLUMN approval_source TEXT;",
+      "sha256": "0d0f23cfdb0395f6330f4731c7028ec96d46ae420e50883cd58ad3fd1b8acedd",
+      "hasApply": false
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "license": "Apache-2.0",
+  "scope": "Axterm-authored thin Cordis Engine Provider, Config and bounded transport adapter.",
+  "engineCore": "@axterm/engine-pi-core",
+  "engineCoreSourceManifest": "../../pi-engine/source-manifest.json",
+  "reuse": "The existing private compiled core directly consumes pinned vendor/pi Agent/API sources; this Provider adds no Agent loop or protocol parser."
+}

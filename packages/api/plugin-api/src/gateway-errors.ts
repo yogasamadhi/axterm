@@ -1,0 +1,41 @@
+// Copyright (c) 2026 DeepSeek. SPDX-License-Identifier: MIT
+// Adapted from packages/api/gateway/src/remote-error-codes.ts at 8bd073392eef6f54e921a093b95076248eb08cbb.
+/**
+ * Gateway infrastructure failure codes merged into the shared Remote failure
+ * vocabulary. Face-neutral: the Host face and the Client face each import this
+ * module so both programs see the same map entries.
+ */
+
+/** Wire details every Gateway infrastructure failure carries. */
+export interface TypertGatewayFaultDetails {
+  /** Canonical `<namespace>/<method>` endpoint. */
+  readonly endpoint: string;
+  /** Affected wire field when the failure is field-specific. */
+  readonly field?: string;
+}
+
+declare module './types.ts' {
+  interface RemoteErrorDetailsMap {
+    'gateway/ambiguous-endpoint': TypertGatewayFaultDetails;
+    'gateway/arguments-invalid': TypertGatewayFaultDetails;
+    'gateway/binding-invalid': TypertGatewayFaultDetails;
+    'gateway/context-failed': TypertGatewayFaultDetails;
+    'gateway/context-not-found': TypertGatewayFaultDetails;
+    'gateway/context-unavailable': TypertGatewayFaultDetails;
+    'gateway/definition-unavailable': TypertGatewayFaultDetails;
+    'gateway/input-invalid': TypertGatewayFaultDetails;
+    'gateway/interactions-forbidden': TypertGatewayFaultDetails;
+    'gateway/invocation-unavailable': TypertGatewayFaultDetails;
+    'gateway/lookup-failed': TypertGatewayFaultDetails;
+    'gateway/lookup-not-found': TypertGatewayFaultDetails;
+    'gateway/lookup-unavailable': TypertGatewayFaultDetails;
+    'gateway/method-unavailable': TypertGatewayFaultDetails;
+    'gateway/peer-disposed': TypertGatewayFaultDetails;
+    'gateway/protocol': TypertGatewayFaultDetails;
+    'gateway/provider-mismatch': TypertGatewayFaultDetails;
+    'gateway/result-invalid': TypertGatewayFaultDetails;
+    'gateway/service-unavailable': TypertGatewayFaultDetails;
+    'gateway/signature-invalid': TypertGatewayFaultDetails;
+    'gateway/uplink-overflow': TypertGatewayFaultDetails;
+  }
+}

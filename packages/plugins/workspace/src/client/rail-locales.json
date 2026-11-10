@@ -1,0 +1,54 @@
+{
+  "en": {
+    "common.operationFailed": "Operation failed",
+    "common.retry": "Retry",
+    "activityRail.title": "Activity rail",
+    "activityRail.hint": "Choose and arrange your main shortcuts. Add saved connection, Bookmarks and AI Assistant stay available. Bookmarks and AI Assistant share one sidebar. Sync, Widgets and tunnels are in Settings.",
+    "activityRail.saved": "Activity rail updated.",
+    "activityRail.moveUp": "Move {item} up",
+    "activityRail.moveDown": "Move {item} down",
+    "bookmarks": "Saved connections",
+    "leftSideBarIcons": "Sidebar shortcuts",
+    "newBookmark": "Add saved connection",
+    "setting": "Settings"
+  },
+  "zh-CN": {
+    "common.operationFailed": "操作失败",
+    "common.retry": "重试",
+    "activityRail.title": "活动栏",
+    "activityRail.hint": "选择常用入口并调整顺序。添加已保存连接、书签与 AI 助手固定保留，书签和 AI 助手共用一个侧栏；同步、组件和隧道集中在设置中。",
+    "activityRail.saved": "活动栏已更新。",
+    "activityRail.moveUp": "上移{item}",
+    "activityRail.moveDown": "下移{item}",
+    "bookmarks": "已保存的连接",
+    "leftSideBarIcons": "侧栏快捷入口",
+    "newBookmark": "添加已保存连接",
+    "setting": "设置"
+  },
+  "ja": {
+    "common.operationFailed": "操作に失敗しました",
+    "common.retry": "再試行",
+    "activityRail.title": "アクティビティレール",
+    "activityRail.hint": "よく使う入口を選び、順序を並べ替えます。保存する接続の追加、ブックマーク、AI アシスタントは常に利用できます。ブックマークと AI アシスタントは同じサイドバーで切り替えます。同期、ウィジェット、トンネルは設定から開けます。",
+    "activityRail.saved": "アクティビティレールを更新しました。",
+    "activityRail.moveUp": "{item} を上へ移動",
+    "activityRail.moveDown": "{item} を下へ移動",
+    "bookmarks": "保存した接続",
+    "leftSideBarIcons": "サイドバーのショートカット",
+    "newBookmark": "保存する接続を追加",
+    "setting": "設定"
+  },
+  "zh-TW": {
+    "common.operationFailed": "操作失敗",
+    "common.retry": "重試",
+    "activityRail.title": "活動列",
+    "activityRail.hint": "選擇常用入口並排列順序。新增已儲存連線、書籤與 AI 助手固定保留，書籤和 AI 助手共用一個側欄；同步、元件和通道集中在設定中。",
+    "activityRail.saved": "活動列已更新。",
+    "activityRail.moveUp": "上移 {item}",
+    "activityRail.moveDown": "下移 {item}",
+    "bookmarks": "已儲存的連線",
+    "leftSideBarIcons": "側邊欄捷徑",
+    "newBookmark": "新增已儲存連線",
+    "setting": "設定"
+  }
+}

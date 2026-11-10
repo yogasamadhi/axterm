@@ -1,0 +1,377 @@
+.data-sync-panel {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.data-sync-heading,
+.data-sync-comparison header,
+.data-sync-preview header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.data-sync-heading h3,
+.data-sync-heading p,
+.data-sync-comparison header small,
+.data-sync-preview header small {
+  margin: 0;
+}
+
+.data-sync-heading small {
+  color: var(--ax-color-primary);
+  font-size: var(--ax-font-size-small);
+  letter-spacing: var(--ax-letter-spacing-brand);
+}
+
+.data-sync-heading p,
+.data-sync-preview small,
+.data-sync-comparison small {
+  color: var(--ax-color-text-muted);
+}
+
+.data-sync-provider-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 4px;
+  border-radius: var(--ax-radius-card);
+  background: color-mix(in srgb, var(--ax-color-canvas) 90%, transparent);
+}
+
+.data-sync-provider-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  white-space: nowrap;
+}
+
+.data-sync-provider-tabs button.active {
+  color: var(--ax-color-text);
+  background: var(--ax-color-control-hover);
+  box-shadow: var(
+    --ax-shadow-configuration-sync-presentation-data-sync-provider-tabs-button-activ-3cde509
+  );
+}
+
+.data-sync-format-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.data-sync-format-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+}
+
+.data-sync-format-tabs button.active {
+  color: var(--ax-color-text);
+  border-color: color-mix(in srgb, var(--ax-color-primary) 55%, var(--ax-color-border));
+  background: color-mix(in srgb, var(--ax-color-primary) 12%, var(--ax-color-canvas));
+}
+
+.data-sync-format-tabs button:disabled {
+  color: var(--ax-color-text-muted);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.data-sync-warning,
+.data-sync-message {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--ax-color-warning) 45%, transparent);
+  border-radius: var(--ax-radius-soft);
+  color: var(--ax-color-warning);
+  background: color-mix(in srgb, var(--ax-color-warning) 8%, transparent);
+}
+
+.data-sync-message {
+  overflow-wrap: anywhere;
+}
+
+.data-sync-message > p {
+  margin: 0;
+}
+
+.data-sync-gist-recovery {
+  margin-block-start: 8px;
+}
+
+.data-sync-gist-recovery summary {
+  width: fit-content;
+  cursor: pointer;
+  font-weight: var(--ax-font-weight-semibold);
+}
+
+.data-sync-gist-recovery ol {
+  margin-block: 8px 0;
+  padding-inline-start: 22px;
+}
+
+.data-sync-gist-recovery li + li {
+  margin-block-start: 6px;
+}
+
+.data-sync-form {
+  display: grid;
+  gap: 16px;
+}
+
+.data-sync-migration {
+  display: grid;
+  gap: 14px;
+}
+
+.data-sync-migration header p {
+  margin: 6px 0 0;
+  color: var(--ax-color-text-muted);
+}
+
+.data-sync-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.data-sync-form-grid label,
+.data-sync-auto-row label {
+  display: grid;
+  gap: 6px;
+}
+
+.data-sync-categories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-soft);
+}
+
+.data-sync-categories legend {
+  padding: 0 6px;
+  color: var(--ax-color-text-muted);
+}
+
+.data-sync-categories label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 8px;
+  border-radius: var(--ax-radius-control);
+}
+
+.data-sync-categories label:hover {
+  background: var(--ax-color-control-hover);
+}
+
+.data-sync-categories span {
+  display: grid;
+  gap: 2px;
+}
+
+.data-sync-categories small {
+  color: var(--ax-color-text-muted);
+}
+
+.data-sync-auto-row,
+.data-sync-actions,
+.data-sync-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.data-sync-auto-row label:not(.check) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.data-sync-auto-row input[type='number'] {
+  width: 84px;
+}
+
+.data-sync-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.data-sync-actions .danger {
+  margin-left: auto;
+}
+
+.data-sync-status {
+  min-height: 42px;
+}
+
+.data-sync-status .sync-state {
+  padding: 3px 8px;
+  border-radius: var(--ax-radius-pill);
+  color: var(--ax-color-primary);
+  background: color-mix(in srgb, var(--ax-color-primary) 12%, transparent);
+}
+
+.data-sync-status .state-failed,
+.data-sync-status .error {
+  color: var(--ax-color-danger);
+}
+
+.data-sync-compare-table {
+  display: grid;
+  margin-top: 12px;
+}
+
+.data-sync-compare-table > div {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) 70px 70px 90px;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--ax-color-border);
+}
+
+.data-sync-compare-table .head {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-control);
+}
+
+.compare-equal {
+  color: var(--ax-color-primary);
+}
+.compare-different {
+  color: var(--ax-color-warning);
+}
+.compare-local-only,
+.compare-remote-only {
+  color: var(--ax-color-primary);
+}
+
+.data-sync-preview-list {
+  display: grid;
+  max-height: 260px;
+  margin: 12px 0;
+  overflow: auto;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+}
+
+.data-sync-preview-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--ax-color-border);
+}
+
+@media (max-width: 900px) {
+  .data-sync-form-grid,
+  .data-sync-categories {
+    grid-template-columns: 1fr;
+  }
+
+  .data-sync-compare-table > div {
+    grid-template-columns: minmax(120px, 1fr) 52px 52px 72px;
+  }
+}
+
+.provider-body {
+  display: contents;
+}
+.surface {
+  padding: 16px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-card-soft);
+  background: var(--ax-color-surface-sunken);
+}
+.data-sync-panel input,
+.data-sync-panel select {
+  min-height: 34px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-soft);
+  background: var(--ax-color-canvas);
+  color: var(--ax-color-text);
+  padding: 7px 10px;
+  font: inherit;
+  font-size: var(--ax-font-size-control);
+}
+.data-sync-panel input[type='checkbox'] {
+  width: auto;
+  min-height: 0;
+  accent-color: var(--ax-color-primary);
+}
+.data-sync-panel button {
+  min-height: 30px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-soft);
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text);
+  padding: 6px 10px;
+  font: inherit;
+  font-size: var(--ax-font-size-control);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.data-sync-panel button:disabled {
+  cursor: not-allowed;
+  color: var(--ax-color-text-muted);
+}
+.data-sync-panel input:focus-visible,
+.data-sync-panel select:focus-visible,
+.data-sync-panel button:focus-visible {
+  outline: 1px solid var(--ax-color-primary);
+  outline-offset: 1px;
+}
+.data-sync-panel button.primary {
+  background: var(--ax-color-primary);
+  color: var(--ax-color-on-primary);
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.danger {
+  color: var(--ax-color-danger);
+}
+
+/* Preserve the frozen form's computed sizing; checkbox bytes and facts remain model-owned. */
+.data-sync-form label {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-control);
+}
+.data-sync-panel input[type='checkbox'] {
+  width: 100%;
+  min-height: 34px;
+  accent-color: var(--ax-color-primary);
+}
+.data-sync-panel .check input[type='checkbox'] {
+  width: auto;
+}
+.data-sync-panel button.primary {
+  background: var(--ax-color-action-success);
+  border-color: var(--ax-color-action-success-border);
+  color: var(--ax-color-on-action-success);
+}
+.data-sync-panel button.danger {
+  background: var(--ax-color-action-danger);
+  border-color: var(--ax-color-action-danger-border);
+  color: var(--ax-color-on-action-danger);
+}
+
+.data-sync-panel input[type='checkbox'] {
+  margin: 0;
+}
+.data-sync-categories small {
+  font-size: var(--ax-font-size-caption-relative);
+}

@@ -1,0 +1,132 @@
+{
+  "name": "@axterm/plugin-api",
+  "version": "0.10.0",
+  "private": false,
+  "type": "module",
+  "license": "(MIT AND Apache-2.0)",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types.js"
+    },
+    "./remote-info": {
+      "types": "./lib/types/remote-info.d.ts",
+      "default": "./lib/remote-info.js"
+    },
+    "./brand": {
+      "types": "./lib/types/brand.d.ts",
+      "default": "./lib/brand.js"
+    },
+    "./host": {
+      "types": "./lib/types/host/index.d.ts",
+      "default": "./lib/host.js"
+    },
+    "./stream-protocol": {
+      "types": "./lib/types/stream-protocol.d.ts",
+      "default": "./lib/stream-protocol.js"
+    },
+    "./storage": {
+      "types": "./lib/types/storage.d.ts",
+      "default": "./lib/storage.js"
+    },
+    "./terminals": {
+      "types": "./lib/types/terminals.d.ts",
+      "default": "./lib/terminals.js"
+    },
+    "./desktop": {
+      "types": "./lib/types/desktop.d.ts",
+      "default": "./lib/desktop.js"
+    },
+    "./catalog": {
+      "types": "./lib/types/catalog.d.ts",
+      "default": "./lib/catalog.js"
+    },
+    "./configuration": {
+      "types": "./lib/types/configuration.d.ts",
+      "default": "./lib/configuration.js"
+    },
+    "./connections": {
+      "types": "./lib/types/connections.d.ts",
+      "default": "./lib/connections.js"
+    },
+    "./files": {
+      "types": "./lib/types/files.d.ts",
+      "default": "./lib/files.js"
+    },
+    "./transfers": {
+      "types": "./lib/types/transfers.d.ts",
+      "default": "./lib/transfers.js"
+    },
+    "./remote-desktop": {
+      "types": "./lib/types/remote-desktop.d.ts",
+      "default": "./lib/remote-desktop.js"
+    },
+    "./automation": {
+      "types": "./lib/types/automation.d.ts",
+      "default": "./lib/automation.js"
+    },
+    "./credentials": {
+      "types": "./lib/types/credentials.d.ts",
+      "default": "./lib/credentials.js"
+    },
+    "./saved-credentials": {
+      "types": "./lib/types/saved-credentials.d.ts",
+      "default": "./lib/saved-credentials.js"
+    },
+    "./configuration-portable": {
+      "types": "./lib/types/configuration-portable.d.ts",
+      "default": "./lib/configuration-portable.js"
+    },
+    "./configuration-sync": {
+      "types": "./lib/types/configuration-sync.d.ts",
+      "default": "./lib/configuration-sync.js"
+    },
+    "./subprocess": {
+      "types": "./lib/types/subprocess.d.ts",
+      "default": "./lib/subprocess.js"
+    },
+    "./ai": {
+      "types": "./lib/types/ai.d.ts",
+      "default": "./lib/ai.js"
+    },
+    "./plugins": {
+      "types": "./lib/types/plugins.d.ts",
+      "default": "./lib/plugins.js"
+    },
+    "./market": {
+      "types": "./lib/types/market.d.ts",
+      "default": "./lib/market.js"
+    },
+    "./session-intents": {
+      "types": "./lib/types/session-intents.d.ts",
+      "default": "./lib/session-intents.js"
+    },
+    "./shortcuts": {
+      "types": "./lib/types/shortcuts.d.ts",
+      "default": "./lib/shortcuts.js"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "files": [
+    "lib/*.js",
+    "lib/types/**/*.d.ts",
+    "LICENSE",
+    "README.md",
+    "SOURCE.json",
+    "LICENSE.AXTERM"
+  ],
+  "description": "Public Axterm Remote and branded identity contracts; Level 3 SDK foundation",
+  "publishConfig": {
+    "access": "public"
+  }
+}

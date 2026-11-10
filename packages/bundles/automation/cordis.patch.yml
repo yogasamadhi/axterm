@@ -1,0 +1,6 @@
+- insert:
+    - id: automation
+      name: '@axterm/plugin-automation'
+      inject: [profileContext]
+      config:
+        profile: !!js ctx.profileContext.name

@@ -1,0 +1,80 @@
+{
+  "name": "@axterm/plugin-ai",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./copy": {
+      "types": "./lib/types/copy.d.ts",
+      "default": "./lib/copy.js"
+    }
+  },
+  "files": [
+    "lib",
+    "SOURCE.json",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/data-schema": "workspace:*",
+    "@axterm/infra-storage-domain": "workspace:*",
+    "zod": "4.4.3",
+    "@axterm/engine-api": "workspace:*",
+    "@axterm/engine-pi": "workspace:*",
+    "@axterm/engine-pi-core": "workspace:*",
+    "@axterm/infra-atomic-write": "workspace:*",
+    "@axterm/infra-gateway": "workspace:*",
+    "@axterm/ui": "workspace:*",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "lucide-react": "1.44.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "external": [
+        "@axterm/infra-gateway/client",
+        "@axterm/ui",
+        "@axterm/ui/controls",
+        "@axterm/ui/workspace",
+        "@axterm/ui/presentation"
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/dom": "10.4.2",
+    "react-dom": "18.3.1"
+  }
+}

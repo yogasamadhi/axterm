@@ -1,0 +1,39 @@
+{
+  "name": "@axterm/infra-plugin-manager",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "LICENSE",
+    "licenses",
+    "SOURCE.json"
+  ],
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/infra-app-boot": "workspace:*",
+    "@axterm/infra-atomic-write": "workspace:*",
+    "pnpm": "11.28.5",
+    "tar": "7.5.22",
+    "yaml": "2.9.0",
+    "zod": "4.4.3",
+    "semver": "^7.8.5"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~",
+    "@deepseek-ai/cordis-plugin-loader": "workspace:~",
+    "@deepseek-ai/cordis-plugin-include": "workspace:~",
+    "@axterm/infra-hmr": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/semver": "7.7.1"
+  }
+}

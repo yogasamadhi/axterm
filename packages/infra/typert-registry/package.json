@@ -1,0 +1,38 @@
+{
+  "name": "@axterm/infra-typert-registry",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "zod": "4.4.3",
+    "@axterm/infra-scope": "workspace:*"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "external": []
+    }
+  }
+}

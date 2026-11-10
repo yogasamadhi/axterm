@@ -1,0 +1,18 @@
+{
+  "name": "@axterm/bundle-connections",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "cordis.patch.yml"
+  ],
+  "axterm": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@axterm/plugin-connections": "workspace:*"
+  }
+}

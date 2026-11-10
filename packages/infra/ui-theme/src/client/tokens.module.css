@@ -1,0 +1,145 @@
+/*
+ * Axterm's product-shell tokens. These semantic roles deliberately own the
+ * application chrome rather than mirroring a historical reference surface.
+ * Feature and terminal themes may override the same roles without changing
+ * interaction geometry or accessibility affordances.
+ */
+:global(:root) {
+  --ax-color-canvas: #252525;
+  --ax-color-canvas-deep: #191919;
+  --ax-color-terminal-canvas: #1e1e1e;
+  --ax-color-surface-raised: #343434;
+  --ax-color-surface-sunken: #1e1e1e;
+  --ax-color-surface-muted: #606060;
+  --ax-color-control-hover: #2d2d2d;
+  --ax-color-heading-eyebrow: #6ab47d;
+  --ax-color-panel-highlight: #ffffff05;
+  --ax-color-task-dialog-surface: transparent;
+  --ax-color-config-export-surface: #2d2d2d;
+  --ax-color-task-dialog-scrim: #050809aa;
+  --ax-color-task-dialog-border: #606060;
+  --ax-color-border: #3c3c3c;
+  --ax-color-settings-canvas: #252525;
+  --ax-color-settings-tab: #16161b;
+  --ax-color-field-placeholder: #55636a;
+  --ax-color-settings-raised: #23232b;
+  --ax-color-settings-border: #3f3f48;
+  --ax-color-settings-input-border: #454650;
+  --ax-color-settings-text: #d0d0d4;
+  --ax-color-tab-inactive: #0b0b0b;
+  --ax-color-tab-active: #505050;
+  --ax-color-tab-active-border: #777777;
+  --ax-color-action-success: #27613a;
+  --ax-color-action-danger: #512d29;
+  --ax-color-action-danger-border: #78473e;
+  --ax-color-on-action-danger: #f4c0b9;
+  --ax-color-action-success-hover: #327548;
+  --ax-color-action-success-border: #39774b;
+  --ax-color-on-action-success: #effff3;
+  --ax-color-text: #dedede;
+  --ax-color-text-strong: #f5f5f5;
+  --ax-color-text-muted: #b0b0b0;
+  --ax-color-text-disabled: #8a8a8a;
+  --ax-color-primary: #2fc7a1;
+  --ax-color-info: #ffc857;
+  --ax-color-success: #4bd17d;
+  --ax-color-danger: #f06473;
+  --ax-color-warning: #ff9f43;
+  --ax-color-on-primary: #06201b;
+  --ax-color-on-danger: #101617;
+
+  --ax-size-activity-rail: 40px;
+  --ax-size-overlay-rail-offset: 38px;
+  --ax-size-terminal-left-rail: 24px;
+  --ax-size-tab-height: 38px;
+  --ax-size-footer-height: 32px;
+  --ax-size-tab-min: 112px;
+  --ax-size-tab-max: 240px;
+  --ax-size-tab-close: 18px;
+  --ax-size-status-dot: 6px;
+  --ax-size-shortcut-bar: 44px;
+
+  --ax-space-1: 4px;
+  --ax-space-2: 8px;
+  --ax-space-3: 12px;
+  --ax-space-4: 16px;
+  --ax-radius-control: 6px;
+  --ax-radius-panel: 10px;
+  --ax-motion-fast: 160ms;
+  --ax-shadow-menu: 0 18px 42px rgb(0 0 0 / 28%), 0 0 0 1px rgb(255 255 255 / 5%);
+}
+
+/* Light shell palette; terminal colors remain owned by terminal appearance. */
+:global(:root[data-ax-theme='light']) {
+  --ax-color-canvas: #f5f5f5;
+  --ax-color-canvas-deep: #eaeaea;
+  --ax-color-surface-raised: #fff;
+  --ax-color-surface-sunken: #eee;
+  --ax-color-surface-muted: #d6d6d6;
+  --ax-color-control-hover: #e0e0e0;
+  --ax-color-heading-eyebrow: #2e7243;
+  --ax-color-panel-highlight: #00000005;
+  --ax-color-task-dialog-surface: #fff;
+  --ax-color-config-export-surface: #f4f4f4;
+  --ax-color-task-dialog-scrim: #05080966;
+  --ax-color-task-dialog-border: #aaa;
+  --ax-color-text: #292929;
+  --ax-color-text-strong: #111;
+  --ax-color-text-muted: #595959;
+  --ax-color-text-disabled: #777;
+  --ax-color-border: #b5b5b5;
+  --ax-color-settings-canvas: #f5f5f5;
+  --ax-color-settings-tab: #eaeaea;
+  --ax-color-field-placeholder: #666;
+  --ax-color-settings-raised: #fff;
+  --ax-color-settings-border: #b5b5b5;
+  --ax-color-settings-input-border: #999;
+  --ax-color-settings-text: #292929;
+  --ax-color-tab-inactive: var(--ax-color-canvas-deep);
+  --ax-color-tab-active: #ddd;
+  --ax-color-tab-active-border: #888;
+  --ax-color-primary: #087e66;
+  --ax-color-on-primary: #fff;
+  --ax-color-danger: #ba263f;
+  --ax-color-on-danger: #fff;
+  --ax-color-success: #18783f;
+  --ax-color-warning: #8c4e00;
+  --ax-color-info: #865e00;
+  --ax-color-action-danger: #f5d8d4;
+  --ax-color-action-danger-border: #b96a60;
+  --ax-color-on-action-danger: #60221a;
+}
+
+/* Retain the frozen product's box model after removing the old CSS preflight. */
+:global(*),
+:global(*::before),
+:global(*::after) {
+  box-sizing: border-box;
+}
+
+/* Retained keyboard/accessibility behavior applies to portal controls too. */
+@media (prefers-reduced-motion: reduce) {
+  :global(*),
+  :global(*::before),
+  :global(*::after) {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+:global(*) {
+  scrollbar-color: var(--ax-color-surface-muted) transparent;
+  scrollbar-width: thin;
+}
+:global(*::-webkit-scrollbar) {
+  width: 8px;
+  height: 8px;
+}
+:global(*::-webkit-scrollbar-thumb) {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--ax-color-surface-muted);
+  background-clip: padding-box;
+}

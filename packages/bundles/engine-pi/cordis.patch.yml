@@ -1,0 +1,5 @@
+- insert:
+    - id: engine-pi
+      name: '@axterm/engine-pi'
+      config:
+        providers: {}

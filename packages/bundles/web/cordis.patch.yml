@@ -1,0 +1,28 @@
+- insert:
+    - id: web-server
+      name: '@axterm/infra-web-server'
+      config:
+        host: 127.0.0.1
+        port: 0
+    - id: connection
+      name: '@axterm/infra-connection'
+    - id: client-modules
+      name: '@axterm/infra-client-modules'
+    - id: client-hmr
+      name: '@axterm/infra-client-hmr'
+    - id: ui-renderer
+      name: '@axterm/infra-ui-renderer'
+    - id: locale
+      name: '@axterm/infra-locale'
+    - id: shortcuts
+      name: '@axterm/infra-shortcuts'
+    - id: ui-theme
+      name: '@axterm/infra-ui-theme'
+    - id: frontend-static
+      name: '@axterm/infra-frontend-static'
+      inject: [webAssets]
+      config:
+        distIndex: !!js ctx.webAssets.index
+        authenticationPage: !!js ctx.webAssets.authenticationPage
+    - id: web-startup
+      name: '@axterm/infra-web-startup'

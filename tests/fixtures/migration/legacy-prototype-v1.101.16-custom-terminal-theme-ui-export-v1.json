@@ -1,0 +1,54 @@
+{
+  "terminalThemes": [
+    {
+      "id": "default",
+      "name": "default"
+    },
+    {
+      "id": "defaultLight",
+      "name": "default light"
+    },
+    {
+      "id": "OtUP3hD",
+      "name": "Axterm Aurora Test",
+      "themeConfig": {
+        "foreground": "#D7F6E8",
+        "background": "#10343B",
+        "cursor": "#2AC795",
+        "cursorAccent": "#071E24",
+        "selectionBackground": "rgba(42, 199, 149, 0.30)",
+        "black": "#07323B",
+        "red": "#F07178",
+        "green": "#49D39C",
+        "yellow": "#F3A95F",
+        "blue": "#5FC2D1",
+        "magenta": "#C792EA",
+        "cyan": "#82D8CE",
+        "white": "#D7F6E8",
+        "brightBlack": "#4A7777",
+        "brightRed": "#FF8990",
+        "brightGreen": "#78E6B6",
+        "brightYellow": "#FFCD82",
+        "brightBlue": "#8ADBE8",
+        "brightMagenta": "#DDB6F2",
+        "brightCyan": "#A8ECE4",
+        "brightWhite": "#F4FFF9"
+      },
+      "uiThemeConfig": {
+        "main": "#10343B",
+        "main-dark": "#071E24",
+        "main-light": "#1C4C53",
+        "text": "#D7F6E8",
+        "text-light": "#F4FFF9",
+        "text-dark": "#A7CEC0",
+        "text-disabled": "#73968A",
+        "primary": "#2AC795",
+        "info": "#5FC2D1",
+        "success": "#49D39C",
+        "error": "#FF6B82",
+        "warn": "#F3A95F"
+      }
+    }
+  ],
+  "config": { "theme": "OtUP3hD" }
+}

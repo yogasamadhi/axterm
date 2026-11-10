@@ -1,0 +1,8 @@
+- insert:
+    - id: plugin-manager
+      name: '@axterm/infra-plugin-manager'
+      config:
+        registry: https://registry.npmjs.org/
+        fallbackRegistries: []
+    - id: plugins
+      name: '@axterm/plugin-plugins'

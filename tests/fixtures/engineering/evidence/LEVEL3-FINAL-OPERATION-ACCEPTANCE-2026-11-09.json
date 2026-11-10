@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "adr": "ADR-232",
+  "implementationSourceRevision": "25fd503a80445ceec1305529e39a3525d635513e",
+  "status": "Level 3 engineering migration completed, including explicitly delegated visual acceptance and protected main cutover",
+  "checks": {
+    "scoped": {
+      "passedTests": 27,
+      "scope": "Current Client decoder/actual xterm/stream/consumer/projection suite, plus the following separately identified owner behavior proof.",
+      "ownerBehaviorSuite": {
+        "sourceRevision": "6afc91e3d7d2806cacac58ccbda7cb7dfc4fdb13",
+        "passedTests": 3449,
+        "conditionalSkips": 68,
+        "failedTests": 0,
+        "wholeCommandExitCode": 0,
+        "note": "Current whole command; original failed attempts retained separately."
+      },
+      "activeHostAndModelSourceChangesSinceOwnerSuite": 0,
+      "browserSourceChangesSinceOwnerSuite": []
+    },
+    "whole": {
+      "state": "passed",
+      "command": "pnpm run check",
+      "exitCode": 0,
+      "sourceRevision": "6afc91e3d7d2806cacac58ccbda7cb7dfc4fdb13",
+      "commandStartedAtRevision": "4aa6b2a62ed290cf2bb042122adef520fda96ef1",
+      "ledgerOnlyFollowup": "Only generated source-scope metadata was normalized in 6afc91e before Vitest started. Application code, dependency declarations, test fixtures and build configuration remained fixed.",
+      "passedTests": 3449,
+      "conditionalSkips": 68,
+      "failedTests": 0,
+      "testFiles": 648,
+      "visualAndAccessibilityPassed": 30,
+      "originalGoldensAndThresholdsUnchanged": true,
+      "platformBuildLintStrictArchitectureContractsLegalLocalizationSourceChecks": "passed",
+      "priorFailedAttempt": {
+        "sourceRevision": "18eff84024e487b90e80ec0dbea0f0557246e96e",
+        "exitCode": 1,
+        "passedTests": 3448,
+        "failedTests": 1,
+        "conditionalSkips": 68,
+        "files": 648,
+        "durationSeconds": 435.2,
+        "failure": "Settings fixture sent native Alt+W without acquiring actual window focus. ADR-234 establishes real focus; 12 relevant tests pass without mocking focus or changing assertions/timeouts."
+      }
+    }
+  },
+  "sourceFreeMacPackage": {
+    "sourceRevision": "25fd503a80445ceec1305529e39a3525d635513e",
+    "passedTests": 28,
+    "scope": "9 native + 4 performance cases (initial 3 pass/1 memory failure; isolated unchanged-input replay passes) + 9 installed-DMG + 5 package-material/distributed CLI/plugin/native + 1 default-workspace PTY identity/close. Not 264 native per-operation invocations.",
+    "nativeAndPerformancePassed": 13,
+    "dmgInstalledPassed": 9,
+    "dmgOtherPlatformSkips": 18,
+    "headlessPassed": 5,
+    "defaultWorkspacePassed": 1,
+    "restrictedPath": true,
+    "realProductionHomeTouched": false,
+    "initialNativePerformanceCommand": {
+      "passed": 12,
+      "failed": 1,
+      "failure": "One-terminal growth 259.4375MiB exceeded unchanged 256MiB ceiling. Original failure and metrics retained."
+    },
+    "isolatedOneTerminalReplay": {
+      "passed": 1,
+      "codeOrBudgetChanged": false,
+      "growthMiB": 116.234375,
+      "note": "Allocation-sensitive five-process RSS result varied; this replay does not turn the original command into a pass."
+    },
+    "performanceMetrics": [
+      {
+        "terminalCount": 1,
+        "growthMiB": 259.4375,
+        "recoveryMs": 679.3800419999998,
+        "initialPassed": false
+      },
+      {
+        "terminalCount": 4,
+        "growthMiB": 435.984375,
+        "recoveryMs": 656.0335839999989,
+        "initialPassed": true
+      },
+      {
+        "terminalCount": 8,
+        "growthMiB": 580.375,
+        "recoveryMs": 675.4067499999983,
+        "initialPassed": true
+      }
+    ]
+  },
+  "visual": {
+    "sourceFreeScreenshotJourneysPassed": 4,
+    "activeBeforeAfterPairs": 18,
+    "originalAutomaticThreshold": 0.01,
+    "originalGoldensChanged": false,
+    "supplementalImages": 126,
+    "ownerTarget": 0.95,
+    "ownerAccepted": false,
+    "scope": "18 active frozen screenshot scenes, 96 product plugin/market/approval/recovery images from unchanged UI, 24 Web AI images, 6 current Web auth scenes. One preexisting unreferenced frozen sync PNG retained and not claimed.",
+    "authenticationPage": "Six styled captures and actual POST /connect/security/reflow test; prior unstyled 38727cd capture superseded and retained as failure evidence.",
+    "acceptanceState": "accepted-by-owner-delegated-review",
+    "acceptanceSatisfied": true,
+    "ownerPersonallyReviewed": false,
+    "reviewEvidence": "docs/implementation/evidence/LEVEL3-DELEGATED-VISUAL-ACCEPTANCE-2026-11-10.json"
+  },
+  "unchangedBusinessPackageEvidence": {
+    "sourceRevision": "d374e49",
+    "uniqueGuiAndHeadlessPassedTests": 44,
+    "modeConditionalSkips": 1,
+    "initialGuiCommand": {
+      "passed": 38,
+      "failed": 1,
+      "skipped": 1
+    },
+    "connectionIsolatedReplay": {
+      "passed": 1,
+      "notSelected": 1
+    },
+    "scope": "Includes Web/control cases. Active business Host/metadata source unchanged; current terminal Client-only delta separately verifies parser behavior/native flow. Original failure log retained."
+  },
+  "sdk": {
+    "sourceRevision": "d374e49",
+    "publicTarballs": 13,
+    "offlineConsumerStrictRuntimeAndGeneratorEntry": "passed",
+    "publicApiFrameworkGeneratorAndLockfileDiffThroughImplementation": [],
+    "publication": "local tarballs only"
+  },
+  "soak": {
+    "baseSourceRevision": "544125131b209ae2e7ff20a92fab1f41fb7e8d94",
+    "candidateSourceRevision": "25fd503a80445ceec1305529e39a3525d635513e",
+    "scope": "Existing 30-minute Node Host/metadata mixed workload only; not browser rendering, Shell, cold source, installers or current-build runtime timings.",
+    "state": "reviewed-for-scoped-reuse",
+    "candidateSoakRerunClaim": false,
+    "activeHostOrModelSourceChanges": 0,
+    "changedSourceDispositions": [
+      {
+        "path": "packages/api/ui/src/client/controls.tsx",
+        "sha256": "41a4bbe7d1a27eaea3e71d1cf8ecc13bdce6eda10de29938c9d907acf0c9ca6e",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      },
+      {
+        "path": "packages/api/ui/src/workspace.ts",
+        "sha256": "01c0b5e5b16c367c2664b0636a85dee2fe3dc37962b34f6bf7050e2bed565ada",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      },
+      {
+        "path": "packages/infra/ui-theme/src/client/semantic-roles.module.css",
+        "sha256": "ac6144be98d20559f45c5204fa34b21931143bca8265be7d5e692a77b82f598c",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      },
+      {
+        "path": "packages/infra/ui-theme/src/client/tokens.module.css",
+        "sha256": "572db391ce9db85f335c59f70b4a73eaeb1d73a01ad938fdcfdc26f8d98a0699",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      },
+      {
+        "path": "packages/plugins/ai/src/client/ui/index.tsx",
+        "sha256": "bdcf9ae413eb7b797211f9d23aacabca9df9fe3ea682beaea7791620db7ff69c",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/catalog/src/client/ui/editor/ssh-host-error.ts",
+        "sha256": "db0ff0061ab6ea7546571f72a327be688cc12cc093a4c8bd4879738826c1bad9",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/catalog/src/client/ui/empty-workspace.tsx",
+        "sha256": "76b478ab8843192d62262bdf8820b6e931f755234858f3ce01588fbeb19cb1a6",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/catalog/src/client/ui/profiles/index.tsx",
+        "sha256": "ba26e9737486cbb87dd61619f397345f93a0a1a5c094c40929d6d5109ac6263c",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/catalog/src/client/ui/profiles/profiles.module.css",
+        "sha256": "92651553d40fbb8669b91b9fa0418e3ced3cf46ee2e9467dd8acd328d1047fd0",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/catalog/src/client/ui/session/menu.tsx",
+        "sha256": "b8230d349565e8a68295090c7824dd75eeeb37223f26fd4ec2a0d46a55d9ffe7",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/catalog/src/client/ui/tree/bookmark-tree.module.css",
+        "sha256": "9b246c1f3d3af378c37dbbff1c3f2f5c1fd8d2796accd96c360501ccd0e7550a",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/catalog/src/client/ui/tree/sidebar.tsx",
+        "sha256": "5968f3e09c10176696eff7497b9eda45bc0e95f78622348f1a8d55ab14408d79",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/configuration/src/client/behavior.module.css",
+        "sha256": "87505840e5336c8805949bdfacd1733ff56163ccd1dba2a097ba56050f798e1e",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/configuration/src/client/settings-layout.tsx",
+        "sha256": "f5db527ac1cfb0c5492efd25c4abccbf2b4601898829fd7cb50d9179102c2401",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/configuration/src/client/ui.module.css",
+        "sha256": "4b76ff7d8c66967ba12df7a39357365797ebfe76e389345e38c969bd677db70a",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/configuration/src/client/ui.tsx",
+        "sha256": "74ceaa15dcfb75c4a8c270bc929dbab5d7ab3da1455e80d6b6a676ebe0c82f6b",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/desktop/src/client/preferences.module.css",
+        "sha256": "03cfcc90927648a0ba3979de53d38461eec91feae0ed5a757b83f5026d0f361d",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/terminals/src/client/locales.ts",
+        "sha256": "ebef19b00ec612d54a137d36a20e5bab9216f34b2c2ee9370a74fce4768429bc",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/terminals/src/client/rendering/output.ts",
+        "sha256": "a9568104720502060de15377ca6112b1796c55a2e76b7182728f40ba3cb7207b",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/terminals/src/client/terminal-output-projection.test.ts",
+        "sha256": "bd3cda08b97c1ddcdd8b4ff33959329b9796a73a585320decde02dfbb0c8226c",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/terminals/src/client/terminal-output-projection.ts",
+        "sha256": "c21396f04ad8115b3dc18b1bbb3691584e57004d6cdbf46521262d6cbbf9f629",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/terminals/src/client/tools/tools.module.css",
+        "sha256": "9494e2a3b7b188cea8b5f73bf5a2cd9bdc32f2d5ae980c2b5b30df83413cfcae",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/terminals/src/client/ui.module.css",
+        "sha256": "9077c5518726d5add97b56b5de8af1b7166d8f7f40ab8ec06aa19d85d4e2e6df",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/terminals/src/client/ui.tsx",
+        "sha256": "dfc95802d3b701b929ed1af770b6de8d8bc751eda96398a3ee51efe7450e6733",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/transfers/src/client/ui/center.tsx",
+        "sha256": "9540f2a189e09c912f126c376c6e79676ae4f0899a46dccf6b58f8938540e58e",
+        "disposition": "outside activated Node workload",
+        "reason": "Owned browser rendering contribution or numeric DOM observer; lazy UI imports require services absent from the Node mixed-workload client. The parser consumer and metadata model are unchanged."
+      },
+      {
+        "path": "packages/plugins/workspace/src/client/arrangement.tsx",
+        "sha256": "7dd43498dfbd1c998ae871055a9bcbf686d332a9a502bc816da27b9ce7c20ee0",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      },
+      {
+        "path": "packages/plugins/workspace/src/client/index.tsx",
+        "sha256": "e7fa3d7602b7b6cca56fddeeb172f9aced93e8ad41ce7ae6902b12e8de01d575",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      },
+      {
+        "path": "packages/plugins/workspace/src/client/startup.module.css",
+        "sha256": "29f3c373f485109831774d8bcf00064c08d0ac9eaa32990b5486822d1fb17cf7",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      },
+      {
+        "path": "packages/plugins/workspace/src/client/store.ts",
+        "sha256": "5bafd7522353ff80d8c349cd2248992362f23df002aec0af19c025d2c1891272",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      },
+      {
+        "path": "packages/plugins/workspace/src/client/workspace.module.css",
+        "sha256": "89e700aea05ccafae78c6d7d88acf5b1e152a8c1091911d0151a4551c54bf1d4",
+        "disposition": "outside activated Node workload",
+        "reason": "React/UI/theme/workspace surface; Node fixture does not mount UI renderer or workspaceUi/slots/locale services."
+      }
+    ],
+    "sourceRootsChecked": [
+      "apps/cli",
+      "apps/desktop-host",
+      "packages",
+      "tests/soak",
+      "tests/fixtures/level3-remote-profile.ts",
+      "tests/fixtures/level3-resource-witness.ts"
+    ],
+    "fixtureUiAdmission": "remoteProfile creates only Registry, Connection, Gateway, Configuration and selected metadata models. Terminal rendering import is under inject workspaceUi/shortcuts/slots/locale/etc; Catalog rendering is similarly gated. These services are absent.",
+    "runtimeDependencyFieldsUnchanged": true,
+    "unrelatedDeveloperDependencyAdded": {
+      "openapi-typescript": [null, "7.13.0"]
+    },
+    "priorReport": {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/soak-5441251.json",
+      "sha256": "a8436934ffc2bcaee0f35c9fca54094caa7495413d46847af0c14fa961d25dc5",
+      "state": "passed"
+    },
+    "priorReportMustPassOriginalVerifier": true,
+    "browserRepairsVerifiedSeparately": true
+  },
+  "operationAcceptanceScope": "Every frozen identity has concrete composed replacements and curated behavior suites. Shared services/streams do not imply artificial one-to-one methods. Package acceptance validates the complete runtime boundary; per-owner suites validate individual semantics.",
+  "mainCutover": {
+    "state": "completed",
+    "runtimeSourceRevision": "71903f68aa7523e63bf884b7040754f85a44281d",
+    "evidence": "docs/implementation/evidence/LEVEL3-MAIN-CUTOVER-2026-11-10.json",
+    "userWipPreserved": true,
+    "productionDataTouched": false
+  },
+  "engineeringMigrationComplete": false,
+  "ownerVisualAccepted": false,
+  "logs": [
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/check-2971042.log",
+      "sha256": "2215fae74ecd12cafaa7c0a0236f7f0beec4422413305cb2ffe6060760e0eccd"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-gui-d374e49.log",
+      "sha256": "3e3009e0ed62a8bef28b401203635140d0c45d77f26625f25c0b44d772a246ec"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-connection-d374e49.log",
+      "sha256": "b9c5babdf8a0e6af01b438d6dc03a3e9e5ed9843811cd79bc3ec69c272a9d3eb"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/native-performance-38727cd.log",
+      "sha256": "3110b35cadbc249f46ca467280f9ef59751f41df4af42e4b7c2059378b4e885c"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/dmg-installed-38727cd.log",
+      "sha256": "00b030a04fe59697b02997df7e24484a4dae9dc13bea5092f56cfe50488f0345"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-headless-38727cd.log",
+      "sha256": "9a609a048d908dd870acd5c8b4f64cf719d5f17ed8a95f39a91f08bcf5f65a1d"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-default-38727cd.log",
+      "sha256": "0fdb46bfe25bf24282b91373e9d8c44328a9830612c285a4bf4742a62a7618cf"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-visual-review-38727cd.log",
+      "sha256": "15ccb7493e72630d6d21dcfbdb63c6db2a6f66a88a4d635406efb781a127a652"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/sdk-consumer-d374e49.log",
+      "sha256": "aa02a9e62094dc5034d0ce427c8b0191f5a83e2864b6a97c41e9010e0d6e1293"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/auth-review-38727cd.log",
+      "sha256": "86e63c6c256859812c5d32a7c9896958f1428bdfc8420e34cec29cf7ffa2a2b3"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-25fd503.log",
+      "sha256": "901409af76553ae6954754b9c23c2f1da4dc872ae24aa98df1b479b5f3291c2a"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/native-performance-25fd503.log",
+      "sha256": "dbbb33482ec583e3b80f82c7999716bb530f9b639c15501e2daf90a641090d0e"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/performance-one-replay-25fd503.log",
+      "sha256": "baf08005e5d00d513e7f98481fcf343c50b01eeafc18c24cae438c9d0b4febab"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-visual-review-25fd503.log",
+      "sha256": "8bd7c8c56fa3e939f98682a787d0db0e142aeb7d19b1ba03907d52ae00b25bff"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-headless-25fd503.log",
+      "sha256": "2cb0a2a2ae7f08f69a80cb5ac3cbc481e7e0f11492f644d12917d103efbfbd42"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/package-default-25fd503.log",
+      "sha256": "a8a56bbf059f9d881a6b43635a8851eaf23b6bbdf750353d2cdd397df35f7e7b"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/spdx-25fd503.log",
+      "sha256": "2b0bc4294b2a5e1468ec601f3f65017c34e110c0ac90d32f75aa740aebc2993d"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/dmg-installed-25fd503.log",
+      "sha256": "3ba3d2639bcee6e7e74a9bfd9b8845bdbc490582f3f5a0ddfc367eb37606024d"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/check-18eff84.log",
+      "sha256": "0bbe2147a69fe66e1910e3851215b9ab9869a73d5152a9e549c66923bf486044"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/final-focus-package-scoped.log",
+      "sha256": "b6ff639300ae73b9fb7b6861b23749574a1a0ebd601cf37ae238d39d911f2a44"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/check-4aa6b2a.log",
+      "sha256": "2dea8335527d7755b4d73d163e0a4df87f4a4e7ff9ddc7104c8f6bb77d96fe48"
+    },
+    {
+      "path": "/Volumes/A/code/project/axterm-level3/out/level3-migration/final-2026-11-09/cold-source-8e6bae5.log",
+      "sha256": "61425b6866b3a36a94035dcb49b6e5d60dcc6cc5ceaf00bcb160501c25094d35"
+    }
+  ],
+  "candidateConfigurationDelta": {
+    "adr": "ADR-234",
+    "files": ["apps/desktop/package.json"],
+    "scope": "Standard package commands pass existing --product; same product staging mode and runtime inputs as validated 25fd503. Low-level validation/development isolation remain. No application runtime source change."
+  },
+  "independentSource": {
+    "state": "passed",
+    "sourceRevision": "8e6bae5594748f1fb7b9628af1287edaaf3df199",
+    "sourceArchiveSha256": "0e3ffff71a3ae8b371d14aa921aa576152239be5e1b3f138fd86c11b440f454c",
+    "hygienePassed": true,
+    "checks": [
+      {
+        "command": "pnpm",
+        "args": [
+          "--store-dir=/Volumes/A/.pnpm-store",
+          "install",
+          "--offline",
+          "--frozen-lockfile",
+          "--ignore-scripts"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm",
+        "args": ["run", "postinstall"],
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm",
+        "args": ["run", "build"],
+        "exitCode": 0
+      }
+    ],
+    "scope": "Source-only archive captured before installation; frozen offline install with scripts disabled, explicit owned postinstall, complete cold application build. No node_modules/build outputs/full DSH product tree in the archive."
+  },
+  "finalEngineeringChecklist": {
+    "closed": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22"
+    ],
+    "pending": [],
+    "count": 22,
+    "total": 22,
+    "effortPercentageClaim": false
+  }
+}

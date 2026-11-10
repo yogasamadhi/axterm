@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "firstParty": {
+    "name": "Axterm",
+    "license": "Apache-2.0",
+    "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+    "files": [
+      {
+        "path": "src/adapters/repository.ts",
+        "source": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+        "sourceSha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677",
+        "scope": "Selected AI-owned facts only; global receipts and cross-domain recovery excluded."
+      },
+      {
+        "path": "src/ports/model-provider.ts",
+        "source": "packages/runtime/src/ports/model-provider.ts",
+        "sourceSha256": "9412ffca3de7ded4863301f8fb6873d63ef2f1c86cfd56f9d747e83c78361586",
+        "scope": "Retained application ModelProvider contract; execution is adapted to ctx.engines."
+      },
+      {
+        "path": "src/adapters/host-capabilities.ts",
+        "source": "packages/runtime/src/adapters/host-capability/client.ts",
+        "sourceSha256": "5f669681262c6eb1b0d2d60f6f90d83a6f5db5426e4065eaf6bb40adb1b7adeb",
+        "scope": "Pure bounded text validation retained; IO replaced with live owner leases."
+      },
+      {
+        "path": "src/adapters/workspace-command.ts",
+        "source": "packages/runtime/src/adapters/ai/workspace-command.ts",
+        "sourceSha256": "712e4afcce2d6ebfa0d9b2868f51b639aa1a2d131524301705aae6d89956a754",
+        "scope": "Execution facts and Windows quoting retained; process ownership moved to ctx.subprocess."
+      },
+      {
+        "path": "src/application/ai-workspace-service.ts",
+        "source": "packages/runtime/src/application/ai-workspace-service.ts",
+        "sourceSha256": "23ac6818767ec88c96d68001fee55728d4b3e06051cac5017fce8969969bba56",
+        "scope": "Selected target binding retained; native IO moved behind owner ports."
+      },
+      {
+        "path": "src/adapters/pi-metadata.ts",
+        "source": "packages/runtime/src/adapters/ai/pi-provider.ts",
+        "sourceSha256": "b1118a66ebd5bb8013f93239eb6c9f3f7babd5756a41b6b08a6047c78af9514f",
+        "scope": "Readonly metadata wrappers only. No Agent/API execution copied into AI."
+      },
+      {
+        "path": "src/application/ai-service.ts",
+        "source": "packages/runtime/src/application/ai-service.ts",
+        "sourceSha256": "842396728f9b821bb556d65463c47da2255113056a1b35d3d9f82ff2339e7235",
+        "scope": "Retained use cases, review receipts, approvals, attachments and budgets; atomic owned admission/logs, Engine execution and lifecycle replace legacy coupling."
+      },
+      {
+        "path": "src/application/ai-context.ts",
+        "source": "packages/runtime/src/application/ai-context.ts",
+        "sourceSha256": "281133f75c1869be55b698b35ad8b36e756455ccfa37ac62e034e84d5869dbd2",
+        "scope": "Bounded context selection and prompt behavior; incremental visible policy replaces unsafe cross-chunk redaction."
+      },
+      {
+        "path": "src/application/ai-work-budget.ts",
+        "source": "packages/runtime/src/application/ai-work-budget.ts",
+        "sourceSha256": "ba895cd06107df61e05342e561d772f2497dcec579a61c2ff10077876eb15f6f",
+        "scope": "Retained application work deadline and human-approval pauses; no Agent loop."
+      },
+      {
+        "path": "src/application/ai-tool-service.ts",
+        "source": "packages/runtime/src/application/ai-tool-service.ts",
+        "sourceSha256": "e04bd709f84cf2811759114821d3006208322ed2a78c00b6ae728ef4e0f96e6e",
+        "scope": "Retained allowlists, MCP definitions and argument validation; IO moved behind selected owner ports."
+      },
+      {
+        "path": "src/adapters/command-review.ts",
+        "source": "packages/runtime/src/adapters/ai/command-review.ts",
+        "sourceSha256": "401f19f00732fabb51178e1838fbb1a5df35403e205b5fa84bec91810fafb21a",
+        "scope": "Retained application policy; only gated pure classifier helpers imported. Classifier execution uses the Engine port and raw text remains ephemeral."
+      },
+      {
+        "path": "src/application/hash.ts",
+        "source": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+        "sourceSha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677",
+        "scope": "Selected pure stable policy hash only; no SQL/global receipts copied."
+      },
+      {
+        "path": "src/client/ui/ai-panel.tsx",
+        "source": "apps/desktop/src/renderer/src/app/ai/ai-panel.tsx",
+        "sourceSha256": "1f4dc3589bad639643ca27de30371924bbf12aea0192e329c30e921553e66904",
+        "scope": "Retained Axterm UI vocabulary and workflows; generated Client owners, selected public services, CSS Modules and Radix composition replace the old renderer boundaries."
+      },
+      {
+        "path": "src/client/ui/ai-prompt-input.tsx",
+        "source": "apps/desktop/src/renderer/src/app/ai/ai-prompt-input.tsx",
+        "sourceSha256": "df23f0e7234b46ecfaa841f6c98a1a95b737e07c592b78da85bcb12f420dfc5c",
+        "scope": "Retained Axterm UI vocabulary and workflows; generated Client owners, selected public services, CSS Modules and Radix composition replace the old renderer boundaries."
+      },
+      {
+        "path": "src/client/ui/ai-context-review.tsx",
+        "source": "apps/desktop/src/renderer/src/app/ai/ai-context-review.tsx",
+        "sourceSha256": "a1f7a4c95b7267071497a32c1a7f9af87aa1f960a248854a6062e6b41d6728bf",
+        "scope": "Retained Axterm UI vocabulary and workflows; generated Client owners, selected public services, CSS Modules and Radix composition replace the old renderer boundaries."
+      },
+      {
+        "path": "src/client/ui/ai-skills.ts",
+        "source": "apps/desktop/src/renderer/src/app/ai/ai-skills.ts",
+        "sourceSha256": "718e59d638ec2a3fb668abb3692d37edee19182081523eb4244234e19ee3e031",
+        "scope": "Retained Axterm UI vocabulary and workflows; generated Client owners, selected public services, CSS Modules and Radix composition replace the old renderer boundaries."
+      },
+      {
+        "path": "src/client/ui/use-ai-attachments.ts",
+        "source": "apps/desktop/src/renderer/src/app/ai/use-ai-attachments.ts",
+        "sourceSha256": "4e96a4f7112a702c1ec2ccc5935d8bec8a0c9f6737ec990d5bf02a21f2312eaf",
+        "scope": "Retained Axterm UI vocabulary and workflows; generated Client owners, selected public services, CSS Modules and Radix composition replace the old renderer boundaries."
+      },
+      {
+        "path": "src/client/ui/use-ai-context-review.ts",
+        "source": "apps/desktop/src/renderer/src/app/ai/use-ai-context-review.ts",
+        "sourceSha256": "3f5d0412f5247846cb1b108bb146b6cd583a97b40458401c7d8360ae598c74db",
+        "scope": "Retained Axterm UI vocabulary and workflows; generated Client owners, selected public services, CSS Modules and Radix composition replace the old renderer boundaries."
+      },
+      {
+        "path": "src/client/ui/attachment-draft-owner.ts",
+        "source": "apps/desktop/src/renderer/src/app/ai/attachment-draft-owner.ts",
+        "sourceSha256": "9327ff98b7be7419114386eeb168f1ee375039163a84dc5257270b8bb52da874",
+        "scope": "Retained Axterm UI vocabulary and workflows; generated Client owners, selected public services, CSS Modules and Radix composition replace the old renderer boundaries."
+      },
+      {
+        "path": "src/client/ui/pi-configuration.ts",
+        "source": "apps/desktop/src/renderer/src/app/ai/pi-configuration.ts",
+        "sourceSha256": "5dd23a54eee3dc1039e2144526d085457a4961a3a146e43b94c4e30c58b862e8",
+        "scope": "Retained Axterm UI vocabulary and workflows; generated Client owners, selected public services, CSS Modules and Radix composition replace the old renderer boundaries."
+      },
+      {
+        "path": "src/client/ui/generated-command.ts",
+        "source": "apps/desktop/src/renderer/src/app/ai-generated-command.ts",
+        "sourceSha256": "7dac4b79e019d246eb1a0a70c744f34f0dd68f6c9d689b6b0e49666c29426be5",
+        "scope": "Pure bounded presentation formatting retained; no legacy Client, state or IO imports."
+      },
+      {
+        "path": "src/client/ui/format.ts",
+        "source": "apps/desktop/src/renderer/src/app/ui/format.ts",
+        "sourceSha256": "3c9079264828907a08f6ecb2b1a71d4252b7d7e4074b7b6ffc929ed4bc7a75ee",
+        "scope": "Pure bounded presentation formatting retained; no legacy Client, state or IO imports."
+      },
+      {
+        "path": "src/client/ui/ui.module.css",
+        "source": "apps/desktop/src/renderer/src/styles/globals.css",
+        "sourceSha256": "e1c0c9df0f5b84c78b09281533f4046660178427c3f44ae6bb15a399b60e170a",
+        "scope": "Selected AI and common form rules retained in original cascade order; selectors scoped to the AI view and adapted to CSS Modules, tokens and Radix."
+      },
+      {
+        "path": "src/client/ui/ui.module.css",
+        "source": "apps/desktop/src/renderer/src/styles/axterm-shell.css",
+        "sourceSha256": "898303272b36b5c7d09836e3e135e04a26898342d9cdaaf068f21f162f982dab",
+        "scope": "Selected AI and common form rules retained in original cascade order; selectors scoped to the AI view and adapted to CSS Modules, tokens and Radix."
+      },
+      {
+        "path": "src/client/ui/bookmark-dialog.tsx",
+        "source": "apps/desktop/src/renderer/src/app/panels.tsx",
+        "sourceSha256": "a822b1c8df774df4423e113dbadd36a4011d60b0d4cfec19a1f5cd2213a521a1",
+        "scope": "Retained AI bookmark generation/review markup and explicit SSH save; public Catalog capability, owned Run admission, generated facts and Radix controls replace legacy renderer IO."
+      },
+      {
+        "path": "src/client/ui/bookmark-draft.ts",
+        "source": "apps/desktop/src/renderer/src/app/ai-bookmark-draft.ts",
+        "sourceSha256": "6267029127cde4b388d752d8f77ed6af0a61cbeb658fb442bd80aba458928a5e",
+        "scope": "Retained strict visible metadata parser; public Catalog schema, no execution or secret generation."
+      }
+    ]
+  },
+  "execution": "All Agent/API execution uses ctx.engines and the fixed Pi core. The discovery leaf is bounded legacy metadata GET only.",
+  "status": "AI Controller/workflow/Client composition and M5 acceptance remain in progress."
+}

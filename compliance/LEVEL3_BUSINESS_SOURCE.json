@@ -1,0 +1,740 @@
+{
+  "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+  "description": "First-party Axterm migration inputs; old implementation retained until M7, not an upstream product import.",
+  "files": [
+    {
+      "path": "packages/plugins/terminals/src/application/terminal-service.ts",
+      "source": "packages/runtime/src/application/terminal-service.ts",
+      "sourceSha256": "cca069cedc90adef8dc423b5b8e48ecb843a728c1a0f46c8eb68243d76981d62"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/terminal-service.test.ts",
+      "source": "packages/runtime/src/application/terminal-service.test.ts",
+      "sourceSha256": "f47b1e60aabdc28b6f413f2159b4ed369eceaaba3ea6a7e403a09da4d47c56f9"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/terminal-output-flow.ts",
+      "source": "packages/runtime/src/application/terminal-output-flow.ts",
+      "sourceSha256": "f6dde2d2c55e956fa7ae4a675782fe87b2df2fad07f6c7cc6ea029fadd14808e"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/terminal-output-flow.test.ts",
+      "source": "packages/runtime/src/application/terminal-output-flow.test.ts",
+      "sourceSha256": "eb2903aa3fbf281c5afe361a9cbbd5c37fa44fa1cabbae5e96476e4661f831ae"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/terminal-directory.ts",
+      "source": "packages/runtime/src/application/terminal-directory.ts",
+      "sourceSha256": "818cde8e2e425199cc0656c3db8d9839e3888b79263794afee21c84799e20bc7"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/terminal-directory.test.ts",
+      "source": "packages/runtime/src/application/terminal-directory.test.ts",
+      "sourceSha256": "b068f676d9f5435f3106dcfc26d1cf7be4410a58eb9ce255a9ad25df8fd598ab"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/shell-integration.ts",
+      "source": "packages/runtime/src/application/shell-integration.ts",
+      "sourceSha256": "6e39362c0669ba211bdf1163e31d1a38665f675cec1a7e2ea4d86b7656f27e60"
+    },
+    {
+      "path": "tests/integration/level3-terminal-shell.test.ts",
+      "source": "packages/runtime/src/application/shell-integration.test.ts",
+      "sourceSha256": "7dd3dcb0dc04642f9d829ac6a340dea55ff66bafe24cbf7c7cfc9b64044f6ed2"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/terminal-recording.ts",
+      "source": "packages/runtime/src/application/terminal-recording.ts",
+      "sourceSha256": "087004a121b02bb77fd28e1c2ac61f64564bfd7be7053d8210d18ed889cc5526"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/terminal-recording.test.ts",
+      "source": "packages/runtime/src/application/terminal-recording.test.ts",
+      "sourceSha256": "0c33767cb7c784648748f5029ae4a2a40d60b69435019163bcdb6ecdacb53f4d"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/node-pty-adapter.ts",
+      "source": "packages/runtime/src/adapters/pty/node-pty-adapter.ts",
+      "sourceSha256": "f76aec78297bade8b57a2cdde61c73e1f6622f4e958dc093adf249e033ccc13a"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/node-pty-adapter.test.ts",
+      "source": "packages/runtime/src/adapters/pty/node-pty-adapter.test.ts",
+      "sourceSha256": "abc125234fc7ca4fed3065d3660848f8f14622e36412febebf2a0ccf197e55bc"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/default-shell.ts",
+      "source": "packages/runtime/src/adapters/pty/default-shell.ts",
+      "sourceSha256": "0fbbc04b7b86edcc5c685bf447a3cacf281ceb737a829360efcde19d34e62c25"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/default-shell.test.ts",
+      "source": "packages/runtime/src/adapters/pty/default-shell.test.ts",
+      "sourceSha256": "ea1d0a8c9071ca35a715f1c0f29103ecde48738e5df252d3b995dfbb6f94e58e"
+    },
+    {
+      "path": "packages/plugins/terminals/src/ports/terminal-channel.ts",
+      "source": "packages/runtime/src/ports/terminal-channel.ts",
+      "sourceSha256": "a405a3fe6221455a16e076f4dca9f202c33a9611e92abedeb6b198e50c269a8a"
+    },
+    {
+      "path": "packages/plugins/terminals/src/types/xterm-headless-entry.d.ts",
+      "source": "packages/runtime/src/types/xterm-headless-entry.d.ts",
+      "sourceSha256": "f8a902e4d442428de2584f8221497fc191eb8498571382a7e1addc7445a7e5d1"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/osc-value.ts",
+      "source": "packages/shared/src/command-history.ts",
+      "sourceSha256": "452afbaae3d91cc3158de7ba64e3a5ae8af74ab26e80138ffaae908cf1034d52"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/errors.ts",
+      "source": "packages/runtime/src/application/errors.ts",
+      "sourceSha256": "d4d1fcf0f58ed6e0513ceeec0f2daca2b0e1596aced6000e332b46e4a99e7218"
+    },
+    {
+      "path": "packages/api/plugin-api/src/terminals.ts",
+      "source": "packages/contracts/src/schemas/resources.ts",
+      "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/terminal-protocol.ts",
+      "source": "apps/desktop/src/renderer/src/components/terminal-protocol.ts",
+      "sourceSha256": "cfba273cd702cc18eb92f3c7739d34f9726539f6607bd5939ab78fa540cba8e2"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/terminal-protocol.test.ts",
+      "source": "tests/unit/terminal-protocol.test.ts",
+      "sourceSha256": "36ac10da6e3e83a10c4624d7dc356bd77c8b2955ee8a2132083fbc07ce0509ba"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/terminal-output-consumer.ts",
+      "source": "apps/desktop/src/renderer/src/components/terminal-output-consumer.ts",
+      "sourceSha256": "08d9d2865284bcbf76791237de88869817b61af67417bd1840a57f3695c975bd"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/terminal-output-consumer.test.ts",
+      "source": "tests/unit/terminal-output-consumer.test.ts",
+      "sourceSha256": "1816a3c01e6d7481b13746fdbbd36aeb4817b46a160ffde9f68ba602c3c84435"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/resources.ts",
+      "source": "packages/contracts/src/schemas/resources.ts",
+      "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/bookmarks.ts",
+      "source": "packages/contracts/src/schemas/bookmarks.ts",
+      "sourceSha256": "72b1811e2cd582a0f59fcdbd232acd6de17162f2624b0252f349da131d91956a"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/connection-history.ts",
+      "source": "packages/contracts/src/schemas/connection-history.ts",
+      "sourceSha256": "44f6b56b0bf3a991f33491b67dd32349f5e261f20787c3c96ab266b4bb9c08e6"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/connection-profiles.ts",
+      "source": "packages/contracts/src/schemas/connection-profiles.ts",
+      "sourceSha256": "3c9a15c35b943a212109147a199e28361a58e8cd9c001c449bebe02b3c660b3d"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/shortcuts.ts",
+      "source": "packages/contracts/src/schemas/shortcuts.ts",
+      "sourceSha256": "2dcb2852dfd7997240cb00c6a9e979b7113894b61205d9da9763d7f5654011f8"
+    },
+    {
+      "path": "packages/plugins/catalog/src/adapters/bookmark-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/bookmark-repository.ts",
+      "sourceSha256": "1ce18fec52ea1efd2e4e205ccaf6635edfe0735445d4e5ac72042f2eda89ed0e"
+    },
+    {
+      "path": "packages/plugins/catalog/src/adapters/connection-history-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/connection-history-repository.ts",
+      "sourceSha256": "69ff76503d1bbbbd7e8d4cb4ee7c999a4a399d3fdc3d73facc35ab8c4f33c82b"
+    },
+    {
+      "path": "packages/plugins/catalog/src/adapters/connection-profile-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/connection-profile-repository.ts",
+      "sourceSha256": "2d1609476f9f49c29fd3bab6cfdf442d1ccd6e14f392dcdcfcbe795b086dce16"
+    },
+    {
+      "path": "packages/plugins/catalog/src/application/errors.ts",
+      "source": "packages/runtime/src/application/errors.ts",
+      "sourceSha256": "d4d1fcf0f58ed6e0513ceeec0f2daca2b0e1596aced6000e332b46e4a99e7218"
+    },
+    {
+      "path": "packages/plugins/catalog/src/application/bookmark-tree-service.ts",
+      "source": "packages/runtime/src/application/bookmark-tree-service.ts",
+      "sourceSha256": "ce027d1e12125401f55d844c6aaeb3478c23f634ddd52fb90d11d78d244b5db3"
+    },
+    {
+      "path": "packages/plugins/catalog/src/application/ssh-bookmark-service.ts",
+      "source": "packages/runtime/src/application/ssh-bookmark-service.ts",
+      "sourceSha256": "01d980bd33ff366f3263f33b4165db6487844e6bf5b69ea09cfe45b9f4ceddc8"
+    },
+    {
+      "path": "packages/plugins/catalog/src/application/connection-profile-service.ts",
+      "source": "packages/runtime/src/application/connection-profile-service.ts",
+      "sourceSha256": "dfbcf7df41a3930696f5f19807dd83e17ec2c58fa88adec1ca5fc64766cf6f73"
+    },
+    {
+      "path": "packages/plugins/catalog/src/domain/bookmarks/model.ts",
+      "source": "packages/runtime/src/domain/bookmarks/model.ts",
+      "sourceSha256": "0b1aae43c194b27e6a23d94601993ad374308f414a584d4a0a0f8ba9575dd864"
+    },
+    {
+      "path": "packages/plugins/catalog/src/ports/unit-of-work.ts",
+      "source": "packages/runtime/src/ports/unit-of-work.ts",
+      "sourceSha256": "f568e95c02e246b58d7f5985f90a944e4775063491067dcf9c5af68543067a98"
+    },
+    {
+      "path": "packages/plugins/catalog/src/adapters/host-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+      "sourceSha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677"
+    },
+    {
+      "path": "packages/plugins/catalog/src/application/trigger-pattern.ts",
+      "source": "packages/runtime/src/application/trigger-engine.ts",
+      "sourceSha256": "6139d7c6cd0fbcadab63f1eec1c1bf1ad21a1c3e088b7a4c64ce151a256c6caa"
+    },
+    {
+      "path": "packages/plugins/configuration/src/adapters/settings-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+      "sourceSha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677"
+    },
+    {
+      "path": "packages/api/plugin-api/src/host/terminal-channel.ts",
+      "source": "packages/runtime/src/ports/terminal-channel.ts",
+      "sourceSha256": "a405a3fe6221455a16e076f4dca9f202c33a9611e92abedeb6b198e50c269a8a"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/connection-service.ts",
+      "source": "packages/runtime/src/application/connection-service.ts",
+      "sourceSha256": "1f49df54f550676bb860df3304f97fc2230ac6eea9d953c78b2ae2b97836c0a5"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/interaction-service.ts",
+      "source": "packages/runtime/src/application/interaction-service.ts",
+      "sourceSha256": "5b78d1dbc5b529495e904ba6d52c0dfaa70b21274c2142a6254ac74bd14d0f92"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/proxy-service.ts",
+      "source": "packages/runtime/src/application/proxy-service.ts",
+      "sourceSha256": "941e187d5284e614846ac73f0d63a1412d2f6dec339e55efd9be5f913e3c5033"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/errors.ts",
+      "source": "packages/runtime/src/application/errors.ts",
+      "sourceSha256": "d4d1fcf0f58ed6e0513ceeec0f2daca2b0e1596aced6000e332b46e4a99e7218"
+    },
+    {
+      "path": "packages/plugins/connections/src/ports/ssh-transport.ts",
+      "source": "packages/runtime/src/ports/ssh-transport.ts",
+      "sourceSha256": "9522c0fcebe12afacf085cd4aa086912ccdcc0b31717171f1b13121c69a3f930"
+    },
+    {
+      "path": "packages/plugins/connections/src/ports/connection-history.ts",
+      "source": "packages/runtime/src/ports/connection-history.ts",
+      "sourceSha256": "07fee2d3ccfa31e0bdeb78389aa84b030cc000c6a697cdc64b5c1eae5db2482c"
+    },
+    {
+      "path": "packages/plugins/connections/src/ports/proxy-connector.ts",
+      "source": "packages/runtime/src/ports/proxy-connector.ts",
+      "sourceSha256": "70e74f50ebe7ae51a877ea8e65cc8db98fb6d198a91f66392e8194bd331ca96b"
+    },
+    {
+      "path": "packages/plugins/connections/src/ports/proxy-command-runner.ts",
+      "source": "packages/runtime/src/ports/proxy-command-runner.ts",
+      "sourceSha256": "bc4c2ea189235c6f5b0c195ffe842c686f994d5068cdd649c40c666586dc6f45"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ssh2/ssh2-transport.ts",
+      "source": "packages/runtime/src/adapters/ssh2/ssh2-transport.ts",
+      "sourceSha256": "743d332d8a33852e3bd38182d1b657e62114977c4fd938390cb81865fa17a055"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ssh2/ssh-agent.ts",
+      "source": "packages/runtime/src/adapters/ssh2/ssh-agent.ts",
+      "sourceSha256": "9ed6e15ce91abb4531ac876aba64d625d4e096415b51427a5ea8272cb85749ce"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ssh2/x11-forwarding.ts",
+      "source": "packages/runtime/src/adapters/ssh2/x11-forwarding.ts",
+      "sourceSha256": "8175a79e746e08bf0918ca812986383d134d203b65f877f4f6f4e8d13e25adcb"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ssh2/certificate-identity.ts",
+      "source": "packages/runtime/src/adapters/ssh2/certificate-identity.ts",
+      "sourceSha256": "d2a66c58346b8c1f5dd78b2a3610e56e697303489ca282c34a2116b7f9e6fa08"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/proxy/tcp-proxy-connector.ts",
+      "source": "packages/runtime/src/adapters/proxy/tcp-proxy-connector.ts",
+      "sourceSha256": "d66a1165dde09bb8e44daf07c5d0472b0cae03f806a36328c560b66cd452da87"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/proxy-command/stdio-proxy-command-runner.ts",
+      "source": "packages/runtime/src/adapters/proxy-command/stdio-proxy-command-runner.ts",
+      "sourceSha256": "8bfa66a30653c213e17bae992df8948db49ba13fe6b67b70752e01bee3df8d2a"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/shell-kind.ts",
+      "source": "packages/runtime/src/application/shell-integration.ts",
+      "sourceSha256": "6e39362c0669ba211bdf1163e31d1a38665f675cec1a7e2ea4d86b7656f27e60"
+    },
+    {
+      "path": "tests/integration/level3-connection-service.test.ts",
+      "source": "packages/runtime/src/application/connection-service.test.ts",
+      "sourceSha256": "d96d89adfdd838c9305bd7282447e8875434db6f81a1186ca2d0b01d91db16e1"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ssh2/certificate-identity.test.ts",
+      "source": "packages/runtime/src/adapters/ssh2/certificate-identity.test.ts",
+      "sourceSha256": "eb1f467a707db40b182bcda28febf28a445cf8f9c8392c223b2404beb38fb58c"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ssh2/ssh-agent.test.ts",
+      "source": "packages/runtime/src/adapters/ssh2/ssh-agent.test.ts",
+      "sourceSha256": "52a35741af2278bf3b31afe68934e6c1e474798d18632a7177cdbeef1880527a"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ssh2/x11-forwarding.test.ts",
+      "source": "packages/runtime/src/adapters/ssh2/x11-forwarding.test.ts",
+      "sourceSha256": "038c17ab9cab6e98479f45f941a0955e0e810b6adf65d10dafb31bf4498ff530"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ssh2/ssh2-transport.test.ts",
+      "source": "packages/runtime/src/adapters/ssh2/ssh2-transport.test.ts",
+      "sourceSha256": "659c737173af735c8e20c26c02c7da7897792e03dd09969ab25c4882eefde0ca"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/proxy/tcp-proxy-connector.test.ts",
+      "source": "packages/runtime/src/adapters/proxy/tcp-proxy-connector.test.ts",
+      "sourceSha256": "5d238e51ad15277ff52c0868e330249881040e5ffda5a44dae0e3aacdcf45483"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/proxy-command/stdio-proxy-command-runner.test.ts",
+      "source": "packages/runtime/src/adapters/proxy-command/stdio-proxy-command-runner.test.ts",
+      "sourceSha256": "52ae13c6b5a4e8b2915cb29932a98c198430d7b88929895a6c43303c02821fff"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/command-history.ts",
+      "source": "packages/contracts/src/schemas/command-history.ts",
+      "sourceSha256": "7c95ccbc1941ff9aa997faf79d48c04fe91bcc35ad9adac2305fa9a469fbf256"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/terminal-themes.ts",
+      "source": "packages/contracts/src/schemas/terminal-themes.ts",
+      "sourceSha256": "7f3c78bf8919c7002bf03a8e3f16f715808f5ee21361aff325e19e7348ab70b4"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/command-history-policy.ts",
+      "source": "packages/shared/src/command-history.ts",
+      "sourceSha256": "452afbaae3d91cc3158de7ba64e3a5ae8af74ab26e80138ffaae908cf1034d52"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/theme-presets.ts",
+      "source": "packages/shared/src/terminal-theme-presets.ts",
+      "sourceSha256": "cdd89b2171eb27604c6ac369932db554520da1ecafb8e9aef68b64f14d7e653e"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/profile-options.ts",
+      "source": "packages/runtime/src/http/app.ts",
+      "sourceSha256": "b98da0c94215e1fe25749c232094c44139372052ff8cb460870db8e62e92eb2e"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/named-facts.ts",
+      "source": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+      "sourceSha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/command-history-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/command-history-repository.ts",
+      "sourceSha256": "0d138c43c4f473e871afa007c63ba960298e1ad0a1c549511930e7451fbc2473"
+    },
+    {
+      "path": "packages/plugins/terminals/src/adapters/terminal-theme-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/terminal-theme-repository.ts",
+      "sourceSha256": "7e6cb4995ac29af427e0c6a152188d62125681637f538c50ee188868bf53b8a1"
+    },
+    {
+      "path": "packages/plugins/terminals/src/application/terminal-theme-service.ts",
+      "source": "packages/runtime/src/application/terminal-theme-service.ts",
+      "sourceSha256": "ba0ebdbbff49eaeb8c46c9758b77764728fd0d57bbae7a1a05e0336c66d11376"
+    },
+    {
+      "path": "tests/integration/level3-terminal-history-repository.test.ts",
+      "source": "packages/runtime/src/adapters/sqlite/command-history-repository.test.ts",
+      "sourceSha256": "e509c4569d893c7315e8c9f25a00aeba1b99ef5cb4463459a29b8f768e904ce0"
+    },
+    {
+      "path": "packages/api/plugin-api/src/files.ts",
+      "source": "packages/contracts/src/host-capabilities/desktop.ts",
+      "sourceSha256": "904f77c123520a3fdcb49141dc7e058d14deb144c688c40323cc684fe1647964"
+    },
+    {
+      "path": "packages/api/plugin-api/src/files.ts",
+      "source": "packages/contracts/src/schemas/resources.ts",
+      "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+    },
+    {
+      "path": "packages/plugins/files/src/adapters/local-files.ts",
+      "source": "apps/desktop/src/main/host-capabilities/server.ts",
+      "sourceSha256": "ee473fe096061a3497aa59c296c646dabf6a64bbea32a52095ec485342b02908"
+    },
+    {
+      "path": "packages/plugins/files/src/application/remote-file-service.ts",
+      "source": "packages/runtime/src/application/sftp-service.ts",
+      "sourceSha256": "5b8bc52a5d37b04f0d00c450ac295fec266735aae75b0c6a88c6367cde5c63ec"
+    },
+    {
+      "path": "packages/plugins/files/src/application/remote-file-service.test.ts",
+      "source": "packages/runtime/src/application/sftp-service.test.ts",
+      "sourceSha256": "b239c2fb79820fdbccc760234cba71624822541f3cc11dd95a9837247e7fc83f"
+    },
+    {
+      "path": "packages/api/plugin-api/src/host/remote-files.ts",
+      "source": "packages/runtime/src/ports/ssh-transport.ts",
+      "sourceSha256": "9522c0fcebe12afacf085cd4aa086912ccdcc0b31717171f1b13121c69a3f930"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/ftp-connection-service.ts",
+      "source": "packages/runtime/src/application/ftp-connection-service.ts",
+      "sourceSha256": "d3b9685c5284d3da143e23751e16602c96407ae263b55b53a7ac9ae270ad1183"
+    },
+    {
+      "path": "packages/plugins/connections/src/ports/ftp-transport.ts",
+      "source": "packages/runtime/src/ports/ftp-transport.ts",
+      "sourceSha256": "e18575893c437e91d023f1143ef6cde3625fd16efb7dab06637a1898b9b7a92e"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/ftp/basic-ftp-adapter.ts",
+      "source": "packages/runtime/src/adapters/ftp/basic-ftp-adapter.ts",
+      "sourceSha256": "15b95fafa6d99a694e8e2b0809409303ca755ee80fa4e8a8e3cd45be027ff386"
+    },
+    {
+      "path": "tests/integration/level3-ftp-adapter.test.ts",
+      "source": "packages/runtime/src/adapters/ftp/basic-ftp-adapter.test.ts",
+      "sourceSha256": "e4debaaae67f79f69c736bf78f02a9629ac66cb42da41acfa7c59d8c3ce0c860"
+    },
+    {
+      "path": "tests/fixtures/ftp-wire.ts",
+      "source": "packages/runtime/src/adapters/ftp/basic-ftp-adapter.test.ts",
+      "sourceSha256": "e4debaaae67f79f69c736bf78f02a9629ac66cb42da41acfa7c59d8c3ce0c860"
+    },
+    {
+      "path": "packages/plugins/files/src/adapters/local-mode.ts",
+      "source": "apps/desktop/src/main/host-capabilities/server.ts",
+      "sourceSha256": "ee473fe096061a3497aa59c296c646dabf6a64bbea32a52095ec485342b02908"
+    },
+    {
+      "path": "packages/api/plugin-api/src/transfers.ts",
+      "source": "packages/contracts/src/schemas/resources.ts",
+      "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+    },
+    {
+      "path": "packages/plugins/transfers/src/application/transfer-service.ts",
+      "source": "packages/runtime/src/application/transfer-service.ts",
+      "sourceSha256": "4810983350247a7905372b35a7e230369ad00510bd262eac5caf9b29a8307d2b"
+    },
+    {
+      "path": "packages/plugins/transfers/src/application/archive-workflow.ts",
+      "source": "packages/runtime/src/application/transfer-service.ts",
+      "sourceSha256": "4810983350247a7905372b35a7e230369ad00510bd262eac5caf9b29a8307d2b"
+    },
+    {
+      "path": "packages/plugins/transfers/src/adapters/transfer-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+      "sourceSha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/plain-terminals.ts",
+      "source": "packages/runtime/src/application/serial-service.ts",
+      "sourceSha256": "df846cd7378013eadb6acb64b5799c5bd72342b53b2163112cb17a8e9b530c80"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/plain-terminals.ts",
+      "source": "packages/runtime/src/application/telnet-service.ts",
+      "sourceSha256": "706b7f394d0a3ddbd4c23d301b6f457670a4be0677e85e07badc1cd4a7929f99"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/serial/node-serial-adapter.ts",
+      "source": "packages/runtime/src/adapters/serial/node-serial-adapter.ts",
+      "sourceSha256": "065b0b0f7edd58bb3d6a24f8f5650d359ac4a46d6ac703657ca2ed81b521a530"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/serial/node-serial-adapter.test.ts",
+      "source": "packages/runtime/src/adapters/serial/node-serial-adapter.test.ts",
+      "sourceSha256": "797ebd3d7ca7d92b601b5a0a2b8280f3c2260549b4eafbd53cc47cf9e811e41a"
+    },
+    {
+      "path": "packages/plugins/connections/src/ports/serial-transport.ts",
+      "source": "packages/runtime/src/ports/serial-transport.ts",
+      "sourceSha256": "ce0ddb9103eafd1597561f5861d920a058cc75c02eb0d23a1b9abfb1ce114d1b"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/telnet/node-telnet-adapter.ts",
+      "source": "packages/runtime/src/adapters/telnet/node-telnet-adapter.ts",
+      "sourceSha256": "a909d4f46edfe47526928ef718b9be41e76c39d9d9786ceb8c8da89ea0e790f0"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/telnet/node-telnet-adapter.test.ts",
+      "source": "packages/runtime/src/adapters/telnet/node-telnet-adapter.test.ts",
+      "sourceSha256": "5d3628c1a6c6c79ed609f1fcfbcf37e508695a51f2ed0ecee7892d0d680de9c1"
+    },
+    {
+      "path": "packages/plugins/connections/src/ports/telnet-transport.ts",
+      "source": "packages/runtime/src/ports/telnet-transport.ts",
+      "sourceSha256": "1eac315199adbc93bd7167732ddae1f26b87d1ac0fd8bdfafee41db583089e74"
+    },
+    {
+      "path": "packages/plugins/connections/src/application/tunnels.ts",
+      "source": "packages/runtime/src/application/tunnel-service.ts",
+      "sourceSha256": "3971fdd823829be828fe4bd2ecb179f65905d50b62a97e48b4faedd1977e8ab5"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/tunnels.ts",
+      "source": "packages/runtime/src/application/tunnel-service.ts",
+      "sourceSha256": "3971fdd823829be828fe4bd2ecb179f65905d50b62a97e48b4faedd1977e8ab5"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/tunnel-profiles.ts",
+      "source": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+      "sourceSha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677"
+    },
+    {
+      "path": "packages/api/plugin-api/src/remote-desktop.ts",
+      "source": "packages/contracts/src/schemas/resources.ts",
+      "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+    },
+    {
+      "path": "packages/plugins/remote-desktop/src/application/sessions.ts",
+      "source": "packages/runtime/src/application/rdp-session-service.ts",
+      "sourceSha256": "63495619c04b1c771d94e87a86a58b95291274868da0d4d1f63630a9daa262ef"
+    },
+    {
+      "path": "packages/plugins/remote-desktop/src/adapters/rdp-relay.ts",
+      "source": "packages/runtime/src/adapters/rdp/node-rdp-relay.ts",
+      "sourceSha256": "ecca66ee1966ecce3b4d3b37689c3cf52bb9bfb437978fcec307067abcaab7c7"
+    },
+    {
+      "path": "packages/plugins/remote-desktop/src/adapters/rdp-relay.test.ts",
+      "source": "packages/runtime/src/adapters/rdp/node-rdp-relay.test.ts",
+      "sourceSha256": "29625950beb26eb222a43ae563e16d98664cfbf550c0dc7e0fd981772ee1857b"
+    },
+    {
+      "path": "packages/plugins/remote-desktop/src/adapters/binary-relay.ts",
+      "source": "packages/runtime/src/adapters/vnc/node-vnc-relay.ts",
+      "sourceSha256": "53bdc6547f1a0b3337c17690bd4e56ee64e251fc48e548eadabc769f776b1535"
+    },
+    {
+      "path": "packages/plugins/remote-desktop/src/ports/relay.ts",
+      "source": "packages/runtime/src/ports/rdp-relay.ts",
+      "sourceSha256": "e014ec581682529d0b0c19438244dbb9adec567e9be0c677f993ff3e128926f6"
+    },
+    {
+      "path": "packages/plugins/connections/src/adapters/target-streams.ts",
+      "source": "packages/runtime/src/application/rdp-session-service.ts",
+      "sourceSha256": "63495619c04b1c771d94e87a86a58b95291274868da0d4d1f63630a9daa262ef"
+    },
+    {
+      "path": "packages/api/plugin-api/src/automation.ts",
+      "source": "packages/contracts/src/schemas/resources.ts",
+      "sourceSha256": "74784d3bb6a6c83f172d251a5d95c928a4277501136918b0ffa7c5736b183084"
+    },
+    {
+      "path": "packages/plugins/automation/src/adapters/quick-command-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/quick-command-repository.ts",
+      "sourceSha256": "1ebe8fba3cb92c6198b07159c9ef88b3c62bedf0e346cca548e69270e740a441"
+    },
+    {
+      "path": "packages/plugins/automation/src/adapters/trigger-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/trigger-repository.ts",
+      "sourceSha256": "66d85c5e0a4a1928656ddc8212e0c64effa01537bac37bf64d012cd44d1ee980"
+    },
+    {
+      "path": "packages/plugins/automation/src/adapters/batch-repository.ts",
+      "source": "packages/runtime/src/adapters/sqlite/batch-operation-repository.ts",
+      "sourceSha256": "accb7eda941ab823ce17f9e1324e8c2fc5a89ac47064610ed90b45ec7a801157"
+    },
+    {
+      "path": "packages/plugins/automation/src/application/quick-commands.ts",
+      "source": "packages/runtime/src/application/quick-command-service.ts",
+      "sourceSha256": "01ab52bca31dafd811ac2dd5f42e744184c263669b615fd2401078663e29ecc4"
+    },
+    {
+      "path": "packages/plugins/automation/src/application/triggers.ts",
+      "source": "packages/runtime/src/application/trigger-service.ts",
+      "sourceSha256": "7a038d0afba868157f5c091c256c21487aefcdb17780964ac423b96bf908604d"
+    },
+    {
+      "path": "packages/plugins/automation/src/application/trigger-engine.ts",
+      "source": "packages/runtime/src/application/trigger-engine.ts",
+      "sourceSha256": "6139d7c6cd0fbcadab63f1eec1c1bf1ad21a1c3e088b7a4c64ce151a256c6caa"
+    },
+    {
+      "path": "packages/plugins/automation/src/application/trigger-engine.test.ts",
+      "source": "packages/runtime/src/application/trigger-service.test.ts",
+      "sourceSha256": "6db06e181d7155fd0187d2aa5b25f21aed0f81620926fd04fd7e4077c2a6d511"
+    },
+    {
+      "path": "packages/plugins/automation/src/application/batches.ts",
+      "source": "packages/runtime/src/application/batch-operation-service.ts",
+      "sourceSha256": "4f4bb871153740afa69c667217815cb6f71bc2cf9e30fd0c84caaed004ce979b"
+    },
+    {
+      "path": "packages/plugins/automation/src/application/errors.ts",
+      "source": "packages/runtime/src/application/errors.ts",
+      "sourceSha256": "d4d1fcf0f58ed6e0513ceeec0f2daca2b0e1596aced6000e332b46e4a99e7218"
+    },
+    {
+      "path": "packages/plugins/automation/src/application/file-renamer.ts",
+      "source": "packages/runtime/src/application/widget-service.ts",
+      "sourceSha256": "f6afbd07dcaa146b9cb10409c7f6e2b3af47d7d1c046a95b0115e7778c485486"
+    },
+    {
+      "path": "packages/plugins/workspace/src/client/index.tsx",
+      "source": "apps/desktop/src/renderer/src/app/app.tsx",
+      "sourceSha256": "45921fbba833db98692d64ecaca36506bddbd0edd866de38e873a62b38ed0345"
+    },
+    {
+      "path": "packages/plugins/workspace/src/client/workspace.module.css",
+      "source": "apps/desktop/src/renderer/src/styles/axterm-shell.css",
+      "sourceSha256": "898303272b36b5c7d09836e3e135e04a26898342d9cdaaf068f21f162f982dab"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/ui.tsx",
+      "source": "apps/desktop/src/renderer/src/components/terminal-view.tsx",
+      "sourceSha256": "0723c2272341c3513151606f9d6ec0a63364d1431d36e1bc13fe32078db74914"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/paste.ts",
+      "source": "apps/desktop/src/renderer/src/components/terminal-paste.ts",
+      "sourceSha256": "33e5200f1f4d5517d0ddd91c914443fd839ad81f3aee52485a5b62ca50b9e163"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/paste-dialog.tsx",
+      "source": "apps/desktop/src/renderer/src/components/terminal-paste-dialog.tsx",
+      "sourceSha256": "72b3dd5490e776c052ea736ab65d89a9bc289165c7b7972506d51f27eb9e4d45"
+    },
+    {
+      "path": "tests/unit/level3-terminal-paste.test.ts",
+      "source": "tests/unit/terminal-paste.test.ts",
+      "sourceSha256": "de6afa3e7496f9bc137989e3de52178da012336a2418fd374bd123c923871bce"
+    },
+    {
+      "path": "packages/plugins/workspace/src/client/locales.ts",
+      "source": "apps/desktop/src/renderer/src/i18n/core.ts",
+      "sourceSha256": "44b698ce7e52f546733b3f6ddd3c662f58714b7fbb1d9f655eb96f4d4a18941b"
+    },
+    {
+      "path": "packages/plugins/workspace/src/client/locales.ts",
+      "source": "apps/desktop/src/renderer/src/i18n/axterm-navigation.generated.json",
+      "sourceSha256": "297d8939515b735a0fa7508ea7d7f35214ec98ee6826fe43cd05155ad041a96e"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/locales.ts",
+      "source": "apps/desktop/src/renderer/src/i18n/core.ts",
+      "sourceSha256": "44b698ce7e52f546733b3f6ddd3c662f58714b7fbb1d9f655eb96f4d4a18941b"
+    },
+    {
+      "path": "packages/plugins/terminals/src/client/locales.ts",
+      "source": "apps/desktop/src/renderer/src/i18n/axterm-navigation.generated.json",
+      "sourceSha256": "297d8939515b735a0fa7508ea7d7f35214ec98ee6826fe43cd05155ad041a96e"
+    },
+    {
+      "path": "packages/plugins/configuration/src/client/locales.ts",
+      "source": "apps/desktop/src/renderer/src/i18n/core.ts",
+      "sourceSha256": "44b698ce7e52f546733b3f6ddd3c662f58714b7fbb1d9f655eb96f4d4a18941b"
+    },
+    {
+      "path": "packages/plugins/configuration/src/client/locales.ts",
+      "source": "apps/desktop/src/renderer/src/i18n/axterm-navigation.generated.json",
+      "sourceSha256": "297d8939515b735a0fa7508ea7d7f35214ec98ee6826fe43cd05155ad041a96e"
+    },
+    {
+      "path": "packages/infra/ui-theme/src/client/tokens.module.css",
+      "source": "apps/desktop/src/renderer/src/styles/axterm.tokens.css",
+      "sourceSha256": "f389e296a38374a4f5f4d29d0a86cc8e89cbb9a5bc8ddddb06588a7ca58a5cb0"
+    },
+    {
+      "path": "packages/plugins/configuration/src/application/sync-crypto.ts",
+      "source": "packages/runtime/src/application/data-sync-service.ts",
+      "sourceSha256": "44b40a4947a0c14ae786a7598c104b1b1dae291591267b023952533663d71243"
+    },
+    {
+      "path": "packages/plugins/configuration/src/application/sync.ts",
+      "source": "packages/runtime/src/application/data-sync-service.ts",
+      "sourceSha256": "44b40a4947a0c14ae786a7598c104b1b1dae291591267b023952533663d71243"
+    },
+    {
+      "path": "packages/plugins/configuration/src/application/sync-document.ts",
+      "source": "packages/runtime/src/adapters/data-sync/axterm-sync-document.ts",
+      "sourceSha256": "896fcd3121d5dfaac4a919cf63c793540f91b534a7cfe78762f04c6c3188cabd"
+    },
+    {
+      "path": "packages/plugins/configuration/src/application/sync-source.ts",
+      "source": "packages/runtime/src/adapters/data-sync/axterm-configuration-sync-data-source.ts",
+      "sourceSha256": "b7df1481ee246a2d0f9f82a0babf494a61e340731564b884d6f45cf3e201a158"
+    },
+    {
+      "path": "packages/plugins/configuration/src/application/sync-hash.ts",
+      "source": "packages/runtime/src/adapters/sqlite/product-repository.ts",
+      "sourceSha256": "a6ca611043259c8b6121f16205a733de3fda19ba1dc66643c837786a3cf3c677"
+    },
+    {
+      "path": "packages/plugins/configuration/src/adapters/sync-profiles.ts",
+      "source": "packages/runtime/src/adapters/sqlite/sync-profile-repository.ts",
+      "sourceSha256": "b9bf5ed6a2fe79e6680aaf6c0330cd931846f0202b7d09b00a324537d251194b"
+    },
+    {
+      "path": "packages/plugins/configuration/src/adapters/sync-providers.ts",
+      "source": "packages/runtime/src/adapters/data-sync/http-sync-providers.ts",
+      "sourceSha256": "9ee33645a3b58a68d1dbaef8451d6a9991cf4fe84137b1b80af7c614eb96c170"
+    },
+    {
+      "path": "packages/plugins/configuration/src/ports/sync.ts",
+      "source": "packages/runtime/src/ports/data-sync.ts",
+      "sourceSha256": "194c0e7894cf47bc786dc855610e0b0daadb4113c4114660ef761821ee44db4c"
+    },
+    {
+      "path": "packages/plugins/configuration/src/application/sync-errors.ts",
+      "source": "packages/runtime/src/application/errors.ts",
+      "sourceSha256": "d4d1fcf0f58ed6e0513ceeec0f2daca2b0e1596aced6000e332b46e4a99e7218"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/data-sync.ts",
+      "source": "packages/contracts/src/schemas/data-sync.ts",
+      "sourceSha256": "27426dcbda9a711f10b3c9300c8d2d5b39f332572ea07fb0bbdd01b79c342541"
+    },
+    {
+      "path": "packages/api/plugin-api/src/schemas/axterm-sync.ts",
+      "source": "packages/contracts/src/schemas/axterm-sync.ts",
+      "sourceSha256": "905fd83e4ae62caa02cb277789e008d38dde3ef76ea12f657bdc7dfb21bf738c"
+    },
+    {
+      "path": "tests/integration/level3-sync-providers.test.ts",
+      "source": "packages/runtime/src/adapters/data-sync/http-sync-providers.test.ts",
+      "sourceSha256": "f9b957cdf8da3aa703af667692e0bf23ebc52d634827c40a781d94059dacb790"
+    },
+    {
+      "path": "tests/integration/level3-sync-document.test.ts",
+      "source": "packages/runtime/src/adapters/data-sync/axterm-sync-document.test.ts",
+      "sourceSha256": "8512acd953d13806fe40651edb6a9de8f0bdc4482fd2a2a894eadedb24f57b0b"
+    }
+  ],
+  "adaptations": [
+    "Canonical public terminal contracts; Host/Client types share SDK identity",
+    "Application recording uses an injected port; native/file implementations stay in adapters",
+    "Admission revocation, metadata-only observations and accurate closing-resource task facts",
+    "Local file behavior moves from the former shell HTTP capability server to an owned Host adapter, live grant leases and pinned fs-safe primitives; no Electron or HTTP business dispatch is copied.",
+    "Transfers separates immutable IO reservations, selected file/connection leases, native tar staging, durable facts and coalesced realtime progress; browser projections adapt the already owned Files observation pattern.",
+    "Serial/Telnet reuse frozen protocol adapters behind Connections-owned opens and Terminals-owned sessions; actual native close barriers, bounded negotiation, canceled-create draining and conservative failed-handle ownership strengthen teardown.",
+    "SSH tunnels split profile facts/application policy from native forwarding; opaque Catalog/Connections transaction participants validate Host references, while unique address dispatch, half-close-aware piping, bounded SOCKS/control resources and actual teardown barriers preserve ownership.",
+    "RemoteDesktop joins existing RDP/VNC/SPICE session metadata, transient claims and binary protocol semantics behind selected Connections stream leases. Strict generation and resource admission, pending creation/channel reservations, actual native close barriers, bounded queues, explicit public DTO identity and metadata-only Client projection strengthen teardown without changing upstream clients or vendor code.",
+    "Automation retains existing command hierarchy, trigger matching/control notation and batch policy behind owned SQL and selected Catalog/Terminals/Connections ports. Owned revisions and compact receipts replace app_meta access; durable commit precedes worker activation/cancellation, Profile/generation leases survive until actual native close, and the existing Axterm Catalog fragment pattern supplies atomic Client facts. Live trigger state refreshes only after commit and fails closed on invalid storage.",
+    "Reviewed file rename retains frozen template/date/filter behavior behind a selected grant-scoped native port. Exclusive native no-replace moves, preview identity checks, bounded generation receipts, complete transient Client baselines, cancellation-aware rollback and same-directory reauthorization for uncertain recovery replace retained raw paths and swallowed rollback failures. Reconnect never replays filesystem mutations.",
+    "Workspace ports the frozen Axterm chrome ownership, class names and computed style inputs into a real root/typed child Slot composition. Terminal UI consumes only its Client model and bounded binary stream, owns xterm/fit/parser-completion flow and cleanup, and retains bounded paste assessment, review, cancellation and normalization. Raw clipboard text stays in transient renderer refs. Current port is a functional default-entry/PTY checkpoint, not full page or visual parity. CSS Modules compile through pinned Vite to explicit owned style effects, with a single independently loadable factory and no side-effect stylesheet injection.",
+    "Configuration retains the version-one sync protocols, crypto and category precedence through owned storage, shared per-resource physical IO leases, durable one-shot intents and complete metadata models. Vault references are never deleted by sync profile CRUD; uncertain writes suspend future automatic uploads. Configuration facts, sync facts, receipts and outbox finalize atomically before preview release. All provider responses and late operations drain before teardown."
+  ]
+}

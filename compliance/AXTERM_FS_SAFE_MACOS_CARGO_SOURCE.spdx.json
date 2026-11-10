@@ -1,0 +1,1346 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "axterm macOS arm64 fs-safe Cargo source-scope inventory",
+  "documentNamespace": "https://axterm.dev/sbom/native-source/0.10.0/macos-arm64/a10c16ddf8cbb0a07b35c0324514b073e8d7d7c6ebe3340f9dc863500ed3ffcd",
+  "creationInfo": {
+    "created": "2026-09-24T00:00:00Z",
+    "creators": ["Tool: Axterm fs-safe macOS source-scope SBOM generator"],
+    "licenseListVersion": "3.23",
+    "comment": "Pinned source: https://github.com/openclaw/fs-safe v0.13.1 (7022a0a10c53e36f34a467df68ed5614a1db1741); Cargo.lock SHA-256 d169c18102ef5a465cf645ceecc15956aafd2f694031d2006284bbcb59284bbd."
+  },
+  "documentDescribes": [
+    "SPDXRef-Cargo-b1894f2605f9e3bc26e35318d6b2d74acbf8525400c8f5680a16ad3c6ed4572a",
+    "SPDXRef-Cargo-3628430cb345a0ef9840ead6add0cacad138f1c37f85eff743e48fccf89947b6",
+    "SPDXRef-Cargo-ecbe934e1fbcf5a4bd0cad3469b9fd7ebfbea5a03be87c11837196b1228bb2fc",
+    "SPDXRef-Cargo-34eecfaa826760a0762b4a16b6a0e4aac8dba654c5539d31766bc12c1788b22e",
+    "SPDXRef-Cargo-ef745fcfcd0644eec850d131ee6dd50d47ec03697cd9c4327cfd29c6a2370b33",
+    "SPDXRef-Cargo-69c4ab67b052b83d1e7f51840b6710053052dd8a088716a53aa394eb3bf46dbd",
+    "SPDXRef-Cargo-ccf385c154caff0e2367fa1ae222dac45aacdc871dc06087283faf50ae1f4b7f",
+    "SPDXRef-Cargo-195fefdb5d91d91062b91b7d9b4324d44d8d673309bcb76bc56709c680cdc1e6",
+    "SPDXRef-Cargo-f6a0c816fb86bdf13ed66c6cad26ea1dad3581d87a561f8982b6959994b5279a",
+    "SPDXRef-Cargo-c235cb9aa7df4720189b5a8adf82fb743e1bed06641271490601c50395e2e2b9",
+    "SPDXRef-Cargo-64b17ab94a2a08eba1f01e9d4495d1392913068486e7ab0ca04551b4e58af5f7",
+    "SPDXRef-Cargo-b7ba2369a368415be526012b3240a87aa5dde7dd4c8b65ed7dbccf1998101d28",
+    "SPDXRef-Cargo-a61eed30e676a1285dfd04e6d2840923f0ee284a8bda1c4b44bdd8ac7afbfba6",
+    "SPDXRef-Cargo-45d01b00592a216714042d4d206163953c8252095f7b9e2d3bd9f9d3b4cbc95c",
+    "SPDXRef-Cargo-0dab2b1e429b9bf46df82eff29a543d3810e3cec8ead672b3171c91ae346fd10",
+    "SPDXRef-Cargo-6f1d7c2a67828d451d894c5e254ea4b4f4ff4e0285b7a310cac8caead516a4b5",
+    "SPDXRef-Cargo-13c307574606b87056beb9d804ffaafc8e13741b1c70ec3d5f18835fca8ec4fc",
+    "SPDXRef-Cargo-b54af6d967b13ebabd1d186f8766a14f176b96fce0fecd9789e4aade390734c9",
+    "SPDXRef-Cargo-9f8cdea652840db45160cac98198eafac67711aa50e9e8c58cf10e37144a564a",
+    "SPDXRef-Cargo-d3d69b6c4e0ffb67dd28e1b84c666fba718a9c328d6a5aee61ca8b17e2c75224",
+    "SPDXRef-Cargo-030328a8c3d7d294ba5d04e620002f9ba351811099e9f8caa9a869a54f5cbabc",
+    "SPDXRef-Cargo-e2bad86668b2e84a55b47e6a123b8b7643ca2a4f393895e38914a75a68415b3a",
+    "SPDXRef-Cargo-b7189af4e65782e720d2fb7c745da7d4e21bc23099c49f42e529a941db323c91",
+    "SPDXRef-Cargo-65c172b2b9743f2428092581ac90e22cef5a27f78a5783a517ea93ee965684a4",
+    "SPDXRef-Cargo-73dd629bd987521573472a9c7423ea970257118b54f36359f20fbef0b56c1514",
+    "SPDXRef-Cargo-b908c21daceaf8973c59f9241cd44a7452dd7e6a1777c79e2843090f21eeb208",
+    "SPDXRef-Cargo-9e585571f6ef1eaa5d85e29b61477f0c469f8128aec609d4481742cad70858d0",
+    "SPDXRef-Cargo-5035fded8f4b9ae3712f97857b42a6452c83d57879f8e3d99c97441f6dce9d70",
+    "SPDXRef-Cargo-05218566f8ca13fa70acd810c70c9e0c7f12b6a4879f3274bbf404dbc1cbceef",
+    "SPDXRef-Cargo-d3625f866c4a7079093de4b5ff75c6591b68b0a7efab0ada68de0478d77a1127",
+    "SPDXRef-Cargo-01d23b12943dfb2f4b951650341311eeac9a0f7d64a5da0e8b07da1dd8ac05bc",
+    "SPDXRef-Cargo-359d065f4d3de72ae80d1719d47fa7e4fa4cd669f314533c0259ddcc352d9ddb",
+    "SPDXRef-Cargo-93761cd586aaf1f65ad66110d8accedbb110d0714ce1d418ebc7a8b498426ce1",
+    "SPDXRef-Cargo-8f91ad3c45904f2de6f20547b398893c0a10959cea95eefbeb30a81c3a868a7f",
+    "SPDXRef-Cargo-f8807dc88474ad6f0ea6fece7c71cab452b3066077a90f9e5cc96913d454281a",
+    "SPDXRef-Cargo-41d23b6a12dc1dd7a6ac5b07fdb99c0acd3579bd7dce507f9614f4e869fda515",
+    "SPDXRef-Cargo-dc1075f7724ae0ce459e6d7ee8da705c76eabfa2933387eff523d5bce3097df3",
+    "SPDXRef-Cargo-d442f44a4b13f9046673b5a2596ee7a330ddac55a2007f0249c4975006c92ecb",
+    "SPDXRef-Cargo-c06af83eacb708435513865ebb752e636bdb87ed484b701f0610cd6fdfddcb8d",
+    "SPDXRef-Cargo-11c05801b688617a9c2b706bb0e8be71f4eef48d4e91666a4643ba209a9f142d",
+    "SPDXRef-Cargo-230e140b274a45eed1a18d086bfabd9089d57e1ef475f78c5275b8e9add9c4da",
+    "SPDXRef-Cargo-540bf899a1a2649f76c32447b7746299e910915fe5af76ef998d3b2796e1f964",
+    "SPDXRef-Cargo-31ff59de04384d4fd09e17c528098858b0a940e3388895b1783026db6bd87cca",
+    "SPDXRef-Cargo-2a4faa83f856ac294e23d14a1402068f6856fe79e7b52a6723ce55eee58e538f",
+    "SPDXRef-Cargo-7ccade98eb38039b1ce40a227bb3f152d739c539dfe2bb89ae2e1721b4ef0234",
+    "SPDXRef-Cargo-785f27f9c3dc0f2e1e45f7c901cc7540040805c6b5f0634d230b9a681961e93a",
+    "SPDXRef-Cargo-7ffb21c4997e740e5e4d602e41991ce7dd3441bc930ea224d425ce96642e6986",
+    "SPDXRef-Cargo-beeaeea7f43d6f1727b1960e42dbdb369cd0cebc48bc855432940503dd0ff993",
+    "SPDXRef-Cargo-b0ab2828e55025fff0e3ca0fd3ed8edc480374d2962604830797b575bb7ab116",
+    "SPDXRef-Cargo-0bae69a176cb1dc5bf29e605e4dc98a51f60c7dc3c65b0fd2aa7f2327aef7b72",
+    "SPDXRef-Cargo-15ce731c3532e729e518f282c0cd76bf7ecb5f60925199cacdb19077223ba0a0",
+    "SPDXRef-Cargo-d3ac9c91da01c25293351e4ab1c5229e1f9c39e5ac244bb6bed765c843c6eb27",
+    "SPDXRef-Cargo-56e894e7f0aa7c4cd8fa7603d314a3de14d84951489bbfa18cca88022cfaeb29",
+    "SPDXRef-Cargo-d1856d926dba78bdf38d110943578a8ccaff981cc88b14dd88af750ef6113766",
+    "SPDXRef-Cargo-accf0a3e3738ed66b8536ee6032db321c56983f193850771751137b1e34bd522",
+    "SPDXRef-Cargo-d77e503da5480f0cef9ac195db3b74d1afa799e666efa21d9209ed7ffab9de9a",
+    "SPDXRef-Cargo-9237bdacebdf8c1ee48ea578555e339cfbb69c2b8e65d2c4fd62e76e8105cb44",
+    "SPDXRef-Cargo-7cd39750acee5a6b8ce9ffe8e9b8bfe082cbffc3efff0bf09488e1d1b4c1f9fa",
+    "SPDXRef-Cargo-0ec9ca4b63c062b74a80995ff06925b155d5ad642108db3af549f7632951a08c",
+    "SPDXRef-Cargo-af694040c59a983088ea036843bec4445c5c08f9eaaf2bfb0a0654680eb05004",
+    "SPDXRef-Cargo-255a4bcb61e999d8951773b317d8bb83d5fb1184349d68078df2f99c62b553cc"
+  ],
+  "comment": "Scope: 61 locked normal-source Cargo package identities for the attested fs-safe v0.13.1 macOS arm64 release source. This is intentionally separate from AXTERM_PRODUCTION_DEPENDENCIES.spdx.json (Bun) and each exact packaged-artifact sidecar. The graph includes build-time/proc-macro packages and does not assert that every package is linked into the published native binary. Manifest licenses and available root texts are leads for qualified review, not selected license options or legal clearance. Expected published macOS binding SHA-256: 78ca69b52d05da239bf50a6768867134265aace0195c8494f64f65b6d1ba6db0.",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Cargo-b1894f2605f9e3bc26e35318d6b2d74acbf8525400c8f5680a16ad3c6ed4572a",
+      "name": "adler2",
+      "versionInfo": "2.0.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: 0BSD OR MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-0BSD (861399f8c21c042b110517e76dc6b63a2b334276c8cf17412fc3c8908ca8dc17), LICENSE-APACHE (8ada45cd9f843acf64e4722ae262c622a2b3b3007c7310ef36ac1061a30f6adb), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/adler2@2.0.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-3628430cb345a0ef9840ead6add0cacad138f1c37f85eff743e48fccf89947b6",
+      "name": "bitflags",
+      "versionInfo": "2.13.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb). Explicit copyright/SPDX source-header candidates: 1 files, 1 lines (f1ee29990c76ccbe7899c0cbd404bd728561c35ecb52dee73e0fe8fcce8009d5). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/bitflags@2.13.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-ecbe934e1fbcf5a4bd0cad3469b9fd7ebfbea5a03be87c11837196b1228bb2fc",
+      "name": "block-buffer",
+      "versionInfo": "0.12.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5), LICENSE-MIT (98181e7249d0c01737645ec982499ce99a0f07eb8f7d625b8840d799d10dbc01). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/block-buffer@0.12.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-34eecfaa826760a0762b4a16b6a0e4aac8dba654c5539d31766bc12c1788b22e",
+      "name": "bzip2",
+      "versionInfo": "0.6.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (c8c6324cf2f0f076e3ed5dea4a21f00bd4dd6fce44f72b110bc52e7fe06f6e1e). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/bzip2@0.6.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-ef745fcfcd0644eec850d131ee6dd50d47ec03697cd9c4327cfd29c6a2370b33",
+      "name": "cfg-if",
+      "versionInfo": "1.0.4",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/cfg-if@1.0.4"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-69c4ab67b052b83d1e7f51840b6710053052dd8a088716a53aa394eb3bf46dbd",
+      "name": "const-oid",
+      "versionInfo": "0.10.2",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5), LICENSE-MIT (73b9dc2e79c7308998dd30296e073aefaefb944a68fb89aa412c23c0edcabcaa). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/const-oid@0.10.2"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-ccf385c154caff0e2367fa1ae222dac45aacdc871dc06087283faf50ae1f4b7f",
+      "name": "convert_case",
+      "versionInfo": "0.11.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (aed7b1758e35afa0cd0fde059d61950747ca11cd0e5e169cb21c11608daed772). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/convert_case@0.11.0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-195fefdb5d91d91062b91b7d9b4324d44d8d673309bcb76bc56709c680cdc1e6",
+      "name": "cpufeatures",
+      "versionInfo": "0.3.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5), LICENSE-MIT (73b9dc2e79c7308998dd30296e073aefaefb944a68fb89aa412c23c0edcabcaa). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/cpufeatures@0.3.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-f6a0c816fb86bdf13ed66c6cad26ea1dad3581d87a561f8982b6959994b5279a",
+      "name": "crc32fast",
+      "versionInfo": "1.5.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08), LICENSE-MIT (61d383b05b87d78f94d2937e2580cce47226d17823c0430fbcad09596537efcf). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/crc32fast@1.5.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-c235cb9aa7df4720189b5a8adf82fb743e1bed06641271490601c50395e2e2b9",
+      "name": "crypto-common",
+      "versionInfo": "0.2.2",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5), LICENSE-MIT (d2e7ec5355c96eeade56b09187ceb48a6a30299da3ce7531a66d3d11405ab963). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/crypto-common@0.2.2"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-64b17ab94a2a08eba1f01e9d4495d1392913068486e7ab0ca04551b4e58af5f7",
+      "name": "ctor",
+      "versionInfo": "1.0.13",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae), LICENSE-MIT (bccaa8b6c09f94e81f06696e179dbe058464bbdfbc823b6d49cada1d71e84ac3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/ctor@1.0.13"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-b7ba2369a368415be526012b3240a87aa5dde7dd4c8b65ed7dbccf1998101d28",
+      "name": "digest",
+      "versionInfo": "0.11.3",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5), LICENSE-MIT (af59cea35d7f5e2777a713b8d155d65efa2c339eb43f3c14e868c6ac8506edad). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/digest@0.11.3"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-a61eed30e676a1285dfd04e6d2840923f0ee284a8bda1c4b44bdd8ac7afbfba6",
+      "name": "equivalent",
+      "versionInfo": "1.0.2",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (7365cc8878a1d7ce155a58c4ca09c3d7a6be413efa5334a80ea842912b669349). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/equivalent@1.0.2"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-45d01b00592a216714042d4d206163953c8252095f7b9e2d3bd9f9d3b4cbc95c",
+      "name": "errno",
+      "versionInfo": "0.3.14",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (8764a597675778ddfd4e25f81b08a05dbcf089ac05662df7613fe67f150e3aa2). Explicit copyright/SPDX source-header candidates: 4 files, 4 lines (0a1e68ab936c69baf560465b6af255e595336e70b2c3954774efa7cfa279cf94). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/errno@0.3.14"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-0dab2b1e429b9bf46df82eff29a543d3810e3cec8ead672b3171c91ae346fd10",
+      "name": "flate2",
+      "versionInfo": "1.1.10",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (025436edff4cfcdde17a5811fdea78892d8482efd1abdec5a17872d07a4f2112). Explicit copyright/SPDX source-header candidates: 1 files, 1 lines (5e7be119634b827050f51b47e558bab9c97ec81971cd06448ca4b5e3b487dfb8). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/flate2@1.1.10"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-6f1d7c2a67828d451d894c5e254ea4b4f4ff4e0285b7a310cac8caead516a4b5",
+      "name": "fs-safe-archive-core",
+      "versionInfo": "0.1.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Project-local source package in https://github.com/openclaw/fs-safe v0.13.1 (7022a0a10c53e36f34a467df68ed5614a1db1741).",
+      "comment": "Source kind: tag-source. Root legal files in the pinned source inventory: none. Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed."
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-13c307574606b87056beb9d804ffaafc8e13741b1c70ec3d5f18835fca8ec4fc",
+      "name": "fs-safe-native",
+      "versionInfo": "0.13.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Project-local source package in https://github.com/openclaw/fs-safe v0.13.1 (7022a0a10c53e36f34a467df68ed5614a1db1741).",
+      "comment": "Source kind: tag-source. Root legal files in the pinned source inventory: none. Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed."
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-b54af6d967b13ebabd1d186f8766a14f176b96fce0fecd9789e4aade390734c9",
+      "name": "futures-channel",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: 1 files, 1 lines (28bedbeee94c0b40df05156b8974198df1089b4d94f753f277ced3054cfdc8cf). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures-channel@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-9f8cdea652840db45160cac98198eafac67711aa50e9e8c58cf10e37144a564a",
+      "name": "futures-core",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures-core@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-d3d69b6c4e0ffb67dd28e1b84c666fba718a9c328d6a5aee61ca8b17e2c75224",
+      "name": "futures-executor",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures-executor@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-030328a8c3d7d294ba5d04e620002f9ba351811099e9f8caa9a869a54f5cbabc",
+      "name": "futures-io",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures-io@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-e2bad86668b2e84a55b47e6a123b8b7643ca2a4f393895e38914a75a68415b3a",
+      "name": "futures-macro",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures-macro@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-b7189af4e65782e720d2fb7c745da7d4e21bc23099c49f42e529a941db323c91",
+      "name": "futures-sink",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures-sink@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-65c172b2b9743f2428092581ac90e22cef5a27f78a5783a517ea93ee965684a4",
+      "name": "futures-task",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures-task@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-73dd629bd987521573472a9c7423ea970257118b54f36359f20fbef0b56c1514",
+      "name": "futures-util",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures-util@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-b908c21daceaf8973c59f9241cd44a7452dd7e6a1777c79e2843090f21eeb208",
+      "name": "futures",
+      "versionInfo": "0.3.34",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427), LICENSE-MIT (6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/futures@0.3.34"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-9e585571f6ef1eaa5d85e29b61477f0c469f8128aec609d4481742cad70858d0",
+      "name": "hashbrown",
+      "versionInfo": "0.17.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/hashbrown@0.17.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-5035fded8f4b9ae3712f97857b42a6452c83d57879f8e3d99c97441f6dce9d70",
+      "name": "hybrid-array",
+      "versionInfo": "0.4.15",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5), LICENSE-MIT (70c9d40f1f9545c3f133b8a67206e89da850f6468eed072281bb3701514114a9). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/hybrid-array@0.4.15"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-05218566f8ca13fa70acd810c70c9e0c7f12b6a4879f3274bbf404dbc1cbceef",
+      "name": "indexmap",
+      "versionInfo": "2.14.2",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (ecc269ef87fd38a1d98e30bfac9ba964a9dbd9315c3770fed98d4d7cb5882055). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/indexmap@2.14.2"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-d3625f866c4a7079093de4b5ff75c6591b68b0a7efab0ada68de0478d77a1127",
+      "name": "libbz2-rs-sys",
+      "versionInfo": "0.2.5",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: bzip2-1.0.6. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (54e1fd7bd53273e601c9599eb162a004dacddee031ae297ee7109a7beb93b1c2). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/libbz2-rs-sys@0.2.5"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-01d23b12943dfb2f4b951650341311eeac9a0f7d64a5da0e8b07da1dd8ac05bc",
+      "name": "libc",
+      "versionInfo": "0.2.189",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a), LICENSE-MIT (123a331b5dbf04c30097fa43b8f858bc85df671fe776de498d01f3d6b7c1f69e). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/libc@0.2.189"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-359d065f4d3de72ae80d1719d47fa7e4fa4cd669f314533c0259ddcc352d9ddb",
+      "name": "libloading",
+      "versionInfo": "0.9.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: ISC. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (b29f8b01452350c20dd1af16ef83b598fea3053578ccc1c7a0ef40e57be2620f). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/libloading@0.9.0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-93761cd586aaf1f65ad66110d8accedbb110d0714ce1d418ebc7a8b498426ce1",
+      "name": "memchr",
+      "versionInfo": "2.8.3",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Unlicense OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: COPYING (01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f), LICENSE-MIT (0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/memchr@2.8.3"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-8f91ad3c45904f2de6f20547b398893c0a10959cea95eefbeb30a81c3a868a7f",
+      "name": "miniz_oxide",
+      "versionInfo": "0.9.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Zlib OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (4108245a1f2df9d4e94df8abed5b4ba0759bb2f9b40a6b939f1be141077ae50b), LICENSE-APACHE.md (0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594), LICENSE-MIT.md (799e9ca9d179295ef372f25d3769cdda7d25bb2668add6a6a1e22d1e4c678b8d), LICENSE-ZLIB.md (0a54e647fe54104658b5e563c04c6f9edf251710e47bce692e0bd990a4ddaa39). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/miniz_oxide@0.9.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-f8807dc88474ad6f0ea6fece7c71cab452b3066077a90f9e5cc96913d454281a",
+      "name": "napi-derive-backend",
+      "versionInfo": "6.1.2",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: none. Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/napi-derive-backend@6.1.2"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-41d23b6a12dc1dd7a6ac5b07fdb99c0acd3579bd7dce507f9614f4e869fda515",
+      "name": "napi-derive",
+      "versionInfo": "3.6.3",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: none. Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/napi-derive@3.6.3"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-dc1075f7724ae0ce459e6d7ee8da705c76eabfa2933387eff523d5bce3097df3",
+      "name": "napi-sys",
+      "versionInfo": "3.3.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: none. Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/napi-sys@3.3.0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-d442f44a4b13f9046673b5a2596ee7a330ddac55a2007f0249c4975006c92ecb",
+      "name": "napi",
+      "versionInfo": "3.12.2",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: none. Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/napi@3.12.2"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-c06af83eacb708435513865ebb752e636bdb87ed484b701f0610cd6fdfddcb8d",
+      "name": "nohash-hasher",
+      "versionInfo": "0.2.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30), LICENSE-MIT (ec353d4fecf7963b4c054384557e5dbc3c7a717997eb4a3815b315721a6aa75a). Explicit copyright/SPDX source-header candidates: 1 files, 1 lines (d7484b93e4a81b593df6ffabc61fdc73dbca0f35edc977e698409c62c03d0d97). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/nohash-hasher@0.2.0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-11c05801b688617a9c2b706bb0e8be71f4eef48d4e91666a4643ba209a9f142d",
+      "name": "pin-project-lite",
+      "versionInfo": "0.2.17",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: 40 files, 40 lines (efb06c512e2b638e2cb6dbc9c9b2928b3c6b89770b5f83197773e344317cf3a8). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/pin-project-lite@0.2.17"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-230e140b274a45eed1a18d086bfabd9089d57e1ef475f78c5275b8e9add9c4da",
+      "name": "proc-macro2",
+      "versionInfo": "1.0.107",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/proc-macro2@1.0.107"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-540bf899a1a2649f76c32447b7746299e910915fe5af76ef998d3b2796e1f964",
+      "name": "quote",
+      "versionInfo": "1.0.47",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/quote@1.0.47"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-31ff59de04384d4fd09e17c528098858b0a940e3388895b1783026db6bd87cca",
+      "name": "rustc-hash",
+      "versionInfo": "2.1.3",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (95bd3988beee069fa2848f648dab43cc6e0b2add2ad6bcb17360caf749802bcc), LICENSE-MIT (30fefc3a7d6a0041541858293bcbea2dde4caa4c0a5802f996a7f7e8c0085652). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rustc-hash@2.1.3"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-2a4faa83f856ac294e23d14a1402068f6856fe79e7b52a6723ce55eee58e538f",
+      "name": "rustix",
+      "versionInfo": "1.1.4",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-Apache-2.0_WITH_LLVM-exception (268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/rustix@1.1.4"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-7ccade98eb38039b1ce40a227bb3f152d739c539dfe2bb89ae2e1721b4ef0234",
+      "name": "semver",
+      "versionInfo": "1.0.28",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/semver@1.0.28"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-785f27f9c3dc0f2e1e45f7c901cc7540040805c6b5f0634d230b9a681961e93a",
+      "name": "sha2",
+      "versionInfo": "0.11.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5), LICENSE-MIT (831e0f43ad0bf014c1c4fec5767aae470434c1d66d6e671be2d823e729063e25). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/sha2@0.11.0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-7ffb21c4997e740e5e4d602e41991ce7dd3441bc930ea224d425ce96642e6986",
+      "name": "simd-adler32",
+      "versionInfo": "0.3.10",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE.md (42a35170233e83e18856792e748de4c1ce4a63b2afce9a370c89ef3fe23f9f2d). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/simd-adler32@0.3.10"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-beeaeea7f43d6f1727b1960e42dbdb369cd0cebc48bc855432940503dd0ff993",
+      "name": "slab",
+      "versionInfo": "0.4.12",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (8ce0830173fdac609dfb4ea603fdc002c2f4af0dc9b1a005653f5da9cf534b18). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/slab@0.4.12"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-b0ab2828e55025fff0e3ca0fd3ed8edc480374d2962604830797b575bb7ab116",
+      "name": "syn",
+      "versionInfo": "2.0.119",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/syn@2.0.119"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-0bae69a176cb1dc5bf29e605e4dc98a51f60c7dc3c65b0fd2aa7f2327aef7b72",
+      "name": "syn",
+      "versionInfo": "3.0.5",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/syn@3.0.5"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-15ce731c3532e729e518f282c0cd76bf7ecb5f60925199cacdb19077223ba0a0",
+      "name": "tinyvec_macros",
+      "versionInfo": "0.1.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0 OR Zlib. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE.md (4f44572785f35152c1fd2eadf565b7e079c0f300b4324f0af653419f9d76b735), LICENSE-MIT.md (1dd8eca0f83669e75fa119e34fb9e1be9d16e3e9b6368962b8019db6e8ae5f7b), LICENSE-ZLIB.md (41ace205715d9f19a3214218cc1c01d57c533e02cd0fef7c8e51a49a7fce5ac5). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/tinyvec_macros@0.1.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-d3ac9c91da01c25293351e4ab1c5229e1f9c39e5ac244bb6bed765c843c6eb27",
+      "name": "tinyvec",
+      "versionInfo": "1.13.2",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: Zlib OR Apache-2.0 OR MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE.md (cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30), LICENSE-MIT.md (fd80a26fbb3f644af1fa994134446702932968519797227e07a1368dea80f0bc), LICENSE-ZLIB.md (84b34dd7608f7fb9b17bd588a6bf392bf7de504e2716f024a77d89f1b145a151). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/tinyvec@1.13.2"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-56e894e7f0aa7c4cd8fa7603d314a3de14d84951489bbfa18cca88022cfaeb29",
+      "name": "typed-path",
+      "versionInfo": "0.12.3",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/typed-path@0.12.3"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-d1856d926dba78bdf38d110943578a8ccaff981cc88b14dd88af750ef6113766",
+      "name": "typenum",
+      "versionInfo": "1.20.1",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (db11fec9946737df39ca3898d9cd8c10ec6f6c3a884a6802b0ad0b81b4e8f23a), LICENSE-APACHE (516b24e051bf5630880ebbd55c40a25ce9552ebaf8970a53e8976eb70e522406), LICENSE-MIT (a825bd853ab71619a4923d7b4311221427848070ff44d990da39b0b274c1683f). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/typenum@1.20.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-accf0a3e3738ed66b8536ee6032db321c56983f193850771751137b1e34bd522",
+      "name": "unicode-ident",
+      "versionInfo": "1.0.24",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: (MIT OR Apache-2.0) AND Unicode-3.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a), LICENSE-MIT (23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3), LICENSE-UNICODE (f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/unicode-ident@1.0.24"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-d77e503da5480f0cef9ac195db3b74d1afa799e666efa21d9209ed7ffab9de9a",
+      "name": "unicode-normalization",
+      "versionInfo": "0.1.25",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (7b63ecd5f1902af1b63729947373683c32745c16a10e8e6292e2e2dcd7e90ae0). Explicit copyright/SPDX source-header candidates: 9 files, 9 lines (fa58ae0ec1e82adaed70c8455fdd9eae2632a980af3287d0073dbc1594580ead). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/unicode-normalization@0.1.25"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-9237bdacebdf8c1ee48ea578555e339cfbb69c2b8e65d2c4fd62e76e8105cb44",
+      "name": "unicode-segmentation",
+      "versionInfo": "1.13.3",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT OR Apache-2.0. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE-APACHE (a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2), LICENSE-MIT (7b63ecd5f1902af1b63729947373683c32745c16a10e8e6292e2e2dcd7e90ae0). Explicit copyright/SPDX source-header candidates: 7 files, 7 lines (0e05313d68ed6f99829885b6ac6e431741f0e850f97cc45f6a4f4e5b27732b01). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/unicode-segmentation@1.13.3"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-7cd39750acee5a6b8ce9ffe8e9b8bfe082cbffc3efff0bf09488e1d1b4c1f9fa",
+      "name": "zip",
+      "versionInfo": "8.6.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: MIT. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (58545fed1565e42d687aecec6897d35c6d37ccb71479a137c0deb2203e125c79). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zip@8.6.0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-0ec9ca4b63c062b74a80995ff06925b155d5ad642108db3af549f7632951a08c",
+      "name": "zstd-safe",
+      "versionInfo": "8.0.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: BSD-3-Clause. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zstd-safe@8.0.0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-af694040c59a983088ea036843bec4445c5c08f9eaaf2bfb0a0654680eb05004",
+      "name": "zstd-sys",
+      "versionInfo": "2.1.0+zstd.1.5.7",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: BSD-3-Clause. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60), LICENSE.BSD-3-Clause (bf7017a73a95ea63bf3716b13ec2bcd79c92942356e3408c6fb66332bad6d977). Explicit copyright/SPDX source-header candidates: 92 files, 92 lines (9089fb0418e9b810cbcf8737b601e6dc24a15a495d585de17533727732ca9ac0). See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zstd-sys@2.1.0%2Bzstd.1.5.7"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Cargo-255a4bcb61e999d8951773b317d8bb83d5fb1184349d68078df2f99c62b553cc",
+      "name": "zstd",
+      "versionInfo": "0.14.0",
+      "primaryPackagePurpose": "SOURCE",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "licenseComments": "Pinned Cargo manifest declaration: BSD-3-Clause. No alternative was selected by this inventory.",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Registry source package in the pinned macOS normal Cargo graph.",
+      "comment": "Source kind: registry. Root legal files in the pinned source inventory: LICENSE (ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60). Explicit copyright/SPDX source-header candidates: none found by the bounded pattern sweep. See the root, napi/Zstandard and source-header legal supplements; applicability remains unreviewed.",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:cargo/zstd@0.14.0"
+        }
+      ]
+    }
+  ]
+}

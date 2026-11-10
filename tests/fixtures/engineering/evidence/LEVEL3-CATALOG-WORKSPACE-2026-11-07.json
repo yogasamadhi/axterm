@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-07",
+  "decisions": ["ADR-094", "ADR-095"],
+  "scope": "Retained Catalog bookmark tree, SSH and seven protocol bookmark editors through owned Client models; partial M4, no whole cutover",
+  "checks": {
+    "scoped": {
+      "log": "out/level3-migration/sdk/catalog-final-scoped.log",
+      "passedFiles": 4,
+      "passedTests": 42,
+      "sha256": "49eea289b892fe302e90bded37499e679062226f7f418f71cf363f84fc8c4ee0"
+    },
+    "publicDialog": {
+      "log": "out/level3-migration/sdk/catalog-public-dialog-tests.log",
+      "passedFiles": 1,
+      "passedTests": 2,
+      "sha256": "97964a9202e1c4b604d5490107fff6d7e346aea3e91392749332b02a57ba4097"
+    },
+    "strict": "out/level3-migration/sdk/catalog-root-strict.log",
+    "lint": "out/level3-migration/sdk/catalog-editor-lint.log",
+    "whole": {
+      "log": "out/level3-migration/sdk/catalog-whole-check.log",
+      "exitCode": 0,
+      "passedFiles": 509,
+      "passedTests": 2988,
+      "conditionalSkippedFiles": 7,
+      "conditionalSkippedTests": 63,
+      "visualAccessibilityPassed": 28,
+      "nativeModelSelectionSeconds": 1.8,
+      "qualification": "This full run started before the owner changed the testing cadence; further intermediate work uses focused checks, with a full run after all engineering implementation."
+    }
+  },
+  "sourceFreeMacPackage": {
+    "resultFile": "/Volumes/A/code/env/development-data/tmp/axterm-l3-catalog-workspace-artifact-YCWVQl/output/LEVEL3_PACKAGE_RESULT.json",
+    "log": "out/level3-migration/sdk/catalog-final-package-tests.log",
+    "passedFiles": 4,
+    "passedTests": 9,
+    "packagedCases": 3,
+    "sourceControlCases": 6,
+    "qualification": "Three actual package UI journeys, their three Web controls and three independent SDK consumers; not nine package-only cases.",
+    "path": "/usr/bin:/bin",
+    "sourceDirectoryRequired": false,
+    "systemNodePnpmRequired": false,
+    "sha256": "9da3e92b07791a257b7b4df78219cba1db390454b253a5ec45ff896627dbb4c2"
+  },
+  "behaviors": [
+    "Retained virtualized tree, search, sorting, keyboard/context actions and owned expansion-only browser preferences",
+    "Actual Web and package create/edit SSH plus FTP/Telnet/serial/RDP/VNC/SPICE/Web bookmarks; startup directory and quick-command editing preserve saved authentication references",
+    "Actual grouping, atomic group-and-protocol update, shared-reference-safe SSH/Web duplication and deletion, group deletion retaining its children",
+    "Web first group response is discarded after server commit; dialog retries the same business key and payload with a fresh transport rpcId; only one group persists",
+    "Vault admission lost ACK uses readonly outcome without another secret write; Catalog lost ACK retains the same key/input; old generation admissions do not delete possibly referenced entries",
+    "Definite save failure retains newly created Vault entries because another window/Profile may already reference them; no automatic credential deletion",
+    "Shutdown joins owned work; actual package/Web databases contain four hosts and eleven bookmarks, no plaintext canaries, with nine encrypted Vault entries and four independently decryptable SSH references",
+    "Public Radix DialogContent preserves feature-owned DOM with asChild, including optional built-in close controls; no additional application React root"
+  ],
+  "visual": {
+    "webDirectory": "out/level3-migration/catalog-workspace-layouts/web",
+    "packageDirectory": "out/level3-migration/catalog-workspace-layouts/package",
+    "imagesPerCarrier": 24,
+    "languages": ["en", "ja", "zh-CN", "zh-TW"],
+    "viewports": ["1280x800", "1440x900", "1920x1080"],
+    "zooms": [1, 2],
+    "manual99PercentOwnerReview": "pending",
+    "originalGoldenImagesUpdated": false
+  },
+  "limitations": [
+    "Remaining Files/Transfers/remote-desktop/Web session/automation/widgets/sync/advanced settings UI is still open; FTP/RDP/VNC/SPICE/Web bookmark launch integration is not accepted by this editor evidence",
+    "Further M5 behavior acceptance, data-copy/recovery, legacy removal, manual visual acceptance and default whole cutover remain open",
+    "Production home untouched; macOS unsigned engineering artifact only; no Windows/Linux native acceptance or formal publication inferred"
+  ],
+  "independentSource": {
+    "source": "/Volumes/A/code/env/development-data/tmp/axterm-independent-snapshot-NfYvDg/source",
+    "installLog": "out/level3-migration/sdk/catalog-cold-install.log",
+    "offlineFrozenCopyInstallWithAllPostinstall": true,
+    "seconds": 87.6,
+    "testsLog": "out/level3-migration/sdk/catalog-cold-tests.log",
+    "passedFiles": 8,
+    "passedTests": 49,
+    "conditionalSkippedTests": 1,
+    "gatesLog": "out/level3-migration/sdk/catalog-cold-gates.log",
+    "frozenInputsLog": "out/level3-migration/sdk/catalog-cold-matches.json",
+    "frozenInputCount": 46,
+    "snapshotMatches": 46,
+    "qualification": "All frozen inputs match the exported snapshot. Production implementation inputs remain identical; later checklist, STATUS, evidence and source-ledger updates are documentation changes. No package path supplied to the cold UI control, so its package case remains skipped."
+  }
+}

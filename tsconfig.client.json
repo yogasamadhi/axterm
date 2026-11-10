@@ -1,0 +1,115 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "lib": ["ES2024", "DOM", "DOM.Iterable", "DOM.AsyncIterable", "ESNext.Disposable"],
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@axterm/plugin-api": ["./packages/api/plugin-api/src/index.ts"],
+      "@axterm/plugin-api/brand": ["./packages/api/plugin-api/src/brand.ts"],
+      "@axterm/plugin-api/credentials": ["./packages/api/plugin-api/src/credentials.ts"],
+      "@axterm/plugin-api/types": ["./packages/api/plugin-api/src/types.ts"],
+      "@axterm/plugin-api/remote-info": ["./packages/api/plugin-api/src/remote-info.ts"],
+      "@axterm/infra-typert-registry/client": [
+        "./packages/infra/typert-registry/src/client/index.ts"
+      ],
+      "@axterm/infra-typert-registry/types": ["./packages/infra/typert-registry/src/types.ts"],
+      "@axterm/infra-connection/client": ["./packages/infra/connection/src/client/index.ts"],
+      "@axterm/infra-gateway/client": ["./packages/infra/gateway/src/client/index.ts"],
+      "@axterm/infra-gateway/types": ["./packages/infra/gateway/src/types.ts"],
+      "@axterm/plugin-api/stream-protocol": ["./packages/api/plugin-api/src/stream-protocol.ts"],
+      "@axterm/infra-deque": ["./packages/infra/deque/src/index.ts"],
+      "@axterm/infra-timeout": ["./packages/infra/timeout/src/index.ts"],
+      "@axterm/plugin-desktop/client": ["./packages/plugins/desktop/src/client/index.ts"],
+      "@axterm/plugin-desktop/types": ["./packages/plugins/desktop/src/types.ts"],
+      "@axterm/infra-scope": ["./packages/infra/scope/src/index.ts"],
+      "@axterm/plugin-api/storage": ["./packages/api/plugin-api/src/storage.ts"],
+      "@axterm/infra-client-modules/client": [
+        "./packages/infra/client-modules/src/client/index.ts"
+      ],
+      "@axterm/infra-package-manifest": ["./packages/infra/package-manifest/src/index.ts"],
+      "@axterm/ui": ["./packages/api/ui/src/index.ts"],
+      "@axterm/ui/store-contract": ["./packages/api/ui/src/store-contract.ts"],
+      "@axterm/infra-ui-renderer/client": ["./packages/infra/ui-renderer/src/client/index.ts"],
+      "@axterm/infra-web-server/types": ["./packages/infra/web-server/src/types.ts"],
+      "@axterm/web/bootstrap": ["./apps/web/src/bootstrap.ts"],
+      "@axterm/plugin-api/terminals": ["./packages/api/plugin-api/src/terminals.ts"],
+      "@axterm/plugin-terminals/types": ["./packages/plugins/terminals/src/types.ts"],
+      "@axterm/plugin-terminals/client": ["./packages/plugins/terminals/src/client/index.ts"],
+      "@axterm/plugin-api/desktop": ["./packages/api/plugin-api/src/desktop.ts"],
+      "@axterm/plugin-api/session-intents": ["./packages/api/plugin-api/src/session-intents.ts"],
+      "@axterm/plugin-api/catalog": ["./packages/api/plugin-api/src/catalog.ts"],
+      "@axterm/plugin-api/configuration": ["./packages/api/plugin-api/src/configuration.ts"],
+      "@axterm/plugin-catalog/client": ["./packages/plugins/catalog/src/client/index.ts"],
+      "@axterm/plugin-catalog/types": ["./packages/plugins/catalog/src/types.ts"],
+      "@axterm/plugin-configuration/client": [
+        "./packages/plugins/configuration/src/client/index.ts"
+      ],
+      "@axterm/plugin-configuration/types": ["./packages/plugins/configuration/src/types.ts"],
+      "@axterm/plugin-api/connections": ["./packages/api/plugin-api/src/connections.ts"],
+      "@axterm/plugin-connections/client": ["./packages/plugins/connections/src/client/index.ts"],
+      "@axterm/plugin-connections/types": ["./packages/plugins/connections/src/types.ts"],
+      "@axterm/plugin-api/files": ["./packages/api/plugin-api/src/files.ts"],
+      "@axterm/plugin-files": ["./packages/plugins/files/src/index.ts"],
+      "@axterm/plugin-files/types": ["./packages/plugins/files/src/types.ts"],
+      "@axterm/plugin-files/client": ["./packages/plugins/files/src/client/index.ts"],
+      "@axterm/infra-desktop-native/files": ["./packages/infra/desktop-native/src/file-grants.ts"],
+      "@axterm/plugin-api/transfers": ["./packages/api/plugin-api/src/transfers.ts"],
+      "@axterm/plugin-transfers": ["./packages/plugins/transfers/src/index.ts"],
+      "@axterm/plugin-transfers/types": ["./packages/plugins/transfers/src/types.ts"],
+      "@axterm/plugin-transfers/client": ["./packages/plugins/transfers/src/client/index.ts"],
+      "@axterm/plugin-api/remote-desktop": ["./packages/api/plugin-api/src/remote-desktop.ts"],
+      "@axterm/plugin-remote-desktop/types": ["./packages/plugins/remote-desktop/src/types.ts"],
+      "@axterm/plugin-remote-desktop/client": [
+        "./packages/plugins/remote-desktop/src/client/index.ts"
+      ],
+      "@axterm/plugin-api/automation": ["./packages/api/plugin-api/src/automation.ts"],
+      "@axterm/plugin-automation/types": ["./packages/plugins/automation/src/types.ts"],
+      "@axterm/plugin-automation/client": ["./packages/plugins/automation/src/client/index.ts"],
+      "@axterm/ui/workspace": ["./packages/api/ui/src/workspace.ts"],
+      "@axterm/plugin-workspace/client": ["./packages/plugins/workspace/src/client/index.tsx"],
+      "@axterm/ui/controls": ["./packages/api/ui/src/client/controls.tsx"],
+      "@axterm/ui/presentation": ["./packages/api/ui/src/presentation.ts"],
+      "@axterm/infra-locale/client": ["./packages/infra/locale/src/client/index.ts"],
+      "@axterm/infra-ui-theme/client": ["./packages/infra/ui-theme/src/client/index.ts"],
+      "@axterm/ui/preference": ["./packages/api/ui/src/preference.ts"],
+      "@axterm/engine-api": ["./packages/api/engine-api/src/index.ts"],
+      "@axterm/plugin-api/saved-credentials": [
+        "./packages/api/plugin-api/src/saved-credentials.ts"
+      ],
+      "@axterm/plugin-api/configuration-portable": [
+        "./packages/api/plugin-api/src/configuration-portable.ts"
+      ],
+      "@axterm/plugin-api/configuration-sync": [
+        "./packages/api/plugin-api/src/configuration-sync.ts"
+      ],
+      "@axterm/plugin-api/subprocess": ["./packages/api/plugin-api/src/subprocess.ts"],
+      "@axterm/plugin-api/ai": ["./packages/api/plugin-api/src/ai.ts"],
+      "@axterm/plugin-ai/client": ["./packages/plugins/ai/src/client/index.ts"],
+      "@axterm/plugin-api/plugins": ["./packages/api/plugin-api/src/plugins.ts"],
+      "@axterm/plugin-plugins/types": ["./packages/plugins/plugins/src/types.ts"],
+      "@axterm/plugin-plugins/client": ["./packages/plugins/plugins/src/client/index.ts"],
+      "@axterm/infra-client-hmr": ["./packages/infra/client-hmr/src/client/index.ts"],
+      "@axterm/infra-client-hmr/client": ["./packages/infra/client-hmr/src/client/index.ts"],
+      "@axterm/plugin-api/market": ["./packages/api/plugin-api/src/market.ts"],
+      "@axterm/plugin-market/types": ["./packages/plugins/market/src/types.ts"],
+      "@axterm/plugin-market/client": ["./packages/plugins/market/src/client/index.ts"],
+      "@axterm/plugin-api/shortcuts": ["./packages/api/plugin-api/src/shortcuts.ts"],
+      "@axterm/ui/shortcuts": ["./packages/api/ui/src/shortcuts.ts"],
+      "@axterm/infra-shortcuts": ["./packages/infra/shortcuts/src/index.ts"],
+      "@axterm/infra-shortcuts/client": ["./packages/infra/shortcuts/src/client/index.ts"]
+    },
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "packages/api/*/src/**/*.ts",
+    "packages/infra/*/src/client/**/*.ts",
+    "packages/plugins/*/src/client/**/*.ts",
+    "packages/infra/*/src/client/**/*.tsx",
+    "apps/web/src/**/*.ts",
+    "packages/plugins/*/src/client/**/*.tsx",
+    "packages/api/*/src/client/**/*.tsx"
+  ],
+  "exclude": ["packages/api/*/src/host"],
+  "files": ["packages/api/ui/src/client/style-modules.d.ts"]
+}

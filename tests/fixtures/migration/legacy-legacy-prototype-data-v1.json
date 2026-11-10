@@ -1,0 +1,48 @@
+{
+  "bookmarks": [
+    {
+      "id": "desktop-bookmark",
+      "type": "ssh",
+      "title": "Desktop production shell",
+      "host": "desktop.example.test",
+      "username": "fallback-user",
+      "authType": "profiles",
+      "profile": "desktop-profile",
+      "password": "B10-stale-bookmark-secret"
+    }
+  ],
+  "bookmarkGroups": [
+    {
+      "id": "default",
+      "bookmarkIds": [],
+      "bookmarkGroupIds": ["desktop-group"]
+    },
+    {
+      "id": "desktop-group",
+      "title": "Desktop imports",
+      "bookmarkIds": ["desktop-bookmark"],
+      "bookmarkGroupIds": [],
+      "level": 2,
+      "expanded": true
+    }
+  ],
+  "profiles": [
+    {
+      "id": "desktop-profile",
+      "name": "Desktop imported identity",
+      "isDefault": true,
+      "username": "deploy",
+      "password": "B10-profile-password-secret",
+      "forwardAgent": true
+    }
+  ],
+  "quickCommands": [
+    {
+      "id": "desktop-command",
+      "name": "Disk usage",
+      "command": "df -h",
+      "description": "",
+      "groupId": "legacy-command-group"
+    }
+  ]
+}

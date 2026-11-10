@@ -1,0 +1,6 @@
+- insert:
+    - id: transfers
+      name: '@axterm/plugin-transfers'
+      inject: [profileContext]
+      config:
+        profile: !!js ctx.profileContext.name

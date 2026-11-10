@@ -1,0 +1,23 @@
+{
+  "name": "@axterm/infra-web-startup",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@axterm/infra-web-server": "workspace:*",
+    "@axterm/infra-connection": "workspace:*",
+    "@axterm/infra-app-boot": "workspace:*",
+    "@axterm/plugin-api": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  }
+}

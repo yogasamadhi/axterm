@@ -1,0 +1,77 @@
+{
+  "name": "@axterm/plugin-desktop",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./headless": {
+      "types": "./lib/types/headless.d.ts",
+      "default": "./lib/headless.js"
+    },
+    "./tasks": {
+      "types": "./lib/types/tasks.d.ts",
+      "default": "./lib/tasks.js"
+    },
+    "./copy": {
+      "types": "./lib/types/copy.d.ts",
+      "default": "./lib/copy.js"
+    }
+  },
+  "files": [
+    "lib",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/infra-cmdline": "workspace:*",
+    "zod": "4.4.3",
+    "@axterm/infra-gateway": "workspace:*",
+    "@axterm/infra-scope": "workspace:*",
+    "@axterm/ui": "workspace:*",
+    "react": "18.3.1",
+    "@axterm/infra-storage-domain": "workspace:*",
+    "@axterm/data-schema": "workspace:*",
+    "lucide-react": "1.44.0",
+    "@axterm/infra-connection": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "external": [
+        "@axterm/infra-gateway/client"
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31"
+  }
+}

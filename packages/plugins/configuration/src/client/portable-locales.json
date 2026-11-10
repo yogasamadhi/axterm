@@ -1,0 +1,62 @@
+{
+  "en": {
+    "portableTitle": "Axterm configuration snapshot",
+    "portableDescription": "Exports connections and all bookmark protocols, profiles, commands, custom themes, triggers and settings in an Axterm-owned format.",
+    "portableLimits": "Vault secrets, histories, AI data, sync profiles and background image bytes are excluded. By default, import creates portable connections and user content only; you can explicitly restore listed portable settings. Privacy choices, credential-dependent proxy settings and the application-local Vault always stay local. User-authored commands and environment values may contain private data.",
+    "portableExport": "Export Axterm configuration",
+    "portableInspect": "Inspect Axterm file",
+    "portablePreview": "Import Axterm configuration",
+    "portableApplySettings": "Also save portable appearance, layout, terminal, file and shortcut settings for the next Axterm start. The current workspace stays open; privacy choices and credential-dependent proxy settings stay local.",
+    "portableExported": "Axterm configuration exported",
+    "portableCancel": "Discard Axterm configuration preview",
+    "portablePreservationNote": "Current settings and the application-local Vault are preserved; no secret is imported.",
+    "portableApplicationNote": "Portable appearance, layout, terminal, file and shortcut settings will replace saved local values for the next Axterm start. The current workspace stays open; privacy choices, credential-dependent proxies and the Vault stay local.",
+    "portableCommit": "Import {count} items",
+    "portableImported": "Axterm configuration imported"
+  },
+  "zh-CN": {
+    "portableTitle": "Axterm 配置快照",
+    "portableDescription": "以 Axterm 自有格式导出连接、所有协议的书签、配置、命令、自建主题、触发器和设置。",
+    "portableLimits": "不包含 Vault 密钥、历史记录、AI 数据、同步配置和背景图片内容。默认只创建便携的连接和用户内容；可显式恢复列出的便携设置。隐私选择、依赖凭据的代理设置及 application-local Vault 始终保留在本机。用户编写的命令及环境变量可能含有隐私数据。",
+    "portableExport": "导出 Axterm 配置",
+    "portableInspect": "检查 Axterm 文件",
+    "portablePreview": "导入 Axterm 配置",
+    "portableApplySettings": "同时保存便携的外观、布局、终端、文件和快捷键设置，供下次启动 Axterm 时恢复。当前工作区会保持打开；当前隐私选择及依赖凭据的代理设置保留在本机。",
+    "portableExported": "Axterm 配置已导出",
+    "portableCancel": "丢弃 Axterm 配置预览",
+    "portablePreservationNote": "保留当前设置和 application-local Vault；不会导入任何密钥。",
+    "portableApplicationNote": "下次启动 Axterm 时，将替换保存的便携外观、布局、终端、文件和快捷键设置；当前工作区会保持打开，隐私选择、依赖凭据的代理和 Vault 保留在本机。",
+    "portableCommit": "导入 {count} 项",
+    "portableImported": "Axterm 配置已导入"
+  },
+  "ja": {
+    "portableTitle": "Axterm 設定スナップショット",
+    "portableDescription": "接続、すべてのブックマークプロトコル、プロファイル、コマンド、カスタムテーマ、トリガー、設定を Axterm 独自形式でエクスポートします。",
+    "portableLimits": "Vault シークレット、履歴、AI データ、同期プロファイル、背景画像のバイト列は除外されます。既定では、インポートはポータブルな接続とユーザーコンテンツのみを作成します。列挙されたポータブル設定は明示的に復元できます。プライバシー設定、資格情報に依存するプロキシ設定、アプリケーションローカル Vault は常にローカルに保持されます。ユーザー作成のコマンドと環境変数には非公開データが含まれる場合があります。",
+    "portableExport": "Axterm 設定をエクスポート",
+    "portableInspect": "Axterm ファイルを検査",
+    "portablePreview": "Axterm 設定をインポート",
+    "portableApplySettings": "ポータブルな外観、レイアウト、ターミナル、ファイル、ショートカット設定も次回の Axterm 起動用に保存します。現在のワークスペースは開いたままになり、プライバシー設定と資格情報に依存するプロキシ設定はローカルに保持されます。",
+    "portableExported": "Axterm 設定をエクスポートしました",
+    "portableCancel": "Axterm 設定のプレビューを破棄",
+    "portablePreservationNote": "現在の設定とアプリケーションローカル Vault は保持され、シークレットはインポートされません。",
+    "portableApplicationNote": "ポータブルな外観、レイアウト、ターミナル、ファイル、ショートカット設定が次回の Axterm 起動時に保存済みローカル値を置き換えます。現在のワークスペースは開いたままになり、プライバシー設定、資格情報に依存するプロキシ、Vault はローカルに保持されます。",
+    "portableCommit": "{count} 項目をインポート",
+    "portableImported": "Axterm 設定をインポートしました"
+  },
+  "zh-TW": {
+    "portableTitle": "Axterm 設定快照",
+    "portableDescription": "以 Axterm 自有格式匯出連線、所有書籤協定、設定檔、命令、自訂主題、觸發器與設定。",
+    "portableLimits": "不包含 Vault 祕密、歷程記錄、AI 資料、同步設定檔與背景圖片位元組。預設匯入只會建立可攜連線與使用者內容；你可以明確還原列出的可攜設定。隱私選項、依賴憑證的 Proxy 設定與應用程式本機 Vault 一律保留在本機。使用者建立的命令與環境變數可能包含私密資料。",
+    "portableExport": "匯出 Axterm 設定",
+    "portableInspect": "檢查 Axterm 檔案",
+    "portablePreview": "匯入 Axterm 設定",
+    "portableApplySettings": "也儲存可攜外觀、版面配置、終端機、檔案與快速鍵設定，供下次啟動 Axterm 使用。目前工作區會維持開啟，隱私選項與依賴憑證的 Proxy 設定會留在本機。",
+    "portableExported": "已匯出 Axterm 設定",
+    "portableCancel": "捨棄 Axterm 設定預覽",
+    "portablePreservationNote": "目前設定與應用程式本機 Vault 會保留；不會匯入任何祕密。",
+    "portableApplicationNote": "可攜外觀、版面配置、終端機、檔案與快速鍵設定會在下次啟動 Axterm 時取代已儲存的本機值。目前工作區會維持開啟，隱私選項、依賴憑證的 Proxy 與 Vault 會留在本機。",
+    "portableCommit": "匯入 {count} 個項目",
+    "portableImported": "已匯入 Axterm 設定"
+  }
+}

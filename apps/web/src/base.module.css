@@ -1,0 +1,31 @@
+:global(html),
+:global(body),
+:global(#root) {
+  height: 100%;
+  margin: 0;
+}
+body {
+  font-family: var(--ax-font-sans);
+  color: var(--ax-color-connect-text);
+  background: var(--ax-color-connect-canvas);
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+html[data-platform='darwin'] [data-window-drag] {
+  -webkit-app-region: drag;
+}
+html[data-platform='darwin']
+  :is(button, input, select, textarea, [tabindex], [role='dialog'], [role='menu']) {
+  -webkit-app-region: no-drag;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: var(--ax-motion-reduced) !important;
+  }
+}

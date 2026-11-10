@@ -1,0 +1,126 @@
+/* Retained first-party startup/behavior styles, scoped without utility CSS. */
+:global(.terminal-security-settings) .hint {
+  grid-column: 1 / -1;
+}
+
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.hint {
+  margin: 0;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-caption);
+  line-height: var(--ax-line-height-relaxed);
+}
+
+.surface h3,
+:global(.approval-list) h3,
+:global(.inspector-body) h2 {
+  margin: 0 0 10px;
+  font-size: var(--ax-font-size-small);
+  font-weight: var(--ax-font-weight-emphasis-soft);
+  color: var(
+    --ax-color-workspace-startup-surface-h3-global-approval-list-h3-global-inspecto-64e0376
+  );
+}
+
+.surface {
+  padding: 14px;
+  border: var(--ax-border-workspace-startup-surface-border);
+  border-radius: var(--ax-radius-soft);
+  background: var(--ax-color-workspace-startup-surface-background);
+}
+
+:global(.ai-chat-workspace) > .surface {
+  margin: 0;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+}
+
+.surface,
+:global(.metric) {
+  border-color: var(--ax-color-border);
+  border-radius: var(--ax-radius-card-soft);
+  background: var(--ax-color-surface-sunken);
+  box-shadow: var(--ax-shadow-workspace-startup-surface-global-metric-box-shadow);
+}
+
+.surface {
+  padding: 16px;
+}
+
+.surface h3,
+:global(.approval-list) h3,
+:global(.inspector-body) h2 {
+  color: var(
+    --ax-color-workspace-startup-surface-h3-global-approval-list-h3-global-inspecto-64e0376
+  );
+  font-size: var(--ax-font-size-control);
+}
+
+:global(.file-permission-editor) .hint,
+:global(.file-permission-editor) :global(.danger-text) {
+  margin: 9px 0 0;
+}
+
+.hint,
+:global(.error-banner) {
+  font-size: var(--ax-font-size-body);
+}
+
+.monitor-settings-group {
+  min-width: 0;
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--ax-color-border);
+}
+
+.monitor-settings-group legend {
+  padding: 0 5px;
+  color: var(--ax-color-text);
+  font-weight: var(--ax-font-weight-semibold);
+}
+
+.monitor-settings-group {
+  grid-template-columns: minmax(0, 1fr);
+}
+.monitor-settings-group > * {
+  min-width: 0;
+}
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.segmented button {
+  flex: 1 1 100px;
+  min-width: 0;
+  min-height: 30px;
+  padding: 5px 8px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-surface-raised);
+}
+.segmented button[aria-selected='true'] {
+  border-color: var(--ax-color-primary);
+  color: var(--ax-color-primary);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-surface-raised);
+  color: var(--ax-color-text);
+}

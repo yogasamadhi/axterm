@@ -1,0 +1,71 @@
+{
+  "name": "@axterm/plugin-configuration",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./package.json": "./package.json",
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./copy": {
+      "types": "./lib/types/copy.d.ts",
+      "default": "./lib/copy.js"
+    }
+  },
+  "files": [
+    "lib",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/data-schema": "workspace:*",
+    "@axterm/infra-scope": "workspace:*",
+    "@axterm/infra-storage-domain": "workspace:*",
+    "zod": "4.4.3",
+    "@axterm/infra-gateway": "workspace:*",
+    "@axterm/ui": "workspace:*",
+    "react": "18.3.1",
+    "@axterm/infra-connection": "workspace:*",
+    "@axterm/infra-atomic-write": "workspace:*",
+    "lucide-react": "1.44.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "vitest": "5.0.0",
+    "@types/react": "18.3.31"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "external": [
+        "@axterm/infra-gateway/client"
+      ]
+    }
+  }
+}

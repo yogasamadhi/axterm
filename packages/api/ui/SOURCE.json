@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/deepseek-ai/deepseek-harness",
+  "commit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "sources": [
+    "packages/client/ui-slots/src",
+    "packages/client/locale/src/client/index.ts (selected pure interfaces)",
+    "packages/client/ui-theme/src/client/index.ts (selected pure interfaces)",
+    "packages/client/shortcuts/src/client/types.ts"
+  ],
+  "license": "MIT",
+  "scope": "Adapted common Slots and store contracts; original notices remain in LICENSE and source headers.",
+  "firstParty": {
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE.AXTERM",
+    "scope": "Axterm-authored workspace contracts and browser controls; no upstream or Radix source was copied into the controls. Radix remains a declared dependency with its own notices."
+  }
+}

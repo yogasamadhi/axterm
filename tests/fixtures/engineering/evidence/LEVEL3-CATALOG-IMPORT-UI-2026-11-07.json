@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-07",
+  "decision": "ADR-079",
+  "scope": "Retained Catalog SSH Config import UI through owned Client flow, generated Remote and native/streamed grant capabilities",
+  "checks": {
+    "scoped": {
+      "log": "out/level3-migration/sdk/catalog-import-ui-tests-3.log",
+      "passedFiles": 4,
+      "passedTests": 12,
+      "conditionalSkippedTests": 1
+    },
+    "webIncludes": {
+      "log": "out/level3-migration/sdk/catalog-import-ui-include-tests-3.log",
+      "passedFiles": 1,
+      "passedTests": 1,
+      "conditionalSkippedTests": 1
+    },
+    "ownership": {
+      "log": "out/level3-migration/sdk/catalog-import-ui-owner-tests-2.log",
+      "passedFiles": 1,
+      "passedTests": 5
+    },
+    "strict": "out/level3-migration/sdk/catalog-import-ui-final-strict.log",
+    "lint": "out/level3-migration/sdk/catalog-import-ui-final-lint.log",
+    "whole": {
+      "log": "out/level3-migration/sdk/catalog-import-ui-whole-check-3.log",
+      "exitCode": 0,
+      "passedFiles": 483,
+      "passedTests": 2849,
+      "conditionalSkippedFiles": 6,
+      "conditionalSkippedTests": 56,
+      "visualAccessibilityPassed": 28,
+      "nativeModelSelectionSeconds": 1.9
+    }
+  },
+  "sourceFreeMacPackage": {
+    "resultFile": "/Volumes/A/code/env/development-data/tmp/axterm-l3-workspace-admission-artifact-r3MRCP/output/LEVEL3_PACKAGE_RESULT.json",
+    "log": "out/level3-migration/sdk/catalog-import-ui-package-tests.log",
+    "passedFiles": 5,
+    "passedTests": 21,
+    "seconds": 74.57,
+    "path": "/usr/bin:/bin",
+    "sourceDirectoryRequired": false,
+    "systemNodePnpmRequired": false
+  },
+  "uiJourneys": [
+    "Root DOM File -> authenticated streaming HTTP -> real native/Host grant",
+    "Independent Web Include File picker and granted re-preview",
+    "Retained safe JSON editing, exclusions and explicit confirmation",
+    "Actual generated preview/commit/report and Catalog model projection",
+    "Complete per-item report; root and Include grants actually revoked on close",
+    "Uncertain command retains original key/payload/precondition; accepted receipt only rereads report",
+    "Late selection and failed revokes remain owned and bounded"
+  ],
+  "layout": {
+    "languages": ["en", "ja", "zh-CN", "zh-TW"],
+    "viewports": ["1280x800", "1440x900", "1920x1080"],
+    "zoomFactors": [1, 2],
+    "matrixScreenshotsPerMode": 24,
+    "reportScreenshotsPerMode": 4,
+    "modes": ["web", "package"],
+    "directory": "out/level3-migration/catalog-import-layouts",
+    "checks": [
+      "Confirmation reachable at every viewport/zoom",
+      "No horizontal dialog overflow",
+      "Edit/delete controls aligned without overlap",
+      "Real retained markup/text and editable JSON"
+    ]
+  },
+  "pending": [
+    "All remaining retained Catalog and other domain interfaces",
+    "Owner page-by-page 99% visual adjudication",
+    "M4\u2013M7, operation closure and default cutover"
+  ],
+  "productionHomeTouched": false,
+  "independentSource": {
+    "directory": "/Volumes/A/code/env/development-data/tmp/axterm-independent-snapshot-3DKOP0/source",
+    "install": {
+      "log": "out/level3-migration/sdk/catalog-import-ui-cold-install.log",
+      "offline": true,
+      "frozenLockfile": true,
+      "allPostinstall": true,
+      "seconds": 67.8
+    },
+    "tests": {
+      "log": "out/level3-migration/sdk/catalog-import-ui-cold-tests.log",
+      "passedFiles": 10,
+      "passedTests": 44,
+      "conditionalSkippedTests": 1,
+      "seconds": 20.76
+    },
+    "strict": "out/level3-migration/sdk/catalog-import-ui-cold-strict.log",
+    "gates": "out/level3-migration/sdk/catalog-import-ui-cold-gates.log",
+    "frozenChangedInputCount": 24,
+    "matchedInWorkingAndSnapshot": 24,
+    "qualification": "Frozen changed inputs were matched before final evidence/documentation updates. No runtime/build/test input changed afterward."
+  }
+}

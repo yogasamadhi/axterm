@@ -1,0 +1,37 @@
+export type AiErrorCode =
+  | 'AI_STEP_LIMIT'
+  | 'AI_RUNTIME_LIMIT'
+  | 'AI_OUTPUT_INVALID'
+  | 'ATTACHMENT_EXPIRED'
+  | 'AI_SECRET_BOUNDARY'
+  | 'AI_POLICY_REJECTED'
+  | 'AI_PROVIDER_FAILED'
+  | 'AI_ENGINE_MISSING'
+  | 'AI_ENGINE_UNSUPPORTED'
+  | 'AI_ENGINE_UNAVAILABLE'
+  | 'AI_ENGINE_CAPACITY'
+  | 'AI_ENGINE_DRAIN_FAILED'
+  | 'AI_ENGINE_CANCELLED'
+  | 'AI_ENGINE_INVALID'
+  | 'AI_ENGINE_OUTPUT_FAILED'
+  | 'ENGINE_DISCOVERY_UNSUPPORTED'
+  | 'APPROVAL_EXPIRED'
+  | 'NOT_FOUND'
+  | 'PRECONDITION_REQUIRED'
+  | 'PRECONDITION_FAILED'
+  | 'CONFLICT'
+  | 'CAPACITY_EXCEEDED'
+  | 'INVALID_STATE'
+  | 'VALIDATION_ERROR'
+  | 'CAPABILITY_UNAVAILABLE'
+  | 'REQUEST_CANCELED'
+  | 'PAYLOAD_TOO_LARGE';
+export class ApplicationError extends Error {
+  constructor(
+    readonly code: AiErrorCode,
+    message: string,
+    readonly status: 400 | 404 | 409 | 412 | 413 | 428 | 503 = 409,
+  ) {
+    super(message);
+  }
+}

@@ -1,0 +1,602 @@
+.connection-profile-panel {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-card);
+  background: var(--ax-color-catalog-profiles-connection-profile-panel-background);
+}
+
+.connection-profile-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.connection-profile-heading span {
+  color: var(--ax-color-primary);
+  font-size: var(--ax-font-size-small);
+  font-weight: var(--ax-font-weight-bold);
+  letter-spacing: var(--ax-letter-spacing-brand);
+}
+
+.connection-profile-heading h1,
+.connection-profile-heading p {
+  margin: 3px 0 0;
+}
+
+.connection-profile-heading h1 {
+  font-size: var(--ax-font-size-heading-relative);
+}
+
+.connection-profile-heading p,
+.connection-profile-message,
+.connection-profile-empty {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-control);
+}
+
+.connection-profile-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.34fr) minmax(360px, 1fr);
+  min-height: 410px;
+  overflow: hidden;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-canvas);
+}
+
+.connection-profile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border-right: 1px solid var(--ax-color-border);
+  background: var(--ax-color-catalog-profiles-connection-profile-list-background);
+}
+
+.connection-profile-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 31px;
+  align-items: center;
+  height: 33px;
+  margin-bottom: 8px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-tiny);
+  color: var(--ax-color-text-muted);
+}
+
+.connection-profile-transport {
+  display: none;
+}
+
+.connection-profile-search input {
+  width: 100%;
+  height: 31px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+}
+
+.connection-profile-search svg {
+  justify-self: center;
+}
+
+.connection-profile-list > button {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 9px;
+  padding: 10px;
+  border-color: transparent;
+  text-align: left;
+}
+
+.connection-profile-list > button.connection-profile-new {
+  grid-template-columns: 16px minmax(0, 1fr);
+}
+
+.connection-profile-list > button.active {
+  border-color: color-mix(in srgb, var(--ax-color-primary) 65%, transparent);
+  background: color-mix(in srgb, var(--ax-color-primary) 14%, var(--ax-color-canvas));
+}
+
+.connection-profile-list span {
+  display: grid;
+  min-width: 0;
+}
+
+.connection-profile-list strong,
+.connection-profile-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connection-profile-list small {
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-small);
+}
+
+.connection-profile-empty {
+  margin: auto 8px;
+  text-align: center;
+}
+
+.connection-profile-editor {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.connection-profile-default {
+  position: relative;
+  display: grid;
+  width: max-content;
+  gap: 13px;
+}
+
+.connection-profile-default > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.connection-profile-default > span span {
+  display: inline-grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: var(--ax-radius-circle);
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-caption);
+}
+
+.connection-profile-default input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.connection-profile-default i {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 22px;
+  border-radius: var(--ax-radius-sheet);
+  background: var(--ax-color-catalog-profiles-connection-profile-default-i-background);
+}
+
+.connection-profile-default i::after {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--ax-radius-circle);
+  background: var(--ax-color-catalog-profiles-connection-profile-default-i-after-background);
+  content: '';
+  transition: transform var(--ax-motion-interaction) var(--ax-motion-easing-ease);
+}
+
+.connection-profile-default input:checked + i {
+  background: var(--ax-color-primary);
+}
+
+.connection-profile-default input:checked + i::after {
+  transform: translateX(22px);
+}
+
+.connection-profile-default input:focus-visible + i {
+  outline: 2px solid var(--ax-color-primary);
+  outline-offset: 2px;
+}
+
+.connection-profile-basics {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) auto;
+  align-items: end;
+  gap: 14px;
+}
+
+.connection-profile-tabs {
+  display: flex;
+  gap: 2px;
+  margin: 16px 0 12px;
+  border-bottom: 1px solid var(--ax-color-border);
+}
+
+.connection-profile-tabs button {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+}
+
+.connection-profile-tabs button.active {
+  border-bottom-color: var(--ax-color-primary);
+  color: var(--ax-color-primary);
+}
+
+.connection-profile-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.connection-profile-fields legend {
+  margin-bottom: 10px;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-body);
+  font-weight: var(--ax-font-weight-bold);
+  letter-spacing: var(--ax-letter-spacing-eyebrow);
+}
+
+.connection-profile-fields .full-field {
+  grid-column: 1 / -1;
+}
+
+.connection-profile-clear {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-body);
+}
+
+.connection-profile-clear input {
+  width: auto;
+}
+
+.connection-profile-secret-input {
+  position: relative;
+  display: block;
+}
+
+.connection-profile-secret-input input {
+  width: 100%;
+  padding-right: 34px;
+}
+
+.connection-profile-secret-input button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  width: 34px;
+  height: 100%;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ax-color-text-muted);
+}
+
+.connection-profile-file-import {
+  align-self: flex-start;
+}
+
+.connection-profile-import-error {
+  color: var(--ax-color-danger);
+  font-size: var(--ax-font-size-body);
+}
+
+.connection-profile-actions {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+@media (max-width: 920px) {
+  .connection-profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .connection-profile-list {
+    max-height: 180px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ax-color-border);
+    overflow: auto;
+  }
+
+  .connection-profile-fields,
+  .connection-profile-basics {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The Settings workspace uses a full-width drawer geometry. */
+.section-settings.surface-section .connection-profile-panel {
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+}
+
+.section-settings.surface-section .connection-profile-heading {
+  display: flex;
+  padding: 20px 0 0;
+}
+
+.section-settings.surface-section .connection-profile-heading h1 {
+  margin-top: 5px;
+  font-size: var(--ax-font-size-display-small);
+}
+
+.section-settings.surface-section .connection-profile-heading p {
+  max-width: 760px;
+  margin-top: 7px;
+  font-size: var(--ax-font-size-subheading);
+  line-height: var(--ax-line-height-code);
+}
+
+.section-settings.surface-section .connection-profile-layout {
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 36px;
+  min-height: calc(100vh - 220px);
+  overflow: visible;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+}
+
+.section-settings.surface-section .connection-profile-list {
+  gap: 1px;
+  padding: 20px 0;
+  border: 0;
+  background: transparent;
+}
+
+.section-settings.surface-section .connection-profile-transport {
+  display: flex;
+  height: 32px;
+  gap: 4px;
+  margin-bottom: 9px;
+}
+
+.section-settings.surface-section .connection-profile-transport button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  padding: 0;
+  border: var(
+    --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-dc988a9
+  );
+  border-radius: var(--ax-radius-tiny);
+  background: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-1b8106b
+  );
+  color: var(--ax-color-settings-text);
+}
+
+.section-settings.surface-section .connection-profile-list > button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 32px;
+  padding: 5px 16px;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+  font-size: var(--ax-font-size-subheading);
+  font-weight: var(--ax-font-weight-regular);
+}
+
+.section-settings.surface-section .connection-profile-list strong {
+  font-weight: var(--ax-font-weight-regular);
+}
+
+.section-settings.surface-section .connection-profile-list > button.connection-profile-new {
+  grid-template-columns: 16px minmax(0, 1fr);
+}
+
+.section-settings.surface-section .connection-profile-list > button.active {
+  border: 0;
+  background: var(--ax-color-primary);
+  color: var(--ax-color-on-primary);
+}
+
+.section-settings.surface-section .connection-profile-list > button span {
+  display: block;
+}
+
+.section-settings.surface-section .connection-profile-search {
+  margin: 0 0 2px;
+}
+
+.section-settings.surface-section .connection-profile-editor {
+  min-height: calc(100vh - 220px);
+  padding: 20px 0;
+}
+
+.section-settings.surface-section .connection-profile-basics {
+  width: calc(66.6667% + 7.333px);
+  max-width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 23px;
+}
+
+.section-settings.surface-section .connection-profile-basics > label:first-child {
+  height: 63px;
+  gap: 8px;
+  color: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-c85109a
+  );
+  font-size: var(--ax-font-size-heading);
+}
+
+.section-settings.surface-section .connection-profile-basics input[type='text'],
+.section-settings.surface-section .connection-profile-basics input:not([type]) {
+  box-sizing: border-box;
+  min-height: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--ax-color-primary) 56%, var(--ax-color-border));
+  border-radius: var(--ax-radius-tiny);
+  background: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-8777985
+  );
+  color: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-6623c01
+  );
+}
+
+.section-settings.surface-section .connection-profile-basics input:focus {
+  border-color: var(--ax-color-primary);
+  outline: 0;
+  box-shadow: var(
+    --ax-shadow-catalog-profiles-section-settings-surface-section-connection-profile-af437cb
+  );
+}
+
+.section-settings.surface-section .connection-profile-default i {
+  transform: translateY(4px);
+}
+
+.section-settings.surface-section .connection-profile-default {
+  height: 62px;
+  color: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-ceb62c3
+  );
+}
+
+.section-settings.surface-section .connection-profile-tabs {
+  width: 100%;
+  margin: 24px 0 16px;
+  border-bottom-color: var(--ax-color-settings-border);
+}
+
+.section-settings.surface-section .connection-profile-tabs button {
+  height: 45px;
+  min-width: 54px;
+  justify-content: flex-start;
+  padding: 7px 0;
+  text-transform: lowercase;
+}
+
+.section-settings.surface-section .connection-profile-fields {
+  width: calc(66.6667% + 7.333px);
+  max-width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+
+.section-settings.surface-section .connection-profile-fields legend {
+  display: none;
+}
+
+.section-settings.surface-section .connection-profile-fields > label {
+  gap: 9px;
+  color: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-7c01d89
+  );
+  font-size: var(--ax-font-size-heading);
+}
+
+.section-settings.surface-section .connection-profile-fields > label.full-field {
+  margin-bottom: -6px;
+}
+
+.section-settings.surface-section .connection-profile-fields input,
+.section-settings.surface-section .connection-profile-fields textarea {
+  box-sizing: border-box;
+  min-height: 32px;
+  height: 32px;
+  border: var(
+    --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-8b57f5c
+  );
+  border-radius: var(--ax-radius-tiny);
+  background: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-b1db674
+  );
+  color: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-7edb747
+  );
+  font-size: var(--ax-font-size-heading);
+}
+
+.section-settings.surface-section .connection-profile-file-import {
+  width: 132px;
+  height: 34px;
+  justify-self: start;
+  margin-top: -3px;
+  padding: 0 14px;
+  border: var(
+    --ax-border-catalog-profiles-section-settings-surface-section-connection-profile-f6da4db
+  );
+  border-radius: var(--ax-radius-tiny);
+  background: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-d129a63
+  );
+  color: var(
+    --ax-color-catalog-profiles-section-settings-surface-section-connection-profile-c20861e
+  );
+  font-size: var(--ax-font-size-heading);
+}
+
+.section-settings.surface-section .connection-profile-actions {
+  display: block;
+  width: calc(66.6667% + 7.333px);
+  margin-top: 20px;
+}
+
+.section-settings.surface-section .connection-profile-actions .primary {
+  width: auto;
+  border-color: var(--ax-color-primary);
+  background: var(--ax-color-primary);
+  color: var(--ax-color-on-primary);
+}
+
+.section-settings.surface-section .connection-profile-fields textarea {
+  min-height: 32px;
+  height: 32px;
+  resize: none;
+  overflow: hidden;
+}
+
+.section-settings.surface-section .connection-profile-actions {
+  width: calc(66.6667% + 7.333px);
+  max-width: 100%;
+  margin-top: 24px;
+}
+
+.formBody {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: contents;
+}
+.connection-profile-panel {
+  color: var(--ax-color-text);
+}
+.connection-profile-panel,
+.connection-profile-panel * {
+  box-sizing: border-box;
+}
+
+:where(.connection-profile-panel) label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.connection-profile-basics input:not([type='checkbox']):not([type='radio']),
+.connection-profile-fields input:not([type='checkbox']):not([type='radio']),
+.connection-profile-fields textarea {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+}

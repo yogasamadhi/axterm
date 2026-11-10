@@ -1,0 +1,85 @@
+.banner {
+  position: absolute;
+  z-index: var(--ax-layer-desktop-power-banner);
+  top: 42px;
+  left: 50%;
+  width: min(640px, calc(100% - 30px));
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px 7px 10px;
+  border: var(--ax-border-desktop-power-banner);
+  border-radius: var(--ax-radius-soft);
+  background: color-mix(in srgb, var(--ax-color-surface-raised) 96%, transparent);
+  box-shadow: var(--ax-shadow-desktop-power-banner);
+  transform: translateX(-50%);
+  backdrop-filter: blur(12px);
+}
+.icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--ax-radius-circle);
+  color: var(--ax-color-desktop-power-icon);
+  background: var(--ax-color-desktop-power-icon-background);
+}
+.copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.copy strong {
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-body);
+  font-weight: var(--ax-font-weight-semibold);
+}
+.copy small {
+  overflow: hidden;
+  color: var(--ax-color-text-muted);
+  font-size: var(--ax-font-size-caption);
+  line-height: var(--ax-line-height-desktop-power-copy);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.actions button {
+  height: 27px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: var(--ax-border-desktop-power-action);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-desktop-power-action-background);
+  color: var(--ax-color-text);
+  font-size: var(--ax-font-size-caption);
+}
+.actions button:hover {
+  border-color: var(--ax-color-primary);
+  color: var(--ax-color-desktop-power-action-hover);
+}
+.actions .dismiss {
+  width: 27px;
+  justify-content: center;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+}
+@media (max-width: 760px) {
+  .banner {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+  .actions {
+    grid-column: 2;
+  }
+  .copy small {
+    white-space: normal;
+  }
+}

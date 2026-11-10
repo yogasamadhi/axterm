@@ -1,0 +1,31 @@
+{
+  "name": "@axterm/infra-subprocess",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./control": {
+      "types": "./lib/types/control.d.ts",
+      "default": "./lib/control.js"
+    }
+  },
+  "files": [
+    "lib",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~",
+    "@axterm/infra-http-proxy": "workspace:*"
+  },
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*"
+  }
+}

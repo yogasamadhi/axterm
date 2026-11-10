@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "firstParty": {
+    "name": "Axterm",
+    "license": "Apache-2.0",
+    "sourceCommit": "f252e62c7841ba906f9d4cb73152cd55a3bea9b3",
+    "files": [
+      {
+        "path": "src/client/ui/interactions.tsx",
+        "source": "apps/desktop/src/renderer/src/app/panels.tsx",
+        "sourceSha256": "a822b1c8df774df4423e113dbadd36a4011d60b0d4cfec19a1f5cd2213a521a1",
+        "scope": "Selected retained SSH interaction markup, text and scoped style rules; generated Client metadata and owned responses replace polling and legacy Query."
+      },
+      {
+        "path": "src/client/ui/locales.ts",
+        "source": "apps/desktop/src/renderer/src/i18n/core.ts",
+        "sourceSha256": "44b698ce7e52f546733b3f6ddd3c662f58714b7fbb1d9f655eb96f4d4a18941b",
+        "scope": "Selected retained SSH interaction markup, text and scoped style rules; generated Client metadata and owned responses replace polling and legacy Query."
+      },
+      {
+        "path": "src/client/ui/ui.module.css",
+        "source": "apps/desktop/src/renderer/src/styles/globals.css",
+        "sourceSha256": "e1c0c9df0f5b84c78b09281533f4046660178427c3f44ae6bb15a399b60e170a",
+        "scope": "Selected retained SSH interaction markup, text and scoped style rules; generated Client metadata and owned responses replace polling and legacy Query."
+      },
+      {
+        "path": "src/client/ui/ui.module.css",
+        "source": "apps/desktop/src/renderer/src/styles/axterm-shell.css",
+        "sourceSha256": "898303272b36b5c7d09836e3e135e04a26898342d9cdaaf068f21f162f982dab",
+        "scope": "Selected retained SSH interaction markup, text and scoped style rules; generated Client metadata and owned responses replace polling and legacy Query."
+      },
+      {
+        "path": "src/client/ui/ui.module.css",
+        "source": "apps/desktop/src/renderer/src/app/bookmarks/ssh-bookmark-form.css",
+        "sourceSha256": "bcdbb0155c0b055dcbffac8d92a8c5e8d34cd5fe606b868479dfdff82c8b6ebd",
+        "scope": "Retained unknown/changed Host Key risk presentation, fingerprint geometry, explicit confirmation and keyboard-interactive details."
+      },
+      {
+        "path": "src/index.ts",
+        "source": "packages/runtime/src/application/connection-history-service.ts",
+        "sourceSha256": "4150b4b355a9b15c12c53637deac55a8c1db6cbb82855d13ba361569a76bd533",
+        "scope": "Selected history reconnect semantics through current Catalog Host facts and Connections-owned generation-local command admission; no legacy service dependency."
+      }
+    ]
+  },
+  "status": "Retained interaction UI scoped implementation verified; broader product/operation/manual visual and M4\u2013M7 acceptance remain open."
+}

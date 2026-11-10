@@ -1,0 +1,4 @@
+{
+  "license": "Apache-2.0",
+  "scope": "Axterm-authored Engine registry, visible event, bounded execution binding and Host provider contracts. No DSH Agent implementation is copied."
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@axterm/infra-connection",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./document-security": {
+      "types": "./lib/types/document-security.d.ts",
+      "default": "./lib/document-security.js"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/infra-scope": "workspace:*",
+    "@axterm/infra-credentials": "workspace:*",
+    "@axterm/infra-web-server": "workspace:*",
+    "@deepseek-ai/schemastery": "workspace:~",
+    "zod": "4.4.3",
+    "parse5": "8.1.0"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "external": []
+    }
+  }
+}

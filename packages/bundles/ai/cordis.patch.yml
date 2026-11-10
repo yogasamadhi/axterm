@@ -1,0 +1,9 @@
+- insert:
+    - id: ai
+      name: '@axterm/plugin-ai'
+      inject: [profileContext]
+      config:
+        profile: !!js ctx.profileContext.name
+        coordinationDirectory: !!js "ctx.profileContext.home + '/data-v2/coordination/ai'"
+        localHome: !!js ctx.profileContext.home
+        remoteWorkspace: !!js "ctx.profileContext.home + '/data-v2/ai-remote'"

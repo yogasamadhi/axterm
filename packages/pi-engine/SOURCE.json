@@ -1,0 +1,6 @@
+{
+  "license": "(MIT AND Apache-2.0)",
+  "sourceManifest": "source-manifest.json",
+  "catalogProvenance": "catalog/provenance.json",
+  "scope": "Private compiled first-party Pi adapter directly reusing pinned vendor/pi and vendor/pi-auto-review sources. The source-first Host type face is src/public.ts; src/index.ts is checked with the dedicated Pi program and source manifest before build."
+}

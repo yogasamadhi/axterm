@@ -1,0 +1,85 @@
+# Shared infrastructure. Additional domains join only with their migration evidence.
+- insert:
+    - id: timer
+      name: '@deepseek-ai/cordis-plugin-timer'
+    - id: hmr
+      name: '@axterm/infra-hmr'
+      config:
+        root: []
+    - id: storage
+      name: '@axterm/infra-storage'
+    - id: product-schema
+      name: '@axterm/data-schema'
+    - id: storage-relational
+      name: '@axterm/infra-storage-relational'
+      inject: [profileContext]
+      config:
+        path: !!js "ctx.profileContext.home + '/data-v2/axterm.sqlite'"
+        schema: productSchema
+    - id: storage-sqlite
+      name: '@axterm/infra-storage-sqlite'
+      inject: [profileContext]
+      config:
+        path: !!js "ctx.profileContext.dir + '/records.sqlite'"
+    - id: storage-domain
+      name: '@axterm/infra-storage-domain'
+      config:
+        backend: sqlite
+        routes:
+          catalog: relational
+          connections: relational
+          configuration: relational
+          automation: relational
+          ai: relational
+          desktop: relational
+          desktop_diagnostics: sqlite
+          storage: relational
+          terminals: relational
+          terminal_assets: relational
+          terminal_transfer_stages: relational
+          transfers: relational
+          files: relational
+    - id: credentials
+      name: '@axterm/infra-credential-vault'
+      inject: [profileContext, runtimeIdentity]
+      disabled: !!js "ctx.runtimeIdentity.mode === 'desktop'"
+      config:
+        directory: !!js "ctx.profileContext.home + '/vault-v2'"
+    - id: desktop-credentials
+      name: '@axterm/infra-desktop-native/credentials'
+      inject: [runtimeIdentity]
+      disabled: !!js "ctx.runtimeIdentity.mode !== 'desktop'"
+    - id: desktop-file-grants
+      name: '@axterm/infra-desktop-native/files'
+      inject: [runtimeIdentity]
+      disabled: !!js "ctx.runtimeIdentity.mode !== 'desktop'"
+    - id: desktop-file-applications
+      name: '@axterm/infra-desktop-native/applications'
+      inject: [runtimeIdentity]
+      disabled: !!js "ctx.runtimeIdentity.mode !== 'desktop'"
+    - id: local-file-grants
+      name: '@axterm/infra-desktop-native/local-files'
+      inject: [profileContext, runtimeIdentity]
+      disabled: !!js "ctx.runtimeIdentity.mode !== 'web'"
+      config:
+        directory: !!js "ctx.profileContext.dir + '/file-imports'"
+        workspace: !!js "ctx.profileContext.home + '/workspace'"
+        downloads: !!js "ctx.profileContext.home + '/downloads'"
+    - id: subprocess
+      name: '@axterm/infra-subprocess-local'
+    - id: engines
+      name: '@axterm/infra-engines'
+    - id: typert
+      name: '@axterm/infra-typert-registry'
+    - id: remote-access
+      name: '@axterm/infra-remote-access'
+    - id: gateway
+      name: '@axterm/infra-gateway'
+    - id: remote-events
+      name: '@axterm/infra-gateway/events'
+    - id: desktop-runtime
+      name: '@axterm/plugin-desktop'
+    - id: desktop-task-inspection
+      name: '@axterm/plugin-desktop/tasks'
+    - id: typert-loader
+      name: '@axterm/infra-typert-loader'

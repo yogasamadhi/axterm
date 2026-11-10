@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "catalog": "navigation",
+  "scope": {
+    "keyCount": 42,
+    "keySha256": "1eb84bd894f934900b4149581a0bd42729ee892732b1b7f6b46d0cc2872b395e"
+  },
+  "locales": {
+    "en": {
+      "draft": {
+        "sourceLanguage": "en",
+        "method": "Axterm product-control wording",
+        "preparedAt": "2026-09-20",
+        "attributionStatus": "unrecorded",
+        "author": null
+      },
+      "languageReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      },
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      }
+    },
+    "ja": {
+      "draft": {
+        "sourceLanguage": "en",
+        "method": "AI-assisted from Axterm English",
+        "preparedAt": "2026-09-20",
+        "attributionStatus": "unrecorded",
+        "author": null
+      },
+      "languageReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      },
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      }
+    },
+    "zh-CN": {
+      "draft": {
+        "sourceLanguage": "en",
+        "method": "AI-assisted from Axterm English",
+        "preparedAt": "2026-09-20",
+        "attributionStatus": "unrecorded",
+        "author": null
+      },
+      "languageReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      },
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      }
+    },
+    "zh-TW": {
+      "draft": {
+        "sourceLanguage": "en",
+        "method": "AI-assisted from Axterm English",
+        "preparedAt": "2026-09-20",
+        "attributionStatus": "unrecorded",
+        "author": null
+      },
+      "languageReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      },
+      "rightsReview": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null
+      }
+    }
+  }
+}

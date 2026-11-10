@@ -1,0 +1,42 @@
+{
+  "name": "@axterm/infra-client-hmr",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "LICENSE",
+    "SOURCE.json"
+  ],
+  "dependencies": {
+    "@axterm/infra-client-modules": "workspace:*",
+    "@axterm/infra-web-server": "workspace:*",
+    "@axterm/infra-connection": "workspace:*",
+    "@deepseek-ai/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@axterm/infra-client-modules"
+      ]
+    }
+  }
+}

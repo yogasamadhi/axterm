@@ -1,0 +1,41 @@
+{
+  "name": "@axterm/infra-ui-renderer",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "dependencies": {
+    "@axterm/ui": "workspace:*",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "use-sync-external-store": "1.6.0",
+    "@axterm/infra-scope": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/dom": "10.4.2"
+  }
+}

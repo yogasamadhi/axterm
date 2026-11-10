@@ -1,0 +1,10 @@
+{
+  "extends": "../../../tsconfig.host.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "lib": ["ES2024", "DOM", "DOM.Iterable", "DOM.AsyncIterable", "ESNext.Disposable"],
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src", "src/events.ts"],
+  "exclude": ["src/client"]
+}

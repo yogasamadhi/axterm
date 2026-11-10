@@ -1,0 +1,95 @@
+.updater-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 14px;
+}
+.updater-panel > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.updater-panel h2,
+.updater-panel p {
+  margin: 0;
+}
+.updater-panel h2 {
+  margin-top: 3px;
+  color: var(--ax-color-desktop-updater-updater-panel-h2-color);
+  font-size: var(--ax-font-size-subheading);
+}
+.updater-panel small,
+.updater-detail span,
+.updater-progress span {
+  color: var(
+    --ax-color-desktop-updater-updater-panel-small-updater-detail-span-updater-prog-e8fead9
+  );
+  font-size: var(--ax-font-size-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--ax-letter-spacing-control-fixed);
+}
+.updater-panel p {
+  max-width: 600px;
+  margin-top: 5px;
+  color: var(--ax-color-desktop-updater-updater-panel-p-color);
+  font-size: var(--ax-font-size-small);
+}
+.updater-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+.updater-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.updater-detail,
+.updater-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.updater-detail strong {
+  color: var(--ax-color-desktop-updater-updater-detail-strong-color);
+  font: var(--ax-font-desktop-updater-updater-detail-strong-font);
+}
+.updater-progress progress {
+  width: min(420px, 60vw);
+  height: 6px;
+  accent-color: var(--ax-color-primary);
+}
+.updater-error {
+  width: fit-content;
+  padding: 4px 7px;
+  border: var(--ax-border-desktop-updater-updater-error-border);
+  border-radius: var(--ax-radius-compact);
+  color: var(--ax-color-desktop-updater-updater-error-color);
+  background: var(--ax-color-desktop-updater-updater-error-background);
+  font-size: var(--ax-font-size-small);
+}
+@media (max-width: 900px) {
+  .updater-panel > header {
+    display: grid;
+  }
+  .updater-actions {
+    justify-content: flex-start;
+  }
+}
+
+.updater-panel {
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-card-soft);
+  background: var(--ax-color-surface-sunken);
+  box-shadow: var(--ax-shadow-desktop-updater-updater-panel-box-shadow);
+}
+
+.updater-panel {
+  padding: 16px;
+}
+.updater-panel h2 {
+  font-weight: var(--ax-font-weight-medium);
+}

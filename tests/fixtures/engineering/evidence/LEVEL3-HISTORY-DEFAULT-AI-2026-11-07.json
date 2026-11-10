@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-07",
+  "decisions": ["ADR-080", "ADR-081", "ADR-082", "ADR-083", "ADR-084"],
+  "scope": "Retained history Client UI, atomic promotion/reconnect ownership, terminal/connection unknown-command reconciliation, and default Pi/AI composition; evidence-backed operation records",
+  "checks": {
+    "scoped": {
+      "log": "out/level3-migration/sdk/history-final-scoped.log",
+      "passedFiles": 11,
+      "passedTests": 31,
+      "conditionalSkippedTests": 2
+    },
+    "defaultProfiles": {
+      "log": "out/level3-migration/sdk/default-ai-profile-snapshots.log",
+      "passedFiles": 1,
+      "passedTests": 4,
+      "intentionalConfigSnapshotsUpdated": 2,
+      "headlessChanged": false
+    },
+    "ownership": {
+      "log": "out/level3-migration/sdk/history-final-owner-tests.log",
+      "passedFiles": 3,
+      "passedTests": 7
+    },
+    "strict": "out/level3-migration/sdk/history-final-strict.log",
+    "lint": "out/level3-migration/sdk/history-final-lint.log",
+    "operationGate": {
+      "log": "out/level3-migration/sdk/operation-map-tests.log",
+      "passedFiles": 2,
+      "passedTests": 28
+    },
+    "whole": {
+      "log": "out/level3-migration/sdk/history-default-ai-whole-check-2.log",
+      "exitCode": 0,
+      "passedFiles": 486,
+      "passedTests": 2870,
+      "conditionalSkippedFiles": 6,
+      "conditionalSkippedTests": 56,
+      "visualAccessibilityPassed": 28,
+      "nativeModelSelectionSeconds": 1.8
+    }
+  },
+  "sourceFreeMacPackage": {
+    "resultFile": "/Volumes/A/code/env/development-data/tmp/axterm-l3-history-default-ai-artifact-wzu9cA/output/LEVEL3_PACKAGE_RESULT.json",
+    "log": "out/level3-migration/sdk/history-final-package-tests.log",
+    "passedFiles": 5,
+    "passedTests": 21,
+    "seconds": 92.13,
+    "path": "/usr/bin:/bin",
+    "sourceDirectoryRequired": false,
+    "systemNodePnpmRequired": false,
+    "packagedCases": 18,
+    "sourceControlCases": 3
+  },
+  "journeys": [
+    "Actual product history sorting, ephemeral password form and Connections-owned admission to real SSH/PTY",
+    "Atomic history-to-Host/Bookmark promotion, current saved Host reconnect and durable compact receipts",
+    "Recording off purges history; accepted settings and history models reflect the same transaction",
+    "Actual delete and clear commands, fresh authenticated history recreation and no browser secret storage",
+    "Lost creation acknowledgments retain bounded command identities; readonly outcomes and actual close without creation replay",
+    "Stale close rejected on Host; pending creation copied/coalesced, canceled late completion and unload joined",
+    "Default Web/Desktop Pi/AI without fixture bundle additions; explicit review precedes provider requests",
+    "Independently extracted distributable SDK Host/Client/leaf consumers preserve selected public contracts"
+  ],
+  "visual": {
+    "webDirectory": "out/level3-migration/history-ui-layouts/web",
+    "packageDirectory": "out/level3-migration/history-ui-layouts/package",
+    "imagesPerCarrier": 48,
+    "languages": ["en", "ja", "zh-CN", "zh-TW"],
+    "viewports": ["1280x800", "1440x900", "1920x1080"],
+    "zoom": [1, 2],
+    "surfaces": ["history sidebar", "one-time secret modal"],
+    "checks": [
+      "Footer inside viewport at 200%",
+      "Dialog focus begins in transient secret input",
+      "No horizontal panel/dialog overflow"
+    ],
+    "owner99PercentApproval": "pending"
+  },
+  "independentSource": {
+    "source": "/Volumes/A/code/env/development-data/tmp/axterm-independent-snapshot-N6HaqQ/source",
+    "installLog": "out/level3-migration/sdk/history-default-ai-cold-install.log",
+    "offlineFrozenAllPostinstallSeconds": 67.1,
+    "testsLog": "out/level3-migration/sdk/history-default-ai-cold-tests.log",
+    "passedFiles": 12,
+    "passedTests": 53,
+    "seconds": 18.12,
+    "strict": "out/level3-migration/sdk/history-default-ai-cold-strict.log",
+    "gates": "out/level3-migration/sdk/history-default-ai-cold-gates.log",
+    "sourceHygienePassed": true,
+    "frozenChangedInputs": 70,
+    "inputHashLog": "out/level3-migration/sdk/history-default-ai-cold-hashes.json",
+    "workingAndSnapshotHashMismatches": 0,
+    "qualification": "All 70 frozen inputs matched before final evidence/status/ADR/format-only updates; no runtime, build, dependency or test source changed afterward."
+  },
+  "boundaries": [
+    "Verified operation records describe engineering slices, not an effort percentage or whole-phase completion.",
+    "Remaining Catalog editors/tree and broader business UI, AI bookmark, ecosystem manager/market/CLI, safe data copy, legacy retirement and final cutover remain open.",
+    "No production home, installed user application, original dirty checkout, DSH snapshot, historical migrations or visual goldens changed.",
+    "Windows/Linux native acceptance, public ecosystem deployment and formal release are not claimed."
+  ]
+}

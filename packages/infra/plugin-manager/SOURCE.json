@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "source": "https://github.com/deepseek-ai/deepseek-harness",
+  "sourceCommit": "8bd073392eef6f54e921a093b95076248eb08cbb",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "src/patch.ts",
+      "source": "packages/boot/plugin-manager/src/patch.ts",
+      "sourceSha256": "4f9c6a2c0245bbc892a5b51ddf0c51c87b5f9837e5c82746060421c4f569001a",
+      "scope": "Comment-preserving Profile switch semantics; Axterm package/service identities."
+    },
+    {
+      "path": "src/registry.ts",
+      "source": "packages/boot/plugin-manager/src/registry.ts",
+      "sourceSha256": "0a653419b34607bffc5b758549abad6c030077568417a9169ba7ccfadb03a7c9",
+      "scope": "Explicit ordered public fallbacks; private or unknown sources queried alone; Axterm uses concrete URLs and pins the selected source."
+    }
+  ],
+  "application": "Package process ownership and transaction orchestration are application-owned; no DSH product dependencies."
+}

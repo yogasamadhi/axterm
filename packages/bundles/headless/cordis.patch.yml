@@ -1,0 +1,5 @@
+- id: hmr
+  disabled: true
+- insert:
+    - id: headless-entry
+      name: '@axterm/plugin-desktop/headless'

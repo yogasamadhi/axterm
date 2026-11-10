@@ -1,0 +1,10 @@
+{
+  "extends": "../../../tsconfig.host.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "types": ["node"],
+    "lib": ["ES2024", "DOM", "ESNext.Disposable"]
+  },
+  "include": ["src/index.ts", "src/service.ts", "src/types.ts"],
+  "exclude": ["src/client"]
+}

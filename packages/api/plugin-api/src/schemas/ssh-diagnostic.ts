@@ -1,0 +1,62 @@
+import { z } from 'zod';
+/** Only these product-owned reasons may become SSH operation diagnostics. */
+export const sshDiagnosticCodeSchema = z.enum([
+  'CONNECTION_WAIT_TIMEOUT',
+  'VALIDATION_ERROR',
+  'PRECONDITION_FAILED',
+  'PRECONDITION_REQUIRED',
+  'CONFLICT',
+  'HOST_NAME_CONFLICT',
+  'NOT_FOUND',
+  'RUNTIME_UNAVAILABLE',
+  'STALE_GENERATION',
+  'UNAUTHORIZED',
+  'FORBIDDEN',
+  'CAPABILITY_UNAVAILABLE',
+  'INTERNAL_ERROR',
+  'AUTHENTICATION_FAILED',
+  'SSH_AUTH_FAILED',
+  'SSH_CONNECTION_REFUSED',
+  'SSH_CONNECTION_TIMEOUT',
+  'SSH_DNS_FAILED',
+  'SSH_NETWORK_UNREACHABLE',
+  'SSH_CONNECTION_LOST',
+  'SSH_NEGOTIATION_FAILED',
+  'SSH_KEY_INVALID',
+  'SSH_CONNECTION_FAILED',
+  'HOST_KEY_REJECTED',
+  'HOST_KEY_CHANGED',
+  'CONNECTION_CLOSED',
+  'PROXY_AUTH_REQUIRED',
+  'PROXY_AUTH_INVALID',
+  'PROXY_TIMEOUT',
+  'PROXY_CONNECT_FAILED',
+  'PROXY_CONNECT_REJECTED',
+]);
+export const sshDiagnosticFieldSchema = z.enum([
+  'host.name',
+  'host.hostname',
+  'host.username',
+  'host.port',
+  'host.authType',
+  'host.proxy',
+  'host.sshAgent',
+  'host.connectionOptions',
+  'host.startup',
+  'host.jumpHostIds',
+  'bookmark.groupId',
+  'bookmark.title',
+  'bookmark.color',
+  'bookmark.profileId',
+  'bookmark.connectionProfileId',
+  'bookmark.quickCommands',
+  'bookmark.triggers',
+]);
+export const sshOperationDiagnosticSchema = z
+  .object({
+    code: sshDiagnosticCodeSchema,
+    fields: z.array(sshDiagnosticFieldSchema).max(8).optional(),
+    operationId: z.uuid().optional(),
+  })
+  .strict();
+export type SshOperationDiagnostic = z.infer<typeof sshOperationDiagnosticSchema>;

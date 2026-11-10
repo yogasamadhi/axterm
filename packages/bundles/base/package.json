@@ -1,0 +1,33 @@
+{
+  "name": "@axterm/bundle-base",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "files": [
+    "cordis.patch.yml"
+  ],
+  "axterm": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@axterm/infra-hmr": "workspace:*",
+    "@deepseek-ai/cordis-plugin-timer": "workspace:~",
+    "@axterm/infra-typert-registry": "workspace:*",
+    "@axterm/infra-typert-loader": "workspace:*",
+    "@axterm/infra-remote-access": "workspace:*",
+    "@axterm/infra-gateway": "workspace:*",
+    "@axterm/plugin-desktop": "workspace:*",
+    "@axterm/infra-storage": "workspace:*",
+    "@axterm/infra-storage-domain": "workspace:*",
+    "@axterm/infra-storage-relational": "workspace:*",
+    "@axterm/infra-storage-sqlite": "workspace:*",
+    "@axterm/infra-credential-vault": "workspace:*",
+    "@axterm/infra-desktop-native": "workspace:*",
+    "@axterm/data-schema": "workspace:*",
+    "@axterm/infra-engines": "workspace:*",
+    "@axterm/infra-subprocess-local": "workspace:*"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "@axterm/infra-gateway",
+  "version": "0.10.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "browser": "./lib/client.browser.js",
+      "default": "./lib/client.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types.js"
+    },
+    "./events": {
+      "types": "./lib/types/events.d.ts",
+      "default": "./lib/events.js"
+    }
+  },
+  "dependencies": {
+    "@axterm/plugin-api": "workspace:*",
+    "@axterm/infra-deque": "workspace:*",
+    "@axterm/infra-timeout": "workspace:*",
+    "@axterm/infra-connection": "workspace:*",
+    "@axterm/infra-remote-access": "workspace:*",
+    "@axterm/infra-typert-registry": "workspace:*",
+    "@axterm/infra-web-server": "workspace:*",
+    "@axterm/infra-cmdline": "workspace:*",
+    "@deepseek-ai/schemastery": "workspace:~",
+    "ws": "8.21.3",
+    "@axterm/infra-scope": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "workspace:~"
+  },
+  "axterm": {
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "external": [
+        "@axterm/infra-connection/client"
+      ]
+    }
+  }
+}

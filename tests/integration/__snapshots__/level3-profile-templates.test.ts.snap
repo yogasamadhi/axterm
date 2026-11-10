@@ -1,0 +1,477 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`records the actual desktop application config composition 1`] = `
+"# == profile composition
+- id: timer
+  name: '@deepseek-ai/cordis-plugin-timer'
+- id: hmr
+  name: '@axterm/infra-hmr'
+  config:
+    root: []
+- id: storage
+  name: '@axterm/infra-storage'
+- id: product-schema
+  name: '@axterm/data-schema'
+- id: storage-relational
+  name: '@axterm/infra-storage-relational'
+  inject:
+    - profileContext
+  config:
+    path: !!js ctx.profileContext.home + '/data-v2/axterm.sqlite'
+    schema: productSchema
+- id: storage-sqlite
+  name: '@axterm/infra-storage-sqlite'
+  inject:
+    - profileContext
+  config:
+    path: !!js ctx.profileContext.dir + '/records.sqlite'
+- id: storage-domain
+  name: '@axterm/infra-storage-domain'
+  config:
+    backend: sqlite
+    routes:
+      catalog: relational
+      connections: relational
+      configuration: relational
+      automation: relational
+      ai: relational
+      desktop: relational
+      desktop_diagnostics: sqlite
+      storage: relational
+      terminals: relational
+      terminal_assets: relational
+      terminal_transfer_stages: relational
+      transfers: relational
+      files: relational
+- id: credentials
+  name: '@axterm/infra-credential-vault'
+  inject:
+    - profileContext
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode === 'desktop'
+  config:
+    directory: !!js ctx.profileContext.home + '/vault-v2'
+- id: desktop-credentials
+  name: '@axterm/infra-desktop-native/credentials'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: desktop-file-grants
+  name: '@axterm/infra-desktop-native/files'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: desktop-file-applications
+  name: '@axterm/infra-desktop-native/applications'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: local-file-grants
+  name: '@axterm/infra-desktop-native/local-files'
+  inject:
+    - profileContext
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'web'
+  config:
+    directory: !!js ctx.profileContext.dir + '/file-imports'
+    workspace: !!js ctx.profileContext.home + '/workspace'
+    downloads: !!js ctx.profileContext.home + '/downloads'
+- id: subprocess
+  name: '@axterm/infra-subprocess-local'
+- id: engines
+  name: '@axterm/infra-engines'
+- id: typert
+  name: '@axterm/infra-typert-registry'
+- id: remote-access
+  name: '@axterm/infra-remote-access'
+- id: gateway
+  name: '@axterm/infra-gateway'
+- id: remote-events
+  name: '@axterm/infra-gateway/events'
+- id: desktop-runtime
+  name: '@axterm/plugin-desktop'
+- id: desktop-task-inspection
+  name: '@axterm/plugin-desktop/tasks'
+- id: typert-loader
+  name: '@axterm/infra-typert-loader'
+- id: web-server
+  name: '@axterm/infra-web-server'
+  config:
+    host: 127.0.0.1
+    port: 0
+- id: connection
+  name: '@axterm/infra-connection'
+- id: client-modules
+  name: '@axterm/infra-client-modules'
+- id: client-hmr
+  name: '@axterm/infra-client-hmr'
+- id: ui-renderer
+  name: '@axterm/infra-ui-renderer'
+- id: locale
+  name: '@axterm/infra-locale'
+- id: shortcuts
+  name: '@axterm/infra-shortcuts'
+- id: ui-theme
+  name: '@axterm/infra-ui-theme'
+- id: frontend-static
+  name: '@axterm/infra-frontend-static'
+  inject:
+    - webAssets
+  config:
+    distIndex: !!js ctx.webAssets.index
+    authenticationPage: !!js ctx.webAssets.authenticationPage
+- id: web-startup
+  name: '@axterm/infra-web-startup'
+- id: catalog
+  name: '@axterm/plugin-catalog'
+- id: configuration
+  name: '@axterm/plugin-configuration'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+    coordinationDirectory: !!js ctx.profileContext.home + '/data-v2/coordination/sync'
+- id: terminal-facts
+  name: '@axterm/plugin-terminals/facts'
+- id: terminals
+  name: '@axterm/plugin-terminals'
+  inject:
+    - profileContext
+  config:
+    stagingDirectory: !!js ctx.profileContext.dir + '/terminal-stages'
+- id: connections
+  name: '@axterm/plugin-connections'
+- id: files
+  name: '@axterm/plugin-files'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+- id: transfers
+  name: '@axterm/plugin-transfers'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+- id: remoteDesktop
+  name: '@axterm/plugin-remote-desktop'
+- id: automation
+  name: '@axterm/plugin-automation'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+- id: workspace
+  name: '@axterm/plugin-workspace'
+- id: engine-pi
+  name: '@axterm/engine-pi'
+  config:
+    providers: {}
+- id: ai
+  name: '@axterm/plugin-ai'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+    coordinationDirectory: !!js ctx.profileContext.home + '/data-v2/coordination/ai'
+    localHome: !!js ctx.profileContext.home
+    remoteWorkspace: !!js ctx.profileContext.home + '/data-v2/ai-remote'
+- id: plugin-manager
+  name: '@axterm/infra-plugin-manager'
+  config:
+    registry: https://registry.npmjs.org/
+    fallbackRegistries: []
+- id: plugins
+  name: '@axterm/plugin-plugins'
+- id: market
+  name: '@axterm/plugin-market'
+"
+`;
+
+exports[`records the actual headless application config composition 1`] = `
+"# == profile composition
+- id: timer
+  name: '@deepseek-ai/cordis-plugin-timer'
+- id: hmr
+  name: '@axterm/infra-hmr'
+  config:
+    root: []
+  disabled: true
+- id: storage
+  name: '@axterm/infra-storage'
+- id: product-schema
+  name: '@axterm/data-schema'
+- id: storage-relational
+  name: '@axterm/infra-storage-relational'
+  inject:
+    - profileContext
+  config:
+    path: !!js ctx.profileContext.home + '/data-v2/axterm.sqlite'
+    schema: productSchema
+- id: storage-sqlite
+  name: '@axterm/infra-storage-sqlite'
+  inject:
+    - profileContext
+  config:
+    path: !!js ctx.profileContext.dir + '/records.sqlite'
+- id: storage-domain
+  name: '@axterm/infra-storage-domain'
+  config:
+    backend: sqlite
+    routes:
+      catalog: relational
+      connections: relational
+      configuration: relational
+      automation: relational
+      ai: relational
+      desktop: relational
+      desktop_diagnostics: sqlite
+      storage: relational
+      terminals: relational
+      terminal_assets: relational
+      terminal_transfer_stages: relational
+      transfers: relational
+      files: relational
+- id: credentials
+  name: '@axterm/infra-credential-vault'
+  inject:
+    - profileContext
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode === 'desktop'
+  config:
+    directory: !!js ctx.profileContext.home + '/vault-v2'
+- id: desktop-credentials
+  name: '@axterm/infra-desktop-native/credentials'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: desktop-file-grants
+  name: '@axterm/infra-desktop-native/files'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: desktop-file-applications
+  name: '@axterm/infra-desktop-native/applications'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: local-file-grants
+  name: '@axterm/infra-desktop-native/local-files'
+  inject:
+    - profileContext
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'web'
+  config:
+    directory: !!js ctx.profileContext.dir + '/file-imports'
+    workspace: !!js ctx.profileContext.home + '/workspace'
+    downloads: !!js ctx.profileContext.home + '/downloads'
+- id: subprocess
+  name: '@axterm/infra-subprocess-local'
+- id: engines
+  name: '@axterm/infra-engines'
+- id: typert
+  name: '@axterm/infra-typert-registry'
+- id: remote-access
+  name: '@axterm/infra-remote-access'
+- id: gateway
+  name: '@axterm/infra-gateway'
+- id: remote-events
+  name: '@axterm/infra-gateway/events'
+- id: desktop-runtime
+  name: '@axterm/plugin-desktop'
+- id: desktop-task-inspection
+  name: '@axterm/plugin-desktop/tasks'
+- id: typert-loader
+  name: '@axterm/infra-typert-loader'
+- id: headless-entry
+  name: '@axterm/plugin-desktop/headless'
+"
+`;
+
+exports[`records the actual web application config composition 1`] = `
+"# == profile composition
+- id: timer
+  name: '@deepseek-ai/cordis-plugin-timer'
+- id: hmr
+  name: '@axterm/infra-hmr'
+  config:
+    root: []
+- id: storage
+  name: '@axterm/infra-storage'
+- id: product-schema
+  name: '@axterm/data-schema'
+- id: storage-relational
+  name: '@axterm/infra-storage-relational'
+  inject:
+    - profileContext
+  config:
+    path: !!js ctx.profileContext.home + '/data-v2/axterm.sqlite'
+    schema: productSchema
+- id: storage-sqlite
+  name: '@axterm/infra-storage-sqlite'
+  inject:
+    - profileContext
+  config:
+    path: !!js ctx.profileContext.dir + '/records.sqlite'
+- id: storage-domain
+  name: '@axterm/infra-storage-domain'
+  config:
+    backend: sqlite
+    routes:
+      catalog: relational
+      connections: relational
+      configuration: relational
+      automation: relational
+      ai: relational
+      desktop: relational
+      desktop_diagnostics: sqlite
+      storage: relational
+      terminals: relational
+      terminal_assets: relational
+      terminal_transfer_stages: relational
+      transfers: relational
+      files: relational
+- id: credentials
+  name: '@axterm/infra-credential-vault'
+  inject:
+    - profileContext
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode === 'desktop'
+  config:
+    directory: !!js ctx.profileContext.home + '/vault-v2'
+- id: desktop-credentials
+  name: '@axterm/infra-desktop-native/credentials'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: desktop-file-grants
+  name: '@axterm/infra-desktop-native/files'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: desktop-file-applications
+  name: '@axterm/infra-desktop-native/applications'
+  inject:
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'desktop'
+- id: local-file-grants
+  name: '@axterm/infra-desktop-native/local-files'
+  inject:
+    - profileContext
+    - runtimeIdentity
+  disabled: !!js ctx.runtimeIdentity.mode !== 'web'
+  config:
+    directory: !!js ctx.profileContext.dir + '/file-imports'
+    workspace: !!js ctx.profileContext.home + '/workspace'
+    downloads: !!js ctx.profileContext.home + '/downloads'
+- id: subprocess
+  name: '@axterm/infra-subprocess-local'
+- id: engines
+  name: '@axterm/infra-engines'
+- id: typert
+  name: '@axterm/infra-typert-registry'
+- id: remote-access
+  name: '@axterm/infra-remote-access'
+- id: gateway
+  name: '@axterm/infra-gateway'
+- id: remote-events
+  name: '@axterm/infra-gateway/events'
+- id: desktop-runtime
+  name: '@axterm/plugin-desktop'
+- id: desktop-task-inspection
+  name: '@axterm/plugin-desktop/tasks'
+- id: typert-loader
+  name: '@axterm/infra-typert-loader'
+- id: web-server
+  name: '@axterm/infra-web-server'
+  config:
+    host: 127.0.0.1
+    port: 0
+- id: connection
+  name: '@axterm/infra-connection'
+- id: client-modules
+  name: '@axterm/infra-client-modules'
+- id: client-hmr
+  name: '@axterm/infra-client-hmr'
+- id: ui-renderer
+  name: '@axterm/infra-ui-renderer'
+- id: locale
+  name: '@axterm/infra-locale'
+- id: shortcuts
+  name: '@axterm/infra-shortcuts'
+- id: ui-theme
+  name: '@axterm/infra-ui-theme'
+- id: frontend-static
+  name: '@axterm/infra-frontend-static'
+  inject:
+    - webAssets
+  config:
+    distIndex: !!js ctx.webAssets.index
+    authenticationPage: !!js ctx.webAssets.authenticationPage
+- id: web-startup
+  name: '@axterm/infra-web-startup'
+- id: catalog
+  name: '@axterm/plugin-catalog'
+- id: configuration
+  name: '@axterm/plugin-configuration'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+    coordinationDirectory: !!js ctx.profileContext.home + '/data-v2/coordination/sync'
+- id: terminal-facts
+  name: '@axterm/plugin-terminals/facts'
+- id: terminals
+  name: '@axterm/plugin-terminals'
+  inject:
+    - profileContext
+  config:
+    stagingDirectory: !!js ctx.profileContext.dir + '/terminal-stages'
+- id: connections
+  name: '@axterm/plugin-connections'
+- id: files
+  name: '@axterm/plugin-files'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+- id: transfers
+  name: '@axterm/plugin-transfers'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+- id: remoteDesktop
+  name: '@axterm/plugin-remote-desktop'
+- id: automation
+  name: '@axterm/plugin-automation'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+- id: workspace
+  name: '@axterm/plugin-workspace'
+- id: engine-pi
+  name: '@axterm/engine-pi'
+  config:
+    providers: {}
+- id: ai
+  name: '@axterm/plugin-ai'
+  inject:
+    - profileContext
+  config:
+    profile: !!js ctx.profileContext.name
+    coordinationDirectory: !!js ctx.profileContext.home + '/data-v2/coordination/ai'
+    localHome: !!js ctx.profileContext.home
+    remoteWorkspace: !!js ctx.profileContext.home + '/data-v2/ai-remote'
+- id: plugin-manager
+  name: '@axterm/infra-plugin-manager'
+  config:
+    registry: https://registry.npmjs.org/
+    fallbackRegistries: []
+- id: plugins
+  name: '@axterm/plugin-plugins'
+- id: market
+  name: '@axterm/plugin-market'
+"
+`;
