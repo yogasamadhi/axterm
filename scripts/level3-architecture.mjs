@@ -21,7 +21,7 @@ export const publicContractPackages = new Set([
   '@axterm/ui',
   '@axterm/remote-generator',
 ]);
-// ADR-027/066/236: only the fixed-source core entry may import these reviewed vendor files.
+// ADR-027/066/236/238/239: only these fixed-source entries import reviewed vendor files.
 // build-pi-engine verifies the independent source manifest before compiling them.
 const pinnedPiSourceImports = new Set([
   '../../../vendor/pi/packages/schema/src/index.ts',
@@ -31,6 +31,9 @@ const pinnedPiSourceImports = new Set([
   '../../../vendor/pi/packages/agent/src/types.ts',
   '../../../vendor/pi/packages/ai/src/types.ts',
   '../../../vendor/pi/packages/ai/src/providers/all.ts',
+  '../../../vendor/pi/packages/ai/src/models.ts',
+  '../../../vendor/pi/packages/coding-agent/src/core/provider-composer.ts',
+  '../../../vendor/pi/packages/coding-agent/src/core/model-config.ts',
   '../../../vendor/pi/packages/ai/src/api/openai-completions.lazy.ts',
   '../../../vendor/pi/packages/ai/src/api/openai-responses.lazy.ts',
   '../../../vendor/pi/packages/ai/src/api/azure-openai-responses.lazy.ts',
@@ -39,11 +42,27 @@ const pinnedPiSourceImports = new Set([
   '../../../vendor/pi/packages/ai/src/api/mistral-conversations.lazy.ts',
   '../../../vendor/pi/packages/ai/src/api/pi-messages.lazy.ts',
 ]);
+const pinnedPiLoginImports = new Set([
+  '../../../vendor/pi/packages/ai/src/providers/all.ts',
+  ...[
+    'load',
+    'anthropic',
+    'openai-codex',
+    'openai-chatgpt',
+    'github-copilot',
+    'openrouter',
+    'kimi-coding',
+    'meta',
+    'xai',
+    'radius',
+  ].map((name) => `../../../vendor/pi/packages/ai/src/auth/oauth/${name}.ts`),
+]);
 function pinnedPiSourceImport(filename, specifier, manifest) {
+  const path = resolve(filename).replaceAll('\\', '/');
   return (
     manifest.name === '@axterm/engine-pi-core' &&
-    resolve(filename).replaceAll('\\', '/').endsWith('/packages/pi-engine/src/index.ts') &&
-    pinnedPiSourceImports.has(specifier)
+    ((path.endsWith('/packages/pi-engine/src/index.ts') && pinnedPiSourceImports.has(specifier)) ||
+      (path.endsWith('/packages/pi-engine/src/login.ts') && pinnedPiLoginImports.has(specifier)))
   );
 }
 const bareName = (value) =>

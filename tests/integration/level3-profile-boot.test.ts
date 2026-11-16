@@ -145,7 +145,7 @@ describe('real Cordis Profile runner', () => {
     );
     expect(JSON.parse(stdout.trim())).toEqual({ files: true, tasks: true });
   });
-  it('imports every unchanged framework build in the supported Node runtime', async () => {
+  it('imports every upstream framework build in the supported Node runtime', async () => {
     const f = await fixture();
     const { stdout } = await run(
       f,
@@ -352,5 +352,40 @@ describe('real Cordis Profile runner', () => {
     await writeFile(f.overlay, 'not-a-list: true\n');
     await expect(run(f, 'await runProfile(options);')).rejects.toThrow(/top-level YAML array/);
     await expect(readFile(f.journal)).rejects.toMatchObject({ code: 'ENOENT' });
+  });
+
+  it('preserves YAML expressions across config dump and Profile startup', async () => {
+    const f = await fixture();
+    await writeFile(
+      f.overlay,
+      `- id: probe\n  config:\n    value: !!js '"from-expression"'\n    journal: ${JSON.stringify(f.journal)}\n`,
+    );
+    const { stdout } = await run(
+      f,
+      `const dump=dumpProfile(options);
+       const app=await runProfile(options);
+       console.log(JSON.stringify({dump, value:app.ctx.get('probe')?.value}));
+       await app.shutdown.shutdown(0);`,
+    );
+    const result = JSON.parse(stdout.trim());
+    expect(result.dump).toContain('!!js');
+    expect(result.value).toBe('from-expression');
+  });
+
+  it('reports a malformed YAML patch location without including its contents', async () => {
+    const f = await fixture();
+    await writeFile(f.overlay, '- id: probe\n  config: { secret: fixture-private-value\n');
+    const { stdout } = await run(
+      f,
+      `try { dumpProfile(options); }
+       catch (error) {
+         console.log(JSON.stringify({name:error.name, message:error.message, cause:error.cause}));
+       }`,
+    );
+    const result = JSON.parse(stdout.trim());
+    expect(result.name).toBe('ConfigurationParseError');
+    expect(result.message).toMatch(/at line 3, column 1$/);
+    expect(result.message).not.toContain('fixture-private-value');
+    expect(result.cause).toBeUndefined();
   });
 });

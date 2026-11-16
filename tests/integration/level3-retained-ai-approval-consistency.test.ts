@@ -17,16 +17,15 @@ async function fixture() {
   const owned = await ownedAiToolPolicy({ open: () => channel });
   const terminal = await owned.terminals.createLocal({ cols: 80, rows: 24 });
   const service = owned.createService(undefined, owned.tools);
-  const run = await service.start(
-    {
-      modelId: randomUUID(),
-      useCase: 'diagnose',
-      prompt: 'review',
-      context: '',
-      tool: { name: 'terminal.exec', args: { command: 'printf reviewed' }, target: terminal.id },
-    },
+  const invocation = await service.invokeRegisteredTool(
+    owned.tools.mcpProposal('terminal.exec', {
+      terminalId: terminal.id,
+      command: 'printf reviewed',
+    }),
+    randomUUID(),
     randomUUID(),
   );
+  const run = service.get(invocation.runId);
   await vi.waitFor(() => expect(service.get(run.id).state).toBe('waiting_approval'));
   const approval = service.approvals()[0]!,
     call = service.toolCalls(run.id)[0]!;

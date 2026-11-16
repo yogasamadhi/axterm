@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "repository": "https://github.com/deepseek-ai/deepseek-harness.git",
-  "commit": "fcc0ad462172522aaf5c93a7b2e01f6b9f0b0159",
-  "tree": "6cccb3ee8c1501c9d623258a660f7413761dd0f0",
+  "commit": "39163dd30f703a79079e2d2446545cff3c453738",
+  "tree": "5740b68dc7112a9b8489be01c39814e874118dbd",
   "license": "MIT",
   "files": [
     {
@@ -22,18 +22,18 @@
     },
     {
       "path": "vendor/cordis/src/context.ts",
-      "bytes": 6165,
-      "sha256": "fd5a4f1d2bc6b8b34729c87fda7639a07759ce07fb070ab05374acbcb9ccdc0e"
+      "bytes": 6702,
+      "sha256": "bafba86b1ee343789a430f675b7834741fefa4cc6ba2c7067e2bda5fe45049fe"
     },
     {
       "path": "vendor/cordis/src/events.ts",
-      "bytes": 16163,
-      "sha256": "a464c843822da4eb31a8d998c5e2216a817b8a7dfeacb6e1aab7f830e7320d6b"
+      "bytes": 16348,
+      "sha256": "5be223a4f8a1c7edddfc9b1509d2b52a2d98e5ec645d72d26c0d00820ea380f8"
     },
     {
       "path": "vendor/cordis/src/fiber.ts",
-      "bytes": 28013,
-      "sha256": "b64c3a97f15f0381479dcf3d25965e56dc4cecfa4a0881fc055a49f65b9945df"
+      "bytes": 28738,
+      "sha256": "927bb4933683120ba99c62e8801d2f9da6acf812fbbeac7608d777a664824540"
     },
     {
       "path": "vendor/cordis/src/index.ts",
@@ -42,28 +42,28 @@
     },
     {
       "path": "vendor/cordis/src/logger.ts",
-      "bytes": 8810,
-      "sha256": "a6836ace311d0bd1abc9c1211cffcba73eff61c89ca47641efd82d91747401cb"
+      "bytes": 8621,
+      "sha256": "c380b67eadaf97506c92ca37b92706897da280c912ce14d01a68d53b9d7e3141"
     },
     {
       "path": "vendor/cordis/src/reflect.ts",
-      "bytes": 16565,
-      "sha256": "047f01fcdef2aa34b4afc39deaf18c16733fabd2a5ef0d55e5c2595b22caadfd"
+      "bytes": 17480,
+      "sha256": "b1d01770568cb7d5074ce2b7ac4f39cdd77cbf9178b9d8cd9cbf48b4e292f305"
     },
     {
       "path": "vendor/cordis/src/registry.ts",
-      "bytes": 11753,
-      "sha256": "34bbd60ae502b4f85201c204afb52a9acabde6878d9278493478c1b2183debd3"
+      "bytes": 11761,
+      "sha256": "ae425a8ebe6768d5334958628591d8956d3c92d36eb6ca59b4aafde020a44163"
     },
     {
       "path": "vendor/cordis/src/service.ts",
-      "bytes": 4263,
-      "sha256": "614205c6ce7cf1a057b8b352e96aa4fcd734c967a3d2283a126c9c61f268e3be"
+      "bytes": 4745,
+      "sha256": "219ffc1d78d00006552e245c46c0fdb5bba9b9c560c6c222b9c6dced131519bf"
     },
     {
       "path": "vendor/cordis/src/utils.ts",
-      "bytes": 10716,
-      "sha256": "c68bab85514ebd8cb08227367ea306b0109a214cd10965c497474eeadaaca756"
+      "bytes": 10916,
+      "sha256": "65d3b72f52344a6e5df182c59558ff60a5dc27fc0c58f05b1056d764a763e096"
     },
     {
       "path": "vendor/cordis/tsconfig.json",
@@ -177,8 +177,8 @@
     },
     {
       "path": "vendor/include/src/index.ts",
-      "bytes": 15358,
-      "sha256": "43ddf01220a45fbbe8c0fd64d5d4944fe42dedcd0862127d6ede1d6086b9d053"
+      "bytes": 17060,
+      "sha256": "5a58e3f8ff8bdf754d63d18ba48ac8e47b6051f228faaab81f4205db3b120f45"
     },
     {
       "path": "vendor/include/src/journal.ts",
@@ -237,8 +237,8 @@
     },
     {
       "path": "vendor/loader/src/index.ts",
-      "bytes": 7710,
-      "sha256": "e2d04b34ef703e08d2e40f0ba41daa31ff564343cfeb018f102133fc62317050"
+      "bytes": 7724,
+      "sha256": "a469e3a8ec2c4554208e60f58640d0b875a3f1b8528a314daeead410e9046e43"
     },
     {
       "path": "vendor/loader/src/internal.ts",

@@ -1,3 +1,4 @@
+import { assertFilePaneLayout } from '../support/file-pane-layout.ts';
 import { closeLevel3Tab } from '../support/level3-tab-actions.ts';
 import { openLevel3Section } from '../support/level3-workspace-actions.ts';
 import { openLevel3Settings } from '../support/level3-workspace-actions.ts';
@@ -334,6 +335,9 @@ it('edits, compares and streams through real SFTP in the owned Files UI', async 
     const remote = workspace.locator('.file-pane-remote');
     const row = remote.getByRole('button', { name: 'remote.txt', exact: true });
     await row.waitFor();
+    await assertFilePaneLayout(workspace, true);
+    if (process.env.AXTERM_SFTP_LAYOUT_SCREENSHOTS)
+      await page.screenshot({ path: '/tmp/axterm-sftp-workspace-after.png' });
     await row.dblclick();
     const editor = page.locator('.remote-editor');
     await editor.waitFor();
@@ -471,6 +475,22 @@ it('edits, compares and streams through real SFTP in the owned Files UI', async 
     const toolbar = sshPanel.locator('.terminal-session-toolbar');
     await toolbar.getByRole('tab', { name: 'SFTP', exact: true }).click();
     const pairedFiles = sshPanel.locator('[data-files-workspace]');
+    await pairedFiles.locator('.file-data-row').first().waitFor();
+    for (const width of [1440, 1100, 800]) {
+      await app.evaluate(
+        ({ BrowserWindow }, size) => BrowserWindow.getAllWindows()[0]!.setSize(size, 1000),
+        width,
+      );
+      await browserExpect.poll(() => page.evaluate(() => innerWidth)).toBe(width);
+      await assertFilePaneLayout(pairedFiles, true);
+    }
+    await app.evaluate(({ BrowserWindow }) =>
+      BrowserWindow.getAllWindows()[0]!.setSize(1440, 1000),
+    );
+    await browserExpect.poll(() => page.evaluate(() => innerWidth)).toBe(1440);
+    await assertFilePaneLayout(pairedFiles, true);
+    if (process.env.AXTERM_SFTP_LAYOUT_SCREENSHOTS)
+      await page.screenshot({ path: '/tmp/axterm-sftp-split-after.png' });
     await pairedFiles
       .locator('.file-pane-remote')
       .getByRole('button', { name: 'remote.txt', exact: true })

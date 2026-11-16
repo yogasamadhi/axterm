@@ -8,6 +8,7 @@ import {
 } from '@axterm/plugin-api';
 import { DomainCommands } from '@axterm/infra-storage-domain';
 import { z, ZodError } from 'zod';
+import { EngineError } from '@axterm/engine-api';
 import * as Contract from '@axterm/plugin-api/ai';
 import { AiCommands } from './adapters/commands.ts';
 import { AiQueries } from './adapters/queries.ts';
@@ -27,6 +28,7 @@ export class AiController extends TypertRemoteService {
   private readonly queries: AiQueries;
   private readonly observation: AiObservation;
   private readonly logs: AiLogObservation;
+  private readonly providerLogins = new Set<string>();
   private closing: Promise<void> | undefined;
   constructor(
     ctx: Context,
@@ -74,6 +76,12 @@ export class AiController extends TypertRemoteService {
     ctx.on('engines/changed', () => this.observation.invalidateEngines());
     this.logs = new AiLogObservation(application.domain, this.queries);
     owner.beforeStorageClose(async () => {
+      await Promise.all(
+        [...this.providerLogins].map(async (id) => {
+          await this.providerAuth().cancel(id);
+          this.providerLogins.delete(id);
+        }),
+      );
       await this.observation.dispose();
       await this.logs.dispose();
     });
@@ -81,7 +89,7 @@ export class AiController extends TypertRemoteService {
     ctx.desktopTaskInspection.register('ai', {
       inspect: (signal) => {
         signal.throwIfAborted();
-        return { active: owner.activeTaskCount() > 0 };
+        return { active: owner.activeTaskCount() > 0 || this.providerLoginActive() };
       },
       dispose: () => this.close(),
     });
@@ -145,6 +153,41 @@ export class AiController extends TypertRemoteService {
   }
   @Remote getCatalog(): Contract.PiCatalogProvider[] {
     return this.call(() => this.application.service.catalog());
+  }
+  @Remote beginProviderLogin(provider: string, method: 'api_key' | 'oauth'): Contract.PiLoginState {
+    return this.call(() => {
+      this.providerLoginActive();
+      if (this.providerLogins.size >= 4) throw this.failure('capacity');
+      const login = this.providerAuth().begin(
+        z.string().min(1).max(120).parse(provider),
+        z.enum(['api_key', 'oauth']).parse(method),
+      );
+      this.providerLogins.add(login.id);
+      return login;
+    });
+  }
+  @Remote getProviderLogin(id: string): Contract.PiLoginState {
+    return this.call(() => {
+      if (!this.providerLogins.has(id)) throw this.failure('not-found');
+      return this.providerAuth().get(z.uuid().parse(id));
+    });
+  }
+  @Remote respondProviderLogin(id: string, prompt: string, value: string): void {
+    return this.call(() => {
+      if (!this.providerLogins.has(id)) throw this.failure('not-found');
+      this.providerAuth().respond(
+        z.uuid().parse(id),
+        z.uuid().parse(prompt),
+        z.string().max(131072).parse(value),
+      );
+    });
+  }
+  @Remote cancelProviderLogin(id: string): Promise<void> {
+    return this.run(async () => {
+      if (!this.providerLogins.has(id)) return;
+      await this.providerAuth().cancel(z.uuid().parse(id));
+      this.providerLogins.delete(id);
+    });
   }
   @Remote createProvider(
     key: string,
@@ -316,6 +359,24 @@ export class AiController extends TypertRemoteService {
     this.lifetime.abort();
     return (this.closing ??= this.owner.close());
   }
+  private providerAuth() {
+    const owner = this.ctx.reflect.get('piProviderAuth');
+    if (!owner) throw this.failure('unavailable');
+    return owner;
+  }
+  private providerLoginActive(): boolean {
+    let active = false;
+    for (const id of this.providerLogins) {
+      try {
+        const state = this.providerAuth().get(id);
+        active ||= state.status === 'running';
+      } catch (error) {
+        if (!(error instanceof EngineError) || error.code !== 'missing') throw error;
+        this.providerLogins.delete(id);
+      }
+    }
+    return active;
+  }
   private signal(signal: AbortSignal): AbortSignal {
     return AbortSignal.any([signal, this.lifetime.signal]);
   }
@@ -341,7 +402,22 @@ export class AiController extends TypertRemoteService {
     let reason: Contract.AiFailureReason = 'unavailable';
     if (this.lifetime.signal.aborted) reason = 'closed';
     else if (error instanceof ZodError) reason = 'invalid';
-    else if (error instanceof StorageCommandError)
+    else if (error instanceof EngineError) {
+      reason =
+        error.code === 'missing'
+          ? 'not-found'
+          : error.code === 'invalid' || error.code === 'duplicate'
+            ? 'invalid'
+            : error.code === 'unsupported' || error.code === 'tool-unavailable'
+              ? 'unsupported'
+              : ['busy', 'capacity', 'backpressure'].includes(error.code)
+                ? 'capacity'
+                : error.code === 'closed'
+                  ? 'closed'
+                  : error.code === 'cancelled'
+                    ? 'cancelled'
+                    : 'unavailable';
+    } else if (error instanceof StorageCommandError)
       reason =
         error.code === 'conflict'
           ? 'conflict'

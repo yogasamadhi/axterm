@@ -1,4 +1,11 @@
-import type { AiRunEvent } from '../ai.ts';
+import type { AiRunEvent, PiLoginState } from '../ai.ts';
+export interface PiProviderAuth {
+  begin(provider: string, method: 'api_key' | 'oauth'): PiLoginState;
+  get(id: string): PiLoginState;
+  respond(id: string, promptId: string, value: string): void;
+  cancel(id: string): Promise<void>;
+  secrets(provider: string, reference: string): Promise<readonly string[]>;
+}
 import type { WidgetMcpTool, WidgetMcpInvocation } from '../widgets.ts';
 export interface AiMcpToolSource {
   listTools(): readonly WidgetMcpTool[];
@@ -13,6 +20,7 @@ export interface AiMcpTools {
 declare module '@deepseek-ai/cordis' {
   interface Context {
     aiMcpTools: AiMcpTools;
+    piProviderAuth: PiProviderAuth;
   }
   interface Events {
     'ai/run-event'(event: AiRunEvent): void;

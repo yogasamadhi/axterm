@@ -1,6 +1,8 @@
 import type { AiPanelActions } from './panel-actions.ts';
 import {
   piModelsFileSchema,
+  piApiSchema,
+  piProviderConfigSchema,
   type PiCatalogProvider,
   type AiModel,
   type AiProvider,
@@ -8,6 +10,19 @@ import {
 
 type Client = AiPanelActions;
 type Catalog = PiCatalogProvider[];
+
+/** New configurations describe Pi models; protocol paths and auth headers belong to Pi. */
+export function piConfigurationForModel(
+  builtin: PiCatalogProvider | undefined,
+  model: string,
+  api: unknown,
+) {
+  const known = builtin?.models.some((entry) => entry.id === model);
+  return piProviderConfigSchema.parse({
+    id: builtin?.id ?? 'axterm-custom',
+    models: known ? [] : [{ id: model, api: piApiSchema.parse(api) }],
+  });
+}
 
 export async function importPiModels(
   client: Client,
@@ -52,19 +67,12 @@ export async function importPiModels(
         refs.push(header.ref);
         headerCredentialRefs[name] = header.ref;
       }
-      const api = entry.value.api ?? entry.models[0]?.api;
       providerAttemptUncertain = true;
       const provider = await client.createAiProvider({
         name: entry.id,
         baseUrl: entry.baseUrl,
         credentialRef: key.ref,
         enabled: true,
-        protocol:
-          api === 'anthropic-messages'
-            ? 'anthropic'
-            : api === 'openai-responses'
-              ? 'openai-responses'
-              : 'openai-chat',
         pi: {
           id: entry.id,
           ...(entry.value.api ? { api: entry.value.api } : {}),

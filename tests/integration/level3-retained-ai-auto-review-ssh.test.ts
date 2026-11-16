@@ -24,7 +24,7 @@ afterEach(async () => {
   vi.unstubAllEnvs();
 });
 it.skipIf(!shell || !existsSync(shell))(
-  'reviews and resumes the native Pi loop over real SSH exec streams in an isolated directory',
+  'executes the native Pi loop directly over real SSH exec streams in an isolated directory',
   async () => {
     const root = await mkdtemp(join(tmpdir(), 'axterm-auto-ssh-'));
     cleanup.push(() => rm(root, { recursive: true, force: true }));
@@ -32,12 +32,17 @@ it.skipIf(!shell || !existsSync(shell))(
     vi.stubEnv('USERPROFILE', root);
     const remote = join(root, 'remote');
     await mkdir(remote);
-    const remoteCwd =
+    const remoteNext = join(remote, 'next remote dir');
+    await mkdir(remoteNext);
+    const remotePath = (directory: string) =>
       process.platform === 'win32'
-        ? remote
+        ? directory
             .replace(/^([A-Za-z]):/u, (_, drive: string) => `/${drive.toLowerCase()}`)
             .replaceAll('\\', '/')
-        : remote;
+        : directory;
+    const remoteCwd = remotePath(remote);
+    const nextCwd = remotePath(remoteNext);
+    let setRemoteDirectory: ((directory: string) => void) | undefined;
     const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
     const wire: string[] = [];
     const ssh = new Server(
@@ -58,6 +63,9 @@ it.skipIf(!shell || !existsSync(shell))(
             session.on('env', (acceptEnv) => acceptEnv?.());
             session.on('shell', (acceptShell) => {
               const stream = acceptShell();
+              setRemoteDirectory = (directory) => {
+                stream.write(`\x1b]7;file://${encodeURI(directory)}\x07`);
+              };
               const timer = setTimeout(
                 () => stream.write(`\x1b]7;file://${encodeURI(remoteCwd)}\x07`),
                 20,
@@ -73,6 +81,7 @@ it.skipIf(!shell || !existsSync(shell))(
                 ['-c', info.command],
                 { cwd: remote, timeout: 3000, maxBuffer: 128 * 1024, windowsHide: true },
                 (error, stdout, stderr) => {
+                  if (wire.length === 2) setRemoteDirectory?.(nextCwd);
                   stream.write(stdout);
                   stream.stderr.write(stderr);
                   stream.exit(error ? 1 : 0);
@@ -184,6 +193,7 @@ it.skipIf(!shell || !existsSync(shell))(
       ['chat', 'tools'],
     );
     const modelId = selected.modelId;
+    const localWorkspace = (await f.model.workspace(terminal.id)).workspaceDirectory;
     const run = await f.model.startRun(randomUUID(), {
       modelId: modelId,
       terminalId: terminal.id,
@@ -192,24 +202,8 @@ it.skipIf(!shell || !existsSync(shell))(
       prompt:
         'Inspect the remote host, create marker with ssh-safe, then delete marker and finish.',
     });
-    await vi.waitFor(async () =>
-      expect((await f.model.getRun(run.id)).state).toBe('waiting_approval'),
-    );
-    expect(
-      (await f.model.getTools(run.id, { limit: 50 })).tools.filter(
-        (call) => call.state === 'succeeded',
-      ),
-    ).toHaveLength(4);
-    await access(join(remote, 'marker'));
     await expect(access(join(root, 'data-v2', 'ai-remote', 'marker'))).rejects.toMatchObject({
       code: 'ENOENT',
-    });
-    const approval = (await f.model.getTools(run.id, { limit: 50 })).approvals.find(
-      (item) => item.runId === run.id,
-    )!;
-    await f.model.decideApproval(randomUUID(), approval.id, {
-      decision: 'approve_once',
-      argsHash: approval.argsHash,
     });
     await vi.waitFor(async () =>
       expect(await f.model.getRun(run.id)).toMatchObject({
@@ -218,12 +212,28 @@ it.skipIf(!shell || !existsSync(shell))(
       }),
     );
     await expect(access(join(remote, 'marker'))).rejects.toMatchObject({ code: 'ENOENT' });
+    await expect(access(join(remoteNext, 'marker'))).rejects.toMatchObject({ code: 'ENOENT' });
+    expect(await f.model.workspace(terminal.id)).toMatchObject({
+      workspaceDirectory: localWorkspace,
+      commandDirectory: nextCwd,
+    });
+    expect((await f.model.getTools(run.id, { limit: 50 })).approvals).toEqual([]);
+    expect(
+      (await f.model.getTools(run.id, { limit: 50 })).tools.every(
+        (call) => call.state === 'succeeded' && call.review === undefined,
+      ),
+    ).toBe(true);
     expect(
       (await f.model.getTools(run.id, { limit: 50 })).tools.map((call) => call.approvalSource),
-    ).toEqual(['automatic', 'automatic', 'automatic', 'automatic', 'user']);
+    ).toEqual([undefined, undefined, undefined, undefined, undefined]);
     expect(wire.slice(1)).toHaveLength(5);
-    expect(wire.slice(1).every((command) => command.startsWith(`cd -- '${remoteCwd}' && (`))).toBe(
+    expect(wire[1]!.startsWith(`cd -- '${remoteCwd}' && (`)).toBe(true);
+    expect(wire.slice(2).every((command) => command.startsWith(`cd -- '${nextCwd}' && (`))).toBe(
       true,
     );
+    const calls = (await f.model.getTools(run.id, { limit: 50 })).tools;
+    expect(
+      calls.map((call) => (call.args.workspace as { commandDirectory: string }).commandDirectory),
+    ).toEqual([remoteCwd, nextCwd, nextCwd, nextCwd, nextCwd]);
   },
 );

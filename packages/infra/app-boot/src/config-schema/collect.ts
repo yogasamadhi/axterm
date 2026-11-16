@@ -5,7 +5,6 @@
 import { readFile, realpath } from 'node:fs/promises';
 import { extname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import * as yaml from 'js-yaml';
 import Loader, {
   EntryGroup,
   ModuleLoader,
@@ -15,10 +14,11 @@ import Loader, {
 import Group from '@deepseek-ai/cordis-plugin-group';
 import Include, {
   applyEntryPatches,
-  entryListSchema,
+  parseEntryYaml,
   type PatchOptions,
 } from '@deepseek-ai/cordis-plugin-include';
 import type { Profile, RuntimeResolution } from '../profile.ts';
+import { configurationParseFailure } from '../configuration-error.ts';
 import { installRuntimeInterception } from '../profile-resolution/resolver.ts';
 import { buildConfigSchemaDocument } from './document.ts';
 import type { CollectedConfigEntry, ConfigSchemaDiagnostic, ConfigSchemaDump } from './types.ts';
@@ -196,18 +196,12 @@ export async function collectConfigSchemas(
       }
       if (content !== undefined) {
         try {
-          source =
-            extension === '.json'
-              ? JSON.parse(content)
-              : yaml.load(content, { schema: entryListSchema });
+          source = extension === '.json' ? JSON.parse(content) : parseEntryYaml(content);
         } catch (error) {
           // Parser messages can quote configuration values; retain only the file and location.
-          const at =
-            error instanceof yaml.YAMLException
-              ? ` at line ${error.mark.line + 1}, column ${error.mark.column + 1}`
-              : '';
-          throw redactedParseFailure(
-            `invalid ${extension === '.json' ? 'JSON' : 'YAML'} include ${filename}${at}`,
+          throw configurationParseFailure(
+            `invalid ${extension === '.json' ? 'JSON' : 'YAML'} include ${filename}`,
+            error,
           );
         }
       }
@@ -320,11 +314,4 @@ export async function collectConfigSchemas(
   } finally {
     interception.dispose();
   }
-}
-
-/** Parser errors embed configuration bytes; only safe file/location diagnostics may escape. */
-function redactedParseFailure(message: string): Error {
-  const failure = new Error(message);
-  failure.name = 'ConfigurationParseError';
-  return failure;
 }

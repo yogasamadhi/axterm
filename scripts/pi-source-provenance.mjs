@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-export const piCommit = '4ea8837927564c592b1d184c956ab7d28c88119b';
+export const piCommit = '8636e211e7834e4ca46a22aec1d65dfd2eac8677';
 const output = path.join(root, 'packages/pi-engine/source-manifest.json');
 function digest(file) {
   return createHash('sha256')
@@ -82,10 +82,14 @@ if (process.argv[2] === '--generate') {
     'vendor/pi/packages/ai/scripts/hydrate-model-catalog.ts',
     'vendor/pi/packages/ai/scripts/model-data.ts',
     'vendor/pi/packages/coding-agent/src/core/skills.ts',
+    'vendor/pi/packages/coding-agent/src/core/provider-composer.ts',
+    'vendor/pi/packages/coding-agent/src/core/model-config.ts',
+    'vendor/pi/packages/coding-agent/src/core/pi-ai-schemas.ts',
+    'vendor/pi/packages/coding-agent/src/core/resolve-config-value.ts',
     'vendor/pi/packages/coding-agent/src/core/source-info.ts',
     'vendor/pi/packages/coding-agent/src/core/diagnostics.ts',
     'vendor/pi/packages/coding-agent/src/config.ts',
-    ...['frontmatter', 'text', 'paths', 'child-process'].map(
+    ...['frontmatter', 'text', 'paths', 'child-process', 'shell', 'json'].map(
       (name) => `vendor/pi/packages/coding-agent/src/utils/${name}.ts`,
     ),
     'vendor/pi/packages/schema/THIRD_PARTY_NOTICES/typebox-LICENSE',

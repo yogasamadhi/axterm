@@ -16,6 +16,9 @@ const api = z.enum([
   'google-generative-ai',
   'mistral-conversations',
   'pi-messages',
+  'openai-codex-responses',
+  'google-vertex',
+  'bedrock-converse-stream',
 ]);
 const endpoint = z
   .url()
@@ -73,8 +76,9 @@ const headerName = z
 export const piProviderConfigurationSchema = z
   .object({
     provider: id,
+    credentialMode: z.literal('pi').optional(),
     api: api.optional(),
-    baseUrl: endpoint,
+    baseUrl: z.union([endpoint, z.literal('')]),
     credentialRef: ref,
     headerCredentialRefs: z.record(headerName, ref).default({}),
     models: z

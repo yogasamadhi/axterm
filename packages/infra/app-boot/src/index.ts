@@ -22,7 +22,6 @@ export type {
   StartupServiceState,
 } from './startup-diagnostics.ts';
 import { basename, dirname, isAbsolute, resolve } from 'node:path';
-import * as yaml from 'js-yaml';
 import { Context, type Fiber, type FiberState } from '@deepseek-ai/cordis';
 import Loader, {
   type Entry,
@@ -31,7 +30,8 @@ import Loader, {
 } from '@deepseek-ai/cordis-plugin-loader';
 import Include, {
   applyEntryPatches,
-  entryListSchema,
+  parseEntryYaml,
+  stringifyEntryYaml,
   type PatchOptions,
 } from '@deepseek-ai/cordis-plugin-include';
 import Group from '@deepseek-ai/cordis-plugin-group';
@@ -695,7 +695,7 @@ export function renderConfigDump(
   }
   let parsed: unknown;
   try {
-    parsed = yaml.load(content, { schema: entryListSchema });
+    parsed = parseEntryYaml(content);
   } catch (error) {
     throw configurationParseFailure(
       `${binName}: failed to parse config ${absoluteConfigPath}`,
@@ -765,7 +765,7 @@ function groupedDump(
   const flush = (): void => {
     if (currentLabel === undefined || group.length === 0) return;
     lines.push(`# == ${currentLabel}`);
-    lines.push(yaml.dump(group, { schema: entryListSchema, noRefs: true }).trimEnd());
+    lines.push(stringifyEntryYaml(group).trimEnd());
     group = [];
   };
   for (let index = 0; index < composed.length; index += 1) {

@@ -569,6 +569,7 @@ button.primary:disabled {
 }
 .file-pane-title {
   display: flex;
+  flex: 0 0 30px;
   height: 30px;
   align-items: center;
   justify-content: space-between;
@@ -578,6 +579,7 @@ button.primary:disabled {
 }
 .file-pane-title > select {
   width: min(230px, 68%);
+  min-height: 26px;
   height: 26px;
 }
 .file-pane-title button,
@@ -609,16 +611,22 @@ button.primary:disabled {
 }
 .file-path-tools {
   display: flex;
-  min-height: 28px;
-  align-items: center;
+  flex: 0 0 40px;
+  min-height: 40px;
+  align-items: flex-start;
+  padding-top: 2px;
   gap: 5px;
   margin: -3px 0 5px;
   overflow-x: auto;
   scrollbar-width: thin;
 }
 .file-path-tools select {
-  min-width: 78px;
+  flex: 0 1 100px;
+  width: 100px;
+  min-width: 64px;
   max-width: 160px;
+  font-size: var(--ax-font-size-small);
+  min-height: 25px;
   height: 25px;
   padding-block: 2px;
 }
@@ -629,14 +637,51 @@ button.primary:disabled {
   align-items: center;
   gap: 4px;
 }
+.file-keyword-filter {
+  display: flex;
+  flex: 1 0 120px;
+  min-width: 120px;
+  max-width: 240px;
+  height: 25px;
+  align-items: center;
+  gap: 4px;
+  padding: 0 5px;
+  border: 1px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-control);
+  background: var(--ax-color-canvas);
+}
+.file-keyword-filter > svg {
+  flex: 0 0 auto;
+}
+.file-keyword-filter input {
+  min-width: 0;
+  min-height: 0;
+  height: 23px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+  font-size: var(--ax-font-size-small);
+}
+.file-keyword-filter button {
+  flex: 0 0 20px;
+  min-width: 20px;
+  min-height: 0;
+  height: 23px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
 .file-keyword-filter.active {
   border-color: var(--ax-color-files-files-file-keyword-filter-active-border-color);
   color: var(--ax-color-files-files-file-keyword-filter-active-color);
 }
 .file-pane-actions {
   display: flex;
-  min-height: 31px;
-  align-items: center;
+  min-height: 40px;
+  flex: 0 0 40px;
+  align-items: flex-start;
+  padding-top: 2px;
   gap: 5px;
   overflow-x: auto;
   scrollbar-width: thin;
@@ -701,7 +746,6 @@ button.primary:disabled {
 }
 .file-table-header-wrap {
   position: relative;
-  padding-right: 30px;
   border-bottom: 1px solid var(--ax-color-border);
   background: var(--ax-color-files-files-file-table-header-wrap-background);
 }
@@ -735,6 +779,9 @@ button.primary:disabled {
   font: inherit;
   letter-spacing: inherit;
   text-transform: inherit;
+}
+.file-table-column:last-child > button {
+  padding-right: 38px;
 }
 .file-table-column > button > span:first-child {
   overflow: hidden;
@@ -807,7 +854,13 @@ button.primary:disabled {
   font-size: var(--ax-font-size-small);
 }
 .file-table .file-row {
+  gap: 0;
+  width: 100%;
   height: 32px;
+  border: 0;
+  border-radius: var(--ax-radius-none);
+  background: transparent;
+  text-align: left;
   padding: 0;
   border-color: var(--ax-color-files-files-file-table-file-row-border-color);
   color: var(--ax-color-files-files-file-table-file-row-color);
@@ -822,6 +875,14 @@ button.primary:disabled {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.file-table .file-row > span > svg {
+  flex: 0 0 auto;
+}
+.file-table .file-row > span > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .file-table .file-row:hover {
   background: var(--ax-color-files-files-file-table-file-row-hover-background);
@@ -1283,44 +1344,45 @@ button.primary:disabled {
   background: var(--ax-color-surface-raised);
   color: var(--ax-color-text);
 }
-.files-session-root button,
-.modal button,
-.files-session-root input,
-.modal input,
-.files-session-root select,
-.modal select,
-.files-session-root textarea,
-.modal textarea {
+/* Form defaults must not override owned toolbar and table controls. */
+:where(.files-session-root) button,
+:where(.modal) button,
+:where(.files-session-root) input,
+:where(.modal) input,
+:where(.files-session-root) select,
+:where(.modal) select,
+:where(.files-session-root) textarea,
+:where(.modal) textarea {
   font: inherit;
 }
-.files-session-root button,
-.modal button {
+:where(.files-session-root) button,
+:where(.modal) button {
   color: inherit;
 }
-.files-session-root button:focus-visible,
-.modal button:focus-visible,
-.files-session-root input:focus-visible,
-.modal input:focus-visible,
-.files-session-root select:focus-visible,
-.modal select:focus-visible,
-.files-session-root textarea:focus-visible,
-.modal textarea:focus-visible {
+:where(.files-session-root) button:focus-visible,
+:where(.modal) button:focus-visible,
+:where(.files-session-root) input:focus-visible,
+:where(.modal) input:focus-visible,
+:where(.files-session-root) select:focus-visible,
+:where(.modal) select:focus-visible,
+:where(.files-session-root) textarea:focus-visible,
+:where(.modal) textarea:focus-visible {
   outline: var(
     --ax-border-files-files-files-session-root-button-focus-visible-modal-button-foc-b95b03b
   );
   outline-offset: 1px;
 }
-.files-session-root button:disabled,
-.modal button:disabled {
+:where(.files-session-root) button:disabled,
+:where(.modal) button:disabled {
   opacity: 1;
   cursor: not-allowed;
 }
-.files-session-root input,
-.modal input,
-.files-session-root select,
-.modal select,
-.files-session-root textarea,
-.modal textarea {
+:where(.files-session-root) input,
+:where(.modal) input,
+:where(.files-session-root) select,
+:where(.modal) select,
+:where(.files-session-root) textarea,
+:where(.modal) textarea {
   width: 100%;
   border: var(
     --ax-border-files-files-files-session-root-input-modal-input-files-session-root--6580250
@@ -1334,20 +1396,20 @@ button.primary:disabled {
   border-radius: var(--ax-radius-control);
   padding: 8px 9px;
 }
-.files-session-root textarea,
-.modal textarea {
+:where(.files-session-root) textarea,
+:where(.modal) textarea {
   resize: vertical;
   font-family: var(--ax-font-code-compact);
 }
-.files-session-root label,
-.modal label {
+:where(.files-session-root) label,
+:where(.modal) label {
   display: grid;
   gap: 6px;
   color: var(--ax-color-files-files-files-session-root-label-modal-label-color);
   font-size: var(--ax-font-size-body);
 }
-.files-session-root button,
-.modal button {
+:where(.files-session-root) button,
+:where(.modal) button {
   cursor: pointer;
   border: var(--ax-border-files-files-files-session-root-button-modal-button-border);
   border-radius: var(--ax-radius-field);
@@ -1359,8 +1421,8 @@ button.primary:disabled {
   align-items: center;
   justify-content: center;
 }
-.files-session-root button:hover,
-.modal button:hover {
+:where(.files-session-root) button:hover,
+:where(.modal) button:hover {
   border-color: var(
     --ax-color-files-files-files-session-root-button-hover-modal-button-hover-border-color
   );
@@ -1368,8 +1430,8 @@ button.primary:disabled {
     --ax-color-files-files-files-session-root-button-hover-modal-button-hover-background
   );
 }
-.files-session-root button.primary,
-.modal button.primary {
+:where(.files-session-root) button.primary,
+:where(.modal) button.primary {
   border-color: var(
     --ax-color-files-files-files-session-root-button-primary-modal-button-primary-b-c5cd5e8
   );
@@ -1378,34 +1440,34 @@ button.primary:disabled {
   );
   color: var(--ax-color-files-files-files-session-root-button-primary-modal-button-primary-color);
 }
-.files-session-root button.primary:hover,
-.modal button.primary:hover {
+:where(.files-session-root) button.primary:hover,
+:where(.modal) button.primary:hover {
   background: var(
     --ax-color-files-files-files-session-root-button-primary-hover-modal-button-pri-113e9d2
   );
 }
-.files-session-root button.danger,
-.modal button.danger {
+:where(.files-session-root) button.danger,
+:where(.modal) button.danger {
   border-color: var(--ax-color-action-danger-border);
   background: var(--ax-color-action-danger);
   color: var(--ax-color-on-action-danger);
 }
-.files-session-root button,
-.modal button,
-.files-session-root input,
-.modal input,
-.files-session-root select,
-.modal select,
-.files-session-root textarea,
-.modal textarea {
+:where(.files-session-root) button,
+:where(.modal) button,
+:where(.files-session-root) input,
+:where(.modal) input,
+:where(.files-session-root) select,
+:where(.modal) select,
+:where(.files-session-root) textarea,
+:where(.modal) textarea {
   color: var(--ax-color-text);
 }
-.files-session-root input,
-.modal input,
-.files-session-root select,
-.modal select,
-.files-session-root textarea,
-.modal textarea {
+:where(.files-session-root) input,
+:where(.modal) input,
+:where(.files-session-root) select,
+:where(.modal) select,
+:where(.files-session-root) textarea,
+:where(.modal) textarea {
   min-height: 34px;
   border-color: var(--ax-color-border);
   border-radius: var(--ax-radius-soft);
@@ -1413,22 +1475,22 @@ button.primary:disabled {
   padding: 7px 10px;
   font-size: var(--ax-font-size-control);
 }
-.files-session-root input[type='checkbox'],
-.modal input[type='checkbox'],
-.files-session-root input[type='radio'],
-.modal input[type='radio'] {
+:where(.files-session-root) input[type='checkbox'],
+:where(.modal) input[type='checkbox'],
+:where(.files-session-root) input[type='radio'],
+:where(.modal) input[type='radio'] {
   accent-color: var(--ax-color-primary);
 }
-.files-session-root input::placeholder,
-.modal input::placeholder,
-.files-session-root textarea::placeholder,
-.modal textarea::placeholder {
+:where(.files-session-root) input::placeholder,
+:where(.modal) input::placeholder,
+:where(.files-session-root) textarea::placeholder,
+:where(.modal) textarea::placeholder {
   color: var(
     --ax-color-files-files-files-session-root-input-placeholder-modal-input-placeho-b6b7809
   );
 }
-.files-session-root button,
-.modal button {
+:where(.files-session-root) button,
+:where(.modal) button {
   min-height: 30px;
   border-color: var(--ax-color-border);
   border-radius: var(--ax-radius-soft);
@@ -1441,35 +1503,35 @@ button.primary:disabled {
     border-color var(--ax-motion-interaction) var(--ax-motion-easing-ease),
     opacity var(--ax-motion-interaction) var(--ax-motion-easing-ease);
 }
-.files-session-root button:hover,
-.modal button:hover {
+:where(.files-session-root) button:hover,
+:where(.modal) button:hover {
   border-color: var(--ax-color-surface-muted);
   background: var(--ax-color-control-hover);
 }
-.files-session-root button.primary,
-.modal button.primary {
+:where(.files-session-root) button.primary,
+:where(.modal) button.primary {
   border-color: var(--ax-color-action-success-border);
   background: var(--ax-color-action-success);
   color: var(--ax-color-on-action-success);
   transition: border-color var(--ax-motion-interaction) var(--ax-motion-easing-ease);
 }
-.files-session-root button.primary:hover,
-.modal button.primary:hover {
+:where(.files-session-root) button.primary:hover,
+:where(.modal) button.primary:hover {
   border-color: var(
     --ax-color-files-files-files-session-root-button-primary-hover-modal-button-pri-f4263af
   );
   background: var(--ax-color-action-success-hover);
 }
-.files-session-root button:disabled,
-.modal button:disabled,
-.files-session-root button.primary:disabled,
-.modal button.primary:disabled {
+:where(.files-session-root) button:disabled,
+:where(.modal) button:disabled,
+:where(.files-session-root) button.primary:disabled,
+:where(.modal) button.primary:disabled {
   border-color: var(--ax-color-border);
   background: var(--ax-color-surface-raised);
   color: var(--ax-color-text-muted);
 }
-.files-session-root label,
-.modal label {
+:where(.files-session-root) label,
+:where(.modal) label {
   color: var(--ax-color-text-muted);
   font-size: var(--ax-font-size-control);
 }
@@ -1573,4 +1635,42 @@ button.primary:disabled {
   min-height: 0;
   height: auto;
   flex: 1;
+}
+
+/* Reserve the remote action row in split view without adding inert controls. */
+.file-workspace-split .file-pane-local .file-path-tools {
+  margin-bottom: 45px;
+}
+.file-pane-actions button,
+.file-path-tools > button,
+.toolbar > button {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.file-address-bar {
+  flex: 0 0 28px;
+}
+.file-address-bar input {
+  min-height: 28px;
+  height: 28px;
+  padding: 3px 8px;
+  font-size: var(--ax-font-size-small);
+}
+.file-address-bar button {
+  min-height: 28px;
+  height: 28px;
+}
+
+.file-column-picker input[type='checkbox'] {
+  width: auto;
+  min-height: 0;
+}
+
+.file-pane-title button,
+.file-pane-actions button,
+.file-path-tools > button {
+  height: 25px;
+  padding: 2px 6px;
+  font-size: var(--ax-font-size-small);
+  line-height: normal;
 }

@@ -1,5 +1,5 @@
 {
-  "sourceRevision": "4ea8837927564c592b1d184c956ab7d28c88119b",
+  "sourceRevision": "8636e211e7834e4ca46a22aec1d65dfd2eac8677",
   "license": "MIT",
   "files": [
     {
@@ -8,11 +8,11 @@
     },
     {
       "path": "vendor/pi/nix/model-catalog.json",
-      "sha256": "305b4ddf4d0a3f71744333f5d0c5448bd01fe8774ec8e637e7cab2aa4d21d512"
+      "sha256": "6b4c957eb83bdf6faac9909f259d7fac47d14fb31c1c1dd21f121d784061ad76"
     },
     {
       "path": "vendor/pi/packages/agent/src/agent-loop.ts",
-      "sha256": "9d7589b5071ea3b8b3e3c624f9cfc09a976ebf7436024a58213837de4645167d"
+      "sha256": "a2c7dc92644bae8655a263e1f5b6ecca6a0d3057002f978e709ed27ec8dd5a92"
     },
     {
       "path": "vendor/pi/packages/agent/src/agent.ts",
@@ -48,7 +48,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/api/anthropic-messages.ts",
-      "sha256": "99b6809987c1477b29a7243c2b99d46890fd0214f45a109d773ddebaa15ce542"
+      "sha256": "58c170051620e047c9cccdec056b4b401432ae689571b7e3e245e93e4e3e61ae"
     },
     {
       "path": "vendor/pi/packages/ai/src/api/azure-openai-config.ts",
@@ -92,7 +92,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/api/constrained-sampling.ts",
-      "sha256": "c7f379d70c2073c61e0e4dc1d2d6f32dbf9850cc2e0c98a8f9e30189ba314091"
+      "sha256": "486e616ebdad5521b2d31859d95b7612e261fd18fd4edbfd019d71df2d4ce5ab"
     },
     {
       "path": "vendor/pi/packages/ai/src/api/github-copilot-headers.ts",
@@ -104,11 +104,11 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/api/google-generative-ai.ts",
-      "sha256": "2d094a12a79c28d0bbbaaae50626463dff40642b11b4f24e5c49ceef01dfccb7"
+      "sha256": "588d88a8d5dad06910f30a0991a22edd2745be48e8ad1d7cb407fbc4f17b21fa"
     },
     {
       "path": "vendor/pi/packages/ai/src/api/google-shared.ts",
-      "sha256": "07b94dd0e0e96e889f7a336dcd4d7696481edb6af95dc22dbf64c283c9c5ff34"
+      "sha256": "9f21e74108961cc8045095964f9c5a691d05685720ff18df982cf5dc1d0ca142"
     },
     {
       "path": "vendor/pi/packages/ai/src/api/google-vertex.lazy.ts",
@@ -116,7 +116,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/api/google-vertex.ts",
-      "sha256": "942d6c99256afafaed777a28f5b15cdfbfc5648af3e7a35652fba0b7454ce841"
+      "sha256": "16c19d34eaa1627f16378c478873c955d01ad111bcb4fa7ca1c9f5948e0a7bee"
     },
     {
       "path": "vendor/pi/packages/ai/src/api/lazy.ts",
@@ -152,7 +152,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/api/openai-completions.ts",
-      "sha256": "dcbe4944d8196426a79837b42af8a6bc1e040904c6831317a1ecb863ddd58168"
+      "sha256": "21740f1217f53ee3e33378784b87de383d308ace948d8b134f63288d880f2e7b"
     },
     {
       "path": "vendor/pi/packages/ai/src/api/openai-decisions.lazy.ts",
@@ -320,7 +320,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/env-api-keys.ts",
-      "sha256": "a0e9c2f74b338c5117c700ad2753d15c091158b1cc57a3b1ab707405621aed38"
+      "sha256": "419a05b55975c91c78b2731f66d1facaf40775f137116d189717f6b7df747293"
     },
     {
       "path": "vendor/pi/packages/ai/src/image-models.ts",
@@ -448,7 +448,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/compat-schema.ts",
-      "sha256": "722032d2b934b3730e0bf063f0fd8edb1a401bf050a4aef2888ef0186ff6f5d1"
+      "sha256": "b9d604e1cf8ca44304b132db0603d64c9340b2d806a8814f8fb195f010136cfa"
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/data-json.d.ts",
@@ -640,7 +640,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan-cn.ts",
-      "sha256": "1869aabbff4baaa12faef00071aab0a5b1b1d38d43f16ce735137fc0e13fa897"
+      "sha256": "541821f5f3f262912eb4fe5c0c55a8777583e3c21f5419d8db85c4013e77e1b2"
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan-individual-cn.models.ts",
@@ -648,7 +648,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan-individual-cn.ts",
-      "sha256": "ac4252be3e60902566710c8f65e518dbfa1482766314376c56647f806577f60f"
+      "sha256": "784c51bdd128b2fa6ed716070abc6515f32dbc96d7026efd61d4afb0a311d1b2"
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan-individual.models.ts",
@@ -656,7 +656,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan-individual.ts",
-      "sha256": "0336ecc9c677d9e295a4832fbc84d9197f58e0468fcd00daff3aec491b896375"
+      "sha256": "736688c0ac2a46fa3489535c958aed175762010acd23f8d2cc0d2d0165a49573"
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan.models.ts",
@@ -664,7 +664,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan.ts",
-      "sha256": "c26b85ab529779c4c2e61f6dd749592b515ec25b121b49dc81989d8a767d51f5"
+      "sha256": "e4cf5dd0c16ea1f47efecc97c86f76d84c532b675ccee9e6f7fa1350a038a06e"
     },
     {
       "path": "vendor/pi/packages/ai/src/providers/radius-config.ts",
@@ -848,7 +848,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/utils/retry.ts",
-      "sha256": "589ede374013a26a1d3e3db3550585b714870c1dc68a5e1df233e2335845c374"
+      "sha256": "eb95b3daec3bd7d14a1c3fba88a64611596ba4d9c79db62b8bfda5f7847df5ec"
     },
     {
       "path": "vendor/pi/packages/ai/src/utils/sanitize-unicode.ts",
@@ -884,7 +884,7 @@
     },
     {
       "path": "vendor/pi/packages/ai/src/utils/version.ts",
-      "sha256": "ec3bf49beeb96329973582ba39d00d6b31a1147fe49dec4c015c53236f7b36ac"
+      "sha256": "ab4da932eb2578ed1026c610c7cd2e4b1af93daf7c3a11f211096cdb811caf45"
     },
     {
       "path": "vendor/pi/packages/coding-agent/src/config.ts",
@@ -893,6 +893,22 @@
     {
       "path": "vendor/pi/packages/coding-agent/src/core/diagnostics.ts",
       "sha256": "1914431098db1b4638e4fb3582ac22e8125356c4ab024671494f565c6d5ffb39"
+    },
+    {
+      "path": "vendor/pi/packages/coding-agent/src/core/model-config.ts",
+      "sha256": "792fe48456eae6175f121a4ef8bc15ebabccfd7f09691850eff2764f79f3a122"
+    },
+    {
+      "path": "vendor/pi/packages/coding-agent/src/core/pi-ai-schemas.ts",
+      "sha256": "ba5a59729646209cbfa870d8a9b3def24d51c2eb21b1ea6a6a331690c35cddd8"
+    },
+    {
+      "path": "vendor/pi/packages/coding-agent/src/core/provider-composer.ts",
+      "sha256": "89288d91995a97987eaa126a11f04216c400e6a8386bdef6061fd1fac95f8473"
+    },
+    {
+      "path": "vendor/pi/packages/coding-agent/src/core/resolve-config-value.ts",
+      "sha256": "0f53dad47fe5d5d8837c022b7951ccd3bd5a9b577bd662f0986272110e83bcc7"
     },
     {
       "path": "vendor/pi/packages/coding-agent/src/core/skills.ts",
@@ -911,8 +927,16 @@
       "sha256": "99142d78b94e658e0be65cf05046be8069b3700168a683e0af64219ad903bcd6"
     },
     {
+      "path": "vendor/pi/packages/coding-agent/src/utils/json.ts",
+      "sha256": "7ee95ee422abcc3610033e27d1e1da08ebadac0502b6326a1540b64843a084dd"
+    },
+    {
       "path": "vendor/pi/packages/coding-agent/src/utils/paths.ts",
       "sha256": "c8a2995b52a181e46cfae3b30f31448d201742d303249f34119ef2fd7a44e672"
+    },
+    {
+      "path": "vendor/pi/packages/coding-agent/src/utils/shell.ts",
+      "sha256": "bacb0f871b92e38ac17221e0c1b00ac5211e0f5c0063675afd980513c7c79fb4"
     },
     {
       "path": "vendor/pi/packages/coding-agent/src/utils/text.ts",

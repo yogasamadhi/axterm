@@ -4,16 +4,9 @@
 import { readFileSync } from 'node:fs';
 import { dirname, isAbsolute, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import * as yaml from 'js-yaml';
 import type { EntryOptions } from '@deepseek-ai/cordis-plugin-loader';
-import { entryListSchema, type PatchOptions } from '@deepseek-ai/cordis-plugin-include';
+import { parseEntryYaml, type PatchOptions } from '@deepseek-ai/cordis-plugin-include';
 import { configurationParseFailure } from './configuration-error.ts';
-// The include's YAML dialect (`!!js` scalars become expression nodes the
-// Loader interpolates against each entry's injection-ready context), imported
-// from the include itself so patch parsing and config dumping can never drift
-// from what the include mounts. User patch layers share it so they may
-// reference `process.env`.
-const userPatchesSchema = entryListSchema;
 
 /**
  * Load an optional patch-list file: a top-level YAML array of loader patch
@@ -96,7 +89,7 @@ function parsePatchList(
 ): PatchOptions[] {
   let parsed: unknown;
   try {
-    parsed = yaml.load(content, { schema: userPatchesSchema });
+    parsed = parseEntryYaml(content);
   } catch (error) {
     throw configurationParseFailure(`${binName}: failed to parse ${label} ${file}`, error);
   }

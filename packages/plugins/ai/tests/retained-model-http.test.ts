@@ -113,7 +113,7 @@ describe('Pi protocols and legacy model discovery', () => {
         expect(JSON.stringify(requests[1]?.body)).toContain('bounded context');
         if (protocol === 'anthropic') {
           expect(requests[1]?.version).toBe('2023-06-01');
-          expect(requests[1]?.body).toMatchObject({ max_tokens: 4096 });
+          expect(requests[1]?.body).toMatchObject({ max_tokens: 16384 });
         }
         const deltas = result.filter((event) => event.type === 'delta');
         expect(deltas.map((event) => event.text).join('')).toBe('Hello');

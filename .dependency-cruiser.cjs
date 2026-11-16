@@ -114,7 +114,7 @@ module.exports = {
       to: {
         path: '(^|/)vendor/',
         pathNot:
-          '^vendor/(pi/packages/((ai|agent|telemetry)/src/|schema/src/index\\.ts$)|pi-auto-review/src/(policy\\.ts|path-surfaces\\.ts|review/shell-text\\.ts)$)',
+          '^vendor/(pi/packages/((ai|agent|telemetry)/src/|schema/src/index\\.ts$|coding-agent/src/core/(provider-composer|model-config)\\.ts$)|pi-auto-review/src/(policy\\.ts|path-surfaces\\.ts|review/shell-text\\.ts)$)',
       },
     },
     {
@@ -123,7 +123,7 @@ module.exports = {
       from: {
         path: '^(apps|packages)/',
         pathNot:
-          '^packages/(pi-engine/|runtime/src/adapters/ai/|engines/pi/src/index\\.ts$|plugins/ai/src/adapters/(command-review|pi-metadata)\\.ts$)',
+          '^packages/(pi-engine/|runtime/src/adapters/ai/|engines/pi/src/(index|credential-store|login-owner)\\.ts$|plugins/ai/src/adapters/(command-review|pi-metadata)\\.ts$)',
       },
       to: { path: '^packages/pi-engine/' },
     },

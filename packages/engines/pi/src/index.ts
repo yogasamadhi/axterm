@@ -14,6 +14,8 @@ import { streamPiAgent, piCatalog, type PiProviderConfig } from '@axterm/engine-
 import { Config, piEngineConfigSchema, piExecutionBindingSchema } from './config.ts';
 import { requestThroughProxy } from './proxy-http.ts';
 import { VisibleSecrets } from './visible-secrets.ts';
+import { PiVaultCredentials } from './credential-store.ts';
+import { PiLoginOwner } from './login-owner.ts';
 export { Config, piEngineConfigSchema };
 export const inject = ['engines', 'credentials'];
 
@@ -92,8 +94,11 @@ export class PiEngineProvider implements EngineProvider {
           provider.models.some((model) => model.id === input.model),
       );
     if (!known) throw new EngineError('missing');
-    const apiKey = await this.resolve(configured.credentialRef, signal);
-    const resolvedSecrets = [apiKey];
+    const apiKey =
+      configured.credentialMode === 'pi'
+        ? undefined
+        : await this.resolve(configured.credentialRef, signal);
+    const resolvedSecrets = apiKey ? [apiKey] : [];
     const headers: Record<string, string | null> = Object.create(null) as Record<
       string,
       string | null
@@ -104,9 +109,26 @@ export class PiEngineProvider implements EngineProvider {
       resolvedSecrets.push(value);
     }
     const visible = new VisibleSecrets(resolvedSecrets);
+    const credentialStore =
+      configured.credentialMode === 'pi'
+        ? new PiVaultCredentials(
+            this.ctx.credentials,
+            configured.provider,
+            configured.credentialRef,
+            (value) => {
+              const values =
+                value.type === 'oauth'
+                  ? [value.access, value.refresh]
+                  : [value.key ?? '', ...Object.values(value.env ?? {})];
+              for (const secret of values)
+                if (secret && !resolvedSecrets.includes(secret)) resolvedSecrets.push(secret);
+              if (!activeSignal.aborted) visible.addSecrets(values);
+            },
+          )
+        : undefined;
     const containsSecret = (text: string) =>
       resolvedSecrets.some((secret) => secret && text.includes(secret));
-    if (configured.legacy) {
+    if (configured.legacy && apiKey) {
       if (configured.legacy.auth === 'x-api-key') {
         headers['x-api-key'] = apiKey;
         headers.authorization = null;
@@ -236,6 +258,7 @@ export class PiEngineProvider implements EngineProvider {
         baseUrl: configured.baseUrl,
         model: input.model,
         apiKey,
+        ...(credentialStore ? { credentialStore } : {}),
         headers,
         timeoutMs: configured.timeoutMs,
         system: input.system,
@@ -314,6 +337,9 @@ export class PiEngineProvider implements EngineProvider {
     }
   }
 }
-export function apply(ctx: Context, config: Config): void {
+export function apply(ctx: Context, config: Config): () => Promise<void> {
+  const login = new PiLoginOwner(ctx);
+  ctx.reflect.provide('piProviderAuth', login);
   ctx.engines.register('pi', new PiEngineProvider(ctx, config));
+  return () => login.close();
 }

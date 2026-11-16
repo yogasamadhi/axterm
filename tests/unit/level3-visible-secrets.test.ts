@@ -1,5 +1,16 @@
 import { expect, it } from 'vitest';
 import { VisibleSecrets } from '../../packages/engines/pi/src/visible-secrets.ts';
+it('redacts rotated OAuth tokens across chunks while preserving a pending old credential suffix', () => {
+  const filter = new VisibleSecrets(['OLD_ACCESS']);
+  expect(filter.push('visible OLD_')).toBe('visible ');
+  filter.addSecrets(['NEW_ACCESS', 'NEW_REFRESH']);
+  const text =
+    filter.push('ACCESS NEW_') +
+    filter.push('ACCESS NEW_REF') +
+    filter.push('RESH done') +
+    filter.finish();
+  expect(text).toBe('[REDACTED_KNOWN_SECRET] [REDACTED_KNOWN_SECRET] [REDACTED_KNOWN_SECRET] done');
+});
 it('redacts a known credential across every possible event boundary without delaying ordinary text', () => {
   const secret = 'CONTROLLED_API_KEY';
   const text = 'before ' + secret + ' after';

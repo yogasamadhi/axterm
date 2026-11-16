@@ -8,17 +8,16 @@ export {
 } from '../../../vendor/pi-auto-review/src/policy.ts';
 import { obj, str, unsafe } from '../../../vendor/pi/packages/schema/src/index.ts';
 import type { AgentMessage, AgentTool } from '../../../vendor/pi/packages/agent/src/types.ts';
-import type { Model, Message, ProviderStreams } from '../../../vendor/pi/packages/ai/src/types.ts';
+import type { Message } from '../../../vendor/pi/packages/ai/src/types.ts';
 import { builtinProviders } from '../../../vendor/pi/packages/ai/src/providers/all.ts';
-import { openAICompletionsApi } from '../../../vendor/pi/packages/ai/src/api/openai-completions.lazy.ts';
-import { openAIResponsesApi } from '../../../vendor/pi/packages/ai/src/api/openai-responses.lazy.ts';
-import { azureOpenAIResponsesApi } from '../../../vendor/pi/packages/ai/src/api/azure-openai-responses.lazy.ts';
-import { anthropicMessagesApi } from '../../../vendor/pi/packages/ai/src/api/anthropic-messages.lazy.ts';
-import { googleGenerativeAIApi } from '../../../vendor/pi/packages/ai/src/api/google-generative-ai.lazy.ts';
-import { mistralConversationsApi } from '../../../vendor/pi/packages/ai/src/api/mistral-conversations.lazy.ts';
-import { piMessagesApi } from '../../../vendor/pi/packages/ai/src/api/pi-messages.lazy.ts';
+import { createModels } from '../../../vendor/pi/packages/ai/src/models.ts';
+export { loginPiProvider } from './login.ts';
+import { composeModelProvider } from '../../../vendor/pi/packages/coding-agent/src/core/provider-composer.ts';
+import type {
+  ModelConfig,
+  ModelsJsonProvider,
+} from '../../../vendor/pi/packages/coding-agent/src/core/model-config.ts';
 import type { PiApi, PiCatalogProvider, PiEngineEvent, PiEngineRequest } from './public';
-import { modelFetchScope } from './scoped-fetch';
 import skills from '../catalog/skills.generated.json' with { type: 'json' };
 
 export function piSkills() {
@@ -26,24 +25,37 @@ export function piSkills() {
 }
 
 const providers = builtinProviders();
-const apis: Record<PiApi, ProviderStreams> = {
-  'openai-completions': openAICompletionsApi(),
-  'openai-responses': openAIResponsesApi(),
-  'azure-openai-responses': azureOpenAIResponsesApi(),
-  'anthropic-messages': anthropicMessagesApi(),
-  'google-generative-ai': googleGenerativeAIApi(),
-  'mistral-conversations': mistralConversationsApi(),
-  'pi-messages': piMessagesApi(),
-};
+// Only APIs with a bounded desktop transport and a portable configuration contract.
+const supportedApis = new Set<string>([
+  'openai-completions',
+  'openai-responses',
+  'azure-openai-responses',
+  'anthropic-messages',
+  'google-generative-ai',
+  'mistral-conversations',
+  'pi-messages',
+  'openai-codex-responses',
+  'google-vertex',
+  'bedrock-converse-stream',
+]);
 
 export function piCatalog(): PiCatalogProvider[] {
   return providers.map((provider) => {
-    const models = provider.getModels().filter((model) => Object.hasOwn(apis, model.api));
+    const models = provider.getModels().filter((model) => supportedApis.has(model.api));
     return {
       id: provider.id,
       name: provider.name,
       baseUrl: provider.baseUrl ?? models[0]?.baseUrl ?? '',
       apiKeyAvailable: !!provider.auth.apiKey && models.length > 0,
+      ...(provider.auth.oauth
+        ? {
+            oauth: {
+              name: provider.auth.oauth.name,
+              label: provider.auth.oauth.loginLabel ?? provider.auth.oauth.name,
+              subscription: provider.auth.oauth.isSubscription ?? false,
+            },
+          }
+        : {}),
       models: models.map(({ id, name, api, reasoning, input, cost, contextWindow, maxTokens }) => ({
         id,
         name,
@@ -63,36 +75,48 @@ export function piCatalog(): PiCatalogProvider[] {
   });
 }
 
-function resolveModel(request: PiEngineRequest): Model<PiApi> {
-  const builtin = providers
-    .find(({ id }) => id === request.provider.id)
-    ?.getModels()
-    .find(({ id }) => id === request.model);
-  const custom = request.provider.models.find(({ id }) => id === request.model);
+function resolveProvider(request: PiEngineRequest) {
+  const builtin = providers.find(({ id }) => id === request.provider.id);
+  // Pi's composer consumes only this immutable metadata view. In particular, no
+  // credentials/headers/expressions enter its config-value resolver or file loader.
+  const config: ModelsJsonProvider = {
+    baseUrl: request.baseUrl || undefined,
+    api: request.provider.api,
+    models: request.provider.models,
+    modelOverrides: request.provider.modelOverrides,
+  };
+  // The pinned composer reads only getProvider; ModelConfig's constructor is file-only.
+  const hasConfig =
+    request.baseUrl ||
+    request.provider.models.length ||
+    Object.keys(request.provider.modelOverrides).length;
+  const snapshot = {
+    getProvider: () => (hasConfig ? config : undefined),
+  } as unknown as ModelConfig;
+  const provider = composeModelProvider(request.provider.id, builtin, snapshot, undefined);
+  const resolved = provider.getModels().find(({ id }) => id === request.model);
+  if (!resolved) throw new Error('Unknown Pi model');
   const override = request.provider.modelOverrides[request.model];
-  const metadata = { ...builtin, ...custom, ...override };
-  const api = override?.api ?? custom?.api ?? request.provider.api ?? builtin?.api;
-  if (!api || !Object.hasOwn(apis, api)) throw new Error('Unsupported Pi model API');
-  return {
-    ...metadata,
-    id: request.model,
-    name: metadata.name ?? request.model,
-    provider: request.provider.id,
+  const api = override?.api ?? resolved.api;
+  if (!supportedApis.has(api)) throw new Error('Unsupported Pi model API');
+  const model = {
+    ...resolved,
     api: api as PiApi,
-    baseUrl: override?.baseUrl ?? custom?.baseUrl ?? request.baseUrl,
-    reasoning: metadata.reasoning ?? false,
-    input: metadata.input ?? ['text'],
-    cost: metadata.cost ?? { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-    contextWindow: metadata.contextWindow ?? 128_000,
-    maxTokens: Math.min(metadata.maxTokens ?? 4_096, 32_768),
-    compat: { ...builtin?.compat, ...custom?.compat, ...override?.compat },
-  } as Model<PiApi>;
+    baseUrl: override?.baseUrl ?? resolved.baseUrl,
+    maxTokens: Math.min(resolved.maxTokens, 32_768),
+  };
+  return { provider, model };
 }
 
 export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<PiEngineEvent> {
   const controller = new AbortController();
   const signal = AbortSignal.any([request.signal, controller.signal]);
-  const model = resolveModel(request);
+  const { provider, model } = resolveProvider(request);
+  const models = request.credentialStore
+    ? createModels({ credentials: request.credentialStore })
+    : undefined;
+  models?.setProvider(provider);
+  const streamProvider = models ?? provider;
   // A rendezvous channel applies backpressure; it never retains unconsumed model events.
   let pending: { event: PiEngineEvent; consumed(): void } | undefined;
   let wake: (() => void) | undefined;
@@ -173,9 +197,9 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
           ? [
               {
                 name: 'workspace_exec',
-                label: 'Propose workspace command',
+                label: 'Execute workspace command',
                 description:
-                  'Request one command on the original workspace. Runtime reviews safe commands and pauses dangerous commands for confirmation. Continue only from actual results; never choose another host or directory.',
+                  'Execute one command directly on the selected terminal and host, using its current directory at dispatch. Subsequent calls follow directory changes in that terminal. Continue from actual results and retain the selected host.',
                 parameters: obj({ command: str({ minLength: 1, maxLength: 8192 }) }),
                 execute: async (toolCallId, args, toolSignal) => {
                   if (!request.executeCommand)
@@ -266,8 +290,9 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
         )
           throw new Error('Model provider request failed');
         const calls = message.content.filter((block) => block.type === 'toolCall');
-        if (calls.length) {
-          const call = calls[0]!;
+        if (calls.length && !executesTools && calls.length !== 1)
+          throw new Error('Invalid application tool request');
+        for (const call of calls) {
           const args = call.arguments;
           const commandCall =
             request.allowCommandProposal &&
@@ -285,11 +310,7 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
             typeof args.request === 'object' &&
             args.request !== null &&
             !Array.isArray(args.request);
-          if (
-            calls.length !== 1 ||
-            message.stopReason === 'length' ||
-            (!commandCall && !pluginCall)
-          )
+          if (message.stopReason === 'length' || (!commandCall && !pluginCall))
             throw new Error('Invalid application tool request');
         }
         await emit({
@@ -304,26 +325,27 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
     },
     signal,
     (m, context, options) => {
-      if (m.api !== 'google-generative-ai')
-        return apis[m.api as PiApi].streamSimple(m, context, options);
-      // Pi's Google adapter does not expose SDK fetch injection. The build binds its SDK
-      // to this request-local transport, without changing process-global fetch.
-      return modelFetchScope.run(request.fetch, () =>
-        apis['google-generative-ai'].streamSimple(m, context, {
+      if (m.api === 'bedrock-converse-stream')
+        return streamProvider.streamSimple(m, context, {
           ...options,
           fetch: undefined,
-          onPayload: (value) => {
-            const payload = value as { config?: { httpOptions?: Record<string, unknown> } };
-            return {
-              ...payload,
-              config: {
-                ...payload.config,
-                httpOptions: { ...payload.config?.httpOptions, retryOptions: { attempts: 1 } },
-              },
-            };
-          },
-        }),
-      );
+          signal: AbortSignal.any([signal, AbortSignal.timeout(request.timeoutMs)]),
+        });
+      if (m.api !== 'google-generative-ai' && m.api !== 'google-vertex')
+        return streamProvider.streamSimple(m, context, options);
+      return streamProvider.streamSimple(m, context, {
+        ...options,
+        onPayload: (value) => {
+          const payload = value as { config?: { httpOptions?: Record<string, unknown> } };
+          return {
+            ...payload,
+            config: {
+              ...payload.config,
+              httpOptions: { ...payload.config?.httpOptions, retryOptions: { attempts: 1 } },
+            },
+          };
+        },
+      });
     },
   )
     .catch((error: unknown) => {

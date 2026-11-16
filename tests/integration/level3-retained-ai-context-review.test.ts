@@ -391,6 +391,7 @@ describe('Runtime context review binding', () => {
         f.service.start(
           {
             ...reviewed,
+            mode: 'work',
             tool: { name: 'terminal.exec', args: { command: 'never' }, target: f.input.terminalId },
           },
           randomUUID(),

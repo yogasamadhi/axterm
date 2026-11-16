@@ -18,7 +18,6 @@ import { AiHostCapabilities } from './host-capabilities.ts';
 import { AiToolResources } from './tool-resources.ts';
 import { OwnedWorkspaceCommands } from './workspace-command.ts';
 import { AiToolService } from '../application/ai-tool-service.ts';
-import { commandReviewer } from './command-review.ts';
 import { AiOwnerLease } from './owner-coordination.ts';
 export const aiOwnerConfigSchema = z
   .object({
@@ -195,7 +194,7 @@ export class OwnedAiApplication {
       this.realtime,
       tools,
       models,
-      commandReviewer,
+      undefined,
       workspaces,
       ctx.runtimeIdentity.generation,
     );

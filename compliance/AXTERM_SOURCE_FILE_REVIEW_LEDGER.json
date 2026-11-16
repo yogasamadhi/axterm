@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Prepared independent source snapshot, excluding this review ledger",
-  "sourceScopeSha256": "c790175fbc1d17e500e0b1c85a67e5bb91c28530c05e8424fe8823f781b40a05",
+  "sourceScopeSha256": "02a0512e07ffbeb12ef47fd54e0f68fe50b54021221866093bc1779932f785a0",
   "limitations": [
     "A path and byte hash identify review scope; they do not establish authorship, license, rights or package inclusion.",
     "Git author metadata and prospective contribution rules do not grant retrospective permission for these bytes.",
@@ -12,8 +12,8 @@
     {
       "file": {
         "path": ".dependency-cruiser.cjs",
-        "bytes": 5277,
-        "sha256": "8fa1eb8d8d9229e6722ea42eb927d71abcc2c424a81159570f6d9f9a80b55e73"
+        "bytes": 5369,
+        "sha256": "536f9a10c148a3bc8f3ca12a1ea9e3b2f2b29e2e953d4bea816cfc6425dad4e8"
       },
       "review": {
         "status": "pending",
@@ -212,8 +212,8 @@
     {
       "file": {
         "path": "AGENTS.md",
-        "bytes": 1113,
-        "sha256": "272c104906f7ed95ac5e013f726adf9c3028c7ca30edcccab96b84b7be2ebdb5"
+        "bytes": 1446,
+        "sha256": "d393c8ac6a6b1ef1d9a35be1413f9bdb9b13500df2ce225cb3f6b5fcefbd3d58"
       },
       "review": {
         "status": "pending",
@@ -232,8 +232,8 @@
     {
       "file": {
         "path": "ARCHITECTURE.md",
-        "bytes": 3752,
-        "sha256": "c06d4f7b616e859b71b253b39f789ce1035dd6e0e0c152ae30bae444789c4092"
+        "bytes": 3859,
+        "sha256": "c82542b8852895bd6ae0431811cf5b26816ae7d50c39cb15f8c7b76b00765564"
       },
       "review": {
         "status": "pending",
@@ -252,8 +252,8 @@
     {
       "file": {
         "path": "CONTRIBUTING.md",
-        "bytes": 2816,
-        "sha256": "a6e1ade736a204db40255e7aca792413e7e448d2bcc597729cc279f603aaa363"
+        "bytes": 3017,
+        "sha256": "5e633693ff3d5b5c9a9433efb4a71441e712da10ed7e4938e43d0e3c26d0b11f"
       },
       "review": {
         "status": "pending",
@@ -373,7 +373,7 @@
       "file": {
         "path": "THIRD_PARTY_NOTICES.txt",
         "bytes": 27036,
-        "sha256": "1aca4fa6f8b2a08e30deed8a7c3ee7525e721a2a959930e56e3cd101de6a6593"
+        "sha256": "852248eaf19de6ede2fa4b87e730bbab3af6cff6f1832647af4a78faf331e109"
       },
       "review": {
         "status": "pending",
@@ -2073,7 +2073,7 @@
       "file": {
         "path": "compliance/AXTERM_PRODUCTION_DEPENDENCIES.spdx.json",
         "bytes": 225818,
-        "sha256": "663e3b2285eaa1db09f59db55123b3560cdb2ef93cba1502135f35717b901e87"
+        "sha256": "0e5ade2d7a9571e99dcbf37ed59a369ff975771f3f879d54fab4b46fdbbf2bef"
       },
       "review": {
         "status": "pending",
@@ -2113,7 +2113,7 @@
       "file": {
         "path": "compliance/DSH_FRAMEWORK_SOURCE.json",
         "bytes": 10937,
-        "sha256": "b1e34bc5d68f3f1a5911b19f75a8f706ce045e00ab6ab978fdc1987e434c7e29"
+        "sha256": "c49a8f6850e34d29e3cddf2660d66d62698003d8fe2b1b4a387b4dcdfe8349a1"
       },
       "review": {
         "status": "pending",
@@ -2313,7 +2313,7 @@
       "file": {
         "path": "compliance/THIRD_PARTY_COMPONENTS.json",
         "bytes": 31903,
-        "sha256": "e2fd5eb65f458d49b3629a3e276cf31081cad9ed4b48b2d00a74ed89e169cf03"
+        "sha256": "6bdbf836ee3e5b62d0caabd9faea8f8a81ee9e8cb0cc86fae1fab0a7e77fb8c9"
       },
       "review": {
         "status": "pending",
@@ -2333,7 +2333,7 @@
       "file": {
         "path": "compliance/THIRD_PARTY_LICENSE_TEXTS.json",
         "bytes": 1000719,
-        "sha256": "893710fb4e0c7eb7d6833704874a7493a95d43dde5a822de626bec35b1eb7e30"
+        "sha256": "8ca366acaed083852896193611f8017d50584d82e3e24b616e9683d40c687362"
       },
       "review": {
         "status": "pending",
@@ -3152,8 +3152,8 @@
     {
       "file": {
         "path": "package.json",
-        "bytes": 16225,
-        "sha256": "0c9dd8f5e1890e5f02b6ea9051a2a8ba42dc46bf6693196489c32fcca7489383"
+        "bytes": 16285,
+        "sha256": "b75e5a870070dedef1447c581fdda86746892bb74a3c074b5696f37a0753b172"
       },
       "review": {
         "status": "pending",
@@ -3472,8 +3472,8 @@
     {
       "file": {
         "path": "packages/api/plugin-api/src/ai.ts",
-        "bytes": 22604,
-        "sha256": "7d9333b0b169cd6b217678e669d2fff4fed9b44977a20527a73699bea491494c"
+        "bytes": 25224,
+        "sha256": "9bd62a11c80649cdcb81348636d72d5d1a453926808bf871d87cc3ce54c8ec46"
       },
       "review": {
         "status": "pending",
@@ -3812,8 +3812,8 @@
     {
       "file": {
         "path": "packages/api/plugin-api/src/host/ai.ts",
-        "bytes": 706,
-        "sha256": "a634d7299746e452698c642c414c44928a50d9b17e67ceee588d112e5f10141c"
+        "bytes": 1070,
+        "sha256": "5dd69a2c45d7e1ee9293337d13613186a24c5a0c240db5a7868f102ba4958cba"
       },
       "review": {
         "status": "pending",
@@ -4212,8 +4212,8 @@
     {
       "file": {
         "path": "packages/api/plugin-api/src/index.ts",
-        "bytes": 20737,
-        "sha256": "4e16cb5da45a554e866f2bbaf788364e79fee9e5da294320b017ad116f9232f3"
+        "bytes": 20763,
+        "sha256": "bea4e8e6e4926342e2d628af97c4c0d3ae1b3907066142fe42e4e654c8b7d386"
       },
       "review": {
         "status": "pending",
@@ -6672,8 +6672,28 @@
     {
       "file": {
         "path": "packages/engines/pi/src/config.ts",
-        "bytes": 4063,
-        "sha256": "7fdfcd9c1f54d904d1b00bc00a0c809c2e42451b44eda63f4b7955fc9fc0bfa8"
+        "bytes": 4213,
+        "sha256": "6504a93ac34b6f8cd83071cf064adc77b1c7f345cfb39e776e0ddb4f7d76836d"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/engines/pi/src/credential-store.ts",
+        "bytes": 2727,
+        "sha256": "3b7e894fb5e1dd3eaf7edd6107a7e1431b12a6687912ecb329680fbeeff2c562"
       },
       "review": {
         "status": "pending",
@@ -6712,8 +6732,28 @@
     {
       "file": {
         "path": "packages/engines/pi/src/index.ts",
-        "bytes": 12476,
-        "sha256": "8cd67fa8f13a2cf57e3b23e13ca5411d3d865ffa47a69c107a90fd778e645bdd"
+        "bytes": 13549,
+        "sha256": "ae1c47c604dcace0a3cf8ffa05e3a60126cf5aeae76739fe1f9b771410aa1e07"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/engines/pi/src/login-owner.ts",
+        "bytes": 5972,
+        "sha256": "efb7b8ab45c3a7be0ab3f7966a02c96b4b61afa464251f7da04a2512195a0d1a"
       },
       "review": {
         "status": "pending",
@@ -6752,8 +6792,8 @@
     {
       "file": {
         "path": "packages/engines/pi/src/visible-secrets.ts",
-        "bytes": 4261,
-        "sha256": "b47f67fdbcfb7a62793507006947b3852fb201d8a431d75141d6adc7555b33ef"
+        "bytes": 5217,
+        "sha256": "5a4120fcd4322c191ee1d1defd02a9cf0a56471423fb41ea41e7dc8e73659dec"
       },
       "review": {
         "status": "pending",
@@ -7032,8 +7072,8 @@
     {
       "file": {
         "path": "packages/infra/app-boot/package.json",
-        "bytes": 1648,
-        "sha256": "1516a9f24c33bbc946cf81d34dfd4b684ca06b49ef4b3366c699e02e7a26ccb5"
+        "bytes": 1623,
+        "sha256": "393d302a4c5bb2024658c5516f4d3cf5525a7cc0d06e540d969a0caa9ad6b61f"
       },
       "review": {
         "status": "pending",
@@ -7072,8 +7112,8 @@
     {
       "file": {
         "path": "packages/infra/app-boot/src/compatibility-preflight.ts",
-        "bytes": 10385,
-        "sha256": "bbc0a39a20f3b65a37a13e506377fa7485e2d5210ff88274da6343dfd70af80b"
+        "bytes": 10333,
+        "sha256": "78fd639b3b81961746dedf20bc80727e0b899b36bf1938bde23faf140626ee70"
       },
       "review": {
         "status": "pending",
@@ -7092,8 +7132,8 @@
     {
       "file": {
         "path": "packages/infra/app-boot/src/config-schema/collect.ts",
-        "bytes": 13283,
-        "sha256": "0ed3ddc1ff2dfffaa02183cb695cf8ff7fd1847e30592a77c13c871e722e7c9f"
+        "bytes": 12848,
+        "sha256": "1e61cba66d9f0178afc679b4bb851b4c40292c4e45f1836be4a2b7ec47916321"
       },
       "review": {
         "status": "pending",
@@ -7232,8 +7272,8 @@
     {
       "file": {
         "path": "packages/infra/app-boot/src/configuration-error.ts",
-        "bytes": 616,
-        "sha256": "bbff40c4a1b9914578bcf5d42480be839323b3d8d281eb03b697195aa465c2e6"
+        "bytes": 668,
+        "sha256": "a749356925b6fe1df8af754f475d4d72a19657d160012118298ee9f69eedfdbb"
       },
       "review": {
         "status": "pending",
@@ -7252,8 +7292,8 @@
     {
       "file": {
         "path": "packages/infra/app-boot/src/index.ts",
-        "bytes": 58858,
-        "sha256": "c21e35bfe7ecb17e7b3da8c3965362ce4990103c73a82ef6686616e41a00bcb4"
+        "bytes": 58788,
+        "sha256": "bff68e7d29f61ade3b0f6cb536398cfa267c2128aa89123a5ec6ad56693ea8fd"
       },
       "review": {
         "status": "pending",
@@ -7292,8 +7332,8 @@
     {
       "file": {
         "path": "packages/infra/app-boot/src/patch-files.ts",
-        "bytes": 5168,
-        "sha256": "a7e60e4db7080f2d475f3f37903f006b039062a84114ace965ce3610912571df"
+        "bytes": 4733,
+        "sha256": "93a3cf78b3f88b81336eaa3d14422342367b77f62f7b4a378f61e367cb501522"
       },
       "review": {
         "status": "pending",
@@ -8572,8 +8612,8 @@
     {
       "file": {
         "path": "packages/infra/connection/src/index.ts",
-        "bytes": 8032,
-        "sha256": "eb69a379f1072a171b6e493d1598ac9b95f2d1e232819942870eaeeeee197ae8"
+        "bytes": 8036,
+        "sha256": "2e9e3aa3d88d3db713a7732dda4fe99add9dcd2f3d46e3a543f88d73f37f9c34"
       },
       "review": {
         "status": "pending",
@@ -10092,8 +10132,8 @@
     {
       "file": {
         "path": "packages/infra/hmr/src/index.ts",
-        "bytes": 52867,
-        "sha256": "b4f2c91fa74bb9314c1253fe4eba7a3ccdc788188858dd6cda19a63d5a69e398"
+        "bytes": 52860,
+        "sha256": "0e11adcd05f1670f28c744d5d634d7052c756eceb7c7e1c20288577f02234810"
       },
       "review": {
         "status": "pending",
@@ -14452,8 +14492,8 @@
     {
       "file": {
         "path": "packages/pi-engine/catalog/models.all.json",
-        "bytes": 965127,
-        "sha256": "175c0d73533fad08fdd1554932a4993c37564d2a2ea084cbcc2126772fbf906f"
+        "bytes": 977010,
+        "sha256": "4cbd75daee429216860f6e5b7e13b4ddb12b495f6947061e5777edd27ce0b4f1"
       },
       "review": {
         "status": "pending",
@@ -14473,7 +14513,7 @@
       "file": {
         "path": "packages/pi-engine/catalog/provenance.json",
         "bytes": 311,
-        "sha256": "a6b1b08176607a2a898c58541e75bd5181ecb69da00f2be33cc4897f214425fb"
+        "sha256": "5e7bd7ec0fa4248ce3f879b7cdedae33bdd4caa40ccc5d5f77c52cdd4540e1e6"
       },
       "review": {
         "status": "pending",
@@ -14513,7 +14553,7 @@
       "file": {
         "path": "packages/pi-engine/package.json",
         "bytes": 599,
-        "sha256": "654a0a744c5f2731b89fbfd141b9ecc7dc13784058e8f8018fbd106d728eb1f6"
+        "sha256": "01141c5c03c9ce05e00728a46b2f292193b81af92438e25a82008d9578cd77d6"
       },
       "review": {
         "status": "pending",
@@ -14612,8 +14652,8 @@
     {
       "file": {
         "path": "packages/pi-engine/source-manifest.json",
-        "bytes": 46325,
-        "sha256": "b5ddbcaf558e9572ae604356d457bd91a20dbafda96c6de3efdf5fb0dc7733d1"
+        "bytes": 47346,
+        "sha256": "31020c4cfcdeb7106d4c4e99f79bb5f9d4e4f2ef57016f2818e967241772cfe2"
       },
       "review": {
         "status": "pending",
@@ -14632,8 +14672,28 @@
     {
       "file": {
         "path": "packages/pi-engine/src/index.ts",
-        "bytes": 14709,
-        "sha256": "6aec712b329d7c630cd472a1ca4304153635f46956145fe32993b566c8e44d5c"
+        "bytes": 15067,
+        "sha256": "665f0ff43616b9d2c4ddcbbf60b62eb941eefe89f0b4b130525e425b3563bd85"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/pi-engine/src/login.ts",
+        "bytes": 2815,
+        "sha256": "558b9db558a0a5b051dd2725bbbec4a7397690bb8f641aac6a4d78a80e10ed21"
       },
       "review": {
         "status": "pending",
@@ -14652,28 +14712,8 @@
     {
       "file": {
         "path": "packages/pi-engine/src/public.ts",
-        "bytes": 3236,
-        "sha256": "5d838f28d986f09ef77a32e0d1a590635291d9ec84e447a8da7b34a27f8c2d88"
-      },
-      "review": {
-        "status": "pending",
-        "originKind": null,
-        "source": null,
-        "license": null,
-        "rightsHolder": null,
-        "distribution": null,
-        "disposition": null,
-        "reviewer": null,
-        "reviewedAt": null,
-        "evidence": [],
-        "conclusion": null
-      }
-    },
-    {
-      "file": {
-        "path": "packages/pi-engine/src/scoped-fetch.ts",
-        "bytes": 359,
-        "sha256": "85c8cb9f0ac0f08fa2c755b14f27d547c1df64f9bd2b71d4a757b3b9916089be"
+        "bytes": 4563,
+        "sha256": "a6441607e1c5e66d5915b741e4370a22cc39eb7e8dfcad660356c0db8400c7f1"
       },
       "review": {
         "status": "pending",
@@ -14692,8 +14732,8 @@
     {
       "file": {
         "path": "packages/pi-engine/tsconfig.json",
-        "bytes": 1853,
-        "sha256": "59c83d43a47ba05636a1fdd280911761b38996d23c4e6a5d394fe08506651ea6"
+        "bytes": 2339,
+        "sha256": "d8f6a313df8e1cd50b88daa40456a2cb9071c9e0c589a822f2b815ada100e510"
       },
       "review": {
         "status": "pending",
@@ -14732,8 +14772,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/README.md",
-        "bytes": 5123,
-        "sha256": "0fc5745810b92a4bc32ec73df6211f3d5327d7839516a99190e7d330cf8f734a"
+        "bytes": 2259,
+        "sha256": "efd64ca78c370a6a11cd0b64f8c660b9e26358e4d39354c579dd6cc770f6a9c7"
       },
       "review": {
         "status": "pending",
@@ -14792,8 +14832,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/adapters/application-owner.ts",
-        "bytes": 8019,
-        "sha256": "042e7be6303025f68c56db18e3ce188a28ae8317cb5f9ab4e804df8685f9a103"
+        "bytes": 7958,
+        "sha256": "8fb26c1b5a5a7ab0bc7b57f824e3fa9df94739345df4c4fdcd31a8122dfada28"
       },
       "review": {
         "status": "pending",
@@ -14892,8 +14932,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/adapters/host-capabilities.ts",
-        "bytes": 7440,
-        "sha256": "b14f3bd1dee7923c95bfffd582f3c4108bd963b89f057b8d6a38007189e32c73"
+        "bytes": 7931,
+        "sha256": "c868d68592cb457e1f06cc5589ad814e970f0d39e25183954a719795c9507f44"
       },
       "review": {
         "status": "pending",
@@ -14972,8 +15012,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/adapters/models.ts",
-        "bytes": 8068,
-        "sha256": "e18f05b21c9c5a0f57c5ce831fda69406da4a891533604bbbed29ca270fae621"
+        "bytes": 8198,
+        "sha256": "6c5cd7fd565832eb5d887b43b4c118592472b9047647b4ea4409a9c568f0fd0f"
       },
       "review": {
         "status": "pending",
@@ -15172,8 +15212,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/application/ai-context.ts",
-        "bytes": 9349,
-        "sha256": "99172caa7ebcc559d73523319fcb6a49e6f6cc62e41ad1684dc6708dc0e0fde2"
+        "bytes": 9236,
+        "sha256": "27d3cc64582c9ea69f1a6e0e07f60c621ade66a7d1dbd779c43e45746dd98d1d"
       },
       "review": {
         "status": "pending",
@@ -15192,8 +15232,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/application/ai-service.ts",
-        "bytes": 65341,
-        "sha256": "8de9f7c775f7f71b5b760e2af89d3c0bcf89d08ab0d6ae3f81b0f914c5f99701"
+        "bytes": 61999,
+        "sha256": "3df6614db1b55c24d52b715da484c95a3dab2f9450255c5ff88326f42b43a0b6"
       },
       "review": {
         "status": "pending",
@@ -15372,8 +15412,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/index.ts",
-        "bytes": 16102,
-        "sha256": "772d45c42f05ae6217169dd3c0bf45413ef9de06b2ac98950fe1f4aaf12f46be"
+        "bytes": 16752,
+        "sha256": "dff6860a4d91531ccbc6a33729f2de728b9cdca20625dd35633b6811b776cee2"
       },
       "review": {
         "status": "pending",
@@ -15392,8 +15432,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/panel-queries.ts",
-        "bytes": 4284,
-        "sha256": "23bab67f44e547f445ed0fc632ccf589e8096d5d010e60c2fd4455d29118e17b"
+        "bytes": 5728,
+        "sha256": "95de25ced520386a4c5127d585265aca934e24fd9c45f35de93507dd4ee01870"
       },
       "review": {
         "status": "pending",
@@ -15572,8 +15612,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/ai-panel.tsx",
-        "bytes": 66943,
-        "sha256": "d4df17526ec7be3e6ddf0d5719e2963421c85c37132764704406157f1378d410"
+        "bytes": 72834,
+        "sha256": "700fb531b643c5394dce9b52c2a39a3e9fabb0822846de013c2b3b7a09cbb2ef"
       },
       "review": {
         "status": "pending",
@@ -15832,8 +15872,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/index.tsx",
-        "bytes": 10835,
-        "sha256": "bdcf9ae413eb7b797211f9d23aacabca9df9fe3ea682beaea7791620db7ff69c"
+        "bytes": 10771,
+        "sha256": "2c5b9bf09d8bc4ad78e9bb4c2849997858f0472c2e7a9906f2140f59796d52ff"
       },
       "review": {
         "status": "pending",
@@ -15852,8 +15892,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/locales.ts",
-        "bytes": 55574,
-        "sha256": "c6a5a044dfddbab6d1915c6a1c7b96eddaa4eef48eb06e501985908928156050"
+        "bytes": 61274,
+        "sha256": "bbda484957eff9c4cf0662b3237238bf1fcaa52a5dfa34841bdf4268ed547c96"
       },
       "review": {
         "status": "pending",
@@ -15872,8 +15912,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/panel-actions.ts",
-        "bytes": 9550,
-        "sha256": "fe8665c7db26ab72348f3099b882aea923fc20d0b54e2d63d6d26b3b061bc672"
+        "bytes": 10150,
+        "sha256": "68dab92a6a64b286357158de0fa1fc8bff7d37011d0aa007e4aaae0a6618e692"
       },
       "review": {
         "status": "pending",
@@ -15912,8 +15952,28 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/pi-configuration.ts",
-        "bytes": 3731,
-        "sha256": "b7ef0da194030f4883e868b406b0f3c55111ecce9067652631cfe87cc138a2de"
+        "bytes": 3964,
+        "sha256": "ba34d7703110f4b31a74f8cf4e913a8bf7096247606836cd390f32850678760f"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/plugins/ai/src/client/ui/pi-model-picker.tsx",
+        "bytes": 1169,
+        "sha256": "098f72b1697d6125b306815539b5dd56022fa90c0dcb83befe24a1aba1a14dd6"
       },
       "review": {
         "status": "pending",
@@ -15932,8 +15992,48 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/provider-detail.tsx",
-        "bytes": 971,
-        "sha256": "18395ac94a2db4adab820cc75fdeea0b031658535fe5ad7e58f5be8bf78224ec"
+        "bytes": 2878,
+        "sha256": "f6296b92cf3446fd82824583559c96212fa4677e9def2b90624dbca50937a18e"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/plugins/ai/src/client/ui/provider-login.tsx",
+        "bytes": 8256,
+        "sha256": "4f82ff55a6deb1297ac4ae12922716a4ad6156a31585af19c92732cd6f895735"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/plugins/ai/src/client/ui/provider-management.tsx",
+        "bytes": 9229,
+        "sha256": "00440a2768bda33a53c98713a7db2ae9e04b95370406bf4d2ef47c06c8ffd691"
       },
       "review": {
         "status": "pending",
@@ -16011,9 +16111,29 @@
     },
     {
       "file": {
+        "path": "packages/plugins/ai/src/client/ui/terminal-selection.ts",
+        "bytes": 1895,
+        "sha256": "52818f5f2d3d37201aa2776a295ad3b228b4b85658a429440c15297147ac48e4"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "packages/plugins/ai/src/client/ui/ui.module.css",
-        "bytes": 47896,
-        "sha256": "12021046b5ee3f3ebda23eca8eaaedeb04fa3db8c50f2fe55577c4b2d8179c26"
+        "bytes": 49240,
+        "sha256": "0fe4ea6ab98e3b53d570871d76dd5c5b4028f74c3e8fa8c4e9414e497baec7fd"
       },
       "review": {
         "status": "pending",
@@ -16112,8 +16232,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/controller.ts",
-        "bytes": 13243,
-        "sha256": "26b1a2006771cbdb9c661f33fdc5593041da71e22fb817139478a16a40375928"
+        "bytes": 16047,
+        "sha256": "6abb0a87859985f319e464cec09fba8e4c6e10245b16a12f8c6b713cc29cb4bc"
       },
       "review": {
         "status": "pending",
@@ -16232,8 +16352,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/ports/host.ts",
-        "bytes": 518,
-        "sha256": "6b1ceda5234b119d1a64ad3a659298b37d602052aa4d2e4ae85bd6894cf87754"
+        "bytes": 619,
+        "sha256": "3bab7c82343f08d79de3a5d96c2f26cfb1813a64f2ed5e84f76ecf0644a203cd"
       },
       "review": {
         "status": "pending",
@@ -16531,6 +16651,46 @@
     },
     {
       "file": {
+        "path": "packages/plugins/ai/tests/provider-login.client.test.tsx",
+        "bytes": 5767,
+        "sha256": "a63d10d626731b740385353ee16d2209073e1cfcbc1dde0e9c25cbf35ac9ac7b"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/plugins/ai/tests/provider-save.client.test.tsx",
+        "bytes": 15836,
+        "sha256": "783d2df7d224309f3bfba23141e41172dc18968fb5079e7643f044bfbf33edf5"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "packages/plugins/ai/tests/reader-hooks.client.test.ts",
         "bytes": 1498,
         "sha256": "e14bd703adea5331900bd4927beec5953dbdd31042005084bb49120ebc4cecf9"
@@ -16592,8 +16752,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/tests/retained-context.test.ts",
-        "bytes": 5248,
-        "sha256": "bafb26cb5205c9775dbf414b30793391855017a96597f897e4d15fd64e8fa32e"
+        "bytes": 6089,
+        "sha256": "2d43886b0145084894a07da8532d4402bf1ae668844ab735f398a3fa8da3d612"
       },
       "review": {
         "status": "pending",
@@ -16612,8 +16772,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/tests/retained-model-http.test.ts",
-        "bytes": 7579,
-        "sha256": "7481cc4bafe36e84d7e7ef6d45255338bc4b1f87e24fe2dfd0371dfdd3a2517e"
+        "bytes": 7580,
+        "sha256": "964dcf9f1df1bb189fb4952482a36c09992cf14c740d78e0e0112813e7336f3f"
       },
       "review": {
         "status": "pending",
@@ -16632,8 +16792,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/tests/retained-pi-provider.test.ts",
-        "bytes": 12230,
-        "sha256": "a4b5ddaf335ec017cb913d23d10dbd00a2d2067b11b0ee17d89cdc1fa200b8fb"
+        "bytes": 13444,
+        "sha256": "69d2ec5673ccc65235286638be350b3f47e7885b0ce16af8496ec17904ff5553"
       },
       "review": {
         "status": "pending",
@@ -16694,6 +16854,46 @@
         "path": "packages/plugins/ai/tests/selected-reader.test.ts",
         "bytes": 3293,
         "sha256": "bcc1c1a9c76782504479e13d3064e149f7f9db9de04e68d1f4fa6904ba985f49"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/plugins/ai/tests/terminal-selection.test.ts",
+        "bytes": 2104,
+        "sha256": "3b1e585d5bf7348f5e8f59e30b29606f654f4ac13deb7dc010cd077f99cccdf1"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/plugins/ai/tests/tool-timeline.client.test.tsx",
+        "bytes": 5022,
+        "sha256": "d3d571fe555faff98e124e3c5e5d8eed4ebdf14e0ea9e5889c3a6b6d3a48b528"
       },
       "review": {
         "status": "pending",
@@ -25432,8 +25632,8 @@
     {
       "file": {
         "path": "packages/plugins/files/src/client/ui/files.module.css",
-        "bytes": 43795,
-        "sha256": "405b2968ba11313c6b56f1a00069efe5946e9ff6c21d72e3c3be1b1721dbaef6"
+        "bytes": 46507,
+        "sha256": "8ff72f3079de6adab2c963133237a6e73374c7a014aaa6a2ffbe1ea0f4bdae2e"
       },
       "review": {
         "status": "pending",
@@ -25712,8 +25912,8 @@
     {
       "file": {
         "path": "packages/plugins/files/src/client/ui/table.tsx",
-        "bytes": 30914,
-        "sha256": "6c310f3d126b7a515369c1bbe3cd278d631ecd93093eaf995e5920e0e9588dfe"
+        "bytes": 31303,
+        "sha256": "24b644cf996c0b082b3d17fb44cf42492f04e55740dac10c832304bd3f5c9f99"
       },
       "review": {
         "status": "pending",
@@ -29291,9 +29491,49 @@
     },
     {
       "file": {
+        "path": "packages/plugins/terminals/src/client/local-titles.test.ts",
+        "bytes": 1883,
+        "sha256": "2bb4c80309da95ef6ce37be7fe97f642e2f3c6548e1c68dc254adefde81adfbe"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "packages/plugins/terminals/src/client/local-titles.ts",
+        "bytes": 1333,
+        "sha256": "ce51a920a8b7de4c8f01dbca5fc7284897652bfa97bf23c63293bb13f945f6ff"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "packages/plugins/terminals/src/client/locales.ts",
-        "bytes": 9466,
-        "sha256": "ebef19b00ec612d54a137d36a20e5bab9216f34b2c2ee9370a74fce4768429bc"
+        "bytes": 9600,
+        "sha256": "4113e782947d4f073b2b55cd8cf3994b9336cb8f53dd5c0b611d1d5a1bfc78e2"
       },
       "review": {
         "status": "pending",
@@ -30652,8 +30892,8 @@
     {
       "file": {
         "path": "packages/plugins/terminals/src/client/ui.tsx",
-        "bytes": 95762,
-        "sha256": "dfc95802d3b701b929ed1af770b6de8d8bc751eda96398a3ee51efe7450e6733"
+        "bytes": 96572,
+        "sha256": "77a0826c7ec5c2568288492bbe9001653c2dc4fb5833dec965edf36328428771"
       },
       "review": {
         "status": "pending",
@@ -32152,8 +32392,8 @@
     {
       "file": {
         "path": "packages/plugins/workspace/src/client/index.tsx",
-        "bytes": 23607,
-        "sha256": "e7fa3d7602b7b6cca56fddeeb172f9aced93e8ad41ce7ae6902b12e8de01d575"
+        "bytes": 23604,
+        "sha256": "940a1585683296781f59ac4f30febd11d856fa0fc693a3b1a0facbfa3e30a1cb"
       },
       "review": {
         "status": "pending",
@@ -33112,8 +33352,8 @@
     {
       "file": {
         "path": "pnpm-lock.yaml",
-        "bytes": 407895,
-        "sha256": "5a9e093f02f2f62fbfa301b81fa48df0ff59cd9e7726b178fe292a65e08e7bd3"
+        "bytes": 408408,
+        "sha256": "91ab3ad88fae41dc03c443f1b714721fb4815013adb13f7e3fea0c55c2f6bf6c"
       },
       "review": {
         "status": "pending",
@@ -33272,8 +33512,8 @@
     {
       "file": {
         "path": "scripts/build-pi-engine.mjs",
-        "bytes": 4094,
-        "sha256": "327a53e7dd86f4b8c946f06081aa3e87571aef27d7bb46c32c225cb094493e5e"
+        "bytes": 3696,
+        "sha256": "7368cbc8498d9f981cfbb9c6d138d2d3af70fbab4cb10553b9fbcd90a9a4f0a3"
       },
       "review": {
         "status": "pending",
@@ -33412,8 +33652,8 @@
     {
       "file": {
         "path": "scripts/commercialization/audit-independent-snapshot.mjs",
-        "bytes": 18507,
-        "sha256": "6039176da27f6ed5f64fcecbb727e3d70de299bdce4ff81dceaadf0776886729"
+        "bytes": 18584,
+        "sha256": "120ecfae922ab2126b1614c6c86cf4fa458f274998ebfadf2a725c4bae19120d"
       },
       "review": {
         "status": "pending",
@@ -34413,7 +34653,7 @@
       "file": {
         "path": "scripts/dsh-framework.mjs",
         "bytes": 3899,
-        "sha256": "8a11796067a4a4aaf1a73e191f4ddaf1849edd240f15b7796f6e9e948c350c8d"
+        "sha256": "48eb27924ebae572ffc6982516078424add9d2077f5fa5e8cf0cd52232082cbb"
       },
       "review": {
         "status": "pending",
@@ -34492,8 +34732,8 @@
     {
       "file": {
         "path": "scripts/level3-architecture.mjs",
-        "bytes": 25678,
-        "sha256": "637894a385a27aacf7c3c2ad0313530d3cc44b50ddf8c3c791f34e2e7be26503"
+        "bytes": 26346,
+        "sha256": "65c4e5df040f2e08d53dfdeb9bf561b1ee5d8fb07c915e78ed72e0b8b9204334"
       },
       "review": {
         "status": "pending",
@@ -35052,8 +35292,8 @@
     {
       "file": {
         "path": "scripts/pi-source-provenance.mjs",
-        "bytes": 4386,
-        "sha256": "9635798ff62a9d3779e45a79c9d23a5e276468f5a5dbf1b286c49ad7e1c2cf08"
+        "bytes": 4673,
+        "sha256": "a8eb75e09fb5783547efdcce94c8cea6300bd203db570e8eb11ce6e93f7ba570"
       },
       "review": {
         "status": "pending",
@@ -38252,8 +38492,8 @@
     {
       "file": {
         "path": "tests/integration/level3-ai-application.test.ts",
-        "bytes": 29718,
-        "sha256": "892bd29f68cffbe6e023e81f42710f8af33dacbee9c55c27efe25bba0ac51cfb"
+        "bytes": 31379,
+        "sha256": "7cc6cee3246a0db30947f6f30d8a4b965aee34d1e45661c20d6120458bc938f6"
       },
       "review": {
         "status": "pending",
@@ -38532,8 +38772,8 @@
     {
       "file": {
         "path": "tests/integration/level3-ai-remote.test.ts",
-        "bytes": 12650,
-        "sha256": "766f93680ef01d35f0fc809307d715d0bed247cf5ea51f1a8848eae53c9635cf"
+        "bytes": 13631,
+        "sha256": "35369cb11afb46d14a64a64a82eeadadb19fd50bf3f3cc64ca3e9eb7a75c5613"
       },
       "review": {
         "status": "pending",
@@ -38632,8 +38872,8 @@
     {
       "file": {
         "path": "tests/integration/level3-ai-ui-reads.test.ts",
-        "bytes": 8781,
-        "sha256": "cf4b1e61bd01eac09fe4b311151ede84450145d19f40556984d90beaadddbf0d"
+        "bytes": 11217,
+        "sha256": "41e66be4b7917978831578657aae6262089205cc3ee130fde87ea2719804731d"
       },
       "review": {
         "status": "pending",
@@ -38652,8 +38892,8 @@
     {
       "file": {
         "path": "tests/integration/level3-ai-ui.test.ts",
-        "bytes": 17521,
-        "sha256": "70f2bdba0591f54c92dec5dd1c54646a1cc6c8c137e0f124b82eea0d5903a853"
+        "bytes": 24660,
+        "sha256": "430a8e47e6d3134a890acf21e5c253c72ea66e86e16564088c8df849c26f2560"
       },
       "review": {
         "status": "pending",
@@ -40172,8 +40412,8 @@
     {
       "file": {
         "path": "tests/integration/level3-files-workspace-ui.test.ts",
-        "bytes": 25064,
-        "sha256": "ac7720cf6fb8eb2262fe18f3ac793cd63418da443032e53065cda8a5488d1657"
+        "bytes": 26083,
+        "sha256": "98df25de510a56886a6efdc970860fef165352be4a865d75c7b3dbebcd0f6169"
       },
       "review": {
         "status": "pending",
@@ -40932,8 +41172,28 @@
     {
       "file": {
         "path": "tests/integration/level3-pi-engine.test.ts",
-        "bytes": 20862,
-        "sha256": "b443ed9b9c967af290763671299b538f594e4ea3936345f449b6f8cf63aa7059"
+        "bytes": 22974,
+        "sha256": "3119fc9844e8d5ebe65cb926bfa2ea0ac928e6e939233a632cdf85f8cf7e13b0"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "tests/integration/level3-pi-login.test.ts",
+        "bytes": 12980,
+        "sha256": "1512dabb6298309571ff330d4103ea58793a782f65c92917ae55b6de4197504c"
       },
       "review": {
         "status": "pending",
@@ -41232,8 +41492,8 @@
     {
       "file": {
         "path": "tests/integration/level3-profile-boot.test.ts",
-        "bytes": 14673,
-        "sha256": "6722ff150ebe72b8cd40cbf796c17f04fc5e17f74a405703928c3fb3786208fa"
+        "bytes": 16065,
+        "sha256": "1f7f52cde81ec0ef010f202128e54e9272d7c18ce122f0fe55095475b4dd0eff"
       },
       "review": {
         "status": "pending",
@@ -41512,8 +41772,8 @@
     {
       "file": {
         "path": "tests/integration/level3-retained-ai-approval-consistency.test.ts",
-        "bytes": 4482,
-        "sha256": "072b07e7e2af678e9d86cdca7d4200cb0d3d84cac1ac8f3293c806d2281cd6a0"
+        "bytes": 4477,
+        "sha256": "b655edd8db362cd997e076c24cbdeebd83018582e23bda8b8cf8a9e2815edc31"
       },
       "review": {
         "status": "pending",
@@ -41532,8 +41792,8 @@
     {
       "file": {
         "path": "tests/integration/level3-retained-ai-approval-ui.test.ts",
-        "bytes": 10595,
-        "sha256": "2aa8fe613eab33cc5665c73de849f570427eead0b9a6dcd78632b52ed9ce130e"
+        "bytes": 12727,
+        "sha256": "418d5b5960f02157ec9756ad889d07f4d7b5f00a004d5261db734cbeda9c71a3"
       },
       "review": {
         "status": "pending",
@@ -41572,8 +41832,8 @@
     {
       "file": {
         "path": "tests/integration/level3-retained-ai-auto-review-ssh.test.ts",
-        "bytes": 8891,
-        "sha256": "d881518dfeb6ee6464302d05ab576eaa6b5bdca6f8722a631ae3dc5e440656e8"
+        "bytes": 9699,
+        "sha256": "240dd6a1227816af4ce4872930f3dd5860b034098c43289b5b15274d1d3c0c2a"
       },
       "review": {
         "status": "pending",
@@ -41592,8 +41852,8 @@
     {
       "file": {
         "path": "tests/integration/level3-retained-ai-context-review.test.ts",
-        "bytes": 14419,
-        "sha256": "6a4a92024adb12509054852e3e23812a118f3eeb201ce14f74ca5771b8c5b3b4"
+        "bytes": 14445,
+        "sha256": "5805a268ecf3e93e20dfafcfc8cf761947a24c244905ecc2b58942c1592b7d74"
       },
       "review": {
         "status": "pending",
@@ -41612,8 +41872,8 @@
     {
       "file": {
         "path": "tests/integration/level3-retained-ai-continuous-work.test.ts",
-        "bytes": 17824,
-        "sha256": "3d6b50d8969c6a29414e449e352ca50e3dc9808b4d2e131838074596452feea4"
+        "bytes": 20372,
+        "sha256": "3e4cd54f1cce15b2862707f85a1e02f866ddfdb83aea8113a84edd4427b4c435"
       },
       "review": {
         "status": "pending",
@@ -41672,8 +41932,8 @@
     {
       "file": {
         "path": "tests/integration/level3-retained-ai-tool-policy.test.ts",
-        "bytes": 8284,
-        "sha256": "cc8df4138778967bfdfce84cb98d145979fba599d554ac97252eb1335c41b309"
+        "bytes": 8233,
+        "sha256": "2d624abd7b93d605b7c12eefd50b064dc76ffc962159f355ab826157e5c3951f"
       },
       "review": {
         "status": "pending",
@@ -41692,8 +41952,8 @@
     {
       "file": {
         "path": "tests/integration/level3-retained-ai-workspace-remote.test.ts",
-        "bytes": 13268,
-        "sha256": "9fd2b770f687fc232756d8c49efdc9794b031cd200578f8b48b56f7a9c74ac83"
+        "bytes": 12733,
+        "sha256": "bde4d1818965bc0247ca7ae8ffa11e30f2d0e033dd3587cd28dd1bc488b83c7d"
       },
       "review": {
         "status": "pending",
@@ -41712,8 +41972,8 @@
     {
       "file": {
         "path": "tests/integration/level3-retained-ai-workspace-service.test.ts",
-        "bytes": 10789,
-        "sha256": "34611477c957f7d390efc8b0cfe2687247f06b89ee8e4cf8b57f40c2bea73d57"
+        "bytes": 11025,
+        "sha256": "2aa208a981246ad820e1fea75970748600a9ef41638e7af89c0b49af81903fc1"
       },
       "review": {
         "status": "pending",
@@ -42852,8 +43112,8 @@
     {
       "file": {
         "path": "tests/integration/level3-terminal-files-pane-ui.test.ts",
-        "bytes": 5977,
-        "sha256": "92485dde52cd3b25d9f49b2691db1e1ae93d34437ac0b84cf10926f1feca0b21"
+        "bytes": 6616,
+        "sha256": "4dedaecf4b44dea9c8ca400570bb9667d74a65f0b2502d15f12dd1df4a8a1e58"
       },
       "review": {
         "status": "pending",
@@ -43692,8 +43952,8 @@
     {
       "file": {
         "path": "tests/integration/level3-workspace-composition-ui.test.ts",
-        "bytes": 3906,
-        "sha256": "adfbd775aaa215d5cb58a618fcd3d3ccb0c8f378f6b1ac0198bdd8164c2611bd"
+        "bytes": 4402,
+        "sha256": "a5ed2ea2143575e64a5f99b2774aa314c14a3cd86b283a91fea524e88cba03c1"
       },
       "review": {
         "status": "pending",
@@ -43774,6 +44034,26 @@
         "path": "tests/soak/vitest.config.ts",
         "bytes": 528,
         "sha256": "41fa510933ea8a05a035358a97d40ebffb13c2874eff6554ea4fe3247b5c6deb"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "tests/support/file-pane-layout.ts",
+        "bytes": 3067,
+        "sha256": "982ddd4987bb287dc60a4e0f24c175f773b5fa32ba85388a6cca78db9a8318f7"
       },
       "review": {
         "status": "pending",
@@ -44952,8 +45232,8 @@
     {
       "file": {
         "path": "tests/unit/independent-snapshot-preparation.test.ts",
-        "bytes": 12784,
-        "sha256": "5b2ba4e4368d825d390f7fb595ee9658ca608e2ab64863e2f44612a35c001459"
+        "bytes": 13634,
+        "sha256": "bf0a725d7061cf1ceb2265e47636c54efae8b3eae25016dfeba51683804a399e"
       },
       "review": {
         "status": "pending",
@@ -45832,8 +46112,8 @@
     {
       "file": {
         "path": "tests/unit/level3-foundation.test.ts",
-        "bytes": 29589,
-        "sha256": "dda4454d2d490e414ad8858cfd8d90dcea1fe942601aed4e6927264c519e1ae7"
+        "bytes": 30608,
+        "sha256": "38485863bd428979f76cd5be6e4a59a0e3cf2fad9654c5ab5596d2276d59234a"
       },
       "review": {
         "status": "pending",
@@ -46632,8 +46912,8 @@
     {
       "file": {
         "path": "tests/unit/level3-retained-schema-inputs.test.ts",
-        "bytes": 7184,
-        "sha256": "25b94c68ad095acc2ae398d5b2f20d61cce5d84b8900f41039d0c2b73b25208d"
+        "bytes": 7568,
+        "sha256": "ed3015050851a1e4869f72ad6c3661b2699813f042fc5cd2e7409f1780295981"
       },
       "review": {
         "status": "pending",
@@ -47972,8 +48252,8 @@
     {
       "file": {
         "path": "tests/unit/level3-visible-secrets.test.ts",
-        "bytes": 3630,
-        "sha256": "c23afe34a7998eb5f98c5affe965bf8a06f6271f375ec7ca9d81a78cef550d10"
+        "bytes": 4138,
+        "sha256": "623ff2b6c73b9fbfb49f0bb5ec171208ea3a4f80833747c2678a82fa22d30c8a"
       },
       "review": {
         "status": "pending",
@@ -48652,8 +48932,8 @@
     {
       "file": {
         "path": "tests/unit/pi-configuration.test.ts",
-        "bytes": 3793,
-        "sha256": "1ff5a2db8bdf33c99f1c38e0ed4c085e56350e1e388ac267e4db19812708e072"
+        "bytes": 4253,
+        "sha256": "18a879deb39a4576ac98c4064a807efa050e2eccf5c8ebf9620eeff934ac6da4"
       },
       "review": {
         "status": "pending",
@@ -49472,8 +49752,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/cordis/src/context.ts",
-        "bytes": 6165,
-        "sha256": "fd5a4f1d2bc6b8b34729c87fda7639a07759ce07fb070ab05374acbcb9ccdc0e"
+        "bytes": 6702,
+        "sha256": "bafba86b1ee343789a430f675b7834741fefa4cc6ba2c7067e2bda5fe45049fe"
       },
       "review": {
         "status": "pending",
@@ -49492,8 +49772,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/cordis/src/events.ts",
-        "bytes": 16163,
-        "sha256": "a464c843822da4eb31a8d998c5e2216a817b8a7dfeacb6e1aab7f830e7320d6b"
+        "bytes": 16348,
+        "sha256": "5be223a4f8a1c7edddfc9b1509d2b52a2d98e5ec645d72d26c0d00820ea380f8"
       },
       "review": {
         "status": "pending",
@@ -49512,8 +49792,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/cordis/src/fiber.ts",
-        "bytes": 28013,
-        "sha256": "b64c3a97f15f0381479dcf3d25965e56dc4cecfa4a0881fc055a49f65b9945df"
+        "bytes": 28738,
+        "sha256": "927bb4933683120ba99c62e8801d2f9da6acf812fbbeac7608d777a664824540"
       },
       "review": {
         "status": "pending",
@@ -49552,8 +49832,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/cordis/src/logger.ts",
-        "bytes": 8810,
-        "sha256": "a6836ace311d0bd1abc9c1211cffcba73eff61c89ca47641efd82d91747401cb"
+        "bytes": 8621,
+        "sha256": "c380b67eadaf97506c92ca37b92706897da280c912ce14d01a68d53b9d7e3141"
       },
       "review": {
         "status": "pending",
@@ -49572,8 +49852,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/cordis/src/reflect.ts",
-        "bytes": 16565,
-        "sha256": "047f01fcdef2aa34b4afc39deaf18c16733fabd2a5ef0d55e5c2595b22caadfd"
+        "bytes": 17480,
+        "sha256": "b1d01770568cb7d5074ce2b7ac4f39cdd77cbf9178b9d8cd9cbf48b4e292f305"
       },
       "review": {
         "status": "pending",
@@ -49592,8 +49872,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/cordis/src/registry.ts",
-        "bytes": 11753,
-        "sha256": "34bbd60ae502b4f85201c204afb52a9acabde6878d9278493478c1b2183debd3"
+        "bytes": 11761,
+        "sha256": "ae425a8ebe6768d5334958628591d8956d3c92d36eb6ca59b4aafde020a44163"
       },
       "review": {
         "status": "pending",
@@ -49612,8 +49892,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/cordis/src/service.ts",
-        "bytes": 4263,
-        "sha256": "614205c6ce7cf1a057b8b352e96aa4fcd734c967a3d2283a126c9c61f268e3be"
+        "bytes": 4745,
+        "sha256": "219ffc1d78d00006552e245c46c0fdb5bba9b9c560c6c222b9c6dced131519bf"
       },
       "review": {
         "status": "pending",
@@ -49632,8 +49912,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/cordis/src/utils.ts",
-        "bytes": 10716,
-        "sha256": "c68bab85514ebd8cb08227367ea306b0109a214cd10965c497474eeadaaca756"
+        "bytes": 10916,
+        "sha256": "65d3b72f52344a6e5df182c59558ff60a5dc27fc0c58f05b1056d764a763e096"
       },
       "review": {
         "status": "pending",
@@ -50092,8 +50372,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/include/src/index.ts",
-        "bytes": 15358,
-        "sha256": "43ddf01220a45fbbe8c0fd64d5d4944fe42dedcd0862127d6ede1d6086b9d053"
+        "bytes": 17060,
+        "sha256": "5a58e3f8ff8bdf754d63d18ba48ac8e47b6051f228faaab81f4205db3b120f45"
       },
       "review": {
         "status": "pending",
@@ -50332,8 +50612,8 @@
     {
       "file": {
         "path": "vendor/deepseek-harness/vendor/loader/src/index.ts",
-        "bytes": 7710,
-        "sha256": "e2d04b34ef703e08d2e40f0ba41daa31ff564343cfeb018f102133fc62317050"
+        "bytes": 7724,
+        "sha256": "a469e3a8ec2c4554208e60f58640d0b875a3f1b8528a314daeead410e9046e43"
       },
       "review": {
         "status": "pending",
@@ -50853,7 +51133,7 @@
       "file": {
         "path": "vendor/pi/nix/model-catalog.json",
         "bytes": 92,
-        "sha256": "305b4ddf4d0a3f71744333f5d0c5448bd01fe8774ec8e637e7cab2aa4d21d512"
+        "sha256": "6b4c957eb83bdf6faac9909f259d7fac47d14fb31c1c1dd21f121d784061ad76"
       },
       "review": {
         "status": "pending",
@@ -50872,8 +51152,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/agent/src/agent-loop.ts",
-        "bytes": 29889,
-        "sha256": "9d7589b5071ea3b8b3e3c624f9cfc09a976ebf7436024a58213837de4645167d"
+        "bytes": 29973,
+        "sha256": "a2c7dc92644bae8655a263e1f5b6ecca6a0d3057002f978e709ed27ec8dd5a92"
       },
       "review": {
         "status": "pending",
@@ -51052,8 +51332,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/api/anthropic-messages.ts",
-        "bytes": 70486,
-        "sha256": "99b6809987c1477b29a7243c2b99d46890fd0214f45a109d773ddebaa15ce542"
+        "bytes": 70677,
+        "sha256": "58c170051620e047c9cccdec056b4b401432ae689571b7e3e245e93e4e3e61ae"
       },
       "review": {
         "status": "pending",
@@ -51272,8 +51552,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/api/constrained-sampling.ts",
-        "bytes": 11668,
-        "sha256": "c7f379d70c2073c61e0e4dc1d2d6f32dbf9850cc2e0c98a8f9e30189ba314091"
+        "bytes": 11958,
+        "sha256": "486e616ebdad5521b2d31859d95b7612e261fd18fd4edbfd019d71df2d4ce5ab"
       },
       "review": {
         "status": "pending",
@@ -51332,8 +51612,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/api/google-generative-ai.ts",
-        "bytes": 14662,
-        "sha256": "2d094a12a79c28d0bbbaaae50626463dff40642b11b4f24e5c49ceef01dfccb7"
+        "bytes": 14900,
+        "sha256": "588d88a8d5dad06910f30a0991a22edd2745be48e8ad1d7cb407fbc4f17b21fa"
       },
       "review": {
         "status": "pending",
@@ -51352,8 +51632,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/api/google-shared.ts",
-        "bytes": 19859,
-        "sha256": "07b94dd0e0e96e889f7a336dcd4d7696481edb6af95dc22dbf64c283c9c5ff34"
+        "bytes": 19733,
+        "sha256": "9f21e74108961cc8045095964f9c5a691d05685720ff18df982cf5dc1d0ca142"
       },
       "review": {
         "status": "pending",
@@ -51392,8 +51672,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/api/google-vertex.ts",
-        "bytes": 17243,
-        "sha256": "942d6c99256afafaed777a28f5b15cdfbfc5648af3e7a35652fba0b7454ce841"
+        "bytes": 17624,
+        "sha256": "16c19d34eaa1627f16378c478873c955d01ad111bcb4fa7ca1c9f5948e0a7bee"
       },
       "review": {
         "status": "pending",
@@ -51572,8 +51852,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/api/openai-completions.ts",
-        "bytes": 63907,
-        "sha256": "dcbe4944d8196426a79837b42af8a6bc1e040904c6831317a1ecb863ddd58168"
+        "bytes": 63965,
+        "sha256": "21740f1217f53ee3e33378784b87de383d308ace948d8b134f63288d880f2e7b"
       },
       "review": {
         "status": "pending",
@@ -52412,8 +52692,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/env-api-keys.ts",
-        "bytes": 8046,
-        "sha256": "a0e9c2f74b338c5117c700ad2753d15c091158b1cc57a3b1ab707405621aed38"
+        "bytes": 8342,
+        "sha256": "419a05b55975c91c78b2731f66d1facaf40775f137116d189717f6b7df747293"
       },
       "review": {
         "status": "pending",
@@ -53052,8 +53332,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/compat-schema.ts",
-        "bytes": 30407,
-        "sha256": "722032d2b934b3730e0bf063f0fd8edb1a401bf050a4aef2888ef0186ff6f5d1"
+        "bytes": 30383,
+        "sha256": "b9d604e1cf8ca44304b132db0603d64c9340b2d806a8814f8fb195f010136cfa"
       },
       "review": {
         "status": "pending",
@@ -53093,7 +53373,7 @@
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/.manifest.json",
         "bytes": 3866,
-        "sha256": "1614205619c03643a45383e95c192935956a01d7397ebfb3904f8c8d0ad2b837"
+        "sha256": "537d86d113c4a16932b32b24526685fc24704cd1a79bb643a5e6c57d30443604"
       },
       "review": {
         "status": "pending",
@@ -53112,8 +53392,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/amazon-bedrock.json",
-        "bytes": 107702,
-        "sha256": "7688f295f84a50aa390255a68c2e8fdc7ec0768f5737ab40358844d597e89803"
+        "bytes": 110653,
+        "sha256": "18a99dd3faf5b38a1b1a781676a5b9c76c90c8547ffe6c2637d2d65eaef34e45"
       },
       "review": {
         "status": "pending",
@@ -53152,8 +53432,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/anthropic.json",
-        "bytes": 11848,
-        "sha256": "b075e002cad7fb74cbe9cc199357ca156991c429963b827de3d1fb88d594f3fc"
+        "bytes": 12738,
+        "sha256": "ebd207ed51603e2060b870bef72c86e9de02d3a14f78bd9813f2de0db27dbdef"
       },
       "review": {
         "status": "pending",
@@ -53352,8 +53632,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/google.json",
-        "bytes": 14598,
-        "sha256": "61a36b42e1436b84c8ed8d738ecb1a2a9d9267f876f7c612407a349b7ca4c301"
+        "bytes": 14600,
+        "sha256": "32b760a0b75e98208ba633456234f3cf733331e4b7b7f1d756d4341917d287f9"
       },
       "review": {
         "status": "pending",
@@ -53432,8 +53712,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/meta.json",
-        "bytes": 3358,
-        "sha256": "563f5ec07973f52ab8c3eb26ef91a36ad8a79e950b37174935666cdcb624bf35"
+        "bytes": 3995,
+        "sha256": "6ccc391fc86586638b4a2f26420f0e4763fccce04d746665cbd55f477124bb3b"
       },
       "review": {
         "status": "pending",
@@ -53612,8 +53892,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/opencode-go.json",
-        "bytes": 20093,
-        "sha256": "e64b95750a60ed63c2ccea2bb06083ef8565a14fa56aae5e9a5deb17c6e70d04"
+        "bytes": 19463,
+        "sha256": "2e8f20182913cec36586a84ea6392f998e4f5897e1a824a36b3ea8a943d21639"
       },
       "review": {
         "status": "pending",
@@ -53632,8 +53912,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/opencode.json",
-        "bytes": 51706,
-        "sha256": "3df0841b9235dc769c81b89fdb0dca0f46cb93e60b92315ca47863f324909451"
+        "bytes": 53026,
+        "sha256": "b47c72fcf7f07c783051361f2835f2217f16cc342275acfc13cfa8d667426fbf"
       },
       "review": {
         "status": "pending",
@@ -53652,8 +53932,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/openrouter.json",
-        "bytes": 295237,
-        "sha256": "7b8a3bb135d4a06d383f2615fd9213f9288e38db1b52bc21ad03dbc27e883097"
+        "bytes": 298746,
+        "sha256": "b9f8c066dfb13c703afb28fd40efeb6156857b5f01d937138df8fbce0bb59010"
       },
       "review": {
         "status": "pending",
@@ -53752,8 +54032,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/radius.json",
-        "bytes": 22641,
-        "sha256": "1fc91013e9f45ecffc6f0ad8a7e339263561c7be671c27a12f78c0daf56111d1"
+        "bytes": 23288,
+        "sha256": "9440f8090f9b147cab029692890a536b9cf432cfe6700afa68ddebe7b0277440"
       },
       "review": {
         "status": "pending",
@@ -53812,8 +54092,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/data/vercel-ai-gateway.json",
-        "bytes": 157084,
-        "sha256": "7e9560343eedab64435792f5cc4c3d4a301e964d3adb8dad67e2c7960db16e08"
+        "bytes": 160338,
+        "sha256": "a90d060732f3eb184aaabce38de955898782d2d2c6a28ece404c5544131d6ce7"
       },
       "review": {
         "status": "pending",
@@ -54892,8 +55172,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan-cn.ts",
-        "bytes": 692,
-        "sha256": "1869aabbff4baaa12faef00071aab0a5b1b1d38d43f16ce735137fc0e13fa897"
+        "bytes": 750,
+        "sha256": "541821f5f3f262912eb4fe5c0c55a8777583e3c21f5419d8db85c4013e77e1b2"
       },
       "review": {
         "status": "pending",
@@ -54932,8 +55212,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan-individual-cn.ts",
-        "bytes": 768,
-        "sha256": "ac4252be3e60902566710c8f65e518dbfa1482766314376c56647f806577f60f"
+        "bytes": 822,
+        "sha256": "784c51bdd128b2fa6ed716070abc6515f32dbc96d7026efd61d4afb0a311d1b2"
       },
       "review": {
         "status": "pending",
@@ -54972,8 +55252,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan-individual.ts",
-        "bytes": 749,
-        "sha256": "0336ecc9c677d9e295a4832fbc84d9197f58e0468fcd00daff3aec491b896375"
+        "bytes": 796,
+        "sha256": "736688c0ac2a46fa3489535c958aed175762010acd23f8d2cc0d2d0165a49573"
       },
       "review": {
         "status": "pending",
@@ -55012,8 +55292,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/providers/qwen-token-plan.ts",
-        "bytes": 673,
-        "sha256": "c26b85ab529779c4c2e61f6dd749592b515ec25b121b49dc81989d8a767d51f5"
+        "bytes": 724,
+        "sha256": "e4cf5dd0c16ea1f47efecc97c86f76d84c532b675ccee9e6f7fa1350a038a06e"
       },
       "review": {
         "status": "pending",
@@ -55932,8 +56212,8 @@
     {
       "file": {
         "path": "vendor/pi/packages/ai/src/utils/retry.ts",
-        "bytes": 11263,
-        "sha256": "589ede374013a26a1d3e3db3550585b714870c1dc68a5e1df233e2335845c374"
+        "bytes": 11792,
+        "sha256": "eb95b3daec3bd7d14a1c3fba88a64611596ba4d9c79db62b8bfda5f7847df5ec"
       },
       "review": {
         "status": "pending",
@@ -56113,7 +56393,7 @@
       "file": {
         "path": "vendor/pi/packages/ai/src/utils/version.ts",
         "bytes": 145,
-        "sha256": "ec3bf49beeb96329973582ba39d00d6b31a1147fe49dec4c015c53236f7b36ac"
+        "sha256": "ab4da932eb2578ed1026c610c7cd2e4b1af93daf7c3a11f211096cdb811caf45"
       },
       "review": {
         "status": "pending",
@@ -56154,6 +56434,86 @@
         "path": "vendor/pi/packages/coding-agent/src/core/diagnostics.ts",
         "bytes": 452,
         "sha256": "1914431098db1b4638e4fb3582ac22e8125356c4ab024671494f565c6d5ffb39"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi/packages/coding-agent/src/core/model-config.ts",
+        "bytes": 8665,
+        "sha256": "792fe48456eae6175f121a4ef8bc15ebabccfd7f09691850eff2764f79f3a122"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi/packages/coding-agent/src/core/pi-ai-schemas.ts",
+        "bytes": 1947,
+        "sha256": "ba5a59729646209cbfa870d8a9b3def24d51c2eb21b1ea6a6a331690c35cddd8"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi/packages/coding-agent/src/core/provider-composer.ts",
+        "bytes": 28339,
+        "sha256": "89288d91995a97987eaa126a11f04216c400e6a8386bdef6061fd1fac95f8473"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi/packages/coding-agent/src/core/resolve-config-value.ts",
+        "bytes": 9339,
+        "sha256": "0f53dad47fe5d5d8837c022b7951ccd3bd5a9b577bd662f0986272110e83bcc7"
       },
       "review": {
         "status": "pending",
@@ -56251,9 +56611,49 @@
     },
     {
       "file": {
+        "path": "vendor/pi/packages/coding-agent/src/utils/json.ts",
+        "bytes": 341,
+        "sha256": "7ee95ee422abcc3610033e27d1e1da08ebadac0502b6326a1540b64843a084dd"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "vendor/pi/packages/coding-agent/src/utils/paths.ts",
         "bytes": 7089,
         "sha256": "c8a2995b52a181e46cfae3b30f31448d201742d303249f34119ef2fd7a44e672"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "vendor/pi/packages/coding-agent/src/utils/shell.ts",
+        "bytes": 8686,
+        "sha256": "bacb0f871b92e38ac17221e0c1b00ac5211e0f5c0063675afd980513c7c79fb4"
       },
       "review": {
         "status": "pending",

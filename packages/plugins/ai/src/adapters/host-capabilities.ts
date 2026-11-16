@@ -29,6 +29,20 @@ export class AiHostCapabilities implements AiHostPort {
       return value.value;
     });
   }
+  resolvePiSecrets(provider: string, ref: string, signal: AbortSignal): Promise<readonly string[]> {
+    return this.run(signal, async (owned) => {
+      const auth = this.ctx.reflect.get('piProviderAuth');
+      if (!auth)
+        throw new ApplicationError(
+          'CAPABILITY_UNAVAILABLE',
+          'Pi credential owner is unavailable',
+          503,
+        );
+      const secrets = await auth.secrets(provider, ref);
+      owned.throwIfAborted();
+      return secrets;
+    });
+  }
   readGrantedTextPrefix(
     grantId: string,
     maxBytes: number,

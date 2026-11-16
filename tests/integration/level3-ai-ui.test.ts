@@ -18,6 +18,7 @@ it('uses the retained AI page, actual generated models, native Vault, browser fi
     shell: ElectronApplication | undefined,
     stopped: Promise<unknown> | undefined;
   let requests = 0;
+  const requestedModels: string[] = [];
   let reply = 'AI UI visible reply AI_UI_PRIVATE_KEY_CANARY';
   const diagnostics: string[] = [];
   const server = createServer((request, response) => {
@@ -27,8 +28,12 @@ it('uses the retained AI page, actual generated models, native Vault, browser fi
       response.end();
       return;
     }
-    request.resume();
+    let body = '';
+    request.on('data', (chunk) => {
+      body += String(chunk);
+    });
     request.once('end', () => {
+      requestedModels.push(String(JSON.parse(body).model));
       response.writeHead(200, { 'content-type': 'text/event-stream' });
       response.end(
         piSseStart('openai-chat') + piSseText('openai-chat', reply) + piSseEnd('openai-chat'),
@@ -149,12 +154,136 @@ process.send({...application.ctx.get('webStartup'),generation:application.ctx.ru
     });
     const config = page.getByRole('dialog', { name: 'AI Config', exact: true });
     await config.waitFor();
+    const providerSelect = config.getByLabel('Pi provider', { exact: true });
+    const reference = JSON.parse(
+      await readFile('packages/pi-engine/catalog/models.all.json', 'utf8'),
+    ) as Record<string, { id: string; type: string }[]>;
+    const chatProviders = Object.entries(reference).filter(([, models]) =>
+      models.some((model) => model.type === 'chat'),
+    );
+    const accountSignIn = config.getByRole('button', {
+      name: 'Account or subscription',
+      exact: true,
+    });
+    const apiKeySignIn = config.getByRole('button', { name: 'API Key', exact: true });
+    const providerOptions = () =>
+      providerSelect
+        .locator('option')
+        .evaluateAll((options) =>
+          options.map((option) => (option as HTMLOptionElement).value).filter(Boolean),
+        );
+    await providerSelect.locator('option[value=deepseek]').waitFor({ state: 'attached' });
+    const keyProviders = await providerOptions();
+    await accountSignIn.click();
+    expect(await providerSelect.inputValue()).toBe('openai-codex');
+    expect(await config.locator('input[name=apiKey]').count()).toBe(0);
+    const accountProviders = await providerOptions();
+    expect([...new Set([...keyProviders, ...accountProviders])].sort()).toEqual(
+      chatProviders.map(([id]) => id).sort(),
+    );
+    const codexLogin = config.getByRole('region', { name: 'Sign in with ChatGPT', exact: true });
+    await codexLogin.getByRole('button', { name: 'Sign in with ChatGPT', exact: true }).click();
+    await codexLogin.getByLabel('Select OpenAI Codex login method:').waitFor();
+    expect(await codexLogin.getByRole('option').allTextContents()).toEqual([
+      'Browser login (default)',
+      'Device code login (headless)',
+    ]);
+    await codexLogin.getByRole('button', { name: 'Cancel', exact: true }).click();
+    for (const [id, models] of chatProviders) {
+      await (keyProviders.includes(id) ? apiKeySignIn : accountSignIn).click();
+      await providerSelect.selectOption(id);
+      const expected = models
+        .filter((model) => model.type === 'chat')
+        .map((model) => model.id)
+        .sort();
+      await expect
+        .poll(
+          () =>
+            config.locator('select[name=model] option').evaluateAll((options) =>
+              options
+                .map((option) => (option as HTMLOptionElement).value)
+                .filter(Boolean)
+                .sort(),
+            ),
+          { message: `Complete Pi model choices for ${id}` },
+        )
+        .toEqual(expected);
+    }
+    await apiKeySignIn.click();
+    await providerSelect.selectOption('minimax-cn');
+    const modelSelect = config.locator('select[name=model]');
+    await modelSelect.selectOption('MiniMax-M3.1-Flash');
+    expect(await modelSelect.inputValue()).toBe('MiniMax-M3.1-Flash');
+    await page.screenshot({ path: 'out/pi-reuse/minimax-complete-catalog.png' });
+    const minimaxLogin = config.getByRole('region', { name: 'Sign in with Pi', exact: true });
+    const minimaxModels = reference['minimax-cn']!.filter((model) => model.type === 'chat')
+      .map((model) => model.id)
+      .sort();
+    const assertMinimaxChoices = async () => {
+      expect(await config.locator('select[name=model]').count()).toBe(1);
+      expect(await config.locator('select[name=model]').inputValue()).toBe('MiniMax-M3.1-Flash');
+      expect(
+        await config.locator('select[name=model] option').evaluateAll((options) =>
+          options
+            .map((option) => (option as HTMLOptionElement).value)
+            .filter(Boolean)
+            .sort(),
+        ),
+      ).toEqual(minimaxModels);
+      expect(await config.locator('input[name=model]').count()).toBe(0);
+    };
+    await minimaxLogin.getByRole('button', { name: 'Sign in with Pi', exact: true }).click();
+    await minimaxLogin.locator('input[type=password]').waitFor();
+    await assertMinimaxChoices();
+    await page.screenshot({ path: 'out/pi-reuse/minimax-key-prompt-models.png' });
+    await minimaxLogin.getByRole('button', { name: 'Cancel', exact: true }).click();
+    await expect.poll(() => minimaxLogin.locator('input[type=password]').count()).toBe(0);
+    await assertMinimaxChoices();
+    await minimaxLogin.getByRole('button', { name: 'Sign in with Pi', exact: true }).click();
+    await minimaxLogin.locator('input[type=password]').waitFor();
+    await assertMinimaxChoices();
+    await minimaxLogin.locator('input[type=password]').fill('MINIMAX_LOGIN_FIXTURE_KEY');
+    await config.getByRole('button', { name: 'Save configuration', exact: true }).click();
+    await expect
+      .poll(() => config.getByRole('alert').textContent())
+      .toContain('Complete Pi sign-in');
+    expect(await config.isVisible()).toBe(true);
+    expect(await minimaxLogin.locator('input[type=password]').inputValue()).toBe(
+      'MINIMAX_LOGIN_FIXTURE_KEY',
+    );
+    const feedback = await config.getByRole('alert').boundingBox();
+    expect(feedback).not.toBeNull();
+    expect(feedback!.y).toBeGreaterThanOrEqual(0);
+    expect(feedback!.y + feedback!.height).toBeLessThanOrEqual(
+      await page.evaluate(() => innerHeight),
+    );
+    await page.screenshot({ path: 'out/pi-reuse/save-login-required.png' });
+    await minimaxLogin.getByRole('button', { name: 'Continue', exact: true }).click();
+    await expect.poll(() => minimaxLogin.getByRole('status').textContent()).toMatch(/Signed in\./);
+    expect(await config.getByRole('alert').count()).toBe(0);
+    await assertMinimaxChoices();
+    await modelSelect.selectOption('');
+    await config.locator('input[name=model]').fill('MiniMax-custom-fixture');
+    expect(await config.locator('input[name=model]').inputValue()).toBe('MiniMax-custom-fixture');
+    await providerSelect.selectOption('deepseek');
+    const chosenModel = reference.deepseek!.filter((model) => model.type === 'chat').at(-1)!.id;
+    await config.locator('select[name=model]').selectOption(chosenModel);
+    expect(await config.locator('[name=protocol], [name=apiPath], [name=auth]').count()).toBe(0);
+    await config.getByRole('button', { name: 'Sign in with Pi', exact: true }).click();
+    const login = config.getByRole('region', { name: 'Sign in with Pi', exact: true });
+    await login.locator('input[type=password]').fill('AI_UI_PRIVATE_KEY_CANARY');
+    await login.getByRole('button', { name: 'Continue', exact: true }).click();
+    await expect.poll(() => login.getByRole('status').textContent()).toMatch(/Signed in\./);
+    expect(await config.locator('select[name=model]').inputValue()).toBe(chosenModel);
+    await page.screenshot({ path: 'out/pi-reuse/native-login.png' });
+    await config.locator('select[name=model]').selectOption('');
+    await config.locator('input[name=model]').fill('ui-custom-deepseek-model');
     await config.locator('[name=name]').fill('UI owned provider');
     await config.locator('[name=baseUrl]').fill(`http://127.0.0.1:${address.port}/v1`);
-    await config.locator('[name=model]').fill('ui-fixture-model');
-    await config.locator('[name=apiKey]').fill('AI_UI_PRIVATE_KEY_CANARY');
+    expect(await config.locator('[name=model]').inputValue()).not.toBe('');
     await config.getByRole('button', { name: 'Save configuration', exact: true }).click();
     await config.waitFor({ state: 'hidden' });
+    await page.getByRole('status').filter({ hasText: 'Provider saved.' }).waitFor();
     const composer = page.locator('.ai-chat-composer:visible');
     await expect
       .poll(() => composer.locator('select[name=modelId]').locator('option').count())
@@ -222,6 +351,7 @@ process.send({...application.ctx.get('webStartup'),generation:application.ctx.ru
       .filter({ hasText: 'AI UI visible reply' })
       .waitFor();
     expect(requests).toBe(1);
+    expect(requestedModels).toEqual(['ui-custom-deepseek-model']);
     if (process.platform !== 'win32') {
       const marker = 'AXTERM_DRAFT_WAS_EXECUTED';
       const command =
@@ -283,6 +413,8 @@ process.send({...application.ctx.get('webStartup'),generation:application.ctx.ru
     await externalConfig.locator('[name=name]').fill('Selected external UI provider');
     await externalConfig.locator('[name=model]').fill('external-ui-model');
     await externalConfig.getByRole('button', { name: 'Save configuration', exact: true }).click();
+    await externalConfig.waitFor({ state: 'hidden' });
+    await page.getByRole('status').filter({ hasText: 'Provider saved.' }).waitFor();
     await externalConfig.waitFor({ state: 'hidden' });
     await page
       .locator('.ai-chat-options select[name=modelId]:visible')

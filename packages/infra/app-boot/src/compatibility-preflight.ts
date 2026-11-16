@@ -9,10 +9,9 @@ import type { Context } from '@deepseek-ai/cordis';
 import type { EntryOptions } from '@deepseek-ai/cordis-plugin-loader';
 import {
   applyEntryPatches,
-  entryListSchema,
+  parseEntryYaml,
   type PatchOptions,
 } from '@deepseek-ai/cordis-plugin-include';
-import { load } from 'js-yaml';
 import { resolvePluginResource } from './package-meta.ts';
 import { barePackageName } from './profile-resolution/resolver.ts';
 import type {} from './profile-resolution/service.ts';
@@ -182,7 +181,7 @@ function preflight(
     try {
       let data: unknown;
       try {
-        data = load(readFileSync(filename, 'utf8'), { schema: entryListSchema });
+        data = parseEntryYaml(readFileSync(filename, 'utf8'));
       } catch (error) {
         if ((error as NodeJS.ErrnoException).code !== 'ENOENT' || config.initial === undefined)
           return undefined;

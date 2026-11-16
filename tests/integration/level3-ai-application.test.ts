@@ -28,7 +28,7 @@ import {
 } from '@axterm/plugin-api/ai';
 import { encodeOpaqueCredentialRef } from '@axterm/plugin-api/credentials';
 import { MemoryCredentials } from '../support/level3-memory-credentials.ts';
-import { piSseStart, piSseText, piSseEnd, piSseHidden } from '../fixtures/pi-sse.ts';
+import { piSseStart, piSseText, piSseEnd, piSseHidden, piSseCommand } from '../fixtures/pi-sse.ts';
 import type { AiToolsPort } from '../../packages/plugins/ai/src/ports/tools.ts';
 const cleanup: (() => Promise<unknown>)[] = [];
 afterEach(async () => {
@@ -349,9 +349,9 @@ it('stops a source by canceling and joining its actual readonly task without cre
 });
 
 it.skipIf(process.platform === 'win32')(
-  'executes reviewed workspace commands through the actual subprocess owner and requires human approval for its temporary-file mutation',
+  'executes full-access work through the actual subprocess owner without command review or approval',
   async () => {
-    const { mkdtemp, rm, writeFile, stat } = await import('node:fs/promises');
+    const { mkdtemp, rm, writeFile, stat, readFile } = await import('node:fs/promises');
     const { tmpdir } = await import('node:os');
     const { join } = await import('node:path');
     const { default: LocalSubprocess } =
@@ -391,7 +391,20 @@ it.skipIf(process.platform === 'win32')(
       commands,
       { localHome: directory, remoteWorkspace: directory },
     );
-    const f = await boot('http://127.0.0.1:1/v1');
+    let modelRequests = 0;
+    const endpoint = await server((request, response) => {
+      request.resume();
+      request.on('end', () => {
+        modelRequests++;
+        response.writeHead(200, { 'content-type': 'text/event-stream' });
+        response.end(
+          modelRequests === 1
+            ? piSseCommand('printf loop > loop.txt')
+            : piSseText('openai-chat', 'Actual loop completed') + piSseEnd('openai-chat'),
+        );
+      });
+    });
+    const f = await boot(endpoint);
     const service = new AiService(
       f.repository,
       f.facts,
@@ -422,10 +435,9 @@ it.skipIf(process.platform === 'win32')(
     const observed = await finished(service, observation.id);
     expect(observed.state, JSON.stringify(observed)).toBe('succeeded');
     expect(observed.result).toContain(directory);
-    expect(f.repository.listToolCalls(observation.id)[0]).toMatchObject({
-      state: 'succeeded',
-      approvalSource: 'automatic',
-    });
+    expect(f.repository.listToolCalls(observation.id)[0]).toMatchObject({ state: 'succeeded' });
+    expect(f.repository.listToolCalls(observation.id)[0]?.review).toBeUndefined();
+    expect(f.repository.listToolCalls(observation.id)[0]?.approvalSource).toBeUndefined();
     expect(f.repository.listApprovals()).toEqual([]);
     await writeFile(join(directory, 'owned.txt'), 'fixture');
     const mutation = await service.start(
@@ -436,20 +448,22 @@ it.skipIf(process.platform === 'win32')(
       },
       randomUUID(),
     );
-    await vi.waitFor(() => expect(service.get(mutation.id).state).toBe('waiting_approval'));
-    expect((await stat(join(directory, 'owned.txt'))).isFile()).toBe(true);
-    const approval = f.repository.listApprovals().find((item) => item.runId === mutation.id)!;
-    await service.decideApproval(
-      approval.id,
-      { decision: 'approve_once', argsHash: approval.argsHash },
-      randomUUID(),
-    );
     expect((await finished(service, mutation.id)).state).toBe('succeeded');
     await expect(stat(join(directory, 'owned.txt'))).rejects.toMatchObject({ code: 'ENOENT' });
     expect(f.repository.listToolCalls(mutation.id)[0]).toMatchObject({
       state: 'succeeded',
-      approvalSource: 'user',
     });
+    expect(f.repository.listApprovals()).toEqual([]);
+    expect(f.repository.listToolCalls(mutation.id)[0]?.review).toBeUndefined();
+    const loop = await service.start(
+      { ...base, prompt: 'Create loop.txt, then report the actual result' },
+      randomUUID(),
+    );
+    expect((await finished(service, loop.id)).result).toBe('Actual loop completed');
+    expect(await readFile(join(directory, 'loop.txt'), 'utf8')).toBe('loop');
+    expect(modelRequests).toBe(2);
+    expect(f.repository.listApprovals()).toEqual([]);
+    expect(f.repository.listToolCalls(loop.id)[0]?.review).toBeUndefined();
     await service.close();
     expect(commands.resourceCount()).toBe(0);
     expect(service.activeTaskCount()).toBe(0);
@@ -566,7 +580,7 @@ function pluginToolFrame(request: unknown, id = 'call_plugin') {
     'data: [DONE]\n\n'
   );
 }
-async function modelPluginFixture(secondBuild = false) {
+async function modelPluginFixture(secondBuild = false, mode: 'chat' | 'work' = 'work') {
   const { AiToolService } =
     await import('../../packages/plugins/ai/src/application/ai-tool-service.ts');
   const bodies: Record<string, unknown>[] = [];
@@ -604,7 +618,7 @@ async function modelPluginFixture(secondBuild = false) {
       bodies.push(JSON.parse(raw));
       response.writeHead(200, { 'content-type': 'text/event-stream' });
       response.end(
-        bodies.length === 1
+        mode === 'work' && bodies.length === 1
           ? pluginToolFrame(install)
           : secondBuild && bodies.length === 2
             ? pluginToolFrame(
@@ -629,6 +643,7 @@ async function modelPluginFixture(secondBuild = false) {
       modelId: f.model.id,
       useCase: 'chat',
       prompt: 'Manage the requested plugin with approval',
+      mode,
       context: '',
     },
     randomUUID(),
@@ -655,6 +670,32 @@ async function modelPluginFixture(secondBuild = false) {
   };
   return { ...f, run, invoke, bodies, waiting };
 }
+it('keeps chat text-only even when plugin management is available to work mode', async () => {
+  const f = await modelPluginFixture(false, 'chat');
+  expect((await finished(f.service, f.run.id)).state).toBe('succeeded');
+  expect(f.bodies).toHaveLength(1);
+  expect(f.bodies[0]!.tools).toBeUndefined();
+  expect(f.invoke).not.toHaveBeenCalled();
+  expect(f.repository.listToolCalls(f.run.id)).toEqual([]);
+  expect(f.repository.listApprovals()).toEqual([]);
+  await expect(
+    f.service.start(
+      {
+        modelId: f.model.id,
+        mode: 'chat',
+        useCase: 'chat',
+        prompt: 'hello',
+        context: '',
+        tool: {
+          name: 'workspace.exec',
+          args: { command: 'echo unexpected' },
+          target: randomUUID(),
+        },
+      },
+      randomUUID(),
+    ),
+  ).rejects.toMatchObject({ code: 'PRECONDITION_FAILED' });
+});
 it('requires a real per-call approval through Pi, binds admission identity and never applies workspace automatic review', async () => {
   const f = await modelPluginFixture();
   const approval = await f.waiting();

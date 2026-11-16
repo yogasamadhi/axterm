@@ -1,7 +1,7 @@
 // Copyright (c) 2026 DeepSeek. SPDX-License-Identifier: MIT
 // Adapted from packages/client/connection/src/index.ts at 8bd073392eef6f54e921a093b95076248eb08cbb.
 /** Host HTTP bridge for browser-client RPC. */
-import type { Context } from '@deepseek-ai/cordis';
+import { Context } from '@deepseek-ai/cordis';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import z from '@deepseek-ai/schemastery';
 // Activates the webServer Context merge used below.
@@ -164,7 +164,7 @@ export async function apply(ctx: Context, config?: ConnectionConfig): Promise<vo
   const authentication =
     identity?.mode === 'desktop'
       ? new DesktopAuthentication(desktopVerifier!, identity.generation)
-      : await BrowserAuth.create(ctx.root, ctx.credentials, cookieMaxAgeDays);
+      : await BrowserAuth.create(ctx[Context.root], ctx.credentials, cookieMaxAgeDays);
   const connection = new HostConnectionService(
     ctx,
     trustedHosts,

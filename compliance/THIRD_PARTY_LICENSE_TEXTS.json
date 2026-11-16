@@ -1338,7 +1338,7 @@
     },
     {
       "name": "@google/genai",
-      "version": "2.21.0",
+      "version": "2.32.0",
       "license": "Apache-2.0",
       "files": [
         {

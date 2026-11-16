@@ -46,6 +46,21 @@ export class AiPanelActions {
     this.reviews.add(owner);
     return owner;
   }
+  beginProviderLogin(provider: string, method: 'api_key' | 'oauth') {
+    return this.task(() => this.model.beginProviderLogin(provider, method));
+  }
+  getProviderLogin(id: string) {
+    return this.task(() => this.model.getProviderLogin(id));
+  }
+  respondProviderLogin(id: string, prompt: string, value: string) {
+    return this.task(() => this.model.respondProviderLogin(id, prompt, value));
+  }
+  cancelProviderLogin(id: string) {
+    return this.cleanup(() => this.model.cancelProviderLogin(id));
+  }
+  openLoginUrl(url: string) {
+    return this.task(() => this.model.openLoginUrl(url));
+  }
   createAttachmentOwner(): AttachmentDraftOwner {
     this.assert();
     if (this.composers.size >= 8) throw new Error('AI_COMPOSER_CAPACITY');

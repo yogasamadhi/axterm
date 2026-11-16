@@ -72,6 +72,65 @@ const input = (runId = 'run') =>
     prompt: 'Visible prompt',
     context: 'Reviewed context',
   });
+
+it.each(['google-generative-ai', 'google-vertex'] as const)(
+  'streams %s through the request-owned transport without automatic continuation',
+  async (api) => {
+    const { streamPiAgent } = await import('@axterm/engine-pi-core');
+    const fetch = vi.fn<typeof globalThis.fetch>(async () => {
+      const chunk = {
+        candidates: [
+          {
+            content: { role: 'model', parts: [{ text: 'Visible Google reply' }] },
+            finishReason: 'CONTINUATION',
+            continuationToken: 'fixture-continuation',
+          },
+        ],
+      };
+      return new Response(`data: ${JSON.stringify(chunk)}\n\n`, {
+        headers: { 'content-type': 'text/event-stream' },
+      });
+    });
+    const unrelatedFetch = vi.fn<typeof globalThis.fetch>(async () => {
+      throw new Error('Google used the process transport');
+    });
+    const originalFetch = globalThis.fetch;
+    const events: unknown[] = [];
+    globalThis.fetch = unrelatedFetch;
+    try {
+      for await (const event of streamPiAgent({
+        provider: {
+          id: 'axterm-fixture',
+          api,
+          models: [{ id: 'fixture-model' }],
+          modelOverrides: {},
+        },
+        model: 'fixture-model',
+        baseUrl: 'https://fixture.example/v1',
+        apiKey: 'FIXTURE_GOOGLE_KEY',
+        system: 'Visible system',
+        prompt: 'Visible prompt',
+        context: '',
+        signal: new AbortController().signal,
+        fetch,
+        headers: { 'x-tenant-key': 'FIXTURE_TENANT' },
+        timeoutMs: 1000,
+      }))
+        events.push(event);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+    expect(unrelatedFetch).not.toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalledOnce();
+    const [resource, init] = fetch.mock.calls[0]!;
+    const request = new Request(resource, init);
+    expect(new URL(request.url).origin).toBe('https://fixture.example');
+    expect(request.headers.get('x-tenant-key')).toBe('FIXTURE_TENANT');
+    expect(events).toContainEqual({ type: 'delta', text: 'Visible Google reply' });
+    expect(events.at(-1)).toEqual({ type: 'completed' });
+  },
+);
+
 for (const [protocol, api] of [
   ['openai-chat', 'openai-completions'],
   ['openai-responses', 'openai-responses'],

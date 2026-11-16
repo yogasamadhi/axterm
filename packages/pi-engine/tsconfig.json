@@ -9,6 +9,16 @@
     "exactOptionalPropertyTypes": false,
     "paths": {
       "@earendil-works/pi-ai": ["../../vendor/pi/packages/ai/src/index.ts"],
+      "@earendil-works/pi-ai/compat": ["../../vendor/pi/packages/ai/src/compat.ts"],
+      "@earendil-works/pi-ai/utils/model-operations": [
+        "../../vendor/pi/packages/ai/src/utils/model-operations.ts"
+      ],
+      "@earendil-works/pi-ai/providers/compat-schema": [
+        "../../vendor/pi/packages/ai/src/providers/compat-schema.ts"
+      ],
+      "@earendil-works/pi-ai/providers/model-schema": [
+        "../../vendor/pi/packages/ai/src/providers/model-schema.ts"
+      ],
       "@earendil-works/pi-telemetry": ["../../vendor/pi/packages/telemetry/src/index.ts"],
       "@anthropic-ai/sdk": ["./node_modules/@anthropic-ai/sdk"],
       "@anthropic-ai/sdk/*": ["./node_modules/@anthropic-ai/sdk/*"],

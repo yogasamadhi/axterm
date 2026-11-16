@@ -32,15 +32,33 @@ export class VisibleSecrets {
     const unique = [...new Set(secrets.filter(Boolean))];
     if (unique.length > 33 || unique.some((text) => text.length > 131072))
       throw new EngineError('capacity');
-    this.patterns = unique.map((text) => {
+    this.patterns = [];
+    this.addSecrets(unique);
+  }
+  /** Refresh may rotate a token before the next provider response starts. */
+  addSecrets(secrets: readonly string[]): void {
+    if (this.ended) throw new EngineError('closed');
+    for (const text of new Set(secrets.filter(Boolean))) {
+      if (this.patterns.some((pattern) => pattern.text === text)) continue;
+      if (this.patterns.length >= 256 || text.length > 131072) throw new EngineError('capacity');
       const prefix = new Uint32Array(text.length);
       for (let i = 1, length = 0; i < text.length; i++) {
         while (length && text[i] !== text[length]) length = prefix[length - 1]!;
         if (text[i] === text[length]) length++;
         prefix[i] = length;
       }
-      return { text, prefix, matched: 0 };
-    });
+      const pattern = { text, prefix, matched: 0 };
+      for (let i = 0; i < this.pending.length; i++) {
+        while (pattern.matched && this.pending[i] !== text[pattern.matched])
+          pattern.matched = prefix[pattern.matched - 1]!;
+        if (this.pending[i] === text[pattern.matched]) pattern.matched++;
+        if (pattern.matched === text.length) {
+          this.matches.push({ start: this.offset + i + 1 - text.length, end: this.offset + i + 1 });
+          pattern.matched = prefix[pattern.matched - 1]!;
+        }
+      }
+      this.patterns.push(pattern);
+    }
   }
   push(text: string): string {
     if (this.ended) throw new EngineError('closed');

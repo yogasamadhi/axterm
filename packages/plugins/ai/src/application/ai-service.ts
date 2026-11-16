@@ -25,6 +25,7 @@ import {
 import type { AiHostPort } from '../ports/host.ts';
 import type { AiModelsPort, AiModelProvider } from '../ports/models.ts';
 import type { AiCommandReviewer } from '../ports/review.ts';
+import type { ModelProvider } from '../ports/model-provider.ts';
 
 import type { AiRepositoryPort } from '../ports/repository.ts';
 import { stableHash } from './hash.ts';
@@ -36,7 +37,6 @@ import type { AiWorkspaceService } from './ai-workspace-service.ts';
 import { ApplicationError } from './errors.ts';
 import { COMMAND_POLICY_VERSION } from '../ports/review.ts';
 import { AiWorkBudget } from './ai-work-budget.ts';
-import type { ModelProvider } from '../ports/model-provider.ts';
 import type { McpToolInvocation } from '../ports/mcp.ts';
 
 export type { AiRunEvent } from '@axterm/plugin-api/ai';
@@ -102,7 +102,7 @@ export class AiService {
     private readonly realtime: AiRealtimePort,
     private readonly tools: AiToolsPort,
     private readonly models: AiModelsPort,
-    private readonly reviewer: AiCommandReviewer,
+    _reviewer: AiCommandReviewer | undefined,
     private readonly workspaces: AiWorkspaceService | undefined,
     private readonly commandGeneration: string,
   ) {}
@@ -142,6 +142,8 @@ export class AiService {
       throw new ApplicationError('CAPABILITY_UNAVAILABLE', 'AI Runtime is closed', 503);
     if (signal?.aborted)
       throw new ApplicationError('REQUEST_CANCELED', 'AI request was canceled', 409);
+    if (input.tool && (input.mode !== 'work' || !['chat', 'diagnose'].includes(input.useCase)))
+      throw new ApplicationError('PRECONDITION_FAILED', 'Tools require work mode', 412);
     const idempotencyInput = input;
     const attachments = this.resolveAttachments(input.attachmentIds ?? []);
     const workspace =
@@ -372,20 +374,35 @@ export class AiService {
       ...new Set(
         providers.flatMap((provider) =>
           [
-            provider.credentialRef,
+            provider.pi?.credentialMode === 'pi' ? undefined : provider.credentialRef,
             provider.proxy?.credentialRef,
             ...Object.values(provider.pi?.headerCredentialRefs ?? {}),
           ].filter((ref): ref is string => !!ref),
         ),
       ),
     ];
-    if (refs.length > 32)
+    if (
+      refs.length + providers.filter((provider) => provider.pi?.credentialMode === 'pi').length >
+      32
+    )
       throw new ApplicationError(
         'CAPACITY_EXCEEDED',
         'Too many AI credential scopes to safely prepare context',
         409,
       );
     const secrets: string[] = [];
+    for (const provider of providers) {
+      if (provider.pi?.credentialMode !== 'pi' || !provider.credentialRef) continue;
+      if (!this.host.resolvePiSecrets)
+        throw new ApplicationError(
+          'CAPABILITY_UNAVAILABLE',
+          'Pi credential owner is unavailable',
+          503,
+        );
+      secrets.push(
+        ...(await this.host.resolvePiSecrets(provider.pi.id, provider.credentialRef, signal)),
+      );
+    }
     for (let offset = 0; offset < refs.length; offset += 4) {
       const results = await Promise.allSettled(
         refs.slice(offset, offset + 4).map((ref) => this.host!.resolveCredential(ref, signal)),
@@ -1053,17 +1070,7 @@ export class AiService {
       const executeCommand =
         working && workspace && budget
           ? (command: string, _toolCallId: string, _signal: AbortSignal) =>
-              this.executeReviewedCommand(
-                runId,
-                input,
-                workspace,
-                command,
-                adapter,
-                model?.model ?? 'unavailable',
-                provider?.timeoutMs ?? 30_000,
-                controller,
-                budget,
-              )
+              this.executeWorkCommand(runId, workspace, command, controller, budget)
           : undefined;
       if (input.tool?.name === 'workspace.exec') {
         if (!executeCommand || typeof input.tool.args.command !== 'string')
@@ -1078,6 +1085,7 @@ export class AiService {
       }
       const modelToolIds = new Set<string>();
       const executePluginManagement =
+        input.mode === 'work' &&
         !!provider &&
         (this.models.supportsApplicationTools?.(provider) ?? provider.engineId === 'pi') &&
         ['chat', 'diagnose'].includes(input.useCase) &&
@@ -1143,7 +1151,8 @@ export class AiService {
       const engineCanceled =
         error instanceof ApplicationError && error.code === 'AI_ENGINE_CANCELLED';
       if (controller.signal.aborted || engineCanceled) {
-        const reason = engineCanceled ? error : controller.signal.reason;
+        // The Engine wraps cancellation; retain the Runtime's target/deadline reason.
+        const reason = controller.signal.aborted ? controller.signal.reason : error;
         this.update(
           runId,
           reason instanceof ApplicationError && reason.code === 'AI_RUNTIME_LIMIT'
@@ -1325,62 +1334,10 @@ export class AiService {
     });
   }
 
-  private waitForCommandApproval(
-    call: AiToolCall,
-    controller: AbortController,
-    budget: AiWorkBudget,
-  ) {
-    const approval = this.facts.createApproval({
-      runId: call.runId,
-      toolCallId: call.id,
-      argsHash: call.argsHash,
-      target: call.target,
-      expiresAt: call.review!.expiresAt,
-    });
-    this.update(call.runId, 'waiting_approval');
-    this.emit({
-      runId: call.runId,
-      type: 'state',
-      data: { run: this.get(call.runId), approval, toolCall: this.repository.getToolCall(call.id) },
-    });
-    budget.pause();
-    return new Promise<void>((resolve, reject) => {
-      let settled = false;
-      const done = (error?: unknown) => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(timer);
-        controller.signal.removeEventListener('abort', abort);
-        this.approvalWaiters.delete(call.id);
-        budget.resume();
-        if (error) reject(error);
-        else resolve();
-      };
-      const abort = () => done(controller.signal.reason ?? new Error('Work canceled'));
-      const timer = setTimeout(
-        () => {
-          this.facts.decideApproval(approval.id, 'expired');
-          controller.abort(
-            new ApplicationError('APPROVAL_EXPIRED', 'Command approval expired', 409),
-          );
-        },
-        Math.max(0, Date.parse(approval.expiresAt) - Date.now()),
-      );
-      timer.unref();
-      this.approvalWaiters.set(call.id, { approve: () => done() });
-      controller.signal.addEventListener('abort', abort, { once: true });
-      if (controller.signal.aborted) abort();
-    });
-  }
-
-  private async executeReviewedCommand(
+  private async executeWorkCommand(
     runId: string,
-    input: AiInput,
     workspace: AiWorkspace,
     command: string,
-    adapter: ModelProvider,
-    model: string,
-    timeoutMs: number,
     controller: AbortController,
     budget: AiWorkBudget,
   ) {
@@ -1391,20 +1348,22 @@ export class AiService {
       const secrets = await this.knownAiSecrets(controller.signal);
       if (redact(command, secrets) !== command)
         throw new ApplicationError('AI_SECRET_BOUNDARY', 'Command contains a credential', 409);
-      // Validate that the original target is still live before reviewing or waiting.
+      // Keep the task's target identity, but follow this terminal's live directory per command.
       const current = await this.workspace(workspace.terminalId);
       if (
         current.connectionId !== workspace.connectionId ||
-        current.terminalKind !== workspace.terminalKind
+        current.terminalKind !== workspace.terminalKind ||
+        current.execution !== workspace.execution ||
+        JSON.stringify(current.sshTarget) !== JSON.stringify(workspace.sshTarget)
       )
         throw new ApplicationError('PRECONDITION_FAILED', 'Work target changed', 412);
       call = this.facts.createToolCall({
         runId,
         toolName: 'workspace.exec',
-        args: aiToolCallSchema.shape.args.parse({ command, workspace }),
+        args: aiToolCallSchema.shape.args.parse({ command, workspace: current }),
         target: workspace.terminalId,
         risk: 'mutating',
-        argsHash: stableHash({ runId, command, workspace }),
+        argsHash: stableHash({ runId, command, workspace: current }),
         state: 'proposed',
       });
       this.commandCompletions.set(
@@ -1413,78 +1372,8 @@ export class AiService {
           complete = resolve;
         }),
       );
-      call = this.facts.updateCommandCall(call.id, {
-        step,
-        review: {
-          status: 'pending',
-          decision: 'ask_user',
-          riskLevel: 'high',
-          userAuthorization: 'unknown',
-          reason: 'Reviewing this command.',
-          source: 'rules',
-          generation: this.commandGeneration,
-          policyVersion: COMMAND_POLICY_VERSION,
-          expiresAt: new Date(Date.now() + 60_000).toISOString(),
-        },
-      });
-      this.emit({ runId, type: 'tool', data: call });
-      const review = await this.reviewer.review({
-        command,
-        workspace,
-        modelId: input.modelId,
-        model,
-        generation: this.commandGeneration,
-        messages: [
-          ...(input.conversationId && input.includeConversationHistory !== false
-            ? this.repository.listAiContextMessages(input.conversationId).messages
-            : []),
-          { role: 'user', content: input.prompt },
-        ],
-        adapter,
-        signal: controller.signal,
-        timeoutMs,
-        secrets,
-        usage: (event) =>
-          this.emit({ runId, type: 'usage', data: { type: 'usage', purpose: 'review', ...event } }),
-      });
-      controller.signal.throwIfAborted();
-      review.expiresAt = new Date(
-        Date.now() + (review.decision === 'ask_user' ? 10 * 60_000 : 60_000),
-      ).toISOString();
-      const risk: AiToolCall['risk'] =
-        review.riskLevel === 'low'
-          ? 'read_only'
-          : review.riskLevel === 'medium'
-            ? 'mutating'
-            : /\b(?:sudo|su|doas|Set-Acl)\b/iu.test(command)
-              ? 'privileged'
-              : 'destructive';
-      call = this.facts.updateCommandCall(call.id, { step, risk, review });
-      call = this.facts.updateCommandCall(call.id, {
-        argsHash: this.commandHash(call, review.expiresAt),
-      });
-      this.emit({ runId, type: 'tool', data: call });
-      if (review.decision === 'reject')
-        throw new ApplicationError('AI_POLICY_REJECTED', review.reason, 409);
-      if (review.decision === 'ask_user')
-        await this.waitForCommandApproval(call, controller, budget);
-      controller.signal.throwIfAborted();
-      const bound = this.repository.getToolCall(call.id);
-      if (
-        bound.argsHash !== this.commandHash(bound, review.expiresAt) ||
-        bound.approvalSource ||
-        bound.state !== (review.decision === 'auto_approve' ? 'proposed' : 'waiting_approval') ||
-        bound.review?.generation !== this.commandGeneration ||
-        Date.parse(review.expiresAt) <= Date.now()
-      )
-        throw new ApplicationError(
-          'PRECONDITION_FAILED',
-          'Command decision changed or expired',
-          412,
-        );
-      call = this.facts.updateCommandCall(call.id, {
-        approvalSource: review.decision === 'auto_approve' ? 'automatic' : 'user',
-      });
+      // ADR-239: choosing work mode grants execution; no classifier or command approval.
+      call = this.facts.updateCommandCall(call.id, { step });
       this.facts.updateToolCall(call.id, 'running');
       this.update(runId, 'running');
       this.emit({ runId, type: 'tool', data: this.repository.getToolCall(call.id) });
@@ -1495,7 +1384,12 @@ export class AiService {
         controller.signal,
       );
       controller.signal.throwIfAborted();
-      const safe = sanitizeToolResult(execution, secrets) as Record<string, unknown>;
+      const safe: Record<string, unknown> = {
+        ...(sanitizeToolResult(execution, secrets) as Record<string, unknown>),
+        commandDirectory:
+          current.commandDirectory === null ? null : redact(current.commandDirectory, secrets),
+        workspaceDirectory: redact(current.workspaceDirectory, secrets),
+      };
       const isError = typeof safe.exitCode === 'number' && safe.exitCode !== 0;
       this.facts.updateToolCall(call.id, isError ? 'failed' : 'succeeded', safe);
       this.emit({ runId, type: 'tool', data: this.repository.getToolCall(call.id) });

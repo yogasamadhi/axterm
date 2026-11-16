@@ -18,8 +18,9 @@ import { piMetadata } from './pi-metadata.ts';
 export function piBinding(provider: AiProvider, model: string): EngineExecutionOptions {
   if (provider.engineId !== 'pi') throw new EngineError('unsupported');
   const credentialRef = provider.credentialRef;
-  const baseUrl = provider.baseUrl;
-  if (!credentialRef || !baseUrl) throw new EngineError('invalid');
+  const baseUrl = provider.baseUrl ?? '';
+  if (!credentialRef || (!baseUrl && provider.pi?.credentialMode !== 'pi'))
+    throw new EngineError('invalid');
   const pi = provider.pi;
   const models = [...(pi?.models ?? [])];
   if (!models.some((item) => item.id === model) && (!pi || pi.api || pi.modelOverrides[model]?.api))
@@ -39,6 +40,7 @@ export function piBinding(provider: AiProvider, model: string): EngineExecutionO
       providerId: provider.id,
       provider: {
         provider: pi?.id ?? 'axterm-custom',
+        ...(pi?.credentialMode ? { credentialMode: pi.credentialMode } : {}),
         baseUrl,
         credentialRef: encodeOpaqueCredentialRef(credentialRef),
         headerCredentialRefs: Object.fromEntries(

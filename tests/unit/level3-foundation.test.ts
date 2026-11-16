@@ -497,15 +497,12 @@ describe('Level 3 migration foundation', () => {
       ).toBe(image.sha256);
   });
 
-  it('verifies framework originals and rejects a source or manifest alteration', async () => {
+  it('verifies framework originals and rejects a stale pin or altered bytes', async () => {
     await expect(checkFrameworkSource()).resolves.toBe(resolve('vendor/deepseek-harness'));
     const root = await mkdtemp(join(tmpdir(), 'axterm-framework-source-'));
     temporary.push(root);
-    await cp(
-      'compliance/DSH_FRAMEWORK_SOURCE.json',
-      join(root, 'compliance/DSH_FRAMEWORK_SOURCE.json'),
-      { recursive: true },
-    );
+    const manifestPath = join(root, 'compliance/DSH_FRAMEWORK_SOURCE.json');
+    await cp('compliance/DSH_FRAMEWORK_SOURCE.json', manifestPath, { recursive: true });
     await cp('vendor/deepseek-harness/LICENSE', join(root, 'vendor/deepseek-harness/LICENSE'), {
       recursive: true,
     });
@@ -529,6 +526,16 @@ describe('Level 3 migration foundation', () => {
       );
     }
     await expect(checkFrameworkSource(root)).resolves.toBe(join(root, 'vendor/deepseek-harness'));
+    const manifest = await readFile(manifestPath, 'utf8');
+    await writeFile(
+      manifestPath,
+      JSON.stringify({
+        ...JSON.parse(manifest),
+        commit: 'e8f7b93a344964de3dca1ace9e72b6e4d6de87cb',
+      }),
+    );
+    await expect(checkFrameworkSource(root)).rejects.toThrow('differs');
+    await writeFile(manifestPath, manifest);
     const original = await readFile(
       join(root, 'vendor/deepseek-harness/vendor/cordis/src/index.ts'),
       'utf8',
@@ -620,6 +627,12 @@ describe('Level 3 migration foundation', () => {
     expect(inspectLevel3Source(file, source, owner)).toEqual([]);
     const schema = "import {obj} from '../../../vendor/pi/packages/schema/src/index.ts'";
     expect(inspectLevel3Source(file, schema, owner)).toEqual([]);
+    const composer =
+      "import {composeModelProvider} from '../../../vendor/pi/packages/coding-agent/src/core/provider-composer.ts'";
+    expect(inspectLevel3Source(file, composer, owner)).toEqual([]);
+    const loginFile = '/repo/packages/pi-engine/src/login.ts';
+    const oauth = "import {xaiOAuth} from '../../../vendor/pi/packages/ai/src/auth/oauth/xai.ts'";
+    expect(inspectLevel3Source(loginFile, oauth, owner)).toEqual([]);
     for (const [filename, code, manifest] of [
       ['/repo/packages/pi-engine/src/other.ts', source, owner],
       [file, source, { name: '@axterm/engine-other' }],
@@ -629,6 +642,9 @@ describe('Level 3 migration foundation', () => {
       [file, schema, { name: '@axterm/engine-other' }],
       [file, "import '../../../vendor/pi/packages/schema/src/private.ts'", owner],
       [file, "import '../../../vendor/deepseek-harness/packages/schema/src/index.ts'", owner],
+      [loginFile, composer, owner],
+      [loginFile, "import '../../../vendor/pi/packages/coding-agent/src/core/sdk.ts'", owner],
+      ['/repo/packages/plugins/ai/src/login.ts', oauth, { name: '@axterm/plugin-ai' }],
     ] as const)
       expect(inspectLevel3Source(filename, code, manifest).join(' ')).toContain(
         'Relative import escapes package',

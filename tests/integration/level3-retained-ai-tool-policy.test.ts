@@ -33,17 +33,12 @@ describe('AI policy and audit', () => {
     const terminal = await terminals.createLocal({ cols: 80, rows: 24 });
     const tools = owned.tools;
     const service = owned.createService(undefined, tools);
-    const run = await service.start(
-      {
-        modelId: randomUUID(),
-        useCase: 'diagnose',
-        prompt: 'run a reviewed command',
-        context: '',
-        terminalId: terminal.id,
-        tool: { name: 'terminal.exec', args: { command: 'printf approved' }, target: terminal.id },
-      },
+    const invocation = await service.invokeRegisteredTool(
+      tools.mcpProposal('terminal.exec', { terminalId: terminal.id, command: 'printf approved' }),
+      randomUUID(),
       randomUUID(),
     );
+    const run = service.get(invocation.runId);
     await vi.waitFor(() => expect(service.get(run.id).state).toBe('waiting_approval'));
     const approval = service.approvals()[0]!;
     await expect(
@@ -94,16 +89,12 @@ describe('AI policy and audit', () => {
     const terminal = await terminals.createLocal({ cols: 80, rows: 24 });
     const tools = owned.tools;
     const service = owned.createService(undefined, tools);
-    const run = await service.start(
-      {
-        modelId: randomUUID(),
-        useCase: 'diagnose',
-        prompt: 'expire this action',
-        context: '',
-        tool: { name: 'terminal.exec', args: { command: 'echo never' }, target: terminal.id },
-      },
+    const invocation = await service.invokeRegisteredTool(
+      tools.mcpProposal('terminal.exec', { terminalId: terminal.id, command: 'echo never' }),
+      randomUUID(),
       randomUUID(),
     );
+    const run = service.get(invocation.runId);
     await vi.waitFor(() => expect(service.get(run.id).state).toBe('waiting_approval'));
     const approval = service.approvals()[0]!;
     owned.domain.run(
@@ -135,19 +126,17 @@ describe('AI policy and audit', () => {
         }),
     };
     const service = owned.createService(undefined, tools as never);
-    const run = await service.start(
-      {
-        modelId: randomUUID(),
-        useCase: 'diagnose',
-        prompt: 'inspect slowly',
-        context: '',
-        tool: { name: 'system.inspectDisk', args: {}, target: 'local' },
-      },
+    const invocation = service.invokeRegisteredTool(
+      { name: 'system.inspectDisk', args: {}, target: 'local' },
+      randomUUID(),
       randomUUID(),
     );
+    await vi.waitFor(() => expect(service.list()).toHaveLength(1));
+    const run = service.list()[0]!;
     await vi.waitFor(() => expect(service.toolCalls(run.id)[0]?.state).toBe('running'));
     service.cancel(run.id);
     resolveTool?.({ tooLate: true });
+    expect(await invocation).toMatchObject({ runId: run.id, state: 'canceled' });
     await vi.waitFor(() => expect(service.get(run.id).state).toBe('canceled'));
     expect(service.toolCalls(run.id)[0]).toMatchObject({
       state: 'canceled',

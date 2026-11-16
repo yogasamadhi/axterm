@@ -6,7 +6,7 @@ import { OwnedWorkspaceCommands } from '../../packages/plugins/ai/src/adapters/w
 import { randomUUID } from 'node:crypto';
 import { once } from 'node:events';
 import { createServer } from 'node:http';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, mkdir, realpath } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -26,6 +26,8 @@ async function fixture(commands: string[], realProcess = false, stallReview = fa
     [];
   let mainTurns = 0;
   let allowReview = true;
+  let holding = false;
+  const held: Array<() => void> = [];
   const server = createServer((req, res) => {
     let body = '';
     req.on('data', (chunk) => {
@@ -38,22 +40,25 @@ async function fixture(commands: string[], realProcess = false, stallReview = fa
       if (reviewing && stallReview) return;
       const command = commands[mainTurns];
       res.writeHead(200, { 'content-type': 'text/event-stream' });
-      res.end(
-        reviewing
-          ? piSseText(
-              'openai-chat',
-              JSON.stringify({
-                outcome: allowReview ? 'allow' : 'deny',
-                risk_level: allowReview ? 'medium' : 'critical',
-                user_authorization: 'high',
-                rationale: 'Requested bounded fixture change.',
-              }),
-            ) + piSseEnd('openai-chat')
-          : command
-            ? piSseCommand(command).replaceAll('call_workspace', `call_${++mainTurns}`)
-            : piSseText('openai-chat', 'Task finished from actual results.') +
-              piSseEnd('openai-chat'),
-      );
+      const send = () =>
+        res.end(
+          reviewing
+            ? piSseText(
+                'openai-chat',
+                JSON.stringify({
+                  outcome: allowReview ? 'allow' : 'deny',
+                  risk_level: allowReview ? 'medium' : 'critical',
+                  user_authorization: 'high',
+                  rationale: 'Requested bounded fixture change.',
+                }),
+              ) + piSseEnd('openai-chat')
+            : command
+              ? piSseCommand(command).replaceAll('call_workspace', `call_${++mainTurns}`)
+              : piSseText('openai-chat', 'Task finished from actual results.') +
+                piSseEnd('openai-chat'),
+        );
+      if (holding) held.push(send);
+      else send();
     });
   });
   server.listen(0, '127.0.0.1');
@@ -106,7 +111,11 @@ async function fixture(commands: string[], realProcess = false, stallReview = fa
   const execute = vi.fn(
     async (_name: string, args: Record<string, unknown>, _target: string, signal: AbortSignal) =>
       realProcess
-        ? workspaceCommands.execute(String(args.command), cwd, signal)
+        ? workspaceCommands.execute(
+            String(args.command),
+            (args.workspace as AiWorkspace).commandDirectory!,
+            signal,
+          )
         : { stdout: `result:${String(args.command)}`, stderr: '', exitCode: 0 },
   );
   const tools = { execute } as unknown as AiToolsPort;
@@ -142,6 +151,13 @@ async function fixture(commands: string[], realProcess = false, stallReview = fa
     database,
     workspace,
     host,
+    holdModel: () => {
+      holding = true;
+      return () => {
+        holding = false;
+        for (const send of held.splice(0)) send();
+      };
+    },
     denyReview: () => {
       allowReview = false;
     },
@@ -151,6 +167,52 @@ async function fixture(commands: string[], realProcess = false, stallReview = fa
   };
 }
 describe('native Pi continuous work and Runtime decisions', () => {
+  it('executes successive commands in the selected terminal’s live local directory and records the actual paths', async () => {
+    const f = await fixture(['node -p "process.cwd()"', 'node -p "process.cwd()"'], true);
+    const original = f.workspace.commandDirectory!;
+    const next = join(original, 'next folder');
+    await mkdir(next);
+    const execute = f.execute.getMockImplementation()!;
+    f.execute.mockImplementationOnce(async (...args) => {
+      const result = await execute(...args);
+      f.workspace.commandDirectory = next;
+      f.workspace.workspaceDirectory = next;
+      return result;
+    });
+    const run = await f.start();
+    await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('succeeded'));
+    const calls = f.service.toolCalls(run.id);
+    expect(calls.map((call) => (call.args.workspace as AiWorkspace).commandDirectory)).toEqual([
+      original,
+      next,
+    ]);
+    expect(calls.map((call) => call.resultMetadata?.commandDirectory)).toEqual([original, next]);
+    expect(String(calls[0]?.resultMetadata?.stdout).trim()).toBe(await realpath(original));
+    expect(String(calls[1]?.resultMetadata?.stdout).trim()).toBe(await realpath(next));
+    expect(JSON.stringify(f.requests[2])).toContain(next);
+    const definition = JSON.stringify(f.requests[0]?.tools);
+    expect(definition).toContain('current directory at dispatch');
+    expect(definition).not.toContain('Runtime reviews safe commands');
+  });
+  it('refuses a reconnected SSH generation between commands instead of following a replacement connection', async () => {
+    const f = await fixture(['hostname', 'whoami']);
+    f.workspace.terminalKind = 'ssh';
+    f.workspace.execution = 'ssh';
+    f.workspace.connectionId = randomUUID();
+    f.workspace.sshTarget = { hostname: 'fixture', port: 22, username: 'fixture', generation: 1 };
+    f.execute.mockImplementationOnce(async () => {
+      f.workspace.sshTarget = { ...f.workspace.sshTarget!, generation: 2 };
+      return { stdout: 'first', stderr: '', exitCode: 0 };
+    });
+    const run = await f.start();
+    await vi.waitFor(() =>
+      expect(f.service.get(run.id)).toMatchObject({
+        state: 'failed',
+        errorCode: 'PRECONDITION_FAILED',
+      }),
+    );
+    expect(f.execute).toHaveBeenCalledTimes(1);
+  });
   it.skipIf(process.platform !== 'win32')(
     'runs transparent PowerShell observation and an authorized file write without approval',
     async () => {
@@ -170,9 +232,9 @@ describe('native Pi continuous work and Runtime decisions', () => {
       for (const call of f.service.toolCalls(run.id))
         expect(call.resultMetadata).toMatchObject({ exitCode: 0 });
       expect(f.service.toolCalls(run.id).map((call) => call.approvalSource)).toEqual([
-        'automatic',
-        'automatic',
-        'automatic',
+        undefined,
+        undefined,
+        undefined,
       ]);
       expect(
         (await readFile(join(f.workspace.commandDirectory!, 'marker.txt'), 'utf8'))
@@ -191,9 +253,9 @@ describe('native Pi continuous work and Runtime decisions', () => {
     expect(
       f.service.toolCalls(run.id).map((call) => [call.step, call.approvalSource, call.state]),
     ).toEqual([
-      [1, 'automatic', 'succeeded'],
-      [2, 'automatic', 'succeeded'],
-      [3, 'automatic', 'succeeded'],
+      [1, undefined, 'succeeded'],
+      [2, undefined, 'succeeded'],
+      [3, undefined, 'succeeded'],
     ]);
     expect(f.requests).toHaveLength(4);
     expect(f.requests[3]!.messages.filter((message) => message.role === 'tool')).toHaveLength(3);
@@ -208,101 +270,67 @@ describe('native Pi continuous work and Runtime decisions', () => {
     expect(f.service.toolCalls(run.id).map((call) => call.step)).toEqual([1, 2, 3]);
     expect(f.service.toolCalls(run.id).at(-1)?.step).toBe(3);
   });
-  it('executes a bounded authorized mutation with a separate tool-free review', async () => {
+  it('executes a bounded mutation directly without requesting or inventing review', async () => {
     const f = await fixture(['echo updated > marker.txt']);
     const run = await f.start();
     await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('succeeded'));
     expect(f.execute).toHaveBeenCalledTimes(1);
-    expect(f.service.toolCalls(run.id)[0]).toMatchObject({
-      risk: 'mutating',
-      approvalSource: 'automatic',
-      review: { source: 'model', decision: 'auto_approve' },
-    });
-    const review = f.requests.find((request) =>
-      request.messages[0]?.content.startsWith('You review one command'),
-    )!;
-    expect(review.tools ?? []).toHaveLength(0);
-    expect(review.messages[0]?.content).not.toContain('You are Axterm');
+    expect(f.service.toolCalls(run.id)[0]).toMatchObject({ risk: 'mutating', state: 'succeeded' });
+    expect(f.service.toolCalls(run.id)[0]?.approvalSource).toBeUndefined();
+    expect(f.service.toolCalls(run.id)[0]?.review).toBeUndefined();
+    expect(f.service.approvals()).toEqual([]);
+    expect(f.requests).toHaveLength(2);
   });
-  it('stops the native loop on a reviewer safety refusal without an approval bypass', async () => {
+  it('does not invoke the former reviewer even when its fixture would refuse the command', async () => {
     const f = await fixture(['echo updated > marker.txt', 'hostname']);
     f.denyReview();
     const run = await f.start();
-    await vi.waitFor(() =>
-      expect(f.service.get(run.id)).toMatchObject({
-        state: 'failed',
-        errorCode: 'AI_POLICY_REJECTED',
-      }),
-    );
-    expect(f.service.toolCalls(run.id)[0]?.review).toMatchObject({
-      decision: 'reject',
-      riskLevel: 'critical',
-    });
-    expect(f.service.approvals()).toHaveLength(0);
-    expect(f.execute).not.toHaveBeenCalled();
-    expect(f.requests).toHaveLength(2);
+    await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('succeeded'));
+    expect(f.execute).toHaveBeenCalledTimes(2);
+    expect(f.service.approvals()).toEqual([]);
+    expect(f.service.toolCalls(run.id).every((call) => call.review === undefined)).toBe(true);
+    expect(f.requests).toHaveLength(3);
+    expect(
+      f.requests.some((request) =>
+        request.messages[0]?.content.startsWith('You review one command'),
+      ),
+    ).toBe(false);
   });
-  it('pauses at danger, survives provider timeout while waiting, and resumes after one approval', async () => {
+  it('continues through a destructive command without a per-command approval pause', async () => {
     const f = await fixture(['whoami', 'del marker.txt', 'hostname']);
     const run = await f.start();
-    await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('waiting_approval'));
-    expect(f.execute).toHaveBeenCalledTimes(1);
-    await new Promise((resolve) => setTimeout(resolve, 1100));
-    expect(f.service.get(run.id).state).toBe('waiting_approval');
-    const approval = f.service.approvals()[0]!;
-    await f.service.decideApproval(
-      approval.id,
-      {
-        decision: 'approve_once',
-        argsHash: approval.argsHash,
-      },
-      randomUUID(),
-    );
     await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('succeeded'));
     expect(f.execute).toHaveBeenCalledTimes(3);
-    expect(f.service.toolCalls(run.id)[1]).toMatchObject({
-      approvalSource: 'user',
-      state: 'succeeded',
-    });
-    await expect(
-      f.service.decideApproval(
-        approval.id,
-        {
-          decision: 'approve_once',
-          argsHash: approval.argsHash,
-        },
-        randomUUID(),
-      ),
-    ).rejects.toMatchObject({ code: 'PRECONDITION_FAILED' });
+    expect(f.service.approvals()).toEqual([]);
+    expect(f.service.toolCalls(run.id).map((call) => call.state)).toEqual([
+      'succeeded',
+      'succeeded',
+      'succeeded',
+    ]);
+    expect(f.requests).toHaveLength(4);
+    expect(JSON.stringify(f.requests[3])).toContain('result:del marker.txt');
   });
-  it.each(['reject', 'cancel', 'expire', 'target'])(
-    'stops the entire loop on %s while waiting',
+  it.each(['cancel', 'shutdown', 'target', 'timeout'] as const)(
+    'stops the entire loop on %s during model generation',
     async (action) => {
       const f = await fixture(['del marker.txt', 'hostname']);
+      const release = f.holdModel();
       const run = await f.start();
-      await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('waiting_approval'));
-      const approval = f.service.approvals()[0]!;
-      if (action === 'reject')
-        await f.service.decideApproval(
-          approval.id,
-          {
-            decision: 'reject',
-            argsHash: approval.argsHash,
-          },
-          randomUUID(),
-        );
-      else if (action === 'cancel') f.service.cancel(run.id);
+      await vi.waitFor(() => expect(f.requests).toHaveLength(1));
+      if (action === 'cancel') f.service.cancel(run.id);
+      else if (action === 'shutdown') await f.service.close();
       else if (action === 'target') f.closeTarget();
-      else {
-        f.database.run(
-          'UPDATE ai_approvals SET expires_at=? WHERE id=?',
-          new Date(0).toISOString(),
-          approval.id,
-        );
-        f.service.approvals();
-      }
-      await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('canceled'));
+      await vi.waitFor(
+        () =>
+          expect(f.service.get(run.id).state).toBe(action === 'timeout' ? 'failed' : 'canceled'),
+        { timeout: 3000 },
+      );
+      if (action === 'target') expect(f.service.get(run.id).errorCode).toBe('PRECONDITION_FAILED');
+      if (action === 'timeout') expect(f.service.get(run.id).errorCode).toBe('AI_PROVIDER_FAILED');
+      release();
+      await f.service.close();
       expect(f.execute).not.toHaveBeenCalled();
+      expect(f.service.toolCalls(run.id)).toEqual([]);
       expect(f.requests).toHaveLength(1);
     },
   );
@@ -316,45 +344,66 @@ describe('native Pi continuous work and Runtime decisions', () => {
   });
   it('enforces the terminal reservation until cancellation', async () => {
     const f = await fixture(['del marker.txt']);
+    f.holdModel();
     const run = await f.start();
-    await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('waiting_approval'));
+    await vi.waitFor(() => expect(f.requests).toHaveLength(1));
     await expect(f.start()).rejects.toMatchObject({ code: 'CAPACITY_EXCEEDED' });
     f.service.cancel(run.id);
+    await f.service.close();
+    expect(f.execute).not.toHaveBeenCalled();
+  });
+  it('retains a work deadline failure instead of reporting it as a user cancellation', async () => {
+    const f = await fixture(['hostname']);
+    f.holdModel();
+    const schedule = globalThis.setTimeout;
+    const timer = vi
+      .spyOn(globalThis, 'setTimeout')
+      .mockImplementation((callback, delay, ...args) =>
+        schedule(callback, delay === 30 * 60_000 ? 100 : delay, ...args),
+      );
+    try {
+      const run = await f.start();
+      await vi.waitFor(() =>
+        expect(f.service.get(run.id)).toMatchObject({
+          state: 'failed',
+          errorCode: 'AI_RUNTIME_LIMIT',
+        }),
+      );
+      expect(f.execute).not.toHaveBeenCalled();
+    } finally {
+      timer.mockRestore();
+    }
   });
   it('rejects a fifth simultaneous work task', async () => {
     const f = await fixture(Array.from({ length: 4 }, () => 'del marker.txt'));
+    f.holdModel();
     const runs = [];
     for (let i = 0; i < 4; i++) {
       const run = await f.start(randomUUID());
       runs.push(run);
-      await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('waiting_approval'));
+      await vi.waitFor(() => expect(f.requests).toHaveLength(i + 1));
     }
     await expect(f.start(randomUUID())).rejects.toMatchObject({ code: 'CAPACITY_EXCEEDED' });
     for (const run of runs) f.service.cancel(run.id);
+    await f.service.close();
+    expect(f.execute).not.toHaveBeenCalled();
   });
-  it('invalidates a changed review generation before consuming approval', async () => {
+  it('does not create reusable approval authority for direct execution', async () => {
     const f = await fixture(['del marker.txt']);
     const run = await f.start();
-    await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('waiting_approval'));
-    const call = f.service.toolCalls(run.id)[0]!;
-    f.database.run(
-      'UPDATE ai_tool_calls SET review_json=? WHERE id=?',
-      JSON.stringify({ ...call.review, generation: 'old-generation' }),
-      call.id,
-    );
-    const approval = f.service.approvals()[0]!;
+    await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('succeeded'));
+    expect(f.service.approvals()).toEqual([]);
     await expect(
       f.service.decideApproval(
-        approval.id,
+        randomUUID(),
         {
           decision: 'approve_once',
-          argsHash: approval.argsHash,
+          argsHash: f.service.toolCalls(run.id)[0]!.argsHash,
         },
         randomUUID(),
       ),
-    ).rejects.toMatchObject({ code: 'PRECONDITION_FAILED' });
-    expect(f.execute).not.toHaveBeenCalled();
-    f.service.cancel(run.id);
+    ).rejects.toMatchObject({ code: 'NOT_FOUND' });
+    expect(f.execute).toHaveBeenCalledTimes(1);
   });
   it('does not execute command 51 or silently create another task', async () => {
     const f = await fixture(Array.from({ length: 51 }, () => 'hostname'));
@@ -373,11 +422,11 @@ describe('native Pi continuous work and Runtime decisions', () => {
       stdout: expect.stringMatching(/^v\d+/u),
     });
   });
-  it('cancels a reviewer request and releases the task without executing', async () => {
-    const f = await fixture(['echo updated > marker.txt'], false, true);
+  it('cancels a model request and releases the task without executing', async () => {
+    const f = await fixture(['echo updated > marker.txt']);
+    f.holdModel();
     const run = await f.start();
-    await vi.waitFor(() => expect(f.requests).toHaveLength(2));
-    expect(f.service.toolCalls(run.id)[0]?.review?.status).toBe('pending');
+    await vi.waitFor(() => expect(f.requests).toHaveLength(1));
     f.service.cancel(run.id);
     await f.service.close();
     expect(f.execute).not.toHaveBeenCalled();
@@ -405,19 +454,14 @@ describe('native Pi continuous work and Runtime decisions', () => {
     expect(f.execute).not.toHaveBeenCalled();
     expect(f.requests).toEqual([]);
   });
-  it('does not retry a timed-out review and asks for human confirmation', async () => {
+  it('never waits for a former reviewer endpoint that would time out', async () => {
     const f = await fixture(['echo updated > marker.txt'], false, true);
     const run = await f.start();
-    await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('waiting_approval'), {
-      timeout: 3000,
-    });
-    expect(f.service.toolCalls(run.id)[0]?.review).toMatchObject({
-      status: 'unavailable',
-      source: 'fallback',
-    });
+    await vi.waitFor(() => expect(f.service.get(run.id).state).toBe('succeeded'));
+    expect(f.service.toolCalls(run.id)[0]?.review).toBeUndefined();
+    expect(f.service.approvals()).toEqual([]);
     expect(f.requests).toHaveLength(2);
-    expect(f.execute).not.toHaveBeenCalled();
-    f.service.cancel(run.id);
+    expect(f.execute).toHaveBeenCalledTimes(1);
   });
   it('cancels the execution signal and rejects late completion', async () => {
     const f = await fixture(['hostname', 'whoami']);

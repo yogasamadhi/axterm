@@ -118,9 +118,9 @@ export function apply(ctx: Context): void {
         (number) =>
           scope.locale.resolveText({
             en: `Local ${number}`,
-            ja: `ローカル ${number}`,
-            'zh-CN': `本地 ${number}`,
-            'zh-TW': `本機 ${number}`,
+            ja: `ローカル${number}`,
+            'zh-CN': `本地${number}`,
+            'zh-TW': `本機${number}`,
           }),
       );
       scope.effect(() => () => startup.close());

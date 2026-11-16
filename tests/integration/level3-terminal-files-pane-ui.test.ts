@@ -1,3 +1,4 @@
+import { assertFilePaneLayout } from '../support/file-pane-layout.ts';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -19,6 +20,7 @@ it('uses the original per-terminal file surface and native authority without cre
       ),
     );
     await writeFile(join(directory, 'paired-local.txt'), 'PAIRED_FILE_BODY');
+    await writeFile(join(directory, `z-long-${'file-name-'.repeat(18)}.txt`), 'long name');
     app = await launchLevel3Desktop({
       executablePath: createRequire(resolve('apps/desktop/package.json'))('electron') as string,
       args: [resolve('apps/desktop'), `--user-data-dir=${home}`],
@@ -86,6 +88,7 @@ it('uses the original per-terminal file surface and native authority without cre
     const pane = files.locator('.file-pane-local'),
       scroll = pane.locator('.file-table-scroll');
     await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.setSize(1200, 700));
+    await assertFilePaneLayout(files);
     const compactHeight = await scroll.evaluate((element) => element.clientHeight);
     await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.setSize(1200, 900));
     await browserExpect
@@ -99,6 +102,16 @@ it('uses the original per-terminal file surface and native authority without cre
         element.querySelector('.file-table-scroll')!.getBoundingClientRect().bottom,
     );
     expect(bottomGap).toBeLessThan(50);
+    for (const width of [800, 1440]) {
+      await app.evaluate(
+        ({ BrowserWindow }, size) => BrowserWindow.getAllWindows()[0]!.setSize(size, 900),
+        width,
+      );
+      await browserExpect.poll(() => page.evaluate(() => innerWidth)).toBe(width);
+      await assertFilePaneLayout(files);
+    }
+    if (process.env.AXTERM_SFTP_LAYOUT_SCREENSHOTS)
+      await page.screenshot({ path: '/tmp/axterm-sftp-local-after.png' });
     await browserExpect(globalTabs).toHaveCount(1);
     await page.locator('[data-workspace-global-tabs] .tab-close').click();
     await browserExpect(globalTabs).toHaveCount(0);

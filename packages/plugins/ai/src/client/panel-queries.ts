@@ -8,6 +8,7 @@ interface AiQueryMap {
   skills: Contract.AiSkill[];
   conversation: Contract.AiMessageWindow & { conversation: Contract.AiConversation };
   tools: Contract.AiToolCall[];
+  toolsByRuns: Contract.AiToolCall[];
 }
 export type AiQueryKind = keyof AiQueryMap;
 export type AiQueryValue<K extends AiQueryKind> = AiQueryMap[K];
@@ -21,10 +22,11 @@ export class AiPanelQueries {
   }
   open<K extends AiQueryKind>(kind: K, id?: string): AiReadLease<AiQueryValue<K>> | undefined {
     if (this.closing) throw new Error('AI_PANEL_READS_CLOSED');
-    if (['provider', 'workspace', 'conversation'].includes(kind) && !id) return undefined;
+    if (['provider', 'workspace', 'conversation', 'toolsByRuns'].includes(kind) && !id)
+      return undefined;
     return this.reads.open(
       kind + ':' + (id ?? ''),
-      () => this.read(kind, id),
+      (signal) => this.read(kind, id, signal),
       () => this.version(kind, id),
       kind === 'workspace' ? 2000 : undefined,
     );
@@ -53,7 +55,12 @@ export class AiPanelQueries {
             : kind;
     return JSON.stringify([baseline.generation, version]);
   }
-  private async read<K extends AiQueryKind>(kind: K, id?: string): Promise<AiQueryValue<K>> {
+  private async read<K extends AiQueryKind>(
+    kind: K,
+    id?: string,
+    signal?: AbortSignal,
+  ): Promise<AiQueryValue<K>> {
+    signal?.throwIfAborted();
     const generation = this.baseline().generation;
     let value: AiQueryMap[AiQueryKind];
     switch (kind) {
@@ -93,6 +100,38 @@ export class AiPanelQueries {
         const tools: Contract.AiToolCall[] = [];
         for (const toolId of new Set(pending.map((row) => row.toolCallId)))
           tools.push(await this.model.getToolCall(toolId));
+        value = tools;
+        break;
+      }
+      case 'toolsByRuns': {
+        const ids: unknown = JSON.parse(id!);
+        if (
+          !Array.isArray(ids) ||
+          ids.length > 50 ||
+          ids.some((value) => typeof value !== 'string')
+        )
+          throw new Error('AI_TOOL_PAGE_INVALID');
+        const tools: Contract.AiToolCall[] = [];
+        let bytes = 0;
+        let pages = 0;
+        for (const runId of new Set<string>(ids)) {
+          let cursor = 0;
+          for (;;) {
+            signal?.throwIfAborted();
+            if (++pages > 256) throw new Error('AI_READ_CAPACITY');
+            const page = await this.model.getTools(runId, { after: cursor, limit: 50 });
+            signal?.throwIfAborted();
+            if (this.baseline().generation !== generation)
+              throw new Error('AI_MODEL_GENERATION_CHANGED');
+            bytes += new TextEncoder().encode(JSON.stringify(page.tools)).byteLength;
+            if (bytes > 4 * 1024 * 1024 || tools.length + page.tools.length > 256)
+              throw new Error('AI_READ_CAPACITY');
+            tools.push(...page.tools);
+            if (!page.hasMore) break;
+            if (page.nextCursor <= cursor) throw new Error('AI_TOOL_PAGE_INVALID');
+            cursor = page.nextCursor;
+          }
+        }
         value = tools;
         break;
       }

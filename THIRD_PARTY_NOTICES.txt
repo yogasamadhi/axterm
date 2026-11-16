@@ -457,7 +457,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 Pi AI / Agent / telemetry source engine
 Source: https://github.com/earendil-works/pi
-Revision: 4ea8837927564c592b1d184c956ab7d28c88119b (Pi 1.5.1)
+Revision: 8636e211e7834e4ca46a22aec1d65dfd2eac8677 (Pi 1.5.2)
 Copyright (c) 2025 Mario Zechner
 License: MIT; full text: licenses/pi-LICENSE.txt
 The pinned model catalog is included under packages/pi-engine/catalog; its immutable source and SHA-256 revision are recorded in provenance.json.
@@ -471,7 +471,7 @@ Only the three pure source modules listed in vendor/pi-auto-review/PROVENANCE.js
 
 DeepSeek Harness Cordis framework and adapted application infrastructure
 Source: https://github.com/deepseek-ai/deepseek-harness
-Framework revision: fcc0ad462172522aaf5c93a7b2e01f6b9f0b0159
+Framework revision: 39163dd30f703a79079e2d2446545cff3c453738
 Adapted infrastructure retains its original 8bd073392eef6f54e921a093b95076248eb08cbb source attribution.
 Copyright (c) 2026 DeepSeek
 The nine Cordis foundation packages and the adapted HMR component retain
@@ -483,9 +483,9 @@ Adapted application infrastructure source paths and upstream hashes are in
 compliance/DSH_INFRASTRUCTURE_SOURCE.json. This is reference provenance, not
 a change to the application's first-party license or a rights-review approval.
 
-Pi schema 1.5.1 — direct vendor/pi source
+Pi schema 1.5.2 — direct vendor/pi source
 ---------------------------------------
-The pinned Pi source at 4ea8837927564c592b1d184c956ab7d28c88119b includes
+The pinned Pi source at 8636e211e7834e4ca46a22aec1d65dfd2eac8677 includes
 @earendil-works/pi-schema. Its upstream TypeBox-derived notice is retained
 verbatim in licenses/pi-schema-typebox-LICENSE.txt and in the compiled engine
 third-party notices. Pi AI/Agent/schema source is independent of the DSH

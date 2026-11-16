@@ -1,7 +1,14 @@
 import { describe, expect, it, vi } from 'vitest';
 import { randomUUID } from 'node:crypto';
-import { aiProviderSchema, piModelsFileSchema } from '../../packages/api/plugin-api/src/ai.ts';
-import { importPiModels } from '../../packages/plugins/ai/src/client/ui/pi-configuration.ts';
+import {
+  aiProviderSchema,
+  piModelsFileSchema,
+  piApiSchema,
+} from '../../packages/api/plugin-api/src/ai.ts';
+import {
+  importPiModels,
+  piConfigurationForModel,
+} from '../../packages/plugins/ai/src/client/ui/pi-configuration.ts';
 
 function fixture() {
   const client = {
@@ -35,6 +42,14 @@ const custom = JSON.stringify({
 });
 
 describe('Pi models.json Vault import', () => {
+  it('preserves Pi API identities in new custom configurations instead of falling back to legacy Chat', () => {
+    for (const api of piApiSchema.options)
+      expect(piConfigurationForModel(undefined, 'custom', api)).toMatchObject({
+        id: 'axterm-custom',
+        models: [{ id: 'custom', api }],
+      });
+    expect(() => piConfigurationForModel(undefined, 'custom', 'openai-chat')).toThrow();
+  });
   it('imports literal credentials into the Vault and stores only references', async () => {
     const client = fixture();
     const imported = await importPiModels(client as never, custom, '', []);

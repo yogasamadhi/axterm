@@ -24,7 +24,7 @@ afterEach(async () => {
 });
 
 describe('assistant selected workspace authenticated Remote and real SSH boundary', () => {
-  it('chats directly, proposes a bound SSH command, requires approval and keeps local files separate', async () => {
+  it('keeps chat tool-free, executes bound work directly over SSH and keeps local files separate', async () => {
     const root = await realpath(await mkdtemp(join(tmpdir(), 'axterm-ai-workspace-http-')));
     cleanup.push(() => rm(root, { recursive: true, force: true }));
     const home = join(root, 'local-home');
@@ -251,12 +251,11 @@ describe('assistant selected workspace authenticated Remote and real SSH boundar
         expect((await f.model.getRun(guardedRun.id)).state).toBe('failed'),
       );
       expect((await f.model.getTools(guardedRun.id, { limit: 50 })).tools).toEqual([]);
-      // ADR091 adds a separately approved plugin-management tool in chat; it
-      // never grants workspace execution or applies its automatic-review exception.
+      // Chat and reply-only skills have no executable tools (ADR239).
       const advertised = (JSON.parse(requests.at(-1)!).tools ?? []).map(
         (tool: { function: { name: string } }) => tool.function.name,
       );
-      expect(advertised).toEqual(guarded.useCase === 'chat' ? ['plugin_manager'] : []);
+      expect(advertised).toEqual([]);
       expect(advertised).not.toContain('workspace_exec');
       expect(sshCommands).toHaveLength(probeCount);
     }
@@ -288,28 +287,17 @@ describe('assistant selected workspace authenticated Remote and real SSH boundar
       conversationId: remoteChat.ids[0]!,
     });
     await vi.waitFor(async () =>
-      expect((await f.model.getRun(remoteRun.id)).state).toBe('waiting_approval'),
+      expect((await f.model.getRun(remoteRun.id)).state).toBe('succeeded'),
     );
-    expect(sshCommands).toHaveLength(probeCount);
-    await expect(readFile(join(remote, 'approval-marker'))).rejects.toMatchObject({
-      code: 'ENOENT',
-    });
-    const approval = (await f.model.getTools(remoteRun.id, { limit: 50 })).approvals.find(
-      (item) => item.runId === remoteRun.id,
-    )!;
+    expect((await f.model.getTools(remoteRun.id, { limit: 50 })).approvals).toEqual([]);
     const call = (await f.model.getTools(remoteRun.id, { limit: 50 })).tools[0]!;
     expect(call).toMatchObject({
       toolName: 'workspace.exec',
       target: terminal.id,
       args: { workspace: { connectionId: connection.id, commandDirectory: remote } },
     });
-    await f.model.decideApproval(randomUUID(), approval.id, {
-      decision: 'approve_once',
-      argsHash: approval.argsHash,
-    });
-    await vi.waitFor(async () =>
-      expect((await f.model.getRun(remoteRun.id)).state).toBe('succeeded'),
-    );
+    expect(call.approvalSource).toBeUndefined();
+    expect(call.review).toBeUndefined();
     expect(sshCommands).toHaveLength(probeCount + 1);
     expect(await readFile(join(remote, 'approval-marker'), 'utf8')).toBe('approved');
     await expect(

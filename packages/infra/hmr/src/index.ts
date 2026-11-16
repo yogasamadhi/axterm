@@ -4,13 +4,7 @@
 import assert from 'node:assert/strict';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { watchConfig as watchExactConfig } from './watch-config.ts';
-import {
-  type Context,
-  Service,
-  type FiberState,
-  type Fiber,
-  type Plugin,
-} from '@deepseek-ai/cordis';
+import { Context, Service, type FiberState, type Fiber, type Plugin } from '@deepseek-ai/cordis';
 import type {
   Entry,
   ModuleLoader,
@@ -1161,7 +1155,7 @@ class Hmr extends Service {
         },
         undefined,
       );
-      const result = await recomposeProfile(this.ownerContext.root, patches, 'axterm', {
+      const result = await recomposeProfile(this.ownerContext[Context.root], patches, 'axterm', {
         requiredIds,
         running,
       });

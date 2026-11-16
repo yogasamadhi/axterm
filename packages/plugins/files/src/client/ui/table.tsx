@@ -284,16 +284,24 @@ export function FileTable({
   onToggleColumn(column: FileManagerColumn): void;
 }) {
   const { language, x } = useI18n();
-  const [widths, setWidths] = useState(() => columns.map(() => 100 / columns.length));
+  const [widths, setWidths] = useState(() => {
+    const weights = columns.map((column) => (column === 'name' ? 52 : column === 'size' ? 18 : 30));
+    const total = weights.reduce((sum, weight) => sum + weight, 0);
+    return weights.map((weight) => (weight / total) * 100);
+  });
   const [scrollTop, setScrollTop] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(340);
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const [dropTarget, setDropTarget] = useState<string>();
   const activeDragRef = useRef<FileDragPayload | undefined>(undefined);
   const scrollRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     const scroll = scrollRef.current;
     if (!scroll) return;
-    const measure = () => setViewportHeight(scroll.clientHeight);
+    const measure = () => {
+      setViewportHeight(scroll.clientHeight);
+      setScrollbarWidth(scroll.offsetWidth - scroll.clientWidth);
+    };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(scroll);
@@ -388,7 +396,7 @@ export function FileTable({
 
   return (
     <div className={cx('file-list file-table')} aria-label={label}>
-      <div className={cx('file-table-header-wrap')}>
+      <div className={cx('file-table-header-wrap')} style={{ paddingRight: scrollbarWidth }}>
         <div className={cx('file-table-header')} role="row" style={{ gridTemplateColumns }}>
           {columns.map((column, index) => {
             const labelText = fileColumnLabel(column, x);
@@ -729,7 +737,7 @@ export function FileTable({
               {columns.map((column) => (
                 <span key={column} title={fileColumnValue(entry, column, x, language)}>
                   {column === 'name' && <FileEntryIcon entry={entry} />}
-                  {fileColumnValue(entry, column, x, language)}
+                  <span>{fileColumnValue(entry, column, x, language)}</span>
                 </span>
               ))}
             </button>

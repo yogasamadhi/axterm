@@ -210,12 +210,18 @@ describe('selected-terminal assistant workspace and execution', () => {
       code: 'ENOENT',
     });
   });
-  it('persists exact workspace approval, executes once and never writes to the foreground CLI', async () => {
+  it('persists the workspace snapshot, executes once directly and never writes to the foreground CLI', async () => {
     const f = await fixture();
     const owned = await ownedAiPolicy();
     const resources = new AiToolResources(owned.ctx, f.home);
     const tools = new AiToolService(resources, f.workspaces);
     const ai = owned.createService(undefined, tools, f.workspaces);
+    const pending = Promise.withResolvers<void>();
+    const execute = f.workspaces.execute.bind(f.workspaces);
+    const execution = vi.spyOn(f.workspaces, 'execute').mockImplementation(async (...args) => {
+      await pending.promise;
+      return execute(...args);
+    });
     cleanup.push(async () => {
       await ai.close();
       await resources.close();
@@ -237,8 +243,8 @@ describe('selected-terminal assistant workspace and execution', () => {
     const key = randomUUID();
     const run = await ai.start(input, key);
     expect(await ai.start(input, key)).toMatchObject({ id: run.id });
-    await vi.waitFor(() => expect(ai.get(run.id).state).toBe('waiting_approval'));
-    const approval = ai.approvals()[0]!;
+    await vi.waitFor(() => expect(execution).toHaveBeenCalledTimes(1));
+    expect(ai.approvals()).toEqual([]);
     expect(ai.toolCalls(run.id)[0]?.args).toMatchObject({
       workspace: { commandDirectory: f.home },
     });
@@ -246,21 +252,14 @@ describe('selected-terminal assistant workspace and execution', () => {
     const next = join(f.home, 'changed');
     await mkdir(next);
     f.emit(next);
-    await ai.decideApproval(
-      approval.id,
-      { decision: 'approve_once', argsHash: approval.argsHash },
-      randomUUID(),
-    );
+    pending.resolve();
+    await vi.waitFor(() => expect(ai.get(run.id).state).toBe('succeeded'));
     expect(await readFile(join(f.home, 'marker'), 'utf8')).toBe(
       process.platform === 'win32' ? 'approved\r\n' : 'approved\n',
     );
-    await expect(
-      ai.decideApproval(
-        approval.id,
-        { decision: 'approve_once', argsHash: approval.argsHash },
-        randomUUID(),
-      ),
-    ).rejects.toMatchObject({ code: 'PRECONDITION_FAILED' });
+    expect(await ai.start(input, key)).toMatchObject({ id: run.id, state: 'succeeded' });
+    expect(execution).toHaveBeenCalledTimes(1);
+    await expect(readFile(join(next, 'marker'))).rejects.toMatchObject({ code: 'ENOENT' });
     expect(f.writes).not.toHaveBeenCalled();
   });
 });

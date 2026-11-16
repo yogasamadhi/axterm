@@ -5,7 +5,10 @@ export type PiApi =
   | 'anthropic-messages'
   | 'google-generative-ai'
   | 'mistral-conversations'
-  | 'pi-messages';
+  | 'pi-messages'
+  | 'openai-codex-responses'
+  | 'google-vertex'
+  | 'bedrock-converse-stream';
 
 export interface PiModelConfig {
   id: string;
@@ -32,6 +35,7 @@ export interface PiCatalogProvider {
   name: string;
   baseUrl: string;
   apiKeyAvailable: boolean;
+  oauth?: { name: string; label: string; subscription: boolean };
   models: PiModelConfig[];
 }
 
@@ -59,7 +63,8 @@ export interface PiEngineRequest {
   provider: PiProviderConfig;
   baseUrl: string;
   model: string;
-  apiKey: string;
+  apiKey?: string | undefined;
+  credentialStore?: PiCredentialStore;
   system: string;
   prompt: string;
   context: string;
@@ -68,6 +73,36 @@ export interface PiEngineRequest {
   headers: Record<string, string | null>;
   timeoutMs: number;
 }
+
+export type PiCredential =
+  | { type: 'api_key'; key?: string | undefined; env?: Record<string, string> | undefined }
+  | { type: 'oauth'; access: string; refresh: string; expires: number; [key: string]: unknown };
+export interface PiCredentialStore {
+  read(providerId: string): Promise<PiCredential | undefined>;
+  list(): Promise<readonly { providerId: string; type: 'api_key' | 'oauth' }[]>;
+  modify(
+    providerId: string,
+    mutate: (value: PiCredential | undefined) => Promise<PiCredential | undefined>,
+  ): Promise<PiCredential | undefined>;
+  delete(providerId: string): Promise<void>;
+}
+export interface PiLoginInteraction {
+  signal: AbortSignal;
+  prompt(value: {
+    type: 'text' | 'secret' | 'select' | 'manual_code';
+    message: string;
+    placeholder?: string;
+    options?: readonly { id: string; label: string; description?: string }[];
+    signal?: AbortSignal;
+  }): Promise<string>;
+  notify(value: unknown): void;
+}
+export declare function loginPiProvider(
+  provider: string,
+  method: 'api_key' | 'oauth',
+  store: PiCredentialStore,
+  interaction: PiLoginInteraction,
+): Promise<PiModelConfig[]>;
 
 export type PiEngineEvent =
   | { type: 'commandProposal'; command: string }

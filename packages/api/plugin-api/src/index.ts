@@ -281,8 +281,9 @@ export abstract class TypertRemoteService<out T = never> extends Service<T> {
  * tree registers it on the root, where it outlives any one Service.
  */
 function provideInvocationAccessor(ctx: Context): void {
-  if (Object.hasOwn(ctx.root.reflect.props, 'invocation')) return;
-  ctx.root.accessor('invocation', { get: () => undefined });
+  const root = ctx[Context.root];
+  if (Object.hasOwn(root.reflect.props, 'invocation')) return;
+  root.accessor('invocation', { get: () => undefined });
 }
 
 /**

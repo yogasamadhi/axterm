@@ -76,6 +76,7 @@ import interactionStyles, {
 } from './interactions/interactions.module.css';
 import { directoryFromOsc633 } from './active-directory.ts';
 import { TerminalWorkspaceAdmissions } from './workspace-owner.ts';
+import { LocalTerminalTitles } from './local-titles.ts';
 import { TerminalDraftOwner } from './draft-owner.ts';
 import { dictionaries } from './locales.ts';
 import type { PropsLocale, PropsRenderSlots } from '@axterm/ui';
@@ -177,6 +178,11 @@ export function installTerminalUi(ctx: Context, model: TerminalsModel): void {
   const visualRegistrations = new Map<string, () => void>();
   const registrations = new Map<string, WorkspaceTabRegistration>();
   const titles = new Map<string, string>();
+  const localTitles = new LocalTerminalTitles(
+    (number) => ctx.locale.bind('terminals')('localTab', { number }),
+    Object.values(dictionaries).map((dictionary) => dictionary.localTerminal),
+    Object.values(dictionaries).map((dictionary) => dictionary.localTab),
+  );
   const views = new Set<() => void>();
   const terminalModes = new Map<string, () => void>();
   const drafts = new TerminalDraftOwner((id) => {
@@ -286,6 +292,7 @@ export function installTerminalUi(ctx: Context, model: TerminalsModel): void {
       for (const registration of registrations.values()) registration.dispose();
       registrations.clear();
       titles.clear();
+      localTitles.reset();
       directories.clear();
       registeredGeneration = generation;
     }
@@ -298,6 +305,7 @@ export function installTerminalUi(ctx: Context, model: TerminalsModel): void {
         registration.dispose();
         registrations.delete(id);
         titles.delete(id);
+        localTitles.remove(id);
         directories.delete(id);
         reloadStates.delete(id);
         if (encodingOverrides.delete(id)) encodingChanged();
@@ -306,7 +314,10 @@ export function installTerminalUi(ctx: Context, model: TerminalsModel): void {
       const tab = {
         id: session.id,
         kind: 'terminal',
-        title: titles.get(session.id) ?? session.title,
+        title:
+          session.kind === 'local'
+            ? localTitles.title(session.id, titles.get(session.id) ?? session.title)
+            : (titles.get(session.id) ?? session.title),
         icon: 'terminal' as const,
       };
       const existing = registrations.get(session.id);
@@ -330,6 +341,7 @@ export function installTerminalUi(ctx: Context, model: TerminalsModel): void {
       for (const registration of registrations.values()) registration.dispose();
       registrations.clear();
       titles.clear();
+      localTitles.reset();
       directories.clear();
     };
   });
@@ -347,6 +359,13 @@ export function installTerminalUi(ctx: Context, model: TerminalsModel): void {
     }),
   );
   const admissions = new TerminalWorkspaceAdmissions(model, (id, title) => {
+    const state = model.getSnapshot();
+    if (
+      title !== undefined &&
+      state.status === 'ready' &&
+      state.baseline.sessions.some((session) => session.id === id && session.kind === 'local')
+    )
+      title = localTitles.title(id, title);
     if (title !== undefined) titles.set(id, title);
     sync();
     const tab = registrations.get(id);

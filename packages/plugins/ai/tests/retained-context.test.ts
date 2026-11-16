@@ -25,12 +25,32 @@ const input = {
 };
 
 describe('bounded model context sources', () => {
+  it('allows factual work results with both new and previously saved default roles', () => {
+    for (const role of [
+      undefined,
+      'Terminal expert. Explain commands and effects clearly, prefer safe steps, and never claim a command was executed.',
+    ]) {
+      const built = buildAiModelContext({ ...input, mode: 'work', ...(role ? { role } : {}) });
+      expect(built.system).toContain(
+        'never claim a command was executed without an actual tool result.',
+      );
+      expect(built.system).not.toContain('never claim a command was executed.');
+      expect(built.system).toContain('Continue from actual tool results');
+    }
+    expect(
+      buildAiModelContext({ ...input, role: 'Custom user role' }).system.startsWith(
+        'Custom user role\n',
+      ),
+    ).toBe(true);
+  });
   it('uses Pi-loaded skill bodies and keeps generation reply-only even in work mode', () => {
     const generated = buildAiModelContext({ ...input, mode: 'work', useCase: 'generateCommand' });
     expect(generated.system).toContain('<skill name="generate-command">');
     expect(generated.system).toContain('Do not execute');
     expect(generated.system).not.toContain('use workspace_exec');
-    expect(buildAiModelContext({ ...input, mode: 'work' }).system).toContain('use workspace_exec');
+    expect(buildAiModelContext({ ...input, mode: 'work' }).system).toContain(
+      'workspace_exec runs commands directly',
+    );
     expect(buildAiModelContext({ ...input, useCase: 'chat' }).system).not.toContain(
       'use workspace_exec',
     );

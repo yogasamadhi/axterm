@@ -1,14 +1,43 @@
 /* Retained native form defaults, scoped to this presentation owner. */
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder),
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder) * {
+:where(
+  .panel-page,
+  .ai-panel-embedded,
+  .ai-provider-modal,
+  .ai-provider-form,
+  .modal,
+  .ai-approval-reminder
+),
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
+  * {
   box-sizing: border-box;
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   :is(button, input, select, textarea) {
   font: inherit;
   color: var(--ax-color-text);
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   :is(input, select, textarea) {
   width: 100%;
   min-height: 34px;
@@ -18,24 +47,54 @@
   padding: 7px 10px;
   font-size: var(--ax-font-size-control);
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   textarea {
   resize: vertical;
   font-family: var(--ax-font-code-compact);
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   :is(input, textarea)::placeholder {
   color: var(
     --ax-color-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--dc5a7ef
   );
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder) label {
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
+  label {
   display: grid;
   gap: 6px;
   color: var(--ax-color-text-muted);
   font-size: var(--ax-font-size-control);
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder) button {
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
+  button {
   min-height: 30px;
   border: 0 solid var(--ax-color-border);
   border-radius: var(--ax-radius-soft);
@@ -49,31 +108,66 @@
     border-color var(--ax-motion-interaction) var(--ax-motion-easing-ease),
     opacity var(--ax-motion-interaction) var(--ax-motion-easing-ease);
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   button:hover {
   border-color: var(--ax-color-surface-muted);
   background: var(--ax-color-canvas-deep);
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   button.primary {
   border-color: var(--ax-color-action-success-border);
   background: var(--ax-color-action-success);
   color: var(--ax-color-on-action-success);
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   button.primary:hover {
   border-color: var(
     --ax-color-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--5f7f2a7
   );
   background: var(--ax-color-action-success-hover);
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   button:disabled {
   background: var(--ax-color-surface-raised);
   color: var(--ax-color-text-muted);
   cursor: not-allowed;
 }
-:where(.panel-page, .ai-panel-embedded, .ai-provider-modal, .modal, .ai-approval-reminder)
+:where(
+    .panel-page,
+    .ai-panel-embedded,
+    .ai-provider-modal,
+    .ai-provider-form,
+    .modal,
+    .ai-approval-reminder
+  )
   :is(button, input, select, textarea):focus-visible {
   outline: var(
     --ax-border-ai-ui-where-panel-page-ai-panel-embedded-ai-provider-modal-modal-ai--a27f197
@@ -189,6 +283,15 @@
 .ai-provider-form {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
+.ai-provider-auth-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ai-provider-auth-methods button[aria-pressed='true'] {
+  border: 1px solid var(--ax-color-primary);
+  background: var(--ax-color-canvas);
+}
 .ai-provider-modal {
   position: fixed;
   inset: 0;
@@ -254,21 +357,52 @@
 }
 .ai-provider-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 8px;
 }
-.ai-provider-card > div {
+.ai-provider-summary {
   display: grid;
   min-width: 0;
   gap: 3px;
 }
-.ai-provider-card > div span,
-.ai-provider-card > div small {
+.ai-provider-summary span,
+.ai-provider-summary small {
   overflow: hidden;
   color: var(--ax-color-text-muted);
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.ai-provider-actions,
+.ai-provider-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ai-provider-actions {
+  grid-column: 1 / -1;
+}
+.ai-provider-dialog-actions {
+  justify-content: end;
+}
+.ai-provider-management,
+.ai-provider-management fieldset {
+  display: grid;
+  gap: 12px;
+}
+.ai-provider-management fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.ai-provider-management p,
+.ai-provider-management .error-banner {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.modal button.ai-provider-delete:not(:disabled) {
+  color: var(--ax-color-danger);
 }
 .ai-provider-card > p {
   grid-column: 1 / -1;
@@ -807,48 +941,44 @@
   color: var(--ax-color-ai-ui-run-state-failed-color);
 }
 
-.agent-tool-list {
+.ai-tool-timeline {
   display: grid;
   gap: 8px;
-  padding: 14px;
-  border: 1px solid var(--ax-color-border);
-  border-radius: var(--ax-radius-panel);
-  background: var(--ax-color-ai-ui-agent-tool-list-background);
+  min-width: 0;
+  margin: 4px 0;
 }
-
-.agent-tool-list > header,
-.agent-tool-list > header > div,
-.agent-tool-list > header span {
-  display: flex;
+.ai-workspace-context .ai-terminal-choice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
+  gap: 8px;
+  width: 100%;
 }
-
-.agent-tool-list > header {
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 2px 5px;
-  color: var(--ax-color-text);
+.ai-tool-timeline .agent-tool-card {
+  border: 0;
+  border-left: 2px solid var(--ax-color-border);
+  border-radius: var(--ax-radius-compact);
+  background: var(--ax-color-surface-raised);
 }
-
-.agent-tool-list > header > div {
-  gap: 9px;
+.ai-tool-timeline .agent-tool-card-header {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 34px;
+  gap: 6px;
 }
-
-.agent-tool-list > header span {
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.agent-tool-list > header > span {
-  color: var(--ax-color-text-muted);
-  font-size: var(--ax-font-size-small);
-}
-
-.agent-tool-list > header small {
-  color: var(--ax-color-text-muted);
-  font-size: var(--ax-font-size-caption);
+.ai-tool-timeline .agent-tool-card-header strong {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--ax-font-code-compact);
   font-weight: var(--ax-font-weight-regular);
+}
+.ai-tool-output {
+  margin: 0;
+  padding: 0 12px 10px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--ax-color-text-muted);
+  font-family: var(--ax-font-code-compact);
+  font-size: var(--ax-font-size-small);
 }
 
 .agent-tool-card {
@@ -1716,12 +1846,6 @@
   min-height: 100px;
   padding: 12px 4px;
 }
-.ai-panel-embedded .agent-tool-list {
-  margin: 0;
-  max-height: 35vh;
-  overflow: auto;
-  flex-shrink: 0;
-}
 
 .app-shell.section-settings.surface-section.with-ai .workspace-sidebar.ai-inspector {
   display: flex;
@@ -1810,10 +1934,6 @@ html[dir='rtl']
 .ai-provider-form .ai-provider-grid {
   grid-template-columns: minmax(0, 1fr);
 }
-.ai-provider-form .ai-provider-card {
-  grid-template-columns: minmax(0, 1fr) auto;
-}
-
 .ai-provider-notice {
   margin: 0;
   padding: 8px 12px;
@@ -1948,4 +2068,9 @@ html[dir='rtl']
   margin: 0;
   width: 100%;
   max-width: none;
+}
+
+.ai-tool-timeline .run-state {
+  background: transparent;
+  padding: 0;
 }

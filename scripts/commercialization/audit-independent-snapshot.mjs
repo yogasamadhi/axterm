@@ -171,7 +171,7 @@ export function isExcludedFromIndependentSnapshot(snapshotPath) {
     if (/^vendor\/pi\/packages\/coding-agent(?:\/src(?:\/(?:core|utils))?)?$/u.test(path))
       return false;
     if (
-      /^vendor\/pi\/packages\/coding-agent\/src\/(?:config\.ts|core\/(?:skills|source-info|diagnostics)\.ts|utils\/(?:frontmatter|text|paths|child-process)\.ts)$/u.test(
+      /^vendor\/pi\/packages\/coding-agent\/src\/(?:config\.ts|core\/(?:skills|source-info|diagnostics|provider-composer|model-config|pi-ai-schemas|resolve-config-value)\.ts|utils\/(?:frontmatter|text|paths|child-process|shell|json)\.ts)$/u.test(
         path,
       )
     )

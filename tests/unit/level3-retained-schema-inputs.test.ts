@@ -4,6 +4,7 @@ import {
   aiAttachmentPreviewSchema,
   aiConversationDetailSchema,
   aiProviderInputSchema,
+  aiProviderPatchSchema,
   aiProviderSchema,
   aiProviderTestResultSchema,
   aiRequestSchema,
@@ -18,6 +19,12 @@ import {
 } from '@axterm/plugin-api/terminals';
 import { startLocalFtpServerSchema } from '@axterm/plugin-api/automation';
 describe('AI provider contracts', () => {
+  it('applies only supplied fields when editing or toggling a saved provider', () => {
+    expect(aiProviderPatchSchema.parse({ name: ' Renamed ' })).toEqual({ name: 'Renamed' });
+    expect(aiProviderPatchSchema.parse({ enabled: false })).toEqual({ enabled: false });
+    expect(aiProviderPatchSchema.parse({ proxy: null })).toEqual({ proxy: null });
+  });
+
   it('keeps legacy OpenAI-compatible inputs valid with bounded defaults', () => {
     expect(
       aiProviderInputSchema.parse({

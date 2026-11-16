@@ -1,5 +1,5 @@
 import { build } from 'esbuild';
-import { cpSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { checkPiSource } from './pi-source-provenance.mjs';
@@ -66,34 +66,18 @@ const result = await build({
     '@earendil-works/pi-schema': path.join(source, 'schema/src/index.ts'),
     '@earendil-works/pi-schema/formats': path.join(source, 'schema/src/formats/index.ts'),
     '@earendil-works/pi-ai': path.join(source, 'ai/src/index.ts'),
+    '@earendil-works/pi-ai/compat': path.join(source, 'ai/src/compat.ts'),
+    '@earendil-works/pi-ai/utils/model-operations': path.join(
+      source,
+      'ai/src/utils/model-operations.ts',
+    ),
     '@earendil-works/pi-telemetry': path.join(source, 'telemetry/src/index.ts'),
   },
-  plugins: [
-    {
-      name: 'google-request-scoped-fetch',
-      setup(builder) {
-        builder.onLoad(
-          { filter: /@google[\\/]genai[\\/]dist[\\/]node[\\/]index\.mjs$/ },
-          ({ path: filename }) => {
-            const text = readFileSync(filename, 'utf8');
-            if ((text.match(/\bfetch\(/gu) ?? []).length !== 3)
-              throw new Error(
-                'Google SDK fetch injection points changed; review the transport binding',
-              );
-            const transport = JSON.stringify(
-              path.join(root, 'packages/pi-engine/src/scoped-fetch.ts'),
-            );
-            return {
-              contents: `import { scopedModelFetch } from ${transport};\n${text.replaceAll(/\bfetch\(/gu, 'scopedModelFetch(')}`,
-              loader: 'js',
-            };
-          },
-        );
-      },
-    },
-  ],
 });
 
+// Discard notices emitted for previous inputs before recording the new bundle.
+for (const directory of ['THIRD_PARTY_NOTICES', 'bundled-licenses'])
+  rmSync(path.join(root, 'packages/pi-engine/dist', directory), { recursive: true, force: true });
 cpSync(
   path.join(source, 'schema/THIRD_PARTY_NOTICES'),
   path.join(root, 'packages/pi-engine/dist/THIRD_PARTY_NOTICES'),

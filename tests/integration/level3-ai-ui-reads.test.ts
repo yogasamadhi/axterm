@@ -6,6 +6,68 @@ import type { AiModel } from '../../packages/plugins/ai/src/client/index.ts';
 import { AiReadRegistry } from '../../packages/plugins/ai/src/client/read-registry.ts';
 import { AiPanelQueries } from '../../packages/plugins/ai/src/client/panel-queries.ts';
 
+it('reads complete inline tool pages in run order and joins a canceled history read without fetching its next page', async () => {
+  const pending = Promise.withResolvers<{
+    tools: unknown[];
+    approvals: unknown[];
+    nextCursor: number;
+    hasMore: boolean;
+  }>();
+  const getTools = vi.fn(async (id: string, query: { after?: number }) =>
+    id === 'held'
+      ? pending.promise
+      : {
+          tools: [{ id: `${id}-${query.after ?? 0}`, runId: id }],
+          approvals: [],
+          nextCursor: (query.after ?? 0) + 1,
+          hasMore: query.after === 0,
+        },
+  );
+  const state = { status: 'ready', baseline: { generation: 'inline-fixture' } };
+  const owner = new AiPanelQueries({
+    subscribe: () => () => {},
+    getSnapshot: () => state,
+    getTools,
+  } as unknown as AiModel);
+  const history = owner.open('toolsByRuns', JSON.stringify(['first', 'second']))!;
+  await vi.waitFor(() => expect(history.resource.getSnapshot().isSuccess).toBe(true));
+  expect(history.resource.getSnapshot().data?.map((call) => call.id)).toEqual([
+    'first-0',
+    'first-1',
+    'second-0',
+    'second-1',
+  ]);
+  const held = owner.open('toolsByRuns', JSON.stringify(['held']))!;
+  await vi.waitFor(() => expect(getTools).toHaveBeenCalledWith('held', { after: 0, limit: 50 }));
+  let drained = false;
+  const closing = held.dispose().then(() => {
+    drained = true;
+  });
+  await setImmediate();
+  expect(drained).toBe(false);
+  pending.resolve({ tools: [], approvals: [], nextCursor: 1, hasMore: true });
+  await closing;
+  expect(getTools.mock.calls.filter(([id]) => id === 'held')).toHaveLength(1);
+  await history.dispose();
+  await owner.dispose();
+});
+
+it('refuses a nonadvancing inline history page instead of looping or publishing incomplete tools', async () => {
+  const state = { status: 'ready', baseline: { generation: 'inline-fixture' } };
+  const getTools = vi.fn(async () => ({ tools: [], approvals: [], nextCursor: 0, hasMore: true }));
+  const owner = new AiPanelQueries({
+    subscribe: () => () => {},
+    getSnapshot: () => state,
+    getTools,
+  } as unknown as AiModel);
+  const history = owner.open('toolsByRuns', JSON.stringify(['run']))!;
+  await vi.waitFor(() => expect(history.resource.getSnapshot().isError).toBe(true));
+  expect(getTools).toHaveBeenCalledTimes(1);
+  expect(history.resource.getSnapshot().data).toBeUndefined();
+  await history.dispose();
+  await owner.dispose();
+});
+
 it('shares a selected read across two UI mounts and joins the actual late result after the final mount leaves', async () => {
   const reads = new AiReadRegistry();
   const pending = Promise.withResolvers<{ name: string }>();

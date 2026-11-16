@@ -310,6 +310,29 @@ it('serves generated AI methods and durable metadata over authenticated HTTP/WS,
     details: { reason: 'invalid' },
   });
   expect((await ai.readProvider(externalDetail.id)).engineId).toBe('external-fixture');
+  await ai.updateProvider(
+    randomUUID(),
+    externalDetail.id,
+    { name: 'Renamed external provider' },
+    `"v${externalDetail.version}"`,
+  );
+  const renamed = await ai.readProvider(externalDetail.id);
+  expect(renamed).toMatchObject({
+    name: 'Renamed external provider',
+    engineId: 'external-fixture',
+    version: externalDetail.version + 1,
+  });
+  await expect(
+    ai.deleteProvider(randomUUID(), renamed.id, `"v${externalDetail.version}"`),
+  ).rejects.toMatchObject({ code: 'ai/failure', details: { reason: 'precondition' } });
+  await ai.deleteProvider(randomUUID(), renamed.id, `"v${renamed.version}"`);
+  const afterDelete = ai.getSnapshot();
+  if (afterDelete.status !== 'ready') throw new Error('Provider baseline unavailable');
+  expect(afterDelete.baseline.providers.map(({ id }) => id)).not.toContain(renamed.id);
+  await expect(ai.readProvider(renamed.id)).rejects.toMatchObject({
+    code: 'ai/failure',
+    details: { reason: 'not-found' },
+  });
   abort.abort();
   await stream.return?.();
   await ai.dispose();

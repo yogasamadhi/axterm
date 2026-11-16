@@ -14,7 +14,7 @@ export const frameworkNames = Object.freeze([
   'hmr',
   'logger-console',
 ]);
-export const dshCommit = 'fcc0ad462172522aaf5c93a7b2e01f6b9f0b0159';
+export const dshCommit = '39163dd30f703a79079e2d2446545cff3c453738';
 const root = resolve(import.meta.dirname, '..');
 const hash = (value) => createHash('sha256').update(value).digest('hex');
 

@@ -28,7 +28,7 @@ export const aiProviderProtocolSchema = z.enum(['openai-chat', 'openai-responses
 export const aiProviderAuthSchema = z.enum(['bearer', 'x-api-key']);
 
 export const DEFAULT_AI_ROLE =
-  'Terminal expert. Explain commands and effects clearly, prefer safe steps, and never claim a command was executed.';
+  'Terminal expert. Explain commands and effects clearly, prefer safe steps, and never claim a command was executed without an actual tool result.';
 
 const aiBaseUrlSchema = z
   .url()
@@ -61,6 +61,9 @@ export const piApiSchema = z.enum([
   'google-generative-ai',
   'mistral-conversations',
   'pi-messages',
+  'openai-codex-responses',
+  'google-vertex',
+  'bedrock-converse-stream',
 ]);
 
 const piProviderIdSchema = z
@@ -108,6 +111,7 @@ const piHeaderNameSchema = z.string().regex(/^[A-Za-z0-9-]{1,64}$/);
 export const piProviderConfigSchema = z
   .object({
     id: piProviderIdSchema,
+    credentialMode: z.literal('pi').optional(),
     api: piApiSchema.optional(),
     models: z.array(piModelConfigSchema).max(500).default([]),
     modelOverrides: piModelOverridesSchema.default({}),
@@ -151,9 +155,68 @@ export const piCatalogProviderSchema = z
     name: z.string(),
     baseUrl: z.string(),
     apiKeyAvailable: z.boolean(),
+    oauth: z
+      .object({ name: z.string(), label: z.string(), subscription: z.boolean() })
+      .strict()
+      .optional(),
     models: z.array(piModelConfigSchema),
   })
   .strict();
+
+export const piLoginPromptSchema = z
+  .object({
+    id: z.uuid(),
+    type: z.enum(['text', 'secret', 'select', 'manual_code']),
+    message: z.string().max(16384),
+    placeholder: z.string().max(4096).optional(),
+    options: z
+      .array(
+        z
+          .object({ id: z.string(), label: z.string(), description: z.string().optional() })
+          .strict(),
+      )
+      .max(100)
+      .optional(),
+  })
+  .strict();
+export const piLoginEventSchema = z.discriminatedUnion('type', [
+  z
+    .object({
+      type: z.literal('info'),
+      message: z.string(),
+      links: z
+        .array(z.object({ url: z.string(), label: z.string().optional() }).strict())
+        .optional(),
+    })
+    .strict(),
+  z
+    .object({ type: z.literal('auth_url'), url: z.string(), instructions: z.string().optional() })
+    .strict(),
+  z
+    .object({
+      type: z.literal('device_code'),
+      userCode: z.string(),
+      verificationUri: z.string(),
+      openBrowserOnConfirm: z.boolean().optional(),
+      copyCodeOnConfirm: z.boolean().optional(),
+      intervalSeconds: z.number().optional(),
+      expiresInSeconds: z.number().optional(),
+    })
+    .strict(),
+  z.object({ type: z.literal('progress'), message: z.string() }).strict(),
+]);
+export const piLoginStateSchema = z
+  .object({
+    id: z.uuid(),
+    provider: piProviderIdSchema,
+    status: z.enum(['running', 'succeeded', 'failed', 'canceled']),
+    prompt: piLoginPromptSchema.optional(),
+    events: z.array(piLoginEventSchema).max(16),
+    credentialRef: z.string().optional(),
+    models: z.array(piModelConfigSchema).max(500),
+  })
+  .strict();
+export type PiLoginState = z.infer<typeof piLoginStateSchema>;
 
 const aiProviderBaseSchema = z
   .object({
@@ -182,11 +245,14 @@ function requirePiTransport(
     engineId?: string | undefined;
     baseUrl?: string | undefined;
     credentialRef?: string | undefined;
+    pi?: { credentialMode?: 'pi' | undefined } | undefined;
   },
   ctx: z.RefinementCtx,
 ): void {
   if ((value.engineId ?? 'pi') !== 'pi') return;
-  for (const field of ['baseUrl', 'credentialRef'] as const)
+  for (const field of (value.pi?.credentialMode === 'pi'
+    ? ['credentialRef']
+    : ['baseUrl', 'credentialRef']) as readonly ('baseUrl' | 'credentialRef')[])
     if (!value[field])
       ctx.addIssue({
         code: 'custom',
@@ -199,7 +265,20 @@ const aiProviderInputBaseSchema = aiProviderBaseSchema
   .omit({ id: true, createdAt: true, updatedAt: true, version: true })
   .strict();
 export const aiProviderInputSchema = aiProviderInputBaseSchema.superRefine(requirePiTransport);
-export const aiProviderPatchSchema = aiProviderInputBaseSchema.partial().strict();
+// Zod applies defaults inside optional fields. Omission in a patch must leave saved values intact.
+const providerFields = aiProviderInputBaseSchema.shape;
+export const aiProviderPatchSchema = aiProviderInputBaseSchema
+  .extend({
+    engineId: providerFields.engineId.unwrap(),
+    apiPath: providerFields.apiPath.unwrap(),
+    protocol: providerFields.protocol.unwrap(),
+    auth: providerFields.auth.unwrap(),
+    role: providerFields.role.unwrap(),
+    proxy: providerFields.proxy.unwrap(),
+    timeoutMs: providerFields.timeoutMs.unwrap(),
+  })
+  .partial()
+  .strict();
 
 export const aiModelSchema = z
   .object({

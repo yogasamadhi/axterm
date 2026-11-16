@@ -1,5 +1,6 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { once } from 'node:events';
+import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it } from 'vitest';
 import { piCatalogProviderSchema } from '@axterm/plugin-api/ai';
 import {
@@ -49,6 +50,30 @@ async function collect(adapter: PiModelProvider) {
 }
 
 describe('Pi source engine adapter', () => {
+  it('preserves every provider and every chat model ID/name/API from the full pinned Pi catalog', () => {
+    const reference = JSON.parse(
+      readFileSync('packages/pi-engine/catalog/models.all.json', 'utf8'),
+    ) as Record<string, { id: string; name: string; api: string; type: string }[]>;
+    const catalog = piCatalog();
+    expect(catalog.map(({ id }) => id)).toEqual(Object.keys(reference));
+    for (const provider of catalog)
+      expect(
+        provider.models
+          .map(({ id, name, api }) => ({ id, name, api }))
+          .sort((a, b) => a.id.localeCompare(b.id)),
+        provider.id,
+      ).toEqual(
+        reference[provider.id]!.filter((model) => model.type === 'chat')
+          .map(({ id, name, api }) => ({ id, name: name.trim(), api }))
+          .sort((a, b) => a.id.localeCompare(b.id)),
+      );
+    expect(catalog.find(({ id }) => id === 'minimax-cn')?.models.map(({ id }) => id)).toEqual([
+      'MiniMax-M2.7',
+      'MiniMax-M2.7-highspeed',
+      'MiniMax-M3',
+      'MiniMax-M3.1-Flash',
+    ]);
+  });
   it('exposes one approval-only command proposal and keeps Pi execution blocked', async () => {
     let body = '';
     const url = await fixture((req, res) => {
@@ -102,7 +127,10 @@ describe('Pi source engine adapter', () => {
     expect(catalog.find(({ id }) => id === 'deepseek')).toMatchObject({ apiKeyAvailable: true });
     expect(catalog.find(({ id }) => id === 'google')?.models.length).toBeGreaterThan(0);
     expect(catalog.find(({ id }) => id === 'openai-codex')?.apiKeyAvailable).toBe(false);
-    expect(JSON.stringify(catalog)).not.toMatch(/apiKey"|env"|oauth"|credential/u);
+    expect(catalog.find(({ id }) => id === 'openai-codex')?.oauth).toMatchObject({
+      subscription: true,
+    });
+    expect(JSON.stringify(catalog)).not.toMatch(/apiKey"|env"|access"|refresh"|credential/u);
   });
   it.each(['openai-chat', 'openai-responses', 'anthropic'] as const)(
     'uses Pi for legacy %s requests, hiding reasoning and reporting usage',

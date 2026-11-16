@@ -12,6 +12,7 @@ import { Bot, WandSparkles } from 'lucide-react';
 import { Button, Tooltip, TooltipTrigger, TooltipContent } from '@axterm/ui/controls';
 import { AiPanel } from './ai-panel.tsx';
 import { AiPanelActions } from './panel-actions.ts';
+import { AiTerminalSelection } from './terminal-selection.ts';
 import { AiI18nProvider } from './i18n.tsx';
 import { dictionaries } from './locales.ts';
 import { AiBookmarkLauncher } from './bookmark-flow.ts';
@@ -114,16 +115,9 @@ export function installAiUi(ctx: Context, model: AiModel): void {
       );
     });
   });
-  let target: string | undefined;
-  const rememberTarget = () => {
-    const state = workspace.getSnapshot();
-    const active = state.tabs.find((tab) => tab.id === state.activeTabId);
-    if (active?.kind === 'terminal') target = active.id;
-    if (target && !state.tabs.some((tab) => tab.id === target && tab.kind === 'terminal'))
-      target = undefined;
-  };
-  ctx.effect(() => workspace.subscribe(rememberTarget));
-  rememberTarget();
+  const targets = new AiTerminalSelection(workspace);
+  ctx.effect(() => () => targets.dispose());
+  const rememberTarget = targets.refresh;
   let tab: WorkspaceTabRegistration | undefined;
   const open = () => {
     rememberTarget();
@@ -171,7 +165,7 @@ export function installAiUi(ctx: Context, model: AiModel): void {
     () => ctx.locale.bind('ai')('ai.explainTerminalPrompt'),
     (id) => {
       open();
-      target = id;
+      targets.select(id);
     },
   );
   ctx.provide('aiTerminalExplanationUi', explanations);
@@ -184,16 +178,18 @@ export function installAiUi(ctx: Context, model: AiModel): void {
     settingsOnly = false,
   }: PropsLocale<'ai'> & { embedded?: boolean; active?: boolean; settingsOnly?: boolean }) {
     const layout = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot);
+    const selection = useSyncExternalStore(targets.subscribe, targets.getSnapshot);
     const locale = useSyncExternalStore(ctx.locale.subscribe, ctx.locale.getSnapshot);
     const draft = useSyncExternalStore(explanations.subscribe, explanations.getSnapshot);
-    const terminalId = layout.tabs.some((tab) => tab.id === target && tab.kind === 'terminal')
-      ? target
-      : undefined;
+    const terminalId = selection.terminalId;
     return (
       <AiI18nProvider value={{ language: locale.active, x: (key, variables) => t(key, variables) }}>
         <AiPanel
           client={actions}
           activeTerminalId={terminalId}
+          terminalTabs={layout.tabs.filter((tab) => tab.kind === 'terminal')}
+          terminalChoice={selection.choice}
+          onTerminalChange={targets.select}
           requestedDraft={
             active && !settingsOnly && draft?.terminalId === terminalId ? draft : undefined
           }

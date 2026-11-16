@@ -100,9 +100,38 @@ describe('independent source snapshot preparation', () => {
       join(source, 'vendor/pi/packages/coding-agent/src/core/skills.ts'),
       'export const skills = true;\n',
     );
+    const composerInputs = [
+      'provider-composer',
+      'model-config',
+      'pi-ai-schemas',
+      'resolve-config-value',
+    ];
+    for (const name of composerInputs)
+      await writeFile(
+        join(source, `vendor/pi/packages/coding-agent/src/core/${name}.ts`),
+        'export {};\n',
+      );
+    await writeFile(
+      join(source, 'vendor/pi/packages/coding-agent/src/core/auth-storage.ts'),
+      'unrelated file credentials\n',
+    );
     const prepared = await prepareIndependentSnapshot(source);
     directories.push(prepared.temporaryDirectory);
     expect(prepared.report.passed).toBe(true);
+    for (const name of composerInputs)
+      expect(
+        existsSync(
+          join(prepared.snapshotDirectory, `vendor/pi/packages/coding-agent/src/core/${name}.ts`),
+        ),
+      ).toBe(true);
+    expect(
+      existsSync(
+        join(
+          prepared.snapshotDirectory,
+          'vendor/pi/packages/coding-agent/src/core/auth-storage.ts',
+        ),
+      ),
+    ).toBe(false);
     expect(existsSync(join(prepared.snapshotDirectory, 'vendor/pi/packages/ai/src/index.ts'))).toBe(
       true,
     );

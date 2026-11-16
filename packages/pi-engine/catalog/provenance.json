@@ -1,5 +1,5 @@
 {
-  "sourceRevision": "4ea8837927564c592b1d184c956ab7d28c88119b",
-  "catalogRevision": "sha256-175c0d73533fad08fdd1554932a4993c37564d2a2ea084cbcc2126772fbf906f",
-  "url": "https://pi.dev/api/models/revisions/sha256-175c0d73533fad08fdd1554932a4993c37564d2a2ea084cbcc2126772fbf906f?types=chat,image,classifier"
+  "sourceRevision": "8636e211e7834e4ca46a22aec1d65dfd2eac8677",
+  "catalogRevision": "sha256-4cbd75daee429216860f6e5b7e13b4ddb12b495f6947061e5777edd27ce0b4f1",
+  "url": "https://pi.dev/api/models/revisions/sha256-4cbd75daee429216860f6e5b7e13b4ddb12b495f6947061e5777edd27ce0b4f1?types=chat,image,classifier"
 }

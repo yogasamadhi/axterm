@@ -39,7 +39,13 @@ it('keeps owner actions alive behind the closed chrome menu, preserves rail orde
     expect(await more.evaluate((element) => element.ownerDocument.activeElement === element)).toBe(
       true,
     );
-    await browserExpect(page.getByRole('tab', { name: '本地 1', exact: true })).toBeVisible();
+    await browserExpect(page.getByRole('tab', { name: '本地1', exact: true })).toBeVisible();
+    for (const number of [2, 3]) {
+      await page.locator('[data-terminal-new]').click();
+      await browserExpect(
+        page.getByRole('tab', { name: `本地${number}`, exact: true }),
+      ).toBeVisible();
+    }
     if (!(await page.locator('[data-catalog-manager-open]').isVisible()))
       await page.locator('[data-activity-item=bookmarks]').click();
     await page.locator('[data-catalog-manager-open]').click();
@@ -53,6 +59,10 @@ it('keeps owner actions alive behind the closed chrome menu, preserves rail orde
     );
     await page.getByRole('button', { name: 'AI 助手', exact: true }).click();
     await browserExpect(page.locator('.ai-panel-embedded')).toBeVisible();
+    await browserExpect(
+      page.locator('.ai-panel-embedded select[name=aiTerminal] option'),
+    ).toHaveText(['跟随当前标签 · 本地3', '1 · 本地1', '2 · 本地2', '3 · 本地3']);
+    await page.screenshot({ path: 'out/pi-reuse/local-tab-numbering.png' });
     expect(await page.locator('.activity-bar nav button').count()).toBe(4);
     await page.getByRole('button', { name: '关闭 AI 助手', exact: true }).click();
     await browserExpect(page.locator('.ai-inspector')).toBeHidden();

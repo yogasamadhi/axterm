@@ -170,6 +170,21 @@ export class AiModel {
   catalog(): Promise<Contract.PiCatalogProvider[]> {
     return this.invoke(() => this.ctx.remote.ai.getCatalog());
   }
+  beginProviderLogin(provider: string, method: 'api_key' | 'oauth') {
+    return this.invoke(() => this.ctx.remote.ai.beginProviderLogin(provider, method));
+  }
+  getProviderLogin(id: string) {
+    return this.invoke(() => this.ctx.remote.ai.getProviderLogin(id));
+  }
+  respondProviderLogin(id: string, prompt: string, value: string) {
+    return this.invoke(() => this.ctx.remote.ai.respondProviderLogin(id, prompt, value));
+  }
+  cancelProviderLogin(id: string) {
+    return this.invoke(() => this.ctx.remote.ai.cancelProviderLogin(id));
+  }
+  openLoginUrl(url: string) {
+    return this.ctx.desktopUi.openExternal(url, this.lifetime.signal);
+  }
   getConversation(id: string): Promise<Contract.AiConversation> {
     return this.invoke(() => this.ctx.remote.ai.getConversation(id));
   }
