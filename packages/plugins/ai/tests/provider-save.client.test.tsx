@@ -4,6 +4,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import {
   aiProviderSchema,
   type AiProvider,
+  type AiProviderInput,
   type AiProviderPatch,
   type PiCatalogProvider,
   type PiLoginState,
@@ -99,14 +100,25 @@ function fixture(saved?: AiProvider, catalog: PiCatalogProvider[] = []) {
       },
     },
     createCredential: vi.fn(async (_input: { secret: string }) => ({ ref: 'fixture-vault-ref' })),
-    createAiProvider: vi.fn(async () => ({ id: 'fixture-provider' })),
+    createAiProvider: vi.fn(async (_input: AiProviderInput) => ({ id: 'fixture-provider' })),
     createAiModel: vi.fn(async () => ({ id: 'fixture-model' })),
     deleteCredential: vi.fn(async () => {}),
     beginProviderLogin: vi.fn<() => Promise<PiLoginState>>(),
     getProviderLogin: vi.fn<() => Promise<PiLoginState>>(),
     cancelProviderLogin: vi.fn(async () => {}),
     openLoginUrl: vi.fn(async () => {}),
-    updateAiProvider: vi.fn(async (_row: AiProvider, _patch: AiProviderPatch) => {}),
+    updateAiProvider: vi.fn(async (row: AiProvider, patch: AiProviderPatch) => {
+      snapshot = {
+        ...snapshot,
+        baseline: {
+          ...snapshot.baseline,
+          providers: snapshot.baseline.providers.map((provider) =>
+            provider.id === row.id ? aiProviderSchema.parse({ ...provider, ...patch }) : provider,
+          ),
+        },
+      };
+      for (const listener of listeners) listener();
+    }),
     deleteAiProvider: vi.fn(async (_row: { id: string; version: number }) => {
       snapshot = { ...snapshot, baseline: { ...snapshot.baseline, providers: [] } };
       for (const listener of listeners) listener();
@@ -234,6 +246,53 @@ it('requires confirmation to delete a saved configuration and removes the card a
   expect(f.client.deleteAiProvider).toHaveBeenCalledExactlyOnceWith(savedProvider);
   expect(f.queryByText(savedProvider.name)).toBeNull();
   expect(f.client.deleteCredential).not.toHaveBeenCalled();
+});
+
+it('shows delete only while the provider is disabled', async () => {
+  const f = fixture({ ...savedProvider, enabled: true });
+  const card = within(f.getByRole('article', { name: savedProvider.name }));
+  expect(card.queryByRole('button', { name: 'Delete' })).toBeNull();
+  expect(card.getByRole('button', { name: 'Edit provider' })).toBeTruthy();
+  fireEvent.click(card.getByRole('button', { name: 'Disable' }));
+  expect(await card.findByRole('button', { name: 'Delete' })).toBeTruthy();
+  fireEvent.click(card.getByRole('button', { name: 'Enable' }));
+  await waitFor(() => expect(card.queryByRole('button', { name: 'Delete' })).toBeNull());
+});
+
+it('uses the selected catalog model endpoint for a new built-in API Key configuration', async () => {
+  const catalog: PiCatalogProvider = {
+    id: 'opencode-go',
+    name: 'OpenCode Go',
+    baseUrl: 'https://opencode.ai/inference/go/anthropic',
+    apiKeyAvailable: true,
+    models: [
+      { id: 'claude-haiku-5-5', api: 'anthropic-messages' },
+      { id: 'deepseek-v4-pro', api: 'openai-completions' },
+    ],
+  };
+  const f = fixture(undefined, [catalog]);
+  const signedIn: PiLoginState = {
+    id: 'go-login',
+    provider: catalog.id,
+    status: 'succeeded',
+    models: catalog.models,
+    events: [],
+    credentialRef: 'go-vault-grant',
+  };
+  f.client.beginProviderLogin.mockResolvedValue(signedIn);
+  f.client.getProviderLogin.mockResolvedValue(signedIn);
+  await f.findByRole('option', { name: catalog.name });
+  fireEvent.change(f.getByLabelText('Pi provider'), { target: { value: catalog.id } });
+  expect((f.getByLabelText('Base URL') as HTMLInputElement).value).toBe('');
+  fireEvent.click(f.getByRole('button', { name: 'Sign in with Pi' }));
+  await f.findByText('Signed in. Credentials are saved in the application Vault.');
+  fireEvent.change(f.getByLabelText('Model'), { target: { value: 'deepseek-v4-pro' } });
+  fireEvent.click(f.getByRole('button', { name: 'Save configuration' }));
+  await f.findByText('Provider saved. Test the connection before using it.');
+  expect(f.client.createAiProvider.mock.calls[0]?.[0]).not.toHaveProperty('baseUrl');
+  expect(f.client.createAiModel).toHaveBeenCalledWith(
+    expect.objectContaining({ model: 'deepseek-v4-pro' }),
+  );
 });
 
 it('can replace a Pi-managed login using only the new grant reference', async () => {

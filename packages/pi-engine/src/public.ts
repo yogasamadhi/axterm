@@ -62,6 +62,7 @@ export interface PiEngineRequest {
   allowCommandProposal?: boolean;
   provider: PiProviderConfig;
   baseUrl: string;
+  sessionId?: string;
   model: string;
   apiKey?: string | undefined;
   credentialStore?: PiCredentialStore;
@@ -118,6 +119,7 @@ export declare function piSkills(): Array<{
   body: string;
 }>;
 export declare function streamPiAgent(request: PiEngineRequest): AsyncIterable<PiEngineEvent>;
+export declare function cleanupPiSessionResources(sessionId: string): void;
 export declare function estimateReviewTextTokens(text: string): number;
 export declare function parseDecision(text: string): {
   outcome: 'allow' | 'deny' | 'defer';

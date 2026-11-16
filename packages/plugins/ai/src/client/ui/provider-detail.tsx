@@ -43,7 +43,7 @@ export function ProviderCard({
           data && (
             <>
               <span>{data.pi?.id ?? (data.engineId === 'pi' ? data.protocol : data.engineId)}</span>
-              {data.engineId === 'pi' && (
+              {data.engineId === 'pi' && data.baseUrl && (
                 <small>
                   {data.baseUrl}
                   {!data.pi && ` · ${data.apiPath}`}
@@ -72,9 +72,11 @@ export function ProviderCard({
         >
           <Pencil size={13} /> {x('ai.editProvider')}
         </button>
-        <button type="button" onClick={() => onAction({ kind: 'delete', provider })}>
-          <Trash2 size={13} /> {x('common.delete')}
-        </button>
+        {!provider.enabled && (
+          <button type="button" onClick={() => onAction({ kind: 'delete', provider })}>
+            <Trash2 size={13} /> {x('common.delete')}
+          </button>
+        )}
       </div>
       {status && <p role="status">{status}</p>}
     </article>

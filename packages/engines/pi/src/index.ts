@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { randomUUID } from 'node:crypto';
 import { pluginToolInputSchema } from '@axterm/plugin-api/plugins';
 import type { Context } from '@deepseek-ai/cordis';
 import { EngineError, type EngineRunInput } from '@axterm/engine-api';
@@ -10,7 +11,12 @@ import type {
 import type {} from '@axterm/plugin-api/host';
 import type { ConnectionsApplication } from '@axterm/plugin-api/host';
 import { credentialRef } from '@axterm/plugin-api/credentials';
-import { streamPiAgent, piCatalog, type PiProviderConfig } from '@axterm/engine-pi-core';
+import {
+  cleanupPiSessionResources,
+  streamPiAgent,
+  piCatalog,
+  type PiProviderConfig,
+} from '@axterm/engine-pi-core';
 import { Config, piEngineConfigSchema, piExecutionBindingSchema } from './config.ts';
 import { requestThroughProxy } from './proxy-http.ts';
 import { VisibleSecrets } from './visible-secrets.ts';
@@ -36,6 +42,7 @@ export class PiEngineProvider implements EngineProvider {
   }
   async openSession(_input: unknown, signal: AbortSignal): Promise<EngineProviderSession> {
     signal.throwIfAborted();
+    const sessionId = randomUUID();
     const lifetime = new AbortController();
     const tasks = new Set<Promise<void>>();
     let closed = false;
@@ -47,6 +54,7 @@ export class PiEngineProvider implements EngineProvider {
           input,
           context,
           AbortSignal.any([signal, lifetime.signal, context.signal]),
+          sessionId,
         );
         tasks.add(task);
         void task.then(
@@ -58,7 +66,9 @@ export class PiEngineProvider implements EngineProvider {
       close: () => {
         closed = true;
         lifetime.abort();
-        return (closing ??= Promise.allSettled([...tasks]).then(() => {}));
+        return (closing ??= Promise.allSettled([...tasks]).then(() =>
+          cleanupPiSessionResources(sessionId),
+        ));
       },
     };
   }
@@ -73,6 +83,7 @@ export class PiEngineProvider implements EngineProvider {
     input: EngineRunInput,
     context: EngineRunContext,
     signal: AbortSignal,
+    sessionId: string,
   ): Promise<void> {
     const binding =
       context.configuration === undefined
@@ -256,6 +267,7 @@ export class PiEngineProvider implements EngineProvider {
       for await (const event of streamPiAgent({
         provider,
         baseUrl: configured.baseUrl,
+        sessionId,
         model: input.model,
         apiKey,
         ...(credentialStore ? { credentialStore } : {}),

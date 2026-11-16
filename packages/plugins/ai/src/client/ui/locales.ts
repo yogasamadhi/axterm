@@ -148,6 +148,7 @@ export const dictionaries = {
     'ai.piConfigHelp':
       'Select a Pi provider and model, or paste models.json. API keys and header values are saved in the application Vault. Environment and command expressions require literal replacements.',
     'ai.providerProtocol': 'API protocol',
+    'ai.providerModelEndpoint': 'Use the model’s Pi endpoint',
     'ai.configTitle': 'AI Config',
     'ai.editProvider': 'Edit provider',
     'ai.deleteProvider': 'Delete provider',
@@ -422,6 +423,7 @@ export const dictionaries = {
     'ai.piConfigHelp':
       '选择 Pi 厂商和模型，或粘贴 models.json。API Key 与请求头值保存到应用 Vault；环境变量和命令表达式需替换为具体值。',
     'ai.providerProtocol': 'API 协议',
+    'ai.providerModelEndpoint': '使用模型的 Pi 默认端点',
     'ai.configTitle': 'AI 配置',
     'ai.editProvider': '编辑',
     'ai.deleteProvider': '删除服务商配置',
@@ -653,6 +655,7 @@ export const dictionaries = {
     'ai.piConfigHelp':
       'Pi のプロバイダーとモデルを選択するか、models.json を貼り付けます。キーとヘッダー値はアプリの Vault に保存します。環境変数やコマンド式は値に置換してください。',
     'ai.providerProtocol': 'API プロトコル',
+    'ai.providerModelEndpoint': 'モデルの Pi 既定エンドポイントを使う',
     'ai.configTitle': 'AI 設定',
     'ai.editProvider': 'プロバイダーを編集',
     'ai.deleteProvider': 'プロバイダー設定を削除',
@@ -931,6 +934,7 @@ export const dictionaries = {
     'ai.piConfigHelp':
       '選擇 Pi 供應商和模型，或貼上 models.json。API Key 與標頭值儲存到應用程式 Vault；環境變數和命令運算式需替換為具體值。',
     'ai.providerProtocol': 'API 通訊協定',
+    'ai.providerModelEndpoint': '使用模型的 Pi 預設端點',
     'ai.configTitle': 'AI 設定',
     'ai.editProvider': '編輯',
     'ai.deleteProvider': '刪除供應商設定',

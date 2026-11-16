@@ -19,6 +19,7 @@ import { AiModels } from '../../packages/plugins/ai/src/adapters/models.ts';
 import { AiHostCapabilities } from '../../packages/plugins/ai/src/adapters/host-capabilities.ts';
 import { commandReviewer } from '../../packages/plugins/ai/src/adapters/command-review.ts';
 import { PiEngineProvider, piEngineConfigSchema } from '../../packages/engines/pi/src/index.ts';
+import { PiVaultCredentials } from '../../packages/engines/pi/src/credential-store.ts';
 import {
   aiProviderInputSchema,
   aiModelInputSchema,
@@ -147,6 +148,81 @@ async function finished(service: AiService, id: string) {
   });
   return service.get(id);
 }
+
+it.each([
+  {
+    model: 'deepseek-v4-pro',
+    protocol: 'openai-chat',
+    baseUrl: 'https://opencode.ai/inference/go/anthropic',
+    url: 'https://opencode.ai/inference/go/openai/v1/chat/completions',
+  },
+  {
+    model: 'claude-haiku-5-5',
+    protocol: 'anthropic',
+    baseUrl: undefined,
+    url: 'https://opencode.ai/inference/go/anthropic/v1/messages',
+  },
+  {
+    model: 'gpt-6-luna',
+    protocol: 'openai-responses',
+    baseUrl: 'https://proxy.fixture.example/v1',
+    url: 'https://proxy.fixture.example/v1/responses',
+  },
+] as const)('tests the saved OpenCode Go model $model through Pi', async (test) => {
+  const f = await boot('https://fixture.example/v1');
+  const ref = randomUUID();
+  const secret = 'OPENCODE_GO_VAULT_FIXTURE';
+  const store = new PiVaultCredentials(
+    f.ctx.credentials,
+    'opencode-go',
+    encodeOpaqueCredentialRef(ref),
+  );
+  await store.modify('opencode-go', async () => ({ type: 'api_key', key: secret }));
+  const provider = f.repository.createJson(
+    'ai_providers',
+    aiProviderInputSchema.parse({
+      name: 'OpenCode Go',
+      ...(test.baseUrl ? { baseUrl: test.baseUrl } : {}),
+      credentialRef: ref,
+      enabled: true,
+      pi: { id: 'opencode-go', credentialMode: 'pi' },
+    }),
+    'ai-provider',
+  );
+  f.repository.createJson(
+    'ai_models',
+    aiModelInputSchema.parse({
+      providerId: provider.id,
+      name: test.model,
+      model: test.model,
+      capabilities: ['chat'],
+    }),
+    'ai-model',
+  );
+  const requests: Request[] = [];
+  const probe = vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
+    const request = new Request(input, init);
+    requests.push(request);
+    return new Response(
+      piSseStart(test.protocol) + piSseText(test.protocol, 'OK') + piSseEnd(test.protocol),
+      { headers: { 'content-type': 'text/event-stream' } },
+    );
+  });
+  const result = await f.service.testProvider(provider.id);
+  expect(result).toMatchObject({ ok: true, providerId: provider.id });
+  expect(result.models).toContain(test.model);
+  expect(JSON.stringify(result)).not.toContain(secret);
+  expect(probe).toHaveBeenCalledTimes(1);
+  const request = requests[0]!;
+  const endpoint = new URL(request.url);
+  expect(endpoint.origin + endpoint.pathname).toBe(test.url);
+  expect(request.headers.get('x-opencode-session')).toMatch(/^[0-9a-f-]{36}$/u);
+  expect([request.headers.get('authorization'), request.headers.get('x-api-key')]).toContain(
+    test.protocol === 'anthropic' ? secret : `Bearer ${secret}`,
+  );
+  expect(await request.json()).toMatchObject({ model: test.model });
+});
+
 describe.each<AiProviderProtocol>(['openai-chat', 'openai-responses', 'anthropic'])(
   '%s owned AI application',
   (protocol) => {

@@ -401,6 +401,9 @@ export function AiPanel({
             ? []
             : [accountModel];
       }
+      const baseUrl =
+        String(form.get('baseUrl') ?? '').trim() ||
+        (pi.models.some((model) => !model.baseUrl) ? selectedPiProvider?.baseUrl : undefined);
       const credential = selectedPiProvider
         ? { ref: piLogin!.credentialRef! }
         : await client.createCredential({
@@ -427,9 +430,7 @@ export function AiPanel({
       providerAttempted = true;
       const provider = await client.createAiProvider({
         name: String(form.get('name')),
-        ...(String(form.get('baseUrl') ?? '').trim()
-          ? { baseUrl: String(form.get('baseUrl')) }
-          : {}),
+        ...(baseUrl ? { baseUrl } : {}),
         pi,
         role: String(form.get('role')),
         timeoutMs: Number(form.get('timeoutMs')),
@@ -800,7 +801,8 @@ export function AiPanel({
           <input
             name="baseUrl"
             key={`url-${piProviderId}`}
-            defaultValue={selectedPiProvider?.baseUrl ?? 'https://api.openai.com/v1/'}
+            defaultValue={selectedPiProvider ? '' : 'https://api.openai.com/v1/'}
+            placeholder={selectedPiProvider ? x('ai.providerModelEndpoint') : undefined}
             required={!selectedPiProvider}
           />
         </label>

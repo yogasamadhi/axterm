@@ -24,8 +24,9 @@ const endpoint = z
   .url()
   .max(4096)
   .refine((value) => {
-    const url = new URL(value);
+    const url = URL.parse(value);
     return (
+      url !== null &&
       ['https:', 'http:'].includes(url.protocol) &&
       !url.username &&
       !url.password &&

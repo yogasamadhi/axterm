@@ -11,6 +11,7 @@ import type { AgentMessage, AgentTool } from '../../../vendor/pi/packages/agent/
 import type { Message } from '../../../vendor/pi/packages/ai/src/types.ts';
 import { builtinProviders } from '../../../vendor/pi/packages/ai/src/providers/all.ts';
 import { createModels } from '../../../vendor/pi/packages/ai/src/models.ts';
+export { cleanupSessionResources as cleanupPiSessionResources } from '../../../vendor/pi/packages/ai/src/session-resources.ts';
 export { loginPiProvider } from './login.ts';
 import { composeModelProvider } from '../../../vendor/pi/packages/coding-agent/src/core/provider-composer.ts';
 import type {
@@ -77,17 +78,25 @@ export function piCatalog(): PiCatalogProvider[] {
 
 function resolveProvider(request: PiEngineRequest) {
   const builtin = providers.find(({ id }) => id === request.provider.id);
+  let baseUrl = request.baseUrl || undefined;
+  if (baseUrl && request.credentialStore && builtin && !builtin.baseUrl) {
+    const models = builtin.getModels().filter((model) => supportedApis.has(model.api));
+    const selected = models.find(({ id }) => id === request.model);
+    // Older setup forms persisted the first model's endpoint as the provider default.
+    if (baseUrl === models[0]?.baseUrl && selected && selected.baseUrl !== baseUrl)
+      baseUrl = undefined;
+  }
   // Pi's composer consumes only this immutable metadata view. In particular, no
   // credentials/headers/expressions enter its config-value resolver or file loader.
   const config: ModelsJsonProvider = {
-    baseUrl: request.baseUrl || undefined,
+    baseUrl,
     api: request.provider.api,
     models: request.provider.models,
     modelOverrides: request.provider.modelOverrides,
   };
   // The pinned composer reads only getProvider; ModelConfig's constructor is file-only.
   const hasConfig =
-    request.baseUrl ||
+    baseUrl ||
     request.provider.models.length ||
     Object.keys(request.provider.modelOverrides).length;
   const snapshot = {
@@ -232,6 +241,7 @@ export async function* streamPiAgent(request: PiEngineRequest): AsyncGenerator<P
     },
     {
       model,
+      sessionId: request.sessionId,
       apiKey: request.apiKey,
       fetch: request.fetch,
       headers: request.headers,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Prepared independent source snapshot, excluding this review ledger",
-  "sourceScopeSha256": "02a0512e07ffbeb12ef47fd54e0f68fe50b54021221866093bc1779932f785a0",
+  "sourceScopeSha256": "b590564b819dc2c7890e37891defa70974a0ab1b09e3ee371b48480ae7b1ac96",
   "limitations": [
     "A path and byte hash identify review scope; they do not establish authorship, license, rights or package inclusion.",
     "Git author metadata and prospective contribution rules do not grant retrospective permission for these bytes.",
@@ -6672,8 +6672,8 @@
     {
       "file": {
         "path": "packages/engines/pi/src/config.ts",
-        "bytes": 4213,
-        "sha256": "6504a93ac34b6f8cd83071cf064adc77b1c7f345cfb39e776e0ddb4f7d76836d"
+        "bytes": 4237,
+        "sha256": "dca654563718c524c92494348fc39790f1b97986973ab2447f881aaeb330e528"
       },
       "review": {
         "status": "pending",
@@ -6732,8 +6732,8 @@
     {
       "file": {
         "path": "packages/engines/pi/src/index.ts",
-        "bytes": 13549,
-        "sha256": "ae1c47c604dcace0a3cf8ffa05e3a60126cf5aeae76739fe1f9b771410aa1e07"
+        "bytes": 13780,
+        "sha256": "0267c7b15be4aaf58d0230c07eaf52ce57b163a7e6edec1d5dde57e0cdeedd21"
       },
       "review": {
         "status": "pending",
@@ -14672,8 +14672,8 @@
     {
       "file": {
         "path": "packages/pi-engine/src/index.ts",
-        "bytes": 15067,
-        "sha256": "665f0ff43616b9d2c4ddcbbf60b62eb941eefe89f0b4b130525e425b3563bd85"
+        "bytes": 15672,
+        "sha256": "6203e6e91ced8b4b9f813be9323a6f3b4e11b523e68770b69c1968014245726a"
       },
       "review": {
         "status": "pending",
@@ -14712,8 +14712,8 @@
     {
       "file": {
         "path": "packages/pi-engine/src/public.ts",
-        "bytes": 4563,
-        "sha256": "a6441607e1c5e66d5915b741e4370a22cc39eb7e8dfcad660356c0db8400c7f1"
+        "bytes": 4661,
+        "sha256": "c372462aff4c40b9cf6cd105d37f339f1f9ef64a2fba59a060464291b21a32c6"
       },
       "review": {
         "status": "pending",
@@ -15612,8 +15612,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/ai-panel.tsx",
-        "bytes": 72834,
-        "sha256": "700fb531b643c5394dce9b52c2a39a3e9fabb0822846de013c2b3b7a09cbb2ef"
+        "bytes": 73005,
+        "sha256": "bad149d8d334221d3aa8b3176fb5a9f4d8c2e91ccbcb65935299d459dafe6957"
       },
       "review": {
         "status": "pending",
@@ -15892,8 +15892,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/locales.ts",
-        "bytes": 61274,
-        "sha256": "bbda484957eff9c4cf0662b3237238bf1fcaa52a5dfa34841bdf4268ed547c96"
+        "bytes": 61561,
+        "sha256": "5419c933461b358a01db216bcd32d1705b39ae8a1a631185cc16fbb3f98b9260"
       },
       "review": {
         "status": "pending",
@@ -15992,8 +15992,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/src/client/ui/provider-detail.tsx",
-        "bytes": 2878,
-        "sha256": "f6296b92cf3446fd82824583559c96212fa4677e9def2b90624dbca50937a18e"
+        "bytes": 2943,
+        "sha256": "34b5831d2b99e8ff0905b2eca0bceb347e62654308e9e30ed10c4ba71eea9545"
       },
       "review": {
         "status": "pending",
@@ -16672,8 +16672,8 @@
     {
       "file": {
         "path": "packages/plugins/ai/tests/provider-save.client.test.tsx",
-        "bytes": 15836,
-        "sha256": "783d2df7d224309f3bfba23141e41172dc18968fb5079e7643f044bfbf33edf5"
+        "bytes": 18480,
+        "sha256": "9122ae5f614efadba9cca2e79fbbbd1a87336f543a0f1913bf526dfc8f107470"
       },
       "review": {
         "status": "pending",
@@ -38492,8 +38492,8 @@
     {
       "file": {
         "path": "tests/integration/level3-ai-application.test.ts",
-        "bytes": 31379,
-        "sha256": "7cc6cee3246a0db30947f6f30d8a4b965aee34d1e45661c20d6120458bc938f6"
+        "bytes": 34077,
+        "sha256": "9e8bbff0ed7d016437133530bbfc04698414d0c69106830dea1e37d94f8be28a"
       },
       "review": {
         "status": "pending",
