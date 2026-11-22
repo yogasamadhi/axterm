@@ -7,19 +7,17 @@ export function deploymentFileAllowed(manifest, name, workspace) {
   if (manifest.name === '@axterm/engine-pi-core' && name === 'dist/metafile.json') return false;
   if (
     !workspace &&
-    parts.some((part) =>
-      [
-        'test',
-        'tests',
-        '__tests__',
-        'examples',
-        'docs',
-        'doc',
-        'benchmarks',
-        'benchmark',
-        'coverage',
-      ].includes(part),
-    )
+    [
+      'test',
+      'tests',
+      '__tests__',
+      'examples',
+      'docs',
+      'doc',
+      'benchmarks',
+      'benchmark',
+      'coverage',
+    ].includes(parts[0])
   )
     return false;
   return true;

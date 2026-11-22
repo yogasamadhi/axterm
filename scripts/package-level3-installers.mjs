@@ -1,13 +1,40 @@
 import { desktopPackageIdentity } from './desktop-package-identity.mjs';
-import { lstat, readFile, readdir, realpath } from 'node:fs/promises';
+import { cp, lstat, mkdtemp, readFile, readdir, realpath, rm, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { dirname, isAbsolute, join, resolve, sep } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { createHash } from 'node:crypto';
+
+const root = resolve(import.meta.dirname, '..');
+const desktop = join(root, 'apps/desktop');
+
+/** NSIS dereferences junctions. Restore the relative dependency graph after extraction. */
+export async function prepareWindowsInstallerInput(prepackaged, destination) {
+  const app = join(prepackaged, 'resources', 'app');
+  const packages = join(app, 'node_modules') + sep;
+  const instances = join(packages, '.axterm') + sep;
+  const links = [];
+  await cp(prepackaged, destination, {
+    recursive: true,
+    async filter(path) {
+      if (!(await lstat(path)).isSymbolicLink()) return true;
+      const target = await realpath(path);
+      if (!path.startsWith(packages) || !target.startsWith(instances))
+        throw Error('Windows installer junction escaped the runtime dependency graph');
+      links.push([relative(app, path), relative(app, target)]);
+      return false;
+    },
+  });
+  const resources = join(destination, 'resources');
+  await writeFile(join(resources, 'axterm-runtime-links.json'), JSON.stringify(links.sort()));
+  await cp(
+    join(desktop, 'build/restore-runtime-links.mjs'),
+    join(resources, 'axterm-restore-runtime-links.mjs'),
+  );
+}
 
 /** Distributable formats consume the completed runtime closure, never the assembly carrier. */
 export async function packageLevel3Installers(app, output) {
   if (!isAbsolute(app) || !isAbsolute(output)) throw Error('Installer paths must be absolute');
-  const root = resolve(import.meta.dirname, '..');
   for (const path of [app, output]) {
     const info = await lstat(path);
     if (!info.isDirectory() || info.isSymbolicLink())
@@ -58,14 +85,16 @@ export async function packageLevel3Installers(app, output) {
     prepackaged.startsWith(output + sep)
   )
     throw Error('Installer output and application cannot contain one another');
-  const desktop = join(root, 'apps/desktop');
   const { build } = createRequire(join(desktop, 'package.json'))('electron-builder');
   const discovery = process.env.CSC_IDENTITY_AUTO_DISCOVERY;
+  const windowsInput =
+    process.platform === 'win32' ? await mkdtemp(join(dirname(prepackaged), 'nsis-input-')) : null;
   process.env.CSC_IDENTITY_AUTO_DISCOVERY = 'false';
   try {
+    if (windowsInput) await prepareWindowsInstallerInput(prepackaged, windowsInput);
     return await build({
       projectDir: desktop,
-      prepackaged,
+      prepackaged: windowsInput ?? prepackaged,
       publish: 'never',
       config: {
         extends: join(desktop, 'electron-builder.yml'),
@@ -74,10 +103,12 @@ export async function packageLevel3Installers(app, output) {
         linux: { executableName: identity.executableName },
         electronVersion: inventory.electron,
         directories: { output },
+        ...(windowsInput ? { nsis: { include: join(desktop, 'build/installer.nsh') } } : {}),
       },
     });
   } finally {
     if (discovery === undefined) delete process.env.CSC_IDENTITY_AUTO_DISCOVERY;
     else process.env.CSC_IDENTITY_AUTO_DISCOVERY = discovery;
+    if (windowsInput) await rm(windowsInput, { recursive: true, force: true });
   }
 }

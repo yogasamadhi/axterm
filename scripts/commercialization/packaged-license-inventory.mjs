@@ -251,7 +251,7 @@ export function inventoryPackagedResources(resourcesDirectory) {
         artifactDirectory,
       ),
       limitations: [
-        'Directory digest covers the sorted physical-file hashes and checked link text; it is not an ASAR hash.',
+        'Directory digest covers the sorted physical-file hashes and verified link targets.',
         'Package manifests and hashes are not source-rights clearance or a complete source-to-binary conclusion.',
       ],
     };

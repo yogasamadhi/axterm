@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Prepared independent source snapshot, excluding this review ledger",
-  "sourceScopeSha256": "b590564b819dc2c7890e37891defa70974a0ab1b09e3ee371b48480ae7b1ac96",
+  "sourceScopeSha256": "43a60e6560cf88eb27397407c1f62f5ec5cbdc0c762c1ab26c8b73abbf8b5b47",
   "limitations": [
     "A path and byte hash identify review scope; they do not establish authorship, license, rights or package inclusion.",
     "Git author metadata and prospective contribution rules do not grant retrospective permission for these bytes.",
@@ -854,6 +854,46 @@
         "path": "apps/desktop/build/icon.svg",
         "bytes": 1138,
         "sha256": "589197174bdda9a35a4786b9aca0505a03ae96d5bb817d2ecaebdb3995beb8e1"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "apps/desktop/build/installer.nsh",
+        "bytes": 822,
+        "sha256": "16c23e903b788196f76999515c6a311483eace3a856e254100e7c237e0776659"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "apps/desktop/build/restore-runtime-links.mjs",
+        "bytes": 1103,
+        "sha256": "bc6fa65427b251958e9bc451d91ca21e581dafd138ec36b1a5724282f8ff7c54"
       },
       "review": {
         "status": "pending",
@@ -33452,8 +33492,8 @@
     {
       "file": {
         "path": "scripts/build-dsh-framework.mjs",
-        "bytes": 2775,
-        "sha256": "eaa83d897e1322bbfccfb07750f63fccabec247ab4f92fa34707f80d58571a77"
+        "bytes": 2798,
+        "sha256": "fc3647bffe3883c953e465f1c4106c749dd00a7b8103009bd5953d4c26c474d1"
       },
       "review": {
         "status": "pending",
@@ -33472,8 +33512,8 @@
     {
       "file": {
         "path": "scripts/build-level3-shell.mjs",
-        "bytes": 2183,
-        "sha256": "8e83d4c513630c4ce15e4e018c931d8bc0b0a6e80d249705e1ae45495c13583a"
+        "bytes": 2200,
+        "sha256": "1ee5d1e58670555bf9650f68519d267a372863306aa64322bb18d1e0f9e002d5"
       },
       "review": {
         "status": "pending",
@@ -33492,8 +33532,8 @@
     {
       "file": {
         "path": "scripts/build-level3.mjs",
-        "bytes": 15933,
-        "sha256": "8ffa0b31d60892e7d2229eb93040472e32dc8f3af4d4f0e3835abeb0c7b23a14"
+        "bytes": 16001,
+        "sha256": "a27394d0dd752075eebf74aedcd6f442c9b51898f7972e2b76c1e92bd6f32507"
       },
       "review": {
         "status": "pending",
@@ -33752,8 +33792,8 @@
     {
       "file": {
         "path": "scripts/commercialization/directory-application-inventory.mjs",
-        "bytes": 1658,
-        "sha256": "4d50d63924b446631479ff1a16926bdb293b8d022c5596ade1d3a08e9f6f948e"
+        "bytes": 1905,
+        "sha256": "3de21ae223b0e2a55c7d6ad2270d159a97a5cd67ea6421ff2b96052a2ec86c83"
       },
       "review": {
         "status": "pending",
@@ -34232,8 +34272,8 @@
     {
       "file": {
         "path": "scripts/commercialization/packaged-license-inventory.mjs",
-        "bytes": 12211,
-        "sha256": "b69028b5b8fc8d3aeee84a7af8ec07e3597d3880093422173fa7b7eb25d752af"
+        "bytes": 12191,
+        "sha256": "94d728ee76b8a786a38528c07c00a181bdcac98b004a052786263fc5c3b2cbf3"
       },
       "review": {
         "status": "pending",
@@ -34592,8 +34632,8 @@
     {
       "file": {
         "path": "scripts/deployment-files.mjs",
-        "bytes": 825,
-        "sha256": "f99b9a4759dd72eb6aef96fdab2cc16f16fe272c8adb0d6b8966faaeb1e02e40"
+        "bytes": 775,
+        "sha256": "2a3f6fd2b51111869d3e39ef4c7ad9f01161a60220343f9faf5316572bf22b18"
       },
       "review": {
         "status": "pending",
@@ -35192,8 +35232,8 @@
     {
       "file": {
         "path": "scripts/package-level3-desktop.mjs",
-        "bytes": 7847,
-        "sha256": "5bd156e919fb6d72eb7fa5c7921ac6f41ed4586d59f928250d456ee0311a8926"
+        "bytes": 7721,
+        "sha256": "76c330904b1f50440383fd8f5ab41dfa3fc82cc4f41ae53facc0824c17f45f88"
       },
       "review": {
         "status": "pending",
@@ -35212,8 +35252,8 @@
     {
       "file": {
         "path": "scripts/package-level3-installers.mjs",
-        "bytes": 3541,
-        "sha256": "89ae52e0725b7611c0de34f053b67f6047654bef8a0ae5fc6b1ee639f6884e02"
+        "bytes": 5060,
+        "sha256": "d87858a8cb40ad3a88409becdb13aa71de3397b2717baad18fc7ceda7718753d"
       },
       "review": {
         "status": "pending",
@@ -35332,8 +35372,8 @@
     {
       "file": {
         "path": "scripts/prepare-level3-native.mjs",
-        "bytes": 3445,
-        "sha256": "c9079e4c675b2a56e4bad9243e9643c7bad47425d0184652dffafc66e5efe434"
+        "bytes": 4054,
+        "sha256": "136e8740b4bfdf2024b1d9fc28d59607006c4808c52e3b89706ce40e943f421b"
       },
       "review": {
         "status": "pending",
@@ -45972,8 +46012,8 @@
     {
       "file": {
         "path": "tests/unit/level3-directory-package-inventory.test.ts",
-        "bytes": 5840,
-        "sha256": "0a0c6badf51e8da3e63f4bc0eb4b4e7cbf19fc7c7c2fa8d636f0e13db08f3ed5"
+        "bytes": 6714,
+        "sha256": "23c965f8664b6d7ccd31520c92472616ea8d006ef09a94da3484ca8a80c97173"
       },
       "review": {
         "status": "pending",
@@ -46212,8 +46252,8 @@
     {
       "file": {
         "path": "tests/unit/level3-lean-deployment.test.ts",
-        "bytes": 5901,
-        "sha256": "246709b0ea2a6f4281e416dbe211191773149c54bd648395b4268963b12bf849"
+        "bytes": 5931,
+        "sha256": "87a2346033908c84793d1de890f0b9e0dbe0edc63a54f0a10684233487ee3e76"
       },
       "review": {
         "status": "pending",
@@ -46532,8 +46572,8 @@
     {
       "file": {
         "path": "tests/unit/level3-package-links.test.ts",
-        "bytes": 2417,
-        "sha256": "faafe378378c98450f7b4681954243b1eb8ea519d60b05c4134e709a294d6200"
+        "bytes": 4048,
+        "sha256": "aa3370600fd5f294e0eaa3536b8dd1333811e858b6b2485e64e14498d6579c76"
       },
       "review": {
         "status": "pending",

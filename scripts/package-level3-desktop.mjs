@@ -8,7 +8,6 @@ import {
   readdir,
   realpath,
   symlink,
-  unlink,
   writeFile,
   glob,
 } from 'node:fs/promises';
@@ -20,31 +19,33 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(import.meta.dirname, '..');
 const desktopRequire = createRequire(join(root, 'apps/desktop/package.json'));
 
-/** Junctions use absolute targets on Windows; relocate them and verify the copied closure. */
-export async function relocateRuntimeLinks(source, destination) {
+/** Copy each dependency instance once and recreate links inside the copied closure. */
+export async function copyRuntimeTree(source, destination) {
   source = await realpath(source);
+  const links = [];
+  await cp(source, destination, {
+    recursive: true,
+    async filter(path) {
+      if (!(await lstat(path)).isSymbolicLink()) return true;
+      const target = await realpath(path);
+      if (!target.startsWith(source + sep))
+        throw new Error('Packaged dependency escaped the runtime closure');
+      links.push([relative(source, path), relative(source, target)]);
+      return false;
+    },
+  });
   destination = await realpath(destination);
-  const inside = (parent, path) => path === parent || path.startsWith(parent + sep);
-  const walk = async (directory) => {
-    for (const entry of await readdir(directory, { withFileTypes: true })) {
-      const path = join(directory, entry.name);
-      if (entry.isSymbolicLink()) {
-        const target = await realpath(path);
-        if (inside(source, target)) {
-          const relocated = join(destination, relative(source, target));
-          await unlink(path);
-          await symlink(
-            process.platform === 'win32' ? relocated : relative(dirname(path), relocated),
-            path,
-            process.platform === 'win32' ? 'junction' : 'dir',
-          );
-        }
-        if (!inside(destination, await realpath(path)))
-          throw new Error('Packaged dependency escaped the runtime closure');
-      } else if (entry.isDirectory()) await walk(path);
-    }
-  };
-  await walk(destination);
+  for (const [location, target] of links) {
+    const path = join(destination, location);
+    const relocated = join(destination, target);
+    await symlink(
+      process.platform === 'win32' ? relocated : relative(dirname(path), relocated),
+      path,
+      process.platform === 'win32' ? 'junction' : 'dir',
+    );
+    if (!(await realpath(path)).startsWith(destination + sep))
+      throw new Error('Packaged dependency escaped the runtime closure');
+  }
 }
 
 /** Directory-only engineering artifact; never publishes or discovers signing credentials. */
@@ -152,8 +153,7 @@ export async function packageLevel3Desktop(stage, output) {
   await assertElectronLocaleFamilies(
     process.platform === 'darwin' ? dirname(dirname(resources)) : dirname(resources),
   );
-  await cp(stage, app, { recursive: true, verbatimSymlinks: true });
-  await relocateRuntimeLinks(stage, app);
+  await copyRuntimeTree(stage, app);
   await cp(join(stage, 'AXTERM_UPDATE_FEED.json'), join(dirname(app), 'AXTERM_UPDATE_FEED.json'));
   if (process.platform === 'linux')
     await cp(join(stage, 'build/icon.png'), join(dirname(app), 'axterm-icon.png'));

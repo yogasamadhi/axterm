@@ -76,7 +76,7 @@ for (const name of frameworkNames) {
     config: false,
     tsconfig: false,
     cwd: directory,
-    deps: { neverBundle: [/^[^./]/] },
+    deps: { neverBundle: [/^(?!\0|[A-Za-z]:[\\/])[^./\\]/] },
     logLevel: 'warn',
     ...(name === 'schemastery'
       ? { outExtensions: ({ format }) => ({ js: format === 'es' ? '.mjs' : '.cjs' }) }

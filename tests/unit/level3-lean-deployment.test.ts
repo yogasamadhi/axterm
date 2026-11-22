@@ -21,6 +21,7 @@ it('omits deployment maps and development folders while preserving public types 
     expect(deploymentFileAllowed(thirdParty, file, false)).toBe(false);
   for (const file of [
     'lib/index.js',
+    'dist/doc/directives.js',
     'lib/index.d.ts',
     'lib/index.d.mts',
     'src/portable.ts',

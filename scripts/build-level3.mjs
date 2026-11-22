@@ -216,7 +216,7 @@ for (const packagePath of packages) {
     config: false,
     tsconfig: false,
     cwd: directory,
-    deps: { neverBundle: [/^(?!\0)[^./]/] },
+    deps: { neverBundle: [/^(?!\0|[A-Za-z]:[\\/])[^./\\]/] },
     logLevel: 'warn',
   });
   if (name === 'ui-theme')
@@ -296,7 +296,7 @@ for (const name of businessPackages) {
     config: false,
     tsconfig: false,
     cwd: directory,
-    deps: { neverBundle: [/^(?!\0)[^./]/] },
+    deps: { neverBundle: [/^(?!\0|[A-Za-z]:[\\/])[^./\\]/] },
     logLevel: 'warn',
   });
 }
@@ -346,7 +346,7 @@ for (const name of businessPackages) {
     config: false,
     tsconfig: false,
     cwd: directory,
-    deps: { neverBundle: [/^(?!\0)[^./]/] },
+    deps: { neverBundle: [/^(?!\0|[A-Za-z]:[\\/])[^./\\]/] },
     logLevel: 'warn',
   });
 }
@@ -422,7 +422,7 @@ for (const application of ['cli', 'desktop-host']) {
     config: false,
     tsconfig: false,
     cwd: cli,
-    deps: { neverBundle: [/^(?!\0)[^./]/] },
+    deps: { neverBundle: [/^(?!\0|[A-Za-z]:[\\/])[^./\\]/] },
     logLevel: 'warn',
   });
 }

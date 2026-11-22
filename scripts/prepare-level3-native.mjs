@@ -1,8 +1,10 @@
 import { desktopPackageIdentity } from './desktop-package-identity.mjs';
 import { chmod, readFile, realpath, readdir, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { execFile } from 'node:child_process';
 import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
 import { rebuild } from '@electron/rebuild';
 
 /** Rebuild copied native inputs; reject a link back into a development package/store. */
@@ -38,24 +40,37 @@ export async function prepareLevel3Native(directory) {
   });
   const files = [];
   for (const native of modules) {
+    const release = join(native.path, 'build/Release');
     for (const name of await readdir(join(native.path, 'build'))) {
       if (name.startsWith('.axterm-node-')) await rm(join(native.path, 'build', name));
     }
-    if (native.name === 'node-pty' && process.platform !== 'win32')
-      await chmod(join(native.path, 'build/Release/spawn-helper'), 0o755);
-    let found = 0;
-    for (const name of (await readdir(join(native.path, 'build/Release'))).sort()) {
-      if (!name.endsWith('.node')) continue;
-      const path = join(native.path, 'build/Release', name);
+    const runtimeFiles = [];
+    if (native.name === 'node-pty') {
+      if (process.platform === 'win32') {
+        // electron-rebuild runs node-gyp directly. The pinned postinstall places ConPTY beside it.
+        await promisify(execFile)(
+          process.execPath,
+          [join(native.path, 'scripts/post-install.js')],
+          {
+            cwd: native.path,
+            env: { ...process.env, npm_config_arch: process.arch },
+            windowsHide: true,
+          },
+        );
+        runtimeFiles.push('conpty/conpty.dll', 'conpty/OpenConsole.exe');
+      } else await chmod(join(release, 'spawn-helper'), 0o755);
+    }
+    const addons = (await readdir(release)).filter((name) => name.endsWith('.node')).sort();
+    if (!addons.length) throw new Error('Native rebuild produced no addon for ' + native.name);
+    for (const name of [...addons, ...runtimeFiles]) {
+      const path = join(release, name);
       files.push({
         path: relative(stage, path).split(sep).join('/'),
         sha256: createHash('sha256')
           .update(await readFile(path))
           .digest('hex'),
       });
-      found++;
     }
-    if (!found) throw new Error('Native rebuild produced no addon for ' + native.name);
     await rm(join(native.path, 'prebuilds'), { recursive: true, force: true });
     await rm(join(native.path, 'build/Release/obj.target'), { recursive: true, force: true });
     if (native.name === 'node-pty' && process.platform !== 'win32')

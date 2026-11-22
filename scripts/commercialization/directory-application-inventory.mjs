@@ -19,7 +19,12 @@ export function inventoryDirectoryApplication(directory) {
         const target = realpathSync(absolute);
         if (target !== root && !target.startsWith(root + sep))
           throw new Error('Application link escapes the runtime closure: ' + name);
-        links.push({ path: name, target: readlinkSync(absolute) });
+        // Windows junctions store the install path. Hash the checked in-package target.
+        const recordedTarget =
+          process.platform === 'win32'
+            ? relative(root, target).split(sep).join('/')
+            : readlinkSync(absolute);
+        links.push({ path: name, target: recordedTarget });
       } else if (entry.isDirectory()) visit(absolute);
       else if (entry.isFile()) {
         const bytes = readFileSync(absolute);
