@@ -36,6 +36,7 @@ overrides:
 
 # Reviewed source patches applied to the frozen dependency graph.
 patchedDependencies:
+  app-builder-lib@26.16.1: patches/app-builder-lib@26.16.1.patch
   node-pty@1.1.0: patches/node-pty@1.1.0.patch
   trzsz2@1.2.0: patches/trzsz2@1.2.0.patch
 

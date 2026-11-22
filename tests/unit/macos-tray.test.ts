@@ -8,6 +8,7 @@ const state = {
     setTemplateImage: vi.fn(),
   },
   tray: {
+    on: vi.fn(),
     setToolTip: vi.fn(),
     setContextMenu: vi.fn(),
     destroy: vi.fn(),
@@ -24,7 +25,7 @@ const native = {
   buildMenu: (items: unknown[]) => state.buildMenu(items) as never,
 };
 
-import { MacosTrayController } from '../../apps/desktop/src/shell/macos-tray.ts';
+import { DesktopTrayController } from '../../apps/desktop/src/shell/desktop-tray.ts';
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -35,7 +36,7 @@ beforeEach(() => {
 describe('macOS menu bar item', () => {
   it('owns one native item with a standard/Retina monochrome template and window/quit menu', () => {
     const showWindow = vi.fn();
-    const controller = new MacosTrayController('Axterm', showWindow, native, 'darwin');
+    const controller = new DesktopTrayController('Axterm', showWindow, native, 'darwin');
     controller.start();
     controller.start();
     expect(native.createTray).toHaveBeenCalledOnce();
@@ -75,8 +76,22 @@ describe('macOS menu bar item', () => {
     expect(native.createTray).toHaveBeenCalledOnce();
   });
 
-  it.each(['win32', 'linux'] as const)('does not allocate a macOS tray on %s', (platform) => {
-    const controller = new MacosTrayController('Axterm', vi.fn(), native, platform);
+  it('restores the window on a single Windows tray click', () => {
+    const showWindow = vi.fn();
+    const controller = new DesktopTrayController('Axterm', showWindow, native, 'win32');
+    controller.start();
+    expect(state.tray.setToolTip).toHaveBeenCalledWith('Axterm');
+    const click = state.tray.on.mock.calls.find(([event]) => event === 'click')?.[1];
+    expect(click).toBeTypeOf('function');
+    click();
+    expect(showWindow).toHaveBeenCalledOnce();
+    controller.close();
+    click();
+    expect(showWindow).toHaveBeenCalledOnce();
+  });
+
+  it('does not allocate a tray on Linux', () => {
+    const controller = new DesktopTrayController('Axterm', vi.fn(), native, 'linux');
     controller.start();
     controller.close();
     expect(native.createTray).not.toHaveBeenCalled();
@@ -87,7 +102,7 @@ describe('macOS menu bar item', () => {
     state.tray.setContextMenu.mockImplementationOnce(() => {
       throw new Error('native menu unavailable');
     });
-    const controller = new MacosTrayController('Axterm', vi.fn(), native, 'darwin');
+    const controller = new DesktopTrayController('Axterm', vi.fn(), native, 'darwin');
     expect(() => controller.start()).toThrow('native menu unavailable');
     expect(state.tray.destroy).toHaveBeenCalledOnce();
     controller.close();
@@ -95,7 +110,7 @@ describe('macOS menu bar item', () => {
   });
 
   it('still destroys the native item if clearing its menu fails during shutdown', () => {
-    const controller = new MacosTrayController('Axterm', vi.fn(), native, 'darwin');
+    const controller = new DesktopTrayController('Axterm', vi.fn(), native, 'darwin');
     controller.start();
     state.tray.setContextMenu.mockImplementationOnce(() => {
       throw new Error('native menu unavailable');
@@ -109,7 +124,7 @@ describe('macOS menu bar item', () => {
 
 it('routes new-window and explicit quit to their Shell owners and revokes captured callbacks on close', () => {
   const actions = { newWindow: vi.fn(), quit: vi.fn() };
-  const controller = new MacosTrayController('Axterm', vi.fn(), native, 'darwin', actions);
+  const controller = new DesktopTrayController('Axterm', vi.fn(), native, 'darwin', actions);
   controller.start();
   const menu = state.buildMenu.mock.calls[0]![0] as Array<{ id?: string; click?: () => void }>;
   const newWindow = menu.find((item) => item.id === 'axterm-new-window')!;

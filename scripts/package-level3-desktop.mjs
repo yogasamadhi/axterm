@@ -130,7 +130,7 @@ export async function packageLevel3Desktop(stage, output) {
         electronLanguages: ['en', 'ja', 'zh-CN', 'zh-TW'],
         files: ['entry.cjs', 'package.json'],
         mac: { identity: null, icon: join(stage, 'build/icon.icns'), target: 'dir' },
-        win: { icon: join(stage, 'build/icon.ico'), signAndEditExecutable: false, target: 'dir' },
+        win: { icon: join(stage, 'build/icon.ico'), signExecutable: false, target: 'dir' },
         linux: {
           executableName: identity.executableName,
           icon: join(stage, 'build/icon.png'),

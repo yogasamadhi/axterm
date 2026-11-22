@@ -1,2 +1,8 @@
+# The package verifies checked-in source and license digests byte for byte.
+* text=auto eol=lf
+
+# Unified diff context lines carry a leading space even when empty.
+patches/app-builder-lib@26.16.1.patch whitespace=-blank-at-eol
+
 # Immutable verification inputs retain original source bytes, including Markdown hard breaks.
 tests/fixtures/engineering/** -whitespace

@@ -59,6 +59,9 @@ foreach ($scheme in $requiredUrlSchemes) {
 $previousPackageResult = $env:AXTERM_LEVEL3_PACKAGE_RESULT
 $uninstaller = $null
 $application = $null
+$upgradeCanaryDirectory = "$installDirectory-upgrade-canary"
+$upgradeCanary = Join-Path $upgradeCanaryDirectory 'preserve.txt'
+$upgradeCanaryOwned = $false
 
 function Assert-InstalledUrlProtocol([string]$Scheme, [string]$ApplicationPath) {
   $schemeKeyPath = Join-Path $protocolRegistryRoot $Scheme
@@ -80,6 +83,30 @@ function Assert-InstalledUrlProtocol([string]$Scheme, [string]$ApplicationPath) 
   }
 }
 
+function Assert-InstalledApplicationIcon([string]$ApplicationPath) {
+  Add-Type -AssemblyName System.Drawing
+  $logoPath = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\apps\desktop\build\icon.ico')).Path
+  $icon = [Drawing.Icon]::ExtractAssociatedIcon($ApplicationPath)
+  if ($null -eq $icon) { throw 'Windows could not extract the installed application icon.' }
+  $logo = [Drawing.Icon]::new($logoPath, $icon.Size)
+  $actual = $icon.ToBitmap()
+  $expected = $logo.ToBitmap()
+  try {
+    for ($y = 0; $y -lt $actual.Height; $y++) {
+      for ($x = 0; $x -lt $actual.Width; $x++) {
+        if ($actual.GetPixel($x, $y).ToArgb() -ne $expected.GetPixel($x, $y).ToArgb()) {
+          throw 'The Windows application icon differs from the Axterm logo.'
+        }
+      }
+    }
+  } finally {
+    $actual.Dispose()
+    $expected.Dispose()
+    $logo.Dispose()
+    $icon.Dispose()
+  }
+}
+
 function Remove-TestUrlProtocol([string]$Scheme, [string]$ApplicationPath) {
   $schemeKeyPath = Join-Path $protocolRegistryRoot $Scheme
   $openCommandPath = Join-Path $schemeKeyPath 'shell\open\command'
@@ -91,7 +118,7 @@ function Remove-TestUrlProtocol([string]$Scheme, [string]$ApplicationPath) {
 }
 
 try {
-  $installation = Start-Process -FilePath $installer -ArgumentList @(
+  $installation = Start-Process -WindowStyle Hidden -FilePath $installer -ArgumentList @(
     '/S',
     "/D=$installDirectory"
   ) -Wait -PassThru
@@ -108,6 +135,27 @@ try {
     throw 'Installed NSIS application must contain exactly one uninstaller.'
   }
   $uninstaller = $uninstallers[0].FullName
+  # Reinstall over a real linked dependency tree and verify that cleanup never
+  # follows a junction into data outside the installation.
+  if (Test-Path -LiteralPath $upgradeCanaryDirectory) {
+    throw 'The isolated upgrade canary already exists.'
+  }
+  New-Item -ItemType Directory -Path $upgradeCanaryDirectory | Out-Null
+  $upgradeCanaryOwned = $true
+  [IO.File]::WriteAllText($upgradeCanary, 'preserve')
+  $upgradeJunction = Join-Path $installDirectory 'resources\upgrade-canary-link'
+  New-Item -ItemType Junction -Path $upgradeJunction -Target $upgradeCanaryDirectory | Out-Null
+  $upgrade = Start-Process -WindowStyle Hidden -FilePath $installer -ArgumentList @(
+    '/S',
+    "/D=$installDirectory"
+  ) -Wait -PassThru
+  if ($upgrade.ExitCode -ne 0) {
+    throw "NSIS upgrade exited with code $($upgrade.ExitCode)."
+  }
+  if ((Test-Path -LiteralPath $upgradeJunction) -or
+      ([IO.File]::ReadAllText($upgradeCanary) -ne 'preserve')) {
+    throw 'NSIS upgrade followed or retained a junction into external data.'
+  }
 
   $expectedVersion = (Get-Content -LiteralPath 'apps/desktop/package.json' -Raw |
     ConvertFrom-Json).version
@@ -115,6 +163,7 @@ try {
   if ($LASTEXITCODE -ne 0 -or -not $binaryVersion.Contains($expectedVersion)) {
     throw "Installed binary version '$binaryVersion' does not match '$expectedVersion'."
   }
+  Assert-InstalledApplicationIcon -ApplicationPath $application
 
   $installedResources = Join-Path $installDirectory 'resources'
   & pnpm run sbom:packaged:check -- $installedResources --platform windows-x64 --sidecar $sidecarPath
@@ -147,12 +196,20 @@ try {
     }
   }
   if ($null -ne $uninstaller -and (Test-Path -LiteralPath $uninstaller -PathType Leaf)) {
-    $uninstallation = Start-Process -FilePath $uninstaller -ArgumentList '/S' -Wait -PassThru
+    $uninstallation = Start-Process -WindowStyle Hidden -FilePath $uninstaller -ArgumentList '/S' -Wait -PassThru
     if ($uninstallation.ExitCode -ne 0) {
       Write-Warning "NSIS uninstaller exited with code $($uninstallation.ExitCode)."
     }
   }
   if (Test-Path -LiteralPath $installDirectory) {
     Remove-Item -LiteralPath $installDirectory -Recurse -Force
+  }
+  if ($upgradeCanaryOwned) {
+    if (Test-Path -LiteralPath $upgradeCanary -PathType Leaf) {
+      Remove-Item -LiteralPath $upgradeCanary -Force
+    }
+    if (Test-Path -LiteralPath $upgradeCanaryDirectory -PathType Container) {
+      [IO.Directory]::Delete($upgradeCanaryDirectory, $false)
+    }
   }
 }

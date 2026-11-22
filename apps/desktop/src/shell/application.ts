@@ -4,7 +4,7 @@ import { reportWorkspaceLoadFailure } from './navigation-failure.ts';
 import { createDesktopUpdaterFromEnvironment } from './signed-release-updater.ts';
 import { assertShellHomeReady } from './data-copy.ts';
 import { RuntimeLegalDocuments, resolvePackagedRuntimeLegalDirectory } from './legal.ts';
-import { MacosTrayController } from './macos-tray.ts';
+import { DesktopTrayController } from './desktop-tray.ts';
 import { createMacosTrayIcon } from './macos-tray-icon.ts';
 import { createRequire } from 'node:module';
 import { DesktopKeyboardBridge } from './keyboard.ts';
@@ -84,7 +84,7 @@ export class DesktopShell {
   >();
   private readonly launches = new DesktopLaunchQueue();
   private readonly bootAdmissions = new Set<number>();
-  private tray: MacosTrayController | undefined;
+  private tray: DesktopTrayController | undefined;
   private recovering = false;
   private recoveryDialogUsed = false;
   private quitting = false;
@@ -173,6 +173,9 @@ export class DesktopShell {
       frame: !custom,
       titleBarStyle: custom ? 'hidden' : 'default',
       ...(process.platform === 'darwin' && custom ? { trafficLightPosition: { x: 9, y: 10 } } : {}),
+      ...(process.platform === 'win32'
+        ? { icon: join(import.meta.dirname, '../../build/icon.ico') }
+        : {}),
       show: this.options.visible !== false,
       webPreferences: {
         preload: this.options.preload,
@@ -199,10 +202,10 @@ export class DesktopShell {
       presentationSlot: 'desktop_' + this.windowSequence++,
     });
     window.on('close', (event) => {
-      if (!this.quitting) {
-        event.preventDefault();
-        window.hide();
-      }
+      if (this.quitting) return;
+      event.preventDefault();
+      if (process.platform === 'win32') void this.requestQuit();
+      else window.hide();
     });
     window.once('closed', () => {
       transport.dispose();
@@ -672,15 +675,16 @@ export class DesktopShell {
       { role: 'windowMenu' },
     ]);
     Menu.setApplicationMenu(menu);
-    this.tray = new MacosTrayController(
+    this.tray = new DesktopTrayController(
       'Axterm',
       this.activate,
       {
-        createTray: () => {
-          const tray = new Tray(createMacosTrayIcon(nativeImage));
-          tray.on('click', this.activate);
-          return tray;
-        },
+        createTray: () =>
+          new Tray(
+            process.platform === 'darwin'
+              ? createMacosTrayIcon(nativeImage)
+              : join(import.meta.dirname, '../../build/icon.ico'),
+          ),
         buildMenu: (items) => Menu.buildFromTemplate(items),
       },
       process.platform,

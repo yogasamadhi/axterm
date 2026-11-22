@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
@@ -12,7 +13,7 @@ test.beforeEach(({ browserName: _browserName }, info) => {
   );
 });
 
-test('Windows and Linux close control remains hittable and hides a multi-tab window while the Host runs', async () => {
+test('the close control remains hittable and applies the platform policy with multiple tabs', async () => {
   test.skip(process.platform === 'darwin', 'Custom native title-bar controls are Windows/Linux.');
   const home = await mkdtemp(resolve(tmpdir(), 'axterm-platform-close-'));
   const app = await launchLevel3Desktop({
@@ -20,6 +21,7 @@ test('Windows and Linux close control remains hittable and hides a multi-tab win
     args: [`--user-data-dir=${home}`],
     env: { ...process.env },
   });
+  const child = app.process();
   try {
     const page = await app.firstWindow();
     await expect(page.getByTestId('runtime-state')).toHaveAttribute('data-state', 'ready');
@@ -52,8 +54,55 @@ test('Windows and Linux close control remains hittable and hides a multi-tab win
     expect(geometry.closeHit).toBe(true);
     await close.hover();
     await expect.poll(() => close.evaluate((button) => button.matches(':hover'))).toBe(true);
+    if (process.platform === 'win32') {
+      await page.locator('.app-statusbar [data-runtime-details-trigger]').click();
+      const hostPid = Number(await page.getByTestId('runtime-process-id').innerText());
+      expect(hostPid).toBeGreaterThan(0);
+      expect(process.kill(hostPid, 0)).toBe(true);
+      await page.keyboard.press('Escape');
+      await app.evaluate(({ BrowserWindow, dialog }) => {
+        const state = globalThis as typeof globalThis & { quitPrompts: number };
+        state.quitPrompts = 0;
+        dialog.showMessageBox = (async (options: Electron.MessageBoxOptions) => {
+          if (
+            options.message !== 'Active tasks may be interrupted.' ||
+            options.buttons?.join(',') !== 'Cancel,Quit'
+          )
+            throw new Error('Unexpected native quit prompt');
+          return { response: state.quitPrompts++, checkboxChecked: false };
+        }) as typeof dialog.showMessageBox;
+        BrowserWindow.getAllWindows()[0]!.focus();
+      });
+      await expect
+        .poll(() =>
+          app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.isFocused()),
+        )
+        .toBe(true);
+      await close.click();
+      await expect
+        .poll(() =>
+          app.evaluate(
+            () => (globalThis as typeof globalThis & { quitPrompts: number }).quitPrompts,
+          ),
+        )
+        .toBe(1);
+      expect(
+        await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.isVisible()),
+      ).toBe(true);
+      await expect(page.getByRole('alertdialog')).toHaveCount(0);
+      await expect(tabs).toHaveCount(3);
+      expect(process.kill(hostPid, 0)).toBe(true);
+
+      const exited = app.waitForEvent('close');
+      await close.click();
+      await exited;
+      await expect.poll(() => child.exitCode).toBe(0);
+      assert.throws(() => process.kill(hostPid, 0), { code: 'ESRCH' });
+      return;
+    }
+
     await close.click();
-    // Approved desktop architecture: ordinary close hides the window; explicit Quit owns task review.
+    await page.getByRole('alertdialog').locator('button.danger').click();
     await expect
       .poll(() =>
         app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0]!.isVisible()),
@@ -66,15 +115,11 @@ test('Windows and Linux close control remains hittable and hides a multi-tab win
     await expect(terminal).toHaveAttribute('data-terminal-id', terminalId!);
     await expect(terminal).toHaveAttribute('data-terminal-channel', 'ready');
     const input = terminal.locator('.xterm-helper-textarea');
-    await input.pressSequentially(
-      process.platform === 'win32'
-        ? "Write-Output ('PLATFORM_' + 'HOST_ALIVE')"
-        : "printf 'PLATFORM_%s\\n' HOST_ALIVE",
-    );
+    await input.pressSequentially("printf 'PLATFORM_%s\\n' HOST_ALIVE");
     await input.press('Enter');
     await expect(terminal.locator('.xterm-rows')).toContainText('PLATFORM_HOST_ALIVE');
   } finally {
-    await closeLevel3Desktop(app);
+    if (child.exitCode === null && child.signalCode === null) await closeLevel3Desktop(app);
     await rm(home, { recursive: true, force: true });
   }
 });

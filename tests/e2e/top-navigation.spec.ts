@@ -30,11 +30,24 @@ test('window navigation spans both edges and sidebars start below it', async ({
           const r = element.getBoundingClientRect();
           return { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
         };
+        const caption = shell.querySelector('[data-desktop-window-controls]');
+        const close = caption?.querySelector('[data-window-action=close]');
+        const sidebarButton = shell.querySelector(
+          ':scope > .workspace-sidebar:not([hidden]) > .explorer-header button',
+        );
         return {
           shell: rect(shell),
           navigation: rect(shell.querySelector(':scope > .tabbar')!),
           rail: rect(shell.querySelector('.activity-bar')!),
           main: rect(shell.querySelector('.workspace-main')!),
+          caption: caption ? rect(caption) : undefined,
+          captionActions: Array.from(caption?.querySelectorAll('[data-window-action]') ?? []).map(
+            (button) => button.getAttribute('data-window-action'),
+          ),
+          closeAtEdge: close
+            ? close.contains(document.elementFromPoint(rect(close).right - 1, rect(close).top + 5))
+            : undefined,
+          sidebarButton: sidebarButton ? rect(sidebarButton) : undefined,
           sessions: Array.from(
             shell.querySelectorAll<HTMLElement>('.workspace-session:not([hidden])'),
           ).map((session) => {
@@ -64,6 +77,13 @@ test('window navigation spans both edges and sidebars start below it', async ({
       expect(boxes.navigation.left).toBe(boxes.shell.left);
       expect(boxes.navigation.right).toBe(boxes.shell.right);
       expect(boxes.navigation.top).toBe(boxes.shell.top);
+      if (process.platform === 'win32') {
+        expect(boxes.captionActions.slice(-3)).toEqual(['minimize', 'toggle-maximize', 'close']);
+        expect(boxes.caption?.right).toBe(boxes.shell.right);
+        expect(boxes.closeAtEdge).toBe(true);
+        if (boxes.sidebarButton)
+          expect(boxes.sidebarButton.right).toBeLessThanOrEqual(boxes.caption!.left);
+      }
       expect(boxes.rail.top).toBeGreaterThanOrEqual(boxes.navigation.bottom);
       expect(boxes.main.top).toBeGreaterThanOrEqual(boxes.navigation.bottom);
       for (const session of boxes.sessions) {
@@ -117,6 +137,16 @@ test('window navigation spans both edges and sidebars start below it', async ({
     await expect(panes.nth(1)).toBeVisible();
     await expect(secondPanel).toBeVisible();
     await checkLayout();
+    if (process.platform === 'win32') {
+      const window = await app.browserWindow(page);
+      await window.evaluate((target) => {
+        target.unmaximize();
+        target.setSize(840, 680);
+        target.webContents.setZoomFactor(2);
+      });
+      await expect.poll(() => page.evaluate(() => innerWidth)).toBeLessThan(500);
+      await checkLayout();
+    }
   } finally {
     await closeLevel3Desktop(app);
     await rm(root, { recursive: true, force: true });

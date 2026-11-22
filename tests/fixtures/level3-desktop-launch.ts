@@ -32,11 +32,11 @@ export async function launchLevel3Desktop(options: LaunchOptions) {
     env: {
       ...Object.fromEntries(
         Object.entries(options.env ?? {}).filter(
-          (entry): entry is [string, string] => entry[1] !== undefined,
+          (entry): entry is [string, string] =>
+            entry[1] !== undefined && entry[0].toUpperCase() !== 'ELECTRON_RUN_AS_NODE',
         ),
       ),
       ELECTRON_RENDERER_URL: '',
-      ELECTRON_RUN_AS_NODE: '',
       HOME: home,
       ZDOTDIR: home,
       AXTERM_HOME: home,

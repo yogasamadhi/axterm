@@ -4,6 +4,8 @@ Apache-2.0 开源桌面终端与远程运维工作台，包含 CLI、独立 Host
 第三方代码与素材保留原许可，见 [LICENSE](LICENSE)、THIRD_PARTY_NOTICES.txt 与 licenses/。
 架构与安全边界见 [架构约定](ARCHITECTURE.md)，贡献规则见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
+Windows 运行期间显示系统托盘图标，单击可恢复最小化窗口。右键菜单可显示窗口、新建窗口或退出。关闭主窗口会进入退出流程。
+
 ## 开发与检查
 
 需要 Node 24.18.0 和 pnpm 11.28.5；所有命令均从本目录运行。

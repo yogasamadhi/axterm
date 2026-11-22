@@ -18,6 +18,7 @@ Axterm 是 Apache-2.0 桌面终端与远程运维工具。采用 Cordis Level 3�
 - 持久化经 ctx.storage 与领域 facet；复杂 SQL 保留关系模型和不可变迁移校验值。
 - 终端/远程桌面走有界 Binary WS；控制帧经 Zod 校验，大文件走 streaming HTTP。终端字节不进入 React/Zustand，不整文件 Base64 JSON。
 - 所有注册、PTY、SSH、WS、listener、timer、stream 都有 disposer；卸载先停止接纳并取消/排空任务，数据库与共享底座最后关闭。
+- Windows 主窗口关闭进入 Shell 的普通退出流程，检查活动任务并关闭 Host；macOS 和 Linux 关闭主窗口时隐藏窗口。
 
 ## 安全与 AI
 

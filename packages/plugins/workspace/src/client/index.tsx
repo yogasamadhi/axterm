@@ -238,6 +238,9 @@ export function apply(ctx: Context): void {
       );
       const [error, setError] = useState(false);
       const owner = { section: state.section, activeTabId: state.activeTabId };
+      const platform = document.documentElement.dataset.platform ?? 'web';
+      const edgeWindowControls =
+        platform === 'win32' && toolbarIds.includes('desktop.window-controls');
       const sectionView =
         state.navigation.find((item) => item.id === state.section)?.view === 'section';
       const settingsChrome =
@@ -289,6 +292,7 @@ export function apply(ctx: Context): void {
           data-axterm-product-workspace=""
           data-sidebar={sidebarVisible ? 'open' : 'closed'}
           data-section-chrome={settingsChrome ? 'settings' : undefined}
+          data-edge-window-controls={edgeWindowControls && !settingsChrome ? '' : undefined}
           onKeyDown={(event) => {
             if (
               settingsChrome &&
@@ -383,7 +387,7 @@ export function apply(ctx: Context): void {
           <header
             className={classes('tabbar')}
             data-has-tabs={state.tabs.length > 0 ? 'true' : 'false'}
-            data-platform={document.documentElement.dataset.platform ?? 'web'}
+            data-platform={platform}
           >
             <WorkspaceTabs
               onDuplicate={(id) =>
@@ -465,9 +469,15 @@ export function apply(ctx: Context): void {
                     </button>
                   ))}
               </MoreActions>
-              {props.renderSlot('workspace.toolbar', owner, { only: 'desktop.window-controls' })}
+              {!edgeWindowControls &&
+                props.renderSlot('workspace.toolbar', owner, { only: 'desktop.window-controls' })}
             </div>
           </header>
+          {edgeWindowControls && !settingsChrome && (
+            <div className={classes('workspace-window-controls')}>
+              {props.renderSlot('workspace.toolbar', owner, { only: 'desktop.window-controls' })}
+            </div>
+          )}
           <main className={classes('workspace-main')} aria-labelledby="workspace-main-heading">
             <h1
               ref={heading}

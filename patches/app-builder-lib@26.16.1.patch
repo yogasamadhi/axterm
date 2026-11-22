@@ -1,0 +1,45 @@
+diff --git a/templates/nsis/include/installUtil.nsh b/templates/nsis/include/installUtil.nsh
+index 47367741632726ba0886ac516461dbe98b7aea58..e0a9d8e84a17e1c22114c20841cd6b42aada1f29 100644
+--- a/templates/nsis/include/installUtil.nsh
++++ b/templates/nsis/include/installUtil.nsh
+@@ -207,7 +207,11 @@ Function uninstallOldVersion
+   ${endif}
+ 
+   StrCpy $uninstallerFileNameTemp "$PLUGINSDIR\old-uninstaller.exe"
+-  !insertmacro copyFile "$uninstallerFileName" "$uninstallerFileNameTemp"
++  !ifmacrodef customOldUninstaller
++    !insertmacro customOldUninstaller
++  !else
++    !insertmacro copyFile "$uninstallerFileName" "$uninstallerFileNameTemp"
++  !endif
+ 
+   # Retry counter
+   StrCpy $R5 0
+diff --git a/templates/nsis/uninstaller.nsh b/templates/nsis/uninstaller.nsh
+index c3f4f11982689baa220de5051bbf144adbd9accc..3162741a1667f6c428c47d6bf0e4f47ba054dc64 100644
+--- a/templates/nsis/uninstaller.nsh
++++ b/templates/nsis/uninstaller.nsh
+@@ -50,6 +50,10 @@ Function un.atomicRMDir
+     StrCmp $R2 "." continue
+     StrCmp $R2 ".." continue
+ 
++    !ifmacrodef customAtomicUninstallEntry
++      !insertmacro customAtomicUninstallEntry
++    !endif
++
+     IfFileExists "$INSTDIR$R0\$R2\*.*" isDir isNotDir
+ 
+     isDir:
+@@ -184,7 +188,11 @@ Section "un.${UNINSTALL_SECTION_NAME}"
+     # Move out of $INSTDIR so it can be removed
+     SetOutPath $TEMP
+     # Remove all files (or remaining shallow directories from the block above)
+-    RMDir /r $INSTDIR
++    !ifmacrodef customDeleteUninstallTree
++      !insertmacro customDeleteUninstallTree
++    !else
++      RMDir /r $INSTDIR
++    !endif
+   !endif
+ 
+   ${ifNot} ${isKeepShortcuts}

@@ -69,8 +69,8 @@ button.danger {
   pointer-events: auto;
 }
 .window-controls button {
-  width: 28px;
-  min-width: 28px;
+  width: var(--ax-window-control-width, 28px);
+  min-width: var(--ax-window-control-width, 28px);
   height: 28px;
   min-height: 28px;
   display: grid;

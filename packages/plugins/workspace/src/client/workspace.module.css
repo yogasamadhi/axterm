@@ -1253,6 +1253,26 @@
   }
 }
 
+/* Windows caption controls sit outside both the scrollable toolbar and the sidebar header. */
+.app-shell[data-edge-window-controls] {
+  --ax-window-control-width: 28px;
+  --ax-workspace-window-controls-width: calc(4 * var(--ax-window-control-width));
+}
+.workspace-window-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: var(--ax-layer-desktop-window-controls-window-controls-z-index);
+}
+.app-shell[data-edge-window-controls][data-sidebar='closed'] > .tabbar {
+  padding-right: max(var(--ax-size-activity-rail), var(--ax-workspace-window-controls-width));
+}
+.app-shell[data-edge-window-controls] > .workspace-sidebar > .explorer-header {
+  padding-right: calc(
+    8px + max(0px, var(--ax-workspace-window-controls-width) - var(--ax-size-activity-rail))
+  );
+}
+
 .terminal-pane[data-pane-empty='true'] {
   pointer-events: auto;
 }

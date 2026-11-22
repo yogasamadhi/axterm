@@ -27,7 +27,11 @@ it('routes window control presentation through its owned preload and keeps the H
       executablePath: createRequire(resolve('apps/desktop/package.json'))('electron') as string,
       args: [entry],
       env: {
-        ...process.env,
+        ...Object.fromEntries(
+          Object.entries(process.env).filter(
+            ([key]) => key.toUpperCase() !== 'ELECTRON_RUN_AS_NODE',
+          ),
+        ),
         HOME: home,
         ZDOTDIR: home,
         AXTERM_HOME: home,
@@ -69,7 +73,10 @@ it('routes window control presentation through its owned preload and keeps the H
     const before = await application.evaluate(() =>
       (globalThis as unknown as { shell: DesktopShell }).shell.snapshot(),
     );
-    await window.evaluate((target) => target.close());
+    await window.evaluate((target) => {
+      if (process.platform === 'win32') target.hide();
+      else target.close();
+    });
     expect(await window.evaluate((target) => target.isVisible())).toBe(false);
     const hidden = await application.evaluate(() =>
       (globalThis as unknown as { shell: DesktopShell }).shell.snapshot(),
@@ -82,7 +89,11 @@ it('routes window control presentation through its owned preload and keeps the H
     await browserExpect(tab).toHaveAttribute('aria-controls', id!);
     const input = page.locator('.xterm-helper-textarea');
     await input.focus();
-    await input.fill('printf "CONTROL_HOST_ALIVE\\n"');
+    await input.fill(
+      process.platform === 'win32'
+        ? 'Write-Output CONTROL_HOST_ALIVE'
+        : 'printf "CONTROL_HOST_ALIVE\\n"',
+    );
     await input.press('Enter');
     await expect
       .poll(() => page.locator('.xterm-rows').innerText())

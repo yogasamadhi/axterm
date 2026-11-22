@@ -52,9 +52,8 @@ export function installWindowControls(ctx: Context): void {
                 scope.workspaceUi.getSnapshot,
               );
             const [confirmation, setConfirmation] = useState(false),
-              isMac = /darwin|mac/iu.test(
-                document.documentElement.dataset.platform ?? navigator.platform,
-              );
+              platform = document.documentElement.dataset.platform,
+              isMac = /darwin|mac/iu.test(platform ?? navigator.platform);
             useEffect(() => {
               if (confirmation && !presentation.busy && document.visibilityState === 'hidden')
                 setConfirmation(false);
@@ -111,7 +110,9 @@ export function installWindowControls(ctx: Context): void {
                       aria-label={t('shell.closeWindow')}
                       disabled={disabled || !state.canClose}
                       onClick={() =>
-                        workspace.tabs.length > 1 ? setConfirmation(true) : perform('close')
+                        platform !== 'win32' && workspace.tabs.length > 1
+                          ? setConfirmation(true)
+                          : perform('close')
                       }
                     >
                       <X size={14} />

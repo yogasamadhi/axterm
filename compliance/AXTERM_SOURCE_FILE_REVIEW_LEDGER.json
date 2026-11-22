@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": "Prepared independent source snapshot, excluding this review ledger",
-  "sourceScopeSha256": "43a60e6560cf88eb27397407c1f62f5ec5cbdc0c762c1ab26c8b73abbf8b5b47",
+  "sourceScopeSha256": "65bf94cf213275b41a123a3d6203713bb8fe9c6d6c24f96f7f71bb3cd0dacc39",
   "limitations": [
     "A path and byte hash identify review scope; they do not establish authorship, license, rights or package inclusion.",
     "Git author metadata and prospective contribution rules do not grant retrospective permission for these bytes.",
@@ -72,8 +72,8 @@
     {
       "file": {
         "path": ".gitattributes",
-        "bytes": 136,
-        "sha256": "b3d08264f07e87f9e73028f3f26270fc70006767c6ea21f3a134c9c7f1a4c071"
+        "bytes": 372,
+        "sha256": "8e64e9dd95334ff22eced205e116daece611b4cb7e50376c8266c65cb984036c"
       },
       "review": {
         "status": "pending",
@@ -232,8 +232,8 @@
     {
       "file": {
         "path": "ARCHITECTURE.md",
-        "bytes": 3859,
-        "sha256": "c82542b8852895bd6ae0431811cf5b26816ae7d50c39cb15f8c7b76b00765564"
+        "bytes": 4006,
+        "sha256": "df70a6b5242b25326b3347706e2a39bfca06360a0e5f2ae01ee83d646181c34b"
       },
       "review": {
         "status": "pending",
@@ -312,8 +312,8 @@
     {
       "file": {
         "path": "README.md",
-        "bytes": 1071,
-        "sha256": "c6a592565dd66b06d8093dc550956800bb59eeccfe0268fb5467d1e461803ed8"
+        "bytes": 1246,
+        "sha256": "2e69fdd6baf8d511ceec2710471088c8a0533a706645d443f3d0cb997e02aa10"
       },
       "review": {
         "status": "pending",
@@ -872,8 +872,8 @@
     {
       "file": {
         "path": "apps/desktop/build/installer.nsh",
-        "bytes": 822,
-        "sha256": "16c23e903b788196f76999515c6a311483eace3a856e254100e7c237e0776659"
+        "bytes": 3945,
+        "sha256": "38b31ca6e4f4f6c73398b8cc93b3ab15a259707cb45b1855c3b51863b419d4cd"
       },
       "review": {
         "status": "pending",
@@ -932,8 +932,8 @@
     {
       "file": {
         "path": "apps/desktop/electron-builder.yml",
-        "bytes": 2873,
-        "sha256": "1dc13a2627f79d112e5fe45872aa364f46038294f2dc89461bc365943dfa13ac"
+        "bytes": 2866,
+        "sha256": "74e37dce8e958977081f20a94fc9fe02f5e658deda3449627347030132052c4a"
       },
       "review": {
         "status": "pending",
@@ -972,8 +972,8 @@
     {
       "file": {
         "path": "apps/desktop/src/shell/application.ts",
-        "bytes": 28215,
-        "sha256": "a68d3b74a60148199dcb3eaf415c6897964180edce1a7de1339b8efa5e8bb703"
+        "bytes": 28455,
+        "sha256": "12ec497d029dbdfdfa0e8233006d0c2c7b3a4d6dd8827db52e111aaf35e18e42"
       },
       "review": {
         "status": "pending",
@@ -1034,6 +1034,26 @@
         "path": "apps/desktop/src/shell/data-copy.ts",
         "bytes": 13722,
         "sha256": "33d25e213a0391b61eecd26aee2704af1a21529128934ff99b2cb97116251fe5"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
+        "path": "apps/desktop/src/shell/desktop-tray.ts",
+        "bytes": 2231,
+        "sha256": "4bb67789705a82e8b4f6aaf6c86b68797ba2c2c947df29ec0255667884aa1164"
       },
       "review": {
         "status": "pending",
@@ -1274,26 +1294,6 @@
         "path": "apps/desktop/src/shell/macos-tray-icon.ts",
         "bytes": 2389,
         "sha256": "3d6ee8310ac79aa25f694dcf3f3a2e4631c343ba2c48ae987b4b2b49050dfa21"
-      },
-      "review": {
-        "status": "pending",
-        "originKind": null,
-        "source": null,
-        "license": null,
-        "rightsHolder": null,
-        "distribution": null,
-        "disposition": null,
-        "reviewer": null,
-        "reviewedAt": null,
-        "evidence": [],
-        "conclusion": null
-      }
-    },
-    {
-      "file": {
-        "path": "apps/desktop/src/shell/macos-tray.ts",
-        "bytes": 2147,
-        "sha256": "41019719e3c8031af19f26ad58c45da8901b3eaa37b1e5c2fba659f4006681b6"
       },
       "review": {
         "status": "pending",
@@ -24652,8 +24652,8 @@
     {
       "file": {
         "path": "packages/plugins/desktop/src/client/window-controls.module.css",
-        "bytes": 3591,
-        "sha256": "3f6730bb03881c82b7db00e82b79ea79d8dfe4753ad4577e7f65e969fbe1bab6"
+        "bytes": 3655,
+        "sha256": "df1cd4edf546a140a7df99b34fc4bb1d7ec03c4efbb7bd2dc9b49ee0236d7cf2"
       },
       "review": {
         "status": "pending",
@@ -24672,8 +24672,8 @@
     {
       "file": {
         "path": "packages/plugins/desktop/src/client/window-controls.tsx",
-        "bytes": 8179,
-        "sha256": "acf7d44e63f156068c626f8d526a0721649657e0c97e95590eea32f51eaef450"
+        "bytes": 8257,
+        "sha256": "7b52d4c8763d6f77d8e83116655a3504c4d9602f28ef98b557f313e0cffd757d"
       },
       "review": {
         "status": "pending",
@@ -32432,8 +32432,8 @@
     {
       "file": {
         "path": "packages/plugins/workspace/src/client/index.tsx",
-        "bytes": 23604,
-        "sha256": "940a1585683296781f59ac4f30febd11d856fa0fc693a3b1a0facbfa3e30a1cb"
+        "bytes": 24133,
+        "sha256": "cd0940d093e6bbfe85508339048d444e5a074c39d88796348ac9577ef56eed00"
       },
       "review": {
         "status": "pending",
@@ -32892,8 +32892,8 @@
     {
       "file": {
         "path": "packages/plugins/workspace/src/client/workspace.module.css",
-        "bytes": 30117,
-        "sha256": "89e700aea05ccafae78c6d7d88acf5b1e152a8c1091911d0151a4551c54bf1d4"
+        "bytes": 30896,
+        "sha256": "12c317d84cf08043fcf7ff7a805ee057288b28bda39dbada8506a089f2412bba"
       },
       "review": {
         "status": "pending",
@@ -33331,6 +33331,26 @@
     },
     {
       "file": {
+        "path": "patches/app-builder-lib@26.16.1.patch",
+        "bytes": 1634,
+        "sha256": "6ff0bbdaf7c6dfb08beac939427de0d90fdcc250b4c20b2bc708c76ef0c8505e"
+      },
+      "review": {
+        "status": "pending",
+        "originKind": null,
+        "source": null,
+        "license": null,
+        "rightsHolder": null,
+        "distribution": null,
+        "disposition": null,
+        "reviewer": null,
+        "reviewedAt": null,
+        "evidence": [],
+        "conclusion": null
+      }
+    },
+    {
+      "file": {
         "path": "patches/node-pty@1.1.0.patch",
         "bytes": 531,
         "sha256": "177f33d5d795d534935a30796f8b154e095efc0308ecb039ee9fe7da6a9c94d5"
@@ -33392,8 +33412,8 @@
     {
       "file": {
         "path": "pnpm-lock.yaml",
-        "bytes": 408408,
-        "sha256": "91ab3ad88fae41dc03c443f1b714721fb4815013adb13f7e3fea0c55c2f6bf6c"
+        "bytes": 408808,
+        "sha256": "42d393b720f5591f8501b3b403e65b8452513fcb9667f91c5d49a701fce99276"
       },
       "review": {
         "status": "pending",
@@ -33412,8 +33432,8 @@
     {
       "file": {
         "path": "pnpm-workspace.yaml",
-        "bytes": 1477,
-        "sha256": "2f62d30d1c8dffdeedeef01a93c15838a4c75caacb2eb638de182ed140993798"
+        "bytes": 1542,
+        "sha256": "f0d057211f1c234572aadb6eb49ad0199d133a6702c636573288a7e719af1b57"
       },
       "review": {
         "status": "pending",
@@ -35232,8 +35252,8 @@
     {
       "file": {
         "path": "scripts/package-level3-desktop.mjs",
-        "bytes": 7721,
-        "sha256": "76c330904b1f50440383fd8f5ab41dfa3fc82cc4f41ae53facc0824c17f45f88"
+        "bytes": 7714,
+        "sha256": "de2abe76787a9d6d8acf882abc1a51b120c1b9e0f59060164086a83bf28866db"
       },
       "review": {
         "status": "pending",
@@ -35712,8 +35732,8 @@
     {
       "file": {
         "path": "scripts/test-windows-nsis.ps1",
-        "bytes": 6891,
-        "sha256": "222c06d7345f7d11b49ff0a4325872e99ff1ecb1c124b9c75ca537f02a6a9d9e"
+        "bytes": 9370,
+        "sha256": "d5cc43fc20f6ed1bdc6259ed85e42ffea4b8772dd0442e5c38e11a5794451d7a"
       },
       "review": {
         "status": "pending",
@@ -35932,8 +35952,8 @@
     {
       "file": {
         "path": "tests/e2e/level3-platform-window.spec.ts",
-        "bytes": 3853,
-        "sha256": "affd5a8930bc3244a65cebc93a5313a53e1f1406a7d01e19aa8ec93def8c0301"
+        "bytes": 5752,
+        "sha256": "569efadfb6c390b777e9b8535ffb5c18a75001e17a0aac023f41ac1e4b27dc73"
       },
       "review": {
         "status": "pending",
@@ -36192,8 +36212,8 @@
     {
       "file": {
         "path": "tests/e2e/top-navigation.spec.ts",
-        "bytes": 6107,
-        "sha256": "e165c3a10eed6304006b6658cb6659b765a6fea64aa09e80d73b73b1938540cc"
+        "bytes": 7610,
+        "sha256": "78933642ca2437c68c63fec3f033a71414a010827c1533415841cc72c502417d"
       },
       "review": {
         "status": "pending",
@@ -37212,8 +37232,8 @@
     {
       "file": {
         "path": "tests/fixtures/level3-desktop-launch.ts",
-        "bytes": 3390,
-        "sha256": "f4a769ad0209a77af3ecce988291c4f1df2adf6813b997cb73e402bbebebea5e"
+        "bytes": 3423,
+        "sha256": "056fcb7beef90dbff536565e12d7b93c1b1af7e9e03891b2004e7509443a84ce"
       },
       "review": {
         "status": "pending",
@@ -43932,8 +43952,8 @@
     {
       "file": {
         "path": "tests/integration/level3-window-controls-ui.test.ts",
-        "bytes": 5985,
-        "sha256": "af2c5e8f48d85be67fe2254d4d56f81426b3701c63d804755d8d588ff2092a23"
+        "bytes": 6302,
+        "sha256": "902235b33bfb18b76ade9b9e911e964eb673b6a720ed1778ea6c8615ab0d7d9d"
       },
       "review": {
         "status": "pending",
@@ -48712,8 +48732,8 @@
     {
       "file": {
         "path": "tests/unit/macos-tray.test.ts",
-        "bytes": 5049,
-        "sha256": "8552cf66f10eaf6509246555ee5e3dc91c5a66230fc0be6eb64d1c26e595a746"
+        "bytes": 5591,
+        "sha256": "8af72cae7df0513fd030829237dc51f1112bc86f7b933a078b02c4ba3b8668e5"
       },
       "review": {
         "status": "pending",

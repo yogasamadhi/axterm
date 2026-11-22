@@ -60,7 +60,7 @@ win:
   extraResources:
     - from: ../../compliance/UPDATE_FEED_RECORD.json
       to: AXTERM_UPDATE_FEED.json
-  signAndEditExecutable: false
+  signExecutable: false
   target: [nsis]
 nsis:
   oneClick: false

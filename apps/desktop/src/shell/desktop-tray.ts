@@ -1,12 +1,12 @@
 import type { Menu, MenuItemConstructorOptions, Tray } from 'electron';
 
 interface TrayNativePort {
-  createTray(): Pick<Tray, 'setToolTip' | 'setContextMenu' | 'destroy' | 'isDestroyed'>;
+  createTray(): Pick<Tray, 'on' | 'setToolTip' | 'setContextMenu' | 'destroy' | 'isDestroyed'>;
   buildMenu(items: MenuItemConstructorOptions[]): Menu;
 }
 
-/** One application-owned menu bar item, independent of windows and Runtime generations. */
-export class MacosTrayController {
+/** One application-owned tray icon, independent of windows and Runtime generations. */
+export class DesktopTrayController {
   private tray: ReturnType<TrayNativePort['createTray']> | undefined;
   private closed = false;
 
@@ -19,18 +19,20 @@ export class MacosTrayController {
   ) {}
 
   start(): void {
-    if (this.closed || this.tray || this.platform !== 'darwin') return;
+    if (this.closed || this.tray || !['darwin', 'win32'].includes(this.platform)) return;
     const tray = this.native.createTray();
     try {
+      const showWindow = () => {
+        if (!this.closed) this.showWindow();
+      };
+      tray.on('click', showWindow);
       tray.setToolTip(this.productName);
       tray.setContextMenu(
         this.native.buildMenu([
           {
             id: 'axterm-show-window',
             label: this.productName,
-            click: () => {
-              if (!this.closed) this.showWindow();
-            },
+            click: showWindow,
           },
           { type: 'separator' },
           ...(this.actions
