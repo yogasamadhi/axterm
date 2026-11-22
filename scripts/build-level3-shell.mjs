@@ -34,7 +34,7 @@ export async function buildLevel3Shell(root = resolve(import.meta.dirname, '..')
     config: false,
     tsconfig: false,
     cwd: desktop,
-    deps: { neverBundle: [/^(?!\0)[^./]/] },
+    deps: { neverBundle: [/^(?!\0|[A-Za-z]:[\\/])[^./\\]/] },
     logLevel: 'warn',
   });
   await build({

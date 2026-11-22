@@ -1,8 +1,51 @@
-import { cp, mkdir, mkdtemp, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import {
+  lstat,
+  mkdir,
+  mkdtemp,
+  readFile,
+  realpath,
+  rm,
+  symlink,
+  writeFile,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { expect, it } from 'vitest';
-import { relocateRuntimeLinks } from '../../scripts/package-level3-desktop.mjs';
+import { copyRuntimeTree } from '../../scripts/package-level3-desktop.mjs';
+import { prepareWindowsInstallerInput } from '../../scripts/package-level3-installers.mjs';
+
+it.runIf(process.platform === 'win32')(
+  'archives a cyclic Windows dependency graph without junctions and restores it at a new path',
+  async () => {
+    const root = await mkdtemp(join(tmpdir(), 'axterm-nsis-links-'));
+    try {
+      const source = join(root, 'prepackaged');
+      const target = join(root, 'installed Axterm');
+      const packagePath = (name: string) =>
+        join('resources', 'app', 'node_modules', '.axterm', name, 'package');
+      const a = packagePath('a');
+      const b = packagePath('b');
+      for (const [index, path] of [a, b].entries()) {
+        await mkdir(join(source, path, 'node_modules'), { recursive: true });
+        await writeFile(join(source, path, 'name.txt'), String(index));
+      }
+      await symlink(join(source, b), join(source, a, 'node_modules', 'b'), 'junction');
+      await symlink(join(source, a), join(source, b, 'node_modules', 'a'), 'junction');
+
+      await prepareWindowsInstallerInput(source, target);
+      const restored = join(target, a, 'node_modules', 'b');
+      await expect(lstat(restored)).rejects.toMatchObject({ code: 'ENOENT' });
+      const installer = join(target, 'resources', 'axterm-restore-runtime-links.mjs');
+      execFileSync(process.execPath, [installer]);
+      expect(await realpath(restored)).toBe(await realpath(join(target, b)));
+      expect(await readFile(join(restored, 'node_modules', 'a', 'name.txt'), 'utf8')).toBe('0');
+      execFileSync(process.execPath, [installer]);
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  },
+);
 
 it('relocates absolute runtime links and retains relative links without depending on the source stage', async () => {
   const root = await mkdtemp(join(tmpdir(), 'axterm-package-links-'));
@@ -28,8 +71,7 @@ it('relocates absolute runtime links and retains relative links without dependin
       join(source, 'relative'),
       type,
     );
-    await cp(source, destination, { recursive: true, verbatimSymlinks: true });
-    await relocateRuntimeLinks(source, destination);
+    await copyRuntimeTree(source, destination);
     for (const path of ['node_modules/absolute', 'relative'])
       expect(await realpath(join(destination, path))).toBe(
         await realpath(join(destination, 'instances/dependency')),
@@ -51,10 +93,10 @@ it('rejects a copied dependency link that escapes both runtime closures', async 
     await mkdir(join(root, 'outside'));
     await symlink(
       join(root, 'outside'),
-      join(root, 'app', 'escape'),
+      join(root, 'stage', 'escape'),
       process.platform === 'win32' ? 'junction' : 'dir',
     );
-    await expect(relocateRuntimeLinks(join(root, 'stage'), join(root, 'app'))).rejects.toThrow(
+    await expect(copyRuntimeTree(join(root, 'stage'), join(root, 'app'))).rejects.toThrow(
       'escaped the runtime closure',
     );
   } finally {

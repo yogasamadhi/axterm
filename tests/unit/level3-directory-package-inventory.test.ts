@@ -92,19 +92,41 @@ it('refuses an escaping link, broken alias and linked root rather than omitting 
   try {
     const app = join(root, 'app');
     await mkdir(app);
-    await writeFile(join(root, 'private'), 'outside');
-    await symlink(join(root, 'private'), join(app, 'escape'));
+    const linkType = process.platform === 'win32' ? 'junction' : 'dir';
+    await mkdir(join(root, 'private'));
+    await symlink(join(root, 'private'), join(app, 'escape'), linkType);
     expect(() => inventoryDirectoryApplication(app)).toThrow('escapes');
     await rm(join(app, 'escape'));
-    await symlink(join(root, 'missing'), join(app, 'broken'));
+    await symlink(join(root, 'missing'), join(app, 'broken'), linkType);
     expect(() => inventoryDirectoryApplication(app)).toThrow();
     await rm(join(app, 'broken'));
-    await symlink(app, join(root, 'alias'), process.platform === 'win32' ? 'junction' : 'dir');
+    await symlink(app, join(root, 'alias'), linkType);
     expect(() => inventoryDirectoryApplication(join(root, 'alias'))).toThrow('root must not');
   } finally {
     await rm(root, { recursive: true, force: true });
   }
 });
+
+it.runIf(process.platform === 'win32')(
+  'identifies the same junction graph after relocation',
+  async () => {
+    const root = await mkdtemp(join(tmpdir(), 'axterm-windows-directory-inventory-'));
+    try {
+      const original = join(root, 'original');
+      const relocated = join(root, 'relocated');
+      for (const app of [original, relocated]) {
+        const target = join(app, 'package');
+        await mkdir(target, { recursive: true });
+        await symlink(target, join(app, 'alias'), 'junction');
+      }
+      const inventory = inventoryDirectoryApplication(original);
+      expect(inventory.links).toEqual([{ path: 'alias', target: 'package' }]);
+      expect(inventoryDirectoryApplication(relocated).sha256).toBe(inventory.sha256);
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  },
+);
 
 it('detects native foreign prebuilds inside the hashed physical store rather than only traditional node_modules names', async () => {
   const root = await mkdtemp(join(tmpdir(), 'axterm-l3-native-prebuild-inventory-'));
